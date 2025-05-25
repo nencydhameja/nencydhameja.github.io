@@ -6,7 +6,7 @@ redirect_from:
   - /about/
   - /about.html
 ---
-<img src="/images/banner.png" alt="Profile Picture" width="50%">
+<img src="/images/banner.png" alt="Profile Picture" width="70%">
 
 
 
