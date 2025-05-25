@@ -1,5 +1,5 @@
 ---
 title: "Agent-Based Econometrics"
-excerpt: "We use Monte Carlo Simulations to evaluate and establish the estimator properties for an agent-based model!"
+excerpt: "This project leverages Monte Carlo simulations to evaluate and establish the statistical properties of estimators within an agent-based model."
 collection: portfolio
 ---
