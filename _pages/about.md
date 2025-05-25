@@ -6,7 +6,8 @@ redirect_from:
   - /about/
   - /about.html
 ---
-![Profile Picture](/images/banner.png)
+<img src="/images/banner.png" alt="Profile Picture" width="50%">
+
 
 
 
