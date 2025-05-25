@@ -1,4 +1,3 @@
-
 ---
 title: "Effect of Diversity Statements in Faculty Hiring"
 excerpt: "Short description of portfolio item number 1<br/>"
