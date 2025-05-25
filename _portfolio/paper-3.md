@@ -4,8 +4,3 @@ excerpt: "This study presents a field experiment conducted in collaboration with
 collection: portfolio
 external_url: "https://www.econstor.eu/bitstream/10419/308508/1/I4R-DP195.pdf?trk=public_post_comment-text"
 ---
-
-
-
-[Draft of the paper](https://www.econstor.eu/bitstream/10419/308508/1/I4R-DP195.pdf?trk=public_post_comment-text)
-
