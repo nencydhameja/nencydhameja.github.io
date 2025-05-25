@@ -6,7 +6,8 @@ redirect_from:
   - /about/
   - /about.html
 ---
-<img src="banner.png" alt="Welcome" width="400"/>
+![Profile Picture]({{ "/images/banner.png" | relative_url }})
+
 
 I'm Nency Dhameja, a Ph.D. candidate (ABD) in Econometrics and Quantitative Economics at Binghamton University (State University of New York).
 
