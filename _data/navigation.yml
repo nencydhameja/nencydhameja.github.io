@@ -19,8 +19,8 @@ main:
     url: /teaching/ 
     
   - title: "CV"
-    url: /files/Nency_Dhameja.pdf
-    target: "_blank"
+    url: /cv/
+
         
   # - title: "Blog Posts"
     # url: /year-archive/
