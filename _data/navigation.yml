@@ -20,6 +20,7 @@ main:
     
   - title: "CV"
     url: /files/Nency_Dhameja.pdf
+    target: "_blank"
         
   # - title: "Blog Posts"
     # url: /year-archive/
