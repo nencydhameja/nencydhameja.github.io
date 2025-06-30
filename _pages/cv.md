@@ -12,5 +12,5 @@ redirect_from:
   This browser does not support PDFs. Please download the PDF to view it: <a href="/files/Nency_Dhameja_CV.pdf">Download PDF</a>.
 </iframe>
 
-<p><a href="/files/Nency_Dhameja.pdf" target="_blank">View Fullscreen</a></p>
+<p><a href="/files/Nency_Dhameja_CV.pdf" target="_blank">View Fullscreen</a></p>
 
