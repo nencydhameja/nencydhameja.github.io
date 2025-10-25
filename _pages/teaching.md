@@ -6,9 +6,8 @@ author_profile: true
 classes: wide
 ---
 
-# Teaching
-
 ### Instructor  
+Binghamton University
 
 | Year | Term   | Course Code | Course Title                       |
 |:----:|:------:|:-------------|:-----------------------------------|
@@ -17,7 +16,7 @@ classes: wide
 ---
 
 ### Teaching Assistant  
-_Binghamton University
+Binghamton University
 
 | Year | Term   | Course Code | Course Title                                |
 |:----:|:------:|:------------|:--------------------------------------------|
