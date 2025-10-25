@@ -70,3 +70,18 @@ h2 {
   margin-top: 0.5rem;
   margin-bottom: 0.3rem;
 }
+
+/* Make teaching tables use the same column widths */
+.page--teaching table {
+  table-layout: fixed;   /* stops per-table auto measuring */
+  width: 100%;
+}
+
+.page--teaching th:nth-child(1),
+.page--teaching td:nth-child(1) { width: 6rem; }   /* Year   */
+.page--teaching th:nth-child(2),
+.page--teaching td:nth-child(2) { width: 7rem; }   /* Term   */
+.page--teaching th:nth-child(3),
+.page--teaching td:nth-child(3) { width: 10rem; }  /* Code   */
+.page--teaching th:nth-child(4),
+.page--teaching td:nth-child(4) { width: auto; }   /* Title  */
