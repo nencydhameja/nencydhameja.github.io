@@ -9,7 +9,6 @@ classes: wide
 # Teaching
 
 ### Instructor  
-_Binghamton University, 2025 – present_
 
 | Year | Term   | Course Code | Course Title                       |
 |:----:|:------:|:-------------|:-----------------------------------|
