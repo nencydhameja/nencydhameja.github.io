@@ -3,7 +3,7 @@ layout: single
 title: "Teaching"
 permalink: /teaching/
 author_profile: true
-classes: wide
+classes: [wide, teaching]
 ---
 
 ### Instructor  (Binghamton University, NY, USA)
