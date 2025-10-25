@@ -64,12 +64,7 @@ h1 {
 h2 {
   font-size: 26px !important;
 }
-.archive__item-title {
-  font-size: 1.2rem;     /* smaller text */
-  font-weight: 600;      /* medium bold */
-  margin-top: 0.5rem;
-  margin-bottom: 0.3rem;
-}
+
 
 /* Make teaching tables use the same column widths */
 /* Consistent column widths on the Teaching page */
@@ -96,3 +91,10 @@ h2 {
 .page.teaching td:nth-child(3) { width: 10rem; }  /* Code   */
 .page.teaching th:nth-child(4),
 .page.teaching td:nth-child(4) { width: auto; }   /* Title  */
+
+.archive__item-title {
+  font-size: 1.2rem;     /* smaller text */
+  font-weight: 600;      /* medium bold */
+  margin-top: 0.5rem;
+  margin-bottom: 0.3rem;
+}
