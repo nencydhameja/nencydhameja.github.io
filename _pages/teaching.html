@@ -1,4 +1,4 @@
----
+<!-- ---
 layout: archive
 title: "Teaching"
 permalink: /teaching/
@@ -9,4 +9,29 @@ author_profile: true
 
 {% for post in site.teaching reversed %}
   {% include archive-single.html %}
+{% endfor %} -->
+
+---
+layout: default
+title: "Teaching"
+permalink: /teaching/
+author_profile: true
+---
+
+{% assign courses = site.teaching | sort: "date" | reverse %}
+
+# Teaching
+
+* TOC
+{:toc}
+
+{% for post in courses %}
+<hr />
+<h2 id="{{ post.slug }}">{{ post.title }}</h2>
+{% if post.subtitle %}<p><em>{{ post.subtitle }}</em></p>{% endif %}
+
+{{ post.content }}
+
+<p><a href="{{ post.url | relative_url }}">Permalink</a></p>
 {% endfor %}
+
