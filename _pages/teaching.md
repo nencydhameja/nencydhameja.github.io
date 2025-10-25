@@ -17,7 +17,7 @@ classes: wide
 ---
 
 ### Teaching Assistant  
-_Binghamton University, 2022 – present_
+_Binghamton University
 
 | Year | Term   | Course Code | Course Title                                |
 |:----:|:------:|:------------|:--------------------------------------------|
