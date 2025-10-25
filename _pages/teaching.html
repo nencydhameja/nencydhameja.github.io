@@ -18,20 +18,23 @@ permalink: /teaching/
 author_profile: true
 ---
 
-{% assign courses = site.teaching | sort: "date" | reverse %}
-
 # Teaching
+**Instructor **, Binghamton University  
+| Year | Term   | Course Code | Course Title                                |
+|:----:|:------:|:------------|:--------------------------------------------|
+| 2025 | Winter | ECON 144    | Economic Poverty & Discrimination           |
 
-* TOC
-{:toc}
+**Teaching Assistant**, Binghamton University  
 
-{% for post in courses %}
-<hr />
-<h2 id="{{ post.slug }}">{{ post.title }}</h2>
-{% if post.subtitle %}<p><em>{{ post.subtitle }}</em></p>{% endif %}
+<!-- At Binghamton University, I have served as Teaching Assistant for the following courses: -->
 
-{{ post.content }}
-
-<p><a href="{{ post.url | relative_url }}">Permalink</a></p>
-{% endfor %}
-
+| Year | Term   | Course Code | Course Title                                   |
+|:----:|:------:|:------------|:-----------------------------------------------|
+| 2025 | Fall   | ECON 483C   | Behavioral Economics                           |
+| 2025 | Spring | ECON 570/670| Agent-Based Modeling (Python)                  |
+| 2024 | Fall   | ECON 476    | Forecasting                                    |
+| 2024 | Fall   | ECON 466    | Introduction to Econometrics                   |
+| 2024 | Spring | ECON 616    | Econometrics                                   |
+| 2023 | Fall   | ECON 483    | Economic Development of Latin America          |
+| 2023 | Spring | ECON 350    | U.S. Financial Systems: Markets & Institutions |
+| 2022 | Fall   | ECON 454    | Economics of Corporations                      |
