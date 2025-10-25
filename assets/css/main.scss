@@ -74,23 +74,23 @@ h2 {
   border-collapse: collapse;
 }
 
-.page.teaching th,
-.page.teaching td {
-  padding: 0.6em 1em;
-  text-align: left;
-  vertical-align: top;
-  white-space: nowrap;   /* keeps ECON 570/670 on one line */
-}
+// .page.teaching th,
+// .page.teaching td {
+//   padding: 0.6em 1em;
+//   text-align: left;
+//   vertical-align: top;
+//   white-space: nowrap;   /* keeps ECON 570/670 on one line */
+// }
 
-/* Column widths */
-.page.teaching th:nth-child(1),
-.page.teaching td:nth-child(1) { width: 6rem; }   /* Year   */
-.page.teaching th:nth-child(2),
-.page.teaching td:nth-child(2) { width: 7rem; }   /* Term   */
-.page.teaching th:nth-child(3),
-.page.teaching td:nth-child(3) { width: 10rem; }  /* Code   */
-.page.teaching th:nth-child(4),
-.page.teaching td:nth-child(4) { width: auto; }   /* Title  */
+// /* Column widths */
+// .page.teaching th:nth-child(1),
+// .page.teaching td:nth-child(1) { width: 6rem; }   /* Year   */
+// .page.teaching th:nth-child(2),
+// .page.teaching td:nth-child(2) { width: 7rem; }   /* Term   */
+// .page.teaching th:nth-child(3),
+// .page.teaching td:nth-child(3) { width: 10rem; }  /* Code   */
+// .page.teaching th:nth-child(4),
+// .page.teaching td:nth-child(4) { width: auto; }   /* Title  */
 
 .archive__item-title {
   font-size: 1.2rem;     /* smaller text */
