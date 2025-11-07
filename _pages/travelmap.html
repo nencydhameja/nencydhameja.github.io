@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Places I've Loved Visiting</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <style>
+    :root{
+      --bg:#0b1020;--card:#111730;--text:#e8ecff;--muted:#aab3d9;--accent:#90b4ff;
+    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#0e1530);} 
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);}
+    .wrapper{max-width:1100px;margin:0 auto;padding:24px;}
+    .card{background:var(--card);border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.35);overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+    header{padding:20px 24px 0}
+    h1{margin:0 0 6px;font-size:28px;letter-spacing:.2px}
+    p.lead{margin:0 0 16px;color:var(--muted)}
+    #map{height:68vh;width:100%;}
+    .list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;padding:16px 20px 22px;border-top:1px solid rgba(255,255,255,.06)}
+    .place{padding:12px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:14px}
+    .place b{display:block;margin-bottom:2px}
+    .badge{display:inline-block;padding:2px 8px;border-radius:999px;background:rgba(144,180,255,.15);color:var(--accent);font-size:12px;margin-top:6px}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card">
+      <header>
+        <h1>Places I've Loved Visiting</h1>
+        <p class="lead">A small, interactive map of art, architecture, nature — and the little sparks of joy they bring.</p>
+      </header>
+      <div id="map" role="region" aria-label="Interactive map of favorite places"></div>
+      <div class="list" id="place-list"></div>
+    </div>
+  </div>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+
+  <script>
+    const PLACES = [
+      { title: "The Metropolitan Museum of Art (The Met)", city: "New York, NY", coords: [40.7794, -73.9632], note: "A timeless collection that makes every visit new.", url: "https://www.metmuseum.org" },
+      { title: "Rodin Sculpture Garden — Stanford University", city: "Stanford, CA", coords: [37.4340, -122.1700], note: "Where thought and art coexist beautifully.", url: "https://museum.stanford.edu/visit/rodin-collection" },
+      { title: "The Art Institute of Chicago", city: "Chicago, IL", coords: [41.8796, -87.6237], note: "Home to some of the world's most moving works.", url: "https://www.artic.edu/" },
+      { title: "Lincoln Park Zoo", city: "Chicago, IL", coords: [41.9211, -87.6339], note: "A reminder of how simple and joyful nature can be.", url: "https://www.lpzoo.org/" },
+      { title: "Peggy Notebaert Nature Museum (Butterfly Haven)", city: "Chicago, IL", coords: [41.9269, -87.6400], note: "Peaceful, bright, and alive.", url: "https://naturemuseum.org/" },
+      { title: "Chicago Architecture River Tour (dock area)", city: "Chicago, IL", coords: [41.8886, -87.6281], note: "A perfect blend of design, history, and storytelling.", url: "https://www.architecture.org/tours/" },
+      { title: "Tribune Tower", city: "Chicago, IL", coords: [41.8904, -87.6240], note: "Architecture that carries the world's stones and stories.", url: "https://www.chicagoarchitecture.org/buildings/tribune-tower/" },
+      { title: "Chicago Botanic Garden", city: "Glencoe, IL", coords: [42.1478, -87.7886], note: "Beautiful gardens showcasing the harmony of nature and design.", url: "https://www.chicagobotanic.org/" },
+      { title: "Whispering Hills (Boone)", city: "Boone, NC", coords: [36.2240, -81.6600], note: "Quiet hills and sky that make time slow down.", url: "" },
+      { title: "Golden Gate Bridge", city: "San Francisco, CA", coords: [37.8199, -122.4783], note: "An iconic bridge with breathtaking views of the bay.", url: "https://www.goldengate.org/" },
+      { title: "United States Capitol Building", city: "Washington, DC", coords: [38.8899, -77.0091], note: "The heart of American democracy and stunning neoclassical design.", url: "https://www.visitthecapitol.gov/" }
+    ];
+
+    const map = L.map('map', { scrollWheelZoom: true });
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
+    const cartoLight = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 20, attribution: '&copy; OpenStreetMap &copy; CartoDB' });
+    const baseMaps = { "OpenStreetMap": osm, "Carto Light": cartoLight };
+
+    const group = L.featureGroup();
+    PLACES.forEach(p => {
+      const popup = `<div style=\"min-width:220px\"><div style=\"font-weight:600;font-size:14px;margin-bottom:4px\">${p.title}</div><div style=\"font-size:12px;opacity:.85;margin-bottom:6px\">${p.city}</div><div style=\"font-size:13px;line-height:1.35\">${p.note || ''}</div>${p.url ? `<div style='margin-top:8px'><a href='${p.url}' target='_blank' rel='noopener'>Learn more →</a></div>` : ''}</div>`;
+      L.marker(p.coords).bindPopup(popup).addTo(group);
+    });
+
+    group.addTo(map);
+    map.fitBounds(group.getBounds().pad(0.2));
+    L.control.layers(baseMaps, { "Places": group }).addTo(map);
+
+    const listEl = document.getElementById('place-list');
+    listEl.innerHTML = PLACES.map(p => `<div class=\"place\"><b>${p.title}</b><div>${p.city}</div>${p.note ? `<div class=\"badge\">${p.note}</div>` : ''}</div>`).join('');
+  </script>
+</body>
+</html>
