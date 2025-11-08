@@ -61,7 +61,7 @@ footer, .page__footer {
     crossorigin=""
   ></script>
 
-   <script>
+     <script>
     const PLACES = [
       { title: "The Metropolitan Museum of Art (The Met)", city: "New York, NY", coords: [40.7794, -73.9632], note: "A timeless collection that makes every visit new.", url: "https://www.metmuseum.org" },
       { title: "Rodin Sculpture Garden — Stanford University", city: "Stanford, CA", coords: [37.4340, -122.1700], note: "Where thought and art coexist beautifully.", url: "https://museum.stanford.edu/visit/rodin-collection" },
@@ -73,7 +73,12 @@ footer, .page__footer {
       { title: "Chicago Botanic Garden", city: "Glencoe, IL", coords: [42.1478, -87.7886], note: "Beautiful gardens showcasing the harmony of nature and design.", url: "https://www.chicagobotanic.org/" },
       { title: "Whispering Hills (Boone)", city: "Boone, NC", coords: [36.2240, -81.6600], note: "Quiet hills and sky that make time slow down.", url: "" },
       { title: "Golden Gate Bridge", city: "San Francisco, CA", coords: [37.8199, -122.4783], note: "An iconic bridge with breathtaking views of the bay.", url: "https://www.goldengate.org/" },
-      { title: "United States Capitol Building", city: "Washington, DC", coords: [38.8899, -77.0091], note: "The heart of American democracy and stunning neoclassical design.", url: "https://www.visitthecapitol.gov/" }
+      { title: "United States Capitol Building", city: "Washington, DC", coords: [38.8899, -77.0091], note: "The heart of American democracy and stunning neoclassical design.", url: "https://www.visitthecapitol.gov/" },
+      
+      /* --- Singapore Additions --- */
+      { title: "Marina Bay Sands", city: "Singapore", coords: [1.2834, 103.8607], note: "Iconic skyline views and architectural brilliance.", url: "https://www.marinabaysands.com/" },
+      { title: "Gardens by the Bay", city: "Singapore", coords: [1.2816, 103.8636], note: "A futuristic oasis blending nature, art, and sustainability.", url: "https://www.gardensbythebay.com.sg/" },
+      { title: "Night Safari", city: "Singapore", coords: [1.4025, 103.7876], note: "A magical experience exploring wildlife under the stars.", url: "https://www.wrs.com.sg/en/night-safari.html" }
     ];
 
     const map = L.map('map', { scrollWheelZoom: true });
@@ -93,6 +98,7 @@ footer, .page__footer {
 
     const listEl = document.getElementById('place-list');
     listEl.innerHTML = PLACES.map(p => `<div class=\"place\"><b>${p.title}</b><div>${p.city}</div>${p.note ? `<div class=\"badge\">${p.note}</div>` : ''}</div>`).join('');
-  </script> 
+  </script>
+
 </body>
 </html>
