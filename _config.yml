@@ -26,7 +26,7 @@ search: false
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "profile.png"
+  avatar           : "Passport_Photo.png"
   name             : "Nency Dhameja"
   pronouns         : # example: "she/her"  
   bio              : "Applied Econometrics, Labor Economics, Causal Inference, Computational Economics"
