@@ -10,4 +10,4 @@ I'm Nency Dhameja (pronounced as Nancy), a Ph.D. candidate (ABD) in Econometrics
 
 My research interests include applied econometrics, labor economics and computational economics. I apply causal inference to study the effects of policies on real-world outcomes. I’m especially interested in integrating machine learning methods into econometric and computational frameworks.
 
-Before academia, I spent over a decade in the IT industry, working as a Software Engineer, Tech Lead, and Project Manager at Accenture, JLL, and Grab. My experience building software systems, managing data workflows, and leading technical teams now directly informs my research in causal inference, applied microeconometrics, and computational economics, including agent-based modeling, machine-learning methods and LLM-based simulations.
+Before academia, I spent over a decade in the IT industry, working as a Software Engineer, Tech Lead, and Project Manager at Accenture, JLL, and Grab. My experience building software systems, managing data workflows, and leading technical teams now directly informs my research in causal inference and computational/LLM work.
