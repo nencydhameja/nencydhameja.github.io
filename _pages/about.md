@@ -6,8 +6,10 @@ redirect_from:
   - /about/
   - /about.html
 ---
-I'm Nency Dhameja _(pronounced as Nancy)_, a 5th year Ph.D. candidate in Econometrics and Quantitative Economics at Binghamton University (State University of New York).
+I'm Nency Dhameja (pronounced “Nancy”), a 5th-year Ph.D. candidate in Econometrics and Quantitative Economics at Binghamton University (State University of New York).
 
-My research interests include applied econometrics, labor economics and computational economics. I apply causal inference to study the effect of policies on real-world outcomes. I’m especially interested in integrating machine learning methods into econometric and computational frameworks.
+My research spans applied econometrics, labor economics, and computational economics. I use modern causal inference methods to study how policies shape real-world outcomes, and I am particularly interested in integrating machine learning into econometric and agent-based modeling frameworks.
 
-Before academia, I spent over a decade in the IT industry, working as a Software Engineer, Tech Lead, and Project Manager at Accenture, JLL, and Grab in Singapore. I also completed an Executive MBA, an experience that first sparked my interest in economics and set me on the path toward pursuing a Ph.D. in the field. My experience building software systems, managing data workflows, and leading technical teams now directly informs my research. It enables me to construct reproducible data pipelines, and develop computational and LLM-based agent models for economic analysis.
+Before entering academia, I spent more than a decade in the IT industry as a Software Engineer, Tech Lead, and Project Manager at Accenture, JLL, and Grab in Singapore. Completing an Executive MBA sparked my interest in economics and ultimately led me to pursue doctoral training.
+
+My technical background in software systems, data engineering, and workflow design strongly informs my research. It enables me to build reproducible data pipelines, conduct empirical analyses, and develop computational and LLM-based agent models for economic behavior and policy evaluation.
