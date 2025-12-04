@@ -20,6 +20,8 @@ baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "nencydhameja/nencydhameja.github.io"
 created: 2025-05-18
 search: false
+minimal_mistakes_skin: "custom"
+
 
 # Site Author - The following control what appear as part of the author content on the side bar.
 #               If a field is blank the icon and link will not appear, otherwise it will be shown.
