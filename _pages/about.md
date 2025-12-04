@@ -9,7 +9,7 @@ redirect_from:
 <div style="text-align: justify;">
 <p>I'm Nency Dhameja (pronounced <i>“Nancy”</i>), a 5th-year Ph.D. candidate in Econometrics and Quantitative Economics at Binghamton University (State University of New York).</p>
 
-<p>My research spans <b>labor economics</b>, <b>applied microeconomics</b> and <b>economics of education</b>. I study how education and labor-market policies shape real-world outcomes using modern causal inference methods. A central theme of my research is integrating machine learning into econometric and computational models, including agent-based and LLM-driven approaches.</p>
+<p>My research spans <b>labor economics</b>, <b>applied microeconomics</b> and <b>economics of education</b>. I study how education and labor-market policies shape real-world outcomes using modern causal inference methods. A central theme of my research is integrating machine learning into econometric and computational models, including agent-based and LLM-driven models.</p>
 
 <p>Before entering academia, I spent more than a decade in the IT industry as a Software Engineer, Tech Lead, and Project Manager at Accenture, JLL, and Grab in Singapore. Completing an Executive MBA sparked my interest in economics and ultimately led me to pursue doctoral degree.</p>
 
