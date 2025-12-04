@@ -111,9 +111,9 @@ footer, .page__footer {
   L.control.layers(baseMaps, { "Places": group }).addTo(map);
 
   const listEl = document.getElementById('place-list');
-  listEl.innerHTML = PLACES.map(p => 
-    `<div class="place"><b>${p.title}</b><div>${p.city}</div>${p.note ? `<div class="badge">${p.note}</div>` : ''}</div>`
-  ).join('');
+  // listEl.innerHTML = PLACES.map(p => 
+  //   `<div class="place"><b>${p.title}</b><div>${p.city}</div>${p.note ? `<div class="badge">${p.note}</div>` : ''}</div>`
+  // ).join('');
 </script>
 
 </body>
