@@ -1,0 +1,49 @@
+/* ==========================================================
+   SITE-WIDE SKY BLUE THEME (SAFE CUSTOM OVERRIDE)
+   ========================================================== */
+
+/* Main background colors */
+:root {
+  --global-bg-start: #cfe9ff;   /* light sky blue */
+  --global-bg-end:   #9cc7ff;   /* medium sky blue */
+  --global-text: #102040;       /* dark readable navy */
+  --global-muted: #4f6485;
+  --global-accent: #0057c7;     /* link + accent color */
+}
+
+/* Apply sky-blue gradient to all major containers */
+html, body, .page, .site-content {
+  background: linear-gradient(180deg, var(--global-bg-start), var(--global-bg-end)) !important;
+  color: var(--global-text);
+}
+
+/* Cards, post bodies, sidebars, and content boxes */
+.page__content,
+.page__inner-wrap,
+.sidebar,
+.author__profile,
+.archive__item {
+  background: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(3px);
+  border-radius: 12px;
+  color: var(--global-text);
+}
+
+/* Heading colors */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--global-text);
+}
+
+/* Link styles */
+a {
+  color: var(--global-accent);
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+.site-footer {
+  background: transparent !important;
+  color: var(--global-muted);
+}
