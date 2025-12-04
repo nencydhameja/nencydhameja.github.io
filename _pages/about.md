@@ -6,9 +6,9 @@ redirect_from:
   - /about/
   - /about.html
 ---
-I'm Nency Dhameja (pronounced “Nancy”), a 5th-year Ph.D. candidate in Econometrics and Quantitative Economics at Binghamton University (State University of New York).
+I'm Nency Dhameja _(pronounced “Nancy”)_, a 5th-year Ph.D. candidate in Econometrics and Quantitative Economics at Binghamton University (State University of New York).
 
-My research spans applied econometrics, labor economics, and computational economics. I use modern causal inference methods to study how policies shape real-world outcomes, and I am particularly interested in integrating machine learning into econometric and agent-based modeling frameworks.
+My research spans applied microeconomics, labor economics, and computational economics. I use modern causal inference methods to study how policies shape real-world outcomes, and I am particularly interested in integrating machine learning into econometric and agent-based modeling frameworks.
 
 Before entering academia, I spent more than a decade in the IT industry as a Software Engineer, Tech Lead, and Project Manager at Accenture, JLL, and Grab in Singapore. Completing an Executive MBA sparked my interest in economics and ultimately led me to pursue doctoral degree.
 
