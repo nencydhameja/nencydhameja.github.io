@@ -37,13 +37,22 @@ footer, .page__footer {
     background:linear-gradient(180deg,var(--bg),#0e1530);
 }
   } */
-  :root{
-  --bg:#0b1020;
-}
+   :root {
+    /* Original dark blue tones */
+    --bg: #0b1020;       /* deep navy */
+    --bg2: #0e1530;      /* gradient navy */
+    --card: #111730;
+    --text: #e8ecff;
+    --muted: #aab3d9;
+    --accent: #90b4ff;
+  }
 
-html,body{
-  background:linear-gradient(180deg,var(--bg),#0e1530);
-}
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: linear-gradient(180deg, var(--bg), var(--bg2));
+  }
+
 
   body {
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
