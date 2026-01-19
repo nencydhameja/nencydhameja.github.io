@@ -8,7 +8,7 @@ redirect_from:
 ---
 <style>
   body {
-    background-color: #eef8fc !important;
+    /* background-color: #eef8fc !important; */
   }
 </style>
 
