@@ -21,4 +21,3 @@ redirect_from:
 
 <p>My technical background in software engineering and workflow design strongly informs my research. It enables me to build robust and reproducible data pipelines, conduct large-scale empirical analysis, and develop computational and LLM-based agent models for studying economic behavior and policy evaluation.</p>
 
-</div>
