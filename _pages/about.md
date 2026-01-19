@@ -15,9 +15,10 @@ redirect_from:
 <div style="text-align: justify;">
 <p>I'm Nency Dhameja (the first name is pronounced <i>“Nancy”</i>), a 5th-year Ph.D. candidate in Econometrics and Quantitative Economics at Binghamton University (State University of New York).</p>
 
-<p>My research spans <b>labor economics</b>, <b>applied microeconomics</b>, and <b>economics of education</b>. I study how education and labor-market policies shape real-world outcomes using modern causal inference methods. A central theme of my research is integrating machine learning into econometric and computational models, including agent-based and LLM-driven models.</p>
+<p>My research spans labor, applied micro, behavioral, and urban economics. I study how behavioral frictions—such as attention, salience, identity, and risk preferences—shape real-world responses to crime, food environments, and education and labor-market policies. My current projects examine behavioral reactions to local crime in housing markets, the role of limited attention and food-access frictions in obesity, identity-driven evaluation in faculty hiring, and prospect-theory–based behavioral modeling using LLM and agent-based methods.</p>
 
-<p>Before entering academia, I spent more than a decade in the IT industry as a Software Engineer, Tech Lead, and Project Manager at Accenture, JLL, and Grab in Singapore. Completing an Executive MBA sparked my interest in economics and ultimately led me to pursue doctoral degree.</p>
+<p>Before academia, I spent over a decade in the IT industry as a Software Engineer, Tech Lead, and Project Manager at firms including Accenture, JLL, and Grab in Singapore. An Executive MBA sparked my interest in economics and ultimately led me to pursue a doctoral degree.
 
-<p>My technical background in software engineering, and workflow design strongly informs my research. It enables me to build reproducible data pipelines, conduct empirical analyses, and develop computational and LLM-based agent models for economic behavior and policy evaluation.</p>
+<p>My technical background in software engineering and workflow design strongly informs my research. It enables me to build robust and reproducible data pipelines, conduct large-scale empirical analysis, and develop computational and LLM-based agent models for studying economic behavior and policy evaluation.</p>
+
 </div>
