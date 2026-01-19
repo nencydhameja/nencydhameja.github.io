@@ -13,7 +13,7 @@ redirect_from:
 </style>
 
 <div style="text-align: justify;">
-<p>I'm Nency Dhameja (the first name is pronounced <i>“Nancy”</i>), a 5th-year Ph.D. candidate in Econometrics and Quantitative Economics at Binghamton University (State University of New York).</p>
+<p>I'm Nency Dhameja (pronounced <i>“Nancy”</i>), a 5th-year Ph.D. candidate in Econometrics and Quantitative Economics at Binghamton University (State University of New York).</p>
 
 <p>My research spans labor, applied micro, behavioral, and urban economics. I study how behavioral frictions—such as attention, salience, identity, and risk preferences—shape real-world responses to crime, food environments, and education and labor-market policies. My current projects examine behavioral reactions to local crime in housing markets, the role of limited attention and food-access frictions in obesity, identity-driven evaluation in faculty hiring, and prospect-theory–based behavioral modeling using LLM and agent-based methods.</p>
 
