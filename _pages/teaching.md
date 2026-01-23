@@ -11,7 +11,7 @@ classes: [wide, teaching]
 
 | Year | Term   | Course Code | Course Title                       |
 |:----:|:------:|:-------------|:-----------------------------------|
-| 2025 | Winter | ECON 144     | Economic Poverty & Discrimination  |
+| 2026 | Winter | ECON 144     | Economic Poverty & Discrimination  |
 
 ---
 
@@ -20,6 +20,7 @@ classes: [wide, teaching]
 
 | Year | Term   | Course Code | Course Title                                |
 |:----:|:------:|:------------|:--------------------------------------------|
+| 2026 | Spring | ECON 448    | Economics of Education                      |
 | 2025 | Fall   | ECON 483C   | Behavioral Economics                        |
 | 2025 | Spring | ECON 570/670| Agent-Based Modeling (Python)               |
 | 2024 | Fall   | ECON 476    | Forecasting                                 |
