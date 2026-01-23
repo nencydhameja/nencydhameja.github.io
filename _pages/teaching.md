@@ -2,7 +2,7 @@
 layout: single
 permalink: /teaching/
 author_profile: true
-title:"Teaching & TA Experience"
+title: Teaching & TA Experience
 classes: [wide, teaching]
 ---
 
