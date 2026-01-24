@@ -1,11 +1,9 @@
 ---
 layout: single
-title: ""
+title: "Presentations"
 permalink: /talks/
 author_profile: true
 ---
-## Presentations
-
 - **2025–2026**
   - APPAM: Public Policy Analysis & Management — *Seattle, Nov 2025*
   - Southern Economic Association — *Florida, Nov 2025*
