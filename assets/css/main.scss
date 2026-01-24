@@ -87,4 +87,15 @@ h2 {
 #theme-toggle {
   display: none !important;
 }
+/* === Global layout width override === */
+@media (min-width: 1024px) {
+  .masthead__inner-wrap,
+  .page,
+  .page__inner-wrap {
+    max-width: 1200px;  /* try 1150–1300 until it feels right */
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 
