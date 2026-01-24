@@ -88,20 +88,30 @@ h2 {
   display: none !important;
 }
 /* === Global layout width override === */
+/* Desktop-only wide layout */
 @media (min-width: 1024px) {
-  .masthead__inner-wrap,
-  .page,
-  .page__inner-wrap {
-    max-width: 1200px;  /* try 1150–1300 until it feels right */
+
+  /* Header */
+  .masthead__inner-wrap {
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
   }
-}
-@media (min-width: 1024px) {
+
+  /* Page wrapper elements */
+  .page,
+  .page__inner-wrap {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* MOST IMPORTANT: override the theme's narrow wrapper */
   #main {
     max-width: 1400px !important;
     margin-left: auto !important;
     margin-right: auto !important;
   }
 }
+
 
