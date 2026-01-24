@@ -97,5 +97,11 @@ h2 {
     margin-right: auto;
   }
 }
-
+@media (min-width: 1024px) {
+  #main {
+    max-width: 1400px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
 
