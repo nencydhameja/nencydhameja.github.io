@@ -127,10 +127,15 @@ h2 {
 /* Highlight active menu tab */
 
 /* Highlight the active navigation tab */
-.greedy-nav .masthead__menu-item.active > a {
-  color: var(--global-accent) !important;   /* your link color */
-  font-weight: 600 !important;              /* bold */
-  border-bottom: 3px solid var(--global-accent) !important; /* underline bar */
+.greedy-nav a {
+      /* your link color */
+  color:var(--global-link-color)!important;
+   padding:0px!important;
+  
 }
-
+// color: var(--global-accent)
+.greedy-nav .visible-links a:before{
+  font-weight: 600 !important;              /* bold */
+  border-bottom: 3px solid var(--global-accent) !important;
+}/* underline bar */
 
