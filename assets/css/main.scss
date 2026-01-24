@@ -125,10 +125,12 @@ h2 {
   }
 }
 /* Highlight active menu tab */
-.masthead__menu-item.active > a {
-  color: #0057c7 !important;     /* same as your link accent */
-  font-weight: 600 !important;   /* subtle bold */
-  border-bottom: 3px solid #0057c7 !important; /* underline bar */
+
+/* Highlight the active navigation tab */
+.greedy-nav .masthead__menu-item.active > a {
+  color: var(--global-accent) !important;   /* your link color */
+  font-weight: 600 !important;              /* bold */
+  border-bottom: 3px solid var(--global-accent) !important; /* underline bar */
 }
 
 
