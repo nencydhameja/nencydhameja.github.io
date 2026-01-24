@@ -113,5 +113,10 @@ h2 {
     margin-right: auto !important;
   }
 }
-
+@media (min-width: 57.8125em) {
+  .author__content,
+  .author__urls-wrapper {
+    padding-left: 15px !important;
+  }
+}
 
