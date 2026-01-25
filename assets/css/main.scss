@@ -89,30 +89,30 @@ h2 {
 // }
 /* === Global layout width override === */
 /* Desktop-only wide layout */
-@media (min-width: 1024px) {
+// @media (min-width: 1024px) {
 
-  /* Header */
-  .masthead__inner-wrap {
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+//   /* Header */
+//   .masthead__inner-wrap {
+//     max-width: 1200px;
+//     margin-left: auto;
+//     margin-right: auto;
+//   }
 
-  /* Page wrapper elements */
-  .page,
-  .page__inner-wrap {
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+//   /* Page wrapper elements */
+//   .page,
+//   .page__inner-wrap {
+//     max-width: 1200px;
+//     margin-left: auto;
+//     margin-right: auto;
+//   }
 
-  /* MOST IMPORTANT: override the theme's narrow wrapper */
-  #main {
-    max-width: 1200px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-}
+//   /* MOST IMPORTANT: override the theme's narrow wrapper */
+//   #main {
+//     max-width: 1200px !important;
+//     margin-left: auto !important;
+//     margin-right: auto !important;
+//   }
+// }
 @media (min-width: 57.8125em) {
   .author__content,
   .author__urls-wrapper {
