@@ -89,51 +89,51 @@ h2 {
 // }
 /* === Global layout width override === */
 /* Desktop-only wide layout */
-// @media (min-width: 1024px) {
-
-//   /* Header */
-//   .masthead__inner-wrap {
-//     max-width: 1200px;
-//     margin-left: auto;
-//     margin-right: auto;
-//   }
-
-//   /* Page wrapper elements */
-//   .page,
-//   .page__inner-wrap {
-//     max-width: 1200px;
-//     margin-left: auto;
-//     margin-right: auto;
-//   }
-
-//   /* MOST IMPORTANT: override the theme's narrow wrapper */
-//   #main {
-//     max-width: 1200px !important;
-//     margin-left: auto !important;
-//     margin-right: auto !important;
-//   }
-// }
 @media (min-width: 1024px) {
 
-  /* 1. Global layout constraint */
-  body,
-  #main,
-  .masthead,
-  .masthead__inner-wrap,
-  .page,
-  .page__inner-wrap {
-    max-width: 1200px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+  /* Header */
+  .masthead__inner-wrap {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  /* 2. Prevent theme “wrapper inside a wrapper” from shrinking */
-  #main > * {
+  /* Page wrapper elements */
+  .page,
+  .page__inner-wrap {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* MOST IMPORTANT: override the theme's narrow wrapper */
+  #main {
     max-width: 1200px !important;
     margin-left: auto !important;
     margin-right: auto !important;
   }
 }
+// @media (min-width: 1024px) {
+
+//   /* 1. Global layout constraint */
+//   body,
+//   #main,
+//   .masthead,
+//   .masthead__inner-wrap,
+//   .page,
+//   .page__inner-wrap {
+//     max-width: 1200px !important;
+//     margin-left: auto !important;
+//     margin-right: auto !important;
+//   }
+
+//   /* 2. Prevent theme “wrapper inside a wrapper” from shrinking */
+//   #main > * {
+//     max-width: 1200px !important;
+//     margin-left: auto !important;
+//     margin-right: auto !important;
+//   }
+// }
 
 @media (min-width: 57.8125em) {
   .author__content,
