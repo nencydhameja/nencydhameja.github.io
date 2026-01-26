@@ -113,6 +113,28 @@ h2 {
 //     margin-right: auto !important;
 //   }
 // }
+@media (min-width: 1024px) {
+
+  /* 1. Global layout constraint */
+  body,
+  #main,
+  .masthead,
+  .masthead__inner-wrap,
+  .page,
+  .page__inner-wrap {
+    max-width: 1200px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* 2. Prevent theme “wrapper inside a wrapper” from shrinking */
+  #main > * {
+    max-width: 1200px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
 @media (min-width: 57.8125em) {
   .author__content,
   .author__urls-wrapper {
