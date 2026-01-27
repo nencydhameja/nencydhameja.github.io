@@ -35,7 +35,7 @@ This project examines how mandatory diversity statements in faculty job applicat
 
 ### <span class="paper-title">Food Swamps, Obesity, and Metabolic Risks</span> _(Work in Progress)_
 
-This project examines how the expansion of dollar stores and low-nutrition retail environments contributes to obesity, metabolic disorders, and long-run health risks. Using store rollouts and quasi-experimental variation in food environments, I study how changes in access to calorie-dense, nutrient-poor options affect chronic disease outcomes.
+This project examines how the expansion of dollar stores and low-nutrition retail environments contributes to obesity/metabolic health risks. Using store rollouts and quasi-experimental variation in food environments, I study how changes in access to calorie-dense, nutrient-poor options affect chronic disease outcomes.
 
 **Fields:** Health Economics, Urban Economics, Public Economics  
 **Methods:** Event Studies / DiD  
@@ -51,7 +51,7 @@ We develop a statistical framework for diagnosing parameter identifiability and 
 [Paper Link](https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf)
 
 ### <span class="paper-title">Social Context in the Schelling Model Using LLMs</span> <i>with Andreas Pape, Srikanth Iyer, Carl Lipo, Yixin Ren, Christopher Zosh (Working Paper) </i>
-This paper introduces large language models as agents in the classic Schelling segregation model to study how communication, narrative framing, and social context shape emergent spatial patterns. Embedding linguistic reasoning into spatial decision rules produces segregation outcomes that differ systematically from traditional models, showing how richer cognitive processes alter neighborhood dynamics.
+This paper introduces large language models as agents in the classic Schelling segregation model to study how communication, narrative framing, and social context shape emergent spatial patterns.
 
 **Fields:** Computational Economics, Behavioral Economics, Social Dynamics  
 **Methods:** Agent-Based Models, Large Language Models, Experimental Simulation  
