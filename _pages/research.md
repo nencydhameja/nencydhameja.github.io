@@ -24,7 +24,7 @@ toc: false
 </style>
 <span class="research-identity">
   <strong>Research Areas:</strong>
-  Applied Microeconomics · Urban Economics · Behavioral Economics · Causal Inference · Computational Economics · LLM-Augmented Economic Models
+  Applied Microeconomics · Behavioral Economics · Causal Inference · LLM-Augmented Economic Models
 </span>
 ## Causal Inference, Applied Micro, and Behavioral Economics
 
