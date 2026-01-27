@@ -5,40 +5,60 @@ permalink: /research/
 author_profile: true
 toc: false
 ---
+.paper-title {
+  color: #52adc8 !important;
+  font-weight: 600;
+}
+
 <div class="research-identity">
   <strong>Research Areas:</strong>
   Applied Microeconomics · Urban Economics · Behavioral Economics · 
   Causal Inference · Computational Economics · LLM-Augmented Economic Models
 </div>
-# The Effect of Diversity Statements in Faculty Hiring with _David Slichter_
-This project studies how mandatory diversity statements in faculty job applications shape who gets hired, how search committees evaluate candidates, and what kinds of institutions adopt these requirements.
-<details>
-<summary><strong>Abstract</strong></summary>
-This paper investigates the causal effect of diversity statements in faculty hiring on both who is hired and how institutions position themselves on diversity.
-We combine faculty-level hiring data with a new hand-collected dataset on job advertisements that require diversity statements. Using variation in the timing and intensity of diversity-statement adoption across departments and institutions, we estimate how these requirements affect:
-- the demographic composition of new hires,
-- the distribution of hires across institution types,
-- and the alignment between stated diversity goals and realized graduation completion rates of under-represented minority students.
-The empirical strategy builds on difference-in-differences and event-study designs, with robustness checks.
-</details>
+### Causal Inference, Applied Micro, and Behavioral Economics
 
-<!-- <details>
-<summary><strong>Materials (coming soon)</strong></summary>
-
-- Draft paper (PDF)
-- Data and code repository
-- Slides and conference presentations
-</details> -->
+#### <span class="paper-title">Salience, Attention, and Memory: Crime Capitalization in Housing Prices</span>
+<span class="label label--info">Work in Progress</span> 
+Homebuyers observe crime infrequently, recall it imperfectly, and often overweight unusually salient incidents. This paper studies how these behavioral frictions shape the spatial and temporal pattern of crime capitalization in housing prices. 
 ---
-## Salience, Attention, and Memory: Crime and Property Values
 
-*Work in progress*  
+#### **The Effect of Diversity Statements in Faculty Hiring**  
+<span class="label label--primary">Working Paper</span>  
+*with David Slichter*
 
-This project asks how homebuyers *perceive* and *remember* local crime risk, and how that perception is capitalized into housing prices over space and time.
+This project examines how mandatory diversity statements in faculty job applications influence hiring and student outcomes. Using comprehensive text from JOE and APSA postings linked to institution–year–discipline hiring records, we classify DEI-related requirements and estimate their effects using modern staggered-adoption DiD estimators with entropy-balancing weights.
+**Fields:** Labor & Personnel Economics, Higher Education, Applied Microeconomics  
+**Methods:** Difference-in-Differences (csdid), Entropy Balancing, Text Classification  
+---
 
-<details>
-<summary><strong>Abstract</strong></summary>
+#### **Food Swamps, Obesity, and Metabolic Risks**  
+<span class="label label--info">Work in Progress</span>
+This project examines how the expansion of dollar stores and low-nutrition retail environments contributes to obesity, metabolic disorders, and long-run health risks. Using store rollouts and quasi-experimental variation in food environments, I study how changes in access to calorie-dense, nutrient-poor options affect chronic disease outcomes.
+**Fields:** Health Economics, Urban Economics, Public Economics  
+**Methods:** Event Studies / DiD
+---
 
-Standard hedonic models assume that housing prices reflect local crime rates in a relatively static way. This project instead models capitalization as the outcome of **salience, attention, and memory**.
+### Computational Economics, Agent-Based Models, and LLMs
 
-Using geocoded repeat-sales housing data matched to detailed crime incidents, I construct spatiotemporal “crime exposure” measures that vary by: distance rings around each property, time windows before sale, and decay patterns that capture how quickly buyers.
+#### **Monte Carlo Diagnostics for Agent-Based Models**  
+<span class="label label--primary">Working Paper</span>  
+*with Christopher Zosh, Yixin Ren, Andreas Pape*
+
+We develop a statistical framework for diagnosing parameter identifiability and uncertainty in stochastic agent-based models (ABMs). The approach combines Monte Carlo experiments with simulation-based confidence intervals, providing generalizable tools for calibration, validation, and sensitivity analysis in complex ABMs.
+
+**Fields:** Computational Economics, Econometrics, Simulation  
+**Methods:** Agent-Based Models, Monte Carlo Simulation, Simulation-Based Inference  
+
+[Paper Link](https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf)
+
+---
+#### **Social Context in the Schelling Model Using LLMs**  
+<span class="label label--primary">Working Paper</span>  
+*with Andreas Pape, Srikanth Iyer, Carl Lipo, Yixin Ren, Christopher Zosh*
+
+This paper introduces large language models as agents in the classic Schelling segregation model to study how communication, narrative framing, and social context shape emergent spatial patterns. Embedding linguistic reasoning into spatial decision rules produces segregation outcomes that differ systematically from traditional models, highlighting how richer cognitive processes alter neighborhood sorting.
+
+**Fields:** Computational Economics, Behavioral Economics, Social Dynamics  
+**Methods:** Agent-Based Models, Large Language Models, Experimental Simulation  
+
+[Paper Link](https://chriszosh1.github.io/files/Social_Context_and_LLM_Segregation.pdf)
