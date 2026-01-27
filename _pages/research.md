@@ -24,13 +24,13 @@ I combine faculty-level hiring data with a new hand-collected dataset on job adv
 The empirical strategy builds on difference-in-differences and event-study designs, with robustness checks using alternative comparison groups and textual measures of how committees talk about diversity. The project aims to distinguish between diversity statements as a *screening device*, a *sorting mechanism*, and a *symbolic compliance* tool, with implications for the design of equitable hiring policies in academia.
 </details>
 
-<details>
+<!-- <details>
 <summary><strong>Materials (coming soon)</strong></summary>
 
 - Draft paper (PDF)
 - Data and code repository
 - Slides and conference presentations
-</details>
+</details> -->
 ---
 ## Salience, Attention, and Memory: Crime and Property Values
 
