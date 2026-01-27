@@ -31,13 +31,10 @@ The empirical strategy builds on difference-in-differences and event-study desig
 - Data and code repository
 - Slides and conference presentations
 </details>
-
-
 ---
+## Salience, Attention, and Memory: Crime and Property Values
 
-## Salience, Attention, and Memory in the Housing Market: Crime and Property Values
-
-*Working Paper (in progress)*  
+*Work in progress*  
 
 This project asks how homebuyers *perceive* and *remember* local crime risk, and how that perception is capitalized into housing prices over space and time.
 
@@ -46,8 +43,4 @@ This project asks how homebuyers *perceive* and *remember* local crime risk, and
 
 Standard hedonic models assume that housing prices reflect local crime rates in a relatively static way. This project instead models capitalization as the outcome of **salience, attention, and memory**.
 
-Using geocoded repeat-sales housing data matched to detailed crime incidents, I construct spatiotemporal “crime exposure” measures that vary by:
-
-- distance rings around each property,
-- time windows before sale,
-- and decay patterns that capture how quickly buyers “
+Using geocoded repeat-sales housing data matched to detailed crime incidents, I construct spatiotemporal “crime exposure” measures that vary by: distance rings around each property, time windows before sale, and decay patterns that capture how quickly buyers.
