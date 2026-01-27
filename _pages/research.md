@@ -25,14 +25,14 @@ Homebuyers observe crime infrequently, recall it imperfectly, and often overweig
 
 **Fields:** Urban Economics, Behavioral Economics, Housing Markets  
 **Methods:** Spatial–Temporal Kernel Estimation, Repeat-Sales Models, Administrative Data  
----
+
 ### <span class="paper-title">The Effect of Diversity Statements in Faculty Hiring</span> _with David Slichter (Working Paper)_
 
 This project examines how mandatory diversity statements in faculty job applications influence hiring and student outcomes. Using comprehensive text from JOE and APSA postings linked to institution–year–discipline hiring records, we classify DEI-related requirements and estimate their effects using staggered-adoption DiD estimators with entropy-balancing weights.
 
 **Fields:** Labor & Personnel Economics, Higher Education, Applied Microeconomics  
 **Methods:** Difference-in-Differences (csdid), Entropy Balancing, Text Classification  
----
+
 ### <span class="paper-title">Food Swamps, Obesity, and Metabolic Risks</span> _(Work in Progress)_
 
 This project examines how the expansion of dollar stores and low-nutrition retail environments contributes to obesity, metabolic disorders, and long-run health risks. Using store rollouts and quasi-experimental variation in food environments, I study how changes in access to calorie-dense, nutrient-poor options affect chronic disease outcomes.
@@ -50,7 +50,7 @@ We develop a statistical framework for diagnosing parameter identifiability and 
 **Methods:** Agent-Based Models, Monte Carlo Simulation, Simulation-Based Inference  
 
 Paper Link: https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf
----
+
 ### <span class="paper-title">Social Context in the Schelling Model Using LLMs</span> _with Andreas Pape, Srikanth Iyer, Carl Lipo, Yixin Ren, Christopher Zosh (Working Paper)_
 This paper introduces large language models as agents in the classic Schelling segregation model to study how communication, narrative framing, and social context shape emergent spatial patterns. Embedding linguistic reasoning into spatial decision rules produces segregation outcomes that differ systematically from traditional models, showing how richer cognitive processes alter neighborhood dynamics.
 
