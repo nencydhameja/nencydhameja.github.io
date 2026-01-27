@@ -61,7 +61,6 @@ Paper Link: https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_e
 ---
 
 ### <span class="paper-title">Social Context in the Schelling Model Using LLMs</span> _with Andreas Pape, Srikanth Iyer, Carl Lipo, Yixin Ren, Christopher Zosh (Working Paper)_
-_
 This paper introduces large language models as agents in the classic Schelling segregation model to study how communication, narrative framing, and social context shape emergent spatial patterns. Embedding linguistic reasoning into spatial decision rules produces segregation outcomes that differ systematically from traditional models, showing how richer cognitive processes alter neighborhood dynamics.
 
 **Fields:** Computational Economics, Behavioral Economics, Social Dynamics  
