@@ -10,8 +10,7 @@ toc: false
   Applied Microeconomics · Urban Economics · Behavioral Economics · 
   Causal Inference · Computational Economics · LLM-Augmented Economic Models
 </div>
-
-## The Effect of Diversity Statements in Faculty Hiring with _David Slichter_
+# The Effect of Diversity Statements in Faculty Hiring with _David Slichter_
 This project studies how mandatory diversity statements in faculty job applications shape who gets hired, how search committees evaluate candidates, and what kinds of institutions adopt these requirements.
 <details>
 <summary><strong>Abstract</strong></summary>
