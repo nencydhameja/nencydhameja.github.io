@@ -26,7 +26,8 @@ Homebuyers observe crime infrequently, recall it imperfectly, and often overweig
 **Fields:** Urban Economics, Behavioral Economics, Housing Markets  
 **Methods:** Spatial–Temporal Kernel Estimation, Repeat-Sales Models, Administrative Data  
 
-### <span class="paper-title">The Effect of Diversity Statements in Faculty Hiring</span> _with David Slichter (Working Paper)_
+### <span class="paper-title">The Effect of Diversity Statements in Faculty Hiring</span> 
+####_with David Slichter (Working Paper)_####
 
 This project examines how mandatory diversity statements in faculty job applications influence hiring and student outcomes. Using comprehensive text from JOE and APSA postings linked to institution–year–discipline hiring records, we classify DEI-related requirements and estimate their effects using staggered-adoption DiD estimators with entropy-balancing weights.
 
@@ -42,19 +43,22 @@ This project examines how the expansion of dollar stores and low-nutrition retai
 
 ---
 ## Computational Economics, Agent-Based Models, and LLMs
-### <span class="paper-title">Monte Carlo Diagnostics for Agent-Based Models</span> _with Christopher Zosh, Yixin Ren, Andreas Pape (Working Paper)_
+### <span class="paper-title">Monte Carlo Diagnostics for Agent-Based Models</span> 
+####_with Christopher Zosh, Yixin Ren, Andreas Pape (Working Paper)_####
 
 We develop a statistical framework for diagnosing parameter identifiability and uncertainty in stochastic agent-based models (ABMs). The approach combines Monte Carlo experiments with simulation-based confidence intervals, providing generalizable tools for calibration, validation, and sensitivity analysis in complex ABMs.
 
 **Fields:** Computational Economics, Econometrics, Simulation  
 **Methods:** Agent-Based Models, Monte Carlo Simulation, Simulation-Based Inference  
 
-Paper Link: https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf
+Paper Link: [PDF](https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf)
 
-### <span class="paper-title">Social Context in the Schelling Model Using LLMs</span> _with Andreas Pape, Srikanth Iyer, Carl Lipo, Yixin Ren, Christopher Zosh (Working Paper)_
+### <span class="paper-title">Social Context in the Schelling Model Using LLMs</span> 
+####_with Andreas Pape, Srikanth Iyer, Carl Lipo, Yixin Ren, Christopher Zosh (Working Paper)_####
 This paper introduces large language models as agents in the classic Schelling segregation model to study how communication, narrative framing, and social context shape emergent spatial patterns. Embedding linguistic reasoning into spatial decision rules produces segregation outcomes that differ systematically from traditional models, showing how richer cognitive processes alter neighborhood dynamics.
 
 **Fields:** Computational Economics, Behavioral Economics, Social Dynamics  
 **Methods:** Agent-Based Models, Large Language Models, Experimental Simulation  
 
-Paper Link: https://chriszosh1.github.io/files/Social_Context_and_LLM_Segregation.pdf
+Paper Link: [PDF](https://chriszosh1.github.io/files/Social_Context_and_LLM_Segregation.pdf)
+
