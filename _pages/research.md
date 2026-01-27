@@ -5,23 +5,16 @@ permalink: /research/
 author_profile: true
 toc: false
 ---
-
 ## The Effect of Diversity Statements in Faculty Hiring with _David Slichter_
-
 This project studies how mandatory diversity statements in faculty job applications shape who gets hired, how search committees evaluate candidates, and what kinds of institutions adopt these requirements.
-
 <details>
 <summary><strong>Abstract</strong></summary>
-
 This paper investigates the causal effect of diversity statements in faculty hiring on both who is hired and how institutions position themselves on diversity.
-
-I combine faculty-level hiring data with a new hand-collected dataset on job advertisements that require diversity statements. Using variation in the timing and intensity of diversity-statement adoption across departments and institutions, I estimate how these requirements affect:
-
+We combine faculty-level hiring data with a new hand-collected dataset on job advertisements that require diversity statements. Using variation in the timing and intensity of diversity-statement adoption across departments and institutions, we estimate how these requirements affect:
 - the demographic composition of new hires,
 - the distribution of hires across institution types,
-- and the alignment between stated diversity goals and realized hiring outcomes.
-
-The empirical strategy builds on difference-in-differences and event-study designs, with robustness checks using alternative comparison groups and textual measures of how committees talk about diversity. The project aims to distinguish between diversity statements as a *screening device*, a *sorting mechanism*, and a *symbolic compliance* tool, with implications for the design of equitable hiring policies in academia.
+- and the alignment between stated diversity goals and realized graduation completion rates of under-represented minority students.
+The empirical strategy builds on difference-in-differences and event-study designs, with robustness checks.
 </details>
 
 <!-- <details>
