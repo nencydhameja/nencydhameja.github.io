@@ -10,9 +10,12 @@ toc: false
   color: #52adc8 !important;
   font-weight: 600;
 }
-  .page__content p {
+.page__content p {
   text-align: justify !important;
   text-justify: inter-word;
+}
+.research-identity {
+  margin-bottom: 0.2rem !important;   /* reduces spacing */
 }
 </style>
 <span class="research-identity">
