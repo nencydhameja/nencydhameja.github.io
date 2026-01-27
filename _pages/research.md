@@ -41,7 +41,7 @@ This project examines how the expansion of dollar stores and low-nutrition retai
 
 **Fields:** Health Economics, Urban Economics, Public Economics  
 **Methods:** Event Studies / DiD  
----
+
 ## Computational Economics, Agent-Based Models, and LLMs
 ### <span class="paper-title">Monte Carlo Diagnostics for Agent-Based Models</span> <i>with Christopher Zosh, Yixin Ren, Andreas Pape (Working Paper)</i>
 
