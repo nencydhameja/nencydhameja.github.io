@@ -27,7 +27,7 @@ Homebuyers observe crime infrequently, recall it imperfectly, and often overweig
 **Methods:** Spatial–Temporal Kernel Estimation, Repeat-Sales Models, Administrative Data  
 
 ### <span class="paper-title">The Effect of Diversity Statements in Faculty Hiring</span> 
-#### _with David Slichter (Working Paper)_ ####
+<i>with David Slichter (Working Paper)</i>
 
 This project examines how mandatory diversity statements in faculty job applications influence hiring and student outcomes. Using comprehensive text from JOE and APSA postings linked to institution–year–discipline hiring records, we classify DEI-related requirements and estimate their effects using staggered-adoption DiD estimators with entropy-balancing weights.
 
