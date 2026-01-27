@@ -5,10 +5,13 @@ permalink: /research/
 author_profile: true
 toc: false
 ---
+<style>
 .paper-title {
   color: #52adc8 !important;
   font-weight: 600;
 }
+</style>
+
 
 <div class="research-identity">
   <strong>Research Areas:</strong>
