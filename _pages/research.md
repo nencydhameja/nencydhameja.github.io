@@ -48,7 +48,6 @@ We develop a statistical framework for diagnosing parameter identifiability and 
 
 **Fields:** Computational Economics, Econometrics, Simulation  
 **Methods:** Agent-Based Models, Monte Carlo Simulation, Simulation-Based Inference  
-
 [Paper Link](https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf)
 
 ### <span class="paper-title">Social Context in the Schelling Model Using LLMs</span> <i>with Andreas Pape, Srikanth Iyer, Carl Lipo, Yixin Ren, Christopher Zosh (Working Paper) </i>
@@ -56,6 +55,5 @@ This paper introduces large language models as agents in the classic Schelling s
 
 **Fields:** Computational Economics, Behavioral Economics, Social Dynamics  
 **Methods:** Agent-Based Models, Large Language Models, Experimental Simulation  
-
 [Paper Link](https://chriszosh1.github.io/files/Social_Context_and_LLM_Segregation.pdf)
 
