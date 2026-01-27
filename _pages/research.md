@@ -15,11 +15,11 @@ toc: false
   text-justify: inter-word;
 }
 </style>
-<div class="research-identity">
+<span class="research-identity">
   <strong>Research Areas:</strong>
   Applied Microeconomics · Urban Economics · Behavioral Economics · 
   Causal Inference · Computational Economics · LLM-Augmented Economic Models
-</div>
+</span>
 ## Causal Inference, Applied Micro, and Behavioral Economics
 ### <span class="paper-title">Salience, Attention, and Memory: Crime Capitalization in Housing Prices</span> _(Work in Progress)_
 
