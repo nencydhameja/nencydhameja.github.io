@@ -17,6 +17,10 @@ toc: false
 .research-identity {
   margin-bottom: 0.2rem !important;   /* reduces spacing */
 }
+.page__content h2 {
+  font-size: 1.25em !important;
+}
+
 </style>
 <span class="research-identity">
   <strong>Research Areas:</strong>
