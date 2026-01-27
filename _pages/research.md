@@ -10,6 +10,11 @@ toc: false
   color: #52adc8 !important;
   font-weight: 600;
 }
+  .page__content p {
+  text-align: justify !important;
+  text-justify: inter-word;
+}
+
 </style>
 
 
@@ -21,7 +26,7 @@ toc: false
 ## Causal Inference, Applied Micro, and Behavioral Economics
 ### <span class="paper-title">Salience, Attention, and Memory: Crime Capitalization in Housing Prices</span> _(Work in Progress)_
 
-Homebuyers observe crime infrequently, recall it imperfectly, and often overweight unusually salient incidents. This paper studies how these behavioral frictions shape the spatial and temporal pattern of crime capitalization in housing prices. Using detailed incident-level crime data linked to repeat-sales transactions in Chicago, I develop a flexible space–time kernel estimator that recovers the distance-decay and time-decay of crime’s price impact. I use the recovered kernel to construct measures of salience, attention, and memory decay following crime shocks.
+Homebuyers observe crime infrequently, recall it imperfectly, and often overweight unusually salient incidents. This paper studies how these behavioral frictions shape the spatial and temporal pattern of crime capitalization in housing prices. Using detailed incident-level crime data linked to repeat-sales transactions, I develop a flexible space–time kernel estimator that recovers the distance-decay and time-decay of crime’s price impact.
 
 **Fields:** Urban Economics, Behavioral Economics, Housing Markets  
 **Methods:** Spatial–Temporal Kernel Estimation, Repeat-Sales Models, Administrative Data  
