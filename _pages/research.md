@@ -14,10 +14,7 @@ toc: false
   text-align: justify !important;
   text-justify: inter-word;
 }
-
 </style>
-
-
 <div class="research-identity">
   <strong>Research Areas:</strong>
   Applied Microeconomics · Urban Economics · Behavioral Economics · 
