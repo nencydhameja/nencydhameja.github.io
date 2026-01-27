@@ -76,14 +76,12 @@ toc: false
 
 **Fields:** Computational Economics, Econometrics, Simulation  
 **Methods:** Agent-Based Models, Monte Carlo Simulation, Simulation-Based Inference  
-**Paper Link:** [PDF](https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf)
-
 <details>
   <summary><strong>Abstract</strong></summary>
-
   We develop a statistical framework for diagnosing parameter identifiability and uncertainty in stochastic agent-based models (ABMs). The approach combines Monte Carlo experiments with simulation-based confidence intervals, providing generalizable tools for calibration, validation, and sensitivity analysis in complex ABMs.
-
 </details>
+**Paper Link:** [PDF](https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf)
+
 
 ---
 
@@ -91,12 +89,10 @@ toc: false
 
 **Fields:** Computational Economics, Behavioral Economics, Social Dynamics  
 **Methods:** Agent-Based Models, Large Language Models, Experimental Simulation  
-**Paper Link:** [PDF](https://chriszosh1.github.io/files/Social_Context_and_LLM_Segregation.pdf)
-
 <details>
   <summary><strong>Abstract</strong></summary>
-
   This paper introduces large language models as agents in the classic Schelling segregation model to study how communication, narrative framing, and social context shape emergent spatial patterns.
-
 </details>
+**Paper Link:** [PDF](https://chriszosh1.github.io/files/Social_Context_and_LLM_Segregation.pdf)
+
 
