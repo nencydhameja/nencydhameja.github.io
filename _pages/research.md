@@ -29,6 +29,7 @@ toc: false
 
 **Fields:** Urban Economics, Behavioral Economics, Housing Markets  
 **Methods:** Spatial–Temporal Kernel Estimation, Repeat-Sales Models  
+
 </Abstract>
 
 ### <span class="paper-title">The Effect of Diversity Statements in Faculty Hiring</span> <i>with David Slichter (Working Paper)</i>
