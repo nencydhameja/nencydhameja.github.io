@@ -25,7 +25,6 @@ Homebuyers observe crime infrequently, recall it imperfectly, and often overweig
 
 **Fields:** Urban Economics, Behavioral Economics, Housing Markets  
 **Methods:** Spatial–Temporal Kernel Estimation, Repeat-Sales Models, Administrative Data  
-
 ---
 ### <span class="paper-title">The Effect of Diversity Statements in Faculty Hiring</span> _with David Slichter (Working Paper)_
 
@@ -33,7 +32,6 @@ This project examines how mandatory diversity statements in faculty job applicat
 
 **Fields:** Labor & Personnel Economics, Higher Education, Applied Microeconomics  
 **Methods:** Difference-in-Differences (csdid), Entropy Balancing, Text Classification  
-
 ---
 ### <span class="paper-title">Food Swamps, Obesity, and Metabolic Risks</span> _(Work in Progress)_
 
@@ -52,7 +50,6 @@ We develop a statistical framework for diagnosing parameter identifiability and 
 **Methods:** Agent-Based Models, Monte Carlo Simulation, Simulation-Based Inference  
 
 Paper Link: https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf
-
 ---
 ### <span class="paper-title">Social Context in the Schelling Model Using LLMs</span> _with Andreas Pape, Srikanth Iyer, Carl Lipo, Yixin Ren, Christopher Zosh (Working Paper)_
 This paper introduces large language models as agents in the classic Schelling segregation model to study how communication, narrative framing, and social context shape emergent spatial patterns. Embedding linguistic reasoning into spatial decision rules produces segregation outcomes that differ systematically from traditional models, showing how richer cognitive processes alter neighborhood dynamics.
