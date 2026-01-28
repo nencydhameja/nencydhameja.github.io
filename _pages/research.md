@@ -19,7 +19,7 @@ toc: false
 }
 .page__content h2 {
   font-size: 1.25em !important;
-  /* margin-top: -0.5em !important; */
+  margin-top: 0.5em !important;
 }
 
 </style>
