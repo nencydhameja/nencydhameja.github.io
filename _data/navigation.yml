@@ -12,11 +12,11 @@ main:
   #   url: /publications/
 
   - title: "Research"
-    url: /research/  
-  - title: "Talks"
-    url: /talks/  
+    url: /research/   
   - title: "Teaching"
     url: /teaching/ 
+  - title: "Talks"
+    url: /talks/ 
   - title: "CV"
     url: /cv/
 
