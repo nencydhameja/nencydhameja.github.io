@@ -23,7 +23,7 @@ toc: false
 }
 
 </style>
-## Causal Inference - Applied Micro, Urban and Behavioral Economics
+## Causal Inference - Applied Micro, and Behavioral Economics
 
 ### <span class="paper-title">Salience, Attention, and Memory: Crime Capitalization in Housing Prices</span> <em>(Work in Progress)</em>
 
