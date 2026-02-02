@@ -23,7 +23,9 @@ toc: false
 }
 
 </style>
-## Causal Inference - Applied Micro, and Behavioral Economics
+My research examines how behavioral frictions, information environments, and institutional design affect economic outcomes, using causal inference and computational methods.
+
+## Empirical Research (Applied Microeconomics)
 
 ### <span class="paper-title">Salience, Attention, and Memory: Crime Capitalization in Housing Prices</span> <em>(Work in Progress)</em>
 
@@ -67,7 +69,7 @@ toc: false
 
 ---
 
-## Computational Economics - Agent-Based Models, and LLMs
+## Computational & Simulation-Based Economics
 
 ### <span class="paper-title">Monte Carlo Diagnostics for Agent-Based Models</span> <i>with Christopher Zosh, Yixin Ren, Andreas Pape (Working Paper)</i>
 
