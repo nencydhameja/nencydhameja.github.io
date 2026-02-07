@@ -84,7 +84,7 @@ My research examines how behavioral frictions, information environments, and ins
 
 ---
 
-### <span class="paper-title">Social Context in the Schelling Model Using LLMs</span> <i>with Andreas Pape, Srikanth Iyer, Carl Lipo, Yixin Ren, Christopher Zosh (Working Paper)</i>
+### <span class="paper-title">Social Context in the Schelling Model Using LLMs</span> <i>with Andreas Pape, Srikanth Iyer, Carl Lipo, Yixin Ren, Christopher Zosh (Work in progress)</i>
 
 **Fields:** Computational Economics, Behavioral Economics, Social Dynamics  
 **Methods:** Agent-Based Models, Large Language Models, Experimental Simulation  
