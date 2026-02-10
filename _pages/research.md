@@ -23,7 +23,7 @@ toc: false
 }
 
 </style>
-My research examines how behavioral frictions, information environments, and institutional design affect economic outcomes, using causal inference and computational methods.
+My research studies how local environments and institutional policies shape economic and social outcomes, using modern causal inference and computational methods.
 
 ## Empirical Research (Applied Microeconomics)
 
