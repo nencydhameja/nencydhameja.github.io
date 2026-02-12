@@ -31,13 +31,15 @@ Before academia, I spent over a decade in the IT industry as a Software Engineer
 </section> -->
 <div class="notice--info">
   <strong>Research Toolkit</strong>
-  <ul>
+
+  <ul style="margin-top:0.5rem; margin-left:0; padding-left:1.2rem;">
     <li><strong>Causal Inference:</strong> Staggered Difference-in-Differences, Event Studies, Synthetic Control Methods</li>
     <li><strong>Confounding Adjustment:</strong> Inverse Probability Weighting (IPW), Entropy Balancing, Double Machine Learning</li>
     <li><strong>Spatial Analysis:</strong> Neighborhood Exposure Designs, Salience and Attention Kernels</li>
     <li><strong>Computational Economics:</strong> Agent-Based Models, LLM-Based Economic Agents</li>
   </ul>
 </div>
+
 
 <!-- <p>My research spans labor, applied micro, behavioral, and urban economics, with a strong focus on causal inference.
 Before academia, I spent over a decade in the IT industry as a Software Engineer, Tech Lead, and Project Manager at firms including Accenture, JLL, and Grab in Singapore. An Executive MBA sparked my interest in economics and ultimately led me to pursue a doctoral degree.</p>
