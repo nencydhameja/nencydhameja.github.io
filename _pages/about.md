@@ -11,7 +11,7 @@ redirect_from:
     /* background-color: #eef8fc !important; */
   }
 </style>
-<h3>Hi, I’m Nency Dhameja (pronounced “Nancy”).<h3>
+<h3>Hi, I’m Nency Dhameja (pronounced “Nancy”).</h3>
 <div style="text-align: justify;">
 <p>I'm a 5th-year Ph.D. candidate in Econometrics and Quantitative Economics at Binghamton University (State University of New York).</p>
 <p>
