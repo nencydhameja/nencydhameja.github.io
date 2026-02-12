@@ -59,6 +59,7 @@ _Do diversity statement requirements causally change faculty hiring composition 
 
 ### <span class="paper-title">Food Swamps, Obesity, and Metabolic Risks</span> <em>(Work in Progress)</em>
 _Do dollar-store rollouts causally affect metabolic health risks?_
+
 **Fields:** Health Economics, Urban Economics, Public Economics  
 **Methods:** Event Studies / DiD  
 
