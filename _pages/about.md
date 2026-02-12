@@ -15,8 +15,8 @@ redirect_from:
 <div style="text-align: justify;">
 <p>I'm Nency Dhameja (pronounced <i>“Nancy”</i>), a 5th-year Ph.D. candidate in Econometrics and Quantitative Economics at Binghamton University (State University of New York).</p>
 <p>
-My research is centered on causal inference and policy evaluation in applied microeconomics. I study how institutions and local environments shape economic, labor-market, and health outcomes, using modern quasi-experimental methods including difference-in-differences, reweighting and confounding adjustment, and machine learning–augmented causal designs.
-
+My research is centered on causal inference and policy evaluation in applied microeconomics. I study how institutions and local environments shape economic, labor-market, and health outcomes, using modern quasi-experimental methods including difference-in-differences, reweighting and confounding adjustment, and machine learning–augmented causal designs.</p>
+<p>
 Before academia, I spent over a decade in the IT industry as a Software Engineer, Tech Lead, and Project Manager at firms including Accenture, JLL, and Grab in Singapore. This technical background informs my work through an emphasis on reproducible pipelines, large-scale administrative data, and computational models (including LLM-based agent simulations) for studying economic behavior and policy interventions.
 </p>
 
