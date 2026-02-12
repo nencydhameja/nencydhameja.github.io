@@ -11,9 +11,9 @@ redirect_from:
     /* background-color: #eef8fc !important; */
   }
 </style>
-### Hi, I’m Nency Dhameja *(pronounced “Nancy”)*.
+<h3>Hi, I’m Nency Dhameja (pronounced “Nancy”).<h3>
 <div style="text-align: justify;">
-<p>I'm Nency Dhameja (pronounced <i>“Nancy”</i>), a 5th-year Ph.D. candidate in Econometrics and Quantitative Economics at Binghamton University (State University of New York).</p>
+<p>I'm a 5th-year Ph.D. candidate in Econometrics and Quantitative Economics at Binghamton University (State University of New York).</p>
 <p>
 My research is centered on causal inference and policy evaluation in applied microeconomics. I study how institutions and local environments shape economic, labor-market, and health outcomes, using modern quasi-experimental methods including difference-in-differences, reweighting and confounding adjustment, and machine learning–augmented causal designs.</p>
 <p>
