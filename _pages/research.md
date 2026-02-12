@@ -43,6 +43,7 @@ _How do localized crime shocks affect housing prices through attention and memor
 ---
 
 ### <span class="paper-title">The Effect of Diversity Statements in Faculty Hiring</span> <i>with David Slichter (Working Paper)</i>
+_Do diversity statement requirements causally change faculty hiring composition and ideology?_
 
 **Fields:** Labor & Personnel Economics, Higher Education, Applied Microeconomics  
 **Methods:** Difference-in-Differences (csdid), Entropy Balancing, Text Classification  
