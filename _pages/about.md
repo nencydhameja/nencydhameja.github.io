@@ -21,7 +21,7 @@ Before academia, I spent over a decade in the IT industry as a Software Engineer
 </p>
 
 <section class="research-toolkit" aria-label="Research Toolkit">
-  <h2>Research Toolkit</h2>
+  <h3>Research Toolkit</h3>
   <ul>
     <li><strong>Causal Inference:</strong> Difference-in-Differences, Event Studies, Synthetic Control Methods</li>
     <li><strong>Confounding Adjustment:</strong> IPW, Entropy Balancing, Double Machine Learning</li>
