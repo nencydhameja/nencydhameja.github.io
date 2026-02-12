@@ -20,7 +20,7 @@ My research is centered on causal inference and policy evaluation in applied mic
 Before academia, I spent over a decade in the IT industry as a Software Engineer, Tech Lead, and Project Manager at firms including Accenture, JLL, and Grab in Singapore. This technical background informs my work through an emphasis on reproducible pipelines, large-scale administrative data, and computational models (including LLM-based agent simulations) for studying economic behavior and policy interventions.
 </p>
 
-<section class="research-toolkit" aria-label="Research Toolkit">
+<!-- <section class="research-toolkit" aria-label="Research Toolkit">
   <h3>Research Toolkit</h3>
   <ul>
     <li><strong>Causal Inference:</strong> Difference-in-Differences, Event Studies, Synthetic Control Methods</li>
@@ -28,7 +28,14 @@ Before academia, I spent over a decade in the IT industry as a Software Engineer
     <li><strong>Spatial Policy Evaluation:</strong> Neighborhood Exposure Designs, Salience Kernels</li>
     <li><strong>Computational Economics:</strong> Agent-Based Models, LLM-Based Economic Agents</li>
   </ul>
-</section>
+</section> -->
+{: .notice--info}
+**Research Toolkit**
+
+- **Causal Inference:** Staggered Difference-in-Differences, Event Studies, Synthetic Control Methods  
+- **Confounding Adjustment:** Inverse Probability Weighting (IPW), Entropy Balancing, Double Machine Learning  
+- **Spatial Causal Inference:** Neighborhood Exposure Designs, Salience and Attention Kernels  
+- **Computational Economics:** Agent-Based Models, LLM-Based Economic Agents  
 
 <!-- <p>My research spans labor, applied micro, behavioral, and urban economics, with a strong focus on causal inference.
 Before academia, I spent over a decade in the IT industry as a Software Engineer, Tech Lead, and Project Manager at firms including Accenture, JLL, and Grab in Singapore. An Executive MBA sparked my interest in economics and ultimately led me to pursue a doctoral degree.</p>
