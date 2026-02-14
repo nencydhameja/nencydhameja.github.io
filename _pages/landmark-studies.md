@@ -117,5 +117,3 @@ I see my own research agenda as building on these traditions—bringing behavior
 mechanisms such as salience, memory, and social comparison into applied urban
 and institutional economics.
 
-3. Places That Shaped My Questions
-*This page is a work in progress and will expand over time.*
