@@ -1,10 +1,9 @@
 ---
-title: "Selected Landmark Studies That Inspire My Research"
-permalink: /landmark-studies/
+title: "Influences & Inspiration"
+permalink: /influences/
 ---
 
-This page highlights a curated selection of landmark empirical studies and causal research designs in economics.
-
+1. Papers & Ideas That Shaped My Thinking
 ---
 
 <!-- <div style="
@@ -61,10 +60,22 @@ This page highlights a curated selection of landmark empirical studies and causa
 **Computational Experiments and Market Institutions**  
 **Gode & Sunder (1993)** — Zero-Intelligence Traders  
 - Laboratory markets with constrained random bidding  
-- Institutions generate equilibrium outcomes even with simple agents  
+- Institutions generate equilibrium outcomes even with simple agents
+- 
+Kahneman & Tversky (1979), Prospect Theory
+Foundations for how attention and loss shape decisions.
 
+Chetty et al. (2014), Neighborhood Effects
+Place as a causal environment.
+
+Callaway & Sant’Anna (2021), Modern DiD
+Credible identification under staggered adoption.
+
+Empirics Strike Back (Brodeur et al.)
+Reproducibility and transparency as a research norm.
 </div>
 
 ---
-
+2. Scholars & Mentors Who Inspire My Work
+3. Places That Shaped My Questions
 *This page is a work in progress and will expand over time.*
