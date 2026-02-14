@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Diversity Statements in Faculty Hiring"
-permalink: /diversity-statements/
+permalink: /diversity-statement/
 ---
 
 This project studies how requiring diversity statements affects faculty hiring
