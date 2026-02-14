@@ -5,7 +5,6 @@ permalink: /diversity-statement/
 author_profile: false
 classes: wide
 ---
-
 This project studies how requiring diversity statements affects faculty hiring
 in economics and political science (2014–2024).
 
@@ -14,9 +13,6 @@ in economics and political science (2014–2024).
 <!-- - [Online Appendix](/diversity-statements/appendix/) -->
 
 ---
-
-## Interactive Map
-
 <iframe
   src="/assets/projects/diversity/div_state_map.html"
   width="100%"
