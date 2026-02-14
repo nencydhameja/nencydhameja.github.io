@@ -7,14 +7,14 @@ This page highlights a curated selection of landmark empirical studies and causa
 
 ---
 
-<div style="
+<!-- <div style="
   border: 1px solid #e5e7eb;
   border-left: 4px solid #3b82f6;
   padding: 12px 16px;
   border-radius: 10px;
   background: #f9fafb;
   margin: 1.5rem 0;
-">
+"> -->
 
 **Crime, Salience, and Housing Markets**  
 **Linden & Rockoff (2008)** — Sex Offenders and Property Values  
