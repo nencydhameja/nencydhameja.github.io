@@ -1,5 +1,5 @@
 ---
-layout: splash
+layout: single
 title: "Diversity Statements in Faculty Hiring"
 permalink: /diversity-statement/
 author_profile: false
