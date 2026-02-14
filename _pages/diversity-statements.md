@@ -12,10 +12,10 @@ in economics and political science (2014–2024).
 ---
 
 <style>
-/* .map-embed{
+.map-embed{
   width: 100%;
-  height: 900px;
-  border: 1px solid #ddd;
+  /* height: 900px; */
+  border: 0px solid #ddd;
   border-radius: 12px;
   overflow: hidden;
 }
@@ -24,7 +24,7 @@ in economics and political science (2014–2024).
   height: 100% !important;
   border: 0 !important;
   display: block !important;
-} */
+}
   /* Force wider content area on wide pages */
 .layout--single.wide .page__inner-wrap,
 .layout--splash .page__inner-wrap {
