@@ -13,10 +13,10 @@ in economics and political science (2014–2024).
 <!-- - [Online Appendix](/diversity-statements/appendix/) -->
 
 ---
-<iframe
-  src="/assets/projects/diversity/div_state_map.html"
-  width="100%"
-  height="750"
-  style="border:1px solid #ddd; border-radius:10px;"
-  loading="lazy">
-</iframe>
+<div class="map-embed">
+  <iframe
+    src="/assets/projects/diversity/div_state_map.html"
+    loading="lazy"
+    allowfullscreen
+  ></iframe>
+</div>
