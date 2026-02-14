@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: splash
 title: "Diversity Statements in Faculty Hiring"
 permalink: /diversity-statement/
 author_profile: false
@@ -10,6 +10,7 @@ This project studies how requiring diversity statements affects faculty hiring
 in economics and political science (2014–2024).
 
 ---
+
 <style>
 .map-embed{
   width: 100%;
@@ -24,6 +25,12 @@ in economics and political science (2014–2024).
   border: 0 !important;
   display: block !important;
 }
+  /* Force wider content area on wide pages */
+.layout--single.wide .page__inner-wrap,
+.layout--splash .page__inner-wrap {
+  max-width: 1600px !important;  /* try 1400–1800 */
+}
+
 </style>
 
 <div class="map-embed">
