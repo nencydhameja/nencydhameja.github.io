@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "Nency Dhameja*"
+title: "Nency Dhameja"
 author_profile: true
 header: false
 redirect_from: 
