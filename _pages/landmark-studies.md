@@ -76,6 +76,46 @@ Reproducibility and transparency as a research norm.
 </div>
 
 ---
-2. Scholars & Mentors Who Inspire My Work
+2. Scholars & Mentors Who Inspire Me
+
+My research is shaped by scholars whose work has influenced how economists
+and social scientists think about behavioral frictions, urban environments,
+and credible causal inference. I am especially inspired by researchers who
+connect rigorous empirical methods with deep questions about decision-making,
+institutions, and inequality.
+
+- **Daniel Kahneman & Amos Tversky** — for foundational insights on salience,
+  loss aversion, and how individuals perceive risk and uncertainty.
+
+- **Sendhil Mullainathan** — for pioneering work on attention, scarcity, and
+  behavioral constraints in economic life.
+
+- **Raj Chetty** — for demonstrating how neighborhoods and institutions shape
+  opportunity and long-run outcomes.
+
+- **Judea Pearl** — for establishing the modern framework of causal reasoning
+  through structural models and causal graphs, shaping how I think about
+  identification and explanation.
+
+- **Alberto Abadie** — for foundational contributions to modern causal inference
+  and policy evaluation.
+
+- **Guido Imbens** — for shaping the way economists think about identification,
+  experiments, and credible empirical design.
+
+- **Kosuke Imai** — for methodological innovation at the intersection of
+  statistics, political economy, and measurement.
+
+- **Susan Athey** — for pioneering work at the intersection of causal inference,
+  machine learning, and policy evaluation, inspiring computational approaches
+  to modern empirical questions.
+
+- **Andreas Pape** — for thoughtful mentorship and guidance on combining
+  computational modeling with empirical rigor.
+
+I see my own research agenda as building on these traditions—bringing behavioral
+mechanisms such as salience, memory, and social comparison into applied urban
+and institutional economics.
+
 3. Places That Shaped My Questions
 *This page is a work in progress and will expand over time.*
