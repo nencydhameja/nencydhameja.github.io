@@ -703,6 +703,7 @@ ui &lt;- fluidPage(
       width = 3,
       sliderInput("sigma", "Population SD:", min = 2, max = 30, value = 10),
       sliderInput("n_size", "Sample size (n):", min = 5, max = 500, value = 10),
+      actionButton("redraw3", "Draw new samples", class = "btn-primary btn-block"),
       p(style = "margin-top:12px;",
         strong("What to notice:"),
         br(),
@@ -722,28 +723,34 @@ ui &lt;- fluidPage(
 )
 
 server &lt;- function(input, output, session) {
+  data &lt;- reactiveVal(NULL)
 
-  output$combo_plot &lt;- renderPlot({
+  observeEvent(list(input$redraw3, input$sigma, input$n_size), {
     mu &lt;- 50
     sigma &lt;- input$sigma
     n &lt;- input$n_size
-
     one_samp &lt;- rnorm(n, mu, sigma)
     means &lt;- replicate(500, mean(rnorm(n, mu, sigma)))
+    data(list(one_samp = one_samp, means = means, mu = mu, sigma = sigma, n = n))
+  }, ignoreNULL = FALSE)
 
-    xlims &lt;- c(mu - 3.5 * sigma, mu + 3.5 * sigma)
+  output$combo_plot &lt;- renderPlot({
+    d &lt;- data()
+    if (is.null(d)) return()
+
+    xlims &lt;- c(d$mu - 3.5 * d$sigma, d$mu + 3.5 * d$sigma)
 
     par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
 
-    hist(one_samp, breaks = 30, col = adjustcolor("#3498db", 0.6), border = "white",
-         main = paste0("One Sample (SD = ", round(sd(one_samp), 1), ")"),
+    hist(d$one_samp, breaks = 30, col = adjustcolor("#3498db", 0.6), border = "white",
+         main = paste0("One Sample (SD = ", round(sd(d$one_samp), 1), ")"),
          xlab = "Value", xlim = xlims, freq = FALSE, cex.main = 1.2)
-    abline(v = mu, col = "#e74c3c", lwd = 2, lty = 2)
+    abline(v = d$mu, col = "#e74c3c", lwd = 2, lty = 2)
 
-    hist(means, breaks = 40, col = adjustcolor("#2ecc71", 0.6), border = "white",
-         main = paste0("Sample Means (SE = ", round(sd(means), 2), ")"),
+    hist(d$means, breaks = 40, col = adjustcolor("#2ecc71", 0.6), border = "white",
+         main = paste0("Sample Means (SE = ", round(sd(d$means), 2), ")"),
          xlab = "Value", xlim = xlims, freq = FALSE, cex.main = 1.2)
-    abline(v = mu, col = "#e74c3c", lwd = 2, lty = 2)
+    abline(v = d$mu, col = "#e74c3c", lwd = 2, lty = 2)
   })
 
   output$se_curve &lt;- renderPlot({
