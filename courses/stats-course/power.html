@@ -155,6 +155,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./variance-sd-se.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variance, SD &amp; Standard Error</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cef.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Regression &amp; the CEF</span></a>
   </div>
@@ -442,7 +448,10 @@ shinyApp(ui, server)</code></pre>
 <p><span class="math display">\[
 \text{MDE} = (z_{1-\alpha} + z_{1-\beta}) \times \sqrt{\frac{2}{n}}
 \]</span></p>
-<p>Larger <span class="math inline">\(n\)</span> shrinks the MDE. Higher power demands a larger MDE (or more <span class="math inline">\(n\)</span>).</p>
+<p>Notice: that <span class="math inline">\(\sqrt{2/n}\)</span> is just the <strong>standard error</strong> of the difference in means. So <strong>MDE is really just a scaled-up SE</strong>:</p>
+<p><span class="math display">\[MDE = (z_{1-\alpha} + z_{1-\beta}) \times SE\]</span></p>
+<p>The critical values (~2.8 for 5% significance and 80% power) are fixed multipliers. The only thing you control is the SE — by increasing <span class="math inline">\(n\)</span> or reducing <span class="math inline">\(\sigma\)</span> (through better measurement, stratification, or controls). Power analysis is really just an SE calculation in disguise. See <a href="variance-sd-se.html">Variance, SD &amp; Standard Error</a> for more on this connection.</p>
+<p>Larger <span class="math inline">\(n\)</span> shrinks the SE, which shrinks the MDE. Higher power demands a larger MDE (or more <span class="math inline">\(n\)</span>).</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
