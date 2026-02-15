@@ -314,7 +314,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-most-misunderstood-concepts-in-statistics" id="toc-the-most-misunderstood-concepts-in-statistics" class="nav-link active" data-scroll-target="#the-most-misunderstood-concepts-in-statistics">The most misunderstood concepts in statistics</a>
+  <li><a href="#first-estimation.-then-inference." id="toc-first-estimation.-then-inference." class="nav-link active" data-scroll-target="#first-estimation.-then-inference.">First: estimation. Then: inference.</a></li>
+  <li><a href="#the-most-misunderstood-concepts-in-statistics" id="toc-the-most-misunderstood-concepts-in-statistics" class="nav-link" data-scroll-target="#the-most-misunderstood-concepts-in-statistics">The most misunderstood concepts in statistics</a>
   <ul class="collapse">
   <li><a href="#what-a-p-value-actually-is" id="toc-what-a-p-value-actually-is" class="nav-link" data-scroll-target="#what-a-p-value-actually-is">What a p-value actually is</a></li>
   <li><a href="#a-concrete-example" id="toc-a-concrete-example" class="nav-link" data-scroll-target="#a-concrete-example">A concrete example</a></li>
@@ -354,11 +355,31 @@ window.Quarto = {
 </header>
 
 
+<section id="first-estimation.-then-inference." class="level2">
+<h2 class="anchored" data-anchor-id="first-estimation.-then-inference.">First: estimation. Then: inference.</h2>
+<p>These are two separate steps, and confusing them is where most misunderstanding begins.</p>
+<p><strong>Step 1 — Estimation</strong> is about computing numbers from your data:</p>
+<ul>
+<li>You collect a sample and calculate a <strong>point estimate</strong> — your best guess at the true parameter. For example, <span class="math inline">\(\hat{\beta} = -5\)</span> or <span class="math inline">\(\bar{x} = 12.3\)</span>.</li>
+<li>You also calculate a <strong>standard error (SE)</strong> — how much that estimate would bounce around if you repeated the experiment. A small SE means your estimate is precise; a large SE means it’s noisy.</li>
+</ul>
+<p>Estimation gives you a number. It does not tell you what to <em>conclude</em>.</p>
+<p><strong>Step 2 — Inference</strong> is about drawing conclusions from those numbers:</p>
+<ul>
+<li>Is the effect real, or could it be noise? → <strong>p-value</strong></li>
+<li>What range of values is plausible for the true parameter? → <strong>confidence interval</strong></li>
+<li>Both are built from the same two ingredients: the estimate and its SE.</li>
+</ul>
+<p><span class="math display">\[\text{test statistic} = \frac{\text{estimate}}{\text{SE}} \qquad \qquad \text{CI} = \text{estimate} \pm 1.96 \times \text{SE}\]</span></p>
+<p>Everything on this page is Step 2. If the estimation step is wrong (biased estimate, wrong SE), then the inference is wrong too — no matter how sophisticated the test. <strong>Good inference starts with good estimation.</strong></p>
+<hr>
+</section>
 <section id="the-most-misunderstood-concepts-in-statistics" class="level2">
 <h2 class="anchored" data-anchor-id="the-most-misunderstood-concepts-in-statistics">The most misunderstood concepts in statistics</h2>
 <p>Almost everyone gets p-values and confidence intervals wrong — including published researchers. Let’s fix that.</p>
 <section id="what-a-p-value-actually-is" class="level3">
 <h3 class="anchored" data-anchor-id="what-a-p-value-actually-is">What a p-value actually is</h3>
+<p>The “p” stands for <strong>probability</strong>.</p>
 <blockquote class="blockquote">
 <p><strong>The p-value is the probability of observing data as extreme as (or more extreme than) what you got, <em>assuming the null hypothesis is true.</em></strong></p>
 </blockquote>
