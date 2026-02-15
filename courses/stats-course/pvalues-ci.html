@@ -317,7 +317,10 @@ window.Quarto = {
   <li><a href="#the-most-misunderstood-concepts-in-statistics" id="toc-the-most-misunderstood-concepts-in-statistics" class="nav-link active" data-scroll-target="#the-most-misunderstood-concepts-in-statistics">The most misunderstood concepts in statistics</a>
   <ul class="collapse">
   <li><a href="#what-a-p-value-actually-is" id="toc-what-a-p-value-actually-is" class="nav-link" data-scroll-target="#what-a-p-value-actually-is">What a p-value actually is</a></li>
+  <li><a href="#a-concrete-example" id="toc-a-concrete-example" class="nav-link" data-scroll-target="#a-concrete-example">A concrete example</a></li>
   <li><a href="#what-a-confidence-interval-actually-is" id="toc-what-a-confidence-interval-actually-is" class="nav-link" data-scroll-target="#what-a-confidence-interval-actually-is">What a confidence interval actually is</a></li>
+  <li><a href="#how-a-ci-is-constructed" id="toc-how-a-ci-is-constructed" class="nav-link" data-scroll-target="#how-a-ci-is-constructed">How a CI is constructed</a></li>
+  <li><a href="#what-is-a-test-statistic" id="toc-what-is-a-test-statistic" class="nav-link" data-scroll-target="#what-is-a-test-statistic">What is a test statistic?</a></li>
   </ul></li>
   <li><a href="#simulation-1-the-p-value-machine" id="toc-simulation-1-the-p-value-machine" class="nav-link" data-scroll-target="#simulation-1-the-p-value-machine">Simulation 1: The p-value machine</a></li>
   <li><a href="#simulation-2-ci-coverage" id="toc-simulation-2-ci-coverage" class="nav-link" data-scroll-target="#simulation-2-ci-coverage">Simulation 2: CI coverage</a>
@@ -367,6 +370,24 @@ window.Quarto = {
 </ul>
 <p>It’s a statement about the <em>data</em>, not about the <em>hypothesis</em>. The p-value asks: “If there really were no effect, how surprising would my data be?”</p>
 </section>
+<section id="a-concrete-example" class="level3">
+<h3 class="anchored" data-anchor-id="a-concrete-example">A concrete example</h3>
+<p>Say you’re testing whether a drug lowers blood pressure. You run a regression and get <span class="math inline">\(\hat{\beta} = -5\)</span> (blood pressure drops 5 points).</p>
+<p><strong>H₀: <span class="math inline">\(\beta = 0\)</span></strong> — the drug does nothing.</p>
+<p>The p-value asks: if the drug truly does nothing (<span class="math inline">\(\beta = 0\)</span>), what’s the probability of observing <span class="math inline">\(\hat{\beta}\)</span> as extreme as <span class="math inline">\(-5\)</span> or more?</p>
+<p>p = 0.03 means: there’s only a 3% chance of seeing an estimate this large purely from random noise. So either:</p>
+<ol type="1">
+<li>H₀ is true and you got unlucky (3% chance), or</li>
+<li>H₀ is false — the drug actually works</li>
+</ol>
+<p>You reject H₀ because 3% feels too unlikely to be just noise.</p>
+<p><strong>But the p-value never tells you <span class="math inline">\(\beta\)</span>’s actual value.</strong> It only tells you the data would be surprising <em>if <span class="math inline">\(\beta\)</span> were exactly zero</em>. This matters:</p>
+<ul>
+<li>p = 0.03 with <span class="math inline">\(\hat{\beta} = -5\)</span> → probably a real, meaningful effect</li>
+<li>p = 0.03 with <span class="math inline">\(\hat{\beta} = -0.001\)</span> and <span class="math inline">\(n = 10{,}000{,}000\)</span> → “statistically significant” but practically meaningless</li>
+</ul>
+<p>That’s why you should always look at the <strong>estimate</strong> (<span class="math inline">\(\hat{\beta}\)</span>) and <strong>confidence interval</strong> together with the p-value — not just whether p &lt; 0.05.</p>
+</section>
 <section id="what-a-confidence-interval-actually-is" class="level3">
 <h3 class="anchored" data-anchor-id="what-a-confidence-interval-actually-is">What a confidence interval actually is</h3>
 <blockquote class="blockquote">
@@ -379,6 +400,55 @@ window.Quarto = {
 <li>A range where 95% of sample means fall</li>
 </ul>
 <p>Once you compute a specific CI, the true parameter is either in it or it isn’t — there’s no probability about it. The 95% refers to the <em>method</em>, not to any single interval.</p>
+</section>
+<section id="how-a-ci-is-constructed" class="level3">
+<h3 class="anchored" data-anchor-id="how-a-ci-is-constructed">How a CI is constructed</h3>
+<p>The recipe is simple. You need three ingredients:</p>
+<ol type="1">
+<li><strong>A point estimate</strong> — your best guess (e.g., <span class="math inline">\(\bar{x}\)</span> or <span class="math inline">\(\hat{\beta}\)</span>)</li>
+<li><strong>A standard error</strong> — how much the estimate bounces around due to sampling</li>
+<li><strong>A critical value</strong> — how many SEs to go out for your desired confidence level</li>
+</ol>
+<p>The formula for a 95% CI for a mean:</p>
+<p><span class="math display">\[\text{CI} = \bar{x} \pm z_{0.975} \times \text{SE} = \bar{x} \pm 1.96 \times \frac{s}{\sqrt{n}}\]</span></p>
+<p>That’s it: <strong>estimate ± margin of error</strong>. The margin of error is just a scaled-up standard error.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Confidence level</th>
+<th style="text-align: center;">Critical value (<span class="math inline">\(z\)</span>)</th>
+<th style="text-align: center;">Margin of error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">90%</td>
+<td style="text-align: center;">1.645</td>
+<td style="text-align: center;">Narrower CI</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">95%</td>
+<td style="text-align: center;">1.960</td>
+<td style="text-align: center;">Standard</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">99%</td>
+<td style="text-align: center;">2.576</td>
+<td style="text-align: center;">Wider CI</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Where does the 1.96 come from?</strong> The middle 95% of a standard normal distribution falls between <span class="math inline">\(-1.96\)</span> and <span class="math inline">\(+1.96\)</span>. So if the sampling distribution of <span class="math inline">\(\bar{x}\)</span> is approximately normal (CLT), going out 1.96 SEs in each direction captures the true mean 95% of the time.</p>
+<p><strong>For small samples</strong> (roughly <span class="math inline">\(n &lt; 30\)</span>), replace the <span class="math inline">\(z\)</span> critical value with a <span class="math inline">\(t\)</span> critical value from the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n - 1\)</span> degrees of freedom. The <span class="math inline">\(t\)</span>-distribution has heavier tails, making the CI wider to account for the extra uncertainty in estimating the SE from small samples. As <span class="math inline">\(n\)</span> grows, the <span class="math inline">\(t\)</span> and <span class="math inline">\(z\)</span> values converge.</p>
+<p><strong>The key insight:</strong> a CI is wide when (a) the data is noisy (large <span class="math inline">\(s\)</span>), (b) the sample is small (small <span class="math inline">\(n\)</span>), or (c) you demand more confidence (larger critical value). You can’t have precision, small samples, and high confidence all at once — pick two.</p>
+</section>
+<section id="what-is-a-test-statistic" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-a-test-statistic">What is a test statistic?</h3>
+<p>A test statistic is a single number that measures <strong>how far your data is from what the null hypothesis predicts</strong>, in units of standard error.</p>
+<p>The most common one is the <strong>z-statistic</strong> (or <strong>t-statistic</strong> for small samples):</p>
+<p><span class="math display">\[z = \frac{\bar{x} - \mu_0}{\text{SE}} = \frac{\text{estimate} - \text{null value}}{\text{standard error}}\]</span></p>
+<p>It answers: “How many standard errors is my estimate from the null?” A <span class="math inline">\(z\)</span> of 2 means your estimate is 2 SEs away from what H₀ predicts — that’s unusual enough to start doubting H₀.</p>
+<p>The p-value is then just the probability of getting a <span class="math inline">\(z\)</span> this large or larger under the null distribution. Large <span class="math inline">\(|z|\)</span> → small p-value → more evidence against H₀.</p>
 </section>
 </section>
 <section id="simulation-1-the-p-value-machine" class="level2">
