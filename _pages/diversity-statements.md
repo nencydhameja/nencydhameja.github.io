@@ -38,6 +38,7 @@ in economics and political science (2014–2024).
     src="/assets/projects/diversity/div_state_map.html"
     title="Interactive Map"
     loading="lazy"
+    scrolling="no"
     allowfullscreen>
   </iframe>
 </div>
