@@ -63,3 +63,7 @@ window.addEventListener('resize', scaleIframe);
     allowfullscreen>
   </iframe>
 </div>
+
+<p style="text-align: right; margin-top: 4px;">
+  <a href="/assets/projects/diversity/div_state_map.html" target="_blank" style="font-size: 13px; color: #636efa;">View full interactive map &rarr;</a>
+</p>
