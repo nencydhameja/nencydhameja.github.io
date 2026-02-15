@@ -315,19 +315,21 @@ window.Quarto = {
    
   <ul>
   <li><a href="#first-estimation.-then-inference." id="toc-first-estimation.-then-inference." class="nav-link active" data-scroll-target="#first-estimation.-then-inference.">First: estimation. Then: inference.</a></li>
-  <li><a href="#the-most-misunderstood-concepts-in-statistics" id="toc-the-most-misunderstood-concepts-in-statistics" class="nav-link" data-scroll-target="#the-most-misunderstood-concepts-in-statistics">The most misunderstood concepts in statistics</a>
+  <li><a href="#part-1-p-values" id="toc-part-1-p-values" class="nav-link" data-scroll-target="#part-1-p-values">Part 1: p-values</a>
   <ul class="collapse">
+  <li><a href="#what-is-a-test-statistic" id="toc-what-is-a-test-statistic" class="nav-link" data-scroll-target="#what-is-a-test-statistic">What is a test statistic?</a></li>
   <li><a href="#what-a-p-value-actually-is" id="toc-what-a-p-value-actually-is" class="nav-link" data-scroll-target="#what-a-p-value-actually-is">What a p-value actually is</a></li>
   <li><a href="#a-concrete-example" id="toc-a-concrete-example" class="nav-link" data-scroll-target="#a-concrete-example">A concrete example</a></li>
+  <li><a href="#simulation-the-p-value-machine" id="toc-simulation-the-p-value-machine" class="nav-link" data-scroll-target="#simulation-the-p-value-machine">Simulation: The p-value machine</a></li>
+  </ul></li>
+  <li><a href="#part-2-confidence-intervals" id="toc-part-2-confidence-intervals" class="nav-link" data-scroll-target="#part-2-confidence-intervals">Part 2: Confidence intervals</a>
+  <ul class="collapse">
   <li><a href="#what-a-confidence-interval-actually-is" id="toc-what-a-confidence-interval-actually-is" class="nav-link" data-scroll-target="#what-a-confidence-interval-actually-is">What a confidence interval actually is</a></li>
   <li><a href="#how-a-ci-is-constructed" id="toc-how-a-ci-is-constructed" class="nav-link" data-scroll-target="#how-a-ci-is-constructed">How a CI is constructed</a></li>
-  <li><a href="#what-is-a-test-statistic" id="toc-what-is-a-test-statistic" class="nav-link" data-scroll-target="#what-is-a-test-statistic">What is a test statistic?</a></li>
+  <li><a href="#simulation-ci-coverage" id="toc-simulation-ci-coverage" class="nav-link" data-scroll-target="#simulation-ci-coverage">Simulation: CI coverage</a></li>
   </ul></li>
-  <li><a href="#simulation-1-the-p-value-machine" id="toc-simulation-1-the-p-value-machine" class="nav-link" data-scroll-target="#simulation-1-the-p-value-machine">Simulation 1: The p-value machine</a></li>
-  <li><a href="#simulation-2-ci-coverage" id="toc-simulation-2-ci-coverage" class="nav-link" data-scroll-target="#simulation-2-ci-coverage">Simulation 2: CI coverage</a>
+  <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a>
   <ul class="collapse">
-  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
-  <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul></li>
   </ul>
@@ -374,16 +376,23 @@ window.Quarto = {
 <p>Everything on this page is Step 2. If the estimation step is wrong (biased estimate, wrong SE), then the inference is wrong too — no matter how sophisticated the test. <strong>Good inference starts with good estimation.</strong></p>
 <hr>
 </section>
-<section id="the-most-misunderstood-concepts-in-statistics" class="level2">
-<h2 class="anchored" data-anchor-id="the-most-misunderstood-concepts-in-statistics">The most misunderstood concepts in statistics</h2>
-<p>Almost everyone gets p-values and confidence intervals wrong — including published researchers. Let’s fix that.</p>
+<section id="part-1-p-values" class="level2">
+<h2 class="anchored" data-anchor-id="part-1-p-values">Part 1: p-values</h2>
+<section id="what-is-a-test-statistic" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-a-test-statistic">What is a test statistic?</h3>
+<p>Before we can talk about p-values, we need the <strong>test statistic</strong> — a single number that measures <strong>how far your estimate is from what the null hypothesis predicts</strong>, in units of standard error.</p>
+<p>The most common one is the <strong>z-statistic</strong> (or <strong>t-statistic</strong> for small samples):</p>
+<p><span class="math display">\[z = \frac{\bar{x} - \mu_0}{\text{SE}} = \frac{\text{estimate} - \text{null value}}{\text{standard error}}\]</span></p>
+<p>It answers: “How many standard errors is my estimate from the null?” A <span class="math inline">\(z\)</span> of 2 means your estimate is 2 SEs away from what H₀ predicts — that’s unusual enough to start doubting H₀.</p>
+</section>
 <section id="what-a-p-value-actually-is" class="level3">
 <h3 class="anchored" data-anchor-id="what-a-p-value-actually-is">What a p-value actually is</h3>
 <p>The “p” stands for <strong>probability</strong>.</p>
 <blockquote class="blockquote">
-<p><strong>The p-value is the probability of observing data as extreme as (or more extreme than) what you got, <em>assuming the null hypothesis is true.</em></strong></p>
+<p><strong>The p-value is the probability of getting a test statistic as large as (or larger than) yours, <em>assuming the null hypothesis is true.</em></strong></p>
 </blockquote>
-<p>That’s it. It is <strong>not</strong>:</p>
+<p>That’s it. Large <span class="math inline">\(|z|\)</span> → small p-value → more evidence against H₀.</p>
+<p>It is <strong>not</strong>:</p>
 <ul>
 <li>The probability that H₀ is true</li>
 <li>The probability that you made a mistake</li>
@@ -409,71 +418,8 @@ window.Quarto = {
 </ul>
 <p>That’s why you should always look at the <strong>estimate</strong> (<span class="math inline">\(\hat{\beta}\)</span>) and <strong>confidence interval</strong> together with the p-value — not just whether p &lt; 0.05.</p>
 </section>
-<section id="what-a-confidence-interval-actually-is" class="level3">
-<h3 class="anchored" data-anchor-id="what-a-confidence-interval-actually-is">What a confidence interval actually is</h3>
-<blockquote class="blockquote">
-<p><strong>A 95% CI is constructed by a procedure that, in repeated sampling, captures the true parameter 95% of the time.</strong></p>
-</blockquote>
-<p>It is <strong>not</strong>:</p>
-<ul>
-<li>A 95% probability that the true parameter is inside <em>this particular</em> interval</li>
-<li>A range where 95% of the data falls</li>
-<li>A range where 95% of sample means fall</li>
-</ul>
-<p>Once you compute a specific CI, the true parameter is either in it or it isn’t — there’s no probability about it. The 95% refers to the <em>method</em>, not to any single interval.</p>
-</section>
-<section id="how-a-ci-is-constructed" class="level3">
-<h3 class="anchored" data-anchor-id="how-a-ci-is-constructed">How a CI is constructed</h3>
-<p>The recipe is simple. You need three ingredients:</p>
-<ol type="1">
-<li><strong>A point estimate</strong> — your best guess (e.g., <span class="math inline">\(\bar{x}\)</span> or <span class="math inline">\(\hat{\beta}\)</span>)</li>
-<li><strong>A standard error</strong> — how much the estimate bounces around due to sampling</li>
-<li><strong>A critical value</strong> — how many SEs to go out for your desired confidence level</li>
-</ol>
-<p>The formula for a 95% CI for a mean:</p>
-<p><span class="math display">\[\text{CI} = \bar{x} \pm z_{0.975} \times \text{SE} = \bar{x} \pm 1.96 \times \frac{s}{\sqrt{n}}\]</span></p>
-<p>That’s it: <strong>estimate ± margin of error</strong>. The margin of error is just a scaled-up standard error.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: center;">Confidence level</th>
-<th style="text-align: center;">Critical value (<span class="math inline">\(z\)</span>)</th>
-<th style="text-align: center;">Margin of error</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">90%</td>
-<td style="text-align: center;">1.645</td>
-<td style="text-align: center;">Narrower CI</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">95%</td>
-<td style="text-align: center;">1.960</td>
-<td style="text-align: center;">Standard</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">99%</td>
-<td style="text-align: center;">2.576</td>
-<td style="text-align: center;">Wider CI</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Where does the 1.96 come from?</strong> The middle 95% of a standard normal distribution falls between <span class="math inline">\(-1.96\)</span> and <span class="math inline">\(+1.96\)</span>. So if the sampling distribution of <span class="math inline">\(\bar{x}\)</span> is approximately normal (CLT), going out 1.96 SEs in each direction captures the true mean 95% of the time.</p>
-<p><strong>For small samples</strong> (roughly <span class="math inline">\(n &lt; 30\)</span>), replace the <span class="math inline">\(z\)</span> critical value with a <span class="math inline">\(t\)</span> critical value from the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n - 1\)</span> degrees of freedom. The <span class="math inline">\(t\)</span>-distribution has heavier tails, making the CI wider to account for the extra uncertainty in estimating the SE from small samples. As <span class="math inline">\(n\)</span> grows, the <span class="math inline">\(t\)</span> and <span class="math inline">\(z\)</span> values converge.</p>
-<p><strong>The key insight:</strong> a CI is wide when (a) the data is noisy (large <span class="math inline">\(s\)</span>), (b) the sample is small (small <span class="math inline">\(n\)</span>), or (c) you demand more confidence (larger critical value). You can’t have precision, small samples, and high confidence all at once — pick two.</p>
-</section>
-<section id="what-is-a-test-statistic" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-a-test-statistic">What is a test statistic?</h3>
-<p>A test statistic is a single number that measures <strong>how far your data is from what the null hypothesis predicts</strong>, in units of standard error.</p>
-<p>The most common one is the <strong>z-statistic</strong> (or <strong>t-statistic</strong> for small samples):</p>
-<p><span class="math display">\[z = \frac{\bar{x} - \mu_0}{\text{SE}} = \frac{\text{estimate} - \text{null value}}{\text{standard error}}\]</span></p>
-<p>It answers: “How many standard errors is my estimate from the null?” A <span class="math inline">\(z\)</span> of 2 means your estimate is 2 SEs away from what H₀ predicts — that’s unusual enough to start doubting H₀.</p>
-<p>The p-value is then just the probability of getting a <span class="math inline">\(z\)</span> this large or larger under the null distribution. Large <span class="math inline">\(|z|\)</span> → small p-value → more evidence against H₀.</p>
-</section>
-</section>
-<section id="simulation-1-the-p-value-machine" class="level2">
-<h2 class="anchored" data-anchor-id="simulation-1-the-p-value-machine">Simulation 1: The p-value machine</h2>
+<section id="simulation-the-p-value-machine" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-the-p-value-machine">Simulation: The p-value machine</h3>
 <p>Draw a sample, compute a test statistic, and see where it falls on the null distribution. The shaded area <em>is</em> the p-value. Under H₀, p-values are uniformly distributed — every value between 0 and 1 is equally likely.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
@@ -634,9 +580,74 @@ server &lt;- function(input, output, session) {
 }
 
 shinyApp(ui, server)</code></pre>
+<section id="things-to-try" class="level4">
+<h4 class="anchored" data-anchor-id="things-to-try">Things to try</h4>
+<ul>
+<li><strong>True <span class="math inline">\(\mu\)</span> = 0:</strong> p-values are uniform — flat histogram. This is the defining property of a valid test. About 5% of p-values fall below 0.05 purely by chance.</li>
+<li><strong>True <span class="math inline">\(\mu\)</span> = 0.5:</strong> p-values pile up near 0. The further <span class="math inline">\(\mu\)</span> is from 0, the more powerful the test, and the smaller the p-values tend to be.</li>
+</ul>
+<hr>
 </section>
-<section id="simulation-2-ci-coverage" class="level2">
-<h2 class="anchored" data-anchor-id="simulation-2-ci-coverage">Simulation 2: CI coverage</h2>
+</section>
+</section>
+<section id="part-2-confidence-intervals" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-confidence-intervals">Part 2: Confidence intervals</h2>
+<section id="what-a-confidence-interval-actually-is" class="level3">
+<h3 class="anchored" data-anchor-id="what-a-confidence-interval-actually-is">What a confidence interval actually is</h3>
+<blockquote class="blockquote">
+<p><strong>A 95% CI is constructed by a procedure that, in repeated sampling, captures the true parameter 95% of the time.</strong></p>
+</blockquote>
+<p>It is <strong>not</strong>:</p>
+<ul>
+<li>A 95% probability that the true parameter is inside <em>this particular</em> interval</li>
+<li>A range where 95% of the data falls</li>
+<li>A range where 95% of sample means fall</li>
+</ul>
+<p>Once you compute a specific CI, the true parameter is either in it or it isn’t — there’s no probability about it. The 95% refers to the <em>method</em>, not to any single interval.</p>
+</section>
+<section id="how-a-ci-is-constructed" class="level3">
+<h3 class="anchored" data-anchor-id="how-a-ci-is-constructed">How a CI is constructed</h3>
+<p>The recipe is simple. You need three ingredients:</p>
+<ol type="1">
+<li><strong>A point estimate</strong> — your best guess (e.g., <span class="math inline">\(\bar{x}\)</span> or <span class="math inline">\(\hat{\beta}\)</span>)</li>
+<li><strong>A standard error</strong> — how much the estimate bounces around due to sampling</li>
+<li><strong>A critical value</strong> — how many SEs to go out for your desired confidence level</li>
+</ol>
+<p>The formula for a 95% CI for a mean:</p>
+<p><span class="math display">\[\text{CI} = \bar{x} \pm z_{0.975} \times \text{SE} = \bar{x} \pm 1.96 \times \frac{s}{\sqrt{n}}\]</span></p>
+<p>That’s it: <strong>estimate ± margin of error</strong>. The margin of error is just a scaled-up standard error.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Confidence level</th>
+<th style="text-align: center;">Critical value (<span class="math inline">\(z\)</span>)</th>
+<th style="text-align: center;">Margin of error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">90%</td>
+<td style="text-align: center;">1.645</td>
+<td style="text-align: center;">Narrower CI</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">95%</td>
+<td style="text-align: center;">1.960</td>
+<td style="text-align: center;">Standard</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">99%</td>
+<td style="text-align: center;">2.576</td>
+<td style="text-align: center;">Wider CI</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Where does the 1.96 come from?</strong> The middle 95% of a standard normal distribution falls between <span class="math inline">\(-1.96\)</span> and <span class="math inline">\(+1.96\)</span>. So if the sampling distribution of <span class="math inline">\(\bar{x}\)</span> is approximately normal (CLT), going out 1.96 SEs in each direction captures the true mean 95% of the time.</p>
+<p><strong>For small samples</strong> (roughly <span class="math inline">\(n &lt; 30\)</span>), replace the <span class="math inline">\(z\)</span> critical value with a <span class="math inline">\(t\)</span> critical value from the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n - 1\)</span> degrees of freedom. The <span class="math inline">\(t\)</span>-distribution has heavier tails, making the CI wider to account for the extra uncertainty in estimating the SE from small samples. As <span class="math inline">\(n\)</span> grows, the <span class="math inline">\(t\)</span> and <span class="math inline">\(z\)</span> values converge.</p>
+<p><strong>The key insight:</strong> a CI is wide when (a) the data is noisy (large <span class="math inline">\(s\)</span>), (b) the sample is small (small <span class="math inline">\(n\)</span>), or (c) you demand more confidence (larger critical value). You can’t have precision, small samples, and high confidence all at once — pick two.</p>
+</section>
+<section id="simulation-ci-coverage" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-ci-coverage">Simulation: CI coverage</h3>
 <p>Draw 100 confidence intervals. Each one either contains the true <span class="math inline">\(\mu\)</span> (blue) or misses it (red). Over many experiments, about 95% contain <span class="math inline">\(\mu\)</span> — but any <em>single</em> CI either does or doesn’t. The 95% is about the procedure, not about your interval.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
@@ -764,25 +775,25 @@ server &lt;- function(input, output, session) {
 }
 
 shinyApp(ui, server)</code></pre>
-<section id="things-to-try" class="level3">
-<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<section id="things-to-try-1" class="level4">
+<h4 class="anchored" data-anchor-id="things-to-try-1">Things to try</h4>
 <ul>
-<li><strong>Sim 1, true <span class="math inline">\(\mu\)</span> = 0:</strong> p-values are uniform — flat histogram. This is the defining property of a valid test. About 5% of p-values fall below 0.05 purely by chance.</li>
-<li><strong>Sim 1, true <span class="math inline">\(\mu\)</span> = 0.5:</strong> p-values pile up near 0. The further <span class="math inline">\(\mu\)</span> is from 0, the more powerful the test, and the smaller the p-values tend to be.</li>
-<li><strong>Sim 2, 95% level:</strong> roughly 5 out of 100 CIs miss <span class="math inline">\(\mu\)</span> (shown in red). Click “Draw new CIs” several times — the exact number varies, but it averages to 5%.</li>
-<li><strong>Sim 2, change confidence to 99%:</strong> fewer CIs miss <span class="math inline">\(\mu\)</span>, but each CI is wider. There’s always a tradeoff between coverage and precision.</li>
-<li><strong>Sim 2, small n (n = 5):</strong> the CIs are very wide. With little data, you can’t be precise. This is the price of honesty.</li>
+<li><strong>95% level:</strong> roughly 5 out of 100 CIs miss <span class="math inline">\(\mu\)</span> (shown in red). Click “Draw new CIs” several times — the exact number varies, but it averages to 5%.</li>
+<li><strong>Change confidence to 99%:</strong> fewer CIs miss <span class="math inline">\(\mu\)</span>, but each CI is wider. There’s always a tradeoff between coverage and precision.</li>
+<li><strong>Small n (n = 5):</strong> the CIs are very wide. With little data, you can’t be precise. This is the price of honesty.</li>
 </ul>
+<hr>
 </section>
-<section id="the-bottom-line" class="level3">
-<h3 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h3>
+</section>
+</section>
+<section id="the-bottom-line" class="level2">
+<h2 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h2>
 <ul>
 <li>A p-value is <strong>not</strong> the probability the null is true. It’s the probability of seeing data this extreme <em>if</em> the null were true.</li>
 <li>A confidence interval is <strong>not</strong> a probability statement about <span class="math inline">\(\mu\)</span>. It’s a statement about the <em>procedure</em>: if you repeated the experiment many times, 95% of your CIs would contain <span class="math inline">\(\mu\)</span>.</li>
 <li>Both concepts are statements about <strong>long-run frequency</strong>, not about any single experiment. This is what makes frequentist inference subtle — and why Bayesian methods (which <em>can</em> make probability statements about parameters) are appealing to many.</li>
 </ul>
 <hr>
-</section>
 <section id="did-you-know" class="level3">
 <h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
 <ul>
