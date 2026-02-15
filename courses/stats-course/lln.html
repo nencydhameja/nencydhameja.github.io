@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The Bootstrap – Interactive Notes</title>
+<title>LLN vs CLT: Why Averages Stabilize Before They Become Normal – Interactive Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./bootstrap.html">The Bootstrap</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./foundations.html">Probability &amp; Uncertainty</a></li><li class="breadcrumb-item"><a href="./lln.html">LLN vs CLT</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -176,7 +176,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lln.html" class="sidebar-item-text sidebar-link">
+  <a href="./lln.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">LLN vs CLT</span></a>
   </div>
 </li>
@@ -216,7 +216,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link active">
+  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Bootstrap</span></a>
   </div>
 </li>
@@ -314,12 +314,12 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
+  <li><a href="#two-theorems-two-different-promises" id="toc-two-theorems-two-different-promises" class="nav-link active" data-scroll-target="#two-theorems-two-different-promises">Two theorems, two different promises</a></li>
+  <li><a href="#simulation-1-the-running-average" id="toc-simulation-1-the-running-average" class="nav-link" data-scroll-target="#simulation-1-the-running-average">Simulation 1: The running average</a></li>
+  <li><a href="#simulation-2-lln-vs-clt-side-by-side" id="toc-simulation-2-lln-vs-clt-side-by-side" class="nav-link" data-scroll-target="#simulation-2-lln-vs-clt-side-by-side">Simulation 2: LLN vs CLT side by side</a>
   <ul class="collapse">
-  <li><a href="#the-steps" id="toc-the-steps" class="nav-link" data-scroll-target="#the-steps">The steps</a></li>
-  <li><a href="#but-cant-i-just-look-at-my-data" id="toc-but-cant-i-just-look-at-my-data" class="nav-link" data-scroll-target="#but-cant-i-just-look-at-my-data">But can’t I just look at my data?</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
-  <li><a href="#when-to-use-the-bootstrap" id="toc-when-to-use-the-bootstrap" class="nav-link" data-scroll-target="#when-to-use-the-bootstrap">When to use the bootstrap</a></li>
+  <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul></li>
   </ul>
@@ -328,9 +328,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./bootstrap.html">The Bootstrap</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./foundations.html">Probability &amp; Uncertainty</a></li><li class="breadcrumb-item"><a href="./lln.html">LLN vs CLT</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">The Bootstrap</h1>
+<h1 class="title">LLN vs CLT: Why Averages Stabilize Before They Become Normal</h1>
 </div>
 
 
@@ -347,35 +347,56 @@ window.Quarto = {
 </header>
 
 
-<section id="the-idea" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>You want a confidence interval for some statistic (mean, median, regression coefficient), but you don’t know the sampling distribution. Maybe the formula is complicated. Maybe there is no formula.</p>
-<p>The <strong>bootstrap</strong> says: <em>pretend your sample is the population</em>. Then simulate the sampling process by <strong>resampling with replacement</strong> from your data, over and over. Each resample gives you a new estimate. The distribution of those estimates <em>approximates</em> the true sampling distribution.</p>
-<section id="the-steps" class="level3">
-<h3 class="anchored" data-anchor-id="the-steps">The steps</h3>
-<ol type="1">
-<li>You have a sample of <span class="math inline">\(n\)</span> observations.</li>
-<li>Draw <span class="math inline">\(n\)</span> observations <strong>with replacement</strong> from your sample (some points get picked twice, some not at all).</li>
-<li>Compute your statistic on this resample.</li>
-<li>Repeat B times (typically 1,000–10,000).</li>
-<li>The spread of those B estimates gives you a standard error and a confidence interval.</li>
-</ol>
-<p>That’s it. No formulas, no distributional assumptions. Just resampling.</p>
+<section id="two-theorems-two-different-promises" class="level2">
+<h2 class="anchored" data-anchor-id="two-theorems-two-different-promises">Two theorems, two different promises</h2>
+<p>The <strong>Law of Large Numbers (LLN)</strong> and the <strong>Central Limit Theorem (CLT)</strong> are the two pillars of statistics, but they say different things:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>LLN</th>
+<th>CLT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>What it says</strong></td>
+<td>The sample mean converges to <span class="math inline">\(\mu\)</span></td>
+<td>The distribution of sample means is approximately normal</td>
+</tr>
+<tr class="even">
+<td><strong>About</strong></td>
+<td>One running average</td>
+<td>Many sample averages</td>
+</tr>
+<tr class="odd">
+<td><strong>Promise</strong></td>
+<td>Your estimate gets <em>close</em> to the truth</td>
+<td>You know the <em>shape</em> of the uncertainty</td>
+</tr>
+<tr class="even">
+<td><strong>Requires</strong></td>
+<td>Finite mean</td>
+<td>Finite variance</td>
+</tr>
+</tbody>
+</table>
+<p><strong>LLN says the mean settles down. CLT says <em>where</em> it settles follows a normal distribution.</strong></p>
+<p>Think of it this way: LLN tells you that if you flip a fair coin enough times, the fraction of heads approaches 0.5. CLT tells you that if you repeat the <em>entire experiment</em> many times, the distribution of those fractions is bell-shaped.</p>
 </section>
-<section id="but-cant-i-just-look-at-my-data" class="level3">
-<h3 class="anchored" data-anchor-id="but-cant-i-just-look-at-my-data">But can’t I just look at my data?</h3>
-<p>No — and this is a crucial distinction. There are <strong>two different distributions</strong> at play:</p>
-<ul>
-<li>The <strong>distribution of the data</strong> = what individual observations look like (their histogram). This tells you about spread, skew, outliers in your raw data.</li>
-<li>The <strong>sampling distribution</strong> = what your <em>statistic</em> (mean, median, slope) would look like if you could repeat the entire experiment many times. This is what you need for standard errors and confidence intervals.</li>
-</ul>
-<p>You can always plot your data. But you <strong>cannot see the sampling distribution</strong> — you only ran the experiment once. You have one mean, not a distribution of means.</p>
-<p>The bootstrap bridges that gap. It simulates the “what if I repeated this experiment?” question using only the data you have. The left panel below shows your data distribution. The right panel shows the bootstrap sampling distribution. Notice: they look completely different. Your data might be skewed and spread out, but the sampling distribution of the mean is narrow and roughly normal (thanks to the CLT). The bootstrap discovers this for you without any formulas.</p>
+<section id="simulation-1-the-running-average" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-1-the-running-average">Simulation 1: The running average</h2>
+<p>Watch one running average converge to the true mean as you add observations one at a time. This is LLN in action — the cumulative mean stabilizes. Try different distributions and notice that convergence happens regardless of the population shape.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
 #| standalone: true
-#| viewerHeight: 900
+#| viewerHeight: 620
 
 library(shiny)
 
@@ -392,21 +413,20 @@ ui &lt;- fluidPage(
     sidebarPanel(
       width = 3,
 
-      selectInput("stat", "Statistic to bootstrap:",
-                  choices = c("Mean", "Median", "SD",
-                              "Correlation", "Regression slope")),
+      selectInput("pop", "Population:",
+                  choices = c("Uniform(0, 1)",
+                              "Exponential(1)",
+                              "Bimodal",
+                              "Bernoulli(0.3)",
+                              "Heavy-tailed (t, df=2)")),
 
-      selectInput("pop", "Population shape:",
-                  choices = c("Normal", "Skewed (exponential)",
-                              "Heavy-tailed", "Bimodal")),
+      sliderInput("n", "Number of observations:",
+                  min = 50, max = 5000, value = 500, step = 50),
 
-      sliderInput("n", "Sample size:",
-                  min = 10, max = 200, value = 30, step = 10),
+      sliderInput("paths", "Number of paths:",
+                  min = 1, max = 10, value = 3, step = 1),
 
-      sliderInput("B", "Bootstrap resamples (B):",
-                  min = 100, max = 5000, value = 1000, step = 100),
-
-      actionButton("go", "New sample + bootstrap",
+      actionButton("go", "Draw new paths",
                    class = "btn-primary", width = "100%"),
 
       uiOutput("results")
@@ -414,12 +434,145 @@ ui &lt;- fluidPage(
 
     mainPanel(
       width = 9,
+      plotOutput("running_avg", height = "500px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  draw_pop &lt;- function(n, pop) {
+    switch(pop,
+      "Uniform(0, 1)"          = runif(n),
+      "Exponential(1)"         = rexp(n, rate = 1),
+      "Bimodal"                = {
+        k &lt;- rbinom(n, 1, 0.5)
+        k * rnorm(n, -2, 0.6) + (1 - k) * rnorm(n, 2, 0.6)
+      },
+      "Bernoulli(0.3)"         = rbinom(n, 1, 0.3),
+      "Heavy-tailed (t, df=2)" = rt(n, df = 2)
+    )
+  }
+
+  pop_mu &lt;- function(pop) {
+    switch(pop,
+      "Uniform(0, 1)"          = 0.5,
+      "Exponential(1)"         = 1,
+      "Bimodal"                = 0,
+      "Bernoulli(0.3)"         = 0.3,
+      "Heavy-tailed (t, df=2)" = 0
+    )
+  }
+
+  dat &lt;- reactive({
+    input$go
+    n     &lt;- input$n
+    paths &lt;- input$paths
+    pop   &lt;- input$pop
+    mu    &lt;- pop_mu(pop)
+
+    all_paths &lt;- lapply(seq_len(paths), function(i) {
+      x &lt;- draw_pop(n, pop)
+      cumsum(x) / seq_along(x)
+    })
+
+    list(all_paths = all_paths, n = n, mu = mu, pop = pop, paths = paths)
+  })
+
+  output$running_avg &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    ylim &lt;- range(unlist(d$all_paths))
+    ylim &lt;- ylim + c(-1, 1) * 0.1 * diff(ylim)
+
+    cols &lt;- c("#e74c3c", "#3498db", "#27ae60", "#9b59b6", "#e67e22",
+              "#1abc9c", "#34495e", "#f39c12", "#2ecc71", "#c0392b")
+
+    plot(NULL, xlim = c(1, d$n), ylim = ylim,
+         xlab = "Number of observations",
+         ylab = "Cumulative mean",
+         main = paste0("LLN: Running average converges to \u03bc = ", d$mu))
+
+    abline(h = d$mu, lty = 2, lwd = 2.5, col = "#2c3e50")
+
+    for (i in seq_along(d$all_paths)) {
+      lines(seq_along(d$all_paths[[i]]), d$all_paths[[i]],
+            col = adjustcolor(cols[i], 0.7), lwd = 1.5)
+    }
+
+    legend("topright", bty = "n", cex = 0.9,
+           legend = c(paste0("True mean (\u03bc = ", d$mu, ")"),
+                      paste0(d$paths, " sample path(s)")),
+           col = c("#2c3e50", cols[1]),
+           lwd = c(2.5, 1.5), lty = c(2, 1))
+  })
+
+  output$results &lt;- renderUI({
+    d &lt;- dat()
+    final_means &lt;- sapply(d$all_paths, function(p) p[length(p)])
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;True mean:&lt;/b&gt; ", d$mu, "&lt;br&gt;",
+        "&lt;b&gt;Final running avg(s):&lt;/b&gt;&lt;br&gt;",
+        paste(round(final_means, 4), collapse = ", "), "&lt;br&gt;",
+        "&lt;b&gt;Max deviation:&lt;/b&gt; ",
+        round(max(abs(final_means - d$mu)), 4)
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</section>
+<section id="simulation-2-lln-vs-clt-side-by-side" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-2-lln-vs-clt-side-by-side">Simulation 2: LLN vs CLT side by side</h2>
+<p>Now see both theorems at once. The <strong>left panel</strong> shows LLN — one running average converging to <span class="math inline">\(\mu\)</span>. The <strong>right panel</strong> shows CLT — the histogram of many sample means forming a normal distribution. Same data, different questions.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| viewerHeight: 580
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      selectInput("pop2", "Population:",
+                  choices = c("Uniform(0, 1)",
+                              "Exponential(1)",
+                              "Bimodal",
+                              "Bernoulli(0.3)")),
+
+      sliderInput("n2", "Sample size per experiment:",
+                  min = 5, max = 200, value = 30, step = 5),
+
+      sliderInput("reps2", "Number of experiments:",
+                  min = 200, max = 3000, value = 1000, step = 100),
+
+      actionButton("go2", "Run experiments",
+                   class = "btn-primary", width = "100%"),
+
+      uiOutput("results2")
+    ),
+
+    mainPanel(
+      width = 9,
       fluidRow(
-        column(6, plotOutput("sample_plot", height = "350px")),
-        column(6, plotOutput("boot_plot", height = "350px"))
-      ),
-      fluidRow(
-        column(12, plotOutput("compare_plot", height = "350px"))
+        column(6, plotOutput("lln_plot", height = "430px")),
+        column(6, plotOutput("clt_plot", height = "430px"))
       )
     )
   )
@@ -429,214 +582,139 @@ server &lt;- function(input, output, session) {
 
   draw_pop &lt;- function(n, pop) {
     switch(pop,
-      "Normal" = rnorm(n, mean = 5, sd = 2),
-      "Skewed (exponential)" = rexp(n, rate = 0.5),
-      "Heavy-tailed" = rt(n, df = 3) * 2 + 5,
-      "Bimodal" = {
+      "Uniform(0, 1)"  = runif(n),
+      "Exponential(1)" = rexp(n, rate = 1),
+      "Bimodal"        = {
         k &lt;- rbinom(n, 1, 0.5)
-        k * rnorm(n, 2, 0.8) + (1 - k) * rnorm(n, 7, 0.8)
-      }
+        k * rnorm(n, -2, 0.6) + (1 - k) * rnorm(n, 2, 0.6)
+      },
+      "Bernoulli(0.3)" = rbinom(n, 1, 0.3)
     )
   }
 
-  compute_stat &lt;- function(x, y = NULL, stat) {
-    switch(stat,
-      "Mean" = mean(x),
-      "Median" = median(x),
-      "SD" = sd(x),
-      "Correlation" = cor(x, y),
-      "Regression slope" = coef(lm(y ~ x))[2]
+  pop_mu &lt;- function(pop) {
+    switch(pop,
+      "Uniform(0, 1)"  = 0.5,
+      "Exponential(1)" = 1,
+      "Bimodal"        = 0,
+      "Bernoulli(0.3)" = 0.3
+    )
+  }
+
+  pop_sigma &lt;- function(pop) {
+    switch(pop,
+      "Uniform(0, 1)"  = sqrt(1 / 12),
+      "Exponential(1)" = 1,
+      "Bimodal"        = sqrt(0.6^2 + 4),
+      "Bernoulli(0.3)" = sqrt(0.3 * 0.7)
     )
   }
 
   dat &lt;- reactive({
-    input$go
-    n    &lt;- input$n
-    B    &lt;- input$B
-    stat &lt;- input$stat
-    pop  &lt;- input$pop
+    input$go2
+    n    &lt;- input$n2
+    reps &lt;- input$reps2
+    pop  &lt;- input$pop2
+    mu   &lt;- pop_mu(pop)
+    sig  &lt;- pop_sigma(pop)
 
-    x &lt;- draw_pop(n, pop)
-    y &lt;- NULL
-    if (stat %in% c("Correlation", "Regression slope")) {
-      y &lt;- 1 + 0.8 * x + rnorm(n, sd = 2)
-    }
+    # One long draw for LLN
+    long_draw &lt;- draw_pop(n * 5, pop)
+    running   &lt;- cumsum(long_draw) / seq_along(long_draw)
 
-    obs_stat &lt;- compute_stat(x, y, stat)
+    # Many experiments for CLT
+    means &lt;- replicate(reps, mean(draw_pop(n, pop)))
 
-    # Bootstrap
-    boot_stats &lt;- replicate(B, {
-      idx &lt;- sample(n, n, replace = TRUE)
-      x_b &lt;- x[idx]
-      y_b &lt;- if (!is.null(y)) y[idx] else NULL
-      compute_stat(x_b, y_b, stat)
-    })
-
-    boot_se &lt;- sd(boot_stats)
-    boot_ci &lt;- quantile(boot_stats, c(0.025, 0.975))
-
-    list(x = x, y = y, obs_stat = obs_stat,
-         boot_stats = boot_stats, boot_se = boot_se,
-         boot_ci = boot_ci, stat = stat, n = n, B = B)
+    list(running = running, means = means, mu = mu, sig = sig,
+         n = n, reps = reps, pop = pop)
   })
 
-  output$sample_plot &lt;- renderPlot({
+  output$lln_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    if (d$stat %in% c("Correlation", "Regression slope")) {
-      plot(d$x, d$y, pch = 16, col = "#3498db80", cex = 0.8,
-           xlab = "X", ylab = "Y", main = "Your sample")
-      if (d$stat == "Regression slope") {
-        abline(lm(d$y ~ d$x), col = "#e74c3c", lwd = 2)
-      }
-    } else {
-      hist(d$x, breaks = 20, col = "#d5e8d4", border = "#82b366",
-           main = "Your sample", xlab = "X", ylab = "Frequency")
-      abline(v = d$obs_stat, col = "#e74c3c", lwd = 2.5, lty = 2)
-      legend("topright", bty = "n", cex = 0.85,
-             legend = paste0(d$stat, " = ", round(d$obs_stat, 3)),
-             col = "#e74c3c", lty = 2, lwd = 2)
-    }
+    plot(seq_along(d$running), d$running, type = "l",
+         col = "#3498db", lwd = 1.5,
+         xlab = "Number of observations",
+         ylab = "Cumulative mean",
+         main = "LLN: One running average")
+    abline(h = d$mu, lty = 2, lwd = 2.5, col = "#e74c3c")
+
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c("Running average",
+                      paste0("True \u03bc = ", d$mu)),
+           col = c("#3498db", "#e74c3c"),
+           lwd = c(1.5, 2.5), lty = c(1, 2))
   })
 
-  output$boot_plot &lt;- renderPlot({
+  output$clt_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    hist(d$boot_stats, breaks = 40, probability = TRUE,
-         col = "#dae8fc", border = "#6c8ebf",
-         main = paste0("Bootstrap distribution (B = ", d$B, ")"),
-         xlab = paste0("Bootstrap ", tolower(d$stat)),
-         ylab = "Density")
+    hist(d$means, breaks = 40, probability = TRUE,
+         col = "#3498db30", border = "#3498db80",
+         main = paste0("CLT: ", d$reps, " sample means (n=", d$n, ")"),
+         xlab = "Sample mean", ylab = "Density")
 
-    abline(v = d$obs_stat, col = "#e74c3c", lwd = 2.5, lty = 2)
-    abline(v = d$boot_ci, col = "#27ae60", lwd = 2, lty = 3)
+    x_seq &lt;- seq(min(d$means), max(d$means), length.out = 300)
+    se &lt;- d$sig / sqrt(d$n)
+    lines(x_seq, dnorm(x_seq, mean = d$mu, sd = se),
+          col = "#e74c3c", lwd = 2.5)
 
-    legend("topright", bty = "n", cex = 0.8,
-           legend = c(paste0("Observed: ", round(d$obs_stat, 3)),
-                      paste0("95% CI: [", round(d$boot_ci[1], 3),
-                             ", ", round(d$boot_ci[2], 3), "]")),
-           col = c("#e74c3c", "#27ae60"),
-           lty = c(2, 3), lwd = 2)
+    abline(v = d$mu, lty = 2, lwd = 2, col = "#2c3e50")
+
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c("Sampling distribution",
+                      paste0("N(\u03bc, \u03c3/\u221an) overlay"),
+                      paste0("True \u03bc = ", d$mu)),
+           col = c("#3498db80", "#e74c3c", "#2c3e50"),
+           lwd = c(8, 2.5, 2), lty = c(1, 1, 2))
   })
 
-  output$compare_plot &lt;- renderPlot({
+  output$results2 &lt;- renderUI({
     d &lt;- dat()
+    se &lt;- d$sig / sqrt(d$n)
 
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    if (d$stat %in% c("Correlation", "Regression slope")) {
-      # For bivariate stats, just show bootstrap dist with CI
-      hist(d$boot_stats, breaks = 40, probability = TRUE,
-           col = "#dae8fc", border = "#6c8ebf",
-           main = "Bootstrap sampling dist.",
-           xlab = paste0("Bootstrap ", tolower(d$stat)),
-           ylab = "Density")
-      abline(v = d$boot_ci, col = "#27ae60", lwd = 2, lty = 3)
-      abline(v = d$obs_stat, col = "#e74c3c", lwd = 2, lty = 2)
-    } else {
-      # Overlay: data distribution (wide) vs bootstrap distribution (narrow)
-      # Rescale data density to fit on same axes
-      dens_data &lt;- density(d$x)
-      dens_boot &lt;- density(d$boot_stats)
-
-      # Normalize both to peak at 1 for visual comparison
-      dens_data$y &lt;- dens_data$y / max(dens_data$y)
-      dens_boot$y &lt;- dens_boot$y / max(dens_boot$y)
-
-      xlim &lt;- range(c(dens_data$x, dens_boot$x))
-
-      plot(dens_data, col = "#e74c3c", lwd = 2.5, xlim = xlim,
-           ylim = c(0, 1.25), main = "Data vs Sampling Distribution",
-           xlab = "Value", ylab = "Scaled density")
-      polygon(dens_data$x, dens_data$y,
-              col = adjustcolor("#e74c3c", 0.15), border = NA)
-
-      lines(dens_boot, col = "#3498db", lwd = 2.5)
-      polygon(dens_boot$x, dens_boot$y,
-              col = adjustcolor("#3498db", 0.15), border = NA)
-
-      legend("topright", bty = "n", cex = 0.8,
-             legend = c("Your data (wide, raw obs.)",
-                        paste0("Sampling dist. of ", tolower(d$stat),
-                               " (narrow)")),
-             col = c("#e74c3c", "#3498db"), lwd = 2.5)
-    }
-  })
-
-  output$results &lt;- renderUI({
-    d &lt;- dat()
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;Statistic:&lt;/b&gt; ", d$stat, "&lt;br&gt;",
-        "&lt;b&gt;Observed:&lt;/b&gt; ", round(d$obs_stat, 4), "&lt;br&gt;",
-        "&lt;b&gt;Bootstrap SE:&lt;/b&gt; ", round(d$boot_se, 4), "&lt;br&gt;",
-        "&lt;b&gt;95% CI:&lt;/b&gt; [", round(d$boot_ci[1], 4),
-        ", ", round(d$boot_ci[2], 4), "]&lt;br&gt;",
+        "&lt;b&gt;LLN (left):&lt;/b&gt;&lt;br&gt;",
+        "Final avg: ", round(d$running[length(d$running)], 4), "&lt;br&gt;",
+        "True \u03bc: ", d$mu, "&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;small&gt;CI uses percentile method:&lt;br&gt;",
-        "2.5th and 97.5th percentiles of&lt;br&gt;",
-        "bootstrap distribution.&lt;/small&gt;"
+        "&lt;b&gt;CLT (right):&lt;/b&gt;&lt;br&gt;",
+        "Mean of means: ", round(mean(d$means), 4), "&lt;br&gt;",
+        "SD of means: ", round(sd(d$means), 4), "&lt;br&gt;",
+        "Theoretical SE: ", round(se, 4)
       ))
     )
   })
 }
 
 shinyApp(ui, server)</code></pre>
-</section>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Mean with Normal population:</strong> the bootstrap distribution looks normal, similar to what CLT gives you analytically.</li>
-<li><strong>Median with skewed population:</strong> no easy formula for the SE of a median. But the bootstrap handles it effortlessly.</li>
-<li><strong>SD with heavy-tailed data:</strong> the bootstrap distribution is skewed — the percentile CI is asymmetric, which is exactly right.</li>
-<li><strong>Regression slope:</strong> bootstrap the slope to get a CI without assuming homoskedasticity.</li>
-<li><strong>Small n (10) vs large n (200):</strong> with small samples the bootstrap distribution is choppy (limited unique resamples). With more data it smooths out.</li>
+<li><strong>Exponential, n = 5:</strong> the LLN panel shows the running average still wobbling, while the CLT histogram is visibly skewed. Neither theorem has fully “kicked in” yet — but they will at different rates.</li>
+<li><strong>Exponential, n = 100:</strong> the running average has settled (LLN), and the histogram is now bell-shaped (CLT). Both theorems have done their job.</li>
+<li><strong>Bimodal:</strong> the running average converges to 0 (the midpoint), even though no individual observation is near 0. LLN doesn’t care about the shape.</li>
+<li><strong>Multiple paths (Sim 1):</strong> all paths converge to the same <span class="math inline">\(\mu\)</span>, but they take different routes. The early wobble is sampling variability; the eventual convergence is LLN.</li>
 </ul>
 </section>
-<section id="when-to-use-the-bootstrap" class="level3">
-<h3 class="anchored" data-anchor-id="when-to-use-the-bootstrap">When to use the bootstrap</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Use bootstrap when…</th>
-<th>Don’t bother when…</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>No formula for the SE exists</td>
-<td>Standard formulas are available and valid</td>
-</tr>
-<tr class="even">
-<td>The statistic is complicated (ratios, quantiles)</td>
-<td>You’re computing a simple mean</td>
-</tr>
-<tr class="odd">
-<td>You suspect non-normality</td>
-<td>n is large and CLT applies</td>
-</tr>
-<tr class="even">
-<td>You want a quick, assumption-free CI</td>
-<td>You need exact small-sample inference</td>
-</tr>
-</tbody>
-</table>
-<p>The bootstrap is not magic — it can fail with very small samples or non-smooth statistics. But for most practical situations, it’s the easiest path to a valid confidence interval.</p>
+<section id="the-bottom-line" class="level3">
+<h3 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h3>
+<ul>
+<li><strong>LLN</strong> = your estimate gets closer to the truth as <span class="math inline">\(n\)</span> grows. It’s about <em>accuracy</em> of a single estimate.</li>
+<li><strong>CLT</strong> = the shape of the sampling distribution is approximately normal. It’s about the <em>distribution</em> of the estimator across repeated experiments.</li>
+<li>You need LLN <em>before</em> CLT matters. If the mean hasn’t stabilized, knowing its distribution is normal doesn’t help much.</li>
+</ul>
 <hr>
 </section>
 <section id="did-you-know" class="level3">
 <h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
 <ul>
-<li><strong>Bradley Efron</strong> invented the bootstrap in 1979 at Stanford. The name comes from the expression <strong>“pulling yourself up by your bootstraps”</strong> — attributed to the tall tales of <strong>Baron Munchausen</strong>, who claimed to have pulled himself out of a swamp by his own hair (later versions say bootstraps). The idea that a sample can estimate its own sampling distribution seemed equally absurd at first.</li>
-<li>When Efron first presented the bootstrap, many statisticians were skeptical. One famously asked: <em>“You’re just sampling from your sample — how can that tell you anything new?”</em> The answer: it tells you about the <em>variability</em> of your estimate, not about new data points.</li>
-<li>The bootstrap is now one of the most cited statistical methods ever. Efron’s 1979 paper has over 20,000 citations. He received the <strong>International Prize in Statistics</strong> (the statistics equivalent of the Nobel) in 2019 for this work.</li>
-<li>Before the bootstrap, getting standard errors for complex statistics (ratios, quantiles, eigenvalues) required either painful analytical derivations or the <strong>delta method</strong> — a Taylor expansion trick that often required heroic assumptions. The bootstrap made all of that unnecessary.</li>
+<li><strong>Jacob Bernoulli</strong> proved the first version of the Law of Large Numbers in his book <em>Ars Conjectandi</em>, published posthumously in <strong>1713</strong>. He called it his “golden theorem” and spent over 20 years working on the proof. The result seems obvious in hindsight — of course averages converge — but rigorously proving <em>why</em> required entirely new mathematical machinery.</li>
+<li>There are actually two versions: the <strong>Weak LLN</strong> (convergence in probability, proved by Bernoulli and later Chebyshev) and the <strong>Strong LLN</strong> (almost sure convergence, proved by Kolmogorov in 1933). The strong version says that convergence happens with probability 1, not just “usually.”</li>
+<li>The heavy-tailed <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(\text{df} = 1\)</span> (the Cauchy distribution) has <strong>no finite mean</strong>, so LLN doesn’t apply. The running average never settles down, no matter how much data you collect. Try it in the simulation above — it keeps jumping around forever.</li>
 </ul>
 
 

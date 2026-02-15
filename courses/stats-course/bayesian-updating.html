@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The Bootstrap – Interactive Notes</title>
+<title>Bayesian Updating: One Gentle Introduction – Interactive Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./bootstrap.html">The Bootstrap</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bayesian-updating.html">Bayesian Thinking</a></li><li class="breadcrumb-item"><a href="./bayesian-updating.html">Bayesian Updating</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -216,7 +216,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link active">
+  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Bootstrap</span></a>
   </div>
 </li>
@@ -298,7 +298,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bayesian-updating.html" class="sidebar-item-text sidebar-link">
+  <a href="./bayesian-updating.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Bayesian Updating</span></a>
   </div>
 </li>
@@ -314,12 +314,15 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
+  <li><a href="#the-bayesian-recipe" id="toc-the-bayesian-recipe" class="nav-link active" data-scroll-target="#the-bayesian-recipe">The Bayesian recipe</a>
   <ul class="collapse">
-  <li><a href="#the-steps" id="toc-the-steps" class="nav-link" data-scroll-target="#the-steps">The steps</a></li>
-  <li><a href="#but-cant-i-just-look-at-my-data" id="toc-but-cant-i-just-look-at-my-data" class="nav-link" data-scroll-target="#but-cant-i-just-look-at-my-data">But can’t I just look at my data?</a></li>
+  <li><a href="#how-is-this-different-from-frequentist-inference" id="toc-how-is-this-different-from-frequentist-inference" class="nav-link" data-scroll-target="#how-is-this-different-from-frequentist-inference">How is this different from frequentist inference?</a></li>
+  </ul></li>
+  <li><a href="#simulation-1-coin-flipping-watch-the-posterior-update" id="toc-simulation-1-coin-flipping-watch-the-posterior-update" class="nav-link" data-scroll-target="#simulation-1-coin-flipping-watch-the-posterior-update">Simulation 1: Coin flipping — watch the posterior update</a></li>
+  <li><a href="#simulation-2-prior-sensitivity-different-priors-same-data" id="toc-simulation-2-prior-sensitivity-different-priors-same-data" class="nav-link" data-scroll-target="#simulation-2-prior-sensitivity-different-priors-same-data">Simulation 2: Prior sensitivity — different priors, same data</a>
+  <ul class="collapse">
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
-  <li><a href="#when-to-use-the-bootstrap" id="toc-when-to-use-the-bootstrap" class="nav-link" data-scroll-target="#when-to-use-the-bootstrap">When to use the bootstrap</a></li>
+  <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul></li>
   </ul>
@@ -328,9 +331,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./bootstrap.html">The Bootstrap</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bayesian-updating.html">Bayesian Thinking</a></li><li class="breadcrumb-item"><a href="./bayesian-updating.html">Bayesian Updating</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">The Bootstrap</h1>
+<h1 class="title">Bayesian Updating: One Gentle Introduction</h1>
 </div>
 
 
@@ -347,35 +350,66 @@ window.Quarto = {
 </header>
 
 
-<section id="the-idea" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>You want a confidence interval for some statistic (mean, median, regression coefficient), but you don’t know the sampling distribution. Maybe the formula is complicated. Maybe there is no formula.</p>
-<p>The <strong>bootstrap</strong> says: <em>pretend your sample is the population</em>. Then simulate the sampling process by <strong>resampling with replacement</strong> from your data, over and over. Each resample gives you a new estimate. The distribution of those estimates <em>approximates</em> the true sampling distribution.</p>
-<section id="the-steps" class="level3">
-<h3 class="anchored" data-anchor-id="the-steps">The steps</h3>
-<ol type="1">
-<li>You have a sample of <span class="math inline">\(n\)</span> observations.</li>
-<li>Draw <span class="math inline">\(n\)</span> observations <strong>with replacement</strong> from your sample (some points get picked twice, some not at all).</li>
-<li>Compute your statistic on this resample.</li>
-<li>Repeat B times (typically 1,000–10,000).</li>
-<li>The spread of those B estimates gives you a standard error and a confidence interval.</li>
-</ol>
-<p>That’s it. No formulas, no distributional assumptions. Just resampling.</p>
-</section>
-<section id="but-cant-i-just-look-at-my-data" class="level3">
-<h3 class="anchored" data-anchor-id="but-cant-i-just-look-at-my-data">But can’t I just look at my data?</h3>
-<p>No — and this is a crucial distinction. There are <strong>two different distributions</strong> at play:</p>
+<section id="the-bayesian-recipe" class="level2">
+<h2 class="anchored" data-anchor-id="the-bayesian-recipe">The Bayesian recipe</h2>
+<p>Bayesian inference has exactly one formula:</p>
+<p><span class="math display">\[\text{Posterior} \propto \text{Prior} \times \text{Likelihood}\]</span></p>
+<p>That’s it. Everything else is details.</p>
 <ul>
-<li>The <strong>distribution of the data</strong> = what individual observations look like (their histogram). This tells you about spread, skew, outliers in your raw data.</li>
-<li>The <strong>sampling distribution</strong> = what your <em>statistic</em> (mean, median, slope) would look like if you could repeat the entire experiment many times. This is what you need for standard errors and confidence intervals.</li>
+<li><strong>Prior</strong>: what you believed before seeing data</li>
+<li><strong>Likelihood</strong>: how probable the data is under each possible parameter value</li>
+<li><strong>Posterior</strong>: your updated belief after seeing data</li>
 </ul>
-<p>You can always plot your data. But you <strong>cannot see the sampling distribution</strong> — you only ran the experiment once. You have one mean, not a distribution of means.</p>
-<p>The bootstrap bridges that gap. It simulates the “what if I repeated this experiment?” question using only the data you have. The left panel below shows your data distribution. The right panel shows the bootstrap sampling distribution. Notice: they look completely different. Your data might be skewed and spread out, but the sampling distribution of the mean is narrow and roughly normal (thanks to the CLT). The bootstrap discovers this for you without any formulas.</p>
+<p>The key insight: <strong>your belief gets updated as data arrives.</strong> Start with a prior (maybe vague, maybe informed), observe data, and the posterior combines both. With enough data, the prior gets overwhelmed — the data speaks for itself.</p>
+<section id="how-is-this-different-from-frequentist-inference" class="level3">
+<h3 class="anchored" data-anchor-id="how-is-this-different-from-frequentist-inference">How is this different from frequentist inference?</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Frequentist</th>
+<th>Bayesian</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Parameters</strong></td>
+<td>Fixed but unknown</td>
+<td>Random variables with distributions</td>
+</tr>
+<tr class="even">
+<td><strong>Probability</strong></td>
+<td>Long-run frequency</td>
+<td>Degree of belief</td>
+</tr>
+<tr class="odd">
+<td><strong>Can say</strong></td>
+<td>“If H₀ is true, data this extreme has p = 0.03”</td>
+<td>“Given the data, P(parameter &gt; 0) = 0.97”</td>
+</tr>
+<tr class="even">
+<td><strong>CI / CrI</strong></td>
+<td>“95% of intervals from this procedure contain <span class="math inline">\(\theta\)</span>”</td>
+<td>“There’s a 95% probability <span class="math inline">\(\theta\)</span> is in this interval”</td>
+</tr>
+</tbody>
+</table>
+<p>The Bayesian interpretation is often what people <em>think</em> a confidence interval means — but it requires a prior.</p>
+</section>
+</section>
+<section id="simulation-1-coin-flipping-watch-the-posterior-update" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-1-coin-flipping-watch-the-posterior-update">Simulation 1: Coin flipping — watch the posterior update</h2>
+<p>Start with a prior belief about a coin’s bias. Flip the coin one at a time and watch the posterior distribution update in real time. With enough flips, the posterior concentrates around the true bias — regardless of the prior.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
 #| standalone: true
-#| viewerHeight: 900
+#| viewerHeight: 680
 
 library(shiny)
 
@@ -392,21 +426,20 @@ ui &lt;- fluidPage(
     sidebarPanel(
       width = 3,
 
-      selectInput("stat", "Statistic to bootstrap:",
-                  choices = c("Mean", "Median", "SD",
-                              "Correlation", "Regression slope")),
+      sliderInput("true_p", "True coin bias:",
+                  min = 0.1, max = 0.9, value = 0.7, step = 0.05),
 
-      selectInput("pop", "Population shape:",
-                  choices = c("Normal", "Skewed (exponential)",
-                              "Heavy-tailed", "Bimodal")),
+      selectInput("prior", "Prior belief:",
+                  choices = c("Uniform (a=1, b=1)" = "uniform",
+                              "Skeptical of bias (a=5, b=5)" = "skeptical",
+                              "Believe heads-biased (a=8, b=2)" = "heads",
+                              "Believe tails-biased (a=2, b=8)" = "tails",
+                              "Very strong fair (a=50, b=50)" = "strong_fair")),
 
-      sliderInput("n", "Sample size:",
-                  min = 10, max = 200, value = 30, step = 10),
+      sliderInput("n_flips", "Number of flips:",
+                  min = 1, max = 200, value = 10, step = 1),
 
-      sliderInput("B", "Bootstrap resamples (B):",
-                  min = 100, max = 5000, value = 1000, step = 100),
-
-      actionButton("go", "New sample + bootstrap",
+      actionButton("go", "Flip coins",
                    class = "btn-primary", width = "100%"),
 
       uiOutput("results")
@@ -415,11 +448,7 @@ ui &lt;- fluidPage(
     mainPanel(
       width = 9,
       fluidRow(
-        column(6, plotOutput("sample_plot", height = "350px")),
-        column(6, plotOutput("boot_plot", height = "350px"))
-      ),
-      fluidRow(
-        column(12, plotOutput("compare_plot", height = "350px"))
+        column(12, plotOutput("posterior_plot", height = "400px"))
       )
     )
   )
@@ -427,157 +456,111 @@ ui &lt;- fluidPage(
 
 server &lt;- function(input, output, session) {
 
-  draw_pop &lt;- function(n, pop) {
-    switch(pop,
-      "Normal" = rnorm(n, mean = 5, sd = 2),
-      "Skewed (exponential)" = rexp(n, rate = 0.5),
-      "Heavy-tailed" = rt(n, df = 3) * 2 + 5,
-      "Bimodal" = {
-        k &lt;- rbinom(n, 1, 0.5)
-        k * rnorm(n, 2, 0.8) + (1 - k) * rnorm(n, 7, 0.8)
-      }
-    )
-  }
-
-  compute_stat &lt;- function(x, y = NULL, stat) {
-    switch(stat,
-      "Mean" = mean(x),
-      "Median" = median(x),
-      "SD" = sd(x),
-      "Correlation" = cor(x, y),
-      "Regression slope" = coef(lm(y ~ x))[2]
+  get_prior &lt;- function(prior) {
+    switch(prior,
+      "uniform"      = c(a = 1, b = 1),
+      "skeptical"    = c(a = 5, b = 5),
+      "heads"        = c(a = 8, b = 2),
+      "tails"        = c(a = 2, b = 8),
+      "strong_fair"  = c(a = 50, b = 50)
     )
   }
 
   dat &lt;- reactive({
     input$go
-    n    &lt;- input$n
-    B    &lt;- input$B
-    stat &lt;- input$stat
-    pop  &lt;- input$pop
+    true_p  &lt;- input$true_p
+    prior   &lt;- input$prior
+    n_flips &lt;- input$n_flips
 
-    x &lt;- draw_pop(n, pop)
-    y &lt;- NULL
-    if (stat %in% c("Correlation", "Regression slope")) {
-      y &lt;- 1 + 0.8 * x + rnorm(n, sd = 2)
-    }
+    ab &lt;- get_prior(prior)
+    a0 &lt;- ab["a"]; b0 &lt;- ab["b"]
 
-    obs_stat &lt;- compute_stat(x, y, stat)
+    # Generate flips
+    flips &lt;- rbinom(n_flips, 1, true_p)
+    heads &lt;- sum(flips)
+    tails &lt;- n_flips - heads
 
-    # Bootstrap
-    boot_stats &lt;- replicate(B, {
-      idx &lt;- sample(n, n, replace = TRUE)
-      x_b &lt;- x[idx]
-      y_b &lt;- if (!is.null(y)) y[idx] else NULL
-      compute_stat(x_b, y_b, stat)
-    })
+    # Posterior parameters
+    a_post &lt;- a0 + heads
+    b_post &lt;- b0 + tails
 
-    boot_se &lt;- sd(boot_stats)
-    boot_ci &lt;- quantile(boot_stats, c(0.025, 0.975))
-
-    list(x = x, y = y, obs_stat = obs_stat,
-         boot_stats = boot_stats, boot_se = boot_se,
-         boot_ci = boot_ci, stat = stat, n = n, B = B)
+    list(a0 = a0, b0 = b0, a_post = a_post, b_post = b_post,
+         true_p = true_p, n_flips = n_flips, heads = heads,
+         tails = tails, flips = flips)
   })
 
-  output$sample_plot &lt;- renderPlot({
+  output$posterior_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    if (d$stat %in% c("Correlation", "Regression slope")) {
-      plot(d$x, d$y, pch = 16, col = "#3498db80", cex = 0.8,
-           xlab = "X", ylab = "Y", main = "Your sample")
-      if (d$stat == "Regression slope") {
-        abline(lm(d$y ~ d$x), col = "#e74c3c", lwd = 2)
-      }
-    } else {
-      hist(d$x, breaks = 20, col = "#d5e8d4", border = "#82b366",
-           main = "Your sample", xlab = "X", ylab = "Frequency")
-      abline(v = d$obs_stat, col = "#e74c3c", lwd = 2.5, lty = 2)
-      legend("topright", bty = "n", cex = 0.85,
-             legend = paste0(d$stat, " = ", round(d$obs_stat, 3)),
-             col = "#e74c3c", lty = 2, lwd = 2)
-    }
-  })
+    x &lt;- seq(0, 1, length.out = 500)
+    y_prior &lt;- dbeta(x, d$a0, d$b0)
+    y_post  &lt;- dbeta(x, d$a_post, d$b_post)
 
-  output$boot_plot &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
+    ylim &lt;- c(0, max(c(y_prior, y_post)) * 1.1)
 
-    hist(d$boot_stats, breaks = 40, probability = TRUE,
-         col = "#dae8fc", border = "#6c8ebf",
-         main = paste0("Bootstrap distribution (B = ", d$B, ")"),
-         xlab = paste0("Bootstrap ", tolower(d$stat)),
-         ylab = "Density")
+    plot(x, y_post, type = "l", lwd = 3, col = "#3498db",
+         xlab = expression("Coin bias (" * theta * ")"),
+         ylab = "Density",
+         main = paste0("Bayesian updating after ", d$n_flips,
+                      " flips (", d$heads, "H, ", d$tails, "T)"),
+         ylim = ylim)
 
-    abline(v = d$obs_stat, col = "#e74c3c", lwd = 2.5, lty = 2)
-    abline(v = d$boot_ci, col = "#27ae60", lwd = 2, lty = 3)
+    # Prior
+    lines(x, y_prior, lwd = 2, col = "#95a5a6", lty = 2)
 
-    legend("topright", bty = "n", cex = 0.8,
-           legend = c(paste0("Observed: ", round(d$obs_stat, 3)),
-                      paste0("95% CI: [", round(d$boot_ci[1], 3),
-                             ", ", round(d$boot_ci[2], 3), "]")),
-           col = c("#e74c3c", "#27ae60"),
-           lty = c(2, 3), lwd = 2)
-  })
+    # Shade posterior
+    polygon(c(0, x, 1), c(0, y_post, 0),
+            col = adjustcolor("#3498db", 0.2), border = NA)
 
-  output$compare_plot &lt;- renderPlot({
-    d &lt;- dat()
+    # True value
+    abline(v = d$true_p, lwd = 2.5, col = "#e74c3c", lty = 2)
 
-    par(mar = c(4.5, 4.5, 3, 1))
+    # Posterior mean
+    post_mean &lt;- d$a_post / (d$a_post + d$b_post)
+    abline(v = post_mean, lwd = 2, col = "#27ae60", lty = 3)
 
-    if (d$stat %in% c("Correlation", "Regression slope")) {
-      # For bivariate stats, just show bootstrap dist with CI
-      hist(d$boot_stats, breaks = 40, probability = TRUE,
-           col = "#dae8fc", border = "#6c8ebf",
-           main = "Bootstrap sampling dist.",
-           xlab = paste0("Bootstrap ", tolower(d$stat)),
-           ylab = "Density")
-      abline(v = d$boot_ci, col = "#27ae60", lwd = 2, lty = 3)
-      abline(v = d$obs_stat, col = "#e74c3c", lwd = 2, lty = 2)
-    } else {
-      # Overlay: data distribution (wide) vs bootstrap distribution (narrow)
-      # Rescale data density to fit on same axes
-      dens_data &lt;- density(d$x)
-      dens_boot &lt;- density(d$boot_stats)
+    # 95% credible interval
+    ci_lo &lt;- qbeta(0.025, d$a_post, d$b_post)
+    ci_hi &lt;- qbeta(0.975, d$a_post, d$b_post)
+    x_ci &lt;- seq(ci_lo, ci_hi, length.out = 200)
+    y_ci &lt;- dbeta(x_ci, d$a_post, d$b_post)
+    polygon(c(ci_lo, x_ci, ci_hi), c(0, y_ci, 0),
+            col = adjustcolor("#3498db", 0.3), border = NA)
 
-      # Normalize both to peak at 1 for visual comparison
-      dens_data$y &lt;- dens_data$y / max(dens_data$y)
-      dens_boot$y &lt;- dens_boot$y / max(dens_boot$y)
-
-      xlim &lt;- range(c(dens_data$x, dens_boot$x))
-
-      plot(dens_data, col = "#e74c3c", lwd = 2.5, xlim = xlim,
-           ylim = c(0, 1.25), main = "Data vs Sampling Distribution",
-           xlab = "Value", ylab = "Scaled density")
-      polygon(dens_data$x, dens_data$y,
-              col = adjustcolor("#e74c3c", 0.15), border = NA)
-
-      lines(dens_boot, col = "#3498db", lwd = 2.5)
-      polygon(dens_boot$x, dens_boot$y,
-              col = adjustcolor("#3498db", 0.15), border = NA)
-
-      legend("topright", bty = "n", cex = 0.8,
-             legend = c("Your data (wide, raw obs.)",
-                        paste0("Sampling dist. of ", tolower(d$stat),
-                               " (narrow)")),
-             col = c("#e74c3c", "#3498db"), lwd = 2.5)
-    }
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c("Prior",
+                      "Posterior",
+                      "95% credible interval",
+                      paste0("True \u03b8 = ", d$true_p),
+                      paste0("Posterior mean = ", round(post_mean, 3))),
+           col = c("#95a5a6", "#3498db",
+                   adjustcolor("#3498db", 0.4),
+                   "#e74c3c", "#27ae60"),
+           lwd = c(2, 3, 8, 2.5, 2),
+           lty = c(2, 1, 1, 2, 3))
   })
 
   output$results &lt;- renderUI({
     d &lt;- dat()
+    post_mean &lt;- d$a_post / (d$a_post + d$b_post)
+    ci_lo &lt;- qbeta(0.025, d$a_post, d$b_post)
+    ci_hi &lt;- qbeta(0.975, d$a_post, d$b_post)
+
+    prior_mean &lt;- d$a0 / (d$a0 + d$b0)
+
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;Statistic:&lt;/b&gt; ", d$stat, "&lt;br&gt;",
-        "&lt;b&gt;Observed:&lt;/b&gt; ", round(d$obs_stat, 4), "&lt;br&gt;",
-        "&lt;b&gt;Bootstrap SE:&lt;/b&gt; ", round(d$boot_se, 4), "&lt;br&gt;",
-        "&lt;b&gt;95% CI:&lt;/b&gt; [", round(d$boot_ci[1], 4),
-        ", ", round(d$boot_ci[2], 4), "]&lt;br&gt;",
+        "&lt;b&gt;Prior:&lt;/b&gt; Beta(", d$a0, ", ", d$b0, ")&lt;br&gt;",
+        "Prior mean: ", round(prior_mean, 3), "&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;small&gt;CI uses percentile method:&lt;br&gt;",
-        "2.5th and 97.5th percentiles of&lt;br&gt;",
-        "bootstrap distribution.&lt;/small&gt;"
+        "&lt;b&gt;Data:&lt;/b&gt; ", d$heads, "H / ", d$tails, "T&lt;br&gt;",
+        "MLE: ", round(d$heads / d$n_flips, 3), "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;Posterior:&lt;/b&gt; Beta(", d$a_post, ", ", d$b_post, ")&lt;br&gt;",
+        "Post. mean: ", round(post_mean, 3), "&lt;br&gt;",
+        "95% CrI: [", round(ci_lo, 3), ", ", round(ci_hi, 3), "]&lt;br&gt;",
+        "&lt;b&gt;True \u03b8:&lt;/b&gt; ", d$true_p
       ))
     )
   })
@@ -585,58 +568,169 @@ server &lt;- function(input, output, session) {
 
 shinyApp(ui, server)</code></pre>
 </section>
+<section id="simulation-2-prior-sensitivity-different-priors-same-data" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-2-prior-sensitivity-different-priors-same-data">Simulation 2: Prior sensitivity — different priors, same data</h2>
+<p>Same coin, same flips, but different starting beliefs. With little data, the prior matters a lot. With enough data, all priors converge to the same posterior. <strong>The data overwhelms the prior.</strong></p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| viewerHeight: 580
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("true_p2", "True coin bias:",
+                  min = 0.1, max = 0.9, value = 0.7, step = 0.05),
+
+      sliderInput("n_flips2", "Number of flips:",
+                  min = 1, max = 500, value = 10, step = 1),
+
+      actionButton("go2", "Flip coins",
+                   class = "btn-primary", width = "100%"),
+
+      uiOutput("results2")
+    ),
+
+    mainPanel(
+      width = 9,
+      plotOutput("sensitivity_plot", height = "450px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  dat &lt;- reactive({
+    input$go2
+    true_p  &lt;- input$true_p2
+    n_flips &lt;- input$n_flips2
+
+    # Generate one set of flips (shared across priors)
+    flips &lt;- rbinom(n_flips, 1, true_p)
+    heads &lt;- sum(flips)
+    tails &lt;- n_flips - heads
+
+    priors &lt;- list(
+      "Uniform (1,1)"        = c(1, 1),
+      "Fair-biased (10,10)"  = c(10, 10),
+      "Heads-biased (8,2)"   = c(8, 2),
+      "Tails-biased (2,8)"   = c(2, 8),
+      "Strong fair (50,50)"  = c(50, 50)
+    )
+
+    list(priors = priors, heads = heads, tails = tails,
+         true_p = true_p, n_flips = n_flips)
+  })
+
+  output$sensitivity_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    x &lt;- seq(0, 1, length.out = 500)
+    cols &lt;- c("#3498db", "#e74c3c", "#27ae60", "#9b59b6", "#e67e22")
+
+    # Find y range
+    ymax &lt;- 0
+    for (i in seq_along(d$priors)) {
+      ab &lt;- d$priors[[i]]
+      y &lt;- dbeta(x, ab[1] + d$heads, ab[2] + d$tails)
+      ymax &lt;- max(ymax, max(y))
+    }
+
+    plot(NULL, xlim = c(0, 1), ylim = c(0, ymax * 1.1),
+         xlab = expression("Coin bias (" * theta * ")"),
+         ylab = "Posterior density",
+         main = paste0("5 priors, same data (",
+                      d$heads, "H / ", d$tails, "T out of ",
+                      d$n_flips, " flips)"))
+
+    for (i in seq_along(d$priors)) {
+      ab &lt;- d$priors[[i]]
+      y &lt;- dbeta(x, ab[1] + d$heads, ab[2] + d$tails)
+      lines(x, y, lwd = 2.5, col = cols[i])
+    }
+
+    abline(v = d$true_p, lty = 2, lwd = 2.5, col = "#2c3e50")
+
+    legend("topright", bty = "n", cex = 0.8,
+           legend = c(names(d$priors),
+                      paste0("True \u03b8 = ", d$true_p)),
+           col = c(cols, "#2c3e50"),
+           lwd = c(rep(2.5, 5), 2.5),
+           lty = c(rep(1, 5), 2))
+  })
+
+  output$results2 &lt;- renderUI({
+    d &lt;- dat()
+
+    lines &lt;- sapply(seq_along(d$priors), function(i) {
+      ab &lt;- d$priors[[i]]
+      a_post &lt;- ab[1] + d$heads
+      b_post &lt;- ab[2] + d$tails
+      post_mean &lt;- a_post / (a_post + b_post)
+      paste0(names(d$priors)[i], ": ",
+             round(post_mean, 3))
+    })
+
+    mle &lt;- d$heads / d$n_flips
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;Posterior means:&lt;/b&gt;&lt;br&gt;",
+        paste(lines, collapse = "&lt;br&gt;"), "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;MLE:&lt;/b&gt; ", round(mle, 3), "&lt;br&gt;",
+        "&lt;b&gt;True \u03b8:&lt;/b&gt; ", d$true_p, "&lt;br&gt;",
+        "&lt;small&gt;With more flips, all posteriors&lt;br&gt;",
+        "converge to the MLE.&lt;/small&gt;"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Mean with Normal population:</strong> the bootstrap distribution looks normal, similar to what CLT gives you analytically.</li>
-<li><strong>Median with skewed population:</strong> no easy formula for the SE of a median. But the bootstrap handles it effortlessly.</li>
-<li><strong>SD with heavy-tailed data:</strong> the bootstrap distribution is skewed — the percentile CI is asymmetric, which is exactly right.</li>
-<li><strong>Regression slope:</strong> bootstrap the slope to get a CI without assuming homoskedasticity.</li>
-<li><strong>Small n (10) vs large n (200):</strong> with small samples the bootstrap distribution is choppy (limited unique resamples). With more data it smooths out.</li>
+<li><strong>Sim 1, 5 flips:</strong> the posterior is wide and heavily influenced by the prior. The 95% credible interval is broad.</li>
+<li><strong>Sim 1, 100 flips:</strong> the posterior is sharp and centered near the true bias. The prior barely matters anymore.</li>
+<li><strong>Sim 1, strong fair prior (a=50, b=50) with true bias = 0.7:</strong> the prior pulls the posterior toward 0.5. You need many flips to overcome a strong prior.</li>
+<li><strong>Sim 2, 10 flips:</strong> the five posteriors are spread apart — the prior matters a lot.</li>
+<li><strong>Sim 2, 200 flips:</strong> all five posteriors are nearly identical and centered on the true value. <strong>The data overwhelms the prior.</strong></li>
+<li><strong>Sim 2, slide from 1 to 500 flips:</strong> watch the posteriors converge in real time. This is the key Bayesian result — with enough data, the prior washes out.</li>
 </ul>
 </section>
-<section id="when-to-use-the-bootstrap" class="level3">
-<h3 class="anchored" data-anchor-id="when-to-use-the-bootstrap">When to use the bootstrap</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Use bootstrap when…</th>
-<th>Don’t bother when…</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>No formula for the SE exists</td>
-<td>Standard formulas are available and valid</td>
-</tr>
-<tr class="even">
-<td>The statistic is complicated (ratios, quantiles)</td>
-<td>You’re computing a simple mean</td>
-</tr>
-<tr class="odd">
-<td>You suspect non-normality</td>
-<td>n is large and CLT applies</td>
-</tr>
-<tr class="even">
-<td>You want a quick, assumption-free CI</td>
-<td>You need exact small-sample inference</td>
-</tr>
-</tbody>
-</table>
-<p>The bootstrap is not magic — it can fail with very small samples or non-smooth statistics. But for most practical situations, it’s the easiest path to a valid confidence interval.</p>
+<section id="the-bottom-line" class="level3">
+<h3 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h3>
+<ul>
+<li><strong>Bayesian inference = prior × likelihood → posterior.</strong> That’s the entire framework.</li>
+<li>The <strong>prior</strong> encodes what you know before seeing data. It can be informative (based on previous studies) or vague (letting the data speak).</li>
+<li>The <strong>posterior</strong> is your updated belief. It’s a full distribution, not just a point estimate — you get a complete picture of uncertainty.</li>
+<li>With enough data, <strong>the prior doesn’t matter.</strong> All reasonable priors converge to the same posterior. This is reassuring: Bayesian inference isn’t “subjective” in the long run.</li>
+<li>The <strong>credible interval</strong> has the interpretation people <em>want</em> from a confidence interval: “There’s a 95% probability that <span class="math inline">\(\theta\)</span> is in this interval.” But this requires accepting the Bayesian framework (and a prior).</li>
+</ul>
 <hr>
 </section>
 <section id="did-you-know" class="level3">
 <h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
 <ul>
-<li><strong>Bradley Efron</strong> invented the bootstrap in 1979 at Stanford. The name comes from the expression <strong>“pulling yourself up by your bootstraps”</strong> — attributed to the tall tales of <strong>Baron Munchausen</strong>, who claimed to have pulled himself out of a swamp by his own hair (later versions say bootstraps). The idea that a sample can estimate its own sampling distribution seemed equally absurd at first.</li>
-<li>When Efron first presented the bootstrap, many statisticians were skeptical. One famously asked: <em>“You’re just sampling from your sample — how can that tell you anything new?”</em> The answer: it tells you about the <em>variability</em> of your estimate, not about new data points.</li>
-<li>The bootstrap is now one of the most cited statistical methods ever. Efron’s 1979 paper has over 20,000 citations. He received the <strong>International Prize in Statistics</strong> (the statistics equivalent of the Nobel) in 2019 for this work.</li>
-<li>Before the bootstrap, getting standard errors for complex statistics (ratios, quantiles, eigenvalues) required either painful analytical derivations or the <strong>delta method</strong> — a Taylor expansion trick that often required heroic assumptions. The bootstrap made all of that unnecessary.</li>
+<li><strong>Thomas Bayes</strong> was an English Presbyterian minister who never published his theorem. His friend <strong>Richard Price</strong> found the manuscript after Bayes’ death and published it in 1763 as “An Essay towards solving a Problem in the Doctrine of Chances.” Bayes’ original example was essentially the coin flipping problem in this simulation.</li>
+<li>Bayesian methods were largely abandoned in the 20th century because they were <strong>computationally intractable</strong> — computing posteriors for realistic problems required integrals that couldn’t be solved analytically. The revival came with <strong>Markov Chain Monte Carlo (MCMC)</strong> algorithms in the 1990s, which made it possible to <em>sample</em> from posteriors instead of computing them exactly.</li>
+<li><strong>Pierre-Simon Laplace</strong> independently discovered Bayes’ theorem and used it extensively — including to estimate the mass of Saturn, the probability that the sun would rise tomorrow, and the bias of a coin. Laplace was arguably the first true Bayesian; Bayes himself only scratched the surface.</li>
+<li>This page is a teaser. The full Bayesian course covers MCMC, hierarchical models, prior selection, and model comparison in depth.</li>
 </ul>
 
 

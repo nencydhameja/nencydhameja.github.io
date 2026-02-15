@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The Bootstrap – Interactive Notes</title>
+<title>p-values, Confidence Intervals &amp; What They Actually Mean – Interactive Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./bootstrap.html">The Bootstrap</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./pvalues-ci.html">p-values &amp; Confidence Intervals</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -210,13 +210,13 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pvalues-ci.html" class="sidebar-item-text sidebar-link">
+  <a href="./pvalues-ci.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">p-values &amp; Confidence Intervals</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link active">
+  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Bootstrap</span></a>
   </div>
 </li>
@@ -314,12 +314,16 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
+  <li><a href="#the-most-misunderstood-concepts-in-statistics" id="toc-the-most-misunderstood-concepts-in-statistics" class="nav-link active" data-scroll-target="#the-most-misunderstood-concepts-in-statistics">The most misunderstood concepts in statistics</a>
   <ul class="collapse">
-  <li><a href="#the-steps" id="toc-the-steps" class="nav-link" data-scroll-target="#the-steps">The steps</a></li>
-  <li><a href="#but-cant-i-just-look-at-my-data" id="toc-but-cant-i-just-look-at-my-data" class="nav-link" data-scroll-target="#but-cant-i-just-look-at-my-data">But can’t I just look at my data?</a></li>
+  <li><a href="#what-a-p-value-actually-is" id="toc-what-a-p-value-actually-is" class="nav-link" data-scroll-target="#what-a-p-value-actually-is">What a p-value actually is</a></li>
+  <li><a href="#what-a-confidence-interval-actually-is" id="toc-what-a-confidence-interval-actually-is" class="nav-link" data-scroll-target="#what-a-confidence-interval-actually-is">What a confidence interval actually is</a></li>
+  </ul></li>
+  <li><a href="#simulation-1-the-p-value-machine" id="toc-simulation-1-the-p-value-machine" class="nav-link" data-scroll-target="#simulation-1-the-p-value-machine">Simulation 1: The p-value machine</a></li>
+  <li><a href="#simulation-2-ci-coverage" id="toc-simulation-2-ci-coverage" class="nav-link" data-scroll-target="#simulation-2-ci-coverage">Simulation 2: CI coverage</a>
+  <ul class="collapse">
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
-  <li><a href="#when-to-use-the-bootstrap" id="toc-when-to-use-the-bootstrap" class="nav-link" data-scroll-target="#when-to-use-the-bootstrap">When to use the bootstrap</a></li>
+  <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul></li>
   </ul>
@@ -328,9 +332,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./bootstrap.html">The Bootstrap</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./pvalues-ci.html">p-values &amp; Confidence Intervals</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">The Bootstrap</h1>
+<h1 class="title">p-values, Confidence Intervals &amp; What They Actually Mean</h1>
 </div>
 
 
@@ -347,35 +351,44 @@ window.Quarto = {
 </header>
 
 
-<section id="the-idea" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>You want a confidence interval for some statistic (mean, median, regression coefficient), but you don’t know the sampling distribution. Maybe the formula is complicated. Maybe there is no formula.</p>
-<p>The <strong>bootstrap</strong> says: <em>pretend your sample is the population</em>. Then simulate the sampling process by <strong>resampling with replacement</strong> from your data, over and over. Each resample gives you a new estimate. The distribution of those estimates <em>approximates</em> the true sampling distribution.</p>
-<section id="the-steps" class="level3">
-<h3 class="anchored" data-anchor-id="the-steps">The steps</h3>
-<ol type="1">
-<li>You have a sample of <span class="math inline">\(n\)</span> observations.</li>
-<li>Draw <span class="math inline">\(n\)</span> observations <strong>with replacement</strong> from your sample (some points get picked twice, some not at all).</li>
-<li>Compute your statistic on this resample.</li>
-<li>Repeat B times (typically 1,000–10,000).</li>
-<li>The spread of those B estimates gives you a standard error and a confidence interval.</li>
-</ol>
-<p>That’s it. No formulas, no distributional assumptions. Just resampling.</p>
-</section>
-<section id="but-cant-i-just-look-at-my-data" class="level3">
-<h3 class="anchored" data-anchor-id="but-cant-i-just-look-at-my-data">But can’t I just look at my data?</h3>
-<p>No — and this is a crucial distinction. There are <strong>two different distributions</strong> at play:</p>
+<section id="the-most-misunderstood-concepts-in-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="the-most-misunderstood-concepts-in-statistics">The most misunderstood concepts in statistics</h2>
+<p>Almost everyone gets p-values and confidence intervals wrong — including published researchers. Let’s fix that.</p>
+<section id="what-a-p-value-actually-is" class="level3">
+<h3 class="anchored" data-anchor-id="what-a-p-value-actually-is">What a p-value actually is</h3>
+<blockquote class="blockquote">
+<p><strong>The p-value is the probability of observing data as extreme as (or more extreme than) what you got, <em>assuming the null hypothesis is true.</em></strong></p>
+</blockquote>
+<p>That’s it. It is <strong>not</strong>:</p>
 <ul>
-<li>The <strong>distribution of the data</strong> = what individual observations look like (their histogram). This tells you about spread, skew, outliers in your raw data.</li>
-<li>The <strong>sampling distribution</strong> = what your <em>statistic</em> (mean, median, slope) would look like if you could repeat the entire experiment many times. This is what you need for standard errors and confidence intervals.</li>
+<li>The probability that H₀ is true</li>
+<li>The probability that you made a mistake</li>
+<li>The probability that the result will replicate</li>
 </ul>
-<p>You can always plot your data. But you <strong>cannot see the sampling distribution</strong> — you only ran the experiment once. You have one mean, not a distribution of means.</p>
-<p>The bootstrap bridges that gap. It simulates the “what if I repeated this experiment?” question using only the data you have. The left panel below shows your data distribution. The right panel shows the bootstrap sampling distribution. Notice: they look completely different. Your data might be skewed and spread out, but the sampling distribution of the mean is narrow and roughly normal (thanks to the CLT). The bootstrap discovers this for you without any formulas.</p>
+<p>It’s a statement about the <em>data</em>, not about the <em>hypothesis</em>. The p-value asks: “If there really were no effect, how surprising would my data be?”</p>
+</section>
+<section id="what-a-confidence-interval-actually-is" class="level3">
+<h3 class="anchored" data-anchor-id="what-a-confidence-interval-actually-is">What a confidence interval actually is</h3>
+<blockquote class="blockquote">
+<p><strong>A 95% CI is constructed by a procedure that, in repeated sampling, captures the true parameter 95% of the time.</strong></p>
+</blockquote>
+<p>It is <strong>not</strong>:</p>
+<ul>
+<li>A 95% probability that the true parameter is inside <em>this particular</em> interval</li>
+<li>A range where 95% of the data falls</li>
+<li>A range where 95% of sample means fall</li>
+</ul>
+<p>Once you compute a specific CI, the true parameter is either in it or it isn’t — there’s no probability about it. The 95% refers to the <em>method</em>, not to any single interval.</p>
+</section>
+</section>
+<section id="simulation-1-the-p-value-machine" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-1-the-p-value-machine">Simulation 1: The p-value machine</h2>
+<p>Draw a sample, compute a test statistic, and see where it falls on the null distribution. The shaded area <em>is</em> the p-value. Under H₀, p-values are uniformly distributed — every value between 0 and 1 is equally likely.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
 #| standalone: true
-#| viewerHeight: 900
+#| viewerHeight: 680
 
 library(shiny)
 
@@ -386,27 +399,27 @@ ui &lt;- fluidPage(
       margin-top: 12px; font-size: 14px; line-height: 1.9;
     }
     .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
   "))),
 
   sidebarLayout(
     sidebarPanel(
       width = 3,
 
-      selectInput("stat", "Statistic to bootstrap:",
-                  choices = c("Mean", "Median", "SD",
-                              "Correlation", "Regression slope")),
+      sliderInput("n", "Sample size (n):",
+                  min = 10, max = 200, value = 30, step = 5),
 
-      selectInput("pop", "Population shape:",
-                  choices = c("Normal", "Skewed (exponential)",
-                              "Heavy-tailed", "Bimodal")),
+      sliderInput("true_mu", HTML("True &amp;mu; (for data generation):"),
+                  min = -1, max = 1, value = 0, step = 0.1),
 
-      sliderInput("n", "Sample size:",
-                  min = 10, max = 200, value = 30, step = 10),
+      sliderInput("reps", "Number of experiments:",
+                  min = 100, max = 2000, value = 500, step = 100),
 
-      sliderInput("B", "Bootstrap resamples (B):",
-                  min = 100, max = 5000, value = 1000, step = 100),
+      helpText("Set true \u03bc = 0 to see p-values under H\u2080.
+               Set it away from 0 to see p-values under H\u2081."),
 
-      actionButton("go", "New sample + bootstrap",
+      actionButton("go", "Run experiments",
                    class = "btn-primary", width = "100%"),
 
       uiOutput("results")
@@ -415,11 +428,8 @@ ui &lt;- fluidPage(
     mainPanel(
       width = 9,
       fluidRow(
-        column(6, plotOutput("sample_plot", height = "350px")),
-        column(6, plotOutput("boot_plot", height = "350px"))
-      ),
-      fluidRow(
-        column(12, plotOutput("compare_plot", height = "350px"))
+        column(6, plotOutput("null_dist", height = "400px")),
+        column(6, plotOutput("pval_hist", height = "400px"))
       )
     )
   )
@@ -427,157 +437,106 @@ ui &lt;- fluidPage(
 
 server &lt;- function(input, output, session) {
 
-  draw_pop &lt;- function(n, pop) {
-    switch(pop,
-      "Normal" = rnorm(n, mean = 5, sd = 2),
-      "Skewed (exponential)" = rexp(n, rate = 0.5),
-      "Heavy-tailed" = rt(n, df = 3) * 2 + 5,
-      "Bimodal" = {
-        k &lt;- rbinom(n, 1, 0.5)
-        k * rnorm(n, 2, 0.8) + (1 - k) * rnorm(n, 7, 0.8)
-      }
-    )
-  }
-
-  compute_stat &lt;- function(x, y = NULL, stat) {
-    switch(stat,
-      "Mean" = mean(x),
-      "Median" = median(x),
-      "SD" = sd(x),
-      "Correlation" = cor(x, y),
-      "Regression slope" = coef(lm(y ~ x))[2]
-    )
-  }
-
   dat &lt;- reactive({
     input$go
-    n    &lt;- input$n
-    B    &lt;- input$B
-    stat &lt;- input$stat
-    pop  &lt;- input$pop
+    n      &lt;- input$n
+    mu     &lt;- input$true_mu
+    reps   &lt;- input$reps
 
-    x &lt;- draw_pop(n, pop)
-    y &lt;- NULL
-    if (stat %in% c("Correlation", "Regression slope")) {
-      y &lt;- 1 + 0.8 * x + rnorm(n, sd = 2)
-    }
+    # Draw one sample for display
+    one_sample &lt;- rnorm(n, mean = mu, sd = 1)
+    one_z &lt;- mean(one_sample) / (1 / sqrt(n))
+    one_p &lt;- 2 * pnorm(-abs(one_z))
 
-    obs_stat &lt;- compute_stat(x, y, stat)
-
-    # Bootstrap
-    boot_stats &lt;- replicate(B, {
-      idx &lt;- sample(n, n, replace = TRUE)
-      x_b &lt;- x[idx]
-      y_b &lt;- if (!is.null(y)) y[idx] else NULL
-      compute_stat(x_b, y_b, stat)
+    # Draw many samples
+    z_stats &lt;- replicate(reps, {
+      x &lt;- rnorm(n, mean = mu, sd = 1)
+      mean(x) / (1 / sqrt(n))
     })
+    p_vals &lt;- 2 * pnorm(-abs(z_stats))
 
-    boot_se &lt;- sd(boot_stats)
-    boot_ci &lt;- quantile(boot_stats, c(0.025, 0.975))
+    reject_rate &lt;- mean(p_vals &lt; 0.05)
 
-    list(x = x, y = y, obs_stat = obs_stat,
-         boot_stats = boot_stats, boot_se = boot_se,
-         boot_ci = boot_ci, stat = stat, n = n, B = B)
+    list(one_z = one_z, one_p = one_p, z_stats = z_stats, p_vals = p_vals,
+         n = n, mu = mu, reps = reps, reject_rate = reject_rate)
   })
 
-  output$sample_plot &lt;- renderPlot({
+  output$null_dist &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    if (d$stat %in% c("Correlation", "Regression slope")) {
-      plot(d$x, d$y, pch = 16, col = "#3498db80", cex = 0.8,
-           xlab = "X", ylab = "Y", main = "Your sample")
-      if (d$stat == "Regression slope") {
-        abline(lm(d$y ~ d$x), col = "#e74c3c", lwd = 2)
-      }
-    } else {
-      hist(d$x, breaks = 20, col = "#d5e8d4", border = "#82b366",
-           main = "Your sample", xlab = "X", ylab = "Frequency")
-      abline(v = d$obs_stat, col = "#e74c3c", lwd = 2.5, lty = 2)
-      legend("topright", bty = "n", cex = 0.85,
-             legend = paste0(d$stat, " = ", round(d$obs_stat, 3)),
-             col = "#e74c3c", lty = 2, lwd = 2)
+    x &lt;- seq(-4, 4, length.out = 300)
+    y &lt;- dnorm(x)
+
+    plot(x, y, type = "l", lwd = 2.5, col = "#2c3e50",
+         xlab = "Test statistic (z)", ylab = "Density",
+         main = "Null distribution &amp; your test statistic")
+
+    # Shade p-value area (two-tailed)
+    z_abs &lt;- abs(d$one_z)
+    if (z_abs &lt; 4) {
+      x_right &lt;- seq(z_abs, 4, length.out = 100)
+      polygon(c(z_abs, x_right, 4), c(0, dnorm(x_right), 0),
+              col = adjustcolor("#e74c3c", 0.4), border = NA)
+      x_left &lt;- seq(-4, -z_abs, length.out = 100)
+      polygon(c(-4, x_left, -z_abs), c(0, dnorm(x_left), 0),
+              col = adjustcolor("#e74c3c", 0.4), border = NA)
     }
+
+    abline(v = d$one_z, lwd = 2.5, col = "#3498db", lty = 1)
+
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c("Null distribution (H\u2080)",
+                      paste0("Your z = ", round(d$one_z, 3)),
+                      paste0("p-value = ", round(d$one_p, 4))),
+           col = c("#2c3e50", "#3498db", adjustcolor("#e74c3c", 0.6)),
+           lwd = c(2.5, 2.5, 8), lty = c(1, 1, 1))
   })
 
-  output$boot_plot &lt;- renderPlot({
+  output$pval_hist &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    hist(d$boot_stats, breaks = 40, probability = TRUE,
-         col = "#dae8fc", border = "#6c8ebf",
-         main = paste0("Bootstrap distribution (B = ", d$B, ")"),
-         xlab = paste0("Bootstrap ", tolower(d$stat)),
-         ylab = "Density")
+    hist(d$p_vals, breaks = 20, probability = TRUE,
+         col = "#3498db30", border = "#3498db80",
+         main = paste0("Distribution of p-values (",
+                       d$reps, " experiments)"),
+         xlab = "p-value", ylab = "Density",
+         xlim = c(0, 1))
 
-    abline(v = d$obs_stat, col = "#e74c3c", lwd = 2.5, lty = 2)
-    abline(v = d$boot_ci, col = "#27ae60", lwd = 2, lty = 3)
-
-    legend("topright", bty = "n", cex = 0.8,
-           legend = c(paste0("Observed: ", round(d$obs_stat, 3)),
-                      paste0("95% CI: [", round(d$boot_ci[1], 3),
-                             ", ", round(d$boot_ci[2], 3), "]")),
-           col = c("#e74c3c", "#27ae60"),
-           lty = c(2, 3), lwd = 2)
-  })
-
-  output$compare_plot &lt;- renderPlot({
-    d &lt;- dat()
-
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    if (d$stat %in% c("Correlation", "Regression slope")) {
-      # For bivariate stats, just show bootstrap dist with CI
-      hist(d$boot_stats, breaks = 40, probability = TRUE,
-           col = "#dae8fc", border = "#6c8ebf",
-           main = "Bootstrap sampling dist.",
-           xlab = paste0("Bootstrap ", tolower(d$stat)),
-           ylab = "Density")
-      abline(v = d$boot_ci, col = "#27ae60", lwd = 2, lty = 3)
-      abline(v = d$obs_stat, col = "#e74c3c", lwd = 2, lty = 2)
+    if (abs(d$mu) &lt; 0.001) {
+      abline(h = 1, lty = 2, lwd = 2, col = "#e74c3c")
+      legend("topright", bty = "n", cex = 0.85,
+             legend = c("p-value histogram",
+                        "Uniform(0,1) reference"),
+             col = c("#3498db80", "#e74c3c"),
+             lwd = c(8, 2), lty = c(1, 2))
     } else {
-      # Overlay: data distribution (wide) vs bootstrap distribution (narrow)
-      # Rescale data density to fit on same axes
-      dens_data &lt;- density(d$x)
-      dens_boot &lt;- density(d$boot_stats)
-
-      # Normalize both to peak at 1 for visual comparison
-      dens_data$y &lt;- dens_data$y / max(dens_data$y)
-      dens_boot$y &lt;- dens_boot$y / max(dens_boot$y)
-
-      xlim &lt;- range(c(dens_data$x, dens_boot$x))
-
-      plot(dens_data, col = "#e74c3c", lwd = 2.5, xlim = xlim,
-           ylim = c(0, 1.25), main = "Data vs Sampling Distribution",
-           xlab = "Value", ylab = "Scaled density")
-      polygon(dens_data$x, dens_data$y,
-              col = adjustcolor("#e74c3c", 0.15), border = NA)
-
-      lines(dens_boot, col = "#3498db", lwd = 2.5)
-      polygon(dens_boot$x, dens_boot$y,
-              col = adjustcolor("#3498db", 0.15), border = NA)
-
-      legend("topright", bty = "n", cex = 0.8,
-             legend = c("Your data (wide, raw obs.)",
-                        paste0("Sampling dist. of ", tolower(d$stat),
-                               " (narrow)")),
-             col = c("#e74c3c", "#3498db"), lwd = 2.5)
+      legend("topright", bty = "n", cex = 0.85,
+             legend = paste0("Under H\u2081 (\u03bc = ", d$mu, "):\n",
+                            "p-values pile up near 0"))
     }
   })
 
   output$results &lt;- renderUI({
     d &lt;- dat()
+
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;Statistic:&lt;/b&gt; ", d$stat, "&lt;br&gt;",
-        "&lt;b&gt;Observed:&lt;/b&gt; ", round(d$obs_stat, 4), "&lt;br&gt;",
-        "&lt;b&gt;Bootstrap SE:&lt;/b&gt; ", round(d$boot_se, 4), "&lt;br&gt;",
-        "&lt;b&gt;95% CI:&lt;/b&gt; [", round(d$boot_ci[1], 4),
-        ", ", round(d$boot_ci[2], 4), "]&lt;br&gt;",
+        "&lt;b&gt;This sample:&lt;/b&gt;&lt;br&gt;",
+        "z = ", round(d$one_z, 3), "&lt;br&gt;",
+        "p = ", round(d$one_p, 4), " ",
+        ifelse(d$one_p &lt; 0.05,
+               "&lt;span class='bad'&gt;(&amp;lt; 0.05)&lt;/span&gt;",
+               "&lt;span class='good'&gt;(\u2265 0.05)&lt;/span&gt;"), "&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;small&gt;CI uses percentile method:&lt;br&gt;",
-        "2.5th and 97.5th percentiles of&lt;br&gt;",
-        "bootstrap distribution.&lt;/small&gt;"
+        "&lt;b&gt;Across ", d$reps, " experiments:&lt;/b&gt;&lt;br&gt;",
+        "Rejection rate: ", round(d$reject_rate * 100, 1), "%&lt;br&gt;",
+        "&lt;small&gt;",
+        ifelse(abs(d$mu) &lt; 0.001,
+               "Under H\u2080, this should be ~5%.",
+               paste0("Under H\u2081, this is the power.")),
+        "&lt;/small&gt;"
       ))
     )
   })
@@ -585,58 +544,160 @@ server &lt;- function(input, output, session) {
 
 shinyApp(ui, server)</code></pre>
 </section>
+<section id="simulation-2-ci-coverage" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-2-ci-coverage">Simulation 2: CI coverage</h2>
+<p>Draw 100 confidence intervals. Each one either contains the true <span class="math inline">\(\mu\)</span> (blue) or misses it (red). Over many experiments, about 95% contain <span class="math inline">\(\mu\)</span> — but any <em>single</em> CI either does or doesn’t. The 95% is about the procedure, not about your interval.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| viewerHeight: 680
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("n2", "Sample size (n):",
+                  min = 5, max = 100, value = 25, step = 5),
+
+      sliderInput("conf", "Confidence level:",
+                  min = 0.80, max = 0.99, value = 0.95, step = 0.01),
+
+      sliderInput("n_ci", "Number of CIs to draw:",
+                  min = 20, max = 200, value = 100, step = 10),
+
+      actionButton("go2", "Draw new CIs",
+                   class = "btn-primary", width = "100%"),
+
+      uiOutput("results2")
+    ),
+
+    mainPanel(
+      width = 9,
+      plotOutput("ci_plot", height = "550px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  dat &lt;- reactive({
+    input$go2
+    n     &lt;- input$n2
+    conf  &lt;- input$conf
+    n_ci  &lt;- input$n_ci
+    mu    &lt;- 5  # true mean
+    sigma &lt;- 2
+
+    z &lt;- qnorm(1 - (1 - conf) / 2)
+
+    results &lt;- t(replicate(n_ci, {
+      x &lt;- rnorm(n, mean = mu, sd = sigma)
+      xbar &lt;- mean(x)
+      se &lt;- sd(x) / sqrt(n)
+      lo &lt;- xbar - z * se
+      hi &lt;- xbar + z * se
+      c(xbar = xbar, lo = lo, hi = hi, covers = (lo &lt;= mu &amp; mu &lt;= hi))
+    }))
+
+    list(results = results, mu = mu, n = n, conf = conf, n_ci = n_ci)
+  })
+
+  output$ci_plot &lt;- renderPlot({
+    d &lt;- dat()
+    res &lt;- d$results
+    n_ci &lt;- d$n_ci
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    covers &lt;- as.logical(res[, "covers"])
+    cols &lt;- ifelse(covers, "#3498db", "#e74c3c")
+
+    plot(NULL, xlim = range(res[, c("lo", "hi")]),
+         ylim = c(0.5, n_ci + 0.5),
+         xlab = expression("Value of " * mu),
+         ylab = "Experiment number",
+         main = paste0(n_ci, " Confidence Intervals (",
+                       d$conf * 100, "% level)"),
+         yaxt = "n")
+
+    # Draw CIs
+    segments(res[, "lo"], seq_len(n_ci), res[, "hi"], seq_len(n_ci),
+             col = cols, lwd = 1.5)
+    points(res[, "xbar"], seq_len(n_ci), pch = 16, cex = 0.5, col = cols)
+
+    # True mu
+    abline(v = d$mu, lty = 2, lwd = 2.5, col = "#2c3e50")
+
+    n_miss &lt;- sum(!covers)
+    legend("topright", bty = "n", cex = 0.9,
+           legend = c(paste0("Contains \u03bc (", sum(covers), ")"),
+                      paste0("Misses \u03bc (", n_miss, ")"),
+                      paste0("True \u03bc = ", d$mu)),
+           col = c("#3498db", "#e74c3c", "#2c3e50"),
+           lwd = c(3, 3, 2.5), lty = c(1, 1, 2))
+  })
+
+  output$results2 &lt;- renderUI({
+    d &lt;- dat()
+    covers &lt;- as.logical(d$results[, "covers"])
+    cover_rate &lt;- mean(covers)
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;Coverage rate:&lt;/b&gt; &lt;span class='",
+        ifelse(abs(cover_rate - d$conf) &lt; 0.05, "good", "bad"), "'&gt;",
+        round(cover_rate * 100, 1), "%&lt;/span&gt;&lt;br&gt;",
+        "&lt;b&gt;Target:&lt;/b&gt; ", d$conf * 100, "%&lt;br&gt;",
+        "&lt;b&gt;Missed:&lt;/b&gt; ", sum(!covers), " of ", d$n_ci, "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;small&gt;Each red line is a CI that&lt;br&gt;",
+        "does not contain the true \u03bc.&lt;br&gt;",
+        "The method gets it right ~",
+        d$conf * 100, "% of the time.&lt;/small&gt;"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Mean with Normal population:</strong> the bootstrap distribution looks normal, similar to what CLT gives you analytically.</li>
-<li><strong>Median with skewed population:</strong> no easy formula for the SE of a median. But the bootstrap handles it effortlessly.</li>
-<li><strong>SD with heavy-tailed data:</strong> the bootstrap distribution is skewed — the percentile CI is asymmetric, which is exactly right.</li>
-<li><strong>Regression slope:</strong> bootstrap the slope to get a CI without assuming homoskedasticity.</li>
-<li><strong>Small n (10) vs large n (200):</strong> with small samples the bootstrap distribution is choppy (limited unique resamples). With more data it smooths out.</li>
+<li><strong>Sim 1, true <span class="math inline">\(\mu\)</span> = 0:</strong> p-values are uniform — flat histogram. This is the defining property of a valid test. About 5% of p-values fall below 0.05 purely by chance.</li>
+<li><strong>Sim 1, true <span class="math inline">\(\mu\)</span> = 0.5:</strong> p-values pile up near 0. The further <span class="math inline">\(\mu\)</span> is from 0, the more powerful the test, and the smaller the p-values tend to be.</li>
+<li><strong>Sim 2, 95% level:</strong> roughly 5 out of 100 CIs miss <span class="math inline">\(\mu\)</span> (shown in red). Click “Draw new CIs” several times — the exact number varies, but it averages to 5%.</li>
+<li><strong>Sim 2, change confidence to 99%:</strong> fewer CIs miss <span class="math inline">\(\mu\)</span>, but each CI is wider. There’s always a tradeoff between coverage and precision.</li>
+<li><strong>Sim 2, small n (n = 5):</strong> the CIs are very wide. With little data, you can’t be precise. This is the price of honesty.</li>
 </ul>
 </section>
-<section id="when-to-use-the-bootstrap" class="level3">
-<h3 class="anchored" data-anchor-id="when-to-use-the-bootstrap">When to use the bootstrap</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Use bootstrap when…</th>
-<th>Don’t bother when…</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>No formula for the SE exists</td>
-<td>Standard formulas are available and valid</td>
-</tr>
-<tr class="even">
-<td>The statistic is complicated (ratios, quantiles)</td>
-<td>You’re computing a simple mean</td>
-</tr>
-<tr class="odd">
-<td>You suspect non-normality</td>
-<td>n is large and CLT applies</td>
-</tr>
-<tr class="even">
-<td>You want a quick, assumption-free CI</td>
-<td>You need exact small-sample inference</td>
-</tr>
-</tbody>
-</table>
-<p>The bootstrap is not magic — it can fail with very small samples or non-smooth statistics. But for most practical situations, it’s the easiest path to a valid confidence interval.</p>
+<section id="the-bottom-line" class="level3">
+<h3 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h3>
+<ul>
+<li>A p-value is <strong>not</strong> the probability the null is true. It’s the probability of seeing data this extreme <em>if</em> the null were true.</li>
+<li>A confidence interval is <strong>not</strong> a probability statement about <span class="math inline">\(\mu\)</span>. It’s a statement about the <em>procedure</em>: if you repeated the experiment many times, 95% of your CIs would contain <span class="math inline">\(\mu\)</span>.</li>
+<li>Both concepts are statements about <strong>long-run frequency</strong>, not about any single experiment. This is what makes frequentist inference subtle — and why Bayesian methods (which <em>can</em> make probability statements about parameters) are appealing to many.</li>
+</ul>
 <hr>
 </section>
 <section id="did-you-know" class="level3">
 <h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
 <ul>
-<li><strong>Bradley Efron</strong> invented the bootstrap in 1979 at Stanford. The name comes from the expression <strong>“pulling yourself up by your bootstraps”</strong> — attributed to the tall tales of <strong>Baron Munchausen</strong>, who claimed to have pulled himself out of a swamp by his own hair (later versions say bootstraps). The idea that a sample can estimate its own sampling distribution seemed equally absurd at first.</li>
-<li>When Efron first presented the bootstrap, many statisticians were skeptical. One famously asked: <em>“You’re just sampling from your sample — how can that tell you anything new?”</em> The answer: it tells you about the <em>variability</em> of your estimate, not about new data points.</li>
-<li>The bootstrap is now one of the most cited statistical methods ever. Efron’s 1979 paper has over 20,000 citations. He received the <strong>International Prize in Statistics</strong> (the statistics equivalent of the Nobel) in 2019 for this work.</li>
-<li>Before the bootstrap, getting standard errors for complex statistics (ratios, quantiles, eigenvalues) required either painful analytical derivations or the <strong>delta method</strong> — a Taylor expansion trick that often required heroic assumptions. The bootstrap made all of that unnecessary.</li>
+<li>The p-value was popularized by <strong>R.A. Fisher</strong> in the 1920s as an informal measure of evidence against the null. But the rigid “reject if p &lt; 0.05” framework came from <strong>Jerzy Neyman</strong> and <strong>Egon Pearson</strong> in the 1930s. Fisher and Neyman-Pearson fundamentally disagreed about what statistical testing means, and the debate was never resolved — we use an awkward hybrid of both frameworks to this day.</li>
+<li>In 2016, the <strong>American Statistical Association</strong> issued its first-ever formal statement on p-values, warning against common misinterpretations. Statement #2: “P-values do not measure the probability that the studied hypothesis is true.”</li>
+<li><strong>Confidence intervals</strong> were invented by Neyman in 1937. He was explicit that the 95% refers to the procedure, not to any single interval. He wrote: “It is not possible to say that the probability of the true value falling in any particular interval is 95%.”</li>
 </ul>
 
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The Bootstrap – Interactive Notes</title>
+<title>The Bias-Variance Tradeoff – Interactive Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./bootstrap.html">The Bootstrap</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cef.html">Regression &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./bias-variance.html">Bias-Variance Tradeoff</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -216,7 +216,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link active">
+  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Bootstrap</span></a>
   </div>
 </li>
@@ -281,7 +281,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bias-variance.html" class="sidebar-item-text sidebar-link">
+  <a href="./bias-variance.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Bias-Variance Tradeoff</span></a>
   </div>
 </li>
@@ -314,12 +314,12 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
+  <li><a href="#why-the-best-model-isnt-the-most-complex-one" id="toc-why-the-best-model-isnt-the-most-complex-one" class="nav-link active" data-scroll-target="#why-the-best-model-isnt-the-most-complex-one">Why the best model isn’t the most complex one</a></li>
+  <li><a href="#simulation-1-polynomial-regression-underfitting-vs-overfitting" id="toc-simulation-1-polynomial-regression-underfitting-vs-overfitting" class="nav-link" data-scroll-target="#simulation-1-polynomial-regression-underfitting-vs-overfitting">Simulation 1: Polynomial regression — underfitting vs overfitting</a></li>
+  <li><a href="#simulation-2-bias²-variance-mse" id="toc-simulation-2-bias²-variance-mse" class="nav-link" data-scroll-target="#simulation-2-bias²-variance-mse">Simulation 2: Bias² + Variance = MSE</a>
   <ul class="collapse">
-  <li><a href="#the-steps" id="toc-the-steps" class="nav-link" data-scroll-target="#the-steps">The steps</a></li>
-  <li><a href="#but-cant-i-just-look-at-my-data" id="toc-but-cant-i-just-look-at-my-data" class="nav-link" data-scroll-target="#but-cant-i-just-look-at-my-data">But can’t I just look at my data?</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
-  <li><a href="#when-to-use-the-bootstrap" id="toc-when-to-use-the-bootstrap" class="nav-link" data-scroll-target="#when-to-use-the-bootstrap">When to use the bootstrap</a></li>
+  <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul></li>
   </ul>
@@ -328,9 +328,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./bootstrap.html">The Bootstrap</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cef.html">Regression &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./bias-variance.html">Bias-Variance Tradeoff</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">The Bootstrap</h1>
+<h1 class="title">The Bias-Variance Tradeoff</h1>
 </div>
 
 
@@ -347,35 +347,58 @@ window.Quarto = {
 </header>
 
 
-<section id="the-idea" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>You want a confidence interval for some statistic (mean, median, regression coefficient), but you don’t know the sampling distribution. Maybe the formula is complicated. Maybe there is no formula.</p>
-<p>The <strong>bootstrap</strong> says: <em>pretend your sample is the population</em>. Then simulate the sampling process by <strong>resampling with replacement</strong> from your data, over and over. Each resample gives you a new estimate. The distribution of those estimates <em>approximates</em> the true sampling distribution.</p>
-<section id="the-steps" class="level3">
-<h3 class="anchored" data-anchor-id="the-steps">The steps</h3>
-<ol type="1">
-<li>You have a sample of <span class="math inline">\(n\)</span> observations.</li>
-<li>Draw <span class="math inline">\(n\)</span> observations <strong>with replacement</strong> from your sample (some points get picked twice, some not at all).</li>
-<li>Compute your statistic on this resample.</li>
-<li>Repeat B times (typically 1,000–10,000).</li>
-<li>The spread of those B estimates gives you a standard error and a confidence interval.</li>
-</ol>
-<p>That’s it. No formulas, no distributional assumptions. Just resampling.</p>
+<section id="why-the-best-model-isnt-the-most-complex-one" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-best-model-isnt-the-most-complex-one">Why the best model isn’t the most complex one</h2>
+<p>You might think: “More flexible models fit the data better, so they must be better.” But there’s a catch. A model that fits the training data perfectly will often perform <em>terribly</em> on new data. This is <strong>overfitting</strong>.</p>
+<p>The <strong>bias-variance tradeoff</strong> explains why:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Simple model (e.g., linear)</th>
+<th>Complex model (e.g., degree-20 polynomial)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Bias</strong></td>
+<td>High — can’t capture the true shape</td>
+<td>Low — flexible enough to match any pattern</td>
+</tr>
+<tr class="even">
+<td><strong>Variance</strong></td>
+<td>Low — stable across samples</td>
+<td>High — estimates change wildly with new data</td>
+</tr>
+<tr class="odd">
+<td><strong>Training error</strong></td>
+<td>Higher</td>
+<td>Lower (maybe zero)</td>
+</tr>
+<tr class="even">
+<td><strong>Test error</strong></td>
+<td>U-shaped — sweet spot exists</td>
+<td>U-shaped — sweet spot exists</td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>total prediction error</strong> (MSE) decomposes as:</p>
+<p><span class="math display">\[\text{MSE} = \text{Bias}^2 + \text{Variance} + \text{Irreducible noise}\]</span></p>
+<p>You can’t eliminate all three. Reducing bias increases variance, and vice versa. The best model <strong>balances both</strong>.</p>
 </section>
-<section id="but-cant-i-just-look-at-my-data" class="level3">
-<h3 class="anchored" data-anchor-id="but-cant-i-just-look-at-my-data">But can’t I just look at my data?</h3>
-<p>No — and this is a crucial distinction. There are <strong>two different distributions</strong> at play:</p>
-<ul>
-<li>The <strong>distribution of the data</strong> = what individual observations look like (their histogram). This tells you about spread, skew, outliers in your raw data.</li>
-<li>The <strong>sampling distribution</strong> = what your <em>statistic</em> (mean, median, slope) would look like if you could repeat the entire experiment many times. This is what you need for standard errors and confidence intervals.</li>
-</ul>
-<p>You can always plot your data. But you <strong>cannot see the sampling distribution</strong> — you only ran the experiment once. You have one mean, not a distribution of means.</p>
-<p>The bootstrap bridges that gap. It simulates the “what if I repeated this experiment?” question using only the data you have. The left panel below shows your data distribution. The right panel shows the bootstrap sampling distribution. Notice: they look completely different. Your data might be skewed and spread out, but the sampling distribution of the mean is narrow and roughly normal (thanks to the CLT). The bootstrap discovers this for you without any formulas.</p>
+<section id="simulation-1-polynomial-regression-underfitting-vs-overfitting" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-1-polynomial-regression-underfitting-vs-overfitting">Simulation 1: Polynomial regression — underfitting vs overfitting</h2>
+<p>Fit polynomials of different degrees to noisy data. Low degrees underfit (too rigid). High degrees overfit (too wiggly). Watch the training error decrease monotonically while the test error has a U-shape.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
 #| standalone: true
-#| viewerHeight: 900
+#| viewerHeight: 700
 
 library(shiny)
 
@@ -392,21 +415,22 @@ ui &lt;- fluidPage(
     sidebarPanel(
       width = 3,
 
-      selectInput("stat", "Statistic to bootstrap:",
-                  choices = c("Mean", "Median", "SD",
-                              "Correlation", "Regression slope")),
+      selectInput("true_fn", "True function:",
+                  choices = c("Sine wave",
+                              "Quadratic",
+                              "Step function",
+                              "Linear")),
 
-      selectInput("pop", "Population shape:",
-                  choices = c("Normal", "Skewed (exponential)",
-                              "Heavy-tailed", "Bimodal")),
+      sliderInput("n_train", "Training points:",
+                  min = 20, max = 200, value = 50, step = 10),
 
-      sliderInput("n", "Sample size:",
-                  min = 10, max = 200, value = 30, step = 10),
+      sliderInput("noise", "Noise level (\u03c3):",
+                  min = 0.1, max = 2, value = 0.5, step = 0.1),
 
-      sliderInput("B", "Bootstrap resamples (B):",
-                  min = 100, max = 5000, value = 1000, step = 100),
+      sliderInput("degree", "Polynomial degree:",
+                  min = 1, max = 20, value = 3, step = 1),
 
-      actionButton("go", "New sample + bootstrap",
+      actionButton("go", "New data",
                    class = "btn-primary", width = "100%"),
 
       uiOutput("results")
@@ -415,11 +439,8 @@ ui &lt;- fluidPage(
     mainPanel(
       width = 9,
       fluidRow(
-        column(6, plotOutput("sample_plot", height = "350px")),
-        column(6, plotOutput("boot_plot", height = "350px"))
-      ),
-      fluidRow(
-        column(12, plotOutput("compare_plot", height = "350px"))
+        column(7, plotOutput("fit_plot", height = "400px")),
+        column(5, plotOutput("error_curve", height = "400px"))
       )
     )
   )
@@ -427,157 +448,130 @@ ui &lt;- fluidPage(
 
 server &lt;- function(input, output, session) {
 
-  draw_pop &lt;- function(n, pop) {
-    switch(pop,
-      "Normal" = rnorm(n, mean = 5, sd = 2),
-      "Skewed (exponential)" = rexp(n, rate = 0.5),
-      "Heavy-tailed" = rt(n, df = 3) * 2 + 5,
-      "Bimodal" = {
-        k &lt;- rbinom(n, 1, 0.5)
-        k * rnorm(n, 2, 0.8) + (1 - k) * rnorm(n, 7, 0.8)
-      }
-    )
-  }
-
-  compute_stat &lt;- function(x, y = NULL, stat) {
-    switch(stat,
-      "Mean" = mean(x),
-      "Median" = median(x),
-      "SD" = sd(x),
-      "Correlation" = cor(x, y),
-      "Regression slope" = coef(lm(y ~ x))[2]
+  f_true &lt;- function(x, fn) {
+    switch(fn,
+      "Sine wave"     = sin(2 * pi * x),
+      "Quadratic"     = 2 * (x - 0.5)^2,
+      "Step function" = ifelse(x &gt; 0.5, 1, 0),
+      "Linear"        = x
     )
   }
 
   dat &lt;- reactive({
     input$go
-    n    &lt;- input$n
-    B    &lt;- input$B
-    stat &lt;- input$stat
-    pop  &lt;- input$pop
+    n     &lt;- input$n_train
+    sigma &lt;- input$noise
+    fn    &lt;- input$true_fn
 
-    x &lt;- draw_pop(n, pop)
-    y &lt;- NULL
-    if (stat %in% c("Correlation", "Regression slope")) {
-      y &lt;- 1 + 0.8 * x + rnorm(n, sd = 2)
+    # Training data
+    x_train &lt;- sort(runif(n, 0, 1))
+    y_train &lt;- f_true(x_train, fn) + rnorm(n, sd = sigma)
+
+    # Test data (fresh)
+    x_test &lt;- sort(runif(n, 0, 1))
+    y_test &lt;- f_true(x_test, fn) + rnorm(n, sd = sigma)
+
+    # Fit polynomials of degree 1 through 20
+    degrees &lt;- 1:20
+    train_mse &lt;- numeric(20)
+    test_mse  &lt;- numeric(20)
+
+    for (d in degrees) {
+      fit &lt;- lm(y_train ~ poly(x_train, d, raw = TRUE))
+      pred_train &lt;- predict(fit)
+      pred_test  &lt;- predict(fit, newdata = data.frame(x_train = x_test))
+      train_mse[d] &lt;- mean((y_train - pred_train)^2)
+      test_mse[d]  &lt;- mean((y_test - pred_test)^2)
     }
 
-    obs_stat &lt;- compute_stat(x, y, stat)
+    # Current degree fit for plotting
+    d_now &lt;- input$degree
+    fit_now &lt;- lm(y_train ~ poly(x_train, d_now, raw = TRUE))
+    x_grid &lt;- seq(0, 1, length.out = 300)
+    pred_grid &lt;- predict(fit_now, newdata = data.frame(x_train = x_grid))
 
-    # Bootstrap
-    boot_stats &lt;- replicate(B, {
-      idx &lt;- sample(n, n, replace = TRUE)
-      x_b &lt;- x[idx]
-      y_b &lt;- if (!is.null(y)) y[idx] else NULL
-      compute_stat(x_b, y_b, stat)
-    })
-
-    boot_se &lt;- sd(boot_stats)
-    boot_ci &lt;- quantile(boot_stats, c(0.025, 0.975))
-
-    list(x = x, y = y, obs_stat = obs_stat,
-         boot_stats = boot_stats, boot_se = boot_se,
-         boot_ci = boot_ci, stat = stat, n = n, B = B)
+    list(x_train = x_train, y_train = y_train,
+         x_test = x_test, y_test = y_test,
+         x_grid = x_grid, pred_grid = pred_grid,
+         train_mse = train_mse, test_mse = test_mse,
+         fn = fn, d_now = d_now, sigma = sigma)
   })
 
-  output$sample_plot &lt;- renderPlot({
+  output$fit_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    if (d$stat %in% c("Correlation", "Regression slope")) {
-      plot(d$x, d$y, pch = 16, col = "#3498db80", cex = 0.8,
-           xlab = "X", ylab = "Y", main = "Your sample")
-      if (d$stat == "Regression slope") {
-        abline(lm(d$y ~ d$x), col = "#e74c3c", lwd = 2)
-      }
-    } else {
-      hist(d$x, breaks = 20, col = "#d5e8d4", border = "#82b366",
-           main = "Your sample", xlab = "X", ylab = "Frequency")
-      abline(v = d$obs_stat, col = "#e74c3c", lwd = 2.5, lty = 2)
-      legend("topright", bty = "n", cex = 0.85,
-             legend = paste0(d$stat, " = ", round(d$obs_stat, 3)),
-             col = "#e74c3c", lty = 2, lwd = 2)
-    }
+    plot(d$x_train, d$y_train, pch = 16,
+         col = "#3498db80", cex = 0.8,
+         xlab = "x", ylab = "y",
+         main = paste0("Degree ", d$d_now, " polynomial fit"),
+         ylim = range(c(d$y_train, d$pred_grid)))
+
+    # True function
+    x_fine &lt;- seq(0, 1, length.out = 300)
+    lines(x_fine, f_true(x_fine, d$fn),
+          col = "#27ae60", lwd = 2, lty = 2)
+
+    # Fitted curve
+    lines(d$x_grid, d$pred_grid, col = "#e74c3c", lwd = 2.5)
+
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c("Training data", "True function",
+                      paste0("Degree ", d$d_now, " fit")),
+           col = c("#3498db80", "#27ae60", "#e74c3c"),
+           pch = c(16, NA, NA), lwd = c(NA, 2, 2.5),
+           lty = c(NA, 2, 1))
   })
 
-  output$boot_plot &lt;- renderPlot({
+  output$error_curve &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    hist(d$boot_stats, breaks = 40, probability = TRUE,
-         col = "#dae8fc", border = "#6c8ebf",
-         main = paste0("Bootstrap distribution (B = ", d$B, ")"),
-         xlab = paste0("Bootstrap ", tolower(d$stat)),
-         ylab = "Density")
+    ylim &lt;- c(0, min(max(d$test_mse) * 1.1, max(d$test_mse[1:15]) * 1.5))
 
-    abline(v = d$obs_stat, col = "#e74c3c", lwd = 2.5, lty = 2)
-    abline(v = d$boot_ci, col = "#27ae60", lwd = 2, lty = 3)
+    plot(1:20, d$train_mse, type = "b", pch = 19, cex = 0.7,
+         col = "#3498db", lwd = 2,
+         xlab = "Polynomial degree",
+         ylab = "Mean Squared Error",
+         main = "Train vs Test Error",
+         ylim = ylim)
+    lines(1:20, d$test_mse, type = "b", pch = 17, cex = 0.7,
+          col = "#e74c3c", lwd = 2)
+
+    # Mark current degree
+    points(d$d_now, d$train_mse[d$d_now], pch = 19, cex = 2, col = "#3498db")
+    points(d$d_now, d$test_mse[d$d_now], pch = 17, cex = 2, col = "#e74c3c")
+
+    # Mark optimal
+    best &lt;- which.min(d$test_mse)
+    abline(v = best, lty = 3, col = "#7f8c8d")
+
+    abline(h = d$sigma^2, lty = 2, col = "#95a5a6")
+    text(15, d$sigma^2 * 1.1, expression("Irreducible noise (" * sigma^2 * ")"),
+         cex = 0.75, col = "#95a5a6")
 
     legend("topright", bty = "n", cex = 0.8,
-           legend = c(paste0("Observed: ", round(d$obs_stat, 3)),
-                      paste0("95% CI: [", round(d$boot_ci[1], 3),
-                             ", ", round(d$boot_ci[2], 3), "]")),
-           col = c("#e74c3c", "#27ae60"),
-           lty = c(2, 3), lwd = 2)
-  })
-
-  output$compare_plot &lt;- renderPlot({
-    d &lt;- dat()
-
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    if (d$stat %in% c("Correlation", "Regression slope")) {
-      # For bivariate stats, just show bootstrap dist with CI
-      hist(d$boot_stats, breaks = 40, probability = TRUE,
-           col = "#dae8fc", border = "#6c8ebf",
-           main = "Bootstrap sampling dist.",
-           xlab = paste0("Bootstrap ", tolower(d$stat)),
-           ylab = "Density")
-      abline(v = d$boot_ci, col = "#27ae60", lwd = 2, lty = 3)
-      abline(v = d$obs_stat, col = "#e74c3c", lwd = 2, lty = 2)
-    } else {
-      # Overlay: data distribution (wide) vs bootstrap distribution (narrow)
-      # Rescale data density to fit on same axes
-      dens_data &lt;- density(d$x)
-      dens_boot &lt;- density(d$boot_stats)
-
-      # Normalize both to peak at 1 for visual comparison
-      dens_data$y &lt;- dens_data$y / max(dens_data$y)
-      dens_boot$y &lt;- dens_boot$y / max(dens_boot$y)
-
-      xlim &lt;- range(c(dens_data$x, dens_boot$x))
-
-      plot(dens_data, col = "#e74c3c", lwd = 2.5, xlim = xlim,
-           ylim = c(0, 1.25), main = "Data vs Sampling Distribution",
-           xlab = "Value", ylab = "Scaled density")
-      polygon(dens_data$x, dens_data$y,
-              col = adjustcolor("#e74c3c", 0.15), border = NA)
-
-      lines(dens_boot, col = "#3498db", lwd = 2.5)
-      polygon(dens_boot$x, dens_boot$y,
-              col = adjustcolor("#3498db", 0.15), border = NA)
-
-      legend("topright", bty = "n", cex = 0.8,
-             legend = c("Your data (wide, raw obs.)",
-                        paste0("Sampling dist. of ", tolower(d$stat),
-                               " (narrow)")),
-             col = c("#e74c3c", "#3498db"), lwd = 2.5)
-    }
+           legend = c("Training error", "Test error",
+                      paste0("Best degree: ", best)),
+           col = c("#3498db", "#e74c3c", "#7f8c8d"),
+           pch = c(19, 17, NA), lwd = c(2, 2, 1),
+           lty = c(1, 1, 3))
   })
 
   output$results &lt;- renderUI({
     d &lt;- dat()
+    best &lt;- which.min(d$test_mse)
+
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;Statistic:&lt;/b&gt; ", d$stat, "&lt;br&gt;",
-        "&lt;b&gt;Observed:&lt;/b&gt; ", round(d$obs_stat, 4), "&lt;br&gt;",
-        "&lt;b&gt;Bootstrap SE:&lt;/b&gt; ", round(d$boot_se, 4), "&lt;br&gt;",
-        "&lt;b&gt;95% CI:&lt;/b&gt; [", round(d$boot_ci[1], 4),
-        ", ", round(d$boot_ci[2], 4), "]&lt;br&gt;",
+        "&lt;b&gt;Degree ", d$d_now, ":&lt;/b&gt;&lt;br&gt;",
+        "Train MSE: ", round(d$train_mse[d$d_now], 4), "&lt;br&gt;",
+        "Test MSE: ", round(d$test_mse[d$d_now], 4), "&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;small&gt;CI uses percentile method:&lt;br&gt;",
-        "2.5th and 97.5th percentiles of&lt;br&gt;",
-        "bootstrap distribution.&lt;/small&gt;"
+        "&lt;b&gt;Optimal degree:&lt;/b&gt; ", best, "&lt;br&gt;",
+        "Test MSE: ", round(d$test_mse[best], 4), "&lt;br&gt;",
+        "&lt;small&gt;Noise floor: \u03c3\u00b2 = ",
+        round(d$sigma^2, 3), "&lt;/small&gt;"
       ))
     )
   })
@@ -585,58 +579,178 @@ server &lt;- function(input, output, session) {
 
 shinyApp(ui, server)</code></pre>
 </section>
+<section id="simulation-2-bias²-variance-mse" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-2-bias²-variance-mse">Simulation 2: Bias² + Variance = MSE</h2>
+<p>Run many simulations with different training sets. For each polynomial degree, decompose the MSE into bias² and variance. Watch the U-shaped total error curve emerge.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| viewerHeight: 520
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      selectInput("fn2", "True function:",
+                  choices = c("Sine wave", "Quadratic")),
+
+      sliderInput("n2", "Training points:",
+                  min = 20, max = 100, value = 40, step = 10),
+
+      sliderInput("noise2", "Noise level:",
+                  min = 0.2, max = 1.5, value = 0.5, step = 0.1),
+
+      sliderInput("mc_sims", "MC simulations:",
+                  min = 100, max = 500, value = 200, step = 50),
+
+      actionButton("go2", "Run",
+                   class = "btn-primary", width = "100%"),
+
+      uiOutput("results2")
+    ),
+
+    mainPanel(
+      width = 9,
+      plotOutput("bv_plot", height = "420px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  f_true &lt;- function(x, fn) {
+    switch(fn,
+      "Sine wave" = sin(2 * pi * x),
+      "Quadratic" = 2 * (x - 0.5)^2
+    )
+  }
+
+  dat &lt;- reactive({
+    input$go2
+    fn    &lt;- input$fn2
+    n     &lt;- input$n2
+    sigma &lt;- input$noise2
+    sims  &lt;- input$mc_sims
+
+    x_eval &lt;- seq(0.05, 0.95, length.out = 50)
+    f_eval &lt;- f_true(x_eval, fn)
+
+    degrees &lt;- 1:12
+    bias2_vec &lt;- numeric(length(degrees))
+    var_vec   &lt;- numeric(length(degrees))
+    mse_vec   &lt;- numeric(length(degrees))
+
+    for (di in seq_along(degrees)) {
+      d &lt;- degrees[di]
+      pred_mat &lt;- matrix(NA, nrow = sims, ncol = length(x_eval))
+
+      for (s in seq_len(sims)) {
+        x_train &lt;- sort(runif(n, 0, 1))
+        y_train &lt;- f_true(x_train, fn) + rnorm(n, sd = sigma)
+        fit &lt;- lm(y_train ~ poly(x_train, d, raw = TRUE))
+        pred_mat[s, ] &lt;- predict(fit,
+          newdata = data.frame(x_train = x_eval))
+      }
+
+      avg_pred &lt;- colMeans(pred_mat)
+      bias2_vec[di] &lt;- mean((avg_pred - f_eval)^2)
+      var_vec[di]   &lt;- mean(apply(pred_mat, 2, var))
+      mse_vec[di]   &lt;- bias2_vec[di] + var_vec[di]
+    }
+
+    list(degrees = degrees, bias2 = bias2_vec, variance = var_vec,
+         mse = mse_vec, sigma = sigma)
+  })
+
+  output$bv_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    ylim &lt;- c(0, max(d$mse) * 1.1)
+
+    plot(d$degrees, d$mse, type = "b", pch = 19, lwd = 2.5,
+         col = "#2c3e50", xlab = "Model complexity (polynomial degree)",
+         ylab = "Error", ylim = ylim,
+         main = "Bias-Variance Decomposition")
+    lines(d$degrees, d$bias2, type = "b", pch = 17, lwd = 2,
+          col = "#e74c3c")
+    lines(d$degrees, d$variance, type = "b", pch = 15, lwd = 2,
+          col = "#3498db")
+
+    abline(h = d$sigma^2, lty = 2, col = "#95a5a6")
+    text(max(d$degrees) - 1, d$sigma^2 + 0.02,
+         expression("Noise floor (" * sigma^2 * ")"),
+         cex = 0.75, col = "#95a5a6")
+
+    best &lt;- d$degrees[which.min(d$mse)]
+    abline(v = best, lty = 3, col = "#7f8c8d")
+
+    legend("topright", bty = "n", cex = 0.9,
+           legend = c("Total MSE", "Bias\u00b2", "Variance",
+                      paste0("Optimal degree: ", best)),
+           col = c("#2c3e50", "#e74c3c", "#3498db", "#7f8c8d"),
+           pch = c(19, 17, 15, NA), lwd = c(2.5, 2, 2, 1),
+           lty = c(1, 1, 1, 3))
+  })
+
+  output$results2 &lt;- renderUI({
+    d &lt;- dat()
+    best &lt;- d$degrees[which.min(d$mse)]
+    bi &lt;- which.min(d$mse)
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;Optimal degree:&lt;/b&gt; ", best, "&lt;br&gt;",
+        "Bias\u00b2: ", round(d$bias2[bi], 4), "&lt;br&gt;",
+        "Variance: ", round(d$variance[bi], 4), "&lt;br&gt;",
+        "MSE: ", round(d$mse[bi], 4), "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;small&gt;MSE = Bias\u00b2 + Variance&lt;br&gt;",
+        "Noise floor: ", round(d$sigma^2, 3), "&lt;/small&gt;"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Mean with Normal population:</strong> the bootstrap distribution looks normal, similar to what CLT gives you analytically.</li>
-<li><strong>Median with skewed population:</strong> no easy formula for the SE of a median. But the bootstrap handles it effortlessly.</li>
-<li><strong>SD with heavy-tailed data:</strong> the bootstrap distribution is skewed — the percentile CI is asymmetric, which is exactly right.</li>
-<li><strong>Regression slope:</strong> bootstrap the slope to get a CI without assuming homoskedasticity.</li>
-<li><strong>Small n (10) vs large n (200):</strong> with small samples the bootstrap distribution is choppy (limited unique resamples). With more data it smooths out.</li>
+<li><strong>Sine wave, degree 1:</strong> the linear fit can’t capture the curve — high bias, low variance. Classic underfitting.</li>
+<li><strong>Sine wave, degree 20:</strong> the polynomial goes wild between data points — low bias, high variance. Classic overfitting.</li>
+<li><strong>Sine wave, degree 3–5:</strong> the sweet spot where bias and variance are balanced. The test error curve reaches its minimum.</li>
+<li><strong>Increase noise:</strong> the optimal degree shifts <em>down</em>. Noisier data means simpler models are better — there’s less signal to extract.</li>
+<li><strong>Quadratic true function, degree 2:</strong> the model matches the DGP perfectly. Bias is essentially zero. Going beyond degree 2 only adds variance.</li>
 </ul>
 </section>
-<section id="when-to-use-the-bootstrap" class="level3">
-<h3 class="anchored" data-anchor-id="when-to-use-the-bootstrap">When to use the bootstrap</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Use bootstrap when…</th>
-<th>Don’t bother when…</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>No formula for the SE exists</td>
-<td>Standard formulas are available and valid</td>
-</tr>
-<tr class="even">
-<td>The statistic is complicated (ratios, quantiles)</td>
-<td>You’re computing a simple mean</td>
-</tr>
-<tr class="odd">
-<td>You suspect non-normality</td>
-<td>n is large and CLT applies</td>
-</tr>
-<tr class="even">
-<td>You want a quick, assumption-free CI</td>
-<td>You need exact small-sample inference</td>
-</tr>
-</tbody>
-</table>
-<p>The bootstrap is not magic — it can fail with very small samples or non-smooth statistics. But for most practical situations, it’s the easiest path to a valid confidence interval.</p>
+<section id="the-bottom-line" class="level3">
+<h3 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h3>
+<ul>
+<li><strong>Simple models are biased but stable.</strong> They miss patterns in the data but give consistent predictions across samples.</li>
+<li><strong>Complex models are flexible but noisy.</strong> They capture the training data perfectly but their predictions change wildly with new data.</li>
+<li><strong>The best model balances both.</strong> The U-shaped test error curve is the signature of the bias-variance tradeoff.</li>
+<li>In practice, we use <strong>cross-validation</strong> to find the sweet spot without needing access to the true function.</li>
+</ul>
 <hr>
 </section>
 <section id="did-you-know" class="level3">
 <h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
 <ul>
-<li><strong>Bradley Efron</strong> invented the bootstrap in 1979 at Stanford. The name comes from the expression <strong>“pulling yourself up by your bootstraps”</strong> — attributed to the tall tales of <strong>Baron Munchausen</strong>, who claimed to have pulled himself out of a swamp by his own hair (later versions say bootstraps). The idea that a sample can estimate its own sampling distribution seemed equally absurd at first.</li>
-<li>When Efron first presented the bootstrap, many statisticians were skeptical. One famously asked: <em>“You’re just sampling from your sample — how can that tell you anything new?”</em> The answer: it tells you about the <em>variability</em> of your estimate, not about new data points.</li>
-<li>The bootstrap is now one of the most cited statistical methods ever. Efron’s 1979 paper has over 20,000 citations. He received the <strong>International Prize in Statistics</strong> (the statistics equivalent of the Nobel) in 2019 for this work.</li>
-<li>Before the bootstrap, getting standard errors for complex statistics (ratios, quantiles, eigenvalues) required either painful analytical derivations or the <strong>delta method</strong> — a Taylor expansion trick that often required heroic assumptions. The bootstrap made all of that unnecessary.</li>
+<li>The bias-variance decomposition was formalized by <strong>Stuart Geman and Donald Geman</strong> in their landmark 1984 paper on image processing. But the intuition goes back much further — <strong>Charles Stein</strong> showed in 1956 that the sample mean is <em>inadmissible</em> (not the best estimator) in dimensions ≥ 3. The <strong>James-Stein estimator</strong> reduces MSE by shrinking toward the grand mean — trading bias for variance. This result was so counterintuitive that Stein’s colleagues initially didn’t believe it.</li>
+<li>The bias-variance tradeoff is the theoretical foundation of <strong>regularization</strong> methods like ridge regression, LASSO, and elastic net. These methods intentionally introduce bias (by shrinking coefficients) to dramatically reduce variance, resulting in better predictions overall.</li>
+<li><strong>Cross-validation</strong> — the practical tool for navigating the tradeoff — was proposed by <strong>Seymour Geisser</strong> in 1975 and popularized by <strong>Mervyn Stone</strong> in the same year. The leave-one-out version was known even earlier.</li>
 </ul>
 
 

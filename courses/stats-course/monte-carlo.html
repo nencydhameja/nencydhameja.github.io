@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The Bootstrap – Interactive Notes</title>
+<title>Monte Carlo Experiments: How We Understand Estimators – Interactive Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./bootstrap.html">The Bootstrap</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./monte-carlo.html">Monte Carlo Experiments</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -216,7 +216,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link active">
+  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Bootstrap</span></a>
   </div>
 </li>
@@ -228,7 +228,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./monte-carlo.html" class="sidebar-item-text sidebar-link">
+  <a href="./monte-carlo.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Monte Carlo Experiments</span></a>
   </div>
 </li>
@@ -314,12 +314,12 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
+  <li><a href="#what-is-a-monte-carlo-experiment" id="toc-what-is-a-monte-carlo-experiment" class="nav-link active" data-scroll-target="#what-is-a-monte-carlo-experiment">What is a Monte Carlo experiment?</a></li>
+  <li><a href="#simulation-1-compare-estimators" id="toc-simulation-1-compare-estimators" class="nav-link" data-scroll-target="#simulation-1-compare-estimators">Simulation 1: Compare estimators</a></li>
+  <li><a href="#simulation-2-consistency-estimates-tighten-with-n" id="toc-simulation-2-consistency-estimates-tighten-with-n" class="nav-link" data-scroll-target="#simulation-2-consistency-estimates-tighten-with-n">Simulation 2: Consistency — estimates tighten with n</a>
   <ul class="collapse">
-  <li><a href="#the-steps" id="toc-the-steps" class="nav-link" data-scroll-target="#the-steps">The steps</a></li>
-  <li><a href="#but-cant-i-just-look-at-my-data" id="toc-but-cant-i-just-look-at-my-data" class="nav-link" data-scroll-target="#but-cant-i-just-look-at-my-data">But can’t I just look at my data?</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
-  <li><a href="#when-to-use-the-bootstrap" id="toc-when-to-use-the-bootstrap" class="nav-link" data-scroll-target="#when-to-use-the-bootstrap">When to use the bootstrap</a></li>
+  <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul></li>
   </ul>
@@ -328,9 +328,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./bootstrap.html">The Bootstrap</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./monte-carlo.html">Monte Carlo Experiments</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">The Bootstrap</h1>
+<h1 class="title">Monte Carlo Experiments: How We Understand Estimators</h1>
 </div>
 
 
@@ -347,35 +347,25 @@ window.Quarto = {
 </header>
 
 
-<section id="the-idea" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>You want a confidence interval for some statistic (mean, median, regression coefficient), but you don’t know the sampling distribution. Maybe the formula is complicated. Maybe there is no formula.</p>
-<p>The <strong>bootstrap</strong> says: <em>pretend your sample is the population</em>. Then simulate the sampling process by <strong>resampling with replacement</strong> from your data, over and over. Each resample gives you a new estimate. The distribution of those estimates <em>approximates</em> the true sampling distribution.</p>
-<section id="the-steps" class="level3">
-<h3 class="anchored" data-anchor-id="the-steps">The steps</h3>
+<section id="what-is-a-monte-carlo-experiment" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-monte-carlo-experiment">What is a Monte Carlo experiment?</h2>
+<p>Every claim in this course — unbiasedness, coverage, power — was verified the same way: by <strong>simulation</strong>. A Monte Carlo experiment is simple:</p>
 <ol type="1">
-<li>You have a sample of <span class="math inline">\(n\)</span> observations.</li>
-<li>Draw <span class="math inline">\(n\)</span> observations <strong>with replacement</strong> from your sample (some points get picked twice, some not at all).</li>
-<li>Compute your statistic on this resample.</li>
-<li>Repeat B times (typically 1,000–10,000).</li>
-<li>The spread of those B estimates gives you a standard error and a confidence interval.</li>
+<li><strong>Specify a data-generating process (DGP):</strong> decide the true parameter, the distribution, and the sample size.</li>
+<li><strong>Draw a sample</strong> from the DGP and compute your estimator.</li>
+<li><strong>Repeat many times</strong> (1,000–10,000 simulations).</li>
+<li><strong>Summarize:</strong> look at the distribution of your estimates. Is the estimator centered on the truth (unbiased)? How spread out is it (variance)? How often does the CI cover the truth?</li>
 </ol>
-<p>That’s it. No formulas, no distributional assumptions. Just resampling.</p>
+<p>This is how statisticians <strong>check their own work</strong>. Theory says OLS is unbiased? Prove it — simulate 5,000 datasets and see if the average estimate equals the true value. Theory says the CI has 95% coverage? Simulate it.</p>
 </section>
-<section id="but-cant-i-just-look-at-my-data" class="level3">
-<h3 class="anchored" data-anchor-id="but-cant-i-just-look-at-my-data">But can’t I just look at my data?</h3>
-<p>No — and this is a crucial distinction. There are <strong>two different distributions</strong> at play:</p>
-<ul>
-<li>The <strong>distribution of the data</strong> = what individual observations look like (their histogram). This tells you about spread, skew, outliers in your raw data.</li>
-<li>The <strong>sampling distribution</strong> = what your <em>statistic</em> (mean, median, slope) would look like if you could repeat the entire experiment many times. This is what you need for standard errors and confidence intervals.</li>
-</ul>
-<p>You can always plot your data. But you <strong>cannot see the sampling distribution</strong> — you only ran the experiment once. You have one mean, not a distribution of means.</p>
-<p>The bootstrap bridges that gap. It simulates the “what if I repeated this experiment?” question using only the data you have. The left panel below shows your data distribution. The right panel shows the bootstrap sampling distribution. Notice: they look completely different. Your data might be skewed and spread out, but the sampling distribution of the mean is narrow and roughly normal (thanks to the CLT). The bootstrap discovers this for you without any formulas.</p>
+<section id="simulation-1-compare-estimators" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-1-compare-estimators">Simulation 1: Compare estimators</h2>
+<p>Pick an estimator, pick a DGP, run <span class="math inline">\(N\)</span> simulations. Compare bias, variance, and MSE (mean squared error = bias² + variance) across estimators.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
 #| standalone: true
-#| viewerHeight: 900
+#| viewerHeight: 700
 
 library(shiny)
 
@@ -392,21 +382,26 @@ ui &lt;- fluidPage(
     sidebarPanel(
       width = 3,
 
-      selectInput("stat", "Statistic to bootstrap:",
-                  choices = c("Mean", "Median", "SD",
-                              "Correlation", "Regression slope")),
+      selectInput("dgp", "Data-generating process:",
+                  choices = c("Normal(5, 2)",
+                              "Exponential(rate=0.5)",
+                              "Contaminated normal",
+                              "Uniform(0, 10)")),
 
-      selectInput("pop", "Population shape:",
-                  choices = c("Normal", "Skewed (exponential)",
-                              "Heavy-tailed", "Bimodal")),
+      sliderInput("n", "Sample size (n):",
+                  min = 5, max = 200, value = 20, step = 5),
 
-      sliderInput("n", "Sample size:",
-                  min = 10, max = 200, value = 30, step = 10),
+      sliderInput("sims", "Number of simulations:",
+                  min = 500, max = 5000, value = 2000, step = 500),
 
-      sliderInput("B", "Bootstrap resamples (B):",
-                  min = 100, max = 5000, value = 1000, step = 100),
+      checkboxGroupInput("estimators", "Estimators to compare:",
+                         choices = c("Mean", "Median",
+                                     "10% trimmed mean",
+                                     "Midrange"),
+                         selected = c("Mean", "Median",
+                                      "10% trimmed mean")),
 
-      actionButton("go", "New sample + bootstrap",
+      actionButton("go", "Run Monte Carlo",
                    class = "btn-primary", width = "100%"),
 
       uiOutput("results")
@@ -415,11 +410,11 @@ ui &lt;- fluidPage(
     mainPanel(
       width = 9,
       fluidRow(
-        column(6, plotOutput("sample_plot", height = "350px")),
-        column(6, plotOutput("boot_plot", height = "350px"))
+        column(8, plotOutput("hist_plot", height = "380px")),
+        column(4, plotOutput("mse_plot", height = "380px"))
       ),
       fluidRow(
-        column(12, plotOutput("compare_plot", height = "350px"))
+        column(12, plotOutput("dgp_plot", height = "220px"))
       )
     )
   )
@@ -427,216 +422,323 @@ ui &lt;- fluidPage(
 
 server &lt;- function(input, output, session) {
 
-  draw_pop &lt;- function(n, pop) {
-    switch(pop,
-      "Normal" = rnorm(n, mean = 5, sd = 2),
-      "Skewed (exponential)" = rexp(n, rate = 0.5),
-      "Heavy-tailed" = rt(n, df = 3) * 2 + 5,
-      "Bimodal" = {
-        k &lt;- rbinom(n, 1, 0.5)
-        k * rnorm(n, 2, 0.8) + (1 - k) * rnorm(n, 7, 0.8)
-      }
+  draw_dgp &lt;- function(n, dgp) {
+    switch(dgp,
+      "Normal(5, 2)"          = rnorm(n, mean = 5, sd = 2),
+      "Exponential(rate=0.5)" = rexp(n, rate = 0.5),
+      "Contaminated normal"   = {
+        k &lt;- rbinom(n, 1, 0.1)
+        (1 - k) * rnorm(n, 5, 1) + k * rnorm(n, 5, 10)
+      },
+      "Uniform(0, 10)"        = runif(n, 0, 10)
     )
   }
 
-  compute_stat &lt;- function(x, y = NULL, stat) {
-    switch(stat,
-      "Mean" = mean(x),
-      "Median" = median(x),
-      "SD" = sd(x),
-      "Correlation" = cor(x, y),
-      "Regression slope" = coef(lm(y ~ x))[2]
+  true_mu &lt;- function(dgp) {
+    switch(dgp,
+      "Normal(5, 2)"          = 5,
+      "Exponential(rate=0.5)" = 2,
+      "Contaminated normal"   = 5,
+      "Uniform(0, 10)"        = 5
+    )
+  }
+
+  compute_est &lt;- function(x, est) {
+    switch(est,
+      "Mean"              = mean(x),
+      "Median"            = median(x),
+      "10% trimmed mean"  = mean(x, trim = 0.1),
+      "Midrange"          = (min(x) + max(x)) / 2
     )
   }
 
   dat &lt;- reactive({
     input$go
     n    &lt;- input$n
-    B    &lt;- input$B
-    stat &lt;- input$stat
-    pop  &lt;- input$pop
+    sims &lt;- input$sims
+    dgp  &lt;- input$dgp
+    ests &lt;- input$estimators
+    mu   &lt;- true_mu(dgp)
 
-    x &lt;- draw_pop(n, pop)
-    y &lt;- NULL
-    if (stat %in% c("Correlation", "Regression slope")) {
-      y &lt;- 1 + 0.8 * x + rnorm(n, sd = 2)
+    if (length(ests) == 0) ests &lt;- "Mean"
+
+    results &lt;- list()
+    for (est in ests) {
+      vals &lt;- replicate(sims, compute_est(draw_dgp(n, dgp), est))
+      bias &lt;- mean(vals) - mu
+      variance &lt;- var(vals)
+      mse &lt;- bias^2 + variance
+      results[[est]] &lt;- list(vals = vals, bias = bias,
+                             variance = variance, mse = mse)
     }
 
-    obs_stat &lt;- compute_stat(x, y, stat)
-
-    # Bootstrap
-    boot_stats &lt;- replicate(B, {
-      idx &lt;- sample(n, n, replace = TRUE)
-      x_b &lt;- x[idx]
-      y_b &lt;- if (!is.null(y)) y[idx] else NULL
-      compute_stat(x_b, y_b, stat)
-    })
-
-    boot_se &lt;- sd(boot_stats)
-    boot_ci &lt;- quantile(boot_stats, c(0.025, 0.975))
-
-    list(x = x, y = y, obs_stat = obs_stat,
-         boot_stats = boot_stats, boot_se = boot_se,
-         boot_ci = boot_ci, stat = stat, n = n, B = B)
+    list(results = results, mu = mu, n = n, sims = sims,
+         dgp = dgp, ests = ests)
   })
 
-  output$sample_plot &lt;- renderPlot({
+  output$dgp_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(3, 4.5, 2, 1))
+
+    big &lt;- draw_dgp(10000, d$dgp)
+    hist(big, breaks = 60, probability = TRUE,
+         col = "#e0e0e0", border = "#b0b0b0",
+         main = paste("DGP:", d$dgp),
+         xlab = "", ylab = "Density")
+    abline(v = d$mu, lty = 2, lwd = 2, col = "#e74c3c")
+  })
+
+  output$hist_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    if (d$stat %in% c("Correlation", "Regression slope")) {
-      plot(d$x, d$y, pch = 16, col = "#3498db80", cex = 0.8,
-           xlab = "X", ylab = "Y", main = "Your sample")
-      if (d$stat == "Regression slope") {
-        abline(lm(d$y ~ d$x), col = "#e74c3c", lwd = 2)
+    cols &lt;- c("#3498db", "#e74c3c", "#27ae60", "#9b59b6")
+    all_vals &lt;- unlist(lapply(d$results, function(r) r$vals))
+    xlim &lt;- quantile(all_vals, c(0.005, 0.995))
+
+    first &lt;- TRUE
+    for (i in seq_along(d$ests)) {
+      vals &lt;- d$results[[d$ests[i]]]$vals
+      if (first) {
+        hist(vals, breaks = 50, probability = TRUE,
+             col = adjustcolor(cols[i], 0.3),
+             border = adjustcolor(cols[i], 0.6),
+             main = paste0("Sampling distributions (",
+                          d$sims, " simulations, n = ", d$n, ")"),
+             xlab = "Estimate", ylab = "Density",
+             xlim = xlim)
+        first &lt;- FALSE
+      } else {
+        hist(vals, breaks = 50, probability = TRUE,
+             col = adjustcolor(cols[i], 0.2),
+             border = adjustcolor(cols[i], 0.5),
+             add = TRUE)
       }
-    } else {
-      hist(d$x, breaks = 20, col = "#d5e8d4", border = "#82b366",
-           main = "Your sample", xlab = "X", ylab = "Frequency")
-      abline(v = d$obs_stat, col = "#e74c3c", lwd = 2.5, lty = 2)
-      legend("topright", bty = "n", cex = 0.85,
-             legend = paste0(d$stat, " = ", round(d$obs_stat, 3)),
-             col = "#e74c3c", lty = 2, lwd = 2)
     }
-  })
 
-  output$boot_plot &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    hist(d$boot_stats, breaks = 40, probability = TRUE,
-         col = "#dae8fc", border = "#6c8ebf",
-         main = paste0("Bootstrap distribution (B = ", d$B, ")"),
-         xlab = paste0("Bootstrap ", tolower(d$stat)),
-         ylab = "Density")
-
-    abline(v = d$obs_stat, col = "#e74c3c", lwd = 2.5, lty = 2)
-    abline(v = d$boot_ci, col = "#27ae60", lwd = 2, lty = 3)
+    abline(v = d$mu, lty = 2, lwd = 2.5, col = "#2c3e50")
 
     legend("topright", bty = "n", cex = 0.8,
-           legend = c(paste0("Observed: ", round(d$obs_stat, 3)),
-                      paste0("95% CI: [", round(d$boot_ci[1], 3),
-                             ", ", round(d$boot_ci[2], 3), "]")),
-           col = c("#e74c3c", "#27ae60"),
-           lty = c(2, 3), lwd = 2)
+           legend = c(d$ests, paste0("True \u03bc = ", d$mu)),
+           col = c(cols[seq_along(d$ests)], "#2c3e50"),
+           lwd = c(rep(8, length(d$ests)), 2.5),
+           lty = c(rep(1, length(d$ests)), 2))
   })
 
-  output$compare_plot &lt;- renderPlot({
+  output$mse_plot &lt;- renderPlot({
     d &lt;- dat()
+    par(mar = c(4.5, 8, 3, 1))
 
-    par(mar = c(4.5, 4.5, 3, 1))
+    mses &lt;- sapply(d$results, function(r) r$mse)
+    biases2 &lt;- sapply(d$results, function(r) r$bias^2)
+    vars &lt;- sapply(d$results, function(r) r$variance)
 
-    if (d$stat %in% c("Correlation", "Regression slope")) {
-      # For bivariate stats, just show bootstrap dist with CI
-      hist(d$boot_stats, breaks = 40, probability = TRUE,
-           col = "#dae8fc", border = "#6c8ebf",
-           main = "Bootstrap sampling dist.",
-           xlab = paste0("Bootstrap ", tolower(d$stat)),
-           ylab = "Density")
-      abline(v = d$boot_ci, col = "#27ae60", lwd = 2, lty = 3)
-      abline(v = d$obs_stat, col = "#e74c3c", lwd = 2, lty = 2)
-    } else {
-      # Overlay: data distribution (wide) vs bootstrap distribution (narrow)
-      # Rescale data density to fit on same axes
-      dens_data &lt;- density(d$x)
-      dens_boot &lt;- density(d$boot_stats)
+    cols &lt;- c("#3498db", "#e74c3c", "#27ae60", "#9b59b6")
+    n_est &lt;- length(d$ests)
 
-      # Normalize both to peak at 1 for visual comparison
-      dens_data$y &lt;- dens_data$y / max(dens_data$y)
-      dens_boot$y &lt;- dens_boot$y / max(dens_boot$y)
+    # Stacked bar: bias^2 + variance = MSE
+    mat &lt;- rbind(biases2, vars)
 
-      xlim &lt;- range(c(dens_data$x, dens_boot$x))
+    bp &lt;- barplot(mat, names.arg = d$ests, col = c("#e74c3c80", "#3498db80"),
+                  horiz = TRUE, las = 1,
+                  main = "MSE decomposition",
+                  xlab = "MSE = Bias\u00b2 + Variance",
+                  border = NA, cex.names = 0.75)
 
-      plot(dens_data, col = "#e74c3c", lwd = 2.5, xlim = xlim,
-           ylim = c(0, 1.25), main = "Data vs Sampling Distribution",
-           xlab = "Value", ylab = "Scaled density")
-      polygon(dens_data$x, dens_data$y,
-              col = adjustcolor("#e74c3c", 0.15), border = NA)
-
-      lines(dens_boot, col = "#3498db", lwd = 2.5)
-      polygon(dens_boot$x, dens_boot$y,
-              col = adjustcolor("#3498db", 0.15), border = NA)
-
-      legend("topright", bty = "n", cex = 0.8,
-             legend = c("Your data (wide, raw obs.)",
-                        paste0("Sampling dist. of ", tolower(d$stat),
-                               " (narrow)")),
-             col = c("#e74c3c", "#3498db"), lwd = 2.5)
-    }
+    legend("bottomright", bty = "n", cex = 0.8,
+           legend = c("Bias\u00b2", "Variance"),
+           fill = c("#e74c3c80", "#3498db80"), border = NA)
   })
 
   output$results &lt;- renderUI({
     d &lt;- dat()
+    lines &lt;- paste0(sapply(d$ests, function(est) {
+      r &lt;- d$results[[est]]
+      paste0(
+        "&lt;b&gt;", est, ":&lt;/b&gt;&lt;br&gt;",
+        "&amp;nbsp; Bias: ", round(r$bias, 4), "&lt;br&gt;",
+        "&amp;nbsp; Var: ", round(r$variance, 4), "&lt;br&gt;",
+        "&amp;nbsp; MSE: ", round(r$mse, 4), "&lt;br&gt;"
+      )
+    }), collapse = "&lt;hr style='margin:6px 0'&gt;")
+
+    tags$div(class = "stats-box", HTML(lines))
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</section>
+<section id="simulation-2-consistency-estimates-tighten-with-n" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-2-consistency-estimates-tighten-with-n">Simulation 2: Consistency — estimates tighten with n</h2>
+<p>A <strong>consistent</strong> estimator converges to the true parameter as <span class="math inline">\(n \to \infty\)</span>. Watch how the sampling distribution of each estimator gets narrower and more centered as you increase the sample size.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| viewerHeight: 520
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      selectInput("dgp2", "DGP:",
+                  choices = c("Normal(5, 2)",
+                              "Exponential(rate=0.5)",
+                              "Contaminated normal")),
+
+      selectInput("est2", "Estimator:",
+                  choices = c("Mean", "Median", "10% trimmed mean")),
+
+      sliderInput("sims2", "Simulations per n:",
+                  min = 500, max = 3000, value = 1000, step = 250),
+
+      actionButton("go2", "Run",
+                   class = "btn-primary", width = "100%"),
+
+      uiOutput("results2")
+    ),
+
+    mainPanel(
+      width = 9,
+      plotOutput("consistency_plot", height = "420px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  draw_dgp &lt;- function(n, dgp) {
+    switch(dgp,
+      "Normal(5, 2)"          = rnorm(n, mean = 5, sd = 2),
+      "Exponential(rate=0.5)" = rexp(n, rate = 0.5),
+      "Contaminated normal"   = {
+        k &lt;- rbinom(n, 1, 0.1)
+        (1 - k) * rnorm(n, 5, 1) + k * rnorm(n, 5, 10)
+      }
+    )
+  }
+
+  true_mu &lt;- function(dgp) {
+    switch(dgp,
+      "Normal(5, 2)"          = 5,
+      "Exponential(rate=0.5)" = 2,
+      "Contaminated normal"   = 5
+    )
+  }
+
+  compute_est &lt;- function(x, est) {
+    switch(est,
+      "Mean"             = mean(x),
+      "Median"           = median(x),
+      "10% trimmed mean" = mean(x, trim = 0.1)
+    )
+  }
+
+  dat &lt;- reactive({
+    input$go2
+    dgp  &lt;- input$dgp2
+    est  &lt;- input$est2
+    sims &lt;- input$sims2
+    mu   &lt;- true_mu(dgp)
+
+    ns &lt;- c(5, 10, 25, 50, 100, 200)
+    all_results &lt;- list()
+    for (n in ns) {
+      all_results[[as.character(n)]] &lt;- replicate(
+        sims, compute_est(draw_dgp(n, dgp), est)
+      )
+    }
+
+    list(all_results = all_results, ns = ns, mu = mu,
+         dgp = dgp, est = est, sims = sims)
+  })
+
+  output$consistency_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    colors &lt;- colorRampPalette(c("#e74c3c", "#3498db"))(length(d$ns))
+
+    all_vals &lt;- unlist(d$all_results)
+    xlim &lt;- quantile(all_vals, c(0.01, 0.99))
+
+    plot(NULL, xlim = xlim,
+         ylim = c(0.5, length(d$ns) * 1.5 + 0.5),
+         yaxt = "n", ylab = "",
+         xlab = paste0("Estimate (", d$est, ")"),
+         main = paste0("Consistency: ", d$est,
+                       " under ", d$dgp))
+    positions &lt;- seq_along(d$ns) * 1.5
+    axis(2, at = positions, labels = paste0("n=", d$ns),
+         las = 1, cex.axis = 0.9)
+
+    for (i in seq_along(d$ns)) {
+      vals &lt;- d$all_results[[i]]
+      dens &lt;- density(vals)
+      dens$y &lt;- dens$y / max(dens$y) * 0.65
+      polygon(dens$x, dens$y + positions[i],
+              col = adjustcolor(colors[i], 0.4),
+              border = colors[i], lwd = 1.5)
+    }
+
+    abline(v = d$mu, lty = 2, lwd = 2.5, col = "#2c3e50")
+    text(d$mu, max(positions) + 0.8,
+         paste0("True \u03bc = ", d$mu), cex = 0.9)
+  })
+
+  output$results2 &lt;- renderUI({
+    d &lt;- dat()
+    lines &lt;- sapply(seq_along(d$ns), function(i) {
+      vals &lt;- d$all_results[[i]]
+      paste0("n=", d$ns[i], ": SD = ", round(sd(vals), 4))
+    })
+
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;Statistic:&lt;/b&gt; ", d$stat, "&lt;br&gt;",
-        "&lt;b&gt;Observed:&lt;/b&gt; ", round(d$obs_stat, 4), "&lt;br&gt;",
-        "&lt;b&gt;Bootstrap SE:&lt;/b&gt; ", round(d$boot_se, 4), "&lt;br&gt;",
-        "&lt;b&gt;95% CI:&lt;/b&gt; [", round(d$boot_ci[1], 4),
-        ", ", round(d$boot_ci[2], 4), "]&lt;br&gt;",
-        "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;small&gt;CI uses percentile method:&lt;br&gt;",
-        "2.5th and 97.5th percentiles of&lt;br&gt;",
-        "bootstrap distribution.&lt;/small&gt;"
+        "&lt;b&gt;Spread shrinks with n:&lt;/b&gt;&lt;br&gt;",
+        paste(lines, collapse = "&lt;br&gt;")
       ))
     )
   })
 }
 
 shinyApp(ui, server)</code></pre>
-</section>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Mean with Normal population:</strong> the bootstrap distribution looks normal, similar to what CLT gives you analytically.</li>
-<li><strong>Median with skewed population:</strong> no easy formula for the SE of a median. But the bootstrap handles it effortlessly.</li>
-<li><strong>SD with heavy-tailed data:</strong> the bootstrap distribution is skewed — the percentile CI is asymmetric, which is exactly right.</li>
-<li><strong>Regression slope:</strong> bootstrap the slope to get a CI without assuming homoskedasticity.</li>
-<li><strong>Small n (10) vs large n (200):</strong> with small samples the bootstrap distribution is choppy (limited unique resamples). With more data it smooths out.</li>
+<li><strong>Normal DGP, Mean vs Median:</strong> the mean has smaller variance (it’s the efficient estimator for normal data). The median is less efficient but still unbiased.</li>
+<li><strong>Contaminated normal, Mean vs Median:</strong> now the median wins. The outliers from the contamination inflate the variance of the mean, but barely affect the median. This is why <strong>robust estimators</strong> exist.</li>
+<li><strong>10% trimmed mean:</strong> a compromise — it trims the most extreme 10% of observations. It handles outliers better than the mean, with less variance than the median. Often the best of both worlds.</li>
+<li><strong>Midrange:</strong> the average of the min and max. Under normal data it’s surprisingly efficient for small <span class="math inline">\(n\)</span>, but terrible for heavy-tailed or skewed data. The MSE plot shows exactly why.</li>
+<li><strong>Consistency (Sim 2):</strong> all three estimators converge to <span class="math inline">\(\mu\)</span> as <span class="math inline">\(n\)</span> grows. The ridgeline plot gets tighter and more centered with each step.</li>
 </ul>
 </section>
-<section id="when-to-use-the-bootstrap" class="level3">
-<h3 class="anchored" data-anchor-id="when-to-use-the-bootstrap">When to use the bootstrap</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Use bootstrap when…</th>
-<th>Don’t bother when…</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>No formula for the SE exists</td>
-<td>Standard formulas are available and valid</td>
-</tr>
-<tr class="even">
-<td>The statistic is complicated (ratios, quantiles)</td>
-<td>You’re computing a simple mean</td>
-</tr>
-<tr class="odd">
-<td>You suspect non-normality</td>
-<td>n is large and CLT applies</td>
-</tr>
-<tr class="even">
-<td>You want a quick, assumption-free CI</td>
-<td>You need exact small-sample inference</td>
-</tr>
-</tbody>
-</table>
-<p>The bootstrap is not magic — it can fail with very small samples or non-smooth statistics. But for most practical situations, it’s the easiest path to a valid confidence interval.</p>
+<section id="the-bottom-line" class="level3">
+<h3 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h3>
+<ul>
+<li>Monte Carlo is the <strong>universal verification tool</strong> in statistics. If you claim an estimator has some property (unbiased, consistent, 95% coverage), you can check it by simulation.</li>
+<li><strong>Bias</strong> = does the estimator aim at the right target? <strong>Variance</strong> = how spread out are the estimates? <strong>MSE</strong> = bias² + variance = overall accuracy.</li>
+<li>Sometimes a biased estimator beats an unbiased one if it has much lower variance. This is the <strong>bias-variance tradeoff</strong> in miniature.</li>
+</ul>
 <hr>
 </section>
 <section id="did-you-know" class="level3">
 <h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
 <ul>
-<li><strong>Bradley Efron</strong> invented the bootstrap in 1979 at Stanford. The name comes from the expression <strong>“pulling yourself up by your bootstraps”</strong> — attributed to the tall tales of <strong>Baron Munchausen</strong>, who claimed to have pulled himself out of a swamp by his own hair (later versions say bootstraps). The idea that a sample can estimate its own sampling distribution seemed equally absurd at first.</li>
-<li>When Efron first presented the bootstrap, many statisticians were skeptical. One famously asked: <em>“You’re just sampling from your sample — how can that tell you anything new?”</em> The answer: it tells you about the <em>variability</em> of your estimate, not about new data points.</li>
-<li>The bootstrap is now one of the most cited statistical methods ever. Efron’s 1979 paper has over 20,000 citations. He received the <strong>International Prize in Statistics</strong> (the statistics equivalent of the Nobel) in 2019 for this work.</li>
-<li>Before the bootstrap, getting standard errors for complex statistics (ratios, quantiles, eigenvalues) required either painful analytical derivations or the <strong>delta method</strong> — a Taylor expansion trick that often required heroic assumptions. The bootstrap made all of that unnecessary.</li>
+<li>The Monte Carlo method was invented by <strong>Stanislaw Ulam</strong> and <strong>John von Neumann</strong> during the <strong>Manhattan Project</strong> in the late 1940s. Ulam was recovering from brain surgery and playing solitaire when he realized that it was easier to estimate the probability of winning by playing many random games than by computing it analytically. He and von Neumann applied this idea to nuclear physics simulations.</li>
+<li>The name “Monte Carlo” was suggested by <strong>Nicholas Metropolis</strong>, a colleague, as a reference to the <strong>Monte Carlo Casino</strong> in Monaco — a nod to the role of randomness. The method was classified as part of the hydrogen bomb program until the 1950s.</li>
+<li>Today, Monte Carlo methods are everywhere: pricing financial derivatives, training AI models, simulating protein folding, predicting elections, and rendering 3D graphics in movies. The basic idea — replace hard math with random simulation — is one of the most powerful tricks in computational science.</li>
 </ul>
 
 

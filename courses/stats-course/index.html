@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Foundations of Statistical Inference</title>
+<title>Interactive Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -97,7 +97,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Foundations of Statistical Inference</a> 
+      <a href="./">Interactive Notes</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -140,6 +140,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">The Sampling Distribution</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lln.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LLN vs CLT</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -170,6 +176,12 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./pvalues-ci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">p-values &amp; Confidence Intervals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Bootstrap</span></a>
   </div>
@@ -178,6 +190,18 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./power.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Power, Alpha, Beta &amp; MDE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./monte-carlo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Monte Carlo Experiments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multiple-testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multiple Testing</span></a>
   </div>
 </li>
       </ul>
@@ -211,8 +235,37 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./clustered-se.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Clustered SEs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./fwl.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Frisch-Waugh-Lovell</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bias-variance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bias-Variance Tradeoff</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Bayesian Thinking</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayesian-updating.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian Updating</span></a>
   </div>
 </li>
       </ul>
@@ -233,6 +286,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#the-central-limit-theorem" id="toc-the-central-limit-theorem" class="nav-link" data-scroll-target="#the-central-limit-theorem">The Central Limit Theorem</a></li>
   <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference">Inference</a></li>
   <li><a href="#regression-diagnostics" id="toc-regression-diagnostics" class="nav-link" data-scroll-target="#regression-diagnostics">Regression &amp; Diagnostics</a></li>
+  <li><a href="#bayesian-thinking" id="toc-bayesian-thinking" class="nav-link" data-scroll-target="#bayesian-thinking">Bayesian Thinking</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -242,7 +296,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Foundations of Statistical Inference</h1>
+<h1 class="title">Interactive Notes</h1>
+<p class="subtitle lead">Simulation-based modules for statistics, econometrics, and causal inference.</p>
 </div>
 
 
@@ -262,12 +317,9 @@ ul.task-list li input[type="checkbox"] {
 <p>Welcome 👋</p>
 <p>This course builds intuition for:</p>
 <ul>
-<li>Uncertainty<br>
-</li>
-<li>Sampling<br>
-</li>
-<li>Inference<br>
-</li>
+<li>Uncertainty</li>
+<li>Sampling</li>
+<li>Inference</li>
 <li>Causal thinking</li>
 </ul>
 <section id="start-here" class="level2">
@@ -278,6 +330,7 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="foundations.html">Foundations</a> — Distributions, Sampling &amp; Confidence Intervals</li>
 <li><a href="variance-sd-se.html">Variance, SD &amp; Standard Error</a> — Population vs Sample, SD vs SE &amp; Why n − 1</li>
 <li><a href="sampling-distribution.html">The Sampling Distribution</a> — Data vs Sampling Distribution &amp; When to Assume Normality</li>
+<li><a href="lln.html">LLN vs CLT</a> — Why Averages Stabilize Before They Become Normal</li>
 </ul>
 </section>
 <section id="the-central-limit-theorem" class="level3">
@@ -289,8 +342,11 @@ ul.task-list li input[type="checkbox"] {
 <section id="inference" class="level3">
 <h3 class="anchored" data-anchor-id="inference">Inference</h3>
 <ul>
+<li><a href="pvalues-ci.html">p-values &amp; Confidence Intervals</a> — What They Actually Mean</li>
 <li><a href="bootstrap.html">The Bootstrap</a> — Resampling-Based Inference</li>
 <li><a href="power.html">Power, Alpha, Beta &amp; MDE</a> — Hypothesis Testing &amp; Experiment Design</li>
+<li><a href="monte-carlo.html">Monte Carlo Experiments</a> — How We Understand Estimators</li>
+<li><a href="multiple-testing.html">Multiple Testing</a> — False Discoveries &amp; the Replication Crisis</li>
 </ul>
 </section>
 <section id="regression-diagnostics" class="level3">
@@ -299,7 +355,15 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="cef.html">Regression &amp; the CEF</a> — OLS and the Conditional Expectation Function</li>
 <li><a href="residuals.html">Residuals &amp; Controls</a> — Diagnostics, Partialling Out &amp; Omitted Variable Bias</li>
 <li><a href="heteroskedasticity.html">Homo- &amp; Heteroskedasticity</a> — Constant vs Non-Constant Variance &amp; Robust SEs</li>
+<li><a href="clustered-se.html">Clustered SEs</a> — When Observations Aren’t Independent</li>
 <li><a href="fwl.html">Frisch-Waugh-Lovell</a> — Partialling Out &amp; OVB</li>
+<li><a href="bias-variance.html">Bias-Variance Tradeoff</a> — Underfitting, Overfitting &amp; MSE Decomposition</li>
+</ul>
+</section>
+<section id="bayesian-thinking" class="level3">
+<h3 class="anchored" data-anchor-id="bayesian-thinking">Bayesian Thinking</h3>
+<ul>
+<li><a href="bayesian-updating.html">Bayesian Updating</a> — One Gentle Introduction</li>
 </ul>
 
 

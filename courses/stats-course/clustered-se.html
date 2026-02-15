@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The Bootstrap – Interactive Notes</title>
+<title>Robust vs Clustered SEs: When Observations Aren’t Independent – Interactive Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./bootstrap.html">The Bootstrap</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cef.html">Regression &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./clustered-se.html">Clustered SEs</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -216,7 +216,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link active">
+  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Bootstrap</span></a>
   </div>
 </li>
@@ -269,7 +269,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./clustered-se.html" class="sidebar-item-text sidebar-link">
+  <a href="./clustered-se.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Clustered SEs</span></a>
   </div>
 </li>
@@ -314,12 +314,16 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
+  <li><a href="#the-independence-assumption-you-forgot-about" id="toc-the-independence-assumption-you-forgot-about" class="nav-link active" data-scroll-target="#the-independence-assumption-you-forgot-about">The independence assumption you forgot about</a>
   <ul class="collapse">
-  <li><a href="#the-steps" id="toc-the-steps" class="nav-link" data-scroll-target="#the-steps">The steps</a></li>
-  <li><a href="#but-cant-i-just-look-at-my-data" id="toc-but-cant-i-just-look-at-my-data" class="nav-link" data-scroll-target="#but-cant-i-just-look-at-my-data">But can’t I just look at my data?</a></li>
+  <li><a href="#three-types-of-standard-errors" id="toc-three-types-of-standard-errors" class="nav-link" data-scroll-target="#three-types-of-standard-errors">Three types of standard errors</a></li>
+  </ul></li>
+  <li><a href="#simulation-1-clustered-data-and-wrong-ses" id="toc-simulation-1-clustered-data-and-wrong-ses" class="nav-link" data-scroll-target="#simulation-1-clustered-data-and-wrong-ses">Simulation 1: Clustered data and wrong SEs</a></li>
+  <li><a href="#simulation-2-rejection-rates" id="toc-simulation-2-rejection-rates" class="nav-link" data-scroll-target="#simulation-2-rejection-rates">Simulation 2: Rejection rates</a>
+  <ul class="collapse">
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
-  <li><a href="#when-to-use-the-bootstrap" id="toc-when-to-use-the-bootstrap" class="nav-link" data-scroll-target="#when-to-use-the-bootstrap">When to use the bootstrap</a></li>
+  <li><a href="#code-reference" id="toc-code-reference" class="nav-link" data-scroll-target="#code-reference">Code reference</a></li>
+  <li><a href="#the-practical-rule" id="toc-the-practical-rule" class="nav-link" data-scroll-target="#the-practical-rule">The practical rule</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul></li>
   </ul>
@@ -328,9 +332,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./bootstrap.html">The Bootstrap</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cef.html">Regression &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./clustered-se.html">Clustered SEs</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">The Bootstrap</h1>
+<h1 class="title">Robust vs Clustered SEs: When Observations Aren’t Independent</h1>
 </div>
 
 
@@ -347,35 +351,60 @@ window.Quarto = {
 </header>
 
 
-<section id="the-idea" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>You want a confidence interval for some statistic (mean, median, regression coefficient), but you don’t know the sampling distribution. Maybe the formula is complicated. Maybe there is no formula.</p>
-<p>The <strong>bootstrap</strong> says: <em>pretend your sample is the population</em>. Then simulate the sampling process by <strong>resampling with replacement</strong> from your data, over and over. Each resample gives you a new estimate. The distribution of those estimates <em>approximates</em> the true sampling distribution.</p>
-<section id="the-steps" class="level3">
-<h3 class="anchored" data-anchor-id="the-steps">The steps</h3>
-<ol type="1">
-<li>You have a sample of <span class="math inline">\(n\)</span> observations.</li>
-<li>Draw <span class="math inline">\(n\)</span> observations <strong>with replacement</strong> from your sample (some points get picked twice, some not at all).</li>
-<li>Compute your statistic on this resample.</li>
-<li>Repeat B times (typically 1,000–10,000).</li>
-<li>The spread of those B estimates gives you a standard error and a confidence interval.</li>
-</ol>
-<p>That’s it. No formulas, no distributional assumptions. Just resampling.</p>
-</section>
-<section id="but-cant-i-just-look-at-my-data" class="level3">
-<h3 class="anchored" data-anchor-id="but-cant-i-just-look-at-my-data">But can’t I just look at my data?</h3>
-<p>No — and this is a crucial distinction. There are <strong>two different distributions</strong> at play:</p>
+<section id="the-independence-assumption-you-forgot-about" class="level2">
+<h2 class="anchored" data-anchor-id="the-independence-assumption-you-forgot-about">The independence assumption you forgot about</h2>
+<p>OLS assumes that observations are <strong>independent</strong>. But in many real datasets they aren’t:</p>
 <ul>
-<li>The <strong>distribution of the data</strong> = what individual observations look like (their histogram). This tells you about spread, skew, outliers in your raw data.</li>
-<li>The <strong>sampling distribution</strong> = what your <em>statistic</em> (mean, median, slope) would look like if you could repeat the entire experiment many times. This is what you need for standard errors and confidence intervals.</li>
+<li>Students within the same <strong>school</strong> share teachers and resources</li>
+<li>Patients within the same <strong>hospital</strong> get similar care</li>
+<li>Purchases by the same <strong>customer</strong> are correlated over time</li>
+<li>Employees within the same <strong>firm</strong> face the same management</li>
 </ul>
-<p>You can always plot your data. But you <strong>cannot see the sampling distribution</strong> — you only ran the experiment once. You have one mean, not a distribution of means.</p>
-<p>The bootstrap bridges that gap. It simulates the “what if I repeated this experiment?” question using only the data you have. The left panel below shows your data distribution. The right panel shows the bootstrap sampling distribution. Notice: they look completely different. Your data might be skewed and spread out, but the sampling distribution of the mean is narrow and roughly normal (thanks to the CLT). The bootstrap discovers this for you without any formulas.</p>
+<p>When observations within a group (cluster) are correlated, OLS standard errors are <strong>too small</strong> — often dramatically so. Your t-statistics are inflated, your p-values are too small, and you reject the null far more than 5% of the time.</p>
+<section id="three-types-of-standard-errors" class="level3">
+<h3 class="anchored" data-anchor-id="three-types-of-standard-errors">Three types of standard errors</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 42%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>SE type</th>
+<th>What it assumes</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>OLS (classical)</strong></td>
+<td>Errors are i.i.d. (independent, constant variance)</td>
+<td>Almost never in practice</td>
+</tr>
+<tr class="even">
+<td><strong>Robust (HC)</strong></td>
+<td>Errors can have different variances, but are independent</td>
+<td>Cross-sectional data with heteroskedasticity</td>
+</tr>
+<tr class="odd">
+<td><strong>Clustered</strong></td>
+<td>Errors can be correlated <em>within</em> clusters</td>
+<td>Any grouped/panel data</td>
+</tr>
+</tbody>
+</table>
+<p>Robust SEs fix heteroskedasticity but <strong>not</strong> within-cluster correlation. Clustered SEs fix both. If your data has clusters, you need clustered SEs.</p>
+</section>
+</section>
+<section id="simulation-1-clustered-data-and-wrong-ses" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-1-clustered-data-and-wrong-ses">Simulation 1: Clustered data and wrong SEs</h2>
+<p>Generate data with students nested in schools. Within each school, outcomes are correlated (shared school effect). Compare the three types of standard errors.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
 #| standalone: true
-#| viewerHeight: 900
+#| viewerHeight: 620
 
 library(shiny)
 
@@ -386,27 +415,27 @@ ui &lt;- fluidPage(
       margin-top: 12px; font-size: 14px; line-height: 1.9;
     }
     .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
   "))),
 
   sidebarLayout(
     sidebarPanel(
       width = 3,
 
-      selectInput("stat", "Statistic to bootstrap:",
-                  choices = c("Mean", "Median", "SD",
-                              "Correlation", "Regression slope")),
+      sliderInput("n_clusters", "Number of schools:",
+                  min = 10, max = 100, value = 30, step = 5),
 
-      selectInput("pop", "Population shape:",
-                  choices = c("Normal", "Skewed (exponential)",
-                              "Heavy-tailed", "Bimodal")),
+      sliderInput("cluster_size", "Students per school:",
+                  min = 5, max = 50, value = 20, step = 5),
 
-      sliderInput("n", "Sample size:",
-                  min = 10, max = 200, value = 30, step = 10),
+      sliderInput("icc", "ICC (intra-cluster correlation):",
+                  min = 0, max = 0.8, value = 0.3, step = 0.05),
 
-      sliderInput("B", "Bootstrap resamples (B):",
-                  min = 100, max = 5000, value = 1000, step = 100),
+      helpText("ICC = share of total variance due to the
+               school-level component. Higher = more clustering."),
 
-      actionButton("go", "New sample + bootstrap",
+      actionButton("go", "New draw",
                    class = "btn-primary", width = "100%"),
 
       uiOutput("results")
@@ -415,11 +444,8 @@ ui &lt;- fluidPage(
     mainPanel(
       width = 9,
       fluidRow(
-        column(6, plotOutput("sample_plot", height = "350px")),
-        column(6, plotOutput("boot_plot", height = "350px"))
-      ),
-      fluidRow(
-        column(12, plotOutput("compare_plot", height = "350px"))
+        column(6, plotOutput("scatter", height = "400px")),
+        column(6, plotOutput("se_compare", height = "400px"))
       )
     )
   )
@@ -427,157 +453,116 @@ ui &lt;- fluidPage(
 
 server &lt;- function(input, output, session) {
 
-  draw_pop &lt;- function(n, pop) {
-    switch(pop,
-      "Normal" = rnorm(n, mean = 5, sd = 2),
-      "Skewed (exponential)" = rexp(n, rate = 0.5),
-      "Heavy-tailed" = rt(n, df = 3) * 2 + 5,
-      "Bimodal" = {
-        k &lt;- rbinom(n, 1, 0.5)
-        k * rnorm(n, 2, 0.8) + (1 - k) * rnorm(n, 7, 0.8)
-      }
-    )
-  }
-
-  compute_stat &lt;- function(x, y = NULL, stat) {
-    switch(stat,
-      "Mean" = mean(x),
-      "Median" = median(x),
-      "SD" = sd(x),
-      "Correlation" = cor(x, y),
-      "Regression slope" = coef(lm(y ~ x))[2]
-    )
-  }
-
   dat &lt;- reactive({
     input$go
-    n    &lt;- input$n
-    B    &lt;- input$B
-    stat &lt;- input$stat
-    pop  &lt;- input$pop
+    G  &lt;- input$n_clusters
+    m  &lt;- input$cluster_size
+    icc &lt;- input$icc
 
-    x &lt;- draw_pop(n, pop)
-    y &lt;- NULL
-    if (stat %in% c("Correlation", "Regression slope")) {
-      y &lt;- 1 + 0.8 * x + rnorm(n, sd = 2)
+    # Variance decomposition: total var = 1
+    sigma_b &lt;- sqrt(icc)        # between-cluster SD
+    sigma_w &lt;- sqrt(1 - icc)    # within-cluster SD
+
+    # Generate clustered data (no true effect: beta = 0)
+    cluster_id &lt;- rep(seq_len(G), each = m)
+    school_effect &lt;- rep(rnorm(G, sd = sigma_b), each = m)
+    x &lt;- rnorm(G * m)
+    y &lt;- 0 * x + school_effect + rnorm(G * m, sd = sigma_w)
+
+    fit &lt;- lm(y ~ x)
+    b_hat &lt;- coef(fit)[2]
+    n &lt;- G * m
+
+    # OLS SE
+    ols_se &lt;- summary(fit)$coefficients[2, 2]
+
+    # Robust SE (HC1)
+    r &lt;- resid(fit)
+    X &lt;- cbind(1, x)
+    bread &lt;- solve(t(X) %*% X)
+    meat_hc &lt;- t(X) %*% diag(r^2 * n / (n - 2)) %*% X
+    robust_se &lt;- sqrt((bread %*% meat_hc %*% bread)[2, 2])
+
+    # Clustered SE (Liang-Zeger)
+    meat_cl &lt;- matrix(0, 2, 2)
+    for (g in seq_len(G)) {
+      idx &lt;- which(cluster_id == g)
+      Xg &lt;- X[idx, , drop = FALSE]
+      rg &lt;- r[idx]
+      meat_cl &lt;- meat_cl + t(Xg) %*% (rg %*% t(rg)) %*% Xg
     }
+    adj &lt;- G / (G - 1) * (n - 1) / (n - 2)
+    cl_vcov &lt;- adj * bread %*% meat_cl %*% bread
+    clustered_se &lt;- sqrt(cl_vcov[2, 2])
 
-    obs_stat &lt;- compute_stat(x, y, stat)
-
-    # Bootstrap
-    boot_stats &lt;- replicate(B, {
-      idx &lt;- sample(n, n, replace = TRUE)
-      x_b &lt;- x[idx]
-      y_b &lt;- if (!is.null(y)) y[idx] else NULL
-      compute_stat(x_b, y_b, stat)
-    })
-
-    boot_se &lt;- sd(boot_stats)
-    boot_ci &lt;- quantile(boot_stats, c(0.025, 0.975))
-
-    list(x = x, y = y, obs_stat = obs_stat,
-         boot_stats = boot_stats, boot_se = boot_se,
-         boot_ci = boot_ci, stat = stat, n = n, B = B)
+    list(x = x, y = y, cluster_id = cluster_id, fit = fit,
+         b_hat = b_hat, ols_se = ols_se, robust_se = robust_se,
+         clustered_se = clustered_se, G = G, m = m, icc = icc)
   })
 
-  output$sample_plot &lt;- renderPlot({
+  output$scatter &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    if (d$stat %in% c("Correlation", "Regression slope")) {
-      plot(d$x, d$y, pch = 16, col = "#3498db80", cex = 0.8,
-           xlab = "X", ylab = "Y", main = "Your sample")
-      if (d$stat == "Regression slope") {
-        abline(lm(d$y ~ d$x), col = "#e74c3c", lwd = 2)
-      }
-    } else {
-      hist(d$x, breaks = 20, col = "#d5e8d4", border = "#82b366",
-           main = "Your sample", xlab = "X", ylab = "Frequency")
-      abline(v = d$obs_stat, col = "#e74c3c", lwd = 2.5, lty = 2)
-      legend("topright", bty = "n", cex = 0.85,
-             legend = paste0(d$stat, " = ", round(d$obs_stat, 3)),
-             col = "#e74c3c", lty = 2, lwd = 2)
-    }
+    # Color by cluster (cycle through colors)
+    palette &lt;- rep(c("#e74c3c", "#3498db", "#27ae60", "#9b59b6",
+                     "#e67e22", "#1abc9c", "#34495e", "#f39c12"),
+                   length.out = d$G)
+    cols &lt;- palette[d$cluster_id]
+
+    plot(d$x, d$y, pch = 16, col = adjustcolor(cols, 0.5), cex = 0.6,
+         xlab = "X", ylab = "Y",
+         main = paste0(d$G, " schools, ", d$m, " students each"))
+    abline(d$fit, col = "#2c3e50", lwd = 2.5)
+    abline(h = 0, lty = 3, col = "gray60")
   })
 
-  output$boot_plot &lt;- renderPlot({
+  output$se_compare &lt;- renderPlot({
     d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
+    par(mar = c(4.5, 8, 3, 1))
 
-    hist(d$boot_stats, breaks = 40, probability = TRUE,
-         col = "#dae8fc", border = "#6c8ebf",
-         main = paste0("Bootstrap distribution (B = ", d$B, ")"),
-         xlab = paste0("Bootstrap ", tolower(d$stat)),
-         ylab = "Density")
+    ses &lt;- c(d$ols_se, d$robust_se, d$clustered_se)
+    names_se &lt;- c("OLS SE", "Robust SE", "Clustered SE")
+    cols &lt;- c("#e74c3c", "#e67e22", "#27ae60")
 
-    abline(v = d$obs_stat, col = "#e74c3c", lwd = 2.5, lty = 2)
-    abline(v = d$boot_ci, col = "#27ae60", lwd = 2, lty = 3)
+    # CIs
+    lo &lt;- d$b_hat - 1.96 * ses
+    hi &lt;- d$b_hat + 1.96 * ses
 
-    legend("topright", bty = "n", cex = 0.8,
-           legend = c(paste0("Observed: ", round(d$obs_stat, 3)),
-                      paste0("95% CI: [", round(d$boot_ci[1], 3),
-                             ", ", round(d$boot_ci[2], 3), "]")),
-           col = c("#e74c3c", "#27ae60"),
-           lty = c(2, 3), lwd = 2)
-  })
+    xlim &lt;- range(c(lo, hi, 0)) + c(-0.3, 0.3)
 
-  output$compare_plot &lt;- renderPlot({
-    d &lt;- dat()
+    plot(NULL, xlim = xlim, ylim = c(0.5, 3.5),
+         yaxt = "n", ylab = "", xlab = expression(hat(beta)),
+         main = "95% CIs with different SEs")
+    axis(2, at = 1:3, labels = names_se, las = 1, cex.axis = 0.85)
 
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    if (d$stat %in% c("Correlation", "Regression slope")) {
-      # For bivariate stats, just show bootstrap dist with CI
-      hist(d$boot_stats, breaks = 40, probability = TRUE,
-           col = "#dae8fc", border = "#6c8ebf",
-           main = "Bootstrap sampling dist.",
-           xlab = paste0("Bootstrap ", tolower(d$stat)),
-           ylab = "Density")
-      abline(v = d$boot_ci, col = "#27ae60", lwd = 2, lty = 3)
-      abline(v = d$obs_stat, col = "#e74c3c", lwd = 2, lty = 2)
-    } else {
-      # Overlay: data distribution (wide) vs bootstrap distribution (narrow)
-      # Rescale data density to fit on same axes
-      dens_data &lt;- density(d$x)
-      dens_boot &lt;- density(d$boot_stats)
-
-      # Normalize both to peak at 1 for visual comparison
-      dens_data$y &lt;- dens_data$y / max(dens_data$y)
-      dens_boot$y &lt;- dens_boot$y / max(dens_boot$y)
-
-      xlim &lt;- range(c(dens_data$x, dens_boot$x))
-
-      plot(dens_data, col = "#e74c3c", lwd = 2.5, xlim = xlim,
-           ylim = c(0, 1.25), main = "Data vs Sampling Distribution",
-           xlab = "Value", ylab = "Scaled density")
-      polygon(dens_data$x, dens_data$y,
-              col = adjustcolor("#e74c3c", 0.15), border = NA)
-
-      lines(dens_boot, col = "#3498db", lwd = 2.5)
-      polygon(dens_boot$x, dens_boot$y,
-              col = adjustcolor("#3498db", 0.15), border = NA)
-
-      legend("topright", bty = "n", cex = 0.8,
-             legend = c("Your data (wide, raw obs.)",
-                        paste0("Sampling dist. of ", tolower(d$stat),
-                               " (narrow)")),
-             col = c("#e74c3c", "#3498db"), lwd = 2.5)
+    for (i in 1:3) {
+      segments(lo[i], i, hi[i], i, lwd = 4, col = cols[i])
+      points(d$b_hat, i, pch = 19, cex = 1.5, col = cols[i])
     }
+
+    abline(v = 0, lty = 2, lwd = 2, col = "#2c3e50")
+    text(0, 3.4, expression("True " * beta * " = 0"), cex = 0.9)
   })
 
   output$results &lt;- renderUI({
     d &lt;- dat()
+    ratio &lt;- d$clustered_se / d$ols_se
+
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;Statistic:&lt;/b&gt; ", d$stat, "&lt;br&gt;",
-        "&lt;b&gt;Observed:&lt;/b&gt; ", round(d$obs_stat, 4), "&lt;br&gt;",
-        "&lt;b&gt;Bootstrap SE:&lt;/b&gt; ", round(d$boot_se, 4), "&lt;br&gt;",
-        "&lt;b&gt;95% CI:&lt;/b&gt; [", round(d$boot_ci[1], 4),
-        ", ", round(d$boot_ci[2], 4), "]&lt;br&gt;",
+        "&lt;b&gt;", expression("hat(beta)"), ":&lt;/b&gt; ",
+        round(d$b_hat, 4), "&lt;br&gt;",
+        "&lt;b&gt;OLS SE:&lt;/b&gt; &lt;span class='bad'&gt;",
+        round(d$ols_se, 4), "&lt;/span&gt;&lt;br&gt;",
+        "&lt;b&gt;Robust SE:&lt;/b&gt; ",
+        round(d$robust_se, 4), "&lt;br&gt;",
+        "&lt;b&gt;Clustered SE:&lt;/b&gt; &lt;span class='good'&gt;",
+        round(d$clustered_se, 4), "&lt;/span&gt;&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;small&gt;CI uses percentile method:&lt;br&gt;",
-        "2.5th and 97.5th percentiles of&lt;br&gt;",
-        "bootstrap distribution.&lt;/small&gt;"
+        "&lt;b&gt;Cluster/OLS ratio:&lt;/b&gt; ", round(ratio, 2), "x&lt;br&gt;",
+        "&lt;small&gt;With ICC = ", d$icc, ", clustered SE is&lt;br&gt;",
+        round(ratio, 1), "x larger than OLS SE.&lt;/small&gt;"
       ))
     )
   })
@@ -585,58 +570,214 @@ server &lt;- function(input, output, session) {
 
 shinyApp(ui, server)</code></pre>
 </section>
+<section id="simulation-2-rejection-rates" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-2-rejection-rates">Simulation 2: Rejection rates</h2>
+<p>The real test: run 500 experiments where the true effect is zero. How often does each type of SE incorrectly reject H₀ at the 5% level? OLS SEs reject far too often. Clustered SEs get it right.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| viewerHeight: 520
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("G2", "Number of clusters:",
+                  min = 10, max = 100, value = 30, step = 5),
+
+      sliderInput("m2", "Obs per cluster:",
+                  min = 5, max = 50, value = 20, step = 5),
+
+      sliderInput("icc2", "ICC:",
+                  min = 0, max = 0.8, value = 0.3, step = 0.05),
+
+      sliderInput("sims", "Number of simulations:",
+                  min = 200, max = 1000, value = 500, step = 100),
+
+      actionButton("go2", "Run simulations",
+                   class = "btn-primary", width = "100%"),
+
+      uiOutput("results2")
+    ),
+
+    mainPanel(
+      width = 9,
+      plotOutput("rejection_plot", height = "420px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  dat &lt;- reactive({
+    input$go2
+    G    &lt;- input$G2
+    m    &lt;- input$m2
+    icc  &lt;- input$icc2
+    sims &lt;- input$sims
+
+    sigma_b &lt;- sqrt(icc)
+    sigma_w &lt;- sqrt(1 - icc)
+    n &lt;- G * m
+
+    reject_ols &lt;- 0
+    reject_robust &lt;- 0
+    reject_cluster &lt;- 0
+
+    for (s in seq_len(sims)) {
+      cluster_id &lt;- rep(seq_len(G), each = m)
+      school_eff &lt;- rep(rnorm(G, sd = sigma_b), each = m)
+      x &lt;- rnorm(n)
+      y &lt;- 0 * x + school_eff + rnorm(n, sd = sigma_w)
+
+      fit &lt;- lm(y ~ x)
+      b_hat &lt;- coef(fit)[2]
+      r &lt;- resid(fit)
+      X &lt;- cbind(1, x)
+
+      # OLS
+      ols_se &lt;- summary(fit)$coefficients[2, 2]
+
+      # Robust
+      bread &lt;- solve(t(X) %*% X)
+      meat_hc &lt;- t(X) %*% diag(r^2 * n / (n - 2)) %*% X
+      robust_se &lt;- sqrt((bread %*% meat_hc %*% bread)[2, 2])
+
+      # Clustered
+      meat_cl &lt;- matrix(0, 2, 2)
+      for (g in seq_len(G)) {
+        idx &lt;- which(cluster_id == g)
+        Xg &lt;- X[idx, , drop = FALSE]
+        rg &lt;- r[idx]
+        meat_cl &lt;- meat_cl + t(Xg) %*% (rg %*% t(rg)) %*% Xg
+      }
+      adj &lt;- G / (G - 1) * (n - 1) / (n - 2)
+      cl_se &lt;- sqrt((adj * bread %*% meat_cl %*% bread)[2, 2])
+
+      if (abs(b_hat / ols_se) &gt; 1.96)    reject_ols &lt;- reject_ols + 1
+      if (abs(b_hat / robust_se) &gt; 1.96) reject_robust &lt;- reject_robust + 1
+      if (abs(b_hat / cl_se) &gt; 1.96)     reject_cluster &lt;- reject_cluster + 1
+    }
+
+    list(rej_ols = reject_ols / sims,
+         rej_robust = reject_robust / sims,
+         rej_cluster = reject_cluster / sims,
+         sims = sims, G = G, m = m, icc = icc)
+  })
+
+  output$rejection_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 8, 3, 1))
+
+    rates &lt;- c(d$rej_ols, d$rej_robust, d$rej_cluster) * 100
+    names_se &lt;- c("OLS SE", "Robust SE", "Clustered SE")
+    cols &lt;- c("#e74c3c", "#e67e22", "#27ae60")
+
+    bp &lt;- barplot(rates, names.arg = names_se, col = cols,
+                  horiz = TRUE, xlim = c(0, max(rates, 10) * 1.3),
+                  xlab = "Rejection rate (%)",
+                  main = paste0("False rejection rate at 5% level\n(",
+                               d$sims, " simulations, ICC = ",
+                               d$icc, ")"),
+                  las = 1, border = NA)
+
+    abline(v = 5, lty = 2, lwd = 2.5, col = "#2c3e50")
+    text(5, max(bp) + 0.6, "Target: 5%", cex = 0.85)
+
+    text(rates + 1, bp, paste0(round(rates, 1), "%"),
+         cex = 0.9, adj = 0)
+  })
+
+  output$results2 &lt;- renderUI({
+    d &lt;- dat()
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;OLS rejection rate:&lt;/b&gt; &lt;span class='",
+        ifelse(d$rej_ols &gt; 0.08, "bad", "good"), "'&gt;",
+        round(d$rej_ols * 100, 1), "%&lt;/span&gt;&lt;br&gt;",
+        "&lt;b&gt;Robust rejection rate:&lt;/b&gt; &lt;span class='",
+        ifelse(d$rej_robust &gt; 0.08, "bad", "good"), "'&gt;",
+        round(d$rej_robust * 100, 1), "%&lt;/span&gt;&lt;br&gt;",
+        "&lt;b&gt;Clustered rejection rate:&lt;/b&gt; &lt;span class='good'&gt;",
+        round(d$rej_cluster * 100, 1), "%&lt;/span&gt;&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;small&gt;True \u03b2 = 0 in all simulations.&lt;br&gt;",
+        "Correct rejection rate is 5%.&lt;/small&gt;"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Mean with Normal population:</strong> the bootstrap distribution looks normal, similar to what CLT gives you analytically.</li>
-<li><strong>Median with skewed population:</strong> no easy formula for the SE of a median. But the bootstrap handles it effortlessly.</li>
-<li><strong>SD with heavy-tailed data:</strong> the bootstrap distribution is skewed — the percentile CI is asymmetric, which is exactly right.</li>
-<li><strong>Regression slope:</strong> bootstrap the slope to get a CI without assuming homoskedasticity.</li>
-<li><strong>Small n (10) vs large n (200):</strong> with small samples the bootstrap distribution is choppy (limited unique resamples). With more data it smooths out.</li>
+<li><strong>ICC = 0 (no clustering):</strong> all three SEs give ~5% rejection. When there’s no within-cluster correlation, OLS SEs are fine.</li>
+<li><strong>ICC = 0.3:</strong> OLS rejection shoots up to ~15–25%. Robust SEs help a little but not enough. Clustered SEs stay near 5%.</li>
+<li><strong>ICC = 0.5:</strong> OLS can reject 30–40% of the time — catastrophic.</li>
+<li><strong>Increase cluster size, hold clusters fixed:</strong> the problem gets <em>worse</em> with more observations per cluster. More correlated data doesn’t help — it just gives you a false sense of precision.</li>
+<li><strong>Increase number of clusters:</strong> this <em>does</em> help. The effective sample size for clustered data is closer to the number of <em>clusters</em> than the number of <em>observations</em>.</li>
 </ul>
 </section>
-<section id="when-to-use-the-bootstrap" class="level3">
-<h3 class="anchored" data-anchor-id="when-to-use-the-bootstrap">When to use the bootstrap</h3>
+<section id="code-reference" class="level3">
+<h3 class="anchored" data-anchor-id="code-reference">Code reference</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 41%">
+<col style="width: 58%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Use bootstrap when…</th>
-<th>Don’t bother when…</th>
+<th>Software</th>
+<th>Clustered SEs</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>No formula for the SE exists</td>
-<td>Standard formulas are available and valid</td>
+<td><strong>R</strong></td>
+<td><code>lmtest::coeftest(fit, vcov = sandwich::vcovCL, cluster = ~school)</code></td>
 </tr>
 <tr class="even">
-<td>The statistic is complicated (ratios, quantiles)</td>
-<td>You’re computing a simple mean</td>
+<td><strong>Stata</strong></td>
+<td><code>reg y x, cluster(school)</code></td>
 </tr>
 <tr class="odd">
-<td>You suspect non-normality</td>
-<td>n is large and CLT applies</td>
-</tr>
-<tr class="even">
-<td>You want a quick, assumption-free CI</td>
-<td>You need exact small-sample inference</td>
+<td><strong>Python</strong></td>
+<td><code>sm.OLS(y, X).fit(cov_type='cluster', cov_kwds={'groups': school})</code></td>
 </tr>
 </tbody>
 </table>
-<p>The bootstrap is not magic — it can fail with very small samples or non-smooth statistics. But for most practical situations, it’s the easiest path to a valid confidence interval.</p>
+</section>
+<section id="the-practical-rule" class="level3">
+<h3 class="anchored" data-anchor-id="the-practical-rule">The practical rule</h3>
+<ul>
+<li><strong>Always cluster at the level of treatment assignment.</strong> If you randomized schools, cluster by school. If you randomized classrooms, cluster by classroom.</li>
+<li>When in doubt, <strong>cluster at the highest level</strong> that makes sense. Clustering too aggressively (too few clusters) can be a problem, but not clustering when you should is always worse.</li>
+<li>The minimum number of clusters for reliable clustered SEs is roughly <strong>30–50</strong>. With fewer clusters, consider the wild cluster bootstrap.</li>
+</ul>
 <hr>
 </section>
 <section id="did-you-know" class="level3">
 <h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
 <ul>
-<li><strong>Bradley Efron</strong> invented the bootstrap in 1979 at Stanford. The name comes from the expression <strong>“pulling yourself up by your bootstraps”</strong> — attributed to the tall tales of <strong>Baron Munchausen</strong>, who claimed to have pulled himself out of a swamp by his own hair (later versions say bootstraps). The idea that a sample can estimate its own sampling distribution seemed equally absurd at first.</li>
-<li>When Efron first presented the bootstrap, many statisticians were skeptical. One famously asked: <em>“You’re just sampling from your sample — how can that tell you anything new?”</em> The answer: it tells you about the <em>variability</em> of your estimate, not about new data points.</li>
-<li>The bootstrap is now one of the most cited statistical methods ever. Efron’s 1979 paper has over 20,000 citations. He received the <strong>International Prize in Statistics</strong> (the statistics equivalent of the Nobel) in 2019 for this work.</li>
-<li>Before the bootstrap, getting standard errors for complex statistics (ratios, quantiles, eigenvalues) required either painful analytical derivations or the <strong>delta method</strong> — a Taylor expansion trick that often required heroic assumptions. The bootstrap made all of that unnecessary.</li>
+<li><strong>Brent Moulton</strong> (1990) published a now-classic paper showing that regressions using aggregate variables (like state-level policies) with individual-level data produce t-statistics that are <strong>wildly inflated</strong> if you ignore clustering. He called it the “Moulton problem.” Many published results in economics were likely spurious because of this.</li>
+<li>The Moulton factor — the ratio of the true variance to the (too-small) OLS variance — is approximately <span class="math inline">\(1 + (m-1) \times ICC\)</span>, where <span class="math inline">\(m\)</span> is the average cluster size. With 50 students per school and ICC = 0.2, the Moulton factor is about <strong>11</strong>, meaning your OLS SE is <span class="math inline">\(\sqrt{11} \approx
+3.3\)</span> times too small. Your t-statistic is 3x too large.</li>
+<li><strong>Cameron, Gelbach, and Miller</strong> (2008) showed that even clustered SEs can be unreliable when the number of clusters is small (&lt; 30–50), leading to the development of the <strong>wild cluster bootstrap</strong> as a more robust alternative.</li>
 </ul>
 
 
