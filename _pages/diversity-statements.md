@@ -35,7 +35,8 @@ in economics and political science (2014–2024).
 /* Force wider content area on wide pages */
 .layout--single.wide .page__inner-wrap,
 .layout--splash .page__inner-wrap {
-  max-width: 1600px !important;
+  max-width: 100% !important;
+  padding: 0 20px !important;
 }
 </style>
 
