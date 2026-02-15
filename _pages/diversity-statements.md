@@ -14,7 +14,7 @@ in economics and political science (2014–2024).
 <style>
 .map-embed{
   width: 100%;
-  height: 520px;
+  height: 600px;
   border: 0px solid #ddd;
   border-radius: 12px;
   overflow: hidden;
@@ -38,7 +38,6 @@ in economics and political science (2014–2024).
     src="/assets/projects/diversity/div_state_map.html"
     title="Interactive Map"
     loading="lazy"
-    scrolling="no"
     allowfullscreen>
   </iframe>
 </div>
