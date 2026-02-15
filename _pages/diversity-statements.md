@@ -14,7 +14,7 @@ in economics and political science (2014–2024).
 <style>
 .map-embed{
   width: 100%;
-  height: 600px;
+  height: 750px;
   border: 0px solid #ddd;
   border-radius: 12px;
   overflow: hidden;
