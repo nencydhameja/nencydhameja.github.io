@@ -1,0 +1,42 @@
+/* "Did you know?" sections */
+section#did-you-know {
+  background: #fef9e7;
+  border-left: 4px solid #f39c12;
+  border-radius: 4px;
+  padding: 16px 24px;
+  margin-top: 2em;
+}
+
+section#did-you-know h3 {
+  color: #e67e22;
+  margin-top: 0;
+}
+
+/* Subtle heading color */
+h2 { color: #2c3e50; }
+h3 { color: #34495e; }
+
+/* Nicer tables */
+table {
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+th {
+  background: #2c3e50;
+  color: white;
+  padding: 8px 14px;
+}
+td {
+  padding: 8px 14px;
+  border-bottom: 1px solid #ecf0f1;
+}
+tr:nth-child(even) {
+  background: #f8f9fa;
+}
+
+/* Horizontal rules */
+hr {
+  border: none;
+  border-top: 1px solid #dcdde1;
+  margin: 2em 0;
+}
