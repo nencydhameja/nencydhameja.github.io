@@ -337,10 +337,10 @@ ui &lt;- fluidPage(
   sidebarLayout(
     sidebarPanel(
       width = 3,
-      sliderInput("pop_mean", "Population mean (mu):", 50, 30, 70, step = 1),
-      sliderInput("pop_sd", "Population SD (sigma):", 10, 2, 25, step = 1),
-      sliderInput("samp_n", "Sample size (n):", 10, 2, 100),
-      sliderInput("n_reps", "Number of samples:", 500, 100, 2000, step = 100),
+      sliderInput("pop_mean", "Population mean (mu):", min = 30, max = 70, value = 50, step = 1),
+      sliderInput("pop_sd", "Population SD (sigma):", min = 2, max = 25, value = 10, step = 1),
+      sliderInput("samp_n", "Sample size (n):", min = 2, max = 100, value = 10),
+      sliderInput("n_reps", "Number of samples:", min = 100, max = 2000, value = 500, step = 100),
       actionButton("go", "Draw new samples", class = "btn-primary btn-block"),
       hr(),
       h4("Results"),
@@ -450,7 +450,10 @@ shinyApp(ui, server)</code></pre>
 </section>
 <section id="the-math-behind-it" class="level3">
 <h3 class="anchored" data-anchor-id="the-math-behind-it">The Math Behind It</h3>
-<p>Each observation <span class="math inline">\(x_i\)</span> is an independent draw with variance <span class="math inline">\(\sigma^2\)</span>. The sample mean is:</p>
+<p>Each observation <span class="math inline">\(x_i\)</span> is an <strong>independent draw with variance <span class="math inline">\(\sigma^2\)</span></strong>. What does that actually mean?</p>
+<p>The population has a distribution with some spread — that spread is <span class="math inline">\(\sigma^2\)</span>. When you sample one person, you don’t know what you’ll get. You might get someone with a long commute or a short one. Before you observe them, that measurement is uncertain — it could land anywhere in the population distribution. That uncertainty <strong>is</strong> <span class="math inline">\(\sigma^2\)</span>. Every observation carries the same amount of uncertainty because every observation comes from the same population.</p>
+<p><strong>“Independent”</strong> means knowing what the first person said tells you nothing about what the second person will say. Each person is a fresh roll of the dice. So you’re averaging <span class="math inline">\(n\)</span> equally-noisy, independent measurements — and the question is: how much noise survives the averaging?</p>
+<p>The sample mean is:</p>
 <p><span class="math display">\[\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i\]</span></p>
 <p><strong>Step 1:</strong> The variance of a sum of independent random variables equals the sum of their variances. Each <span class="math inline">\(x_i\)</span> contributes <span class="math inline">\(\sigma^2\)</span>:</p>
 <p><span class="math display">\[\text{Var}\left(\sum_{i=1}^n x_i\right) = \sigma^2 + \sigma^2 + \cdots + \sigma^2 = n\sigma^2\]</span></p>
@@ -486,9 +489,9 @@ ui &lt;- fluidPage(
   sidebarLayout(
     sidebarPanel(
       width = 3,
-      sliderInput("true_sd", "Population SD:", 15, 5, 40, step = 1),
-      sliderInput("n_obs", "Sample size (n):", 25, 5, 200),
-      sliderInput("n_samples", "Samples to draw:", 300, 50, 1000, step = 50),
+      sliderInput("true_sd", "Population SD:", min = 5, max = 40, value = 15, step = 1),
+      sliderInput("n_obs", "Sample size (n):", min = 5, max = 200, value = 25),
+      sliderInput("n_samples", "Samples to draw:", min = 50, max = 1000, value = 300, step = 50),
       actionButton("redraw", "Redraw", class = "btn-primary btn-block"),
       hr(),
       h4("Theory"),
@@ -601,8 +604,8 @@ ui &lt;- fluidPage(
   sidebarLayout(
     sidebarPanel(
       width = 3,
-      sliderInput("sigma", "Population SD:", 10, 2, 30),
-      sliderInput("n_size", "Sample size (n):", 10, 5, 500),
+      sliderInput("sigma", "Population SD:", min = 2, max = 30, value = 10),
+      sliderInput("n_size", "Sample size (n):", min = 5, max = 500, value = 10),
       p(style = "margin-top:12px;",
         strong("What to notice:"),
         br(),
