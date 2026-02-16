@@ -185,6 +185,11 @@ window.Quarto = {
   <li><a href="#why-randomization-works" id="toc-why-randomization-works" class="nav-link" data-scroll-target="#why-randomization-works">Why randomization works</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
+  <li><a href="#what-if-you-cant-randomize" id="toc-what-if-you-cant-randomize" class="nav-link" data-scroll-target="#what-if-you-cant-randomize">What if you can’t randomize?</a>
+  <ul class="collapse">
+  <li><a href="#natural-experiments" id="toc-natural-experiments" class="nav-link" data-scroll-target="#natural-experiments">Natural experiments</a></li>
+  <li><a href="#the-rest-of-this-course" id="toc-the-rest-of-this-course" class="nav-link" data-scroll-target="#the-rest-of-this-course">The rest of this course</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -366,6 +371,53 @@ shinyApp(ui, server)</code></pre>
 <li>Switch to <strong>self-selection (low Y₀ seek treatment)</strong>: now the opposite. Sicker people seek treatment, making it <em>look</em> less effective than it is.</li>
 <li>The left plot shows both potential outcomes — something you never see in real data. That’s the fundamental problem.</li>
 </ul>
+<hr>
+</section>
+</section>
+<section id="what-if-you-cant-randomize" class="level2">
+<h2 class="anchored" data-anchor-id="what-if-you-cant-randomize">What if you can’t randomize?</h2>
+<p>In a true experiment (RCT):</p>
+<ul>
+<li>You randomly assign people to treatment vs control</li>
+<li>Because it’s random, the two groups are identical on average — so any difference in outcomes must be caused by the treatment</li>
+</ul>
+<p>But most questions in economics, policy, and social science <strong>can’t</strong> be answered with an RCT. You can’t randomly assign poverty, or force some cities to build highways and others not to. So how do you estimate causal effects?</p>
+<section id="natural-experiments" class="level3">
+<h3 class="anchored" data-anchor-id="natural-experiments">Natural experiments</h3>
+<p>A <strong>natural experiment</strong> is when something in the real world — a policy change, a rule, a geographic boundary, a disaster — creates treatment and control groups that are <strong>as-if randomly assigned</strong>. Nobody designed it as an experiment, but the logic is the same.</p>
+<p><strong>Example:</strong> Say the government announced “all tracts in counties with food desert score &gt; X get a healthy food program.” Tracts at X+1 vs X−1 didn’t choose to be on different sides of that line — the cutoff did it for them. So comparing those tracts is like comparing treatment and control in an experiment.</p>
+<ul>
+<li>The word <strong>“natural”</strong> = it happened in the real world, not in a lab.</li>
+<li>The word <strong>“experiment”</strong> = it created as-if random variation in who got treated.</li>
+</ul>
+<p>The whole point is to get around the selection bias problem the simulation above shows. If people (or firms, or cities) <strong>choose</strong> their treatment status, the naive comparison is biased. A natural experiment gives you variation that the units didn’t choose.</p>
+</section>
+<section id="the-rest-of-this-course" class="level3">
+<h3 class="anchored" data-anchor-id="the-rest-of-this-course">The rest of this course</h3>
+<p>Every method in this course is a strategy for exploiting natural experiments or otherwise correcting for selection bias:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>The idea</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><a href="did.html">Difference-in-Differences</a></strong></td>
+<td>Compare changes over time between treated and control groups</td>
+</tr>
+<tr class="even">
+<td><strong><a href="ipw.html">IPW</a></strong></td>
+<td>Reweight observations so treated and control look similar on observables</td>
+</tr>
+<tr class="odd">
+<td><strong><a href="entropy-balancing.html">Entropy Balancing</a></strong></td>
+<td>Directly balance covariates between groups without modeling the propensity score</td>
+</tr>
+</tbody>
+</table>
+<p>Each one makes a different assumption about <em>why</em> the comparison is valid. The art of causal inference is choosing the right method for your setting — and being honest about when the assumptions fail.</p>
 
 
 </section>

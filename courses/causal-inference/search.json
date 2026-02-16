@@ -70,6 +70,16 @@
     ]
   },
   {
+    "objectID": "potential-outcomes.html#what-if-you-cant-randomize",
+    "href": "potential-outcomes.html#what-if-you-cant-randomize",
+    "title": "Potential Outcomes & ATE",
+    "section": "What if you can’t randomize?",
+    "text": "What if you can’t randomize?\nIn a true experiment (RCT):\n\nYou randomly assign people to treatment vs control\nBecause it’s random, the two groups are identical on average — so any difference in outcomes must be caused by the treatment\n\nBut most questions in economics, policy, and social science can’t be answered with an RCT. You can’t randomly assign poverty, or force some cities to build highways and others not to. So how do you estimate causal effects?\n\nNatural experiments\nA natural experiment is when something in the real world — a policy change, a rule, a geographic boundary, a disaster — creates treatment and control groups that are as-if randomly assigned. Nobody designed it as an experiment, but the logic is the same.\nExample: Say the government announced “all tracts in counties with food desert score &gt; X get a healthy food program.” Tracts at X+1 vs X−1 didn’t choose to be on different sides of that line — the cutoff did it for them. So comparing those tracts is like comparing treatment and control in an experiment.\n\nThe word “natural” = it happened in the real world, not in a lab.\nThe word “experiment” = it created as-if random variation in who got treated.\n\nThe whole point is to get around the selection bias problem the simulation above shows. If people (or firms, or cities) choose their treatment status, the naive comparison is biased. A natural experiment gives you variation that the units didn’t choose.\n\n\nThe rest of this course\nEvery method in this course is a strategy for exploiting natural experiments or otherwise correcting for selection bias:\n\n\n\nMethod\nThe idea\n\n\n\n\nDifference-in-Differences\nCompare changes over time between treated and control groups\n\n\nIPW\nReweight observations so treated and control look similar on observables\n\n\nEntropy Balancing\nDirectly balance covariates between groups without modeling the propensity score\n\n\n\nEach one makes a different assumption about why the comparison is valid. The art of causal inference is choosing the right method for your setting — and being honest about when the assumptions fail.",
+    "crumbs": [
+      "Potential Outcomes & ATE"
+    ]
+  },
+  {
     "objectID": "did.html",
     "href": "did.html",
     "title": "Difference-in-Differences",
