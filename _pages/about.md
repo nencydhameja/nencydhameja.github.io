@@ -21,7 +21,7 @@ My research is centered on causal inference and policy evaluation in applied mic
 <p>
 Before academia, I spent over a decade in the IT industry. My technical background informs my work through an emphasis on reproducible pipelines, large-scale administrative data, and computational models (including LLM-based agent simulations) for studying economic behavior and policy interventions.
 </p>
-<p><strong>Fields</strong>: Applied Microeconomics; Urban & Spatial Economics; Labor Economics; Computational Economics</p>
+<p><strong>Fields</strong>: Applied Microeconomics, Urban & Spatial Economics, Labor Economics, Computational Economics</p>
 <div class="notice--info">
   <strong>Research Toolkit</strong>
   <ul style="margin-top:0.5rem; margin-left:0; padding-left:1.2rem;">
