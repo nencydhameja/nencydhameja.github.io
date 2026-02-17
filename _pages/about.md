@@ -19,7 +19,7 @@ redirect_from:
 <p>
 My research is centered on causal inference and policy evaluation in applied microeconomics. I study how institutions and local environments shape economic, labor-market, and health outcomes, using modern quasi-experimental methods including difference-in-differences, reweighting and confounding adjustment, and machine learning–augmented causal designs.</p>
 <p>
-Before academia, I spent over a decade in the IT industry as a Software Engineer, Tech Lead, and Project Manager at firms including Accenture, JLL, and Grab in Singapore. This technical background informs my work through an emphasis on reproducible pipelines, large-scale administrative data, and computational models (including LLM-based agent simulations) for studying economic behavior and policy interventions.
+Before academia, I spent over a decade in the IT industry. My technical background informs my work through an emphasis on reproducible pipelines, large-scale administrative data, and computational models (including LLM-based agent simulations) for studying economic behavior and policy interventions.
 </p>
 <p><strong>Fields</strong>: Applied Microeconomics; Urban & Spatial Economics; Labor Economics; Computational Economics</p>
 <div class="notice--info">
