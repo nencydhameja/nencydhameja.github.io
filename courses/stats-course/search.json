@@ -592,7 +592,7 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Interactive Notes",
+    "title": "Learning Lab",
     "section": "",
     "text": "Welcome 👋\nThis course builds intuition for:",
     "crumbs": [
@@ -602,7 +602,7 @@
   {
     "objectID": "index.html#start-here",
     "href": "index.html#start-here",
-    "title": "Interactive Notes",
+    "title": "Learning Lab",
     "section": "Start Here",
     "text": "Start Here\n\nProbability & Uncertainty\n\nFoundations — Distributions, Sampling & Confidence Intervals\nVariance, SD & Standard Error — Population vs Sample, SD vs SE & Why n − 1\nThe Sampling Distribution — Data vs Sampling Distribution & When to Assume Normality\n\n\n\nThe Central Limit Theorem\n\nCLT Simulator — Interactive CLT Simulator\nLLN vs CLT — Why Averages Stabilize Before They Become Normal\n\n\n\nInference\n\np-values & Confidence Intervals — What They Actually Mean\nThe Bootstrap — Resampling-Based Inference\nPower, Alpha, Beta & MDE — Hypothesis Testing & Experiment Design\nMonte Carlo Experiments — How We Understand Estimators\nMultiple Testing — False Discoveries & the Replication Crisis\n\n\n\nRegression & Diagnostics\n\nRegression & the CEF — OLS and the Conditional Expectation Function\nResiduals & Controls — Diagnostics, Partialling Out & Omitted Variable Bias\nHomo- & Heteroskedasticity — Constant vs Non-Constant Variance & Robust SEs\nClustered SEs — When Observations Aren’t Independent\nFrisch-Waugh-Lovell — Partialling Out & OVB\nBias-Variance Tradeoff — Underfitting, Overfitting & MSE Decomposition\n\n\n\nBayesian Thinking\n\nBayesian Updating — One Gentle Introduction",
     "crumbs": [
