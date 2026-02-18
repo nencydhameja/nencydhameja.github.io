@@ -6,6 +6,7 @@ author_profile: false
 redirect_from:
   - /resume-json
 robots: noindex
+published: false
 ---
 
 {% include base_path %}

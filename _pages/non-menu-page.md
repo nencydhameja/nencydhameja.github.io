@@ -6,6 +6,7 @@ redirect_from:
   - "/nmp/"
   - "/nmp.html"
 robots: noindex
+published: false
 ---
 
 This is a page not in the menu. You can use markdown in this page.
