@@ -342,10 +342,7 @@ window.Quarto = {
 
 <p>The <strong>Frisch-Waugh-Lovell (FWL) theorem</strong> says: the coefficient on <span class="math inline">\(X_1\)</span> in <span class="math inline">\(Y = \beta_1 X_1 + \beta_2 X_2 + \varepsilon\)</span> is identical to the slope from regressing the <strong>residualized</strong> <span class="math inline">\(Y\)</span> on the <strong>residualized</strong> <span class="math inline">\(X_1\)</span> — after partialling out <span class="math inline">\(X_2\)</span> from both.</p>
 <p>Drag the sliders to see it hold for any DGP.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 700
 
 library(shiny)

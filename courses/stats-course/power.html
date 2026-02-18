@@ -394,10 +394,7 @@ window.Quarto = {
 <li>Under the <strong>alternative</strong>, the distribution is shifted by the true effect size.</li>
 </ul>
 <p>You pick a <strong>critical value</strong> (the cutoff). If your test statistic lands past it, you reject H₀. The simulation below shows both distributions. Drag the sliders and watch how <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>, and power change.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 580
 
 library(shiny)
@@ -549,10 +546,7 @@ shinyApp(ui, server)</code></pre>
 <p><span class="math display">\[MDE = (z_{1-\alpha} + z_{1-\beta}) \times SE\]</span></p>
 <p>The critical values (~2.8 for 5% significance and 80% power) are fixed multipliers. The only thing you control is the SE — by increasing <span class="math inline">\(n\)</span> or reducing <span class="math inline">\(\sigma\)</span> (through better measurement, stratification, or controls). Power analysis is really just an SE calculation in disguise. See <a href="variance-sd-se.html">Variance, SD &amp; Standard Error</a> for more on this connection.</p>
 <p>Larger <span class="math inline">\(n\)</span> shrinks the SE, which shrinks the MDE. Higher power demands a larger MDE (or more <span class="math inline">\(n\)</span>).</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 480
 
 library(shiny)

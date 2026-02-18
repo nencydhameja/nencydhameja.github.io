@@ -352,10 +352,7 @@ window.Quarto = {
 <p>Once you have a distribution, you can answer useful questions: What’s the most likely outcome? How often do we see extreme values? Where does the middle 50% of the data sit?</p>
 <p><strong>Key objects:</strong> histogram (shape), CDF (cumulative probabilities), quantiles (where does 50% of the data fall?).</p>
 <p>Explore different distributions below — notice how each has a distinct shape, center, and spread.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 450
 
 library(shiny)
@@ -438,10 +435,7 @@ shinyApp(ui, server)</code></pre>
 <p>Sampling is why statistics exists. A <strong>sample mean is not a fixed truth</strong> — it is one draw from a distribution of possible sample means. Repeat the sampling and you get a different answer every time.</p>
 <p>The key insight: <strong>larger samples produce less variable estimates</strong>. The spread of the sampling distribution shrinks at rate <span class="math inline">\(1/\sqrt{n}\)</span>.</p>
 <p>Try it: press “New draw” a few times at <span class="math inline">\(n = 10\)</span>, then slide up to <span class="math inline">\(n = 200\)</span> and watch how the sample means cluster tighter around the true mean.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 420
 
 library(shiny)
@@ -495,10 +489,7 @@ shinyApp(ui, server)</code></pre>
 <p>A <strong>95% confidence interval</strong> does <em>not</em> mean “there’s a 95% probability the true value is inside.” The true value is fixed — it’s either in there or not.</p>
 <p>The correct interpretation: if you repeated the experiment many times and built a CI each time, <strong>95% of those intervals would contain the true value</strong>.</p>
 <p>The simulation below shows exactly this. Each horizontal line is one CI from a fresh sample. Most cover the true mean (blue), but about 5% miss (red).</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 500
 
 library(shiny)

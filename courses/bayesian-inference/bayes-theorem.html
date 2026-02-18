@@ -224,10 +224,7 @@ window.Quarto = {
 <p>You test positive. <strong>What’s the probability you actually have the disease?</strong></p>
 <p>Most people say 99%. The real answer is about <strong>9%</strong>. This is not a trick — it’s Bayes’ theorem. The disease is so rare that even a good test produces more false positives than true positives.</p>
 <p>The simulator below lets you adjust the base rate and test accuracy and watch how the posterior probability changes.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 580
 
 library(shiny)

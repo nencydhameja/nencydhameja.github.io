@@ -218,10 +218,7 @@ window.Quarto = {
 <section id="when-does-did-fail" class="level3">
 <h3 class="anchored" data-anchor-id="when-does-did-fail">When does DID fail?</h3>
 <p>When the parallel trends assumption is violated — if the treated group was already on a different trajectory <em>before</em> treatment. The simulation below lets you break this assumption and see the bias that results.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 620
 
 library(shiny)

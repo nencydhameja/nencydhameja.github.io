@@ -392,10 +392,7 @@ window.Quarto = {
 <section id="simulation-1-the-running-average" class="level2">
 <h2 class="anchored" data-anchor-id="simulation-1-the-running-average">Simulation 1: The running average</h2>
 <p>Watch one running average converge to the true mean as you add observations one at a time. This is LLN in action — the cumulative mean stabilizes. Try different distributions and notice that convergence happens regardless of the population shape.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 620
 
 library(shiny)
@@ -529,10 +526,7 @@ shinyApp(ui, server)</code></pre>
 <section id="simulation-2-lln-vs-clt-side-by-side" class="level2">
 <h2 class="anchored" data-anchor-id="simulation-2-lln-vs-clt-side-by-side">Simulation 2: LLN vs CLT side by side</h2>
 <p>Now see both theorems at once. The <strong>left panel</strong> shows LLN — one running average converging to <span class="math inline">\(\mu\)</span>. The <strong>right panel</strong> shows CLT — the histogram of many sample means forming a normal distribution. Same data, different questions.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 580
 
 library(shiny)

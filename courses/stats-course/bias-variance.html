@@ -394,10 +394,7 @@ window.Quarto = {
 <section id="simulation-1-polynomial-regression-underfitting-vs-overfitting" class="level2">
 <h2 class="anchored" data-anchor-id="simulation-1-polynomial-regression-underfitting-vs-overfitting">Simulation 1: Polynomial regression — underfitting vs overfitting</h2>
 <p>Fit polynomials of different degrees to noisy data. Low degrees underfit (too rigid). High degrees overfit (too wiggly). Watch the training error decrease monotonically while the test error has a U-shape.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 700
 
 library(shiny)
@@ -582,10 +579,7 @@ shinyApp(ui, server)</code></pre>
 <section id="simulation-2-bias²-variance-mse" class="level2">
 <h2 class="anchored" data-anchor-id="simulation-2-bias²-variance-mse">Simulation 2: Bias² + Variance = MSE</h2>
 <p>Run many simulations with different training sets. For each polynomial degree, decompose the MSE into bias² and variance. Watch the U-shaped total error curve emerge.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 520
 
 library(shiny)

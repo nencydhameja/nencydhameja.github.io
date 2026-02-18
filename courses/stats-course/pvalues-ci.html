@@ -421,10 +421,7 @@ window.Quarto = {
 <section id="simulation-the-p-value-machine" class="level3">
 <h3 class="anchored" data-anchor-id="simulation-the-p-value-machine">Simulation: The p-value machine</h3>
 <p>Draw a sample, compute a test statistic, and see where it falls on the null distribution. The shaded area <em>is</em> the p-value. Under H₀, p-values are uniformly distributed — every value between 0 and 1 is equally likely.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 680
 
 library(shiny)
@@ -649,10 +646,7 @@ shinyApp(ui, server)</code></pre>
 <section id="simulation-ci-coverage" class="level3">
 <h3 class="anchored" data-anchor-id="simulation-ci-coverage">Simulation: CI coverage</h3>
 <p>Draw 100 confidence intervals. Each one either contains the true <span class="math inline">\(\mu\)</span> (blue) or misses it (red). Over many experiments, about 95% contain <span class="math inline">\(\mu\)</span> — but any <em>single</em> CI either does or doesn’t. The 95% is about the procedure, not about your interval.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 680
 
 library(shiny)

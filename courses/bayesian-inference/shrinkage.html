@@ -220,10 +220,7 @@ window.Quarto = {
 <p><strong>Shrinkage</strong> says: don’t take the raw numbers at face value. Pull (“shrink”) every estimate toward the overall average. The more uncertain you are about an individual estimate, the more you pull.</p>
 <p><span class="math display">\[\hat{\theta}_i^{shrunk} = w_i \cdot \bar{\theta}_{overall} + (1 - w_i) \cdot \hat{\theta}_i^{raw}\]</span></p>
 <p>This is the core of <strong>empirical Bayes</strong> and <strong>James-Stein estimation</strong>. It sounds like you’re adding bias — and you are — but you’re reducing variance by more than enough to compensate. The result: better predictions overall.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 620
 
 library(shiny)

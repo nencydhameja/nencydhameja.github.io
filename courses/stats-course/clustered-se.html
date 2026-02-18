@@ -400,10 +400,7 @@ window.Quarto = {
 <section id="simulation-1-clustered-data-and-wrong-ses" class="level2">
 <h2 class="anchored" data-anchor-id="simulation-1-clustered-data-and-wrong-ses">Simulation 1: Clustered data and wrong SEs</h2>
 <p>Generate data with students nested in schools. Within each school, outcomes are correlated (shared school effect). Compare the three types of standard errors.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 620
 
 library(shiny)
@@ -573,10 +570,7 @@ shinyApp(ui, server)</code></pre>
 <section id="simulation-2-rejection-rates" class="level2">
 <h2 class="anchored" data-anchor-id="simulation-2-rejection-rates">Simulation 2: Rejection rates</h2>
 <p>The real test: run 500 experiments where the true effect is zero. How often does each type of SE incorrectly reject H₀ at the 5% level? OLS SEs reject far too often. Clustered SEs get it right.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 520
 
 library(shiny)

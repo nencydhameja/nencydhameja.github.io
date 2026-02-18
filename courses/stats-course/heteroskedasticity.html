@@ -357,10 +357,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="why-does-it-matter">Why does it matter?</h3>
 <p>OLS is still <strong>unbiased</strong> under heteroskedasticity — the coefficient estimates are fine. But the <strong>standard errors are wrong</strong>. And wrong standard errors mean wrong confidence intervals, wrong t-statistics, wrong p-values. You might declare something significant when it isn’t (or miss something real).</p>
 <p>The fix: use <strong>robust standard errors</strong> (HC, or “sandwich” standard errors) that don’t assume constant variance.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 620
 
 library(shiny)

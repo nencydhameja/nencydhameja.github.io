@@ -421,10 +421,7 @@ window.Quarto = {
 <p>Think of it this way: if you have <span class="math inline">\(n = 1\)</span> data point, the sample mean equals that point, so the deviation is 0. But that doesn’t mean there’s no variability in the population! Dividing by <span class="math inline">\(n - 1 = 0\)</span> makes the formula undefined, which correctly tells you: <em>you can’t estimate spread from a single observation</em>.</p>
 <p>The <span class="math inline">\(n - 1\)</span> is called the <strong>degrees of freedom</strong> — you “used up” one degree of freedom estimating the mean.</p>
 <p>Try the simulation below to see this in action:</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 750
 
 library(shiny)
@@ -573,10 +570,7 @@ shinyApp(ui, server)</code></pre>
 <li><strong>SE</strong> tells you how precisely you’ve estimated the mean</li>
 <li>More data → smaller SE → more precise estimate</li>
 </ul>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 800
 
 library(shiny)
@@ -688,10 +682,7 @@ shinyApp(ui, server)</code></pre>
 <li><strong>SE shrinks</strong> — more data means a more precise estimate</li>
 <li><strong>Sample variance (s²) bounces around σ²</strong> — but is unbiased on average</li>
 </ul>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 700
 
 library(shiny)
