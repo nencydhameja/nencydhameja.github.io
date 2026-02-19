@@ -12,22 +12,18 @@ in economics and political science (2014–2024).
 ---
 
 <style>
-.map-embed{
+.embed-container{
   width: 100%;
   max-width: 1300px;
   margin: 0 auto;
-  /* scale trick: container height = 500/1300 = 38.46% of width */
-  padding-bottom: 38.46%;
   position: relative;
   border-radius: 12px;
   overflow: hidden;
 }
-.map-embed iframe{
+.embed-container iframe{
   position: absolute;
   top: 0;
   left: 0;
-  width: 1300px;
-  height: 500px;
   border: 0;
   transform-origin: 0 0;
 }
@@ -41,23 +37,41 @@ in economics and political science (2014–2024).
 </style>
 
 <script>
-function scaleIframe() {
-  var wrap = document.querySelector('.map-embed');
-  var iframe = wrap && wrap.querySelector('iframe');
-  if (!wrap || !iframe) return;
-  var s = wrap.offsetWidth / 1300;
-  iframe.style.transform = 'scale(' + s + ')';
-  wrap.style.height = (500 * s) + 'px';
-  wrap.style.paddingBottom = '0';
+function scaleAllEmbeds() {
+  document.querySelectorAll('.embed-container').forEach(function(wrap) {
+    var iframe = wrap.querySelector('iframe');
+    if (!iframe) return;
+    var nativeW = parseInt(iframe.dataset.width) || 1300;
+    var nativeH = parseInt(iframe.dataset.height) || 500;
+    var s = wrap.offsetWidth / nativeW;
+    iframe.style.width = nativeW + 'px';
+    iframe.style.height = nativeH + 'px';
+    iframe.style.transform = 'scale(' + s + ')';
+    wrap.style.height = (nativeH * s) + 'px';
+  });
 }
-window.addEventListener('load', scaleIframe);
-window.addEventListener('resize', scaleIframe);
+window.addEventListener('load', scaleAllEmbeds);
+window.addEventListener('resize', scaleAllEmbeds);
 </script>
 
-<div class="map-embed">
+<div class="embed-container">
+  <iframe
+    src="/assets/projects/diversity/treatment_trend.html"
+    title="Treatment Trend"
+    data-width="1300"
+    data-height="520"
+    loading="lazy"
+    scrolling="no"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<div class="embed-container" style="margin-top: 24px;">
   <iframe
     src="/assets/projects/diversity/div_state_map.html"
     title="Interactive Map"
+    data-width="1300"
+    data-height="500"
     loading="lazy"
     scrolling="no"
     allowfullscreen>
