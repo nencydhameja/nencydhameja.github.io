@@ -59,7 +59,7 @@ window.addEventListener('resize', scaleAllEmbeds);
     src="/assets/projects/diversity/treatment_trend.html"
     title="Treatment Trend"
     data-width="1300"
-    data-height="520"
+    data-height="650"
     loading="lazy"
     scrolling="no"
     allowfullscreen>
