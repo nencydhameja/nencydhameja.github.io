@@ -71,7 +71,7 @@ window.addEventListener('resize', scaleAllEmbeds);
     src="/assets/projects/diversity/div_state_map.html"
     title="Interactive Map"
     data-width="1300"
-    data-height="500"
+    data-height="700"
     loading="lazy"
     scrolling="no"
     allowfullscreen>
