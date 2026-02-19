@@ -14,18 +14,13 @@ in economics and political science (2014–2024).
 <style>
 .embed-container{
   width: 100%;
-  max-width: 1300px;
   margin: 0 auto;
-  position: relative;
   border-radius: 12px;
   overflow: hidden;
 }
 .embed-container iframe{
-  position: absolute;
-  top: 0;
-  left: 0;
+  width: 100%;
   border: 0;
-  transform-origin: 0 0;
 }
 
 /* Force wider content area on wide pages */
@@ -36,30 +31,11 @@ in economics and political science (2014–2024).
 }
 </style>
 
-<script>
-function scaleAllEmbeds() {
-  document.querySelectorAll('.embed-container').forEach(function(wrap) {
-    var iframe = wrap.querySelector('iframe');
-    if (!iframe) return;
-    var nativeW = parseInt(iframe.dataset.width) || 1300;
-    var nativeH = parseInt(iframe.dataset.height) || 500;
-    var s = wrap.offsetWidth / nativeW;
-    iframe.style.width = nativeW + 'px';
-    iframe.style.height = nativeH + 'px';
-    iframe.style.transform = 'scale(' + s + ')';
-    wrap.style.height = (nativeH * s) + 'px';
-  });
-}
-window.addEventListener('load', scaleAllEmbeds);
-window.addEventListener('resize', scaleAllEmbeds);
-</script>
-
 <div class="embed-container">
   <iframe
     src="/assets/projects/diversity/treatment_trend.html"
     title="Treatment Trend"
-    data-width="1300"
-    data-height="650"
+    height="650"
     loading="lazy"
     scrolling="no"
     allowfullscreen>
@@ -70,8 +46,7 @@ window.addEventListener('resize', scaleAllEmbeds);
   <iframe
     src="/assets/projects/diversity/div_state_map.html"
     title="Interactive Map"
-    data-width="1300"
-    data-height="700"
+    height="700"
     loading="lazy"
     scrolling="no"
     allowfullscreen>
