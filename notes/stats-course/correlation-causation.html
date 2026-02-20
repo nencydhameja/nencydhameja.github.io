@@ -357,6 +357,7 @@ window.Quarto = {
   <li><a href="#the-regression-slope-is-a-correlation" id="toc-the-regression-slope-is-a-correlation" class="nav-link active" data-scroll-target="#the-regression-slope-is-a-correlation">The regression slope is a correlation</a></li>
   <li><a href="#so-you-see-a-correlation.-now-what" id="toc-so-you-see-a-correlation.-now-what" class="nav-link" data-scroll-target="#so-you-see-a-correlation.-now-what">So you see a correlation. Now what?</a>
   <ul class="collapse">
+  <li><a href="#spurious-correlation-why-unrelated-things-look-related" id="toc-spurious-correlation-why-unrelated-things-look-related" class="nav-link" data-scroll-target="#spurious-correlation-why-unrelated-things-look-related">Spurious correlation: why unrelated things look related</a></li>
   <li><a href="#collider-bias-the-trickiest-one" id="toc-collider-bias-the-trickiest-one" class="nav-link" data-scroll-target="#collider-bias-the-trickiest-one">Collider bias: the trickiest one</a></li>
   </ul></li>
   <li><a href="#simulation-1-same-scatter-plot-different-causal-stories" id="toc-simulation-1-same-scatter-plot-different-causal-stories" class="nav-link" data-scroll-target="#simulation-1-same-scatter-plot-different-causal-stories">Simulation 1: Same scatter plot, different causal stories</a>
@@ -429,8 +430,8 @@ window.Quarto = {
 <td>Family background → education AND income</td>
 </tr>
 <tr class="even">
-<td><strong>Coincidence</strong></td>
-<td>No connection</td>
+<td><strong>Spurious correlation</strong></td>
+<td>No real connection</td>
 <td><a href="https://tylervigen.com/spurious-correlations">US spending on science correlates with suicides by hanging</a></td>
 </tr>
 <tr class="odd">
@@ -441,6 +442,18 @@ window.Quarto = {
 </tbody>
 </table>
 <p>The scatter plot looks the same in all five cases. You literally cannot tell them apart from the data alone.</p>
+<section id="spurious-correlation-why-unrelated-things-look-related" class="level3">
+<h3 class="anchored" data-anchor-id="spurious-correlation-why-unrelated-things-look-related">Spurious correlation: why unrelated things look related</h3>
+<p>A <strong>spurious correlation</strong> is a correlation between two variables that have no causal connection whatsoever. It’s not confounding (no hidden Z), not reverse causality — it’s pure noise that <em>looks</em> like signal.</p>
+<p><strong>Why does it happen?</strong> If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are truly independent, then <span class="math inline">\(\text{Cor}(X, Y) = 0\)</span> in the population. But in a finite sample, the sample correlation <span class="math inline">\(r_{XY}\)</span> is almost never exactly zero. It has sampling variability:</p>
+<p><span class="math display">\[\text{Var}(r_{XY}) \approx \frac{1}{n}\]</span></p>
+<p>With small <span class="math inline">\(n\)</span>, the sample correlation can be large purely by chance. With <span class="math inline">\(n = 10\)</span>, a correlation of <span class="math inline">\(r = 0.5\)</span> between two completely independent variables isn’t unusual at all.</p>
+<p><strong>Multiple testing makes it worse.</strong> If you compute correlations between <span class="math inline">\(k\)</span> pairs of unrelated variables and test each at <span class="math inline">\(\alpha = 0.05\)</span>, the probability that at least one comes up “significant” is:</p>
+<p><span class="math display">\[P(\text{at least one false positive}) = 1 - (1 - 0.05)^k\]</span></p>
+<p>With <span class="math inline">\(k = 20\)</span> pairs, that’s a 64% chance. With <span class="math inline">\(k = 100\)</span>, it’s 99.4%. Test enough things and you <em>will</em> find “significant” correlations between variables that have nothing to do with each other. (This ties directly to the <a href="multiple-testing.html">Multiple Testing</a> page.)</p>
+<p><strong>Trending variables are the worst offenders.</strong> If two time series both trend upward over time — say, US GDP and the number of cat videos on YouTube — they’ll be highly correlated even though neither causes the other. Mathematically, if <span class="math inline">\(X_t = a + bt + \varepsilon_t\)</span> and <span class="math inline">\(Y_t = c + dt + \eta_t\)</span> where <span class="math inline">\(\varepsilon\)</span> and <span class="math inline">\(\eta\)</span> are completely independent, the sample correlation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> will be close to 1 because both share the time trend <span class="math inline">\(t\)</span>. The correlation is real in the data but meaningless — it’s driven by the common trend, not by any relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p><strong>The fix:</strong> large samples (reduces <span class="math inline">\(\text{Var}(r)\)</span>), pre-registration (decide what to test before looking at data), multiple testing corrections (Bonferroni, BH), and skepticism about correlations found by searching through many variables.</p>
+</section>
 <section id="collider-bias-the-trickiest-one" class="level3">
 <h3 class="anchored" data-anchor-id="collider-bias-the-trickiest-one">Collider bias: the trickiest one</h3>
 <p>The first four reasons are intuitive. The fifth — <strong>collider bias</strong> — is subtle and catches even experienced researchers.</p>
@@ -490,7 +503,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="simulation-1-same-scatter-plot-different-causal-stories">Simulation 1: Same scatter plot, different causal stories</h2>
 <p>Three different causal structures — all producing <strong>the same correlation</strong> between X and Y. Drag the sliders and watch: the scatter plots are indistinguishable, but the true causal effect of X on Y is completely different in each case.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 750
+#| viewerHeight: 950
 
 library(shiny)
 
@@ -523,7 +536,9 @@ ui &lt;- fluidPage(
 
     mainPanel(
       width = 8,
-      plotOutput("three_plots", height = "600px")
+      plotOutput("plot_causal", height = "280px"),
+      plotOutput("plot_confound", height = "280px"),
+      plotOutput("plot_reverse", height = "280px")
     )
   )
 )
@@ -561,40 +576,48 @@ server &lt;- function(input, output, session) {
          true_b = b, confound = cf)
   })
 
-  output$three_plots &lt;- renderPlot({
+  output$plot_causal &lt;- renderPlot({
     d &lt;- sim()
-    par(mfrow = c(1, 3), mar = c(5, 5, 4, 2))
-
-    # Plot 1: X causes Y
-    plot(d$x1, d$y1, pch = 16, cex = 0.5,
+    par(mar = c(4, 5, 3, 2))
+    plot(d$x1, d$y1, pch = 16, cex = 0.6,
          col = adjustcolor("#3498db", 0.4),
          xlab = "X", ylab = "Y",
-         main = expression(X %-&gt;% Y))
+         main = expression("Story 1: X causes Y  (" * X %-&gt;% Y * ")"))
     abline(lm(d$y1 ~ d$x1), col = "#e74c3c", lwd = 3)
-    mtext(paste0("OLS slope = ", round(d$b1, 2),
-                 "  (true effect = ", d$true_b, ")"),
-          side = 3, line = 0, cex = 0.9, font = 2,
-          col = if (abs(d$b1 - d$true_b) &lt; 0.15) "#27ae60" else "#e74c3c")
+    legend("topleft", bty = "n", cex = 1,
+           legend = paste0("OLS slope = ", round(d$b1, 2),
+                           "  |  True effect = ", d$true_b),
+           text.col = if (abs(d$b1 - d$true_b) &lt; 0.15) "#27ae60" else "#e74c3c",
+           text.font = 2)
+  })
 
-    # Plot 2: Confounding
-    plot(d$x2, d$y2, pch = 16, cex = 0.5,
+  output$plot_confound &lt;- renderPlot({
+    d &lt;- sim()
+    par(mar = c(4, 5, 3, 2))
+    plot(d$x2, d$y2, pch = 16, cex = 0.6,
          col = adjustcolor("#3498db", 0.4),
          xlab = "X", ylab = "Y",
-         main = expression(Z %-&gt;% X * "," ~~ Z %-&gt;% Y))
+         main = expression("Story 2: Confounding  (" * Z %-&gt;% X * "," ~~ Z %-&gt;% Y * ")"))
     abline(lm(d$y2 ~ d$x2), col = "#e74c3c", lwd = 3)
-    mtext(paste0("OLS slope = ", round(d$b2, 2),
-                 "  (true effect = ", d$true_b, ")"),
-          side = 3, line = 0, cex = 0.9, font = 2, col = "#e74c3c")
+    legend("topleft", bty = "n", cex = 1,
+           legend = paste0("OLS slope = ", round(d$b2, 2),
+                           "  |  True effect = ", d$true_b,
+                           "  [BIASED]"),
+           text.col = "#e74c3c", text.font = 2)
+  })
 
-    # Plot 3: Reverse causality
-    plot(d$x3, d$y3, pch = 16, cex = 0.5,
+  output$plot_reverse &lt;- renderPlot({
+    d &lt;- sim()
+    par(mar = c(4, 5, 3, 2))
+    plot(d$x3, d$y3, pch = 16, cex = 0.6,
          col = adjustcolor("#3498db", 0.4),
          xlab = "X", ylab = "Y",
-         main = expression(Y %-&gt;% X))
+         main = expression("Story 3: Reverse causality  (" * Y %-&gt;% X * ")"))
     abline(lm(d$y3 ~ d$x3), col = "#e74c3c", lwd = 3)
-    mtext(paste0("OLS slope = ", round(d$b3, 2),
-                 "  (true effect = 0)"),
-          side = 3, line = 0, cex = 0.9, font = 2, col = "#e74c3c")
+    legend("topleft", bty = "n", cex = 1,
+           legend = paste0("OLS slope = ", round(d$b3, 2),
+                           "  |  True effect = 0  [MISLEADING]"),
+           text.col = "#e74c3c", text.font = 2)
   })
 
   output$results1 &lt;- renderUI({
