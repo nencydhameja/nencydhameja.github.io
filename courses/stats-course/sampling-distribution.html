@@ -410,6 +410,16 @@ window.Quarto = {
 </table>
 <p>Your data might be wildly skewed. But the sampling distribution of the mean can still be normal, because averaging smooths things out. That’s the CLT.</p>
 <p>The simulation below makes this concrete. The left panel shows your data (one sample). The right panel shows what happens when you repeat the experiment 1,000 times — the sampling distribution.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>God’s View.</strong> In these simulations, we can repeat the experiment 1,000 times and directly see the sampling distribution. In practice, you run the experiment once. You never observe the sampling distribution — you infer its properties (via the CLT or the bootstrap) to build standard errors and confidence intervals.</p>
+</div>
+</div>
+</div>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 1050
 

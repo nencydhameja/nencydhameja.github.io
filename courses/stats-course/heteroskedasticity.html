@@ -369,6 +369,16 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="why-does-it-matter">Why does it matter?</h3>
 <p>OLS is still <strong>unbiased</strong> under heteroskedasticity — the coefficient estimates are fine. But the <strong>standard errors are wrong</strong>. And wrong standard errors mean wrong confidence intervals, wrong t-statistics, wrong p-values. You might declare something significant when it isn’t (or miss something real).</p>
 <p>The fix: use <strong>robust standard errors</strong> (HC, or “sandwich” standard errors) that don’t assume constant variance.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>God’s View.</strong> In these simulations, we control whether the errors are homoskedastic or heteroskedastic — we set the variance function. In practice, you don’t know the error structure. You test for heteroskedasticity and use robust SEs as insurance.</p>
+</div>
+</div>
+</div>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 620
 

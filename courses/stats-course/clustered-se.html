@@ -407,6 +407,16 @@ window.Quarto = {
 </tbody>
 </table>
 <p>Robust SEs fix heteroskedasticity but <strong>not</strong> within-cluster correlation. Clustered SEs fix both. If your data has clusters, you need clustered SEs.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>God’s View.</strong> In these simulations, we set the cluster structure and the intra-cluster correlation (ICC) — we know exactly how much correlation exists within groups. In practice, you identify clusters from your study design (schools, hospitals, firms) and let the clustered SE estimator handle the rest without knowing the true ICC.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="simulation-1-clustered-data-and-wrong-ses" class="level2">

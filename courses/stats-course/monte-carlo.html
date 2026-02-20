@@ -369,6 +369,16 @@ window.Quarto = {
 <li><strong>Summarize:</strong> look at the distribution of your estimates. Is the estimator centered on the truth (unbiased)? How spread out is it (variance)? How often does the CI cover the truth?</li>
 </ol>
 <p>This is how statisticians <strong>check their own work</strong>. Theory says OLS is unbiased? Prove it — simulate 5,000 datasets and see if the average estimate equals the true value. Theory says the CI has 95% coverage? Simulate it.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>God’s View.</strong> Monte Carlo is <em>pure</em> God’s View. We specify the entire data-generating process — true parameter, distribution, sample size — then generate thousands of datasets to study how estimators behave. In practice, you get one dataset from an unknown DGP. Monte Carlo is how statisticians verify their tools work <em>before</em> you use them on real data.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="simulation-1-compare-estimators" class="level2">
 <h2 class="anchored" data-anchor-id="simulation-1-compare-estimators">Simulation 1: Compare estimators</h2>

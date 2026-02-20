@@ -369,6 +369,16 @@ window.Quarto = {
 </ol>
 <p>Regression doesn’t assume the world is linear. It gives you the <strong>best linear approximation</strong> to whatever the true relationship is. The simulator below lets you see exactly where that approximation works and where it breaks down.</p>
 <p>In the plots: the red dots show the conditional mean of <span class="math inline">\(Y\)</span> in each bin of <span class="math inline">\(X\)</span> (the empirical CEF), the green curve is the true CEF, and the blue line is OLS. Switch DGPs to see when they agree and when they diverge.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>God’s View.</strong> In these simulations, we set the true CEF — the green curve. We know exactly how <span class="math inline">\(E[Y \mid X]\)</span> behaves, so we can see where OLS gets it right and where it misses. In practice, you never see the true CEF. You only see the data and the regression line, and you hope they’re close.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="reading-the-residual-plot" class="level3">
 <h3 class="anchored" data-anchor-id="reading-the-residual-plot">Reading the residual plot</h3>

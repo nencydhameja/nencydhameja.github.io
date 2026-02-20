@@ -371,6 +371,16 @@ window.Quarto = {
 <section id="residuals-and-the-cef" class="level2">
 <h2 class="anchored" data-anchor-id="residuals-and-the-cef">Residuals and the CEF</h2>
 <p>Recall from the <a href="cef.html">CEF page</a>: OLS is the best <em>linear</em> approximation to <span class="math inline">\(E[Y \mid X]\)</span>. When the CEF is nonlinear, the residuals absorb the nonlinearity. That’s why a curved pattern in the residual plot signals model misspecification — the residuals are doing the work the model should be doing.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>God’s View.</strong> In these simulations, we set the true DGP — including any omitted variables and the true functional form. We can see exactly what the residuals are “absorbing.” In practice, you don’t know what’s missing from your model. Residual diagnostics are your flashlight in the dark.</p>
+</div>
+</div>
+</div>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 600
 

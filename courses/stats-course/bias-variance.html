@@ -402,6 +402,16 @@ window.Quarto = {
 <p>The <strong>total prediction error</strong> (MSE) decomposes as:</p>
 <p><span class="math display">\[\text{MSE} = \text{Bias}^2 + \text{Variance} + \text{Irreducible noise}\]</span></p>
 <p>You can’t eliminate all three. Reducing bias increases variance, and vice versa. The best model <strong>balances both</strong>.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>God’s View.</strong> In these simulations, we know the true function <span class="math inline">\(f(x)\)</span> that generated the data — the curve we’re trying to learn. We can compute exact bias and variance because we know the target. In practice, you never know <span class="math inline">\(f(x)\)</span>. Finding it is the whole point of modeling. You use test error or cross-validation as a proxy for the tradeoff you can’t see directly.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="simulation-1-polynomial-regression-underfitting-vs-overfitting" class="level2">
 <h2 class="anchored" data-anchor-id="simulation-1-polynomial-regression-underfitting-vs-overfitting">Simulation 1: Polynomial regression — underfitting vs overfitting</h2>

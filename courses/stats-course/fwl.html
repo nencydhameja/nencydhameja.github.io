@@ -354,6 +354,16 @@ window.Quarto = {
 
 <p>The <strong>Frisch-Waugh-Lovell (FWL) theorem</strong> says: the coefficient on <span class="math inline">\(X_1\)</span> in <span class="math inline">\(Y = \beta_1 X_1 + \beta_2 X_2 + \varepsilon\)</span> is identical to the slope from regressing the <strong>residualized</strong> <span class="math inline">\(Y\)</span> on the <strong>residualized</strong> <span class="math inline">\(X_1\)</span> — after partialling out <span class="math inline">\(X_2\)</span> from both.</p>
 <p>Drag the sliders to see it hold for any DGP.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>God’s View.</strong> In these simulations, we set the true <span class="math inline">\(\beta_1\)</span>, <span class="math inline">\(\beta_2\)</span>, and the correlation between <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>. We can verify FWL gives the same answer as the full regression. In practice, you don’t know the true coefficients — but FWL holds mechanically regardless, which is why it’s useful for understanding what “controlling for” actually does.</p>
+</div>
+</div>
+</div>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 700
 
