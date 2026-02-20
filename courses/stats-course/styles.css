@@ -16,6 +16,24 @@ section#did-you-know h3 {
 h2 { color: #2c3e50; }
 h3 { color: #34495e; }
 
+/* Sidebar section headings only (not child page links) */
+.sidebar-item-section > .sidebar-item-container > .sidebar-item-text {
+  color: #2471a3;
+  font-weight: 700;
+  font-size: 0.95em;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Active/selected sidebar item */
+.sidebar-item .sidebar-link.active {
+  background: #2c3e50;
+  color: #ffffff !important;
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin: 1px 0;
+}
+
 /* Nicer tables */
 table {
   border-collapse: collapse;
@@ -32,6 +50,16 @@ td {
 }
 tr:nth-child(even) {
   background: #f8f9fa;
+}
+
+/* God's View callout */
+div.callout.callout-note.callout-style-simple {
+  background: #fef9e7 !important;
+  border-left: 4px solid #f39c12 !important;
+  border-top: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+  border-radius: 4px;
 }
 
 /* Horizontal rules */
