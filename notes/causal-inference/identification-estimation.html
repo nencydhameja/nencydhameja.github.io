@@ -255,6 +255,12 @@ window.Quarto = {
   <li><a href="#threats-to-identification" id="toc-threats-to-identification" class="nav-link" data-scroll-target="#threats-to-identification">Threats to identification</a></li>
   <li><a href="#the-pattern" id="toc-the-pattern" class="nav-link" data-scroll-target="#the-pattern">The pattern</a></li>
   </ul></li>
+  <li><a href="#types-of-bias" id="toc-types-of-bias" class="nav-link" data-scroll-target="#types-of-bias">Types of bias</a>
+  <ul class="collapse">
+  <li><a href="#identification-biases" id="toc-identification-biases" class="nav-link" data-scroll-target="#identification-biases">Identification biases</a></li>
+  <li><a href="#estimation-biases" id="toc-estimation-biases" class="nav-link" data-scroll-target="#estimation-biases">Estimation biases</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul></li>
   <li><a href="#simulation-identification-matters-estimation-is-secondary" id="toc-simulation-identification-matters-estimation-is-secondary" class="nav-link" data-scroll-target="#simulation-identification-matters-estimation-is-secondary">Simulation: identification matters, estimation is secondary</a>
   <ul class="collapse">
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
@@ -523,8 +529,113 @@ window.Quarto = {
 <section id="the-pattern" class="level3">
 <h3 class="anchored" data-anchor-id="the-pattern">The pattern</h3>
 <p>In all three cases:</p>
-<p><span class="math display">\[\text{Estimate} = \text{Causal effect} + \text{Bias from violated assumption}\]</span></p>
-<p>The bias term is <strong>not a function of the estimator or sample size</strong>. It’s a function of how the world works. That’s why it’s an identification problem.</p>
+<p><span class="math display">\[\text{Estimate} = \text{Causal effect} + \text{Identification bias} + \text{Estimation bias}\]</span></p>
+<p>Identification bias comes from violated assumptions — it’s a function of how the world works. Estimation bias comes from the estimator — it’s a function of how you computed the number. Identification bias dominates and can’t be fixed. Estimation bias is usually smaller and <em>can</em> be fixed by choosing a better estimator. That’s why identification comes first.</p>
+<hr>
+</section>
+</section>
+<section id="types-of-bias" class="level2">
+<h2 class="anchored" data-anchor-id="types-of-bias">Types of bias</h2>
+<section id="identification-biases" class="level3">
+<h3 class="anchored" data-anchor-id="identification-biases">Identification biases</h3>
+<p>These come from the world, not the estimator. More data doesn’t help. A fancier estimator doesn’t help. You need a <strong>different identification strategy</strong> or <strong>better data</strong>.</p>
+<p><strong>Omitted variable bias (OVB).</strong> The most common. An unobserved variable <span class="math inline">\(U\)</span> affects both treatment and outcome. For the simple regression <span class="math inline">\(Y = \beta X + \gamma U + \varepsilon\)</span> where you omit <span class="math inline">\(U\)</span>:</p>
+<p><span class="math display">\[\text{OVB} = \gamma \cdot \frac{\text{Cov}(X, U)}{\text{Var}(X)}\]</span></p>
+<p>The bias is the effect of <span class="math inline">\(U\)</span> on <span class="math inline">\(Y\)</span> (<span class="math inline">\(\gamma\)</span>) times how much <span class="math inline">\(U\)</span> correlates with <span class="math inline">\(X\)</span>. If <span class="math inline">\(U\)</span> drives people toward treatment <em>and</em> improves outcomes, both terms are positive and you overestimate the effect.</p>
+<p><strong>Selection bias.</strong> The treated group would have had different outcomes even without treatment: <span class="math inline">\(E[Y(0) \mid D=1] \neq E[Y(0) \mid D=0]\)</span>. This is OVB rephrased in potential outcomes language — the “omitted variable” is whatever drives people to select into treatment.</p>
+<p><strong>Simultaneity bias.</strong> <span class="math inline">\(X\)</span> causes <span class="math inline">\(Y\)</span> but <span class="math inline">\(Y\)</span> also causes <span class="math inline">\(X\)</span>. Regressing <span class="math inline">\(Y\)</span> on <span class="math inline">\(X\)</span> picks up both directions. Common in macro (do interest rates affect GDP, or does GDP affect interest rates?) and in supply/demand estimation.</p>
+<p><strong>Collider bias (sample selection bias).</strong> You condition on a variable caused by both treatment and outcome — this opens a fake path between them. The <a href="../stats-course/correlation-causation.html">correlation-causation page</a> covers this in detail.</p>
+<p><strong>Differential trends bias.</strong> In DID: the treated group was already on a different trajectory before treatment. The estimate captures the pre-existing divergence, not the treatment effect.</p>
+</section>
+<section id="estimation-biases" class="level3">
+<h3 class="anchored" data-anchor-id="estimation-biases">Estimation biases</h3>
+<p>These come from the estimator, not the world. They can be reduced or eliminated by choosing a better estimator, using more data, or fixing the specification.</p>
+<p><strong>Functional form misspecification.</strong> You fit a linear model but the truth is nonlinear. In RDD: a straight line through curved data creates a fake “jump” at the cutoff. Fix: use local polynomials, check robustness to specification.</p>
+<p><strong>Finite sample / weak instrument bias.</strong> With weak instruments (<span class="math inline">\(F &lt; 10\)</span>), 2SLS is biased toward OLS in finite samples — even if the exclusion restriction holds. This shrinks with stronger instruments or alternative estimators (LIML, Anderson-Rubin).</p>
+<p><strong>Negative weighting (TWFE with staggered treatment).</strong> Goodman-Bacon (2021) and de Chaisemartin &amp; d’Haultfoeuille (2020) showed that two-way fixed effects can produce negative weights on some treatment effects when treatment is staggered across time — giving biased estimates even when parallel trends holds. Fix: use Callaway &amp; Sant’Anna, Sun &amp; Abraham, or other heterogeneity-robust estimators.</p>
+<p><strong>Extreme weights.</strong> In IPW: when propensity scores are near 0 or 1, some observations get enormous weights, making the estimate noisy and potentially biased in finite samples. Fix: trim extreme scores, use entropy balancing, or use doubly robust estimators.</p>
+<p><strong>Attenuation bias (measurement error).</strong> When <span class="math inline">\(X\)</span> is measured with noise, OLS is biased toward zero. Technically this is an identification issue (you’re estimating the effect of noisy-<span class="math inline">\(X\)</span>, not true-<span class="math inline">\(X\)</span>), but it can be fixed with better measurement or with IV. See the <a href="../stats-course/measurement-error.html">measurement error page</a>.</p>
+</section>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">Summary</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Bias</th>
+<th>Type</th>
+<th>Goes away with more data?</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Omitted variable / confounding</td>
+<td>Identification</td>
+<td>No</td>
+<td>Better controls, different strategy (IV, DID, RDD)</td>
+</tr>
+<tr class="even">
+<td>Selection bias</td>
+<td>Identification</td>
+<td>No</td>
+<td>Randomization, or argue CIA</td>
+</tr>
+<tr class="odd">
+<td>Simultaneity</td>
+<td>Identification</td>
+<td>No</td>
+<td>IV, timing restrictions</td>
+</tr>
+<tr class="even">
+<td>Collider / sample selection</td>
+<td>Identification</td>
+<td>No</td>
+<td>Don’t condition on colliders</td>
+</tr>
+<tr class="odd">
+<td>Differential trends</td>
+<td>Identification</td>
+<td>No</td>
+<td>Different comparison group, different strategy</td>
+</tr>
+<tr class="even">
+<td>Functional form</td>
+<td>Estimation</td>
+<td>Partially</td>
+<td>Flexible specifications, local methods</td>
+</tr>
+<tr class="odd">
+<td>Weak instruments</td>
+<td>Estimation</td>
+<td>Partially</td>
+<td>Stronger instruments, LIML</td>
+</tr>
+<tr class="even">
+<td>TWFE negative weighting</td>
+<td>Estimation</td>
+<td>No</td>
+<td>Heterogeneity-robust DID estimators</td>
+</tr>
+<tr class="odd">
+<td>Extreme IPW weights</td>
+<td>Estimation</td>
+<td>Yes (slowly)</td>
+<td>Trimming, EB, doubly robust</td>
+</tr>
+<tr class="even">
+<td>Attenuation (measurement error)</td>
+<td>Both</td>
+<td>No</td>
+<td>Better data, IV</td>
+</tr>
+</tbody>
+</table>
 <hr>
 </section>
 </section>
