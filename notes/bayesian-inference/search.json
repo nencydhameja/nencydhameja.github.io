@@ -84,7 +84,7 @@
     "href": "index.html",
     "title": "Bayesian Thinking",
     "section": "",
-    "text": "Notes on Bayesian inference — updating beliefs with data. Start with a prior, observe data, get a posterior. Just the core logic, with simulations.\nBuilds on: Statistical Inference",
+    "text": "Bayesian inference — updating beliefs with data. Start with a prior, observe data, get a posterior. Just the core logic, with simulations.\nBuilds on: Statistical Inference",
     "crumbs": [
       "Welcome"
     ]

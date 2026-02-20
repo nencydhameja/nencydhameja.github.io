@@ -770,7 +770,7 @@
     "href": "index.html",
     "title": "Statistical Inference",
     "section": "",
-    "text": "These are my notes on statistics, econometrics, and causal inference — built around interactive simulations. The idea is to see how things like sampling distributions, p-values, and OLS actually work, not just read about them.",
+    "text": "Interactive simulations for statistics, econometrics, and causal inference. The idea is to see how things like sampling distributions, p-values, and OLS actually work, not just read about them.",
     "crumbs": [
       "Home"
     ]

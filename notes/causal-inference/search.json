@@ -34,7 +34,7 @@
     "href": "index.html",
     "title": "Causal Inference",
     "section": "",
-    "text": "Notes on causal inference methods — each topic pairs explanation with an interactive simulation you can run in the browser.\nBuilds on: Statistical Inference",
+    "text": "Causal inference methods — each topic pairs explanation with an interactive simulation you can run in the browser.\nBuilds on: Statistical Inference",
     "crumbs": [
       "Welcome"
     ]
