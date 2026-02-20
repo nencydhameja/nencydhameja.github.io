@@ -747,8 +747,12 @@ shinyApp(ui, server)</code></pre>
 <ol type="1">
 <li><p><strong>Measure better.</strong> The best fix is reducing <span class="math inline">\(\sigma_\eta\)</span>. Use validated instruments, multiple measurements, averages of repeated measures.</p></li>
 <li><p><strong>Instrumental variables (IV).</strong> Find a variable <span class="math inline">\(Z\)</span> that predicts <span class="math inline">\(X^*\)</span> but isn’t contaminated by the measurement error. Two-stage least squares recovers the true <span class="math inline">\(\beta\)</span>.</p></li>
-<li><p><strong>Reliability ratio correction.</strong> If you know (or can estimate) the reliability <span class="math inline">\(\lambda = \text{Var}(X^*) / \text{Var}(X)\)</span>, divide your estimate by <span class="math inline">\(\lambda\)</span>: <span class="math inline">\(\hat{\beta}_{corrected} = \hat{\beta}_{OLS} / \lambda\)</span>.</p></li>
-<li><p><strong>Multiple indicators.</strong> If you have two noisy measures of <span class="math inline">\(X^*\)</span> with independent errors, their covariance identifies <span class="math inline">\(\text{Var}(X^*)\)</span>, letting you compute <span class="math inline">\(\lambda\)</span> directly.</p></li>
+<li><p><strong>Reliability ratio correction.</strong> OLS with measurement error shrinks the coefficient by the <strong>signal-to-noise ratio</strong> (also called the reliability ratio):</p></li>
+</ol>
+<p><span class="math display">\[\hat{\beta}_{OLS} \xrightarrow{p} \beta \cdot \underbrace{\frac{\text{Var}(X^*)}{\text{Var}(X^*) + \text{Var}(\eta)}}_{\text{SNR}}\]</span></p>
+<p>The SNR is always between 0 and 1. High noise (<span class="math inline">\(\text{Var}(\eta) \gg \text{Var}(X^*)\)</span>) → SNR near 0 → coefficient crushed toward zero. Low noise → SNR near 1 → barely any attenuation. If you know the SNR, you can correct: <span class="math inline">\(\hat{\beta}_{corrected} = \hat{\beta}_{OLS} / \text{SNR}\)</span>.</p>
+<ol start="4" type="1">
+<li><strong>Multiple indicators.</strong> If you have two noisy measures of <span class="math inline">\(X^*\)</span> with independent errors, their covariance identifies <span class="math inline">\(\text{Var}(X^*)\)</span>, letting you compute <span class="math inline">\(\lambda\)</span> directly.</li>
 </ol>
 <hr>
 </section>
