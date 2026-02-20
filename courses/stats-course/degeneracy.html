@@ -339,7 +339,10 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#things-to-try-2" id="toc-things-to-try-2" class="nav-link" data-scroll-target="#things-to-try-2">Things to try</a></li>
   </ul></li>
-  <li><a href="#the-unifying-principle" id="toc-the-unifying-principle" class="nav-link" data-scroll-target="#the-unifying-principle">The unifying principle</a></li>
+  <li><a href="#the-unifying-principle" id="toc-the-unifying-principle" class="nav-link" data-scroll-target="#the-unifying-principle">The unifying principle</a>
+  <ul class="collapse">
+  <li><a href="#precision-problems-vs-identification-problems" id="toc-precision-problems-vs-identification-problems" class="nav-link" data-scroll-target="#precision-problems-vs-identification-problems">Precision problems vs identification problems</a></li>
+  </ul></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -921,9 +924,56 @@ shinyApp(ui, server)</code></pre>
 <li>No variation <strong>between X1 and X2</strong> (regressors move together) → can’t separate their effects</li>
 <li>No variation in <strong>treatment assignment</strong> (everyone treated or everyone control) → can’t estimate causal effects</li>
 </ul>
-<p><strong>An important asymmetry:</strong> noise in Y lives in the <em>numerator</em> (<span class="math inline">\(SE(\hat{\beta}) = \sigma / [\sqrt{n} \cdot SD(X)]\)</span>). More variance in Y makes your estimate noisier — wider CIs, less precision — but OLS is still unbiased. You still get the right answer on average; you just need more data. Specifically, <span class="math inline">\(SE \propto \sigma / \sqrt{n}\)</span>, so if the noise in Y doubles, you can compensate by quadrupling your sample size. It’s expensive, but it works — the estimate converges to the truth eventually. Why? More data doesn’t reduce the noise in any individual observation — <span class="math inline">\(\sigma^2\)</span> is a property of the population, not your sample size. But when you average over more observations, the random noise cancels out: some observations are too high, some too low, and the average lands closer to the truth. Formally, <span class="math inline">\(\text{Var}(\bar{X}) = \sigma^2 / n\)</span> — the variance of the <em>average</em> shrinks even though each observation is equally noisy. That’s the Law of Large Numbers at work, and it’s what makes this a precision problem rather than a fundamental one. But when variation in the <em>denominator</em> disappears (Var(X) → 0, perfect collinearity, n → 1), the formula divides by zero and inference doesn’t just get worse — it breaks entirely. That’s the distinction: <strong>numerator problems hurt precision; denominator problems kill identification.</strong></p>
+<section id="precision-problems-vs-identification-problems" class="level3">
+<h3 class="anchored" data-anchor-id="precision-problems-vs-identification-problems">Precision problems vs identification problems</h3>
+<p>Not all “bad variation” is the same. The SE formula has a numerator and a denominator, and they fail in completely different ways:</p>
+<p><span class="math display">\[SE(\hat{\beta}) = \frac{\overbrace{\sigma}^{\text{numerator: noise in Y}}}{\underbrace{\sqrt{n} \cdot SD(X)}_{\text{denominator: signal in X}}}\]</span></p>
+<p><strong>Precision problem (numerator too big).</strong> High variance in Y means <span class="math inline">\(\sigma\)</span> is large, so your SE is large and your CIs are wide. But OLS is still unbiased — you still get the right answer on average. You can fix this by collecting more data: <span class="math inline">\(SE \propto \sigma / \sqrt{n}\)</span>, so if the noise in Y doubles, quadrupling your sample size gets you back to the same SE. Why does more data help? It doesn’t reduce the noise in any single observation — <span class="math inline">\(\sigma^2\)</span> is a property of the population, not your sample size. But when you average over more observations, the random noise cancels out: some observations are too high, some too low, and the average lands closer to the truth. Formally, <span class="math inline">\(\text{Var}(\bar{X}) = \sigma^2 / n\)</span>. The variance of the <em>average</em> shrinks even though each observation is equally noisy. That’s the Law of Large Numbers. <strong>More data always helps a precision problem.</strong></p>
+<p><strong>Identification problem (denominator goes to zero).</strong> When <span class="math inline">\(SD(X) \to 0\)</span>, or <span class="math inline">\(n \to 1\)</span>, or regressors become perfectly collinear, the denominator vanishes and the SE goes to infinity. This isn’t imprecision — the parameter literally isn’t estimable. No amount of data fixes it. If every person in your study has the same income, you cannot estimate the effect of income, period — not with 100 observations, not with a million. The formula divides by zero and OLS either crashes or gives you a meaningless number. <strong>More data never helps an identification problem.</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Precision problem</th>
+<th>Identification problem</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>What’s wrong</strong></td>
+<td>Numerator too big (<span class="math inline">\(\sigma\)</span> large)</td>
+<td>Denominator goes to zero</td>
+</tr>
+<tr class="even">
+<td><strong>Bias?</strong></td>
+<td>No — estimates are centered on truth</td>
+<td>Undefined — no estimate exists</td>
+</tr>
+<tr class="odd">
+<td><strong>CIs?</strong></td>
+<td>Wide but valid</td>
+<td>Infinite or meaningless</td>
+</tr>
+<tr class="even">
+<td><strong>Fix with more data?</strong></td>
+<td>Yes (<span class="math inline">\(SE \propto 1/\sqrt{n}\)</span>)</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td><strong>Example</strong></td>
+<td>Noisy outcome</td>
+<td>Constant regressor, perfect collinearity, n = 1</td>
+</tr>
+</tbody>
+</table>
 <p>Understanding <em>where</em> the variation comes from — and when it might disappear — is the difference between statistics that works and statistics that lies.</p>
 <hr>
+</section>
 </section>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
