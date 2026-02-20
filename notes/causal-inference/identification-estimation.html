@@ -247,6 +247,13 @@ window.Quarto = {
   <li><a href="#identification-the-assumption" id="toc-identification-the-assumption" class="nav-link" data-scroll-target="#identification-the-assumption">Identification: the assumption</a></li>
   <li><a href="#estimation-the-computation" id="toc-estimation-the-computation" class="nav-link" data-scroll-target="#estimation-the-computation">Estimation: the computation</a></li>
   <li><a href="#research-designs-bundle-both" id="toc-research-designs-bundle-both" class="nav-link" data-scroll-target="#research-designs-bundle-both">Research designs bundle both</a></li>
+  <li><a href="#the-math-where-bias-comes-from" id="toc-the-math-where-bias-comes-from" class="nav-link" data-scroll-target="#the-math-where-bias-comes-from">The math: where bias comes from</a>
+  <ul class="collapse">
+  <li><a href="#selection-on-observables" id="toc-selection-on-observables" class="nav-link" data-scroll-target="#selection-on-observables">Selection on observables</a></li>
+  <li><a href="#difference-in-differences" id="toc-difference-in-differences" class="nav-link" data-scroll-target="#difference-in-differences">Difference-in-differences</a></li>
+  <li><a href="#instrumental-variables" id="toc-instrumental-variables" class="nav-link" data-scroll-target="#instrumental-variables">Instrumental variables</a></li>
+  <li><a href="#the-pattern" id="toc-the-pattern" class="nav-link" data-scroll-target="#the-pattern">The pattern</a></li>
+  </ul></li>
   <li><a href="#simulation-identification-matters-estimation-is-secondary" id="toc-simulation-identification-matters-estimation-is-secondary" class="nav-link" data-scroll-target="#simulation-identification-matters-estimation-is-secondary">Simulation: identification matters, estimation is secondary</a>
   <ul class="collapse">
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
@@ -428,6 +435,44 @@ window.Quarto = {
 </table>
 <p>This is why the same estimation tool shows up in multiple designs. IPW appears in the SOO column <em>and</em> the DID column — because it’s a tool, not a strategy.</p>
 <hr>
+</section>
+<section id="the-math-where-bias-comes-from" class="level2">
+<h2 class="anchored" data-anchor-id="the-math-where-bias-comes-from">The math: where bias comes from</h2>
+<p>When an identification assumption fails, it introduces a <strong>bias term</strong> that no estimator can remove. Here’s the decomposition for three methods.</p>
+<section id="selection-on-observables" class="level3">
+<h3 class="anchored" data-anchor-id="selection-on-observables">Selection on observables</h3>
+<p>We want the Average Treatment Effect on the Treated (ATT):</p>
+<p><span class="math display">\[\tau = E[Y(1) - Y(0) \mid D = 1]\]</span></p>
+<p>We observe <span class="math inline">\(E[Y \mid D=1] = E[Y(1) \mid D=1]\)</span> and <span class="math inline">\(E[Y \mid D=0] = E[Y(0) \mid D=0]\)</span>. The naive comparison is:</p>
+<p><span class="math display">\[E[Y \mid D=1] - E[Y \mid D=0] = \underbrace{E[Y(1) - Y(0) \mid D=1]}_{\text{ATT}} + \underbrace{E[Y(0) \mid D=1] - E[Y(0) \mid D=0]}_{\text{selection bias}}\]</span></p>
+<p>The second term is <strong>selection bias</strong> — the treated group would have had different outcomes <em>even without treatment</em>. The CIA says: conditional on <span class="math inline">\(X\)</span>, <span class="math inline">\(E[Y(0) \mid D=1, X] = E[Y(0) \mid D=0, X]\)</span>, so the selection bias is zero within each stratum of <span class="math inline">\(X\)</span>.</p>
+<p><strong>If the CIA fails</strong> — there’s an unobserved confounder <span class="math inline">\(U\)</span> — then <span class="math inline">\(E[Y(0) \mid D=1, X] \neq E[Y(0) \mid D=0, X]\)</span> because <span class="math inline">\(D\)</span> is still correlated with <span class="math inline">\(Y(0)\)</span> through <span class="math inline">\(U\)</span> even after conditioning on <span class="math inline">\(X\)</span>. The bias term is nonzero. Regression, IPW, matching — all give biased answers because the selection bias is <strong>baked into the estimand</strong>, not the estimator.</p>
+</section>
+<section id="difference-in-differences" class="level3">
+<h3 class="anchored" data-anchor-id="difference-in-differences">Difference-in-differences</h3>
+<p>The DID estimand is:</p>
+<p><span class="math display">\[\hat{\tau}_{DID} = \big(E[Y_{1t}] - E[Y_{1,t-1}]\big) - \big(E[Y_{0t}] - E[Y_{0,t-1}]\big)\]</span></p>
+<p>where group 1 is treated, group 0 is control, <span class="math inline">\(t\)</span> is post, <span class="math inline">\(t-1\)</span> is pre. Substitute potential outcomes and add and subtract <span class="math inline">\(E[Y_{1t}(0)]\)</span>:</p>
+<p><span class="math display">\[\hat{\tau}_{DID} = \underbrace{E[Y_{1t}(1) - Y_{1t}(0)]}_{\text{ATT}} + \underbrace{\big(E[Y_{1t}(0)] - E[Y_{1,t-1}(0)]\big) - \big(E[Y_{0t}(0)] - E[Y_{0,t-1}(0)]\big)}_{\text{differential trend bias}}\]</span></p>
+<p>The parallel trends assumption says the second term equals zero — the treated group’s <em>untreated</em> trajectory matches the control group’s trajectory. Then <span class="math inline">\(\hat{\tau}_{DID} = \text{ATT}\)</span>.</p>
+<p><strong>If parallel trends fail</strong> — say the treated group was already trending upward faster — the differential trend term is positive. DID overestimates the effect. This bias doesn’t shrink with more data. It doesn’t go away if you switch from a 2×2 difference to TWFE or IPW-DID. It’s an identification failure, not an estimation failure.</p>
+</section>
+<section id="instrumental-variables" class="level3">
+<h3 class="anchored" data-anchor-id="instrumental-variables">Instrumental variables</h3>
+<p>We have <span class="math inline">\(Y = \beta X + \varepsilon\)</span> where <span class="math inline">\(\text{Cov}(X, \varepsilon) \neq 0\)</span> (endogeneity). The IV estimand is:</p>
+<p><span class="math display">\[\hat{\beta}_{IV} = \frac{\text{Cov}(Z, Y)}{\text{Cov}(Z, X)}\]</span></p>
+<p>Substitute <span class="math inline">\(Y = \beta X + \varepsilon\)</span>:</p>
+<p><span class="math display">\[\hat{\beta}_{IV} = \frac{\text{Cov}(Z, \beta X + \varepsilon)}{\text{Cov}(Z, X)} = \beta + \frac{\text{Cov}(Z, \varepsilon)}{\text{Cov}(Z, X)}\]</span></p>
+<p>The exclusion restriction says <span class="math inline">\(\text{Cov}(Z, \varepsilon) = 0\)</span> — the instrument is uncorrelated with the error. Then <span class="math inline">\(\hat{\beta}_{IV} = \beta\)</span>.</p>
+<p><strong>If the exclusion restriction fails</strong> — <span class="math inline">\(Z\)</span> directly affects <span class="math inline">\(Y\)</span> through some channel other than <span class="math inline">\(X\)</span> — then <span class="math inline">\(\text{Cov}(Z, \varepsilon) \neq 0\)</span> and the bias term <span class="math inline">\(\frac{\text{Cov}(Z, \varepsilon)}{\text{Cov}(Z, X)}\)</span> is nonzero. No amount of data, no alternative estimator (LIML, GMM, jackknife) removes this. It’s baked in.</p>
+</section>
+<section id="the-pattern" class="level3">
+<h3 class="anchored" data-anchor-id="the-pattern">The pattern</h3>
+<p>In all three cases:</p>
+<p><span class="math display">\[\text{Estimate} = \text{Causal effect} + \text{Bias from violated assumption}\]</span></p>
+<p>The bias term is <strong>not a function of the estimator or sample size</strong>. It’s a function of how the world works. That’s why it’s an identification problem.</p>
+<hr>
+</section>
 </section>
 <section id="simulation-identification-matters-estimation-is-secondary" class="level2">
 <h2 class="anchored" data-anchor-id="simulation-identification-matters-estimation-is-secondary">Simulation: identification matters, estimation is secondary</h2>
