@@ -209,7 +209,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Regression &amp; Diagnostics</span></a>
+ <span class="menu-text">Regression</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -229,8 +229,25 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./fwl.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Frisch-Waugh-Lovell</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Standard Errors &amp; Diagnostics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./heteroskedasticity.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Homo- &amp; Heteroskedasticity</span></a>
+ <span class="menu-text">Heteroskedasticity</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -241,14 +258,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fwl.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Frisch-Waugh-Lovell</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./measurement-error.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Measurement Error &amp; Attenuation Bias</span></a>
+ <span class="menu-text">Measurement Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,13 +278,13 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
  <span class="menu-text">Bayesian Thinking</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./bayesian-updating.html" class="sidebar-item-text sidebar-link">
@@ -297,7 +308,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#probability-uncertainty" id="toc-probability-uncertainty" class="nav-link" data-scroll-target="#probability-uncertainty">Probability &amp; Uncertainty</a></li>
   <li><a href="#the-central-limit-theorem" id="toc-the-central-limit-theorem" class="nav-link" data-scroll-target="#the-central-limit-theorem">The Central Limit Theorem</a></li>
   <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference">Inference</a></li>
-  <li><a href="#regression-diagnostics" id="toc-regression-diagnostics" class="nav-link" data-scroll-target="#regression-diagnostics">Regression &amp; Diagnostics</a></li>
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression">Regression</a></li>
+  <li><a href="#standard-errors-diagnostics" id="toc-standard-errors-diagnostics" class="nav-link" data-scroll-target="#standard-errors-diagnostics">Standard Errors &amp; Diagnostics</a></li>
   <li><a href="#bayesian-thinking" id="toc-bayesian-thinking" class="nav-link" data-scroll-target="#bayesian-thinking">Bayesian Thinking</a></li>
   </ul></li>
   </ul>
@@ -361,15 +373,20 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="multiple-testing.html">Multiple Testing</a> — False Discoveries &amp; the Replication Crisis</li>
 </ul>
 </section>
-<section id="regression-diagnostics" class="level3">
-<h3 class="anchored" data-anchor-id="regression-diagnostics">Regression &amp; Diagnostics</h3>
+<section id="regression" class="level3">
+<h3 class="anchored" data-anchor-id="regression">Regression</h3>
 <ul>
 <li><a href="cef.html">Regression &amp; the CEF</a> — OLS and the Conditional Expectation Function</li>
 <li><a href="residuals.html">Residuals &amp; Controls</a> — Diagnostics, Partialling Out &amp; Omitted Variable Bias</li>
-<li><a href="heteroskedasticity.html">Homo- &amp; Heteroskedasticity</a> — Constant vs Non-Constant Variance &amp; Robust SEs</li>
-<li><a href="clustered-se.html">Clustered SEs</a> — When Observations Aren’t Independent</li>
 <li><a href="fwl.html">Frisch-Waugh-Lovell</a> — Partialling Out &amp; OVB</li>
-<li><a href="measurement-error.html">Measurement Error &amp; Attenuation Bias</a> — Why Noisy Regressors Bias You Toward Zero</li>
+</ul>
+</section>
+<section id="standard-errors-diagnostics" class="level3">
+<h3 class="anchored" data-anchor-id="standard-errors-diagnostics">Standard Errors &amp; Diagnostics</h3>
+<ul>
+<li><a href="heteroskedasticity.html">Heteroskedasticity</a> — Constant vs Non-Constant Variance &amp; Robust SEs</li>
+<li><a href="clustered-se.html">Clustered SEs</a> — When Observations Aren’t Independent</li>
+<li><a href="measurement-error.html">Measurement Error</a> — Why Noisy Regressors Bias You Toward Zero</li>
 <li><a href="bias-variance.html">Bias-Variance Tradeoff</a> — Underfitting, Overfitting &amp; MSE Decomposition</li>
 <li><a href="degeneracy.html">When Inference Breaks Down</a> — Why Variation Is the Fuel of Inference</li>
 </ul>
