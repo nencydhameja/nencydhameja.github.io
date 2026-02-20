@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Regression Discontinuity – Applied Causal Inference</title>
+<title>Synthetic Control – Applied Causal Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +115,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rdd.html">Regression Discontinuity</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./synth.html">Synthetic Control</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -178,13 +178,13 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rdd.html" class="sidebar-item-text sidebar-link active">
+  <a href="./rdd.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Regression Discontinuity</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./synth.html" class="sidebar-item-text sidebar-link">
+  <a href="./synth.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Synthetic Control</span></a>
   </div>
 </li>
@@ -200,11 +200,12 @@ window.Quarto = {
   <ul>
   <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
   <ul class="collapse">
-  <li><a href="#sharp-vs-fuzzy" id="toc-sharp-vs-fuzzy" class="nav-link" data-scroll-target="#sharp-vs-fuzzy">Sharp vs Fuzzy</a></li>
-  <li><a href="#when-does-rdd-fail" id="toc-when-does-rdd-fail" class="nav-link" data-scroll-target="#when-does-rdd-fail">When does RDD fail?</a></li>
+  <li><a href="#the-classic-example" id="toc-the-classic-example" class="nav-link" data-scroll-target="#the-classic-example">The classic example</a></li>
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
+  <li><a href="#when-does-synthetic-control-fail" id="toc-when-does-synthetic-control-fail" class="nav-link" data-scroll-target="#when-does-synthetic-control-fail">When does synthetic control fail?</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
-  <li><a href="#the-bandwidth-tradeoff" id="toc-the-bandwidth-tradeoff" class="nav-link" data-scroll-target="#the-bandwidth-tradeoff">The bandwidth tradeoff</a></li>
+  <li><a href="#inference-placebo-tests" id="toc-inference-placebo-tests" class="nav-link" data-scroll-target="#inference-placebo-tests">Inference: placebo tests</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -214,7 +215,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Regression Discontinuity</h1>
+<h1 class="title">Synthetic Control</h1>
 </div>
 
 
@@ -233,25 +234,32 @@ window.Quarto = {
 
 <section id="the-idea" class="level2">
 <h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>Some treatments are assigned by a <strong>cutoff rule</strong>: you get a scholarship if your test score is above 80, you qualify for a program if your income is below $30k, you win an election if your vote share exceeds 50%.</p>
-<p>Right around the cutoff, people just above and just below are nearly identical — they differ by a fraction of a point. The cutoff creates <strong>near-random assignment</strong> in a narrow window. That’s the identifying variation.</p>
-<p><span class="math display">\[\tau_{RDD} = \lim_{x \downarrow c} E[Y \mid X = x] - \lim_{x \uparrow c} E[Y \mid X = x]\]</span></p>
-<p>The treatment effect is the <strong>jump in the outcome at the cutoff</strong>. If the outcome is smooth everywhere except at the cutoff, that discontinuity is the causal effect.</p>
-<section id="sharp-vs-fuzzy" class="level3">
-<h3 class="anchored" data-anchor-id="sharp-vs-fuzzy">Sharp vs Fuzzy</h3>
-<ul>
-<li><strong>Sharp RDD:</strong> treatment is a deterministic function of the running variable. Score <span class="math inline">\(\geq\)</span> 80 → treated, period. Everyone complies.</li>
-<li><strong>Fuzzy RDD:</strong> the cutoff changes the <em>probability</em> of treatment, but not perfectly. Some people above the cutoff don’t take treatment, some below do. This is essentially an IV problem — the cutoff is the instrument.</li>
-</ul>
+<p>You have <strong>one treated unit</strong> — a state that passed a law, a country hit by a crisis, a company that changed policy. You want to know what would have happened without the treatment. But there’s no single control unit that’s a good comparison.</p>
+<p>The synthetic control method builds a <strong>weighted combination</strong> of untreated units that matches the treated unit’s pre-treatment trajectory. That weighted combination — the “synthetic” version — serves as the counterfactual.</p>
+<p><span class="math display">\[\hat{Y}_{1t}^{N} = \sum_{j=2}^{J+1} w_j \, Y_{jt}\]</span></p>
+<p>where <span class="math inline">\(w_j \geq 0\)</span> and <span class="math inline">\(\sum w_j = 1\)</span>. The weights are chosen so that the synthetic unit tracks the treated unit closely before treatment. After treatment, the gap between the treated unit and its synthetic version is the estimated effect.</p>
+<section id="the-classic-example" class="level3">
+<h3 class="anchored" data-anchor-id="the-classic-example">The classic example</h3>
+<p><strong>Abadie, Diamond &amp; Hainmueller (2010):</strong> California passed Proposition 99 in 1988, a major tobacco control program. No single state is a good comparison — some are too urban, some too rural, some already had anti-smoking laws. The synthetic California is a weighted mix of states (Utah, Nevada, Colorado, Connecticut, Montana…) that together match California’s pre-1988 smoking trend almost exactly. After 1988, actual California diverges sharply below its synthetic version — that gap is the treatment effect.</p>
 </section>
-<section id="when-does-rdd-fail" class="level3">
-<h3 class="anchored" data-anchor-id="when-does-rdd-fail">When does RDD fail?</h3>
+<section id="assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
+<ol type="1">
+<li><strong>No interference / SUTVA:</strong> the treatment of the treated unit doesn’t affect the donor units (no spillovers)</li>
+<li><strong>Convex hull:</strong> the treated unit’s pre-treatment outcomes can be expressed as a weighted average of the donors — the treated unit isn’t an outlier that no combination of donors can match</li>
+<li><strong>No anticipation:</strong> the treated unit doesn’t change behavior before the treatment date</li>
+<li><strong>Common factors:</strong> treated and donor units are driven by the same underlying factors, just with different loadings — the weights that work pre-treatment continue to work post-treatment</li>
+</ol>
+</section>
+<section id="when-does-synthetic-control-fail" class="level3">
+<h3 class="anchored" data-anchor-id="when-does-synthetic-control-fail">When does synthetic control fail?</h3>
 <ul>
-<li><strong>Manipulation:</strong> if people can precisely control their score to land just above or below the cutoff, the “as good as random” logic breaks. Check for bunching at the cutoff (McCrary test).</li>
-<li><strong>Wrong functional form:</strong> if you fit a straight line but the true relationship is curved, you might mistake curvature for a jump. Use local polynomials and check sensitivity to bandwidth.</li>
+<li><strong>Bad pre-treatment fit:</strong> if the synthetic unit can’t track the treated unit before treatment, you can’t trust the post-treatment gap. There’s no magic — if no combination of donors resembles the treated unit, the method doesn’t work.</li>
+<li><strong>Spillovers:</strong> if the treatment affects the donor units too (e.g., smokers move from California to Nevada), the synthetic control is contaminated.</li>
+<li><strong>Too few donors:</strong> with very few comparison units, the weights are forced and the match may be poor.</li>
 </ul>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 650
+#| viewerHeight: 680
 
 library(shiny)
 
@@ -264,37 +272,34 @@ ui &lt;- fluidPage(
     .stats-box b { color: #2c3e50; }
     .good { color: #27ae60; font-weight: bold; }
     .bad  { color: #e74c3c; font-weight: bold; }
+    .wt-table { font-size: 12px; margin-top: 6px; }
+    .wt-table td { padding: 1px 6px; }
   "))),
 
   sidebarLayout(
     sidebarPanel(
       width = 3,
 
-      sliderInput("n", "Sample size:",
-                  min = 200, max = 2000, value = 500, step = 100),
+      sliderInput("tau_sc", "True treatment effect:",
+                  min = -5, max = 5, value = -3, step = 0.5),
 
-      sliderInput("tau", "True treatment effect:",
-                  min = 0, max = 5, value = 2, step = 0.25),
+      sliderInput("n_donors", "Number of donor units:",
+                  min = 3, max = 15, value = 8, step = 1),
 
-      sliderInput("sigma", "Noise (SD):",
-                  min = 0.5, max = 4, value = 1.5, step = 0.25),
+      sliderInput("sigma_sc", "Noise (SD):",
+                  min = 0.1, max = 2, value = 0.5, step = 0.1),
 
-      sliderInput("bw", "Bandwidth around cutoff:",
-                  min = 0.05, max = 0.5, value = 0.2, step = 0.05),
+      sliderInput("treat_time", "Treatment period:",
+                  min = 8, max = 18, value = 12, step = 1),
 
-      selectInput("curve", "True relationship:",
-                  choices = c("Linear" = "linear",
-                              "Quadratic" = "quad",
-                              "Flat" = "flat")),
+      actionButton("go_sc", "New draw", class = "btn-primary", width = "100%"),
 
-      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
-
-      uiOutput("results")
+      uiOutput("results_sc")
     ),
 
     mainPanel(
       width = 9,
-      plotOutput("rdd_plot", height = "480px")
+      plotOutput("synth_plot", height = "500px")
     )
   )
 )
@@ -302,132 +307,140 @@ ui &lt;- fluidPage(
 server &lt;- function(input, output, session) {
 
   dat &lt;- reactive({
-    input$go
-    n     &lt;- input$n
-    tau   &lt;- input$tau
-    sigma &lt;- input$sigma
-    bw    &lt;- input$bw
-    curve &lt;- input$curve
+    input$go_sc
+    tau   &lt;- input$tau_sc
+    J     &lt;- input$n_donors
+    sigma &lt;- input$sigma_sc
+    T0    &lt;- input$treat_time
+    TT    &lt;- 25
 
-    # Running variable: uniform on [0, 1], cutoff at 0.5
-    x &lt;- runif(n)
-    cutoff &lt;- 0.5
-    treat &lt;- as.numeric(x &gt;= cutoff)
-
-    # Potential outcome (smooth function of x)
-    if (curve == "linear") {
-      mu &lt;- 2 + 1.5 * x
-    } else if (curve == "quad") {
-      mu &lt;- 2 + 3 * (x - 0.5)^2
-    } else {
-      mu &lt;- rep(3, n)
+    # Generate donor unit trajectories
+    # Each donor has its own intercept and slope
+    set.seed(NULL)
+    intercepts &lt;- rnorm(J, mean = 10, sd = 2)
+    slopes     &lt;- rnorm(J, mean = 0.3, sd = 0.15)
+    donors &lt;- matrix(NA, nrow = TT, ncol = J)
+    for (j in 1:J) {
+      donors[, j] &lt;- intercepts[j] + slopes[j] * (1:TT) + rnorm(TT, sd = sigma)
     }
 
-    y &lt;- mu + tau * treat + rnorm(n, sd = sigma)
+    # True weights (sparse: pick 3-4 donors that matter)
+    n_active &lt;- min(4, J)
+    active &lt;- sample(1:J, n_active)
+    true_w &lt;- rep(0, J)
+    raw &lt;- runif(n_active, 0.1, 1)
+    true_w[active] &lt;- raw / sum(raw)
 
-    # Local linear regression within bandwidth
-    in_bw &lt;- abs(x - cutoff) &lt;= bw
-    x_bw &lt;- x[in_bw]
-    y_bw &lt;- y[in_bw]
-    t_bw &lt;- treat[in_bw]
+    # Treated unit = weighted combo of donors + treatment effect after T0
+    treated &lt;- donors %*% true_w + rnorm(TT, sd = sigma * 0.5)
+    treated[(T0 + 1):TT] &lt;- treated[(T0 + 1):TT] + tau
 
-    # Separate regressions left and right
-    left  &lt;- x_bw &lt; cutoff
-    right &lt;- x_bw &gt;= cutoff
+    # Estimate synthetic control weights (OLS on pre-period, constrained to sum to 1)
+    # Simple approach: non-negative least squares via iterative projection
+    pre &lt;- 1:T0
+    Y1_pre &lt;- treated[pre]
+    Y0_pre &lt;- donors[pre, ]
 
-    if (sum(left) &gt; 2 &amp;&amp; sum(right) &gt; 2) {
-      fit_l &lt;- lm(y_bw[left] ~ x_bw[left])
-      fit_r &lt;- lm(y_bw[right] ~ x_bw[right])
-
-      # Predicted values at cutoff
-      pred_l &lt;- coef(fit_l)[1] + coef(fit_l)[2] * cutoff
-      pred_r &lt;- coef(fit_r)[1] + coef(fit_r)[2] * cutoff
-
-      rdd_est &lt;- pred_r - pred_l
-
-      # Fitted lines for plotting
-      xseq_l &lt;- seq(cutoff - bw, cutoff, length.out = 100)
-      xseq_r &lt;- seq(cutoff, cutoff + bw, length.out = 100)
-      yhat_l &lt;- coef(fit_l)[1] + coef(fit_l)[2] * xseq_l
-      yhat_r &lt;- coef(fit_r)[1] + coef(fit_r)[2] * xseq_r
+    # Use a simple regression + normalize approach
+    # Unconstrained OLS, then clip negatives and renormalize
+    if (J &lt;= T0) {
+      fit &lt;- lm(Y1_pre ~ Y0_pre - 1)
+      w_hat &lt;- coef(fit)
     } else {
-      rdd_est &lt;- NA
-      xseq_l &lt;- xseq_r &lt;- yhat_l &lt;- yhat_r &lt;- NULL
-      pred_l &lt;- pred_r &lt;- NA
+      # More donors than periods: use ridge-like approach
+      lambda &lt;- 0.01
+      w_hat &lt;- solve(t(Y0_pre) %*% Y0_pre + lambda * diag(J),
+                     t(Y0_pre) %*% Y1_pre)
     }
+    w_hat[w_hat &lt; 0] &lt;- 0
+    if (sum(w_hat) &gt; 0) w_hat &lt;- w_hat / sum(w_hat) else w_hat &lt;- rep(1/J, J)
 
-    list(x = x, y = y, treat = treat, cutoff = cutoff,
-         bw = bw, in_bw = in_bw, rdd_est = rdd_est,
-         tau = tau, sigma = sigma,
-         xseq_l = xseq_l, xseq_r = xseq_r,
-         yhat_l = yhat_l, yhat_r = yhat_r,
-         pred_l = pred_l, pred_r = pred_r)
+    # Synthetic control trajectory
+    synth &lt;- donors %*% w_hat
+
+    # Estimated effect (post-treatment gap)
+    post &lt;- (T0 + 1):TT
+    gaps &lt;- treated[post] - synth[post]
+    avg_effect &lt;- mean(gaps)
+
+    # Pre-treatment fit (RMSPE)
+    pre_rmspe &lt;- sqrt(mean((treated[pre] - synth[pre])^2))
+
+    list(time = 1:TT, treated = as.numeric(treated),
+         synth = as.numeric(synth), donors = donors,
+         w_hat = w_hat, T0 = T0, tau = tau,
+         avg_effect = avg_effect, pre_rmspe = pre_rmspe, J = J)
   })
 
-  output$rdd_plot &lt;- renderPlot({
+  output$synth_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    # Color by treatment
-    cols &lt;- ifelse(d$treat == 1, adjustcolor("#3498db", 0.25),
-                   adjustcolor("#e74c3c", 0.25))
+    ylim &lt;- range(c(d$treated, d$synth, d$donors)) + c(-1, 1)
 
-    # Dim points outside bandwidth
-    cols[!d$in_bw] &lt;- adjustcolor("gray70", 0.15)
+    # Donor units (gray background)
+    plot(d$time, d$donors[, 1], type = "n",
+         xlab = "Time", ylab = "Outcome",
+         main = "Synthetic Control Method",
+         ylim = ylim)
 
-    plot(d$x, d$y, pch = 16, cex = 0.5, col = cols,
-         xlab = "Running variable (X)", ylab = "Outcome (Y)",
-         main = "Regression Discontinuity Design")
-
-    # Cutoff line
-    abline(v = d$cutoff, lty = 2, col = "gray40", lwd = 1.5)
-
-    # Bandwidth shading
-    rect(d$cutoff - d$bw, par("usr")[3],
-         d$cutoff + d$bw, par("usr")[4],
-         col = adjustcolor("#f39c12", 0.08), border = NA)
-
-    # Local linear fits
-    if (!is.null(d$xseq_l)) {
-      lines(d$xseq_l, d$yhat_l, col = "#e74c3c", lwd = 3)
-      lines(d$xseq_r, d$yhat_r, col = "#3498db", lwd = 3)
-
-      # Jump arrow
-      arrows(d$cutoff + 0.01, d$pred_l, d$cutoff + 0.01, d$pred_r,
-             code = 3, lwd = 2.5, col = "#27ae60", length = 0.1)
-
-      text(d$cutoff + 0.03,
-           (d$pred_l + d$pred_r) / 2,
-           paste0("Jump = ", round(d$rdd_est, 2)),
-           col = "#27ae60", cex = 0.95, adj = 0, font = 2)
+    for (j in 1:d$J) {
+      lines(d$time, d$donors[, j], col = adjustcolor("gray70", 0.4), lwd = 0.8)
     }
 
-    text(d$cutoff, par("usr")[4] * 0.98, "Cutoff",
-         col = "gray40", cex = 0.8, pos = 4)
+    # Synthetic control
+    lines(d$time, d$synth, col = "#e74c3c", lwd = 3, lty = 2)
+
+    # Treated unit
+    lines(d$time, d$treated, col = "#3498db", lwd = 3)
+
+    # Treatment line
+    abline(v = d$T0 + 0.5, lty = 3, col = "gray40", lwd = 1.5)
+    text(d$T0 + 0.5, ylim[2], "Treatment", pos = 4, cex = 0.85, col = "gray40")
+
+    # Gap shading in post period
+    post &lt;- (d$T0 + 1):length(d$time)
+    polygon(c(d$time[post], rev(d$time[post])),
+            c(d$treated[post], rev(d$synth[post])),
+            col = adjustcolor("#27ae60", 0.15), border = NA)
+
+    # Gap label
+    mid_post &lt;- d$time[round(median(post))]
+    mid_gap &lt;- (d$treated[round(median(post))] + d$synth[round(median(post))]) / 2
+    text(mid_post, mid_gap,
+         paste0("Avg gap = ", round(d$avg_effect, 2)),
+         col = "#27ae60", font = 2, cex = 0.9)
 
     legend("topleft", bty = "n", cex = 0.85,
-           legend = c("Control (below cutoff)", "Treated (above cutoff)",
-                      "Estimation window"),
-           pch = c(16, 16, 15),
-           col = c("#e74c3c", "#3498db", adjustcolor("#f39c12", 0.3)))
+           legend = c("Treated unit", "Synthetic control", "Donor units"),
+           col = c("#3498db", "#e74c3c", "gray70"),
+           lwd = c(3, 3, 1), lty = c(1, 2, 1))
   })
 
-  output$results &lt;- renderUI({
+  output$results_sc &lt;- renderUI({
     d &lt;- dat()
-    if (is.na(d$rdd_est)) {
-      return(tags$div(class = "stats-box",
-        HTML("&lt;b&gt;Not enough observations in bandwidth.&lt;/b&gt; Widen it.")))
-    }
 
-    bias &lt;- d$rdd_est - d$tau
+    # Top weights
+    ord &lt;- order(d$w_hat, decreasing = TRUE)
+    top &lt;- ord[d$w_hat[ord] &gt; 0.01]
+    wt_rows &lt;- paste0(
+      sapply(top, function(j) {
+        paste0("&lt;tr&gt;&lt;td&gt;Donor ", j, "&lt;/td&gt;&lt;td&gt;&lt;b&gt;",
+               round(d$w_hat[j] * 100), "%&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;")
+      }),
+      collapse = ""
+    )
+
     tags$div(class = "stats-box",
       HTML(paste0(
         "&lt;b&gt;True effect:&lt;/b&gt; ", d$tau, "&lt;br&gt;",
-        "&lt;b&gt;RDD estimate:&lt;/b&gt; ", round(d$rdd_est, 3), "&lt;br&gt;",
-        "&lt;b&gt;Bias:&lt;/b&gt; &lt;span class='", ifelse(abs(bias) &lt; 0.3, "good", "bad"), "'&gt;",
-        round(bias, 3), "&lt;/span&gt;&lt;br&gt;",
+        "&lt;b&gt;Avg post-treatment gap:&lt;/b&gt; ",
+        "&lt;span class='", ifelse(abs(d$avg_effect - d$tau) &lt; 1, "good", "bad"), "'&gt;",
+        round(d$avg_effect, 2), "&lt;/span&gt;&lt;br&gt;",
+        "&lt;b&gt;Pre-treatment RMSPE:&lt;/b&gt; ", round(d$pre_rmspe, 3), "&lt;br&gt;",
         "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;small&gt;Bandwidth: &amp;plusmn;", d$bw, " around cutoff&lt;/small&gt;"
+        "&lt;b&gt;Weights:&lt;/b&gt;",
+        "&lt;table class='wt-table'&gt;", wt_rows, "&lt;/table&gt;"
       ))
     )
   })
@@ -438,58 +451,30 @@ shinyApp(ui, server)</code></pre>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Default settings:</strong> the jump at the cutoff is clear. The RDD estimate is close to the true effect.</li>
-<li><strong>Narrow the bandwidth (0.05):</strong> fewer observations, noisier estimate — but less bias from misspecification. Widen it (0.5): more data, more precise, but you’re using observations far from the cutoff.</li>
-<li><strong>Switch to quadratic:</strong> with a narrow bandwidth, the local linear fit still works fine. But widen the bandwidth with a quadratic DGP and the estimate gets biased — the line can’t capture the curve.</li>
-<li><strong>Set true effect = 0:</strong> there should be no visible jump. If you see one, it’s noise (or a bad bandwidth choice).</li>
-<li><strong>Crank up noise:</strong> the jump gets harder to see, and you need more data or a wider bandwidth to detect it. This is the bias-variance tradeoff of bandwidth selection.</li>
+<li><strong>Default settings (effect = -3):</strong> the synthetic control (red dashed) tracks the treated unit closely before treatment, then diverges. The green-shaded gap is the estimated effect.</li>
+<li><strong>Set true effect = 0:</strong> the two lines should stay close after treatment too. If you see a big gap, it’s noise — this is why pre-treatment fit matters.</li>
+<li><strong>Reduce donors to 3:</strong> fewer building blocks means a worse pre-treatment fit. The estimate gets noisier.</li>
+<li><strong>Increase donors to 15:</strong> more building blocks, better fit. But watch the weights — most donors get zero weight. The method is naturally sparse.</li>
+<li><strong>Move treatment period later (18):</strong> short post-period, harder to judge whether the gap is real or just noise.</li>
+<li><strong>Crank up noise:</strong> the pre-treatment fit deteriorates and the post-treatment gap becomes unreliable.</li>
 </ul>
 <hr>
 </section>
 </section>
-<section id="the-bandwidth-tradeoff" class="level2">
-<h2 class="anchored" data-anchor-id="the-bandwidth-tradeoff">The bandwidth tradeoff</h2>
-<p>Bandwidth is the central tuning parameter in RDD:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th>Narrow bandwidth</th>
-<th>Wide bandwidth</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Bias</strong></td>
-<td>Low — only using near-identical units</td>
-<td>High — far-away units may differ systematically</td>
-</tr>
-<tr class="even">
-<td><strong>Variance</strong></td>
-<td>High — few observations</td>
-<td>Low — more data</td>
-</tr>
-<tr class="odd">
-<td><strong>Risk</strong></td>
-<td>Noisy, imprecise estimate</td>
-<td>Precise but potentially wrong</td>
-</tr>
-</tbody>
-</table>
-<p>In practice, researchers use <strong>data-driven bandwidth selectors</strong> (Imbens &amp; Kalyanaraman 2012, Calonico, Cattaneo &amp; Titiunik 2014) that optimize this tradeoff. You should always check that your results are robust to different bandwidth choices.</p>
+<section id="inference-placebo-tests" class="level2">
+<h2 class="anchored" data-anchor-id="inference-placebo-tests">Inference: placebo tests</h2>
+<p>With one treated unit, you can’t do standard inference. Instead, you run <strong>placebo tests:</strong></p>
+<p><strong>In-space placebos.</strong> Apply the synthetic control method to each <em>donor</em> unit — pretend it was treated and build a synthetic version from the remaining donors. If the treated unit’s gap is much larger than the placebo gaps, the effect is likely real.</p>
+<p><strong>In-time placebos.</strong> Move the treatment date earlier (to a period when no treatment occurred). If you find a gap in the placebo period, your method is picking up something other than the treatment.</p>
+<p>These aren’t formal p-values, but they give you a sense of whether the effect is distinguishable from noise.</p>
 <hr>
 </section>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
 <ul>
-<li><p>The RDD idea goes back to <strong>Thistlethwaite &amp; Campbell (1960)</strong>, who studied the effect of merit scholarships on career outcomes using the score cutoff. It was largely ignored for decades until economists rediscovered it in the late 1990s.</p></li>
-<li><p><strong>Lee (2008)</strong> used RDD to study the incumbency advantage in US elections — candidates who barely win vs barely lose. This paper helped establish RDD as a workhorse method in political economy.</p></li>
-<li><p>Cattaneo, Idrobo &amp; Titiunik wrote an excellent practical guide: <em>A Practical Introduction to Regression Discontinuity Designs</em>. It’s freely available and covers everything from basic plots to formal inference.</p></li>
+<li><p>The synthetic control method was developed by <strong>Abadie &amp; Gardeazabal (2003)</strong> to study the economic impact of terrorism in the Basque Country, and formalized by <strong>Abadie, Diamond &amp; Hainmueller (2010)</strong> in the California tobacco study. It has since become one of the most widely used methods in policy evaluation.</p></li>
+<li><p>Athey &amp; Imbens (2017) called synthetic control “arguably the most important innovation in the policy evaluation literature in the last 15 years.”</p></li>
+<li><p>The method works best when you have <strong>long pre-treatment panels</strong> (many time periods before treatment) and a <strong>moderate number of donor units</strong>. It struggles with short panels or when no combination of donors can approximate the treated unit.</p></li>
 </ul>
 
 
