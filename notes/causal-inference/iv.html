@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Difference-in-Differences – Applied Causal Inference</title>
+<title>Instrumental Variables – Applied Causal Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +115,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./did.html">Difference-in-Differences</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./iv.html">Instrumental Variables</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -154,7 +154,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./did.html" class="sidebar-item-text sidebar-link active">
+  <a href="./did.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Difference-in-Differences</span></a>
   </div>
 </li>
@@ -172,7 +172,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iv.html" class="sidebar-item-text sidebar-link">
+  <a href="./iv.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Instrumental Variables</span></a>
   </div>
 </li>
@@ -188,9 +188,13 @@ window.Quarto = {
   <ul>
   <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
   <ul class="collapse">
-  <li><a href="#when-does-did-fail" id="toc-when-does-did-fail" class="nav-link" data-scroll-target="#when-does-did-fail">When does DID fail?</a></li>
+  <li><a href="#two-stage-least-squares-2sls" id="toc-two-stage-least-squares-2sls" class="nav-link" data-scroll-target="#two-stage-least-squares-2sls">Two-stage least squares (2SLS)</a></li>
+  <li><a href="#classic-example" id="toc-classic-example" class="nav-link" data-scroll-target="#classic-example">Classic example</a></li>
+  <li><a href="#when-does-iv-fail" id="toc-when-does-iv-fail" class="nav-link" data-scroll-target="#when-does-iv-fail">When does IV fail?</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
+  <li><a href="#what-does-iv-actually-estimate" id="toc-what-does-iv-actually-estimate" class="nav-link" data-scroll-target="#what-does-iv-actually-estimate">What does IV actually estimate?</a></li>
+  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
     </div>
@@ -199,7 +203,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Difference-in-Differences</h1>
+<h1 class="title">Instrumental Variables</h1>
 </div>
 
 
@@ -218,12 +222,34 @@ window.Quarto = {
 
 <section id="the-idea" class="level2">
 <h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>You have two groups: one gets treated at some point, the other never does. You observe both <strong>before and after</strong> treatment. The key assumption: absent treatment, both groups would have followed <strong>parallel trends</strong>.</p>
-<p><span class="math display">\[\hat{\tau}_{DID} = (\bar{Y}_{treat,post} - \bar{Y}_{treat,pre}) - (\bar{Y}_{ctrl,post} - \bar{Y}_{ctrl,pre})\]</span></p>
-<p>The first difference removes time-invariant group characteristics. The second difference removes common time trends. What’s left is the treatment effect.</p>
-<section id="when-does-did-fail" class="level3">
-<h3 class="anchored" data-anchor-id="when-does-did-fail">When does DID fail?</h3>
-<p>When the parallel trends assumption is violated — if the treated group was already on a different trajectory <em>before</em> treatment. The simulation below lets you break this assumption and see the bias that results.</p>
+<p>You want the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>, but <span class="math inline">\(X\)</span> is <strong>endogenous</strong> — correlated with the error term because of confounding, reverse causality, or measurement error. OLS is biased.</p>
+<p>The fix: find a variable <span class="math inline">\(Z\)</span> (the <strong>instrument</strong>) that:</p>
+<ol type="1">
+<li><strong>Relevance:</strong> <span class="math inline">\(Z\)</span> is correlated with <span class="math inline">\(X\)</span> — it actually moves <span class="math inline">\(X\)</span></li>
+<li><strong>Exclusion restriction:</strong> <span class="math inline">\(Z\)</span> affects <span class="math inline">\(Y\)</span> <em>only through</em> <span class="math inline">\(X\)</span> — no back doors</li>
+</ol>
+<p><span class="math display">\[Z \to X \to Y\]</span></p>
+<p>If both conditions hold, you can use <span class="math inline">\(Z\)</span> to isolate the part of <span class="math inline">\(X\)</span> that’s “as good as random” and estimate the causal effect.</p>
+<section id="two-stage-least-squares-2sls" class="level3">
+<h3 class="anchored" data-anchor-id="two-stage-least-squares-2sls">Two-stage least squares (2SLS)</h3>
+<p>The mechanics are simple:</p>
+<p><strong>First stage:</strong> regress <span class="math inline">\(X\)</span> on <span class="math inline">\(Z\)</span> to get predicted values <span class="math inline">\(\hat{X}\)</span></p>
+<p><span class="math display">\[X = \pi_0 + \pi_1 Z + v\]</span></p>
+<p><strong>Second stage:</strong> regress <span class="math inline">\(Y\)</span> on <span class="math inline">\(\hat{X}\)</span> instead of <span class="math inline">\(X\)</span></p>
+<p><span class="math display">\[Y = \beta_0 + \beta_1 \hat{X} + \varepsilon\]</span></p>
+<p>Why does this work? <span class="math inline">\(\hat{X}\)</span> contains only the variation in <span class="math inline">\(X\)</span> that comes from <span class="math inline">\(Z\)</span>. Since <span class="math inline">\(Z\)</span> is exogenous (by assumption), <span class="math inline">\(\hat{X}\)</span> is uncorrelated with the error term. The confounding is gone.</p>
+</section>
+<section id="classic-example" class="level3">
+<h3 class="anchored" data-anchor-id="classic-example">Classic example</h3>
+<p><strong>Returns to education.</strong> You want to know if more schooling causes higher earnings. But ability confounds: smarter people get more education <em>and</em> earn more. OLS overstates the return.</p>
+<p>Angrist &amp; Krueger (1991) used <strong>quarter of birth</strong> as an instrument. Because of compulsory schooling laws, people born in Q1 can drop out slightly earlier than Q4 births — so quarter of birth affects education (relevance) but presumably doesn’t affect earnings directly (exclusion).</p>
+</section>
+<section id="when-does-iv-fail" class="level3">
+<h3 class="anchored" data-anchor-id="when-does-iv-fail">When does IV fail?</h3>
+<ul>
+<li><strong>Weak instruments:</strong> if <span class="math inline">\(Z\)</span> barely moves <span class="math inline">\(X\)</span>, the first stage is weak and the IV estimate becomes wildly noisy and biased. Rule of thumb: first-stage F-statistic &gt; 10.</li>
+<li><strong>Exclusion restriction violated:</strong> if <span class="math inline">\(Z\)</span> affects <span class="math inline">\(Y\)</span> through channels other than <span class="math inline">\(X\)</span>, the estimate is biased. This assumption is <strong>untestable</strong> — you argue it, you don’t prove it.</li>
+</ul>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 620
 
@@ -244,17 +270,17 @@ ui &lt;- fluidPage(
     sidebarPanel(
       width = 3,
 
-      sliderInput("n_units", "Units per group:",
-                  min = 20, max = 200, value = 50, step = 10),
+      sliderInput("n", "Sample size:",
+                  min = 100, max = 2000, value = 500, step = 100),
 
-      sliderInput("true_effect", "True treatment effect:",
-                  min = 0, max = 5, value = 2, step = 0.5),
+      sliderInput("true_b", "True causal effect of X on Y:",
+                  min = 0, max = 5, value = 2, step = 0.25),
 
-      sliderInput("trend_diff", "Differential pre-trend\n(violation of parallel trends):",
-                  min = -1, max = 1, value = 0, step = 0.1),
+      sliderInput("confound", "Confounding strength:",
+                  min = 0, max = 5, value = 3, step = 0.25),
 
-      sliderInput("sigma", "Noise (SD):",
-                  min = 0.5, max = 3, value = 1, step = 0.25),
+      sliderInput("inst_str", "Instrument strength:",
+                  min = 0, max = 3, value = 1.5, step = 0.1),
 
       actionButton("go", "New draw", class = "btn-primary", width = "100%"),
 
@@ -263,7 +289,7 @@ ui &lt;- fluidPage(
 
     mainPanel(
       width = 9,
-      plotOutput("did_plot", height = "450px")
+      plotOutput("iv_plot", height = "470px")
     )
   )
 )
@@ -272,95 +298,91 @@ server &lt;- function(input, output, session) {
 
   dat &lt;- reactive({
     input$go
-    n     &lt;- input$n_units
-    tau   &lt;- input$true_effect
-    delta &lt;- input$trend_diff
-    sigma &lt;- input$sigma
+    n   &lt;- input$n
+    b   &lt;- input$true_b
+    cf  &lt;- input$confound
+    pi1 &lt;- input$inst_str
 
-    periods &lt;- -4:4
-    treat_time &lt;- 1  # treatment at t = 1
+    # Confounder (unobserved ability)
+    u &lt;- rnorm(n)
 
-    # Group means over time
-    ctrl_mean &lt;- 3 + 0.3 * periods
-    treat_mean &lt;- 5 + (0.3 + delta) * periods
+    # Instrument
+    z &lt;- rnorm(n)
 
-    # Add treatment effect post
-    treat_mean[periods &gt;= treat_time] &lt;- treat_mean[periods &gt;= treat_time] + tau
+    # Endogenous regressor: driven by instrument + confounder
+    x &lt;- pi1 * z + cf * u + rnorm(n)
 
-    # Generate unit-level data
-    ctrl_data &lt;- sapply(ctrl_mean, function(m) m + rnorm(n, sd = sigma))
-    treat_data &lt;- sapply(treat_mean, function(m) m + rnorm(n, sd = sigma))
+    # Outcome: causal effect of x + confounder
+    y &lt;- b * x + cf * u + rnorm(n)
 
-    ctrl_means_obs &lt;- colMeans(ctrl_data)
-    treat_means_obs &lt;- colMeans(treat_data)
+    # OLS (biased)
+    ols &lt;- lm(y ~ x)
 
-    # DID estimate (using t=0 as pre, t=1 as post)
-    pre_idx  &lt;- which(periods == 0)
-    post_idx &lt;- which(periods == 1)
+    # 2SLS by hand
+    first &lt;- lm(x ~ z)
+    x_hat &lt;- fitted(first)
+    second &lt;- lm(y ~ x_hat)
 
-    did_est &lt;- (treat_means_obs[post_idx] - treat_means_obs[pre_idx]) -
-               (ctrl_means_obs[post_idx] - ctrl_means_obs[pre_idx])
+    # First-stage F
+    f_stat &lt;- summary(first)$fstatistic[1]
 
-    # Counterfactual for treated (parallel to control from t=0)
-    cf &lt;- treat_means_obs[pre_idx] + (ctrl_means_obs - ctrl_means_obs[pre_idx])
-
-    list(periods = periods, ctrl = ctrl_means_obs, treat = treat_means_obs,
-         cf = cf, did_est = did_est, tau = tau, delta = delta,
-         treat_time = treat_time)
+    list(x = x, y = y, z = z, x_hat = x_hat,
+         b_ols = coef(ols)[2],
+         b_iv = coef(second)[2],
+         first_coef = coef(first)[2],
+         f_stat = f_stat,
+         true_b = b, confound = cf, inst_str = pi1)
   })
 
-  output$did_plot &lt;- renderPlot({
+  output$iv_plot &lt;- renderPlot({
     d &lt;- dat()
+    par(mfrow = c(1, 2), mar = c(4.5, 4.5, 3, 1))
 
-    par(mar = c(4.5, 4.5, 3, 1))
-    ylim &lt;- range(c(d$ctrl, d$treat, d$cf)) + c(-0.5, 0.5)
-
-    plot(d$periods, d$treat, type = "b", pch = 19, lwd = 2.5, col = "#3498db",
-         xlab = "Time period", ylab = "Mean outcome",
-         main = "Difference-in-Differences",
-         ylim = ylim, xaxt = "n")
-    axis(1, at = d$periods)
-
-    lines(d$periods, d$ctrl, type = "b", pch = 19, lwd = 2.5, col = "#e74c3c")
-
-    # Counterfactual (dashed, post only)
-    post &lt;- d$periods &gt;= d$treat_time
-    lines(d$periods[post], d$cf[post], type = "b", pch = 1, lwd = 2, lty = 2,
-          col = "#3498db80")
-
-    # Treatment onset
-    abline(v = d$treat_time - 0.5, lty = 3, col = "gray50", lwd = 1.5)
-    text(d$treat_time - 0.5, ylim[2], "Treatment", pos = 4, cex = 0.85, col = "gray40")
-
-    # DID bracket
-    pre_idx  &lt;- which(d$periods == 0)
-    post_idx &lt;- which(d$periods == 1)
-    arrows(max(d$periods) - 0.3, d$cf[post_idx],
-           max(d$periods) - 0.3, d$treat[post_idx],
-           code = 3, lwd = 2, col = "#27ae60", length = 0.1)
-    text(max(d$periods) - 0.1, (d$cf[post_idx] + d$treat[post_idx]) / 2,
-         paste0("DID = ", round(d$did_est, 2)),
-         col = "#27ae60", cex = 0.9, adj = 0)
-
+    # Left: OLS scatter (X vs Y)
+    plot(d$x, d$y, pch = 16, cex = 0.4,
+         col = adjustcolor("#3498db", 0.3),
+         xlab = "X (endogenous)", ylab = "Y",
+         main = "OLS: Y on X")
+    abline(lm(d$y ~ d$x), col = "#e74c3c", lwd = 3)
+    abline(a = 0, b = d$true_b, col = "#27ae60", lwd = 2, lty = 2)
     legend("topleft", bty = "n", cex = 0.85,
-           legend = c("Treated", "Control", "Counterfactual (parallel trends)"),
-           col = c("#3498db", "#e74c3c", "#3498db80"),
-           pch = c(19, 19, 1), lty = c(1, 1, 2), lwd = c(2.5, 2.5, 2))
+           legend = c(paste0("OLS = ", round(d$b_ols, 2)),
+                      paste0("True = ", d$true_b)),
+           col = c("#e74c3c", "#27ae60"), lwd = c(3, 2), lty = c(1, 2))
+
+    # Right: IV scatter (X-hat vs Y)
+    plot(d$x_hat, d$y, pch = 16, cex = 0.4,
+         col = adjustcolor("#9b59b6", 0.3),
+         xlab = expression(hat(X) ~ "(from first stage)"), ylab = "Y",
+         main = expression("2SLS: Y on " * hat(X)))
+    abline(lm(d$y ~ d$x_hat), col = "#e74c3c", lwd = 3)
+    abline(a = 0, b = d$true_b, col = "#27ae60", lwd = 2, lty = 2)
+    legend("topleft", bty = "n", cex = 0.85,
+           legend = c(paste0("IV = ", round(d$b_iv, 2)),
+                      paste0("True = ", d$true_b)),
+           col = c("#e74c3c", "#27ae60"), lwd = c(3, 2), lty = c(1, 2))
   })
 
   output$results &lt;- renderUI({
     d &lt;- dat()
-    bias &lt;- d$did_est - d$tau
-    biased &lt;- abs(d$delta) &gt; 0.05
+    ols_bias &lt;- d$b_ols - d$true_b
+    iv_bias  &lt;- d$b_iv - d$true_b
+    weak &lt;- d$f_stat &lt; 10
 
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;True effect:&lt;/b&gt; ", d$tau, "&lt;br&gt;",
-        "&lt;b&gt;DID estimate:&lt;/b&gt; ", round(d$did_est, 3), "&lt;br&gt;",
-        "&lt;b&gt;Bias:&lt;/b&gt; &lt;span class='", ifelse(biased, "bad", "good"), "'&gt;",
-        round(bias, 3), "&lt;/span&gt;&lt;br&gt;",
-        if (biased) "&lt;br&gt;&lt;small&gt;Parallel trends violated &amp;mdash; DID is biased.&lt;/small&gt;"
-        else "&lt;br&gt;&lt;small&gt;Parallel trends hold &amp;mdash; DID is unbiased.&lt;/small&gt;"
+        "&lt;b&gt;True effect:&lt;/b&gt; ", d$true_b, "&lt;br&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        "&lt;b&gt;OLS:&lt;/b&gt; ", round(d$b_ols, 3),
+        " &amp;nbsp; Bias: &lt;span class='bad'&gt;", round(ols_bias, 3), "&lt;/span&gt;&lt;br&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        "&lt;b&gt;IV (2SLS):&lt;/b&gt; ", round(d$b_iv, 3),
+        " &amp;nbsp; Bias: &lt;span class='", ifelse(abs(iv_bias) &lt; abs(ols_bias), "good", "bad"), "'&gt;",
+        round(iv_bias, 3), "&lt;/span&gt;&lt;br&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        "&lt;b&gt;First-stage F:&lt;/b&gt; ", round(d$f_stat, 1),
+        if (weak) " &lt;span class='bad'&gt;&amp;lt; 10 (weak!)&lt;/span&gt;"
+        else " &lt;span class='good'&gt;&amp;ge; 10&lt;/span&gt;"
       ))
     )
   })
@@ -371,14 +393,31 @@ shinyApp(ui, server)</code></pre>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Differential pre-trend = 0:</strong> parallel trends hold, DID nails the true effect.</li>
-<li><strong>Slide the differential pre-trend to +0.5:</strong> the treated group was already rising faster. DID attributes some of that trend to the treatment — the estimate is biased upward.</li>
-<li><strong>Set true effect = 0 with a differential trend:</strong> DID “finds” an effect that doesn’t exist. That’s how pre-trend violations create false positives.</li>
-<li>Look at the pre-treatment periods — if the lines aren’t parallel before treatment, you should worry.</li>
+<li><strong>Confounding = 3, instrument = 1.5:</strong> OLS is badly biased. IV recovers the true effect. This is the whole point.</li>
+<li><strong>Set confounding = 0:</strong> OLS and IV agree — when there’s no endogeneity, you don’t need an instrument.</li>
+<li><strong>Slide instrument strength toward 0:</strong> the first-stage F drops below 10. The IV estimate becomes erratic — sometimes worse than OLS. That’s the weak instrument problem.</li>
+<li><strong>Increase sample size with a weak instrument:</strong> it doesn’t help much. Weak instruments bias IV toward OLS, and more data doesn’t fix that.</li>
+<li><strong>True effect = 0, confounding = 3:</strong> OLS “finds” a large effect. IV correctly shows ~0.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="what-does-iv-actually-estimate" class="level2">
+<h2 class="anchored" data-anchor-id="what-does-iv-actually-estimate">What does IV actually estimate?</h2>
+<p>A subtle point: IV doesn’t estimate the effect for everyone. It estimates the <strong>Local Average Treatment Effect (LATE)</strong> — the effect for <strong>compliers</strong>, people whose treatment status is actually changed by the instrument.</p>
+<p>In the Angrist &amp; Krueger example: IV estimates the return to education for people who <em>would have dropped out</em> if born in a different quarter. It says nothing about people who would have stayed in school regardless.</p>
+<p>This means two different valid instruments can give you two different IV estimates — not because one is wrong, but because they’re identifying effects for different subpopulations.</p>
+<hr>
+</section>
+<section id="did-you-know" class="level2">
+<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
+<ul>
+<li><p>The instrumental variables method dates back to <strong>Philip Wright (1928)</strong>, who used it to estimate supply and demand curves for butter and flax seed. Some historians credit his son, Sewall Wright, with the actual derivation.</p></li>
+<li><p>The <strong>“weak instruments” problem</strong> was formalized by Staiger &amp; Stock (1997). They showed that when the first-stage F is below 10, IV can be <em>more biased</em> than OLS — the cure becomes worse than the disease.</p></li>
+<li><p>Joshua Angrist, one of the 2021 Nobel laureates, built much of his career on clever instruments: quarter of birth for schooling, draft lottery numbers for military service, religious composition for family size. The art is finding instruments that are both relevant and excludable.</p></li>
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
