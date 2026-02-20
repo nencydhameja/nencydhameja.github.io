@@ -252,6 +252,7 @@ window.Quarto = {
   <li><a href="#selection-on-observables" id="toc-selection-on-observables" class="nav-link" data-scroll-target="#selection-on-observables">Selection on observables</a></li>
   <li><a href="#difference-in-differences" id="toc-difference-in-differences" class="nav-link" data-scroll-target="#difference-in-differences">Difference-in-differences</a></li>
   <li><a href="#instrumental-variables" id="toc-instrumental-variables" class="nav-link" data-scroll-target="#instrumental-variables">Instrumental variables</a></li>
+  <li><a href="#threats-to-identification" id="toc-threats-to-identification" class="nav-link" data-scroll-target="#threats-to-identification">Threats to identification</a></li>
   <li><a href="#the-pattern" id="toc-the-pattern" class="nav-link" data-scroll-target="#the-pattern">The pattern</a></li>
   </ul></li>
   <li><a href="#simulation-identification-matters-estimation-is-secondary" id="toc-simulation-identification-matters-estimation-is-secondary" class="nav-link" data-scroll-target="#simulation-identification-matters-estimation-is-secondary">Simulation: identification matters, estimation is secondary</a>
@@ -465,6 +466,59 @@ window.Quarto = {
 <p><span class="math display">\[\hat{\beta}_{IV} = \frac{\text{Cov}(Z, \beta X + \varepsilon)}{\text{Cov}(Z, X)} = \beta + \frac{\text{Cov}(Z, \varepsilon)}{\text{Cov}(Z, X)}\]</span></p>
 <p>The exclusion restriction says <span class="math inline">\(\text{Cov}(Z, \varepsilon) = 0\)</span> — the instrument is uncorrelated with the error. Then <span class="math inline">\(\hat{\beta}_{IV} = \beta\)</span>.</p>
 <p><strong>If the exclusion restriction fails</strong> — <span class="math inline">\(Z\)</span> directly affects <span class="math inline">\(Y\)</span> through some channel other than <span class="math inline">\(X\)</span> — then <span class="math inline">\(\text{Cov}(Z, \varepsilon) \neq 0\)</span> and the bias term <span class="math inline">\(\frac{\text{Cov}(Z, \varepsilon)}{\text{Cov}(Z, X)}\)</span> is nonzero. No amount of data, no alternative estimator (LIML, GMM, jackknife) removes this. It’s baked in.</p>
+</section>
+<section id="threats-to-identification" class="level3">
+<h3 class="anchored" data-anchor-id="threats-to-identification">Threats to identification</h3>
+<p>Each method has specific threats — things that make the bias term nonzero:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Identification assumption</th>
+<th>Threat (what breaks it)</th>
+<th>What the bias looks like</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>SOO</strong></td>
+<td>No unobserved confounders</td>
+<td>Omitted variable that drives both <span class="math inline">\(D\)</span> and <span class="math inline">\(Y\)</span></td>
+<td>Selection bias: treated group was different to begin with</td>
+</tr>
+<tr class="even">
+<td><strong>DID</strong></td>
+<td>Parallel trends</td>
+<td>Treated group was already on a different trajectory</td>
+<td>You attribute the pre-existing trend to the treatment</td>
+</tr>
+<tr class="odd">
+<td><strong>IV</strong></td>
+<td>Exclusion restriction</td>
+<td>Instrument affects <span class="math inline">\(Y\)</span> through a channel other than <span class="math inline">\(X\)</span></td>
+<td>IV picks up the direct effect, not just the causal path</td>
+</tr>
+<tr class="even">
+<td><strong>RDD</strong></td>
+<td>Continuity at cutoff</td>
+<td>Units manipulate their score to sort across the cutoff; or another policy also kicks in at the same cutoff</td>
+<td>The “jump” reflects sorting or a different treatment, not your treatment</td>
+</tr>
+<tr class="odd">
+<td><strong>Synthetic control</strong></td>
+<td>Pre-treatment fit generalizes</td>
+<td>Spillovers from treated unit to donors; structural break changes the relationship</td>
+<td>Counterfactual is wrong, gap doesn’t reflect the treatment</td>
+</tr>
+</tbody>
+</table>
+<p>Notice: every threat is about <strong>the world</strong>, not about <strong>the math</strong>. You can’t test your way out of these — you argue them with institutional knowledge.</p>
 </section>
 <section id="the-pattern" class="level3">
 <h3 class="anchored" data-anchor-id="the-pattern">The pattern</h3>
