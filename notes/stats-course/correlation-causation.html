@@ -503,7 +503,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="simulation-1-same-scatter-plot-different-causal-stories">Simulation 1: Same scatter plot, different causal stories</h2>
 <p>Three different causal structures — all producing <strong>the same correlation</strong> between X and Y. Drag the sliders and watch: the scatter plots are indistinguishable, but the true causal effect of X on Y is completely different in each case.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 700
+#| viewerHeight: 520
 
 library(shiny)
 
@@ -511,7 +511,7 @@ ui &lt;- fluidPage(
   tags$head(tags$style(HTML("
     .stats-box {
       background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
+      margin-top: 8px; font-size: 13px; line-height: 1.7;
     }
     .stats-box b { color: #2c3e50; }
     .causal  { color: #27ae60; font-weight: bold; }
@@ -537,11 +537,9 @@ ui &lt;- fluidPage(
     mainPanel(
       width = 8,
       fluidRow(
-        column(6, plotOutput("plot_causal", height = "220px")),
-        column(6, plotOutput("plot_confound", height = "220px"))
-      ),
-      fluidRow(
-        column(6, offset = 3, plotOutput("plot_reverse", height = "220px"))
+        column(4, plotOutput("plot_causal", height = "260px")),
+        column(4, plotOutput("plot_confound", height = "260px")),
+        column(4, plotOutput("plot_reverse", height = "260px"))
       )
     )
   )
@@ -582,7 +580,7 @@ server &lt;- function(input, output, session) {
 
   output$plot_causal &lt;- renderPlot({
     d &lt;- sim()
-    par(mar = c(3, 4, 2.5, 1))
+    par(mar = c(3, 3, 2, 0.5), cex.axis = 0.8, cex.lab = 0.9, cex.main = 0.85)
     plot(d$x1, d$y1, pch = 16, cex = 0.5,
          col = adjustcolor("#3498db", 0.4),
          xlab = "X", ylab = "Y",
@@ -597,7 +595,7 @@ server &lt;- function(input, output, session) {
 
   output$plot_confound &lt;- renderPlot({
     d &lt;- sim()
-    par(mar = c(3, 4, 2.5, 1))
+    par(mar = c(3, 3, 2, 0.5), cex.axis = 0.8, cex.lab = 0.9, cex.main = 0.85)
     plot(d$x2, d$y2, pch = 16, cex = 0.5,
          col = adjustcolor("#3498db", 0.4),
          xlab = "X", ylab = "Y",
@@ -612,7 +610,7 @@ server &lt;- function(input, output, session) {
 
   output$plot_reverse &lt;- renderPlot({
     d &lt;- sim()
-    par(mar = c(3, 4, 2.5, 1))
+    par(mar = c(3, 3, 2, 0.5), cex.axis = 0.8, cex.lab = 0.9, cex.main = 0.85)
     plot(d$x3, d$y3, pch = 16, cex = 0.5,
          col = adjustcolor("#3498db", 0.4),
          xlab = "X", ylab = "Y",
