@@ -160,6 +160,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./selection-observables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Selection on Observables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./ipw.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">IPW</span></a>
   </div>
@@ -428,8 +434,8 @@ shinyApp(ui, server)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong><a href="did.html">Difference-in-Differences</a></strong></td>
-<td>Compare changes over time between treated and control groups</td>
+<td><strong><a href="selection-observables.html">Selection on Observables</a></strong></td>
+<td>Condition on everything that drives both treatment and outcome</td>
 </tr>
 <tr class="even">
 <td><strong><a href="ipw.html">IPW</a></strong></td>
@@ -438,6 +444,22 @@ shinyApp(ui, server)</code></pre>
 <tr class="odd">
 <td><strong><a href="entropy-balancing.html">Entropy Balancing</a></strong></td>
 <td>Directly balance covariates between groups without modeling the propensity score</td>
+</tr>
+<tr class="even">
+<td><strong><a href="did.html">Difference-in-Differences</a></strong></td>
+<td>Compare changes over time between treated and control groups</td>
+</tr>
+<tr class="odd">
+<td><strong><a href="iv.html">Instrumental Variables</a></strong></td>
+<td>Use exogenous variation to isolate the causal effect</td>
+</tr>
+<tr class="even">
+<td><strong><a href="rdd.html">Regression Discontinuity</a></strong></td>
+<td>Exploit a cutoff rule as a natural experiment</td>
+</tr>
+<tr class="odd">
+<td><strong><a href="synth.html">Synthetic Control</a></strong></td>
+<td>Build a weighted counterfactual from donor units</td>
 </tr>
 </tbody>
 </table>
