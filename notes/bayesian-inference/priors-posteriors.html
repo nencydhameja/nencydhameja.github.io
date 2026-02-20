@@ -208,6 +208,11 @@ window.Quarto = {
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
   <li><a href="#shrinkage-the-bayesian-superpower" id="toc-shrinkage-the-bayesian-superpower" class="nav-link" data-scroll-target="#shrinkage-the-bayesian-superpower">Shrinkage: the Bayesian superpower</a></li>
+  <li><a href="#why-did-the-math-work-out-so-cleanly" id="toc-why-did-the-math-work-out-so-cleanly" class="nav-link" data-scroll-target="#why-did-the-math-work-out-so-cleanly">Why did the math work out so cleanly?</a>
+  <ul class="collapse">
+  <li><a href="#common-conjugate-pairs" id="toc-common-conjugate-pairs" class="nav-link" data-scroll-target="#common-conjugate-pairs">Common conjugate pairs</a></li>
+  <li><a href="#the-problem-most-real-models-arent-conjugate" id="toc-the-problem-most-real-models-arent-conjugate" class="nav-link" data-scroll-target="#the-problem-most-real-models-arent-conjugate">The problem: most real models aren’t conjugate</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -399,8 +404,58 @@ shinyApp(ui, server)</code></pre>
 <li><strong>Hierarchical models:</strong> borrow strength across groups by shrinking toward a common mean.</li>
 </ul>
 <p>Shrinkage isn’t bias — it’s a <strong>bias-variance tradeoff</strong>. You add a little bias but reduce variance a lot, often improving overall accuracy.</p>
+</section>
+<section id="why-did-the-math-work-out-so-cleanly" class="level2">
+<h2 class="anchored" data-anchor-id="why-did-the-math-work-out-so-cleanly">Why did the math work out so cleanly?</h2>
+<p>The simulation above computes the posterior <strong>instantly</strong> — no sampling, no iteration, just a formula. That’s because we used a <strong>conjugate prior</strong>: a special prior-likelihood pair where the posterior has the same distributional form as the prior.</p>
+<p>Here, the prior is Normal, the likelihood is Normal, and the posterior is Normal too. You just update the mean and variance:</p>
+<p><span class="math display">\[\mu_{post} = \frac{\frac{\mu_0}{\sigma_0^2} + \frac{n\bar{y}}{\sigma^2}}{\frac{1}{\sigma_0^2} + \frac{n}{\sigma^2}}\]</span></p>
+<p>Plug in numbers, get the answer. No algorithm required.</p>
+<section id="common-conjugate-pairs" class="level3">
+<h3 class="anchored" data-anchor-id="common-conjugate-pairs">Common conjugate pairs</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Likelihood</th>
+<th>Conjugate prior</th>
+<th>Posterior</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Normal (known <span class="math inline">\(\sigma\)</span>)</td>
+<td>Normal</td>
+<td>Normal</td>
+<td>Estimating a mean (this page)</td>
+</tr>
+<tr class="even">
+<td>Binomial</td>
+<td>Beta</td>
+<td>Beta</td>
+<td>Estimating a proportion (<a href="bayes-theorem.html">Bayes’ Theorem</a>)</td>
+</tr>
+<tr class="odd">
+<td>Poisson</td>
+<td>Gamma</td>
+<td>Gamma</td>
+<td>Estimating a rate</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-problem-most-real-models-arent-conjugate" class="level3">
+<h3 class="anchored" data-anchor-id="the-problem-most-real-models-arent-conjugate">The problem: most real models aren’t conjugate</h3>
+<p>Conjugacy is elegant but limited. It only works for these specific combinations. The moment your model gets realistic — logistic regression with priors on coefficients, hierarchical models with multiple levels, non-standard likelihoods — there’s no conjugate solution. The posterior is some high-dimensional surface with no closed-form expression.</p>
+<p>That’s why <a href="mcmc.html">MCMC</a> exists: when you can’t write down the posterior, you <strong>sample</strong> from it instead. The progression in this course:</p>
+<ul>
+<li><strong>This page:</strong> conjugate priors — exact, instant posteriors (the special case)</li>
+<li><strong><a href="mcmc.html">MCMC</a>:</strong> numerical sampling — posteriors for any model (the general case)</li>
+<li><strong><a href="hierarchical.html">Hierarchical Models</a>:</strong> the reason you need MCMC in practice</li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
