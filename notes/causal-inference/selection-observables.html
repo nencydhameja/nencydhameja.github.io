@@ -115,7 +115,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Selection on Observables</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Identification Strategies</a></li><li class="breadcrumb-item"><a href="./selection-observables.html">Selection on Observables</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -143,57 +143,90 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Welcome</span></a>
+ <span class="menu-text">Home</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Framework</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./potential-outcomes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Potential Outcomes &amp; ATE</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./did.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Difference-in-Differences</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Identification Strategies</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./selection-observables.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Selection on Observables</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ipw.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">IPW</span></a>
+  <a href="./did.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Difference-in-Differences</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./entropy-balancing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Entropy Balancing</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./iv.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Instrumental Variables</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rdd.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Regression Discontinuity</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./synth.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Synthetic Control</span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Estimation Tools</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ipw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">IPW</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./entropy-balancing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropy Balancing</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -211,7 +244,7 @@ window.Quarto = {
   <li><a href="#when-does-selection-on-observables-fail" id="toc-when-does-selection-on-observables-fail" class="nav-link" data-scroll-target="#when-does-selection-on-observables-fail">When does selection on observables fail?</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
-  <li><a href="#the-selection-on-observables-toolkit" id="toc-the-selection-on-observables-toolkit" class="nav-link" data-scroll-target="#the-selection-on-observables-toolkit">The selection on observables toolkit</a></li>
+  <li><a href="#estimation-tools-not-just-for-selection-on-observables" id="toc-estimation-tools-not-just-for-selection-on-observables" class="nav-link" data-scroll-target="#estimation-tools-not-just-for-selection-on-observables">Estimation tools (not just for selection on observables)</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -219,7 +252,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Identification Strategies</a></li><li class="breadcrumb-item"><a href="./selection-observables.html">Selection on Observables</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Selection on Observables</h1>
 </div>
@@ -443,14 +476,46 @@ shinyApp(ui, server)</code></pre>
 <hr>
 </section>
 </section>
-<section id="the-selection-on-observables-toolkit" class="level2">
-<h2 class="anchored" data-anchor-id="the-selection-on-observables-toolkit">The selection on observables toolkit</h2>
-<p>Once you believe the CIA holds, you have several tools:</p>
-<p><strong>Regression adjustment</strong> is the simplest: just include the confounders as controls in a regression. It works well when the outcome model is approximately linear. It can be biased if the model is misspecified (e.g., the true relationship is nonlinear and you fit a line).</p>
-<p><strong>Matching</strong> pairs each treated unit with one or more control units that have similar X values. It’s intuitive and nonparametric — no functional form assumptions. But it struggles in high dimensions (many covariates) and can be sensitive to the distance metric.</p>
-<p><strong>IPW</strong> models the treatment assignment process instead of the outcome. It reweights observations to create a pseudo-population where treatment is independent of X. It’s flexible but can produce extreme weights when propensity scores are near 0 or 1. See the <a href="ipw.html">IPW page</a>.</p>
-<p><strong>Entropy balancing</strong> achieves exact covariate balance without modeling the propensity score. It’s less sensitive to model misspecification and avoids extreme weights. See the <a href="entropy-balancing.html">Entropy Balancing page</a>.</p>
-<p><strong>Doubly robust estimators</strong> combine regression and weighting — they’re consistent if <em>either</em> the outcome model <em>or</em> the propensity score model is correct (not necessarily both). This provides an extra layer of protection against misspecification.</p>
+<section id="estimation-tools-not-just-for-selection-on-observables" class="level2">
+<h2 class="anchored" data-anchor-id="estimation-tools-not-just-for-selection-on-observables">Estimation tools (not just for selection on observables)</h2>
+<p>Once you have an identification strategy, you need a way to <em>implement</em> it. The tools below are often associated with selection on observables, but they’re <strong>general-purpose</strong> — they show up in other strategies too.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Used in selection on observables</th>
+<th>Also used in</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Regression adjustment</strong></td>
+<td>Control for X in a regression</td>
+<td>DID with covariates, RDD with covariates</td>
+</tr>
+<tr class="even">
+<td><strong>Matching</strong></td>
+<td>Pair treated/control on X</td>
+<td>DID matching estimators</td>
+</tr>
+<tr class="odd">
+<td><strong><a href="ipw.html">IPW</a></strong></td>
+<td>Reweight by propensity score</td>
+<td>IPW-DID (Abadie 2005, Callaway &amp; Sant’Anna 2021)</td>
+</tr>
+<tr class="even">
+<td><strong><a href="entropy-balancing.html">Entropy Balancing</a></strong></td>
+<td>Balance covariates with weights</td>
+<td>Weighted DID</td>
+</tr>
+<tr class="odd">
+<td><strong>Doubly robust</strong></td>
+<td>Combine regression + weighting</td>
+<td>DR-DID (Sant’Anna &amp; Zhao 2020)</td>
+</tr>
+</tbody>
+</table>
+<p>The identification strategy tells you <strong>why</strong> your comparison is valid. The estimation tool tells you <strong>how</strong> to make the comparison. Don’t confuse the two — IPW is a tool, not a strategy.</p>
 <hr>
 </section>
 <section id="did-you-know" class="level2">
