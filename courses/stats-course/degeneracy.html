@@ -916,10 +916,10 @@ shinyApp(ui, server)</code></pre>
 </table>
 <p><strong>Variation is the fuel of inference.</strong> No variation, no learning.</p>
 <ul>
-<li>No variation in <strong>your data</strong> → can’t estimate spread</li>
-<li>No variation in <strong>your regressor</strong> → can’t estimate slopes</li>
-<li>No variation <strong>between regressors</strong> → can’t separate effects</li>
-<li>No variation in <strong>treatment assignment</strong> → can’t estimate causal effects</li>
+<li>No variation in <strong>Y</strong> (your outcome) → can’t estimate spread or uncertainty</li>
+<li>No variation in <strong>X</strong> (your regressor) → can’t estimate slopes</li>
+<li>No variation <strong>between X1 and X2</strong> (regressors move together) → can’t separate their effects</li>
+<li>No variation in <strong>treatment assignment</strong> (everyone treated or everyone control) → can’t estimate causal effects</li>
 </ul>
 <p>Understanding <em>where</em> the variation comes from — and when it might disappear — is the difference between statistics that works and statistics that lies.</p>
 <hr>
