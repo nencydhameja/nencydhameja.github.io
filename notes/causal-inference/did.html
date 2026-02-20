@@ -200,6 +200,7 @@ window.Quarto = {
   <ul>
   <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
   <ul class="collapse">
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
   <li><a href="#when-does-did-fail" id="toc-when-does-did-fail" class="nav-link" data-scroll-target="#when-does-did-fail">When does DID fail?</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
@@ -233,6 +234,15 @@ window.Quarto = {
 <p>You have two groups: one gets treated at some point, the other never does. You observe both <strong>before and after</strong> treatment. The key assumption: absent treatment, both groups would have followed <strong>parallel trends</strong>.</p>
 <p><span class="math display">\[\hat{\tau}_{DID} = (\bar{Y}_{treat,post} - \bar{Y}_{treat,pre}) - (\bar{Y}_{ctrl,post} - \bar{Y}_{ctrl,pre})\]</span></p>
 <p>The first difference removes time-invariant group characteristics. The second difference removes common time trends. What’s left is the treatment effect.</p>
+<section id="assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
+<ol type="1">
+<li><strong>Parallel trends:</strong> absent treatment, the treated and control groups would have followed the same trajectory over time — the key assumption</li>
+<li><strong>No anticipation:</strong> treated units don’t change behavior before the treatment date</li>
+<li><strong>SUTVA:</strong> treatment of one group doesn’t spill over to the control group</li>
+<li><strong>Stable composition:</strong> the groups don’t change membership over time (no differential attrition)</li>
+</ol>
+</section>
 <section id="when-does-did-fail" class="level3">
 <h3 class="anchored" data-anchor-id="when-does-did-fail">When does DID fail?</h3>
 <p>When the parallel trends assumption is violated — if the treated group was already on a different trajectory <em>before</em> treatment. The simulation below lets you break this assumption and see the bias that results.</p>

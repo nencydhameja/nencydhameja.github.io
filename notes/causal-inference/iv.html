@@ -201,6 +201,7 @@ window.Quarto = {
   <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
   <ul class="collapse">
   <li><a href="#two-stage-least-squares-2sls" id="toc-two-stage-least-squares-2sls" class="nav-link" data-scroll-target="#two-stage-least-squares-2sls">Two-stage least squares (2SLS)</a></li>
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
   <li><a href="#classic-example" id="toc-classic-example" class="nav-link" data-scroll-target="#classic-example">Classic example</a></li>
   <li><a href="#when-does-iv-fail" id="toc-when-does-iv-fail" class="nav-link" data-scroll-target="#when-does-iv-fail">When does IV fail?</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
@@ -250,6 +251,15 @@ window.Quarto = {
 <p><strong>Second stage:</strong> regress <span class="math inline">\(Y\)</span> on <span class="math inline">\(\hat{X}\)</span> instead of <span class="math inline">\(X\)</span></p>
 <p><span class="math display">\[Y = \beta_0 + \beta_1 \hat{X} + \varepsilon\]</span></p>
 <p>Why does this work? <span class="math inline">\(\hat{X}\)</span> contains only the variation in <span class="math inline">\(X\)</span> that comes from <span class="math inline">\(Z\)</span>. Since <span class="math inline">\(Z\)</span> is exogenous (by assumption), <span class="math inline">\(\hat{X}\)</span> is uncorrelated with the error term. The confounding is gone.</p>
+</section>
+<section id="assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
+<ol type="1">
+<li><strong>Relevance:</strong> <span class="math inline">\(Z\)</span> is correlated with <span class="math inline">\(X\)</span> — the instrument actually moves the endogenous variable. Testable: check the first-stage F-statistic.</li>
+<li><strong>Exclusion restriction:</strong> <span class="math inline">\(Z\)</span> affects <span class="math inline">\(Y\)</span> <em>only through</em> <span class="math inline">\(X\)</span> — no direct effect and no back-door paths. <strong>Not testable</strong> — you argue it.</li>
+<li><strong>Independence:</strong> <span class="math inline">\(Z\)</span> is as good as randomly assigned — uncorrelated with the error term in the outcome equation</li>
+<li><strong>Monotonicity (for LATE):</strong> the instrument moves everyone in the same direction — no “defiers” who do the opposite of what the instrument encourages</li>
+</ol>
 </section>
 <section id="classic-example" class="level3">
 <h3 class="anchored" data-anchor-id="classic-example">Classic example</h3>

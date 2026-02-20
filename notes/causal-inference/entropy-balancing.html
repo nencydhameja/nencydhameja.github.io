@@ -74,6 +74,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -173,6 +202,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#entropy-balancing-a-different-approach" id="toc-entropy-balancing-a-different-approach" class="nav-link" data-scroll-target="#entropy-balancing-a-different-approach">Entropy balancing: a different approach</a>
   <ul class="collapse">
   <li><a href="#ipw-vs-entropy-balancing" id="toc-ipw-vs-entropy-balancing" class="nav-link" data-scroll-target="#ipw-vs-entropy-balancing">IPW vs Entropy Balancing</a></li>
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
   </ul>
@@ -245,6 +275,14 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+</section>
+<section id="assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
+<ol type="1">
+<li><strong>Selection on observables:</strong> conditional on the covariates you balance on, treatment is independent of potential outcomes. Same as IPW — if you’re missing a confounder, balancing the observed ones doesn’t help.</li>
+<li><strong>Overlap:</strong> treated and control groups share common support in covariate space. You can’t reweight controls to look like treated units if no controls exist in that part of the distribution.</li>
+<li><strong>Correct moments:</strong> you need to balance the <em>right</em> moments. If the outcome depends on <span class="math inline">\(X^2\)</span> but you only balance on <span class="math inline">\(E[X]\)</span>, you’ll miss the confounding.</li>
+</ol>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 650
 

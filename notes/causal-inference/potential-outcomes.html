@@ -200,6 +200,7 @@ window.Quarto = {
   <ul>
   <li><a href="#the-fundamental-problem-of-causal-inference" id="toc-the-fundamental-problem-of-causal-inference" class="nav-link active" data-scroll-target="#the-fundamental-problem-of-causal-inference">The fundamental problem of causal inference</a>
   <ul class="collapse">
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
   <li><a href="#why-randomization-works" id="toc-why-randomization-works" class="nav-link" data-scroll-target="#why-randomization-works">Why randomization works</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
@@ -244,6 +245,14 @@ window.Quarto = {
 <p>The <strong>Average Treatment Effect (ATE)</strong> is:</p>
 <p><span class="math display">\[\text{ATE} = E[Y(1) - Y(0)]\]</span></p>
 <p>Since we can’t observe both for anyone, we need assumptions (like random assignment) to estimate it.</p>
+<section id="assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
+<ol type="1">
+<li><strong>SUTVA (Stable Unit Treatment Value Assumption):</strong> one person’s treatment doesn’t affect another person’s outcome — no interference between units</li>
+<li><strong>Consistency:</strong> the observed outcome for a treated person equals their potential outcome under treatment, <span class="math inline">\(Y_i = Y_i(1)\)</span> if treated</li>
+<li><strong>Random assignment (for unbiased estimation):</strong> treatment is independent of potential outcomes — <span class="math inline">\(Y(0), Y(1) \perp D\)</span></li>
+</ol>
+</section>
 <section id="why-randomization-works" class="level3">
 <h3 class="anchored" data-anchor-id="why-randomization-works">Why randomization works</h3>
 <p>If treatment is assigned randomly, the treated and control groups are comparable <em>on average</em>. The difference in group means is an unbiased estimator of the ATE. But if treatment isn’t random — if sicker people seek treatment — the naive comparison is biased. That’s <strong>selection bias</strong>.</p>

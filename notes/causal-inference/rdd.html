@@ -201,6 +201,7 @@ window.Quarto = {
   <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
   <ul class="collapse">
   <li><a href="#sharp-vs-fuzzy" id="toc-sharp-vs-fuzzy" class="nav-link" data-scroll-target="#sharp-vs-fuzzy">Sharp vs Fuzzy</a></li>
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
   <li><a href="#when-does-rdd-fail" id="toc-when-does-rdd-fail" class="nav-link" data-scroll-target="#when-does-rdd-fail">When does RDD fail?</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
@@ -243,6 +244,15 @@ window.Quarto = {
 <li><strong>Sharp RDD:</strong> treatment is a deterministic function of the running variable. Score <span class="math inline">\(\geq\)</span> 80 → treated, period. Everyone complies.</li>
 <li><strong>Fuzzy RDD:</strong> the cutoff changes the <em>probability</em> of treatment, but not perfectly. Some people above the cutoff don’t take treatment, some below do. This is essentially an IV problem — the cutoff is the instrument.</li>
 </ul>
+</section>
+<section id="assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
+<ol type="1">
+<li><strong>Continuity:</strong> the potential outcomes <span class="math inline">\(E[Y(0) \mid X = x]\)</span> and <span class="math inline">\(E[Y(1) \mid X = x]\)</span> are continuous at the cutoff — no other jump happens at exactly that point</li>
+<li><strong>No manipulation:</strong> units cannot precisely control their running variable to sort across the cutoff. If they can, the “as good as random” logic breaks.</li>
+<li><strong>Local randomization:</strong> units just above and just below the cutoff are comparable on all observed and unobserved characteristics</li>
+<li><strong>Correct functional form:</strong> the relationship between the running variable and outcome is correctly modeled within the bandwidth window</li>
+</ol>
 </section>
 <section id="when-does-rdd-fail" class="level3">
 <h3 class="anchored" data-anchor-id="when-does-rdd-fail">When does RDD fail?</h3>

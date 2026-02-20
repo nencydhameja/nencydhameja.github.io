@@ -201,6 +201,7 @@ window.Quarto = {
   <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem">The problem</a></li>
   <li><a href="#the-idea" id="toc-the-idea" class="nav-link" data-scroll-target="#the-idea">The idea</a>
   <ul class="collapse">
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
   </ul>
@@ -245,6 +246,13 @@ window.Quarto = {
 <li>Compute the weighted difference in means.</li>
 </ol>
 <p><strong>Intuition:</strong> if a treated person had only a 20% chance of being treated (based on their X), they’re “surprising” — they represent 5 similar people who weren’t treated. So they get upweighted. This creates a <strong>pseudo-population</strong> where treatment is independent of X.</p>
+<section id="assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
+<ol type="1">
+<li><strong>Unconfoundedness (selection on observables):</strong> conditional on observed covariates <span class="math inline">\(X\)</span>, treatment is independent of potential outcomes — <span class="math inline">\(Y(0), Y(1) \perp D \mid X\)</span>. All confounders are observed and included.</li>
+<li><strong>Overlap (positivity):</strong> every unit has a non-zero probability of being in either group — <span class="math inline">\(0 &lt; e(X) &lt; 1\)</span> for all <span class="math inline">\(X\)</span>. No one is deterministically treated or untreated.</li>
+<li><strong>Correct propensity score model:</strong> the functional form of <span class="math inline">\(e(X)\)</span> is correctly specified. If you use a logit and the true relationship is nonlinear, the weights are wrong.</li>
+</ol>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 650
 
@@ -373,6 +381,7 @@ server &lt;- function(input, output, session) {
 }
 
 shinyApp(ui, server)</code></pre>
+</section>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
