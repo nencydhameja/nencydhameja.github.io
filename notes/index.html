@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learning Lab — Nency Dhameja</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #f8f9fa;
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    header h1 { font-size: 2em; margin-bottom: 8px; }
+    header p { font-size: 1.1em; opacity: 0.85; }
+    header a { color: #85c1e9; }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .course-card {
+      background: white;
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-left: 5px solid #3498db;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .course-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    .course-card h2 {
+      margin-bottom: 8px;
+      font-size: 1.3em;
+    }
+    .course-card h2 a {
+      color: #2c3e50;
+      text-decoration: none;
+    }
+    .course-card h2 a:hover { color: #3498db; }
+    .course-card .desc {
+      color: #555;
+      margin-bottom: 12px;
+    }
+    .course-card .topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .course-card .topics span {
+      background: #eaf2f8;
+      color: #2c3e50;
+      font-size: 0.82em;
+      padding: 3px 10px;
+      border-radius: 12px;
+    }
+    .card-stat   { border-left-color: #3498db; }
+    .card-causal { border-left-color: #27ae60; }
+    .card-bayes  { border-left-color: #8e44ad; }
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #999;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Notes</h1>
+  <p>Learn statistics and causal inference through interactive simulations.</p>
+  <p><a href="https://nencydhameja.com">&larr; Back to main site</a></p>
+</header>
+
+<div class="container">
+
+  <div class="course-card card-stat">
+    <h2><a href="stats-course/index.html">Foundations of Statistical Inference</a></h2>
+    <p class="desc">
+      Simulation-based modules for statistics, econometrics, and causal inference.
+    </p>
+    <div class="topics">
+      <span>Distributions</span>
+      <span>Sampling</span>
+      <span>CLT &amp; LLN</span>
+      <span>p-values &amp; CIs</span>
+      <span>Power &amp; MDE</span>
+      <span>Monte Carlo</span>
+      <span>Regression &amp; CEF</span>
+      <span>Clustered SEs</span>
+      <span>Bias-Variance</span>
+      <span>Bayesian Updating</span>
+    </div>
+  </div>
+
+  <div class="course-card card-causal">
+    <h2><a href="causal-inference/index.html">Applied Causal Inference</a></h2>
+    <p class="desc">
+      From potential outcomes to modern treatment effect estimators — see
+      selection bias, parallel trends, and reweighting in action.
+    </p>
+    <div class="topics">
+      <span>Potential Outcomes</span>
+      <span>Difference-in-Differences</span>
+      <span>IPW</span>
+      <span>Entropy Balancing</span>
+    </div>
+  </div>
+
+  <!-- Hidden for now — uncomment to show Bayesian course
+  <div class="course-card card-bayes">
+    <h2><a href="bayesian-inference/index.html">Introduction to Bayesian Thinking</a></h2>
+    <p class="desc">
+      Priors, posteriors, shrinkage, and the Bayesian-frequentist divide —
+      built from first principles with no measure theory.
+    </p>
+    <div class="topics">
+      <span>Bayes' Theorem</span>
+      <span>Priors &amp; Posteriors</span>
+      <span>Shrinkage</span>
+      <span>Bayesian vs Frequentist</span>
+    </div>
+  </div>
+  -->
+
+</div>
+
+<footer>
+  Nency Dhameja &middot; All simulations run in the browser via
+  <a href="https://shiny.posit.co/py/docs/shinylive.html">Shinylive</a>
+</footer>
+
+</body>
+</html>
