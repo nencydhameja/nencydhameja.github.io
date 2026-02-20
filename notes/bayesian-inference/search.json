@@ -82,9 +82,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Introduction to Bayesian Thinking",
+    "title": "Bayesian Thinking",
     "section": "",
-    "text": "Bayesian inference is a framework for updating beliefs with data. You start with what you think is plausible (a prior), observe data, and arrive at an updated belief (a posterior). That’s it — the rest is mechanics.\nThis short course builds intuition through simulations. No measure theory, no MCMC (yet) — just the core logic.\nPrerequisites: Foundations of Statistical Inference",
+    "text": "Notes on Bayesian inference — updating beliefs with data. Start with a prior, observe data, get a posterior. No measure theory, no MCMC (yet) — just the core logic, with simulations.\nBuilds on: Statistical Inference",
     "crumbs": [
       "Welcome"
     ]
@@ -92,7 +92,7 @@
   {
     "objectID": "index.html#topics",
     "href": "index.html#topics",
-    "title": "Introduction to Bayesian Thinking",
+    "title": "Bayesian Thinking",
     "section": "Topics",
     "text": "Topics\n\nBayes’ Theorem — The engine behind everything: how evidence updates beliefs\nPriors & Posteriors — Watch your prior get overwhelmed by data\nBayesian vs Frequentist — Same question, two philosophies, different answers",
     "crumbs": [
@@ -102,7 +102,7 @@
   {
     "objectID": "index.html#how-does-bayesian-inference-relate-to-causal-inference",
     "href": "index.html#how-does-bayesian-inference-relate-to-causal-inference",
-    "title": "Introduction to Bayesian Thinking",
+    "title": "Bayesian Thinking",
     "section": "How does Bayesian inference relate to causal inference?",
     "text": "How does Bayesian inference relate to causal inference?\nThey’re different questions:\n\n\n\n\n\n\n\n\n\nBayesian inference\nCausal inference\n\n\n\n\nQuestion\nWhat should I believe given the data?\nDoes X cause Y?\n\n\nFramework\nPrior + likelihood = posterior\nPotential outcomes, DAGs\n\n\nKey concept\nUpdating beliefs\nCounterfactuals\n\n\n\nYou can combine them — Bayesian causal inference uses Bayesian methods to estimate causal effects — but each stands on its own.",
     "crumbs": [

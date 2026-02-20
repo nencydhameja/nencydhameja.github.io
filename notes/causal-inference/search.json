@@ -32,9 +32,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Applied Causal Inference",
+    "title": "Causal Inference",
     "section": "",
-    "text": "This short course builds intuition for causal inference methods through interactive simulations. Each page pairs plain-language explanation with a hands-on demo you can run in the browser.\nPrerequisite: Foundations of Statistical Inference",
+    "text": "Notes on causal inference methods — each topic pairs explanation with an interactive simulation you can run in the browser.\nBuilds on: Statistical Inference",
     "crumbs": [
       "Welcome"
     ]
@@ -42,7 +42,7 @@
   {
     "objectID": "index.html#topics",
     "href": "index.html#topics",
-    "title": "Applied Causal Inference",
+    "title": "Causal Inference",
     "section": "Topics",
     "text": "Topics\n\nPotential Outcomes & ATE — The framework behind all causal questions\nDifference-in-Differences — Parallel trends, treatment effects & event studies\nInverse Probability Weighting — Reweighting to balance treated and control\nEntropy Balancing — Exact moment balancing without a propensity score model",
     "crumbs": [
