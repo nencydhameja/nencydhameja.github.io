@@ -104,6 +104,7 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light">
@@ -203,7 +204,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#why-mcmc" id="toc-why-mcmc" class="nav-link active" data-scroll-target="#why-mcmc">Why MCMC?</a></li>
+  <li><a href="#what-is-mcmc" id="toc-what-is-mcmc" class="nav-link active" data-scroll-target="#what-is-mcmc">What is MCMC?</a></li>
+  <li><a href="#why-do-we-need-it" id="toc-why-do-we-need-it" class="nav-link" data-scroll-target="#why-do-we-need-it">Why do we need it?</a></li>
   <li><a href="#the-metropolis-hastings-algorithm" id="toc-the-metropolis-hastings-algorithm" class="nav-link" data-scroll-target="#the-metropolis-hastings-algorithm">The Metropolis-Hastings algorithm</a>
   <ul class="collapse">
   <li><a href="#simulation-1-metropolis-hastings-in-action" id="toc-simulation-1-metropolis-hastings-in-action" class="nav-link" data-scroll-target="#simulation-1-metropolis-hastings-in-action">Simulation 1: Metropolis-Hastings in action</a></li>
@@ -241,9 +243,18 @@ window.Quarto = {
 </header>
 
 
-<section id="why-mcmc" class="level2">
-<h2 class="anchored" data-anchor-id="why-mcmc">Why MCMC?</h2>
-<p>On the <a href="priors-posteriors.html">Priors &amp; Posteriors</a> page, we used <strong>conjugate priors</strong> — special prior-likelihood pairs where the posterior has a closed-form solution. That’s elegant but limiting. Most real models don’t have conjugate posteriors:</p>
+<section id="what-is-mcmc" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-mcmc">What is MCMC?</h2>
+<p>The name breaks down into two parts:</p>
+<ul>
+<li><strong>Monte Carlo:</strong> using random sampling to approximate something you can’t compute exactly. Instead of solving an integral analytically, you draw random samples and use their average as an approximation. (Named after the Monte Carlo casino — it’s fundamentally about randomness.)</li>
+<li><strong>Markov Chain:</strong> a sequence of random values where each value depends only on the previous one — not on the full history. The “chain” is a random walk through parameter space, where each step proposes a new value based on where you currently are.</li>
+</ul>
+<p>Put them together: <strong>MCMC constructs a Markov chain whose long-run distribution equals the posterior.</strong> Run it long enough, and the samples you collect are (approximately) draws from <span class="math inline">\(p(\theta \mid y)\)</span> — even though you never computed that distribution directly.</p>
+</section>
+<section id="why-do-we-need-it" class="level2">
+<h2 class="anchored" data-anchor-id="why-do-we-need-it">Why do we need it?</h2>
+<p>On the <a href="priors-posteriors.html">Priors &amp; Posteriors</a> page, we used <strong>conjugate priors</strong> — special prior-likelihood pairs where the posterior has a <a href="priors-posteriors.html#the-problem-most-real-models-arent-conjugate">closed-form solution</a>. That’s elegant but limiting. Most real models don’t have conjugate posteriors:</p>
 <ul>
 <li>Logistic regression with a prior on coefficients</li>
 <li>Hierarchical models with multiple levels of parameters</li>
@@ -253,7 +264,7 @@ window.Quarto = {
 </section>
 <section id="the-metropolis-hastings-algorithm" class="level2">
 <h2 class="anchored" data-anchor-id="the-metropolis-hastings-algorithm">The Metropolis-Hastings algorithm</h2>
-<p>The core idea is beautifully simple:</p>
+<p>The most foundational MCMC algorithm. The core idea is beautifully simple:</p>
 <ol type="1">
 <li>Start at some value <span class="math inline">\(\theta_0\)</span>.</li>
 <li><strong>Propose</strong> a new value <span class="math inline">\(\theta^*\)</span> from a proposal distribution <span class="math inline">\(q(\theta^* \mid \theta_t)\)</span> — typically <span class="math inline">\(\theta^* \sim N(\theta_t, \sigma_{prop}^2)\)</span>.</li>

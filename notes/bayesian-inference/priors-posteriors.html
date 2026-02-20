@@ -104,6 +104,7 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light">
@@ -447,6 +448,20 @@ shinyApp(ui, server)</code></pre>
 <section id="the-problem-most-real-models-arent-conjugate" class="level3">
 <h3 class="anchored" data-anchor-id="the-problem-most-real-models-arent-conjugate">The problem: most real models aren’t conjugate</h3>
 <p>Conjugacy is elegant but limited. It only works for these specific combinations. The moment your model gets realistic — logistic regression with priors on coefficients, hierarchical models with multiple levels, non-standard likelihoods — there’s no conjugate solution. The posterior is some high-dimensional surface with no closed-form expression.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>What does “closed-form” mean?</strong> A closed-form solution is one you can write as a finite formula using standard operations (addition, multiplication, exponents, etc.) and evaluate directly.</p>
+<p><strong>Closed-form (conjugate case):</strong> the posterior mean above — plug in <span class="math inline">\(\mu_0\)</span>, <span class="math inline">\(\sigma_0\)</span>, <span class="math inline">\(n\)</span>, <span class="math inline">\(\bar{y}\)</span>, <span class="math inline">\(\sigma\)</span>, do arithmetic, get the exact answer. Done.</p>
+<p><strong>Not closed-form (non-conjugate case):</strong> say you want the posterior for a logistic regression coefficient <span class="math inline">\(\theta\)</span> with a normal prior:</p>
+<p><span class="math display">\[p(\theta \mid y) = \frac{\prod_{i=1}^n \frac{1}{1 + e^{-\theta x_i}} \cdot e^{-\theta^2/2}}{\int_{-\infty}^{\infty} \prod_{i=1}^n \frac{1}{1 + e^{-\theta x_i}} \cdot e^{-\theta^2/2} \, d\theta}\]</span></p>
+<p>That integral in the denominator? There’s no formula for it. You can’t simplify it to “plug in numbers.” You’d have to numerically approximate it — which is exactly what <a href="mcmc.html">MCMC</a> does (it sidesteps the integral entirely by sampling).</p>
+</div>
+</div>
+</div>
 <p>That’s why <a href="mcmc.html">MCMC</a> exists: when you can’t write down the posterior, you <strong>sample</strong> from it instead. The progression in this course:</p>
 <ul>
 <li><strong>This page:</strong> conjugate priors — exact, instant posteriors (the special case)</li>

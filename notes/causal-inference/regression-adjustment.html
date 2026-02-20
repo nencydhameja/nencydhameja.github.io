@@ -104,6 +104,7 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light">
@@ -267,8 +268,8 @@ window.Quarto = {
   <li><a href="#the-vulnerability-functional-form" id="toc-the-vulnerability-functional-form" class="nav-link" data-scroll-target="#the-vulnerability-functional-form">The vulnerability: functional form</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
-  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul></li>
+  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
     </div>
@@ -557,15 +558,15 @@ shinyApp(ui, server)</code></pre>
 <p>This is why alternatives like <a href="ipw.html">IPW</a> and <a href="entropy-balancing.html">entropy balancing</a> exist: they avoid modeling the outcome entirely. And <a href="doubly-robust.html">doubly robust</a> methods hedge both bets.</p>
 <hr>
 </section>
-<section id="did-you-know" class="level3">
-<h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
+</section>
+<section id="did-you-know" class="level2">
+<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
 <ul>
 <li><p>Regression adjustment is so natural that most applied researchers use it without thinking of it as a “method.” But <strong>Freedman (2008)</strong> showed that even in randomized experiments, regression adjustment can be biased in finite samples if the model is wrong — the linear adjustment can <em>introduce</em> bias that wasn’t there. <strong>Lin (2013)</strong> showed how to fix this: interact the treatment indicator with all covariates, and the resulting estimator is asymptotically unbiased regardless of the true functional form.</p></li>
 <li><p>The vulnerability of regression to functional form is a key motivation for <strong>semiparametric</strong> and <strong>nonparametric</strong> methods. Instead of assuming <span class="math inline">\(E[Y \mid X] = \alpha + \beta X\)</span> (which might be wrong), methods like kernel regression or series estimation let the data determine the shape.</p></li>
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
