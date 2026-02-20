@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Difference-in-Differences – Applied Causal Inference</title>
+<title>Identification vs Estimation – Applied Causal Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +115,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Research Designs</a></li><li class="breadcrumb-item"><a href="./did.html">Difference-in-Differences</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./potential-outcomes.html">Framework</a></li><li class="breadcrumb-item"><a href="./identification-estimation.html">Identification vs Estimation</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -163,7 +163,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./identification-estimation.html" class="sidebar-item-text sidebar-link">
+  <a href="./identification-estimation.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Identification vs Estimation</span></a>
   </div>
 </li>
@@ -186,7 +186,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./did.html" class="sidebar-item-text sidebar-link active">
+  <a href="./did.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Difference-in-Differences</span></a>
   </div>
 </li>
@@ -243,21 +243,24 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
+  <li><a href="#two-separate-questions" id="toc-two-separate-questions" class="nav-link active" data-scroll-target="#two-separate-questions">Two separate questions</a></li>
+  <li><a href="#identification-the-assumption" id="toc-identification-the-assumption" class="nav-link" data-scroll-target="#identification-the-assumption">Identification: the assumption</a></li>
+  <li><a href="#estimation-the-computation" id="toc-estimation-the-computation" class="nav-link" data-scroll-target="#estimation-the-computation">Estimation: the computation</a></li>
+  <li><a href="#research-designs-bundle-both" id="toc-research-designs-bundle-both" class="nav-link" data-scroll-target="#research-designs-bundle-both">Research designs bundle both</a></li>
+  <li><a href="#simulation-identification-matters-estimation-is-secondary" id="toc-simulation-identification-matters-estimation-is-secondary" class="nav-link" data-scroll-target="#simulation-identification-matters-estimation-is-secondary">Simulation: identification matters, estimation is secondary</a>
   <ul class="collapse">
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
-  <li><a href="#when-does-did-fail" id="toc-when-does-did-fail" class="nav-link" data-scroll-target="#when-does-did-fail">When does DID fail?</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
+  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Research Designs</a></li><li class="breadcrumb-item"><a href="./did.html">Difference-in-Differences</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./potential-outcomes.html">Framework</a></li><li class="breadcrumb-item"><a href="./identification-estimation.html">Identification vs Estimation</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Difference-in-Differences</h1>
+<h1 class="title">Identification vs Estimation</h1>
 </div>
 
 
@@ -274,25 +277,163 @@ window.Quarto = {
 </header>
 
 
-<section id="the-idea" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>You have two groups: one gets treated at some point, the other never does. You observe both <strong>before and after</strong> treatment. The key assumption: absent treatment, both groups would have followed <strong>parallel trends</strong>.</p>
-<p><span class="math display">\[\hat{\tau}_{DID} = (\bar{Y}_{treat,post} - \bar{Y}_{treat,pre}) - (\bar{Y}_{ctrl,post} - \bar{Y}_{ctrl,pre})\]</span></p>
-<p>The first difference removes time-invariant group characteristics. The second difference removes common time trends. What’s left is the treatment effect.</p>
-<section id="assumptions" class="level3">
-<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
+<section id="two-separate-questions" class="level2">
+<h2 class="anchored" data-anchor-id="two-separate-questions">Two separate questions</h2>
+<p>Every causal inference study answers two questions:</p>
 <ol type="1">
-<li><strong>Parallel trends:</strong> absent treatment, the treated and control groups would have followed the same trajectory over time — the key assumption</li>
-<li><strong>No anticipation:</strong> treated units don’t change behavior before the treatment date</li>
-<li><strong>SUTVA:</strong> treatment of one group doesn’t spill over to the control group</li>
-<li><strong>Stable composition:</strong> the groups don’t change membership over time (no differential attrition)</li>
+<li><strong>Identification:</strong> <em>Why</em> is this comparison causal? What assumption makes your estimand equal the causal parameter?</li>
+<li><strong>Estimation:</strong> <em>How</em> do you compute the number from data? What statistical procedure do you use?</li>
 </ol>
+<p>These are independent. You can have perfect identification with a bad estimator (noisy but unbiased). You can have a brilliant estimator with no identification (precise but wrong). <strong>Identification comes first.</strong> If your assumptions don’t hold, no estimator can save you.</p>
 </section>
-<section id="when-does-did-fail" class="level3">
-<h3 class="anchored" data-anchor-id="when-does-did-fail">When does DID fail?</h3>
-<p>When the parallel trends assumption is violated — if the treated group was already on a different trajectory <em>before</em> treatment. The simulation below lets you break this assumption and see the bias that results.</p>
+<section id="identification-the-assumption" class="level2">
+<h2 class="anchored" data-anchor-id="identification-the-assumption">Identification: the assumption</h2>
+<p>Identification is about the <strong>source of exogenous variation</strong> — why the variation in treatment you’re using is “as good as random” for estimating a causal effect.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Identification strategy</th>
+<th>The assumption</th>
+<th>In words</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Selection on observables</strong></td>
+<td><span class="math inline">\(Y(0), Y(1) \perp D \mid X\)</span></td>
+<td>Conditional on X, treatment is as good as random</td>
+</tr>
+<tr class="even">
+<td><strong>Parallel trends</strong></td>
+<td><span class="math inline">\(E[Y(0)_t - Y(0)_{t-1} \mid D=1] = E[Y(0)_t - Y(0)_{t-1} \mid D=0]\)</span></td>
+<td>Absent treatment, both groups would have trended the same</td>
+</tr>
+<tr class="odd">
+<td><strong>Exclusion restriction</strong></td>
+<td><span class="math inline">\(Z\)</span> affects <span class="math inline">\(Y\)</span> only through <span class="math inline">\(X\)</span></td>
+<td>The instrument has no direct effect on the outcome</td>
+</tr>
+<tr class="even">
+<td><strong>Continuity</strong></td>
+<td><span class="math inline">\(E[Y(0) \mid X=x]\)</span> is continuous at the cutoff</td>
+<td>No other jump happens at the cutoff</td>
+</tr>
+</tbody>
+</table>
+<p>Each assumption is a <strong>claim about the world</strong> — not something you compute. You argue it using institutional knowledge, theory, and indirect evidence. Some are partially testable (you can check pre-trends for DID, run a McCrary test for RDD), but none can be fully proven from data.</p>
+</section>
+<section id="estimation-the-computation" class="level2">
+<h2 class="anchored" data-anchor-id="estimation-the-computation">Estimation: the computation</h2>
+<p>Estimation is about <strong>how you turn data into a number</strong>, given that you believe your identification assumption holds.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Estimator</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>OLS regression</strong></td>
+<td>Fits a linear model, uses coefficients</td>
+</tr>
+<tr class="even">
+<td><strong>Matching</strong></td>
+<td>Pairs treated/control units with similar covariates</td>
+</tr>
+<tr class="odd">
+<td><strong>IPW</strong></td>
+<td>Reweights observations by inverse propensity scores</td>
+</tr>
+<tr class="even">
+<td><strong>Entropy balancing</strong></td>
+<td>Finds weights that exactly balance covariate moments</td>
+</tr>
+<tr class="odd">
+<td><strong>Doubly robust</strong></td>
+<td>Combines regression and weighting</td>
+</tr>
+<tr class="even">
+<td><strong>2SLS</strong></td>
+<td>Two-stage regression using predicted values from the first stage</td>
+</tr>
+<tr class="odd">
+<td><strong>Local polynomial</strong></td>
+<td>Fits flexible curves on each side of a cutoff</td>
+</tr>
+<tr class="even">
+<td><strong>Synthetic control weights</strong></td>
+<td>Constrained optimization to match pre-treatment trends</td>
+</tr>
+<tr class="odd">
+<td><strong>TWFE</strong></td>
+<td>Two-way fixed effects regression</td>
+</tr>
+</tbody>
+</table>
+<p>These are <strong>tools</strong> — they can often be combined with different identification strategies. IPW can implement selection on observables <em>or</em> be used in a DID design (IPW-DID). Regression can adjust for covariates in an RDD <em>or</em> in a cross-sectional study. The estimator doesn’t determine identification; the assumption does.</p>
+</section>
+<section id="research-designs-bundle-both" class="level2">
+<h2 class="anchored" data-anchor-id="research-designs-bundle-both">Research designs bundle both</h2>
+<p>What we usually call “methods” in applied work — DID, IV, RDD — are really <strong>research designs</strong> that bundle an identification strategy with a default estimator:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Research design</th>
+<th>Identification</th>
+<th>Common estimators</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>SOO study</strong></td>
+<td>Conditional independence</td>
+<td>Regression, matching, IPW, EB, doubly robust</td>
+</tr>
+<tr class="even">
+<td><strong>DID</strong></td>
+<td>Parallel trends</td>
+<td>2×2 difference, TWFE, IPW-DID (Abadie 2005), DR-DID (Sant’Anna &amp; Zhao 2020)</td>
+</tr>
+<tr class="odd">
+<td><strong>IV</strong></td>
+<td>Exclusion restriction + relevance</td>
+<td>2SLS, LIML, GMM</td>
+</tr>
+<tr class="even">
+<td><strong>RDD</strong></td>
+<td>Continuity at cutoff</td>
+<td>Local polynomial, local randomization</td>
+</tr>
+<tr class="odd">
+<td><strong>Synthetic control</strong></td>
+<td>Pre-treatment fit → valid counterfactual</td>
+<td>Constrained weight optimization, augmented SCM</td>
+</tr>
+</tbody>
+</table>
+<p>This is why the same estimation tool shows up in multiple designs. IPW appears in the SOO column <em>and</em> the DID column — because it’s a tool, not a strategy.</p>
+<hr>
+</section>
+<section id="simulation-identification-matters-estimation-is-secondary" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-identification-matters-estimation-is-secondary">Simulation: identification matters, estimation is secondary</h2>
+<p>Same data, same identification assumption, three different estimators. When the assumption holds, they all work. When it doesn’t, they all fail.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 620
+#| viewerHeight: 580
 
 library(shiny)
 
@@ -300,7 +441,7 @@ ui &lt;- fluidPage(
   tags$head(tags$style(HTML("
     .stats-box {
       background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
+      margin-top: 12px; font-size: 13px; line-height: 1.8;
     }
     .stats-box b { color: #2c3e50; }
     .good { color: #27ae60; font-weight: bold; }
@@ -311,26 +452,26 @@ ui &lt;- fluidPage(
     sidebarPanel(
       width = 3,
 
-      sliderInput("n_units", "Units per group:",
-                  min = 20, max = 200, value = 50, step = 10),
+      sliderInput("n_ie", "Sample size:",
+                  min = 200, max = 2000, value = 500, step = 100),
 
-      sliderInput("true_effect", "True treatment effect:",
+      sliderInput("ate_ie", "True ATE:",
                   min = 0, max = 5, value = 2, step = 0.5),
 
-      sliderInput("trend_diff", "Differential pre-trend\n(violation of parallel trends):",
-                  min = -1, max = 1, value = 0, step = 0.1),
+      sliderInput("obs_ie", "Observed confounding (X):",
+                  min = 0, max = 3, value = 1.5, step = 0.25),
 
-      sliderInput("sigma", "Noise (SD):",
-                  min = 0.5, max = 3, value = 1, step = 0.25),
+      sliderInput("unobs_ie", "Unobserved confounding (U):",
+                  min = 0, max = 3, value = 0, step = 0.25),
 
-      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
+      actionButton("go_ie", "New draw", class = "btn-primary", width = "100%"),
 
-      uiOutput("results")
+      uiOutput("results_ie")
     ),
 
     mainPanel(
       width = 9,
-      plotOutput("did_plot", height = "450px")
+      plotOutput("ie_plot", height = "420px")
     )
   )
 )
@@ -338,114 +479,119 @@ ui &lt;- fluidPage(
 server &lt;- function(input, output, session) {
 
   dat &lt;- reactive({
-    input$go
-    n     &lt;- input$n_units
-    tau   &lt;- input$true_effect
-    delta &lt;- input$trend_diff
-    sigma &lt;- input$sigma
+    input$go_ie
+    n   &lt;- input$n_ie
+    ate &lt;- input$ate_ie
+    gx  &lt;- input$obs_ie
+    gu  &lt;- input$unobs_ie
 
-    periods &lt;- -4:4
-    treat_time &lt;- 1  # treatment at t = 1
+    x &lt;- rnorm(n)
+    u &lt;- rnorm(n)
 
-    # Group means over time
-    ctrl_mean &lt;- 3 + 0.3 * periods
-    treat_mean &lt;- 5 + (0.3 + delta) * periods
+    p &lt;- pnorm(gx * x + gu * u)
+    treat &lt;- rbinom(n, 1, p)
 
-    # Add treatment effect post
-    treat_mean[periods &gt;= treat_time] &lt;- treat_mean[periods &gt;= treat_time] + tau
+    y &lt;- 1 + 2 * x + 1.5 * u + ate * treat + rnorm(n)
 
-    # Generate unit-level data
-    ctrl_data &lt;- sapply(ctrl_mean, function(m) m + rnorm(n, sd = sigma))
-    treat_data &lt;- sapply(treat_mean, function(m) m + rnorm(n, sd = sigma))
+    # Estimator 1: OLS regression controlling for X
+    est_reg &lt;- coef(lm(y ~ treat + x))[2]
 
-    ctrl_means_obs &lt;- colMeans(ctrl_data)
-    treat_means_obs &lt;- colMeans(treat_data)
+    # Estimator 2: IPW
+    ps &lt;- fitted(glm(treat ~ x, family = binomial))
+    ps &lt;- pmin(pmax(ps, 0.01), 0.99)
+    w &lt;- ifelse(treat == 1, 1 / ps, 1 / (1 - ps))
+    est_ipw &lt;- weighted.mean(y[treat == 1], w[treat == 1]) -
+               weighted.mean(y[treat == 0], w[treat == 0])
 
-    # DID estimate (using t=0 as pre, t=1 as post)
-    pre_idx  &lt;- which(periods == 0)
-    post_idx &lt;- which(periods == 1)
+    # Estimator 3: Matching (simple: nearest neighbor on X)
+    matched_y &lt;- numeric(sum(treat == 1))
+    x_t &lt;- x[treat == 1]
+    y_t &lt;- y[treat == 1]
+    x_c &lt;- x[treat == 0]
+    y_c &lt;- y[treat == 0]
+    for (i in seq_along(x_t)) {
+      nearest &lt;- which.min(abs(x_c - x_t[i]))
+      matched_y[i] &lt;- y_c[nearest]
+    }
+    est_match &lt;- mean(y_t) - mean(matched_y)
 
-    did_est &lt;- (treat_means_obs[post_idx] - treat_means_obs[pre_idx]) -
-               (ctrl_means_obs[post_idx] - ctrl_means_obs[pre_idx])
-
-    # Counterfactual for treated (parallel to control from t=0)
-    cf &lt;- treat_means_obs[pre_idx] + (ctrl_means_obs - ctrl_means_obs[pre_idx])
-
-    list(periods = periods, ctrl = ctrl_means_obs, treat = treat_means_obs,
-         cf = cf, did_est = did_est, tau = tau, delta = delta,
-         treat_time = treat_time)
+    list(est_reg = est_reg, est_ipw = est_ipw, est_match = est_match,
+         ate = ate, gu = gu)
   })
 
-  output$did_plot &lt;- renderPlot({
+  output$ie_plot &lt;- renderPlot({
     d &lt;- dat()
+    par(mar = c(5, 4.5, 3, 1))
 
-    par(mar = c(4.5, 4.5, 3, 1))
-    ylim &lt;- range(c(d$ctrl, d$treat, d$cf)) + c(-0.5, 0.5)
+    estimates &lt;- c(d$est_reg, d$est_ipw, d$est_match)
+    biases &lt;- estimates - d$ate
+    labels &lt;- c("OLS\nregression", "IPW", "Nearest-neighbor\nmatching")
 
-    plot(d$periods, d$treat, type = "b", pch = 19, lwd = 2.5, col = "#3498db",
-         xlab = "Time period", ylab = "Mean outcome",
-         main = "Difference-in-Differences",
-         ylim = ylim, xaxt = "n")
-    axis(1, at = d$periods)
+    cia_holds &lt;- d$gu == 0
+    cols &lt;- ifelse(abs(biases) &lt; 0.5, "#27ae60", "#e74c3c")
 
-    lines(d$periods, d$ctrl, type = "b", pch = 19, lwd = 2.5, col = "#e74c3c")
+    bp &lt;- barplot(estimates, col = cols, border = NA,
+                  names.arg = labels, cex.names = 0.85,
+                  main = ifelse(cia_holds,
+                    "CIA holds: all estimators work",
+                    "CIA violated: all estimators fail"),
+                  ylab = "Estimate",
+                  ylim = c(0, max(estimates, d$ate) * 1.5))
 
-    # Counterfactual (dashed, post only)
-    post &lt;- d$periods &gt;= d$treat_time
-    lines(d$periods[post], d$cf[post], type = "b", pch = 1, lwd = 2, lty = 2,
-          col = "#3498db80")
+    abline(h = d$ate, lty = 2, col = "gray40", lwd = 2)
+    text(0.2, d$ate + 0.15, paste0("True ATE = ", d$ate),
+         col = "gray40", cex = 0.85, adj = 0)
 
-    # Treatment onset
-    abline(v = d$treat_time - 0.5, lty = 3, col = "gray50", lwd = 1.5)
-    text(d$treat_time - 0.5, ylim[2], "Treatment", pos = 4, cex = 0.85, col = "gray40")
-
-    # DID bracket
-    pre_idx  &lt;- which(d$periods == 0)
-    post_idx &lt;- which(d$periods == 1)
-    arrows(max(d$periods) - 0.3, d$cf[post_idx],
-           max(d$periods) - 0.3, d$treat[post_idx],
-           code = 3, lwd = 2, col = "#27ae60", length = 0.1)
-    text(max(d$periods) - 0.1, (d$cf[post_idx] + d$treat[post_idx]) / 2,
-         paste0("DID = ", round(d$did_est, 2)),
-         col = "#27ae60", cex = 0.9, adj = 0)
-
-    legend("topleft", bty = "n", cex = 0.85,
-           legend = c("Treated", "Control", "Counterfactual (parallel trends)"),
-           col = c("#3498db", "#e74c3c", "#3498db80"),
-           pch = c(19, 19, 1), lty = c(1, 1, 2), lwd = c(2.5, 2.5, 2))
+    text(bp, estimates + 0.2,
+         paste0(round(estimates, 2)),
+         cex = 0.9, font = 2)
   })
 
-  output$results &lt;- renderUI({
+  output$results_ie &lt;- renderUI({
     d &lt;- dat()
-    bias &lt;- d$did_est - d$tau
-    biased &lt;- abs(d$delta) &gt; 0.05
+    cia_holds &lt;- d$gu == 0
 
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;True effect:&lt;/b&gt; ", d$tau, "&lt;br&gt;",
-        "&lt;b&gt;DID estimate:&lt;/b&gt; ", round(d$did_est, 3), "&lt;br&gt;",
-        "&lt;b&gt;Bias:&lt;/b&gt; &lt;span class='", ifelse(biased, "bad", "good"), "'&gt;",
-        round(bias, 3), "&lt;/span&gt;&lt;br&gt;",
-        if (biased) "&lt;br&gt;&lt;small&gt;Parallel trends violated &amp;mdash; DID is biased.&lt;/small&gt;"
-        else "&lt;br&gt;&lt;small&gt;Parallel trends hold &amp;mdash; DID is unbiased.&lt;/small&gt;"
+        "&lt;b&gt;True ATE:&lt;/b&gt; ", d$ate, "&lt;br&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        "&lt;b&gt;Regression:&lt;/b&gt; ", round(d$est_reg, 2),
+        " (bias: ", round(d$est_reg - d$ate, 2), ")&lt;br&gt;",
+        "&lt;b&gt;IPW:&lt;/b&gt; ", round(d$est_ipw, 2),
+        " (bias: ", round(d$est_ipw - d$ate, 2), ")&lt;br&gt;",
+        "&lt;b&gt;Matching:&lt;/b&gt; ", round(d$est_match, 2),
+        " (bias: ", round(d$est_match - d$ate, 2), ")&lt;br&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        if (cia_holds)
+          "&lt;span class='good'&gt;CIA holds.&lt;/span&gt; All three estimators give similar, roughly unbiased answers. The choice of estimator is secondary."
+        else
+          "&lt;span class='bad'&gt;CIA violated.&lt;/span&gt; All three estimators are biased. Switching estimators doesn't help — you need a different identification strategy."
       ))
     )
   })
 }
 
 shinyApp(ui, server)</code></pre>
-</section>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Differential pre-trend = 0:</strong> parallel trends hold, DID nails the true effect.</li>
-<li><strong>Slide the differential pre-trend to +0.5:</strong> the treated group was already rising faster. DID attributes some of that trend to the treatment — the estimate is biased upward.</li>
-<li><strong>Set true effect = 0 with a differential trend:</strong> DID “finds” an effect that doesn’t exist. That’s how pre-trend violations create false positives.</li>
-<li>Look at the pre-treatment periods — if the lines aren’t parallel before treatment, you should worry.</li>
+<li><strong>Unobserved confounding = 0:</strong> the CIA holds. All three estimators — regression, IPW, matching — give roughly the same answer, close to the true ATE. The choice between them is about efficiency, not bias.</li>
+<li><strong>Unobserved confounding = 2:</strong> the CIA is violated. All three estimators are biased in the same direction. Switching from regression to IPW to matching doesn’t help — the problem is identification, not estimation.</li>
+<li><strong>Increase sample size with unobserved confounding:</strong> all three get more <em>precise</em> but stay <em>biased</em>. More data doesn’t fix a broken assumption.</li>
+</ul>
+<p>The lesson: <strong>spend your energy on identification, not on the fanciest estimator.</strong></p>
+<hr>
+</section>
+</section>
+<section id="did-you-know" class="level2">
+<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
+<ul>
+<li><p>The distinction between identification and estimation was articulated clearly by <strong>Charles Manski</strong> in his 1995 book <em>Identification Problems in the Social Sciences</em>. He argued that most debates in empirical work are really about identification, not estimation.</p></li>
+<li><p><strong>Angrist &amp; Pischke</strong> (<em>Mostly Harmless Econometrics</em>, 2009) organized their entire textbook around identification strategies — regression, IV, DID, RDD — rather than estimators. This framing reshaped how a generation of economists thinks about empirical work.</p></li>
+<li><p>A common mistake in applied papers: spending pages discussing the estimator (clustered SEs, bootstrap, semiparametric methods) while spending one paragraph on identification. The estimator is the easy part. The hard part is arguing that your comparison is causal.</p></li>
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
