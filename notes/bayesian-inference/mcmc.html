@@ -204,7 +204,10 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-is-mcmc" id="toc-what-is-mcmc" class="nav-link active" data-scroll-target="#what-is-mcmc">What is MCMC?</a></li>
+  <li><a href="#what-is-mcmc" id="toc-what-is-mcmc" class="nav-link active" data-scroll-target="#what-is-mcmc">What is MCMC?</a>
+  <ul class="collapse">
+  <li><a href="#watch-it-happen" id="toc-watch-it-happen" class="nav-link" data-scroll-target="#watch-it-happen">Watch it happen</a></li>
+  </ul></li>
   <li><a href="#why-do-we-need-it" id="toc-why-do-we-need-it" class="nav-link" data-scroll-target="#why-do-we-need-it">Why do we need it?</a></li>
   <li><a href="#the-metropolis-hastings-algorithm" id="toc-the-metropolis-hastings-algorithm" class="nav-link" data-scroll-target="#the-metropolis-hastings-algorithm">The Metropolis-Hastings algorithm</a>
   <ul class="collapse">
@@ -251,6 +254,148 @@ window.Quarto = {
 <li><strong>Markov Chain:</strong> a sequence of random values where each value depends only on the previous one — not on the full history. The “chain” is a random walk through parameter space, where each step proposes a new value based on where you currently are.</li>
 </ul>
 <p>Put them together: <strong>MCMC constructs a Markov chain whose long-run distribution equals the posterior.</strong> Run it long enough, and the samples you collect are (approximately) draws from <span class="math inline">\(p(\theta \mid y)\)</span> — even though you never computed that distribution directly.</p>
+<section id="watch-it-happen" class="level3">
+<h3 class="anchored" data-anchor-id="watch-it-happen">Watch it happen</h3>
+<p>The chain wanders through parameter space. Early on, the histogram of visited values looks nothing like the target. But as samples accumulate, the histogram converges to the true posterior — the chain has “learned” the distribution just by random walking.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 480
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 8px; font-size: 13px; line-height: 1.7;
+    }
+    .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("show_n", "Samples to show:",
+                  min = 10, max = 5000, value = 50, step = 10,
+                  animate = animationOptions(interval = 80, loop = FALSE)),
+
+      actionButton("go_intro", "New chain", class = "btn-primary", width = "100%"),
+
+      uiOutput("results_intro")
+    ),
+
+    mainPanel(
+      width = 9,
+      fluidRow(
+        column(6, plotOutput("trace_intro", height = "340px")),
+        column(6, plotOutput("hist_intro", height = "340px"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  chain_data &lt;- reactive({
+    input$go_intro
+
+    # Target: posterior is N(2, 0.5^2) — we pretend we can't compute this
+    target_mu &lt;- 2
+    target_sd &lt;- 0.5
+    log_target &lt;- function(x) dnorm(x, target_mu, target_sd, log = TRUE)
+
+    # Run a long chain once
+    n_total &lt;- 5000
+    chain &lt;- numeric(n_total)
+    chain[1] &lt;- -1  # start far from the target
+    prop_sd &lt;- 0.4
+
+    for (t in 2:n_total) {
+      proposal &lt;- rnorm(1, chain[t - 1], prop_sd)
+      log_r &lt;- log_target(proposal) - log_target(chain[t - 1])
+      if (log(runif(1)) &lt; log_r) {
+        chain[t] &lt;- proposal
+      } else {
+        chain[t] &lt;- chain[t - 1]
+      }
+    }
+
+    list(chain = chain, target_mu = target_mu, target_sd = target_sd)
+  })
+
+  output$trace_intro &lt;- renderPlot({
+    d &lt;- chain_data()
+    n_show &lt;- min(input$show_n, length(d$chain))
+    par(mar = c(4, 4.5, 3, 1))
+
+    plot(1:n_show, d$chain[1:n_show], type = "l",
+         col = "#3498db80", lwd = 0.6,
+         xlim = c(1, max(200, n_show)),
+         ylim = range(d$chain),
+         xlab = "Step", ylab = expression(theta),
+         main = "The chain explores")
+
+    # Show current position
+    points(n_show, d$chain[n_show], pch = 19, col = "#e74c3c", cex = 1.5)
+
+    abline(h = d$target_mu, lty = 2, col = "#27ae60", lwd = 1.5)
+    text(max(200, n_show) * 0.95, d$target_mu,
+         expression("Target " * mu), pos = 3, cex = 0.8, col = "#27ae60")
+  })
+
+  output$hist_intro &lt;- renderPlot({
+    d &lt;- chain_data()
+    n_show &lt;- min(input$show_n, length(d$chain))
+    samples &lt;- d$chain[1:n_show]
+    par(mar = c(4, 4.5, 3, 1))
+
+    xlim &lt;- c(d$target_mu - 3 * d$target_sd - 1,
+              d$target_mu + 3 * d$target_sd + 1)
+
+    hist(samples, breaks = seq(xlim[1], xlim[2], length.out = 40),
+         freq = FALSE, col = "#3498db40", border = "#3498db",
+         xlim = xlim, ylim = c(0, 1.2),
+         xlab = expression(theta), main = "Histogram vs true posterior")
+
+    # True target
+    x_seq &lt;- seq(xlim[1], xlim[2], length.out = 300)
+    lines(x_seq, dnorm(x_seq, d$target_mu, d$target_sd),
+          col = "#27ae60", lwd = 2.5)
+
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c(paste0("MCMC samples (n=", n_show, ")"),
+                      "True posterior"),
+           col = c("#3498db", "#27ae60"),
+           lwd = c(NA, 2.5), pch = c(15, NA), pt.cex = c(1.5, NA))
+  })
+
+  output$results_intro &lt;- renderUI({
+    d &lt;- chain_data()
+    n_show &lt;- min(input$show_n, length(d$chain))
+    samples &lt;- d$chain[1:n_show]
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;Samples:&lt;/b&gt; ", n_show, "&lt;br&gt;",
+        "&lt;b&gt;MCMC mean:&lt;/b&gt; ", round(mean(samples), 3), "&lt;br&gt;",
+        "&lt;b&gt;True mean:&lt;/b&gt; ", d$target_mu, "&lt;br&gt;",
+        "&lt;b&gt;Error:&lt;/b&gt; &lt;span class='good'&gt;",
+        round(abs(mean(samples) - d$target_mu), 3), "&lt;/span&gt;"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<p>Drag the slider (or hit the play button) and watch:</p>
+<ul>
+<li><strong>10 samples:</strong> the histogram is jagged, nothing like the green curve. The chain hasn’t explored enough.</li>
+<li><strong>100 samples:</strong> the shape starts to emerge. The chain has found the high-probability region.</li>
+<li><strong>1000+ samples:</strong> the histogram matches the true posterior almost exactly. The chain has “learned” the distribution through random walking alone.</li>
+</ul>
+<p>The chain never knew the formula for the green curve. It only knew how to evaluate the posterior at any single point and compare “is this new spot better or worse?” That’s enough.</p>
+</section>
 </section>
 <section id="why-do-we-need-it" class="level2">
 <h2 class="anchored" data-anchor-id="why-do-we-need-it">Why do we need it?</h2>
