@@ -503,7 +503,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="simulation-1-same-scatter-plot-different-causal-stories">Simulation 1: Same scatter plot, different causal stories</h2>
 <p>Three different causal structures — all producing <strong>the same correlation</strong> between X and Y. Drag the sliders and watch: the scatter plots are indistinguishable, but the true causal effect of X on Y is completely different in each case.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 950
+#| viewerHeight: 700
 
 library(shiny)
 
@@ -536,9 +536,13 @@ ui &lt;- fluidPage(
 
     mainPanel(
       width = 8,
-      plotOutput("plot_causal", height = "280px"),
-      plotOutput("plot_confound", height = "280px"),
-      plotOutput("plot_reverse", height = "280px")
+      fluidRow(
+        column(6, plotOutput("plot_causal", height = "220px")),
+        column(6, plotOutput("plot_confound", height = "220px"))
+      ),
+      fluidRow(
+        column(6, offset = 3, plotOutput("plot_reverse", height = "220px"))
+      )
     )
   )
 )
@@ -578,13 +582,13 @@ server &lt;- function(input, output, session) {
 
   output$plot_causal &lt;- renderPlot({
     d &lt;- sim()
-    par(mar = c(4, 5, 3, 2))
-    plot(d$x1, d$y1, pch = 16, cex = 0.6,
+    par(mar = c(3, 4, 2.5, 1))
+    plot(d$x1, d$y1, pch = 16, cex = 0.5,
          col = adjustcolor("#3498db", 0.4),
          xlab = "X", ylab = "Y",
          main = expression("Story 1: X causes Y  (" * X %-&gt;% Y * ")"))
     abline(lm(d$y1 ~ d$x1), col = "#e74c3c", lwd = 3)
-    legend("topleft", bty = "n", cex = 1,
+    legend("topleft", bty = "n", cex = 0.8,
            legend = paste0("OLS slope = ", round(d$b1, 2),
                            "  |  True effect = ", d$true_b),
            text.col = if (abs(d$b1 - d$true_b) &lt; 0.15) "#27ae60" else "#e74c3c",
@@ -593,13 +597,13 @@ server &lt;- function(input, output, session) {
 
   output$plot_confound &lt;- renderPlot({
     d &lt;- sim()
-    par(mar = c(4, 5, 3, 2))
-    plot(d$x2, d$y2, pch = 16, cex = 0.6,
+    par(mar = c(3, 4, 2.5, 1))
+    plot(d$x2, d$y2, pch = 16, cex = 0.5,
          col = adjustcolor("#3498db", 0.4),
          xlab = "X", ylab = "Y",
          main = expression("Story 2: Confounding  (" * Z %-&gt;% X * "," ~~ Z %-&gt;% Y * ")"))
     abline(lm(d$y2 ~ d$x2), col = "#e74c3c", lwd = 3)
-    legend("topleft", bty = "n", cex = 1,
+    legend("topleft", bty = "n", cex = 0.8,
            legend = paste0("OLS slope = ", round(d$b2, 2),
                            "  |  True effect = ", d$true_b,
                            "  [BIASED]"),
@@ -608,13 +612,13 @@ server &lt;- function(input, output, session) {
 
   output$plot_reverse &lt;- renderPlot({
     d &lt;- sim()
-    par(mar = c(4, 5, 3, 2))
-    plot(d$x3, d$y3, pch = 16, cex = 0.6,
+    par(mar = c(3, 4, 2.5, 1))
+    plot(d$x3, d$y3, pch = 16, cex = 0.5,
          col = adjustcolor("#3498db", 0.4),
          xlab = "X", ylab = "Y",
          main = expression("Story 3: Reverse causality  (" * Y %-&gt;% X * ")"))
     abline(lm(d$y3 ~ d$x3), col = "#e74c3c", lwd = 3)
-    legend("topleft", bty = "n", cex = 1,
+    legend("topleft", bty = "n", cex = 0.8,
            legend = paste0("OLS slope = ", round(d$b3, 2),
                            "  |  True effect = 0  [MISLEADING]"),
            text.col = "#e74c3c", text.font = 2)
