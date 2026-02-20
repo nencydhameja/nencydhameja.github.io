@@ -265,6 +265,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
   <li><a href="#why-randomization-works" id="toc-why-randomization-works" class="nav-link" data-scroll-target="#why-randomization-works">Why randomization works</a></li>
+  <li><a href="#under-random-assignment-selection-bias-0" id="toc-under-random-assignment-selection-bias-0" class="nav-link" data-scroll-target="#under-random-assignment-selection-bias-0">Under random assignment, selection bias = 0</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
   <li><a href="#what-if-you-cant-randomize" id="toc-what-if-you-cant-randomize" class="nav-link" data-scroll-target="#what-if-you-cant-randomize">What if you can’t randomize?</a>
@@ -318,8 +319,27 @@ window.Quarto = {
 </section>
 <section id="why-randomization-works" class="level3">
 <h3 class="anchored" data-anchor-id="why-randomization-works">Why randomization works</h3>
-<p>If treatment is assigned randomly, the treated and control groups are comparable <em>on average</em>. The difference in group means is an unbiased estimator of the ATE. But if treatment isn’t random — if sicker people seek treatment — the naive comparison is biased. That’s <strong>selection bias</strong>.</p>
-<p>The simulation below lets you see both potential outcomes (which you never get in real life), watch selection bias appear, and see how randomization fixes it.</p>
+<p>Start with the only thing we can compute from data — the <strong>difference in observed group means</strong>:</p>
+<p><span class="math display">\[E[Y \mid D=1] - E[Y \mid D=0]\]</span></p>
+<p>By consistency (<span class="math inline">\(Y_i = D_i Y_i(1) + (1 - D_i) Y_i(0)\)</span>), this equals:</p>
+<p><span class="math display">\[E[Y(1) \mid D=1] - E[Y(0) \mid D=0]\]</span></p>
+<p>Now add and subtract <span class="math inline">\(E[Y(0) \mid D=1]\)</span>:</p>
+<p><span class="math display">\[\underbrace{E[Y(1) \mid D=1] - E[Y(0) \mid D=1]}_{\text{ATT}} + \underbrace{E[Y(0) \mid D=1] - E[Y(0) \mid D=0]}_{\text{Selection bias}}\]</span></p>
+<p>This is the <strong>fundamental decomposition</strong>:</p>
+<p><span class="math display">\[\text{Difference in means} = \text{ATT} + \text{Selection bias}\]</span></p>
+<p>The <strong>selection bias</strong> term asks: would the treated group have had different outcomes <em>even without treatment</em>? If sicker people seek treatment, then <span class="math inline">\(E[Y(0) \mid D=1] &lt; E[Y(0) \mid D=0]\)</span> — the treated group would have done worse anyway — and the naive comparison underestimates the effect.</p>
+</section>
+<section id="under-random-assignment-selection-bias-0" class="level3">
+<h3 class="anchored" data-anchor-id="under-random-assignment-selection-bias-0">Under random assignment, selection bias = 0</h3>
+<p>If <span class="math inline">\(D\)</span> is independent of potential outcomes — <span class="math inline">\(Y(0), Y(1) \perp D\)</span> — then conditioning on <span class="math inline">\(D\)</span> doesn’t matter:</p>
+<p><span class="math display">\[E[Y(0) \mid D=1] = E[Y(0) \mid D=0] = E[Y(0)]\]</span></p>
+<p>The selection bias term is exactly zero. And the ATT simplifies:</p>
+<p><span class="math display">\[\text{ATT} = E[Y(1) \mid D=1] - E[Y(0) \mid D=1] = E[Y(1)] - E[Y(0)] = \text{ATE}\]</span></p>
+<p>So under random assignment:</p>
+<p><span class="math display">\[\boxed{\text{Difference in means} = \text{ATT} = \text{ATE}}\]</span></p>
+<p>The naive estimator — just comparing group averages — gives you the causal effect. No modeling, no assumptions about functional form. That’s why randomization is the gold standard.</p>
+<p>Without randomization, the selection bias term is generally nonzero, and the difference in means ≠ ATE. Every method in this course is a strategy for eliminating or working around that selection bias.</p>
+<p>The simulation below lets you see both potential outcomes (which you never get in real life), watch selection bias appear, and see how randomization kills it.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 620
 
