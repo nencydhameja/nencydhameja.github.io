@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Frisch-Waugh-Lovell Theorem – Foundations of Statistical Inference</title>
+<title>Measurement Error &amp; Attenuation Bias – Foundations of Statistical Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cef.html">Regression &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./fwl.html">Frisch-Waugh-Lovell</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cef.html">Regression &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./measurement-error.html">Measurement Error &amp; Attenuation Bias</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -275,13 +275,13 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fwl.html" class="sidebar-item-text sidebar-link active">
+  <a href="./fwl.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Frisch-Waugh-Lovell</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./measurement-error.html" class="sidebar-item-text sidebar-link">
+  <a href="./measurement-error.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Measurement Error &amp; Attenuation Bias</span></a>
   </div>
 </li>
@@ -320,16 +320,30 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link active" data-scroll-target="#did-you-know">Did you know?</a></li>
+  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem">The problem</a>
+  <ul class="collapse">
+  <li><a href="#why-does-it-shrink-toward-zero" id="toc-why-does-it-shrink-toward-zero" class="nav-link" data-scroll-target="#why-does-it-shrink-toward-zero">Why does it shrink toward zero?</a></li>
+  </ul></li>
+  <li><a href="#simulation-1-watch-the-slope-attenuate" id="toc-simulation-1-watch-the-slope-attenuate" class="nav-link" data-scroll-target="#simulation-1-watch-the-slope-attenuate">Simulation 1: Watch the slope attenuate</a>
+  <ul class="collapse">
+  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  </ul></li>
+  <li><a href="#simulation-2-attenuation-is-systematic-not-just-noisy" id="toc-simulation-2-attenuation-is-systematic-not-just-noisy" class="nav-link" data-scroll-target="#simulation-2-attenuation-is-systematic-not-just-noisy">Simulation 2: Attenuation is systematic, not just noisy</a>
+  <ul class="collapse">
+  <li><a href="#things-to-try-1" id="toc-things-to-try-1" class="nav-link" data-scroll-target="#things-to-try-1">Things to try</a></li>
+  </ul></li>
+  <li><a href="#measurement-error-in-y-vs-x" id="toc-measurement-error-in-y-vs-x" class="nav-link" data-scroll-target="#measurement-error-in-y-vs-x">Measurement error in Y vs X</a></li>
+  <li><a href="#what-can-you-do-about-it" id="toc-what-can-you-do-about-it" class="nav-link" data-scroll-target="#what-can-you-do-about-it">What can you do about it?</a></li>
+  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cef.html">Regression &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./fwl.html">Frisch-Waugh-Lovell</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cef.html">Regression &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./measurement-error.html">Measurement Error &amp; Attenuation Bias</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Frisch-Waugh-Lovell Theorem</h1>
+<h1 class="title">Measurement Error &amp; Attenuation Bias</h1>
 </div>
 
 
@@ -346,178 +360,360 @@ window.Quarto = {
 </header>
 
 
-<p>The <strong>Frisch-Waugh-Lovell (FWL) theorem</strong> says: the coefficient on <span class="math inline">\(X_1\)</span> in <span class="math inline">\(Y = \beta_1 X_1 + \beta_2 X_2 + \varepsilon\)</span> is identical to the slope from regressing the <strong>residualized</strong> <span class="math inline">\(Y\)</span> on the <strong>residualized</strong> <span class="math inline">\(X_1\)</span> — after partialling out <span class="math inline">\(X_2\)</span> from both.</p>
-<p>Drag the sliders to see it hold for any DGP.</p>
+<section id="the-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem">The problem</h2>
+<p>You want to estimate the effect of <span class="math inline">\(X^*\)</span> on <span class="math inline">\(Y\)</span>:</p>
+<p><span class="math display">\[Y_i = \alpha + \beta X_i^* + u_i\]</span></p>
+<p>But you don’t observe <span class="math inline">\(X^*\)</span> perfectly. Instead you observe <span class="math inline">\(X\)</span> with noise:</p>
+<p><span class="math display">\[X_i = X_i^* + \eta_i, \qquad \eta_i \sim (0, \sigma_\eta^2)\]</span></p>
+<p>where <span class="math inline">\(\eta\)</span> is <strong>measurement error</strong> — independent of <span class="math inline">\(X^*\)</span> and <span class="math inline">\(u\)</span>.</p>
+<p>When you run OLS on the mismeasured <span class="math inline">\(X\)</span>, you don’t get <span class="math inline">\(\beta\)</span>. You get:</p>
+<p><span class="math display">\[\hat{\beta}_{OLS} \xrightarrow{p} \beta \times \underbrace{\frac{\text{Var}(X^*)}{\text{Var}(X^*) + \sigma_\eta^2}}_{\lambda}\]</span></p>
+<p>That fraction <span class="math inline">\(\lambda\)</span> is always between 0 and 1. So the estimate is <strong>biased toward zero</strong>. This is <strong>attenuation bias</strong>.</p>
+<section id="why-does-it-shrink-toward-zero" class="level3">
+<h3 class="anchored" data-anchor-id="why-does-it-shrink-toward-zero">Why does it shrink toward zero?</h3>
+<p>Think of it this way. The measurement error adds random noise to <span class="math inline">\(X\)</span>. From OLS’s perspective, some of the variation in <span class="math inline">\(X\)</span> is real signal (correlated with <span class="math inline">\(Y\)</span>) and some is pure noise (uncorrelated with <span class="math inline">\(Y\)</span>). OLS can’t tell which is which, so it averages over both — diluting the estimated slope.</p>
+<p>More noise → more dilution → flatter slope.</p>
+<hr>
+</section>
+</section>
+<section id="simulation-1-watch-the-slope-attenuate" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-1-watch-the-slope-attenuate">Simulation 1: Watch the slope attenuate</h2>
+<p>Increase the measurement error and watch the estimated slope shrink toward zero. The true relationship stays the same — only the noise changes.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 700
+#| viewerHeight: 650
 
 library(shiny)
 
 ui &lt;- fluidPage(
   tags$head(tags$style(HTML("
-    .eq-box {
+    .stats-box {
       background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-bottom: 14px; font-size: 14px; line-height: 1.9;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
     }
-    .eq-box b { color: #2c3e50; }
-    .match  { color: #27ae60; font-weight: bold; }
-    .coef   { color: #e74c3c; font-weight: bold; }
+    .stats-box b { color: #2c3e50; }
   "))),
 
   sidebarLayout(
     sidebarPanel(
       width = 3,
 
-      sliderInput("n", "Sample size (n):",
+      sliderInput("beta", "True slope (\u03b2):",
+                  min = 0.5, max = 3, value = 1.5, step = 0.1),
+
+      sliderInput("n", "Sample size:",
                   min = 50, max = 500, value = 200, step = 50),
 
-      sliderInput("b1", HTML("True &amp;beta;&lt;sub&gt;1&lt;/sub&gt; (effect of X&lt;sub&gt;1&lt;/sub&gt;):"),
-                  min = -3, max = 3, value = 1.5, step = 0.1),
+      sliderInput("sigma_x", "SD of true X*:",
+                  min = 1, max = 5, value = 2, step = 0.5),
 
-      sliderInput("b2", HTML("True &amp;beta;&lt;sub&gt;2&lt;/sub&gt; (effect of X&lt;sub&gt;2&lt;/sub&gt;):"),
-                  min = -3, max = 3, value = -1, step = 0.1),
+      sliderInput("sigma_u", "SD of outcome noise (u):",
+                  min = 0.5, max = 3, value = 1, step = 0.25),
 
-      sliderInput("rho", HTML("Corr(X&lt;sub&gt;1&lt;/sub&gt;, X&lt;sub&gt;2&lt;/sub&gt;):"),
-                  min = -0.9, max = 0.9, value = 0.6, step = 0.1),
+      sliderInput("sigma_eta", "Measurement error (\u03c3\u03b7):",
+                  min = 0, max = 5, value = 0, step = 0.25),
 
-      sliderInput("sigma", HTML("Error SD (&amp;sigma;):"),
-                  min = 0.5, max = 5, value = 1, step = 0.5),
-
-      actionButton("resim", "New draw", class = "btn-primary", width = "100%"),
-
-      uiOutput("results_box")
+      uiOutput("results")
     ),
 
     mainPanel(
       width = 9,
-      fluidRow(
-        column(4, plotOutput("plot_full",    height = "350px")),
-        column(4, plotOutput("plot_partial", height = "350px")),
-        column(4, plotOutput("plot_fwl",     height = "350px"))
-      ),
-      fluidRow(
-        column(12, uiOutput("step_text"))
-      )
+      plotOutput("scatter", height = "550px")
     )
   )
 )
 
 server &lt;- function(input, output, session) {
 
-  dat &lt;- reactive({
-    input$resim
-    n     &lt;- input$n
-    b1    &lt;- input$b1
-    b2    &lt;- input$b2
-    rho   &lt;- input$rho
-    sigma &lt;- input$sigma
+  # True data — only regenerates when beta, n, sigma_x, sigma_u change
+  base &lt;- reactive({
+    n   &lt;- input$n
+    b   &lt;- input$beta
+    sx  &lt;- input$sigma_x
+    su  &lt;- input$sigma_u
 
-    # Generate correlated X1, X2
-    z1 &lt;- rnorm(n)
-    z2 &lt;- rnorm(n)
-    x1 &lt;- z1
-    x2 &lt;- rho * z1 + sqrt(1 - rho^2) * z2
+    x_star &lt;- rnorm(n, 0, sx)
+    u      &lt;- rnorm(n, su)
+    y      &lt;- 2 + b * x_star + u
 
-    eps &lt;- rnorm(n, sd = sigma)
-    y   &lt;- b1 * x1 + b2 * x2 + eps
-
-    # Full OLS
-    full_fit &lt;- lm(y ~ x1 + x2)
-
-    # FWL steps
-    ey &lt;- resid(lm(y  ~ x2))   # residualise Y on X2
-    ex &lt;- resid(lm(x1 ~ x2))   # residualise X1 on X2
-    fwl_fit &lt;- lm(ey ~ ex)
-
-    list(x1 = x1, x2 = x2, y = y,
-         ey = ey, ex = ex,
-         full_fit = full_fit, fwl_fit = fwl_fit,
-         b1 = b1, b2 = b2)
+    list(x_star = x_star, y = y, beta = b, sx = sx)
   })
 
-  # --- Plot 1: Y vs X1 (naive scatter) ---
-  output$plot_full &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4, 3, 1))
-    plot(d$x1, d$y, pch = 16, col = "#3498db80", cex = 0.8,
-         xlab = expression(X[1]), ylab = "Y",
-         main = expression("Y vs " * X[1] * " (raw)"))
-    abline(lm(d$y ~ d$x1), col = "#e74c3c", lwd = 2.5)
-    naive_b &lt;- round(coef(lm(d$y ~ d$x1))[2], 4)
-    legend("topleft", bty = "n", cex = 0.9,
-           legend = paste("Naive slope =", naive_b))
+  # Measurement error applied on top — changes when eta slider moves
+  sim &lt;- reactive({
+    d   &lt;- base()
+    se  &lt;- input$sigma_eta
+
+    eta   &lt;- rnorm(length(d$x_star), 0, se)
+    x_obs &lt;- d$x_star + eta
+
+    fit_true &lt;- lm(d$y ~ d$x_star)
+    fit_obs  &lt;- lm(d$y ~ x_obs)
+
+    lambda &lt;- d$sx^2 / (d$sx^2 + se^2)
+
+    list(x_star = d$x_star, x_obs = x_obs, y = d$y,
+         b_true = coef(fit_true)[2], b_obs = coef(fit_obs)[2],
+         beta = d$beta, lambda = lambda, sigma_eta = se)
   })
 
-  # --- Plot 2: residualised X1 (partial out X2) ---
-  output$plot_partial &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4, 3, 1))
-    plot(d$x1, d$ex, pch = 16, col = "#9b59b680", cex = 0.8,
-         xlab = expression(X[1]),
-         ylab = expression(e[X[1]]),
-         main = expression("Residualise " * X[1] * " on " * X[2]))
-    abline(h = 0, lty = 2, col = "gray50")
-    abline(lm(d$ex ~ d$x1), col = "#8e44ad", lwd = 2)
+  output$scatter &lt;- renderPlot({
+    d &lt;- sim()
+
+    par(mfrow = c(1, 2), mar = c(4.5, 4.5, 3.5, 1))
+
+    # Left: true X*
+    plot(d$x_star, d$y, pch = 16, cex = 0.6,
+         col = adjustcolor("#3498db", 0.5),
+         xlab = "True X*", ylab = "Y",
+         main = "Regression on true X*")
+    abline(lm(d$y ~ d$x_star), col = "#27ae60", lwd = 3)
+    mtext(paste0("Slope = ", round(d$b_true, 3)),
+          side = 3, line = 0, cex = 1.1, font = 2, col = "#27ae60")
+
+    # Right: observed X with error
+    plot(d$x_obs, d$y, pch = 16, cex = 0.6,
+         col = adjustcolor("#e74c3c", 0.4),
+         xlab = "Observed X (with error)", ylab = "Y",
+         main = paste0("Regression on mismeasured X"))
+    abline(lm(d$y ~ d$x_obs), col = "#e74c3c", lwd = 3)
+    abline(a = coef(lm(d$y ~ d$x_star))[1],
+           b = d$beta, col = "#27ae60", lwd = 2, lty = 2)
+    mtext(paste0("Slope = ", round(d$b_obs, 3),
+                 "  (true = ", d$beta, ")"),
+          side = 3, line = 0, cex = 1.1, font = 2, col = "#e74c3c")
     legend("topleft", bty = "n", cex = 0.85,
-           legend = expression("Variation in " * X[1] * " independent of " * X[2]))
+           legend = c("OLS on mismeasured X", "True slope"),
+           col = c("#e74c3c", "#27ae60"), lwd = c(3, 2), lty = c(1, 2))
   })
 
-  # --- Plot 3: FWL regression ---
-  output$plot_fwl &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4, 3, 1))
-    plot(d$ex, d$ey, pch = 16, col = "#2ecc7180", cex = 0.8,
-         xlab = expression(e[X[1]]),
-         ylab = expression(e[Y]),
-         main = "FWL: Residual Y vs Residual X1")
-    abline(d$fwl_fit, col = "#e74c3c", lwd = 2.5)
-    fwl_b &lt;- round(coef(d$fwl_fit)[2], 4)
-    legend("topleft", bty = "n", cex = 0.9,
-           legend = paste("FWL slope =", fwl_b))
-  })
+  output$results &lt;- renderUI({
+    d &lt;- sim()
 
-  # --- Results comparison ---
-  output$results_box &lt;- renderUI({
-    d &lt;- dat()
-    full_b1 &lt;- round(coef(d$full_fit)["x1"], 4)
-    fwl_b1  &lt;- round(coef(d$fwl_fit)[2], 4)
-    naive_b &lt;- round(coef(lm(d$y ~ d$x1))[2], 4)
-
-    tags$div(class = "eq-box", style = "margin-top: 16px;",
+    tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;True &amp;beta;&lt;sub&gt;1&lt;/sub&gt;:&lt;/b&gt; ", d$b1, "&lt;br&gt;",
-        "&lt;b&gt;Full OLS &amp;beta;&lt;sub&gt;1&lt;/sub&gt;:&lt;/b&gt; &lt;span class='coef'&gt;", full_b1, "&lt;/span&gt;&lt;br&gt;",
-        "&lt;b&gt;FWL &amp;beta;&lt;sub&gt;1&lt;/sub&gt;:&lt;/b&gt; &lt;span class='coef'&gt;", fwl_b1, "&lt;/span&gt;&lt;br&gt;",
-        "&lt;span class='match'&gt;&amp;#10003; They match!&lt;/span&gt;&lt;br&gt;&lt;br&gt;",
-        "&lt;b&gt;Naive slope:&lt;/b&gt; ", naive_b, "&lt;br&gt;",
-        "&lt;small&gt;(biased by omitting X&lt;sub&gt;2&lt;/sub&gt;)&lt;/small&gt;"
-      ))
-    )
-  })
-
-  # --- Step explanation ---
-  output$step_text &lt;- renderUI({
-    tags$div(class = "eq-box", style = "margin-top: 8px;",
-      HTML(paste0(
-        "&lt;b&gt;Steps:&lt;/b&gt; ",
-        "(1) Regress Y on X&lt;sub&gt;2&lt;/sub&gt; &amp;rarr; residuals &lt;i&gt;e&lt;sub&gt;Y&lt;/sub&gt;&lt;/i&gt; &amp;nbsp;|&amp;nbsp; ",
-        "(2) Regress X&lt;sub&gt;1&lt;/sub&gt; on X&lt;sub&gt;2&lt;/sub&gt; &amp;rarr; residuals &lt;i&gt;e&lt;sub&gt;X₁&lt;/sub&gt;&lt;/i&gt; &amp;nbsp;|&amp;nbsp; ",
-        "(3) Regress &lt;i&gt;e&lt;sub&gt;Y&lt;/sub&gt;&lt;/i&gt; on &lt;i&gt;e&lt;sub&gt;X₁&lt;/sub&gt;&lt;/i&gt; &amp;rarr; ",
-        "slope = &amp;beta;&lt;sub&gt;1&lt;/sub&gt; from full regression"
+        "&lt;b&gt;True \u03b2:&lt;/b&gt; ", d$beta, "&lt;br&gt;",
+        "&lt;b&gt;OLS on X*:&lt;/b&gt; ", round(d$b_true, 3), "&lt;br&gt;",
+        "&lt;b&gt;OLS on X:&lt;/b&gt; ", round(d$b_obs, 3), "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;Attenuation factor (\u03bb):&lt;/b&gt;&lt;br&gt;",
+        "Var(X*) / [Var(X*) + Var(\u03b7)]&lt;br&gt;",
+        "= ", round(d$lambda, 3), "&lt;br&gt;",
+        "&lt;b&gt;\u03b2 \u00d7 \u03bb = &lt;/b&gt;",
+        round(d$beta * d$lambda, 3)
       ))
     )
   })
 }
 
 shinyApp(ui, server)</code></pre>
-<hr>
-<section id="did-you-know" class="level3">
-<h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
+<section id="things-to-try" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Ragnar Frisch</strong> and <strong>Jan Tinbergen</strong> won the very first Nobel Prize in Economics in 1969. Frisch coined the terms “econometrics,” “microeconomics,” and “macroeconomics.” The FWL theorem appeared in Frisch &amp; Waugh (1933).</li>
-<li><strong>Michael Lovell</strong> extended the result in 1963, showing it applies to any partitioned regression — not just the two-variable case. That’s why it’s FWL, not just FW.</li>
-<li>FWL is the theoretical foundation behind <strong>“partialling out”</strong> and <strong>“controlling for”</strong> variables. Every time you add a control to a regression, you’re implicitly doing the residualization that FWL describes.</li>
-<li>In machine learning, the same idea appears as <strong>“residualization”</strong> in double/debiased ML (Chernozhukov et al., 2018) — one of the most important recent developments in causal ML.</li>
+<li><strong>Start with <span class="math inline">\(\eta\)</span> = 0:</strong> both panels are identical. No measurement error, no bias.</li>
+<li><strong>Slowly increase <span class="math inline">\(\eta\)</span>:</strong> watch the right panel’s slope flatten. The cloud of points spreads horizontally (noise in X), so OLS “sees” a weaker relationship.</li>
+<li><strong><span class="math inline">\(\eta\)</span> = 5, SD of X* = 2:</strong> the attenuation factor drops to ~0.14. Your estimate is 86% too small.</li>
+<li><strong>Increase n:</strong> the slope doesn’t recover! Attenuation bias is not a small-sample problem — it persists no matter how much data you have. More data just gives you a more precise estimate of the <em>wrong</em> number.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="simulation-2-attenuation-is-systematic-not-just-noisy" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-2-attenuation-is-systematic-not-just-noisy">Simulation 2: Attenuation is systematic, not just noisy</h2>
+<p>Run 500 regressions, each with fresh measurement error. The distribution of slope estimates is centered <em>below</em> the true <span class="math inline">\(\beta\)</span> — it’s not random noise, it’s a systematic downward bias.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 550
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("beta2", "True slope (\u03b2):",
+                  min = 0.5, max = 3, value = 1.5, step = 0.1),
+
+      sliderInput("n2", "Sample size per run:",
+                  min = 50, max = 300, value = 100, step = 50),
+
+      sliderInput("sigma_eta2", "Measurement error (\u03c3\u03b7):",
+                  min = 0, max = 5, value = 2, step = 0.25),
+
+      sliderInput("n_sims", "Number of simulations:",
+                  min = 100, max = 1000, value = 500, step = 100),
+
+      uiOutput("results2")
+    ),
+
+    mainPanel(
+      width = 9,
+      plotOutput("mc_plot", height = "450px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  sim &lt;- reactive({
+    n     &lt;- input$n2
+    b     &lt;- input$beta2
+    se    &lt;- input$sigma_eta2
+    nsims &lt;- input$n_sims
+    sx    &lt;- 2
+
+    betas_true &lt;- numeric(nsims)
+    betas_obs  &lt;- numeric(nsims)
+
+    for (i in seq_len(nsims)) {
+      x_star &lt;- rnorm(n, 0, sx)
+      u      &lt;- rnorm(n)
+      y      &lt;- 2 + b * x_star + u
+
+      eta   &lt;- rnorm(n, 0, se)
+      x_obs &lt;- x_star + eta
+
+      betas_true[i] &lt;- coef(lm(y ~ x_star))[2]
+      betas_obs[i]  &lt;- coef(lm(y ~ x_obs))[2]
+    }
+
+    lambda &lt;- sx^2 / (sx^2 + se^2)
+
+    list(betas_true = betas_true, betas_obs = betas_obs,
+         beta = b, lambda = lambda)
+  })
+
+  output$mc_plot &lt;- renderPlot({
+    d &lt;- sim()
+
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    all_b &lt;- c(d$betas_true, d$betas_obs)
+    xlim  &lt;- range(all_b) + c(-0.1, 0.1)
+
+    # No-error distribution
+    hist(d$betas_true, breaks = 40,
+         col = adjustcolor("#27ae60", 0.5), border = "white",
+         main = "Distribution of slope estimates across simulations",
+         xlab = expression(hat(beta)), xlim = xlim,
+         freq = FALSE, cex.main = 1.3)
+
+    # With-error distribution
+    hist(d$betas_obs, breaks = 40,
+         col = adjustcolor("#e74c3c", 0.45), border = "white",
+         add = TRUE, freq = FALSE)
+
+    abline(v = d$beta, col = "#2c3e50", lwd = 2.5, lty = 2)
+    abline(v = d$beta * d$lambda, col = "#e74c3c", lwd = 2, lty = 3)
+    abline(v = mean(d$betas_obs), col = "#e74c3c", lwd = 1.5)
+
+    legend("topright", bty = "n", cex = 0.9,
+           legend = c(
+             paste0("No error (centered at \u03b2 = ", d$beta, ")"),
+             paste0("With error (centered at ", round(mean(d$betas_obs), 3), ")"),
+             paste0("Theory: \u03b2\u03bb = ", round(d$beta * d$lambda, 3))
+           ),
+           fill = c(adjustcolor("#27ae60", 0.5),
+                    adjustcolor("#e74c3c", 0.45), NA),
+           border = c("white", "white", NA),
+           col = c(NA, NA, "#e74c3c"),
+           lwd = c(NA, NA, 2), lty = c(NA, NA, 3))
+  })
+
+  output$results2 &lt;- renderUI({
+    d &lt;- sim()
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;True \u03b2:&lt;/b&gt; ", d$beta, "&lt;br&gt;",
+        "&lt;b&gt;Avg estimate (no error):&lt;/b&gt; ",
+        round(mean(d$betas_true), 3), "&lt;br&gt;",
+        "&lt;b&gt;Avg estimate (with error):&lt;/b&gt; ",
+        round(mean(d$betas_obs), 3), "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;Attenuation factor:&lt;/b&gt; ", round(d$lambda, 3), "&lt;br&gt;",
+        "&lt;b&gt;\u03b2 \u00d7 \u03bb:&lt;/b&gt; ",
+        round(d$beta * d$lambda, 3), "&lt;br&gt;",
+        "&lt;small&gt;Bias: ",
+        round(mean(d$betas_obs) - d$beta, 3), "&lt;/small&gt;"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<section id="things-to-try-1" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try-1">Things to try</h3>
+<ul>
+<li><strong><span class="math inline">\(\eta\)</span> = 0:</strong> both distributions overlap perfectly — no bias at all.</li>
+<li><strong><span class="math inline">\(\eta\)</span> = 2:</strong> the red distribution shifts left. The average slope is systematically below the truth.</li>
+<li><strong>Increase n to 300:</strong> the distributions get <em>narrower</em> (more precise) but the red one stays centered at the wrong value. Attenuation bias doesn’t go away with more data.</li>
+<li><strong>Compare theory vs simulation:</strong> the theoretical <span class="math inline">\(\beta\lambda\)</span> should closely match the average of the red distribution.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="measurement-error-in-y-vs-x" class="level2">
+<h2 class="anchored" data-anchor-id="measurement-error-in-y-vs-x">Measurement error in Y vs X</h2>
+<p>A crucial asymmetry:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Error in X</strong></th>
+<th><strong>Error in Y</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Bias?</strong></td>
+<td>Yes — toward zero</td>
+<td>No bias</td>
+</tr>
+<tr class="even">
+<td><strong>Precision?</strong></td>
+<td>Slightly worse</td>
+<td>Worse (larger SEs)</td>
+</tr>
+<tr class="odd">
+<td><strong>Goes away with more data?</strong></td>
+<td>No</td>
+<td>SEs shrink, but that’s just precision</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why the asymmetry?</strong> When <span class="math inline">\(Y\)</span> is measured with error, the noise goes into the residual — it’s just more <span class="math inline">\(u\)</span>. The slope is unbiased; you just estimate it less precisely. When <span class="math inline">\(X\)</span> is measured with error, the noise is in the <em>regressor</em>, which contaminates the covariance between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> and biases the slope.</p>
+<hr>
+</section>
+<section id="what-can-you-do-about-it" class="level2">
+<h2 class="anchored" data-anchor-id="what-can-you-do-about-it">What can you do about it?</h2>
+<ol type="1">
+<li><p><strong>Measure better.</strong> The best fix is reducing <span class="math inline">\(\sigma_\eta\)</span>. Use validated instruments, multiple measurements, averages of repeated measures.</p></li>
+<li><p><strong>Instrumental variables (IV).</strong> Find a variable <span class="math inline">\(Z\)</span> that predicts <span class="math inline">\(X^*\)</span> but isn’t contaminated by the measurement error. Two-stage least squares recovers the true <span class="math inline">\(\beta\)</span>.</p></li>
+<li><p><strong>Reliability ratio correction.</strong> If you know (or can estimate) the reliability <span class="math inline">\(\lambda = \text{Var}(X^*) / \text{Var}(X)\)</span>, divide your estimate by <span class="math inline">\(\lambda\)</span>: <span class="math inline">\(\hat{\beta}_{corrected} = \hat{\beta}_{OLS} / \lambda\)</span>.</p></li>
+<li><p><strong>Multiple indicators.</strong> If you have two noisy measures of <span class="math inline">\(X^*\)</span> with independent errors, their covariance identifies <span class="math inline">\(\text{Var}(X^*)\)</span>, letting you compute <span class="math inline">\(\lambda\)</span> directly.</p></li>
+</ol>
+<hr>
+</section>
+<section id="did-you-know" class="level2">
+<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
+<ul>
+<li><p>The attenuation bias formula was derived by <strong>Karl Pearson</strong> in the early 1900s, making it one of the oldest results in regression theory. Pearson was studying the relationship between fathers’ and sons’ heights and realized that imprecise measurements of height would make the hereditary correlation look weaker than it really was.</p></li>
+<li><p>In economics, <strong>Jerry Hausman</strong> (2001) showed that measurement error in survey data on income and consumption can attenuate elasticity estimates by 30–50%. Studies using administrative tax records (with near-zero measurement error) consistently find larger effects than survey-based studies — exactly what attenuation bias predicts.</p></li>
+<li><p>The <strong>errors-in-variables</strong> literature distinguishes between <em>classical</em> measurement error (what we covered: <span class="math inline">\(X = X^* + \eta\)</span> with <span class="math inline">\(\eta\)</span> independent of <span class="math inline">\(X^*\)</span>) and <em>non-classical</em> error (where the error depends on the true value). Non-classical error can bias in either direction, not just toward zero. Mean-reverting error in test scores is a common example.</p></li>
 </ul>
 
 
