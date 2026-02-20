@@ -355,11 +355,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#the-regression-slope-is-a-correlation" id="toc-the-regression-slope-is-a-correlation" class="nav-link active" data-scroll-target="#the-regression-slope-is-a-correlation">The regression slope is a correlation</a></li>
-  <li><a href="#so-you-see-a-correlation.-now-what" id="toc-so-you-see-a-correlation.-now-what" class="nav-link" data-scroll-target="#so-you-see-a-correlation.-now-what">So you see a correlation. Now what?</a>
-  <ul class="collapse">
-  <li><a href="#spurious-correlation-why-unrelated-things-look-related" id="toc-spurious-correlation-why-unrelated-things-look-related" class="nav-link" data-scroll-target="#spurious-correlation-why-unrelated-things-look-related">Spurious correlation: why unrelated things look related</a></li>
-  <li><a href="#collider-bias-the-trickiest-one" id="toc-collider-bias-the-trickiest-one" class="nav-link" data-scroll-target="#collider-bias-the-trickiest-one">Collider bias: the trickiest one</a></li>
-  </ul></li>
+  <li><a href="#so-you-see-a-correlation.-now-what" id="toc-so-you-see-a-correlation.-now-what" class="nav-link" data-scroll-target="#so-you-see-a-correlation.-now-what">So you see a correlation. Now what?</a></li>
   <li><a href="#simulation-1-same-scatter-plot-different-causal-stories" id="toc-simulation-1-same-scatter-plot-different-causal-stories" class="nav-link" data-scroll-target="#simulation-1-same-scatter-plot-different-causal-stories">Simulation 1: Same scatter plot, different causal stories</a>
   <ul class="collapse">
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
@@ -367,6 +363,11 @@ window.Quarto = {
   <li><a href="#simulation-2-randomization-breaks-confounding" id="toc-simulation-2-randomization-breaks-confounding" class="nav-link" data-scroll-target="#simulation-2-randomization-breaks-confounding">Simulation 2: Randomization breaks confounding</a>
   <ul class="collapse">
   <li><a href="#things-to-try-1" id="toc-things-to-try-1" class="nav-link" data-scroll-target="#things-to-try-1">Things to try</a></li>
+  </ul></li>
+  <li><a href="#digging-deeper-why-correlations-mislead" id="toc-digging-deeper-why-correlations-mislead" class="nav-link" data-scroll-target="#digging-deeper-why-correlations-mislead">Digging deeper: why correlations mislead</a>
+  <ul class="collapse">
+  <li><a href="#spurious-correlation-why-unrelated-things-look-related" id="toc-spurious-correlation-why-unrelated-things-look-related" class="nav-link" data-scroll-target="#spurious-correlation-why-unrelated-things-look-related">Spurious correlation: why unrelated things look related</a></li>
+  <li><a href="#collider-bias-the-trickiest-one" id="toc-collider-bias-the-trickiest-one" class="nav-link" data-scroll-target="#collider-bias-the-trickiest-one">Collider bias: the trickiest one</a></li>
   </ul></li>
   <li><a href="#when-does-correlation-become-causation" id="toc-when-does-correlation-become-causation" class="nav-link" data-scroll-target="#when-does-correlation-become-causation">When does correlation become causation?</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
@@ -442,50 +443,6 @@ window.Quarto = {
 </tbody>
 </table>
 <p>The scatter plot looks the same in all five cases. You literally cannot tell them apart from the data alone.</p>
-<section id="spurious-correlation-why-unrelated-things-look-related" class="level3">
-<h3 class="anchored" data-anchor-id="spurious-correlation-why-unrelated-things-look-related">Spurious correlation: why unrelated things look related</h3>
-<p>A <strong>spurious correlation</strong> is a correlation between two variables that have no causal connection whatsoever. It’s not confounding (no hidden Z), not reverse causality — it’s pure noise that <em>looks</em> like signal.</p>
-<p><strong>Why does it happen?</strong> If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are truly independent, then <span class="math inline">\(\text{Cor}(X, Y) = 0\)</span> in the population. But in a finite sample, the sample correlation <span class="math inline">\(r_{XY}\)</span> is almost never exactly zero. It has sampling variability:</p>
-<p><span class="math display">\[\text{Var}(r_{XY}) \approx \frac{1}{n}\]</span></p>
-<p>With small <span class="math inline">\(n\)</span>, the sample correlation can be large purely by chance. With <span class="math inline">\(n = 10\)</span>, a correlation of <span class="math inline">\(r = 0.5\)</span> between two completely independent variables isn’t unusual at all.</p>
-<p><strong>Multiple testing makes it worse.</strong> If you compute correlations between <span class="math inline">\(k\)</span> pairs of unrelated variables and test each at <span class="math inline">\(\alpha = 0.05\)</span>, the probability that at least one comes up “significant” is:</p>
-<p><span class="math display">\[P(\text{at least one false positive}) = 1 - (1 - 0.05)^k\]</span></p>
-<p>With <span class="math inline">\(k = 20\)</span> pairs, that’s a 64% chance. With <span class="math inline">\(k = 100\)</span>, it’s 99.4%. Test enough things and you <em>will</em> find “significant” correlations between variables that have nothing to do with each other. (This ties directly to the <a href="multiple-testing.html">Multiple Testing</a> page.)</p>
-<p><strong>Trending variables are the worst offenders.</strong> If two time series both trend upward over time — say, US GDP and the number of cat videos on YouTube — they’ll be highly correlated even though neither causes the other. Mathematically, if <span class="math inline">\(X_t = a + bt + \varepsilon_t\)</span> and <span class="math inline">\(Y_t = c + dt + \eta_t\)</span> where <span class="math inline">\(\varepsilon\)</span> and <span class="math inline">\(\eta\)</span> are completely independent, the sample correlation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> will be close to 1 because both share the time trend <span class="math inline">\(t\)</span>. The correlation is real in the data but meaningless — it’s driven by the common trend, not by any relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
-<p><strong>The fix:</strong> large samples (reduces <span class="math inline">\(\text{Var}(r)\)</span>), pre-registration (decide what to test before looking at data), multiple testing corrections (Bonferroni, BH), and skepticism about correlations found by searching through many variables.</p>
-</section>
-<section id="collider-bias-the-trickiest-one" class="level3">
-<h3 class="anchored" data-anchor-id="collider-bias-the-trickiest-one">Collider bias: the trickiest one</h3>
-<p>The first four reasons are intuitive. The fifth — <strong>collider bias</strong> — is subtle and catches even experienced researchers.</p>
-<p>Start with the name. In causal diagrams, arrows show what causes what. A <strong>collider</strong> is a variable where two arrows point <em>into</em> it:</p>
-<p><span class="math display">\[X \to C \leftarrow Y\]</span></p>
-<p>The variable <span class="math inline">\(C\)</span> “collides” — it’s caused by both <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. On its own, that’s fine. <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> can be completely independent. The problem starts when you <strong>condition on the collider</strong> — by restricting your sample to specific values of <span class="math inline">\(C\)</span>, or by controlling for <span class="math inline">\(C\)</span> in a regression. That act of conditioning opens a fake pathway between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> that doesn’t exist in the real world.</p>
-<p><strong>Why does conditioning on a collider create a fake association?</strong> Think of it as an information leak. If you know someone is in a specific group (defined by <span class="math inline">\(C\)</span>), then learning about <span class="math inline">\(X\)</span> tells you something about <span class="math inline">\(Y\)</span> — not because they’re related, but because both contributed to getting into that group. Knowing one cause of <span class="math inline">\(C\)</span> changes what you infer about the other cause.</p>
-<p><strong>The hospital example, step by step.</strong></p>
-<ol type="1">
-<li>Disease A and disease B are <strong>completely unrelated</strong> in the general population. Knowing someone has A tells you nothing about whether they have B.</li>
-<li>Both diseases can put you in the hospital. “Hospitalization” is a collider: A → Hospital ← B.</li>
-<li>Now you study <strong>only hospitalized patients</strong>. You’ve conditioned on the collider.</li>
-<li>Pick a hospitalized patient. You learn they <em>don’t</em> have disease A. But they’re in the hospital — so something put them there. That something is more likely to be disease B.</li>
-<li>Result: among hospitalized patients, A and B look <strong>negatively correlated</strong>. Not because one prevents the other, but because you restricted your sample to people who have <em>at least one</em> of them.</li>
-</ol>
-<p>In the general population: no correlation. In the hospital: negative correlation. The correlation is entirely an artifact of how you selected your sample.</p>
-<p><strong>The talent-attractiveness tradeoff.</strong></p>
-<ol type="1">
-<li>In the general population, acting talent and physical attractiveness are <strong>unrelated</strong>. Plenty of beautiful untalented people, plenty of talented plain-looking people.</li>
-<li>Hollywood selects actors who are talented OR attractive OR both. “Getting cast” is a collider: Talent → Cast ← Attractiveness.</li>
-<li>Among <em>successful actors</em> (conditioned on being cast), you notice: the beautiful ones seem less talented, and the talented ones seem less attractive.</li>
-<li>Why? If an actor isn’t particularly talented, they probably got cast because they’re attractive (and vice versa). Knowing one cause tells you about the other — but only within the selected group.</li>
-<li>You conclude “there’s a tradeoff between talent and looks.” There isn’t. You’re seeing collider bias.</li>
-</ol>
-<p><strong>How it shows up in research.</strong> Collider bias often sneaks in through:</p>
-<ul>
-<li><strong>Sample selection:</strong> studying only college graduates, only employed people, only published studies, only survivors</li>
-<li><strong>Controlling for post-treatment variables:</strong> if you run a regression of X on Y “controlling for” a variable that X and Y both cause, you’ve conditioned on a collider</li>
-<li><strong>Attrition:</strong> if people drop out of your study for reasons related to both treatment and outcome, the remaining sample is conditioned on a collider</li>
-</ul>
-<p><strong>The fix:</strong> think carefully about the causal structure <em>before</em> you run your regression. Draw the diagram. If a variable is caused by your treatment and your outcome, <strong>don’t control for it and don’t select on it</strong>. Condition only on variables that are causes (confounders), never on variables that are consequences (colliders).</p>
-<p><strong>Correlation becomes causal when you can rule out reasons 2–5.</strong> That’s what the entire field of causal inference is about.</p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -497,7 +454,6 @@ window.Quarto = {
 </div>
 </div>
 <hr>
-</section>
 </section>
 <section id="simulation-1-same-scatter-plot-different-causal-stories" class="level2">
 <h2 class="anchored" data-anchor-id="simulation-1-same-scatter-plot-different-causal-stories">Simulation 1: Same scatter plot, different causal stories</h2>
@@ -812,9 +768,57 @@ shinyApp(ui, server)</code></pre>
 <hr>
 </section>
 </section>
+<section id="digging-deeper-why-correlations-mislead" class="level2">
+<h2 class="anchored" data-anchor-id="digging-deeper-why-correlations-mislead">Digging deeper: why correlations mislead</h2>
+<section id="spurious-correlation-why-unrelated-things-look-related" class="level3">
+<h3 class="anchored" data-anchor-id="spurious-correlation-why-unrelated-things-look-related">Spurious correlation: why unrelated things look related</h3>
+<p>A <strong>spurious correlation</strong> is a correlation between two variables that have no causal connection whatsoever. It’s not confounding (no hidden Z), not reverse causality — it’s pure noise that <em>looks</em> like signal.</p>
+<p><strong>Why does it happen?</strong> If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are truly independent, then <span class="math inline">\(\text{Cor}(X, Y) = 0\)</span> in the population. But in a finite sample, the sample correlation <span class="math inline">\(r_{XY}\)</span> is almost never exactly zero. It has sampling variability:</p>
+<p><span class="math display">\[\text{Var}(r_{XY}) \approx \frac{1}{n}\]</span></p>
+<p>With small <span class="math inline">\(n\)</span>, the sample correlation can be large purely by chance. With <span class="math inline">\(n = 10\)</span>, a correlation of <span class="math inline">\(r = 0.5\)</span> between two completely independent variables isn’t unusual at all.</p>
+<p><strong>Multiple testing makes it worse.</strong> If you compute correlations between <span class="math inline">\(k\)</span> pairs of unrelated variables and test each at <span class="math inline">\(\alpha = 0.05\)</span>, the probability that at least one comes up “significant” is:</p>
+<p><span class="math display">\[P(\text{at least one false positive}) = 1 - (1 - 0.05)^k\]</span></p>
+<p>With <span class="math inline">\(k = 20\)</span> pairs, that’s a 64% chance. With <span class="math inline">\(k = 100\)</span>, it’s 99.4%. Test enough things and you <em>will</em> find “significant” correlations between variables that have nothing to do with each other. (This ties directly to the <a href="multiple-testing.html">Multiple Testing</a> page.)</p>
+<p><strong>Trending variables are the worst offenders.</strong> If two time series both trend upward over time — say, US GDP and the number of cat videos on YouTube — they’ll be highly correlated even though neither causes the other. Mathematically, if <span class="math inline">\(X_t = a + bt + \varepsilon_t\)</span> and <span class="math inline">\(Y_t = c + dt + \eta_t\)</span> where <span class="math inline">\(\varepsilon\)</span> and <span class="math inline">\(\eta\)</span> are completely independent, the sample correlation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> will be close to 1 because both share the time trend <span class="math inline">\(t\)</span>. The correlation is real in the data but meaningless — it’s driven by the common trend, not by any relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p><strong>The fix:</strong> large samples (reduces <span class="math inline">\(\text{Var}(r)\)</span>), pre-registration (decide what to test before looking at data), multiple testing corrections (Bonferroni, BH), and skepticism about correlations found by searching through many variables.</p>
+</section>
+<section id="collider-bias-the-trickiest-one" class="level3">
+<h3 class="anchored" data-anchor-id="collider-bias-the-trickiest-one">Collider bias: the trickiest one</h3>
+<p>The first four reasons are intuitive. The fifth — <strong>collider bias</strong> — is subtle and catches even experienced researchers.</p>
+<p>Start with the name. In causal diagrams, arrows show what causes what. A <strong>collider</strong> is a variable where two arrows point <em>into</em> it:</p>
+<p><span class="math display">\[X \to C \leftarrow Y\]</span></p>
+<p>The variable <span class="math inline">\(C\)</span> “collides” — it’s caused by both <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. On its own, that’s fine. <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> can be completely independent. The problem starts when you <strong>condition on the collider</strong> — by restricting your sample to specific values of <span class="math inline">\(C\)</span>, or by controlling for <span class="math inline">\(C\)</span> in a regression. That act of conditioning opens a fake pathway between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> that doesn’t exist in the real world.</p>
+<p><strong>Why does conditioning on a collider create a fake association?</strong> Think of it as an information leak. If you know someone is in a specific group (defined by <span class="math inline">\(C\)</span>), then learning about <span class="math inline">\(X\)</span> tells you something about <span class="math inline">\(Y\)</span> — not because they’re related, but because both contributed to getting into that group. Knowing one cause of <span class="math inline">\(C\)</span> changes what you infer about the other cause.</p>
+<p><strong>The hospital example, step by step.</strong></p>
+<ol type="1">
+<li>Disease A and disease B are <strong>completely unrelated</strong> in the general population. Knowing someone has A tells you nothing about whether they have B.</li>
+<li>Both diseases can put you in the hospital. “Hospitalization” is a collider: A → Hospital ← B.</li>
+<li>Now you study <strong>only hospitalized patients</strong>. You’ve conditioned on the collider.</li>
+<li>Pick a hospitalized patient. You learn they <em>don’t</em> have disease A. But they’re in the hospital — so something put them there. That something is more likely to be disease B.</li>
+<li>Result: among hospitalized patients, A and B look <strong>negatively correlated</strong>. Not because one prevents the other, but because you restricted your sample to people who have <em>at least one</em> of them.</li>
+</ol>
+<p>In the general population: no correlation. In the hospital: negative correlation. The correlation is entirely an artifact of how you selected your sample.</p>
+<p><strong>The talent-attractiveness tradeoff.</strong></p>
+<ol type="1">
+<li>In the general population, acting talent and physical attractiveness are <strong>unrelated</strong>. Plenty of beautiful untalented people, plenty of talented plain-looking people.</li>
+<li>Hollywood selects actors who are talented OR attractive OR both. “Getting cast” is a collider: Talent → Cast ← Attractiveness.</li>
+<li>Among <em>successful actors</em> (conditioned on being cast), you notice: the beautiful ones seem less talented, and the talented ones seem less attractive.</li>
+<li>Why? If an actor isn’t particularly talented, they probably got cast because they’re attractive (and vice versa). Knowing one cause tells you about the other — but only within the selected group.</li>
+<li>You conclude “there’s a tradeoff between talent and looks.” There isn’t. You’re seeing collider bias.</li>
+</ol>
+<p><strong>How it shows up in research.</strong> Collider bias often sneaks in through:</p>
+<ul>
+<li><strong>Sample selection:</strong> studying only college graduates, only employed people, only published studies, only survivors</li>
+<li><strong>Controlling for post-treatment variables:</strong> if you run a regression of X on Y “controlling for” a variable that X and Y both cause, you’ve conditioned on a collider</li>
+<li><strong>Attrition:</strong> if people drop out of your study for reasons related to both treatment and outcome, the remaining sample is conditioned on a collider</li>
+</ul>
+<p><strong>The fix:</strong> think carefully about the causal structure <em>before</em> you run your regression. Draw the diagram. If a variable is caused by your treatment and your outcome, <strong>don’t control for it and don’t select on it</strong>. Condition only on variables that are causes (confounders), never on variables that are consequences (colliders).</p>
+<hr>
+</section>
+</section>
 <section id="when-does-correlation-become-causation" class="level2">
 <h2 class="anchored" data-anchor-id="when-does-correlation-become-causation">When does correlation become causation?</h2>
-<p>You can move from correlation to causation when you can <strong>rule out the alternative explanations:</strong></p>
+<p><strong>Correlation becomes causal when you can rule out reasons 2–5.</strong> That’s what the entire field of causal inference is about.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
