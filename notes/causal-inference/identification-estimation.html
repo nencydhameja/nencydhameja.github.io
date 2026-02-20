@@ -221,6 +221,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./regression-adjustment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regression Adjustment</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./ipw.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">IPW</span></a>
   </div>
@@ -243,7 +249,7 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#two-separate-questions" id="toc-two-separate-questions" class="nav-link active" data-scroll-target="#two-separate-questions">Two separate questions</a></li>
+  <li><a href="#two-separate-questions-in-every-causal-study" id="toc-two-separate-questions-in-every-causal-study" class="nav-link active" data-scroll-target="#two-separate-questions-in-every-causal-study">Two separate questions in every causal study</a></li>
   <li><a href="#identification-the-assumption" id="toc-identification-the-assumption" class="nav-link" data-scroll-target="#identification-the-assumption">Identification: the assumption</a></li>
   <li><a href="#estimation-the-computation" id="toc-estimation-the-computation" class="nav-link" data-scroll-target="#estimation-the-computation">Estimation: the computation</a></li>
   <li><a href="#research-designs-bundle-both" id="toc-research-designs-bundle-both" class="nav-link" data-scroll-target="#research-designs-bundle-both">Research designs bundle both</a></li>
@@ -291,14 +297,19 @@ window.Quarto = {
 </header>
 
 
-<section id="two-separate-questions" class="level2">
-<h2 class="anchored" data-anchor-id="two-separate-questions">Two separate questions</h2>
-<p>Every causal inference study answers two questions:</p>
+<section id="two-separate-questions-in-every-causal-study" class="level2">
+<h2 class="anchored" data-anchor-id="two-separate-questions-in-every-causal-study">Two separate questions in every causal study</h2>
+<p>Every causal inference project answers two fundamentally different questions:</p>
 <ol type="1">
-<li><strong>Identification:</strong> <em>Why</em> is this comparison causal? What assumption makes your estimand equal the causal parameter?</li>
-<li><strong>Estimation:</strong> <em>How</em> do you compute the number from data? What statistical procedure do you use?</li>
+<li><strong>Identification.</strong> <em>Why</em> is this comparison causal? What assumptions make the estimand equal to the causal parameter?</li>
+<li><strong>Estimation.</strong> <em>How</em> do we compute the estimand from data? What statistical procedure do we use?</li>
 </ol>
-<p>These are independent. You can have perfect identification with a bad estimator (noisy but unbiased). You can have a brilliant estimator with no identification (precise but wrong). <strong>Identification comes first.</strong> If your assumptions don’t hold, no estimator can save you.</p>
+<p>These are conceptually independent:</p>
+<ul>
+<li>You can have correct identification with a poor estimator (unbiased but noisy).</li>
+<li>You can have a highly efficient estimator with no identification (precise but biased toward the wrong parameter).</li>
+</ul>
+<p><strong>Identification comes first.</strong> If the assumptions fail, no estimator can recover the causal effect.</p>
 </section>
 <section id="identification-the-assumption" class="level2">
 <h2 class="anchored" data-anchor-id="identification-the-assumption">Identification: the assumption</h2>

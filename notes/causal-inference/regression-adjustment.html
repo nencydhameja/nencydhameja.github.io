@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Selection on Observables – Applied Causal Inference</title>
+<title>Regression Adjustment – Applied Causal Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +115,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Methods</a></li><li class="breadcrumb-item"><a href="./selection-observables.html">Selection on Observables</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./regression-adjustment.html">Estimation Tools</a></li><li class="breadcrumb-item"><a href="./regression-adjustment.html">Regression Adjustment</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -180,7 +180,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./selection-observables.html" class="sidebar-item-text sidebar-link active">
+  <a href="./selection-observables.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Selection on Observables</span></a>
   </div>
 </li>
@@ -221,7 +221,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./regression-adjustment.html" class="sidebar-item-text sidebar-link">
+  <a href="./regression-adjustment.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Regression Adjustment</span></a>
   </div>
 </li>
@@ -251,22 +251,21 @@ window.Quarto = {
   <ul>
   <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
   <ul class="collapse">
-  <li><a href="#how-is-this-different-from-just-running-a-regression" id="toc-how-is-this-different-from-just-running-a-regression" class="nav-link" data-scroll-target="#how-is-this-different-from-just-running-a-regression">How is this different from “just running a regression”?</a></li>
   <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
-  <li><a href="#when-does-selection-on-observables-fail" id="toc-when-does-selection-on-observables-fail" class="nav-link" data-scroll-target="#when-does-selection-on-observables-fail">When does selection on observables fail?</a></li>
+  <li><a href="#the-vulnerability-functional-form" id="toc-the-vulnerability-functional-form" class="nav-link" data-scroll-target="#the-vulnerability-functional-form">The vulnerability: functional form</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
-  </ul></li>
-  <li><a href="#estimation-tools-not-just-for-selection-on-observables" id="toc-estimation-tools-not-just-for-selection-on-observables" class="nav-link" data-scroll-target="#estimation-tools-not-just-for-selection-on-observables">Estimation tools (not just for selection on observables)</a></li>
+  <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Methods</a></li><li class="breadcrumb-item"><a href="./selection-observables.html">Selection on Observables</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./regression-adjustment.html">Estimation Tools</a></li><li class="breadcrumb-item"><a href="./regression-adjustment.html">Regression Adjustment</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Selection on Observables</h1>
+<h1 class="title">Regression Adjustment</h1>
 </div>
 
 
@@ -285,63 +284,22 @@ window.Quarto = {
 
 <section id="the-idea" class="level2">
 <h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>You want the causal effect of a treatment, but people <strong>select into treatment</strong> based on their characteristics. Sicker patients seek medication, motivated students enroll in programs, richer firms adopt new technology.</p>
-<p>The selection on observables strategy says: <strong>if you can observe everything that drives both treatment and outcome, you can condition on it and recover the causal effect.</strong> Once you hold those variables fixed, treatment is as good as random.</p>
-<p><span class="math display">\[Y(0), Y(1) \perp D \mid X\]</span></p>
-<p>This is the <strong>conditional independence assumption</strong> (CIA), also called <strong>unconfoundedness</strong> or <strong>ignorability</strong>. It says: among people with the same <span class="math inline">\(X\)</span>, who gets treated is effectively random.</p>
-<section id="how-is-this-different-from-just-running-a-regression" class="level3">
-<h3 class="anchored" data-anchor-id="how-is-this-different-from-just-running-a-regression">How is this different from “just running a regression”?</h3>
-<p>It’s the same logic, made precise. When you run <span class="math inline">\(Y = \alpha + \tau D + \beta X + \varepsilon\)</span> and claim <span class="math inline">\(\hat{\tau}\)</span> is causal, you’re implicitly assuming selection on observables — that <span class="math inline">\(X\)</span> contains all the confounders. The difference is that causal inference makes this assumption <strong>explicit</strong> and offers multiple ways to implement it, each with different strengths:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Method</th>
-<th>How it adjusts for X</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong><a href="regression-adjustment.html">Regression Adjustment</a></strong></td>
-<td>Models the outcome as a function of X and D</td>
-</tr>
-<tr class="even">
-<td><strong>Matching</strong></td>
-<td>Pairs treated and control units with similar X</td>
-</tr>
-<tr class="odd">
-<td><strong><a href="ipw.html">IPW</a></strong></td>
-<td>Reweights units by their probability of treatment given X</td>
-</tr>
-<tr class="even">
-<td><strong><a href="entropy-balancing.html">Entropy Balancing</a></strong></td>
-<td>Directly reweights controls to match treated group’s X distribution</td>
-</tr>
-<tr class="odd">
-<td><strong>Doubly robust</strong></td>
-<td>Combines regression and weighting — consistent if either model is correct</td>
-</tr>
-</tbody>
-</table>
-<p>All of these rely on the same fundamental assumption. They differ in <em>how</em> they use X to make the comparison fair.</p>
-</section>
+<p>The simplest way to estimate a causal effect from observational data: run a regression of the outcome on the treatment indicator and the confounders.</p>
+<p><span class="math display">\[Y_i = \alpha + \tau D_i + \beta X_i + \varepsilon_i\]</span></p>
+<p>The coefficient <span class="math inline">\(\hat{\tau}\)</span> is your treatment effect estimate, “adjusted” for <span class="math inline">\(X\)</span>. OLS compares treated and control units <em>within levels of X</em> — holding the confounder constant to isolate the effect of treatment.</p>
+<p>The gap between the two regression lines (treated vs control) is <span class="math inline">\(\hat{\tau}\)</span>.</p>
 <section id="assumptions" class="level3">
 <h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
 <ol type="1">
-<li><strong>Conditional independence (CIA):</strong> all confounders are observed and included in X. If an unobserved variable affects both treatment and outcome, every method above is biased. <strong>This is untestable</strong> — you argue it based on institutional knowledge.</li>
-<li><strong>Overlap (common support):</strong> for every value of X, there are both treated and untreated units — <span class="math inline">\(0 &lt; P(D = 1 \mid X) &lt; 1\)</span>. If some covariate profiles always get treated, you can’t estimate the counterfactual for them.</li>
-<li><strong>SUTVA:</strong> one unit’s treatment doesn’t affect another’s outcome.</li>
+<li><strong>Selection on observables (CIA):</strong> all confounders are included in <span class="math inline">\(X\)</span>. If an unobserved variable drives both treatment and outcome, the estimate is biased — same as every other tool under SOO.</li>
+<li><strong>Correct functional form:</strong> the relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is correctly specified. If you fit a linear model but the truth is quadratic, the adjustment is wrong and <span class="math inline">\(\hat{\tau}\)</span> is biased. <strong>This is the key vulnerability.</strong></li>
+<li><strong>Overlap:</strong> treated and control groups share common support in <span class="math inline">\(X\)</span>.</li>
 </ol>
 </section>
-<section id="when-does-selection-on-observables-fail" class="level3">
-<h3 class="anchored" data-anchor-id="when-does-selection-on-observables-fail">When does selection on observables fail?</h3>
-<p>When there are <strong>unobserved confounders</strong> — variables that affect both treatment and outcome but aren’t in your data. No amount of regression, matching, or weighting can fix this.</p>
-<p>Examples:</p>
-<ul>
-<li><strong>Returns to education:</strong> ability is unobserved. More able people get more education <em>and</em> earn more. Controlling for test scores helps but doesn’t fully capture ability. → You need <strong>IV</strong>.</li>
-<li><strong>Effect of a new policy:</strong> states that adopt the policy may differ in unobservable ways (political will, citizen preferences). → You need <strong>DID</strong> or <strong>synthetic control</strong>.</li>
-<li><strong>Effect of a drug:</strong> patients who take the drug may be sicker in ways the chart doesn’t capture. → You need an <strong>RCT</strong>.</li>
-</ul>
-<p>The simulation below shows what happens when the CIA holds vs when it doesn’t.</p>
+<section id="the-vulnerability-functional-form" class="level3">
+<h3 class="anchored" data-anchor-id="the-vulnerability-functional-form">The vulnerability: functional form</h3>
+<p>Regression adjustment <strong>models the outcome</strong>. If the model is wrong, the estimate is biased — even when all confounders are observed. This is an <em>estimation</em> bias, not an identification failure.</p>
+<p>Compare this to <a href="ipw.html">IPW</a>, which models the <em>treatment assignment</em> instead. IPW doesn’t care how <span class="math inline">\(Y\)</span> relates to <span class="math inline">\(X\)</span> — it only needs the propensity score to be correct. Different models, different vulnerabilities.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 620
 
@@ -362,26 +320,31 @@ ui &lt;- fluidPage(
     sidebarPanel(
       width = 3,
 
-      sliderInput("n_so", "Sample size:",
+      sliderInput("n", "Sample size:",
                   min = 200, max = 2000, value = 500, step = 100),
 
-      sliderInput("ate_so", "True ATE:",
+      sliderInput("ate", "True ATE:",
                   min = 0, max = 5, value = 2, step = 0.5),
 
-      sliderInput("obs_conf", "Observed confounding (X):",
+      sliderInput("confounding", "Confounding strength:",
                   min = 0, max = 3, value = 1.5, step = 0.25),
 
-      sliderInput("unobs_conf", "Unobserved confounding (U):",
-                  min = 0, max = 3, value = 0, step = 0.25),
+      selectInput("shape", "True outcome model:",
+                  choices = c("Linear (Y ~ X)"      = "linear",
+                              "Quadratic (Y ~ X\u00b2)" = "quadratic")),
 
-      actionButton("go_so", "New draw", class = "btn-primary", width = "100%"),
+      actionButton("go", "New draw",
+                   class = "btn-primary", width = "100%"),
 
-      uiOutput("results_so")
+      uiOutput("results")
     ),
 
     mainPanel(
       width = 9,
-      plotOutput("so_plot", height = "450px")
+      fluidRow(
+        column(6, plotOutput("scatter_plot", height = "400px")),
+        column(6, plotOutput("compare_plot", height = "400px"))
+      )
     )
   )
 )
@@ -389,87 +352,144 @@ ui &lt;- fluidPage(
 server &lt;- function(input, output, session) {
 
   dat &lt;- reactive({
-    input$go_so
-    n   &lt;- input$n_so
-    ate &lt;- input$ate_so
-    gx  &lt;- input$obs_conf
-    gu  &lt;- input$unobs_conf
+    input$go
+    n    &lt;- input$n
+    ate  &lt;- input$ate
+    conf &lt;- input$confounding
+    is_linear &lt;- input$shape == "linear"
 
-    # Observed confounder
+    # Confounder
     x &lt;- rnorm(n)
 
-    # Unobserved confounder
-    u &lt;- rnorm(n)
+    # Treatment depends on x
+    p_true &lt;- pnorm(conf * x)
+    treat  &lt;- rbinom(n, 1, p_true)
 
-    # Treatment depends on both
-    p &lt;- pnorm(gx * x + gu * u)
-    treat &lt;- rbinom(n, 1, p)
-
-    # Outcome depends on both
-    y &lt;- 1 + 2 * x + 1.5 * u + ate * treat + rnorm(n)
+    # Outcome depends on x (linearly or quadratically) + treatment
+    if (is_linear) {
+      y &lt;- 1 + 2 * x + ate * treat + rnorm(n)
+    } else {
+      y &lt;- 1 + 2 * x^2 + ate * treat + rnorm(n)
+    }
 
     # Naive (no controls)
-    naive &lt;- coef(lm(y ~ treat))[2]
+    naive &lt;- mean(y[treat == 1]) - mean(y[treat == 0])
 
-    # Controlling for X only
-    ctrl_x &lt;- coef(lm(y ~ treat + x))[2]
+    # Regression adjustment (always linear: Y ~ D + X)
+    fit &lt;- lm(y ~ treat + x)
+    reg_est &lt;- coef(fit)["treat"]
 
-    # Oracle: controlling for X and U
-    oracle &lt;- coef(lm(y ~ treat + x + u))[2]
+    # IPW for comparison
+    ps &lt;- fitted(glm(treat ~ x, family = binomial))
+    w &lt;- ifelse(treat == 1, 1 / ps, 1 / (1 - ps))
+    ipw_est &lt;- weighted.mean(y[treat == 1], w[treat == 1]) -
+               weighted.mean(y[treat == 0], w[treat == 0])
 
-    list(x = x, u = u, treat = treat, y = y,
-         naive = naive, ctrl_x = ctrl_x, oracle = oracle,
-         ate = ate, gx = gx, gu = gu)
+    list(x = x, treat = treat, y = y, fit = fit,
+         naive = naive, reg_est = reg_est, ipw_est = ipw_est,
+         ate = ate, is_linear = is_linear)
   })
 
-  output$so_plot &lt;- renderPlot({
+  output$scatter_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    estimates &lt;- c(d$naive, d$ctrl_x, d$oracle)
-    biases &lt;- estimates - d$ate
-    labels &lt;- c("Naive\n(no controls)", "Control for X\n(observed)", "Control for X + U\n(oracle)")
-    cols &lt;- c("#e74c3c", ifelse(abs(biases[2]) &lt; 0.3, "#27ae60", "#f39c12"), "#27ae60")
+    plot(d$x, d$y, pch = 16, cex = 0.5,
+         col = ifelse(d$treat == 1, "#3498db50", "#e74c3c50"),
+         xlab = "X (confounder)", ylab = "Y (outcome)",
+         main = "Data + Regression Fit")
 
-    bp &lt;- barplot(estimates, col = cols, border = NA,
-                  names.arg = labels, cex.names = 0.85,
-                  main = "Estimated Treatment Effect by Method",
-                  ylab = "Estimate", ylim = c(0, max(estimates) * 1.4))
+    # Fitted regression lines (always linear)
+    x_seq &lt;- seq(min(d$x), max(d$x), length.out = 200)
+    pred_t &lt;- predict(d$fit,
+      newdata = data.frame(treat = 1, x = x_seq))
+    pred_c &lt;- predict(d$fit,
+      newdata = data.frame(treat = 0, x = x_seq))
+    lines(x_seq, pred_t, col = "#3498db", lwd = 2.5)
+    lines(x_seq, pred_c, col = "#e74c3c", lwd = 2.5)
 
-    # True ATE line
-    abline(h = d$ate, lty = 2, col = "gray40", lwd = 2)
-    text(0.2, d$ate + 0.15, paste0("True ATE = ", d$ate),
-         col = "gray40", cex = 0.85, adj = 0)
+    # True conditional means (dashed)
+    if (d$is_linear) {
+      true_t &lt;- 1 + 2 * x_seq + d$ate
+      true_c &lt;- 1 + 2 * x_seq
+    } else {
+      true_t &lt;- 1 + 2 * x_seq^2 + d$ate
+      true_c &lt;- 1 + 2 * x_seq^2
+    }
+    lines(x_seq, true_t, col = "#3498db", lwd = 1.5, lty = 3)
+    lines(x_seq, true_c, col = "#e74c3c", lwd = 1.5, lty = 3)
 
-    # Bias labels
-    text(bp, estimates + 0.15,
-         paste0(round(estimates, 2), "\n(bias: ", round(biases, 2), ")"),
-         cex = 0.8)
+    # Gap arrow at x = 0
+    mid_t &lt;- predict(d$fit,
+      newdata = data.frame(treat = 1, x = 0))
+    mid_c &lt;- predict(d$fit,
+      newdata = data.frame(treat = 0, x = 0))
+    arrows(0, mid_c, 0, mid_t, code = 3,
+           col = "#2c3e50", lwd = 2, length = 0.08)
+    text(0.3, (mid_t + mid_c) / 2,
+         bquote(hat(tau) == .(round(coef(d$fit)["treat"], 2))),
+         cex = 0.95, font = 2)
+
+    legend("topleft", bty = "n", cex = 0.8,
+           legend = c("Treated", "Control",
+                      "Regression fit", "True E[Y|X,D]"),
+           col = c("#3498db", "#e74c3c", "gray40", "gray40"),
+           pch = c(16, 16, NA, NA),
+           lwd = c(NA, NA, 2.5, 1.5),
+           lty = c(NA, NA, 1, 3))
   })
 
-  output$results_so &lt;- renderUI({
+  output$compare_plot &lt;- renderPlot({
     d &lt;- dat()
-    bias_naive &lt;- d$naive - d$ate
-    bias_x &lt;- d$ctrl_x - d$ate
-    bias_oracle &lt;- d$oracle - d$ate
-    cia_holds &lt;- d$gu == 0
+    par(mar = c(4.5, 9, 3, 2))
+
+    ests &lt;- c(d$ipw_est, d$reg_est, d$naive)
+    labels &lt;- c("IPW", "Regression adj.", "Naive")
+    cols &lt;- c("#27ae60", "#3498db", "#e74c3c")
+
+    xlim &lt;- range(c(ests, d$ate))
+    pad  &lt;- max(diff(xlim) * 0.4, 0.5)
+    xlim &lt;- xlim + c(-pad, pad)
+
+    plot(ests, 1:3, pch = 19, cex = 2, col = cols,
+         xlim = xlim, ylim = c(0.5, 3.5),
+         yaxt = "n", xlab = "Estimated treatment effect",
+         ylab = "", main = "Estimator Comparison")
+    axis(2, at = 1:3, labels = labels,
+         las = 1, cex.axis = 0.9)
+
+    abline(v = d$ate, lty = 2, col = "#2c3e50", lwd = 2)
+    text(d$ate, 3.45,
+         paste0("True ATE = ", d$ate),
+         cex = 0.85, font = 2, col = "#2c3e50")
+
+    # Lines from true to estimate
+    segments(d$ate, 1:3, ests, 1:3,
+             col = cols, lwd = 2, lty = 2)
+  })
+
+  output$results &lt;- renderUI({
+    d &lt;- dat()
+    b_naive &lt;- d$naive - d$ate
+    b_reg   &lt;- d$reg_est - d$ate
+    b_ipw   &lt;- d$ipw_est - d$ate
+    reg_ok  &lt;- abs(b_reg) &lt; abs(b_naive) * 0.5
+    ipw_ok  &lt;- abs(b_ipw) &lt; abs(b_naive) * 0.5
 
     tags$div(class = "stats-box",
       HTML(paste0(
         "&lt;b&gt;True ATE:&lt;/b&gt; ", d$ate, "&lt;br&gt;",
-        "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;b&gt;Naive:&lt;/b&gt; ", round(d$naive, 2),
-        " &lt;span class='bad'&gt;(bias: ", round(bias_naive, 2), ")&lt;/span&gt;&lt;br&gt;",
-        "&lt;b&gt;Control X:&lt;/b&gt; ", round(d$ctrl_x, 2),
-        " &lt;span class='", ifelse(cia_holds, "good", "bad"), "'&gt;(bias: ",
-        round(bias_x, 2), ")&lt;/span&gt;&lt;br&gt;",
-        "&lt;b&gt;Oracle (X+U):&lt;/b&gt; ", round(d$oracle, 2),
-        " &lt;span class='good'&gt;(bias: ", round(bias_oracle, 2), ")&lt;/span&gt;&lt;br&gt;",
-        "&lt;hr style='margin:6px 0'&gt;",
-        if (cia_holds)
-          "&lt;small&gt;CIA holds: controlling for X is enough.&lt;/small&gt;"
-        else
-          "&lt;small&gt;CIA violated: U confounds treatment. Controlling for X alone leaves residual bias.&lt;/small&gt;"
+        "&lt;b&gt;Naive:&lt;/b&gt; &lt;span class='bad'&gt;",
+        round(d$naive, 3), "&lt;/span&gt;",
+        " (bias: ", round(b_naive, 3), ")&lt;br&gt;",
+        "&lt;b&gt;Reg. adj:&lt;/b&gt; &lt;span class='",
+        ifelse(reg_ok, "good", "bad"), "'&gt;",
+        round(d$reg_est, 3), "&lt;/span&gt;",
+        " (bias: ", round(b_reg, 3), ")&lt;br&gt;",
+        "&lt;b&gt;IPW:&lt;/b&gt; &lt;span class='",
+        ifelse(ipw_ok, "good", "bad"), "'&gt;",
+        round(d$ipw_est, 3), "&lt;/span&gt;",
+        " (bias: ", round(b_ipw, 3), ")"
       ))
     )
   })
@@ -480,65 +500,27 @@ shinyApp(ui, server)</code></pre>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Unobserved confounding = 0:</strong> the CIA holds. Controlling for X eliminates all bias — the green and oracle bars match. This is the world where selection on observables works.</li>
-<li><strong>Unobserved confounding = 1.5:</strong> now there’s a confounder you can’t see. Controlling for X helps (reduces bias vs naive) but doesn’t eliminate it. Only the oracle, who controls for both X and U, gets the right answer.</li>
-<li><strong>Unobserved confounding = 3:</strong> controlling for X barely helps. The bias is large. No amount of regression, matching, or weighting on X can fix this — you need a different identification strategy.</li>
-<li><strong>Set observed confounding = 0, unobserved = 2:</strong> all the confounding is unobserved. Naive and “control for X” give the same (biased) answer because X isn’t a confounder here.</li>
+<li><strong>Linear outcome, confounding = 1.5:</strong> regression adjustment works well. The fitted lines (solid) match the true curves (dotted). The estimate is close to the true ATE.</li>
+<li><strong>Switch to Quadratic:</strong> now the true outcome is <span class="math inline">\(Y = 1 + 2X^2 + \tau D\)</span>, but regression still fits a line. The solid lines miss the curvature (compare to the dotted true curves). The regression estimate is <strong>biased</strong> — it’s a functional form problem, not a confounding problem.</li>
+<li><strong>Quadratic outcome, compare to IPW:</strong> IPW doesn’t model the outcome, so it still works. The green dot (IPW) is close to the true ATE; the blue dot (regression) is not.</li>
+<li><strong>Confounding = 0:</strong> treatment is random. All three estimators agree, and functional form doesn’t matter (no confounding to adjust for).</li>
 </ul>
+</section>
+<section id="the-bottom-line" class="level3">
+<h3 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h3>
+<p>Regression adjustment is the simplest and most common tool. It works great when the outcome model is correctly specified. But it’s <strong>fragile to functional form misspecification</strong> — fitting a line when the truth is curved introduces bias even when all confounders are observed.</p>
+<p>This is why alternatives like <a href="ipw.html">IPW</a> and <a href="entropy-balancing.html">entropy balancing</a> exist: they avoid modeling the outcome entirely. And <a href="https://en.wikipedia.org/wiki/Doubly_robust_estimation">doubly robust</a> methods hedge both bets.</p>
 <hr>
 </section>
-</section>
-<section id="estimation-tools-not-just-for-selection-on-observables" class="level2">
-<h2 class="anchored" data-anchor-id="estimation-tools-not-just-for-selection-on-observables">Estimation tools (not just for selection on observables)</h2>
-<p>Once you have an identification strategy, you need a way to <em>implement</em> it. The tools below are often associated with selection on observables, but they’re <strong>general-purpose</strong> — they show up in other strategies too.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Tool</th>
-<th>Used in selection on observables</th>
-<th>Also used in</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Regression adjustment</strong></td>
-<td>Control for X in a regression</td>
-<td>DID with covariates, RDD with covariates</td>
-</tr>
-<tr class="even">
-<td><strong>Matching</strong></td>
-<td>Pair treated/control on X</td>
-<td>DID matching estimators</td>
-</tr>
-<tr class="odd">
-<td><strong><a href="ipw.html">IPW</a></strong></td>
-<td>Reweight by propensity score</td>
-<td>IPW-DID (Abadie 2005, Callaway &amp; Sant’Anna 2021)</td>
-</tr>
-<tr class="even">
-<td><strong><a href="entropy-balancing.html">Entropy Balancing</a></strong></td>
-<td>Balance covariates with weights</td>
-<td>Weighted DID</td>
-</tr>
-<tr class="odd">
-<td><strong>Doubly robust</strong></td>
-<td>Combine regression + weighting</td>
-<td>DR-DID (Sant’Anna &amp; Zhao 2020)</td>
-</tr>
-</tbody>
-</table>
-<p>The identification strategy tells you <strong>why</strong> your comparison is valid. The estimation tool tells you <strong>how</strong> to make the comparison. Don’t confuse the two — IPW is a tool, not a strategy.</p>
-<hr>
-</section>
-<section id="did-you-know" class="level2">
-<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
+<section id="did-you-know" class="level3">
+<h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
 <ul>
-<li><p>The conditional independence assumption was formalized by <strong>Rosenbaum &amp; Rubin (1983)</strong> in their foundational paper on propensity scores. They showed that conditioning on a scalar propensity score is sufficient — you don’t need to match on every covariate separately.</p></li>
-<li><p>The term <strong>“selection on observables”</strong> is economics jargon. In statistics it’s called <strong>ignorability</strong> or <strong>no unmeasured confounding</strong>. In epidemiology it’s the <strong>exchangeability</strong> assumption. Same idea, different fields, different names.</p></li>
-<li><p><strong>Altonji, Elder &amp; Taber (2005)</strong> proposed a practical check: compare how much the estimate changes when you add observed controls. If adding strong predictors of the outcome barely moves the estimate, it’s less likely that unobservables would change it much either. Not a proof — but a useful heuristic.</p></li>
+<li><p>Regression adjustment is so natural that most applied researchers use it without thinking of it as a “method.” But <strong>Freedman (2008)</strong> showed that even in randomized experiments, regression adjustment can be biased in finite samples if the model is wrong — the linear adjustment can <em>introduce</em> bias that wasn’t there. <strong>Lin (2013)</strong> showed how to fix this: interact the treatment indicator with all covariates, and the resulting estimator is asymptotically unbiased regardless of the true functional form.</p></li>
+<li><p>The vulnerability of regression to functional form is a key motivation for <strong>semiparametric</strong> and <strong>nonparametric</strong> methods. Instead of assuming <span class="math inline">\(E[Y \mid X] = \alpha + \beta X\)</span> (which might be wrong), methods like kernel regression or series estimation let the data determine the shape.</p></li>
 </ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

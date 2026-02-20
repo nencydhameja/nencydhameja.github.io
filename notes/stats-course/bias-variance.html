@@ -356,7 +356,7 @@ window.Quarto = {
   <ul>
   <li><a href="#why-the-best-model-isnt-the-most-complex-one" id="toc-why-the-best-model-isnt-the-most-complex-one" class="nav-link active" data-scroll-target="#why-the-best-model-isnt-the-most-complex-one">Why the best model isn’t the most complex one</a></li>
   <li><a href="#simulation-1-polynomial-regression-underfitting-vs-overfitting" id="toc-simulation-1-polynomial-regression-underfitting-vs-overfitting" class="nav-link" data-scroll-target="#simulation-1-polynomial-regression-underfitting-vs-overfitting">Simulation 1: Polynomial regression — underfitting vs overfitting</a></li>
-  <li><a href="#simulation-2-bias²-variance-mse" id="toc-simulation-2-bias²-variance-mse" class="nav-link" data-scroll-target="#simulation-2-bias²-variance-mse">Simulation 2: Bias² + Variance = MSE</a>
+  <li><a href="#simulation-2-slide-along-the-bias-variance-curve" id="toc-simulation-2-slide-along-the-bias-variance-curve" class="nav-link" data-scroll-target="#simulation-2-slide-along-the-bias-variance-curve">Simulation 2: Slide along the bias-variance curve</a>
   <ul class="collapse">
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
@@ -626,9 +626,9 @@ server &lt;- function(input, output, session) {
 
 shinyApp(ui, server)</code></pre>
 </section>
-<section id="simulation-2-bias²-variance-mse" class="level2">
-<h2 class="anchored" data-anchor-id="simulation-2-bias²-variance-mse">Simulation 2: Bias² + Variance = MSE</h2>
-<p>Run many simulations with different training sets. For each polynomial degree, decompose the MSE into bias² and variance. Watch the U-shaped total error curve emerge.</p>
+<section id="simulation-2-slide-along-the-bias-variance-curve" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-2-slide-along-the-bias-variance-curve">Simulation 2: Slide along the bias-variance curve</h2>
+<p>Drag the complexity slider to move the ball along the U-shaped MSE curve — or press ▶ to animate. On the right, see what 20 fits from different training samples look like at each degree: simple models are stable but wrong (bias); complex models scatter wildly (variance).</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 620
 
@@ -641,6 +641,7 @@ ui &lt;- fluidPage(
       margin-top: 12px; font-size: 14px; line-height: 1.9;
     }
     .stats-box b { color: #2c3e50; }
+    .ball-val { font-weight: bold; color: #e67e22; }
   "))),
 
   sidebarLayout(
@@ -659,10 +660,14 @@ ui &lt;- fluidPage(
       sliderInput("noise2", "Noise level:",
                   min = 0.2, max = 1.5, value = 0.5, step = 0.1),
 
-      sliderInput("mc_sims", "MC simulations:",
-                  min = 100, max = 500, value = 200, step = 50),
+      tags$hr(),
 
-      actionButton("go2", "Run",
+      sliderInput("degree2", "Model complexity (degree):",
+                  min = 1, max = 12, value = 1, step = 1,
+                  animate = animationOptions(
+                    interval = 700, loop = TRUE)),
+
+      actionButton("go2", "New data",
                    class = "btn-primary", width = "100%"),
 
       uiOutput("results2")
@@ -671,8 +676,8 @@ ui &lt;- fluidPage(
     mainPanel(
       width = 9,
       fluidRow(
-        column(7, plotOutput("bv_plot", height = "500px")),
-        column(5, plotOutput("bar_plot", height = "500px"))
+        column(6, plotOutput("bv_plot", height = "480px")),
+        column(6, plotOutput("fit_plot2", height = "480px"))
       )
     )
   )
@@ -689,20 +694,23 @@ server &lt;- function(input, output, session) {
     )
   }
 
-  dat &lt;- reactive({
+  # Pre-compute MC results for ALL degrees at once.
+  # Only recomputes when function / n / noise / button changes —
+  # dragging the degree slider is instant.
+  mc_data &lt;- reactive({
     input$go2
     fn    &lt;- input$fn2
     n     &lt;- input$n2
     sigma &lt;- input$noise2
-    sims  &lt;- input$mc_sims
+    sims  &lt;- 50
 
-    x_eval &lt;- seq(0.05, 0.95, length.out = 50)
+    x_eval &lt;- seq(0.05, 0.95, length.out = 40)
     f_eval &lt;- f_true(x_eval, fn)
 
-    degrees &lt;- 1:12
-    bias2_vec &lt;- numeric(length(degrees))
-    var_vec   &lt;- numeric(length(degrees))
-    mse_vec   &lt;- numeric(length(degrees))
+    degrees   &lt;- 1:12
+    bias2_vec &lt;- numeric(12)
+    var_vec   &lt;- numeric(12)
+    pred_list &lt;- vector("list", 12)
 
     for (di in seq_along(degrees)) {
       d &lt;- degrees[di]
@@ -711,111 +719,158 @@ server &lt;- function(input, output, session) {
       for (s in seq_len(sims)) {
         x_train &lt;- sort(runif(n, 0, 1))
         y_train &lt;- f_true(x_train, fn) + rnorm(n, sd = sigma)
-        fit &lt;- lm(y_train ~ poly(x_train, d, raw = TRUE))
-        pred_mat[s, ] &lt;- predict(fit,
-          newdata = data.frame(x_train = x_eval))
+        fit &lt;- tryCatch(
+          lm(y_train ~ poly(x_train, d, raw = TRUE)),
+          error = function(e) NULL)
+        if (!is.null(fit)) {
+          pred_mat[s, ] &lt;- predict(fit,
+            newdata = data.frame(x_train = x_eval))
+        }
       }
 
-      avg_pred &lt;- colMeans(pred_mat)
-      bias2_vec[di] &lt;- mean((avg_pred - f_eval)^2)
-      var_vec[di]   &lt;- mean(apply(pred_mat, 2, var))
-      mse_vec[di]   &lt;- bias2_vec[di] + var_vec[di]
+      good &lt;- complete.cases(pred_mat)
+      if (sum(good) &gt; 2) {
+        pred_mat &lt;- pred_mat[good, , drop = FALSE]
+        avg_pred &lt;- colMeans(pred_mat)
+        bias2_vec[di] &lt;- mean((avg_pred - f_eval)^2)
+        var_vec[di]   &lt;- mean(apply(pred_mat, 2, var))
+      }
+      pred_list[[di]] &lt;- pred_mat
     }
 
-    list(degrees = degrees, bias2 = bias2_vec, variance = var_vec,
-         mse = mse_vec, sigma = sigma)
+    list(degrees = degrees, bias2 = bias2_vec,
+         variance = var_vec,
+         mse = bias2_vec + var_vec,
+         sigma = sigma, x_eval = x_eval,
+         f_eval = f_eval, pred_list = pred_list,
+         fn = fn)
   })
 
+  # LEFT PLOT: U-curve with sliding ball
   output$bv_plot &lt;- renderPlot({
-    d &lt;- dat()
+    d   &lt;- mc_data()
+    deg &lt;- input$degree2
     par(mar = c(4.5, 4.5, 3, 1))
 
-    ylim &lt;- c(0, max(d$mse) * 1.15)
+    ylim &lt;- c(0, max(d$mse) * 1.25)
+    x    &lt;- d$degrees
 
-    # Stacked area: variance on bottom, bias² on top
-    x &lt;- d$degrees
     plot(x, d$mse, type = "n",
-         xlab = "Polynomial degree", ylab = "Error", ylim = ylim,
-         main = "Bias\u00b2 + Variance = MSE")
+         xlab = "Polynomial degree", ylab = "Error",
+         ylim = ylim,
+         main = "Bias\u00b2 + Variance = MSE",
+         xaxt = "n")
+    axis(1, at = 1:12)
 
-    # Fill variance (bottom layer)
+    # Stacked area fills
     polygon(c(x, rev(x)),
             c(d$variance, rep(0, length(x))),
-            col = adjustcolor("#3498db", 0.35), border = NA)
-
-    # Fill bias² (top layer, stacked on variance)
+            col = adjustcolor("#3498db", 0.25),
+            border = NA)
     polygon(c(x, rev(x)),
-            c(d$variance + d$bias2, rev(d$variance)),
-            col = adjustcolor("#e74c3c", 0.35), border = NA)
+            c(d$mse, rev(d$variance)),
+            col = adjustcolor("#e74c3c", 0.25),
+            border = NA)
 
-    # Lines on top
+    # Lines
     lines(x, d$variance, col = "#3498db", lwd = 2)
-    lines(x, d$variance + d$bias2, col = "#2c3e50", lwd = 2.5)
     lines(x, d$bias2, col = "#e74c3c", lwd = 2, lty = 2)
+    lines(x, d$mse, col = "#2c3e50", lwd = 2.5)
 
+    # Noise floor
     abline(h = d$sigma^2, lty = 2, col = "#95a5a6")
+    text(11.5, d$sigma^2 + ylim[2] * 0.03,
+         expression(sigma^2), cex = 0.8, col = "#95a5a6")
 
-    best &lt;- x[which.min(d$mse)]
+    # Optimal degree
+    best &lt;- which.min(d$mse)
     abline(v = best, lty = 3, col = "#7f8c8d")
 
+    # Vertical line from ball to x-axis
+    segments(deg, 0, deg, d$mse[deg],
+             lty = 2, col = "#e67e22", lwd = 1.5)
+
+    # The sliding ball
+    points(deg, d$mse[deg],
+           pch = 21, bg = "#f39c12", col = "#2c3e50",
+           cex = 3.5, lwd = 2)
+
     legend("topright", bty = "n", cex = 0.85,
-           legend = c("MSE (Bias\u00b2 + Var)",
+           legend = c("MSE (total)",
                       "Bias\u00b2", "Variance",
                       paste0("Optimal: degree ", best)),
-           col = c("#2c3e50", "#e74c3c", "#3498db", "#7f8c8d"),
+           col = c("#2c3e50", "#e74c3c",
+                   "#3498db", "#7f8c8d"),
            lwd = c(2.5, 2, 2, 1),
-           lty = c(1, 2, 1, 3),
-           fill = c(NA, adjustcolor("#e74c3c", 0.35),
-                    adjustcolor("#3498db", 0.35), NA),
-           border = c(NA, NA, NA, NA))
+           lty = c(1, 2, 1, 3))
   })
 
-  output$bar_plot &lt;- renderPlot({
-    d &lt;- dat()
+  # RIGHT PLOT: What fits look like at current degree
+  output$fit_plot2 &lt;- renderPlot({
+    d   &lt;- mc_data()
+    deg &lt;- input$degree2
     par(mar = c(4.5, 4.5, 3, 1))
 
-    # Stacked bar chart for selected degrees
-    show &lt;- c(1, 3, 5, 8, 12)
-    show &lt;- show[show &lt;= length(d$degrees)]
+    pred_mat &lt;- d$pred_list[[deg]]
+    avg_pred &lt;- colMeans(pred_mat)
+    n_show   &lt;- min(20, nrow(pred_mat))
 
-    bar_mat &lt;- rbind(d$bias2[show], d$variance[show])
-    rownames(bar_mat) &lt;- c("Bias\u00b2", "Variance")
-    colnames(bar_mat) &lt;- paste0("d=", d$degrees[show])
+    # Cap y-range so wild high-degree fits don't
+    # blow up the axis
+    preds_shown &lt;- as.vector(pred_mat[1:n_show, ])
+    yq &lt;- quantile(preds_shown,
+                   c(0.02, 0.98), na.rm = TRUE)
+    ylim &lt;- c(
+      min(yq[1], min(d$f_eval) - 0.3),
+      max(yq[2], max(d$f_eval) + 0.3))
 
-    bp &lt;- barplot(bar_mat, beside = FALSE,
-            col = c(adjustcolor("#e74c3c", 0.7),
-                    adjustcolor("#3498db", 0.7)),
-            ylab = "Error",
-            main = "MSE = Bias\u00b2 + Variance",
-            ylim = c(0, max(colSums(bar_mat)) * 1.2),
-            border = "white", las = 1)
+    plot(d$x_eval, d$f_eval, type = "n",
+         xlab = "x", ylab = "f(x)",
+         ylim = ylim,
+         main = paste0("Degree ", deg,
+           " \u2014 20 fits from different samples"))
 
-    # Add MSE total labels on top
-    totals &lt;- colSums(bar_mat)
-    text(bp, totals, labels = round(totals, 3),
-         pos = 3, cex = 0.8, font = 2)
+    # Individual fits (semi-transparent)
+    for (i in 1:n_show) {
+      lines(d$x_eval, pred_mat[i, ],
+            col = adjustcolor("#3498db", 0.2),
+            lwd = 1.2)
+    }
 
-    legend("topright", bty = "n", cex = 0.9,
-           legend = c("Bias\u00b2", "Variance"),
-           fill = c(adjustcolor("#e74c3c", 0.7),
-                    adjustcolor("#3498db", 0.7)),
-           border = "white")
+    # Average prediction — gap from truth = bias
+    lines(d$x_eval, avg_pred,
+          col = "#e74c3c", lwd = 2.5)
+
+    # True function
+    lines(d$x_eval, d$f_eval,
+          col = "#27ae60", lwd = 2.5, lty = 2)
+
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c("True f(x)",
+                      "Average prediction",
+                      "Individual fits"),
+           col = c("#27ae60", "#e74c3c",
+                   adjustcolor("#3498db", 0.5)),
+           lwd = c(2.5, 2.5, 1.2),
+           lty = c(2, 1, 1))
   })
 
+  # Stats box
   output$results2 &lt;- renderUI({
-    d &lt;- dat()
-    best &lt;- d$degrees[which.min(d$mse)]
-    bi &lt;- which.min(d$mse)
+    d   &lt;- mc_data()
+    deg &lt;- input$degree2
+    best &lt;- which.min(d$mse)
 
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;Optimal degree:&lt;/b&gt; ", best, "&lt;br&gt;",
-        "Bias\u00b2: ", round(d$bias2[bi], 4), "&lt;br&gt;",
-        "Variance: ", round(d$variance[bi], 4), "&lt;br&gt;",
-        "MSE: ", round(d$mse[bi], 4), "&lt;br&gt;",
+        "&lt;b&gt;Degree ", deg, ":&lt;/b&gt;&lt;br&gt;",
+        "Bias\u00b2: ", round(d$bias2[deg], 4), "&lt;br&gt;",
+        "Variance: ", round(d$variance[deg], 4), "&lt;br&gt;",
+        "&lt;span class='ball-val'&gt;MSE: ",
+        round(d$mse[deg], 4), "&lt;/span&gt;&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;small&gt;MSE = Bias\u00b2 + Variance&lt;br&gt;",
-        "Noise floor: ", round(d$sigma^2, 3), "&lt;/small&gt;"
+        "&lt;b&gt;Optimal:&lt;/b&gt; degree ", best,
+        " (MSE ", round(d$mse[best], 4), ")"
       ))
     )
   })

@@ -57,12 +57,17 @@
       flex-wrap: wrap;
       gap: 6px;
     }
-    .course-card .topics span {
+    .course-card .topics a {
       background: #eaf2f8;
       color: #2c3e50;
       font-size: 0.82em;
       padding: 3px 10px;
       border-radius: 12px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .course-card .topics a:hover {
+      background: #d4e6f1;
     }
     .card-stat   { border-left-color: #3498db; }
     .card-causal { border-left-color: #27ae60; }
@@ -91,16 +96,17 @@
       Simulation-based modules for statistics, econometrics, and causal inference.
     </p>
     <div class="topics">
-      <span>Distributions</span>
-      <span>Sampling</span>
-      <span>CLT &amp; LLN</span>
-      <span>p-values &amp; CIs</span>
-      <span>Power &amp; MDE</span>
-      <span>Monte Carlo</span>
-      <span>Regression &amp; CEF</span>
-      <span>Clustered SEs</span>
-      <span>Bias-Variance</span>
-      <span>Bayesian Updating</span>
+      <a href="stats-course/foundations.html">Distributions</a>
+      <a href="stats-course/sampling-distribution.html">Sampling</a>
+      <a href="stats-course/simulations.html">CLT</a>
+      <a href="stats-course/lln.html">LLN</a>
+      <a href="stats-course/pvalues-ci.html">p-values &amp; CIs</a>
+      <a href="stats-course/power.html">Power &amp; MDE</a>
+      <a href="stats-course/monte-carlo.html">Monte Carlo</a>
+      <a href="stats-course/cef.html">Regression &amp; CEF</a>
+      <a href="stats-course/clustered-se.html">Clustered SEs</a>
+      <a href="stats-course/bias-variance.html">Bias-Variance</a>
+      <a href="stats-course/bayesian-updating.html">Bayesian Updating</a>
     </div>
   </div>
 
@@ -111,10 +117,16 @@
       selection bias, parallel trends, and reweighting in action.
     </p>
     <div class="topics">
-      <span>Potential Outcomes</span>
-      <span>Difference-in-Differences</span>
-      <span>IPW</span>
-      <span>Entropy Balancing</span>
+      <a href="causal-inference/potential-outcomes.html">Potential Outcomes</a>
+      <a href="causal-inference/identification-estimation.html">Identification vs Estimation</a>
+      <a href="causal-inference/selection-observables.html">Selection on Observables</a>
+      <a href="causal-inference/did.html">Difference-in-Differences</a>
+      <a href="causal-inference/iv.html">IV</a>
+      <a href="causal-inference/rdd.html">RDD</a>
+      <a href="causal-inference/synth.html">Synthetic Control</a>
+      <a href="causal-inference/regression-adjustment.html">Regression Adjustment</a>
+      <a href="causal-inference/ipw.html">IPW</a>
+      <a href="causal-inference/entropy-balancing.html">Entropy Balancing</a>
     </div>
   </div>
 
@@ -126,10 +138,10 @@
       built from first principles with no measure theory.
     </p>
     <div class="topics">
-      <span>Bayes' Theorem</span>
-      <span>Priors &amp; Posteriors</span>
-      <span>Shrinkage</span>
-      <span>Bayesian vs Frequentist</span>
+      <a href="bayesian-inference/bayes-theorem.html">Bayes' Theorem</a>
+      <a href="bayesian-inference/priors-posteriors.html">Priors &amp; Posteriors</a>
+      <a href="bayesian-inference/shrinkage.html">Shrinkage</a>
+      <a href="bayesian-inference/bayes-vs-freq.html">Bayesian vs Frequentist</a>
     </div>
   </div>
   -->
