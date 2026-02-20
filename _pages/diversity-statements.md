@@ -25,7 +25,7 @@ in economics and political science (2014–2024).
 }
 </style>
 
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+<script src="https://cdn.plot.ly/plotly-3.3.0.min.js" charset="utf-8"></script>
 
 <div class="plotly-container">
   <div id="treatment-trend" style="width:100%;"></div>
