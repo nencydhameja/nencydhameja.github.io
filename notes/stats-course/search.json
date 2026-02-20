@@ -768,9 +768,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Foundations of Statistical Inference",
+    "title": "Statistical Inference",
     "section": "",
-    "text": "Welcome 👋\nThis course builds intuition for:",
+    "text": "These are my notes on statistics, econometrics, and causal inference — built around interactive simulations in R. The idea is to see how things like sampling distributions, p-values, and OLS actually work, not just read about them.",
     "crumbs": [
       "Home"
     ]
@@ -778,7 +778,7 @@
   {
     "objectID": "index.html#start-here",
     "href": "index.html#start-here",
-    "title": "Foundations of Statistical Inference",
+    "title": "Statistical Inference",
     "section": "Start Here",
     "text": "Start Here\n\nProbability & Uncertainty\n\nFoundations — Distributions, Sampling & Confidence Intervals\nVariance, SD & Standard Error — Population vs Sample, SD vs SE & Why n − 1\nThe Sampling Distribution — Data vs Sampling Distribution & When to Assume Normality\n\n\n\nThe Central Limit Theorem\n\nCLT Simulator — Interactive CLT Simulator\nLLN vs CLT — Why Averages Stabilize Before They Become Normal\n\n\n\nInference\n\np-values & Confidence Intervals — What They Actually Mean\nThe Bootstrap — Resampling-Based Inference\nPower, Alpha, Beta & MDE — Hypothesis Testing & Experiment Design\nMonte Carlo Experiments — How We Understand Estimators\nMultiple Testing — False Discoveries & the Replication Crisis\n\n\n\nRegression\n\nRegression & the CEF — OLS and the Conditional Expectation Function\nResiduals & Controls — Diagnostics, Partialling Out & Omitted Variable Bias\nFrisch-Waugh-Lovell — Partialling Out & OVB\n\n\n\nStandard Errors & Diagnostics\n\nHeteroskedasticity — Constant vs Non-Constant Variance & Robust SEs\nClustered SEs — When Observations Aren’t Independent\nMeasurement Error — Why Noisy Regressors Bias You Toward Zero\nBias-Variance Tradeoff — Underfitting, Overfitting & MSE Decomposition\nWhen Inference Breaks Down — Why Variation Is the Fuel of Inference\n\n\n\nCausal Thinking\n\nFrom Correlation to Causation — Why Correlation Isn’t Enough & When It Becomes Causal\n\n\n\nBayesian Thinking\n\nBayesian Updating — One Gentle Introduction",
     "crumbs": [
