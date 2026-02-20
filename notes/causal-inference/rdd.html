@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Instrumental Variables – Applied Causal Inference</title>
+<title>Regression Discontinuity – Applied Causal Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +115,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./iv.html">Instrumental Variables</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rdd.html">Regression Discontinuity</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -172,13 +172,13 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iv.html" class="sidebar-item-text sidebar-link active">
+  <a href="./iv.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Instrumental Variables</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rdd.html" class="sidebar-item-text sidebar-link">
+  <a href="./rdd.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Regression Discontinuity</span></a>
   </div>
 </li>
@@ -194,12 +194,11 @@ window.Quarto = {
   <ul>
   <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
   <ul class="collapse">
-  <li><a href="#two-stage-least-squares-2sls" id="toc-two-stage-least-squares-2sls" class="nav-link" data-scroll-target="#two-stage-least-squares-2sls">Two-stage least squares (2SLS)</a></li>
-  <li><a href="#classic-example" id="toc-classic-example" class="nav-link" data-scroll-target="#classic-example">Classic example</a></li>
-  <li><a href="#when-does-iv-fail" id="toc-when-does-iv-fail" class="nav-link" data-scroll-target="#when-does-iv-fail">When does IV fail?</a></li>
+  <li><a href="#sharp-vs-fuzzy" id="toc-sharp-vs-fuzzy" class="nav-link" data-scroll-target="#sharp-vs-fuzzy">Sharp vs Fuzzy</a></li>
+  <li><a href="#when-does-rdd-fail" id="toc-when-does-rdd-fail" class="nav-link" data-scroll-target="#when-does-rdd-fail">When does RDD fail?</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
-  <li><a href="#what-does-iv-actually-estimate" id="toc-what-does-iv-actually-estimate" class="nav-link" data-scroll-target="#what-does-iv-actually-estimate">What does IV actually estimate?</a></li>
+  <li><a href="#the-bandwidth-tradeoff" id="toc-the-bandwidth-tradeoff" class="nav-link" data-scroll-target="#the-bandwidth-tradeoff">The bandwidth tradeoff</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -209,7 +208,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Instrumental Variables</h1>
+<h1 class="title">Regression Discontinuity</h1>
 </div>
 
 
@@ -228,36 +227,25 @@ window.Quarto = {
 
 <section id="the-idea" class="level2">
 <h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>You want the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>, but <span class="math inline">\(X\)</span> is <strong>endogenous</strong> — correlated with the error term because of confounding, reverse causality, or measurement error. OLS is biased.</p>
-<p>The fix: find a variable <span class="math inline">\(Z\)</span> (the <strong>instrument</strong>) that:</p>
-<ol type="1">
-<li><strong>Relevance:</strong> <span class="math inline">\(Z\)</span> is correlated with <span class="math inline">\(X\)</span> — it actually moves <span class="math inline">\(X\)</span></li>
-<li><strong>Exclusion restriction:</strong> <span class="math inline">\(Z\)</span> affects <span class="math inline">\(Y\)</span> <em>only through</em> <span class="math inline">\(X\)</span> — no back doors</li>
-</ol>
-<p><span class="math display">\[Z \to X \to Y\]</span></p>
-<p>If both conditions hold, you can use <span class="math inline">\(Z\)</span> to isolate the part of <span class="math inline">\(X\)</span> that’s “as good as random” and estimate the causal effect.</p>
-<section id="two-stage-least-squares-2sls" class="level3">
-<h3 class="anchored" data-anchor-id="two-stage-least-squares-2sls">Two-stage least squares (2SLS)</h3>
-<p>The mechanics are simple:</p>
-<p><strong>First stage:</strong> regress <span class="math inline">\(X\)</span> on <span class="math inline">\(Z\)</span> to get predicted values <span class="math inline">\(\hat{X}\)</span></p>
-<p><span class="math display">\[X = \pi_0 + \pi_1 Z + v\]</span></p>
-<p><strong>Second stage:</strong> regress <span class="math inline">\(Y\)</span> on <span class="math inline">\(\hat{X}\)</span> instead of <span class="math inline">\(X\)</span></p>
-<p><span class="math display">\[Y = \beta_0 + \beta_1 \hat{X} + \varepsilon\]</span></p>
-<p>Why does this work? <span class="math inline">\(\hat{X}\)</span> contains only the variation in <span class="math inline">\(X\)</span> that comes from <span class="math inline">\(Z\)</span>. Since <span class="math inline">\(Z\)</span> is exogenous (by assumption), <span class="math inline">\(\hat{X}\)</span> is uncorrelated with the error term. The confounding is gone.</p>
-</section>
-<section id="classic-example" class="level3">
-<h3 class="anchored" data-anchor-id="classic-example">Classic example</h3>
-<p><strong>Returns to education.</strong> You want to know if more schooling causes higher earnings. But ability confounds: smarter people get more education <em>and</em> earn more. OLS overstates the return.</p>
-<p>Angrist &amp; Krueger (1991) used <strong>quarter of birth</strong> as an instrument. Because of compulsory schooling laws, people born in Q1 can drop out slightly earlier than Q4 births — so quarter of birth affects education (relevance) but presumably doesn’t affect earnings directly (exclusion).</p>
-</section>
-<section id="when-does-iv-fail" class="level3">
-<h3 class="anchored" data-anchor-id="when-does-iv-fail">When does IV fail?</h3>
+<p>Some treatments are assigned by a <strong>cutoff rule</strong>: you get a scholarship if your test score is above 80, you qualify for a program if your income is below $30k, you win an election if your vote share exceeds 50%.</p>
+<p>Right around the cutoff, people just above and just below are nearly identical — they differ by a fraction of a point. The cutoff creates <strong>near-random assignment</strong> in a narrow window. That’s the identifying variation.</p>
+<p><span class="math display">\[\tau_{RDD} = \lim_{x \downarrow c} E[Y \mid X = x] - \lim_{x \uparrow c} E[Y \mid X = x]\]</span></p>
+<p>The treatment effect is the <strong>jump in the outcome at the cutoff</strong>. If the outcome is smooth everywhere except at the cutoff, that discontinuity is the causal effect.</p>
+<section id="sharp-vs-fuzzy" class="level3">
+<h3 class="anchored" data-anchor-id="sharp-vs-fuzzy">Sharp vs Fuzzy</h3>
 <ul>
-<li><strong>Weak instruments:</strong> if <span class="math inline">\(Z\)</span> barely moves <span class="math inline">\(X\)</span>, the first stage is weak and the IV estimate becomes wildly noisy and biased. Rule of thumb: first-stage F-statistic &gt; 10.</li>
-<li><strong>Exclusion restriction violated:</strong> if <span class="math inline">\(Z\)</span> affects <span class="math inline">\(Y\)</span> through channels other than <span class="math inline">\(X\)</span>, the estimate is biased. This assumption is <strong>untestable</strong> — you argue it, you don’t prove it.</li>
+<li><strong>Sharp RDD:</strong> treatment is a deterministic function of the running variable. Score <span class="math inline">\(\geq\)</span> 80 → treated, period. Everyone complies.</li>
+<li><strong>Fuzzy RDD:</strong> the cutoff changes the <em>probability</em> of treatment, but not perfectly. Some people above the cutoff don’t take treatment, some below do. This is essentially an IV problem — the cutoff is the instrument.</li>
+</ul>
+</section>
+<section id="when-does-rdd-fail" class="level3">
+<h3 class="anchored" data-anchor-id="when-does-rdd-fail">When does RDD fail?</h3>
+<ul>
+<li><strong>Manipulation:</strong> if people can precisely control their score to land just above or below the cutoff, the “as good as random” logic breaks. Check for bunching at the cutoff (McCrary test).</li>
+<li><strong>Wrong functional form:</strong> if you fit a straight line but the true relationship is curved, you might mistake curvature for a jump. Use local polynomials and check sensitivity to bandwidth.</li>
 </ul>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 620
+#| viewerHeight: 650
 
 library(shiny)
 
@@ -277,16 +265,21 @@ ui &lt;- fluidPage(
       width = 3,
 
       sliderInput("n", "Sample size:",
-                  min = 100, max = 2000, value = 500, step = 100),
+                  min = 200, max = 2000, value = 500, step = 100),
 
-      sliderInput("true_b", "True causal effect of X on Y:",
+      sliderInput("tau", "True treatment effect:",
                   min = 0, max = 5, value = 2, step = 0.25),
 
-      sliderInput("confound", "Confounding strength:",
-                  min = 0, max = 5, value = 3, step = 0.25),
+      sliderInput("sigma", "Noise (SD):",
+                  min = 0.5, max = 4, value = 1.5, step = 0.25),
 
-      sliderInput("inst_str", "Instrument strength:",
-                  min = 0, max = 3, value = 1.5, step = 0.1),
+      sliderInput("bw", "Bandwidth around cutoff:",
+                  min = 0.05, max = 0.5, value = 0.2, step = 0.05),
+
+      selectInput("curve", "True relationship:",
+                  choices = c("Linear" = "linear",
+                              "Quadratic" = "quad",
+                              "Flat" = "flat")),
 
       actionButton("go", "New draw", class = "btn-primary", width = "100%"),
 
@@ -295,7 +288,7 @@ ui &lt;- fluidPage(
 
     mainPanel(
       width = 9,
-      plotOutput("iv_plot", height = "470px")
+      plotOutput("rdd_plot", height = "480px")
     )
   )
 )
@@ -304,91 +297,131 @@ server &lt;- function(input, output, session) {
 
   dat &lt;- reactive({
     input$go
-    n   &lt;- input$n
-    b   &lt;- input$true_b
-    cf  &lt;- input$confound
-    pi1 &lt;- input$inst_str
+    n     &lt;- input$n
+    tau   &lt;- input$tau
+    sigma &lt;- input$sigma
+    bw    &lt;- input$bw
+    curve &lt;- input$curve
 
-    # Confounder (unobserved ability)
-    u &lt;- rnorm(n)
+    # Running variable: uniform on [0, 1], cutoff at 0.5
+    x &lt;- runif(n)
+    cutoff &lt;- 0.5
+    treat &lt;- as.numeric(x &gt;= cutoff)
 
-    # Instrument
-    z &lt;- rnorm(n)
+    # Potential outcome (smooth function of x)
+    if (curve == "linear") {
+      mu &lt;- 2 + 1.5 * x
+    } else if (curve == "quad") {
+      mu &lt;- 2 + 3 * (x - 0.5)^2
+    } else {
+      mu &lt;- rep(3, n)
+    }
 
-    # Endogenous regressor: driven by instrument + confounder
-    x &lt;- pi1 * z + cf * u + rnorm(n)
+    y &lt;- mu + tau * treat + rnorm(n, sd = sigma)
 
-    # Outcome: causal effect of x + confounder
-    y &lt;- b * x + cf * u + rnorm(n)
+    # Local linear regression within bandwidth
+    in_bw &lt;- abs(x - cutoff) &lt;= bw
+    x_bw &lt;- x[in_bw]
+    y_bw &lt;- y[in_bw]
+    t_bw &lt;- treat[in_bw]
 
-    # OLS (biased)
-    ols &lt;- lm(y ~ x)
+    # Separate regressions left and right
+    left  &lt;- x_bw &lt; cutoff
+    right &lt;- x_bw &gt;= cutoff
 
-    # 2SLS by hand
-    first &lt;- lm(x ~ z)
-    x_hat &lt;- fitted(first)
-    second &lt;- lm(y ~ x_hat)
+    if (sum(left) &gt; 2 &amp;&amp; sum(right) &gt; 2) {
+      fit_l &lt;- lm(y_bw[left] ~ x_bw[left])
+      fit_r &lt;- lm(y_bw[right] ~ x_bw[right])
 
-    # First-stage F
-    f_stat &lt;- summary(first)$fstatistic[1]
+      # Predicted values at cutoff
+      pred_l &lt;- coef(fit_l)[1] + coef(fit_l)[2] * cutoff
+      pred_r &lt;- coef(fit_r)[1] + coef(fit_r)[2] * cutoff
 
-    list(x = x, y = y, z = z, x_hat = x_hat,
-         b_ols = coef(ols)[2],
-         b_iv = coef(second)[2],
-         first_coef = coef(first)[2],
-         f_stat = f_stat,
-         true_b = b, confound = cf, inst_str = pi1)
+      rdd_est &lt;- pred_r - pred_l
+
+      # Fitted lines for plotting
+      xseq_l &lt;- seq(cutoff - bw, cutoff, length.out = 100)
+      xseq_r &lt;- seq(cutoff, cutoff + bw, length.out = 100)
+      yhat_l &lt;- coef(fit_l)[1] + coef(fit_l)[2] * xseq_l
+      yhat_r &lt;- coef(fit_r)[1] + coef(fit_r)[2] * xseq_r
+    } else {
+      rdd_est &lt;- NA
+      xseq_l &lt;- xseq_r &lt;- yhat_l &lt;- yhat_r &lt;- NULL
+      pred_l &lt;- pred_r &lt;- NA
+    }
+
+    list(x = x, y = y, treat = treat, cutoff = cutoff,
+         bw = bw, in_bw = in_bw, rdd_est = rdd_est,
+         tau = tau, sigma = sigma,
+         xseq_l = xseq_l, xseq_r = xseq_r,
+         yhat_l = yhat_l, yhat_r = yhat_r,
+         pred_l = pred_l, pred_r = pred_r)
   })
 
-  output$iv_plot &lt;- renderPlot({
+  output$rdd_plot &lt;- renderPlot({
     d &lt;- dat()
-    par(mfrow = c(1, 2), mar = c(4.5, 4.5, 3, 1))
+    par(mar = c(4.5, 4.5, 3, 1))
 
-    # Left: OLS scatter (X vs Y)
-    plot(d$x, d$y, pch = 16, cex = 0.4,
-         col = adjustcolor("#3498db", 0.3),
-         xlab = "X (endogenous)", ylab = "Y",
-         main = "OLS: Y on X")
-    abline(lm(d$y ~ d$x), col = "#e74c3c", lwd = 3)
-    abline(a = 0, b = d$true_b, col = "#27ae60", lwd = 2, lty = 2)
-    legend("topleft", bty = "n", cex = 0.85,
-           legend = c(paste0("OLS = ", round(d$b_ols, 2)),
-                      paste0("True = ", d$true_b)),
-           col = c("#e74c3c", "#27ae60"), lwd = c(3, 2), lty = c(1, 2))
+    # Color by treatment
+    cols &lt;- ifelse(d$treat == 1, adjustcolor("#3498db", 0.25),
+                   adjustcolor("#e74c3c", 0.25))
 
-    # Right: IV scatter (X-hat vs Y)
-    plot(d$x_hat, d$y, pch = 16, cex = 0.4,
-         col = adjustcolor("#9b59b6", 0.3),
-         xlab = expression(hat(X) ~ "(from first stage)"), ylab = "Y",
-         main = expression("2SLS: Y on " * hat(X)))
-    abline(lm(d$y ~ d$x_hat), col = "#e74c3c", lwd = 3)
-    abline(a = 0, b = d$true_b, col = "#27ae60", lwd = 2, lty = 2)
+    # Dim points outside bandwidth
+    cols[!d$in_bw] &lt;- adjustcolor("gray70", 0.15)
+
+    plot(d$x, d$y, pch = 16, cex = 0.5, col = cols,
+         xlab = "Running variable (X)", ylab = "Outcome (Y)",
+         main = "Regression Discontinuity Design")
+
+    # Cutoff line
+    abline(v = d$cutoff, lty = 2, col = "gray40", lwd = 1.5)
+
+    # Bandwidth shading
+    rect(d$cutoff - d$bw, par("usr")[3],
+         d$cutoff + d$bw, par("usr")[4],
+         col = adjustcolor("#f39c12", 0.08), border = NA)
+
+    # Local linear fits
+    if (!is.null(d$xseq_l)) {
+      lines(d$xseq_l, d$yhat_l, col = "#e74c3c", lwd = 3)
+      lines(d$xseq_r, d$yhat_r, col = "#3498db", lwd = 3)
+
+      # Jump arrow
+      arrows(d$cutoff + 0.01, d$pred_l, d$cutoff + 0.01, d$pred_r,
+             code = 3, lwd = 2.5, col = "#27ae60", length = 0.1)
+
+      text(d$cutoff + 0.03,
+           (d$pred_l + d$pred_r) / 2,
+           paste0("Jump = ", round(d$rdd_est, 2)),
+           col = "#27ae60", cex = 0.95, adj = 0, font = 2)
+    }
+
+    text(d$cutoff, par("usr")[4] * 0.98, "Cutoff",
+         col = "gray40", cex = 0.8, pos = 4)
+
     legend("topleft", bty = "n", cex = 0.85,
-           legend = c(paste0("IV = ", round(d$b_iv, 2)),
-                      paste0("True = ", d$true_b)),
-           col = c("#e74c3c", "#27ae60"), lwd = c(3, 2), lty = c(1, 2))
+           legend = c("Control (below cutoff)", "Treated (above cutoff)",
+                      "Estimation window"),
+           pch = c(16, 16, 15),
+           col = c("#e74c3c", "#3498db", adjustcolor("#f39c12", 0.3)))
   })
 
   output$results &lt;- renderUI({
     d &lt;- dat()
-    ols_bias &lt;- d$b_ols - d$true_b
-    iv_bias  &lt;- d$b_iv - d$true_b
-    weak &lt;- d$f_stat &lt; 10
+    if (is.na(d$rdd_est)) {
+      return(tags$div(class = "stats-box",
+        HTML("&lt;b&gt;Not enough observations in bandwidth.&lt;/b&gt; Widen it.")))
+    }
 
+    bias &lt;- d$rdd_est - d$tau
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;True effect:&lt;/b&gt; ", d$true_b, "&lt;br&gt;",
+        "&lt;b&gt;True effect:&lt;/b&gt; ", d$tau, "&lt;br&gt;",
+        "&lt;b&gt;RDD estimate:&lt;/b&gt; ", round(d$rdd_est, 3), "&lt;br&gt;",
+        "&lt;b&gt;Bias:&lt;/b&gt; &lt;span class='", ifelse(abs(bias) &lt; 0.3, "good", "bad"), "'&gt;",
+        round(bias, 3), "&lt;/span&gt;&lt;br&gt;",
         "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;b&gt;OLS:&lt;/b&gt; ", round(d$b_ols, 3),
-        " &amp;nbsp; Bias: &lt;span class='bad'&gt;", round(ols_bias, 3), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;b&gt;IV (2SLS):&lt;/b&gt; ", round(d$b_iv, 3),
-        " &amp;nbsp; Bias: &lt;span class='", ifelse(abs(iv_bias) &lt; abs(ols_bias), "good", "bad"), "'&gt;",
-        round(iv_bias, 3), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;b&gt;First-stage F:&lt;/b&gt; ", round(d$f_stat, 1),
-        if (weak) " &lt;span class='bad'&gt;&amp;lt; 10 (weak!)&lt;/span&gt;"
-        else " &lt;span class='good'&gt;&amp;ge; 10&lt;/span&gt;"
+        "&lt;small&gt;Bandwidth: &amp;plusmn;", d$bw, " around cutoff&lt;/small&gt;"
       ))
     )
   })
@@ -399,28 +432,58 @@ shinyApp(ui, server)</code></pre>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Confounding = 3, instrument = 1.5:</strong> OLS is badly biased. IV recovers the true effect. This is the whole point.</li>
-<li><strong>Set confounding = 0:</strong> OLS and IV agree — when there’s no endogeneity, you don’t need an instrument.</li>
-<li><strong>Slide instrument strength toward 0:</strong> the first-stage F drops below 10. The IV estimate becomes erratic — sometimes worse than OLS. That’s the weak instrument problem.</li>
-<li><strong>Increase sample size with a weak instrument:</strong> it doesn’t help much. Weak instruments bias IV toward OLS, and more data doesn’t fix that.</li>
-<li><strong>True effect = 0, confounding = 3:</strong> OLS “finds” a large effect. IV correctly shows ~0.</li>
+<li><strong>Default settings:</strong> the jump at the cutoff is clear. The RDD estimate is close to the true effect.</li>
+<li><strong>Narrow the bandwidth (0.05):</strong> fewer observations, noisier estimate — but less bias from misspecification. Widen it (0.5): more data, more precise, but you’re using observations far from the cutoff.</li>
+<li><strong>Switch to quadratic:</strong> with a narrow bandwidth, the local linear fit still works fine. But widen the bandwidth with a quadratic DGP and the estimate gets biased — the line can’t capture the curve.</li>
+<li><strong>Set true effect = 0:</strong> there should be no visible jump. If you see one, it’s noise (or a bad bandwidth choice).</li>
+<li><strong>Crank up noise:</strong> the jump gets harder to see, and you need more data or a wider bandwidth to detect it. This is the bias-variance tradeoff of bandwidth selection.</li>
 </ul>
 <hr>
 </section>
 </section>
-<section id="what-does-iv-actually-estimate" class="level2">
-<h2 class="anchored" data-anchor-id="what-does-iv-actually-estimate">What does IV actually estimate?</h2>
-<p>A subtle point: IV doesn’t estimate the effect for everyone. It estimates the <strong>Local Average Treatment Effect (LATE)</strong> — the effect for <strong>compliers</strong>, people whose treatment status is actually changed by the instrument.</p>
-<p>In the Angrist &amp; Krueger example: IV estimates the return to education for people who <em>would have dropped out</em> if born in a different quarter. It says nothing about people who would have stayed in school regardless.</p>
-<p>This means two different valid instruments can give you two different IV estimates — not because one is wrong, but because they’re identifying effects for different subpopulations.</p>
+<section id="the-bandwidth-tradeoff" class="level2">
+<h2 class="anchored" data-anchor-id="the-bandwidth-tradeoff">The bandwidth tradeoff</h2>
+<p>Bandwidth is the central tuning parameter in RDD:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Narrow bandwidth</th>
+<th>Wide bandwidth</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Bias</strong></td>
+<td>Low — only using near-identical units</td>
+<td>High — far-away units may differ systematically</td>
+</tr>
+<tr class="even">
+<td><strong>Variance</strong></td>
+<td>High — few observations</td>
+<td>Low — more data</td>
+</tr>
+<tr class="odd">
+<td><strong>Risk</strong></td>
+<td>Noisy, imprecise estimate</td>
+<td>Precise but potentially wrong</td>
+</tr>
+</tbody>
+</table>
+<p>In practice, researchers use <strong>data-driven bandwidth selectors</strong> (Imbens &amp; Kalyanaraman 2012, Calonico, Cattaneo &amp; Titiunik 2014) that optimize this tradeoff. You should always check that your results are robust to different bandwidth choices.</p>
 <hr>
 </section>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
 <ul>
-<li><p>The instrumental variables method dates back to <strong>Philip Wright (1928)</strong>, who used it to estimate supply and demand curves for butter and flax seed. Some historians credit his son, Sewall Wright, with the actual derivation.</p></li>
-<li><p>The <strong>“weak instruments” problem</strong> was formalized by Staiger &amp; Stock (1997). They showed that when the first-stage F is below 10, IV can be <em>more biased</em> than OLS — the cure becomes worse than the disease.</p></li>
-<li><p>Joshua Angrist, one of the 2021 Nobel laureates, built much of his career on clever instruments: quarter of birth for schooling, draft lottery numbers for military service, religious composition for family size. The art is finding instruments that are both relevant and excludable.</p></li>
+<li><p>The RDD idea goes back to <strong>Thistlethwaite &amp; Campbell (1960)</strong>, who studied the effect of merit scholarships on career outcomes using the score cutoff. It was largely ignored for decades until economists rediscovered it in the late 1990s.</p></li>
+<li><p><strong>Lee (2008)</strong> used RDD to study the incumbency advantage in US elections — candidates who barely win vs barely lose. This paper helped establish RDD as a workhorse method in political economy.</p></li>
+<li><p>Cattaneo, Idrobo &amp; Titiunik wrote an excellent practical guide: <em>A Practical Introduction to Regression Discontinuity Designs</em>. It’s freely available and covers everything from basic plots to formal inference.</p></li>
 </ul>
 
 
