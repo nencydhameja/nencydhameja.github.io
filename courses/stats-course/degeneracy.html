@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Regression &amp; the CEF – Foundations of Statistical Inference</title>
+<title>When Inference Breaks Down – Foundations of Statistical Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cef.html">Regression &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./cef.html">Regression &amp; the CEF</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cef.html">Regression &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./degeneracy.html">When Inference Breaks Down</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -251,7 +251,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cef.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cef.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Regression &amp; the CEF</span></a>
   </div>
 </li>
@@ -293,7 +293,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./degeneracy.html" class="sidebar-item-text sidebar-link">
+  <a href="./degeneracy.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">When Inference Breaks Down</span></a>
   </div>
 </li>
@@ -326,9 +326,20 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-is-the-cef" id="toc-what-is-the-cef" class="nav-link active" data-scroll-target="#what-is-the-cef">What is the CEF?</a></li>
-  <li><a href="#how-does-regression-fit-in" id="toc-how-does-regression-fit-in" class="nav-link" data-scroll-target="#how-does-regression-fit-in">How does regression fit in?</a></li>
-  <li><a href="#reading-the-residual-plot" id="toc-reading-the-residual-plot" class="nav-link" data-scroll-target="#reading-the-residual-plot">Reading the residual plot</a></li>
+  <li><a href="#the-common-thread" id="toc-the-common-thread" class="nav-link active" data-scroll-target="#the-common-thread">The common thread</a></li>
+  <li><a href="#simulation-1-too-little-data" id="toc-simulation-1-too-little-data" class="nav-link" data-scroll-target="#simulation-1-too-little-data">Simulation 1: Too little data</a>
+  <ul class="collapse">
+  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  </ul></li>
+  <li><a href="#simulation-2-no-variation-in-x" id="toc-simulation-2-no-variation-in-x" class="nav-link" data-scroll-target="#simulation-2-no-variation-in-x">Simulation 2: No variation in X</a>
+  <ul class="collapse">
+  <li><a href="#things-to-try-1" id="toc-things-to-try-1" class="nav-link" data-scroll-target="#things-to-try-1">Things to try</a></li>
+  </ul></li>
+  <li><a href="#simulation-3-multicollinearity" id="toc-simulation-3-multicollinearity" class="nav-link" data-scroll-target="#simulation-3-multicollinearity">Simulation 3: Multicollinearity</a>
+  <ul class="collapse">
+  <li><a href="#things-to-try-2" id="toc-things-to-try-2" class="nav-link" data-scroll-target="#things-to-try-2">Things to try</a></li>
+  </ul></li>
+  <li><a href="#the-unifying-principle" id="toc-the-unifying-principle" class="nav-link" data-scroll-target="#the-unifying-principle">The unifying principle</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -336,9 +347,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cef.html">Regression &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./cef.html">Regression &amp; the CEF</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cef.html">Regression &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./degeneracy.html">When Inference Breaks Down</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Regression &amp; the CEF</h1>
+<h1 class="title">When Inference Breaks Down</h1>
 </div>
 
 
@@ -355,84 +366,392 @@ window.Quarto = {
 </header>
 
 
-<section id="what-is-the-cef" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-the-cef">What is the CEF?</h3>
-<p>The <strong>conditional expectation function (CEF)</strong> answers a simple question: <em>“What do you expect Y to be, given that you know X?”</em></p>
-<p>Say you’re looking at income (<span class="math inline">\(Y\)</span>) vs.&nbsp;years of education (<span class="math inline">\(X\)</span>). The CEF answers: among everyone with exactly 12 years of education, what’s their average income? What about 16 years? 20 years? If you plot those averages, you get a curve — that’s the CEF. It could be a straight line, or it could bend, flatten out, jump — whatever the data actually does.</p>
+<section id="the-common-thread" class="level2">
+<h2 class="anchored" data-anchor-id="the-common-thread">The common thread</h2>
+<p><strong>You need variation to learn anything. When variation disappears in some dimension, the math collapses.</strong></p>
+<p>Every formula in this course has a denominator that measures variation somewhere. When that variation goes to zero, the formula divides by zero and inference breaks down:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What disappears</th>
+<th>What breaks</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Variation in <strong>data</strong> (all values identical)</td>
+<td>SD = 0, SE = 0, CI has zero width</td>
+<td>Nothing to estimate — your “sample” is a constant</td>
+</tr>
+<tr class="even">
+<td>Variation in <strong>sample size</strong> (n = 1)</td>
+<td><span class="math inline">\(s^2 = \frac{\sum(x_i - \bar{x})^2}{n-1}\)</span> divides by 0</td>
+<td>Can’t measure spread from a single point</td>
+</tr>
+<tr class="odd">
+<td>Variation in <strong>X</strong> (regressor is constant)</td>
+<td>OLS slope is undefined</td>
+<td>Can’t draw a line through a vertical stack of points</td>
+</tr>
+<tr class="even">
+<td>Variation <strong>between regressors</strong> (perfect collinearity)</td>
+<td>Individual coefficients undefined</td>
+<td>Can’t separate the effect of X1 from X2 if they move together perfectly</td>
+</tr>
+</tbody>
+</table>
+<p>The simulations below let you push each slider to the edge and watch the math collapse in real time.</p>
+<hr>
 </section>
-<section id="how-does-regression-fit-in" class="level3">
-<h3 class="anchored" data-anchor-id="how-does-regression-fit-in">How does regression fit in?</h3>
-<p><strong>OLS draws a straight line through that.</strong> Two cases:</p>
-<ol type="1">
-<li><strong>CEF is already a straight line</strong> — OLS gets it exactly right. Each extra unit of <span class="math inline">\(X\)</span> adds the same bump to expected <span class="math inline">\(Y\)</span>. The line <em>is</em> the CEF.</li>
-<li><strong>CEF is curved</strong> — maybe the first few years of education matter a lot, but returns flatten after a PhD. OLS can’t bend, so it draws the <em>best straight line it can</em> through that curve. It’s a useful summary, but it misses the shape.</li>
-</ol>
-<p>Regression doesn’t assume the world is linear. It gives you the <strong>best linear approximation</strong> to whatever the true relationship is. The simulator below lets you see exactly where that approximation works and where it breaks down.</p>
-<p>In the plots: the red dots show the conditional mean of <span class="math inline">\(Y\)</span> in each bin of <span class="math inline">\(X\)</span> (the empirical CEF), the green curve is the true CEF, and the blue line is OLS. Switch DGPs to see when they agree and when they diverge.</p>
-</section>
-<section id="reading-the-residual-plot" class="level3">
-<h3 class="anchored" data-anchor-id="reading-the-residual-plot">Reading the residual plot</h3>
-<p>The right panel shows residuals vs.&nbsp;fitted values with a <a href="https://en.wikipedia.org/wiki/Local_regression">LOESS</a> smoother (red curve). LOESS fits a tiny weighted regression at each point using only nearby observations, producing a flexible curve that follows local patterns. If OLS is correctly specified, the LOESS line should be flat at zero. If it curves, that’s visual evidence of nonlinearity that OLS is missing.</p>
+<section id="simulation-1-too-little-data" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-1-too-little-data">Simulation 1: Too little data</h2>
+<p>The standard error is <span class="math inline">\(SE = s / \sqrt{n}\)</span>. As <span class="math inline">\(n\)</span> shrinks, the SE explodes — your estimate becomes useless. At <span class="math inline">\(n = 1\)</span>, the sample variance <span class="math inline">\(s^2\)</span> is undefined (dividing by <span class="math inline">\(n - 1 = 0\)</span>).</p>
+<p>Watch the confidence interval expand until it swallows everything.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 680
+#| viewerHeight: 650
 
 library(shiny)
 
-dgp_choices &lt;- c(
-  "Linear",
-  "Quadratic",
-  "Log (diminishing returns)",
-  "Step function",
-  "Sine wave"
-)
-
-# True CEF for each DGP
-cef_fun &lt;- function(x, dgp) {
-  switch(dgp,
-    "Linear"                   = 2 + 1.5 * x,
-    "Quadratic"                = 1 + 0.8 * x - 0.15 * x^2,
-    "Log (diminishing returns)" = 3 * log(x + 1),
-    "Step function"            = ifelse(x &lt; 0, -1, 2),
-    "Sine wave"                = 2 * sin(x),
-    1.5 * x
-  )
-}
-
 ui &lt;- fluidPage(
   tags$head(tags$style(HTML("
-    .info-box {
+    .stats-box {
       background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.8;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
     }
-    .info-box b { color: #2c3e50; }
+    .stats-box b { color: #2c3e50; }
+    .warning { color: #e74c3c; font-weight: bold; }
   "))),
 
   sidebarLayout(
     sidebarPanel(
       width = 3,
 
-      selectInput("dgp", "True DGP:",
-                  choices = dgp_choices),
-
       sliderInput("n", "Sample size (n):",
-                  min = 50, max = 1000, value = 300, step = 50),
+                  min = 1, max = 50, value = 30, step = 1),
 
-      sliderInput("sigma", HTML("Error SD (&amp;sigma;):"),
-                  min = 0.5, max = 4, value = 1.5, step = 0.5),
+      sliderInput("true_mu", "True mean:",
+                  min = 0, max = 100, value = 50, step = 5),
 
-      sliderInput("nbins", "Bins for CEF:",
+      sliderInput("true_sd", "Population SD:",
                   min = 5, max = 30, value = 15, step = 1),
 
-      actionButton("redraw", "New draw", class = "btn-primary", width = "100%"),
+      uiOutput("results")
+    ),
 
-      uiOutput("info_box")
+    mainPanel(
+      width = 9,
+      plotOutput("ci_plot", height = "550px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  sim &lt;- reactive({
+    n   &lt;- input$n
+    mu  &lt;- input$true_mu
+    sig &lt;- input$true_sd
+
+    samp &lt;- rnorm(n, mu, sig)
+    xbar &lt;- mean(samp)
+
+    if (n == 1) {
+      list(samp = samp, xbar = xbar, se = NA, ci_lo = NA, ci_hi = NA,
+           s = NA, n = n, mu = mu, degenerate = TRUE)
+    } else {
+      s  &lt;- sd(samp)
+      se &lt;- s / sqrt(n)
+      tc &lt;- qt(0.975, df = n - 1)
+      ci_lo &lt;- xbar - tc * se
+      ci_hi &lt;- xbar + tc * se
+      list(samp = samp, xbar = xbar, se = se, ci_lo = ci_lo, ci_hi = ci_hi,
+           s = s, n = n, mu = mu, tc = tc, degenerate = FALSE)
+    }
+  })
+
+  output$ci_plot &lt;- renderPlot({
+    d &lt;- sim()
+    par(mar = c(4.5, 4.5, 3.5, 1))
+
+    if (d$degenerate) {
+      plot(1, d$samp[1], pch = 19, cex = 2, col = "#e74c3c",
+           xlim = c(0.5, 1.5), ylim = c(d$mu - 60, d$mu + 60),
+           xlab = "", ylab = "Value", xaxt = "n",
+           main = "n = 1: Variance is UNDEFINED")
+      abline(h = d$mu, col = "#27ae60", lwd = 2, lty = 2)
+      text(1, d$mu + 5, paste0("True mean = ", d$mu), col = "#27ae60", cex = 1.1)
+      text(1, d$samp[1] - 5, paste0("Your one observation = ", round(d$samp[1], 1)),
+           col = "#e74c3c", cex = 1.1)
+      text(1, d$mu - 40,
+           "Can't compute SD, SE, or CI from a single point.",
+           cex = 1.3, font = 2, col = "#e74c3c")
+    } else {
+      ylim &lt;- range(c(d$ci_lo, d$ci_hi, d$samp, d$mu)) + c(-10, 10)
+
+      plot(seq_along(d$samp), d$samp, pch = 16, cex = 0.8,
+           col = adjustcolor("#3498db", 0.6),
+           xlim = c(0, d$n + 1), ylim = ylim,
+           xlab = "Observation", ylab = "Value",
+           main = paste0("n = ", d$n, " — 95% CI"))
+
+      abline(h = d$mu, col = "#27ae60", lwd = 2, lty = 2)
+      abline(h = d$xbar, col = "#2c3e50", lwd = 2)
+
+      # CI band
+      rect(0, d$ci_lo, d$n + 1, d$ci_hi,
+           col = adjustcolor("#e74c3c", 0.1), border = NA)
+      abline(h = d$ci_lo, col = "#e74c3c", lwd = 1.5, lty = 3)
+      abline(h = d$ci_hi, col = "#e74c3c", lwd = 1.5, lty = 3)
+
+      legend("topright", bty = "n", cex = 0.9,
+             legend = c(paste0("True mean = ", d$mu),
+                        paste0("Sample mean = ", round(d$xbar, 1)),
+                        paste0("95% CI: [", round(d$ci_lo, 1), ", ",
+                               round(d$ci_hi, 1), "]"),
+                        paste0("CI width = ", round(d$ci_hi - d$ci_lo, 1))),
+             col = c("#27ae60", "#2c3e50", "#e74c3c", NA),
+             lwd = c(2, 2, 1.5, NA), lty = c(2, 1, 3, NA))
+    }
+  })
+
+  output$results &lt;- renderUI({
+    d &lt;- sim()
+
+    if (d$degenerate) {
+      tags$div(class = "stats-box",
+        HTML(paste0(
+          "&lt;span class='warning'&gt;DEGENERATE&lt;/span&gt;&lt;br&gt;",
+          "&lt;b&gt;n = 1&lt;/b&gt;&lt;br&gt;",
+          "s = undefined (0/0)&lt;br&gt;",
+          "SE = undefined&lt;br&gt;",
+          "CI = undefined&lt;br&gt;",
+          "&lt;hr style='margin:8px 0'&gt;",
+          "&lt;small&gt;You used up your one degree",
+          " of freedom estimating the mean.",
+          " None left to estimate spread.&lt;/small&gt;"
+        ))
+      )
+    } else {
+      tags$div(class = "stats-box",
+        HTML(paste0(
+          "&lt;b&gt;n = &lt;/b&gt;", d$n, "&lt;br&gt;",
+          "&lt;b&gt;s = &lt;/b&gt;", round(d$s, 2), "&lt;br&gt;",
+          "&lt;b&gt;SE = &lt;/b&gt;", round(d$se, 2), "&lt;br&gt;",
+          "&lt;b&gt;t critical = &lt;/b&gt;", round(d$tc, 2), "&lt;br&gt;",
+          "&lt;b&gt;CI width = &lt;/b&gt;", round(d$ci_hi - d$ci_lo, 1), "&lt;br&gt;",
+          "&lt;hr style='margin:8px 0'&gt;",
+          "&lt;small&gt;df = ", d$n - 1, "&lt;/small&gt;"
+        ))
+      )
+    }
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<section id="things-to-try" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<ul>
+<li><strong>n = 30:</strong> normal-looking CI, reasonably tight around the mean.</li>
+<li><strong>n = 5:</strong> CI balloons — the t critical value jumps from ~2 to ~2.8, and the SE is much larger. Your estimate is barely useful.</li>
+<li><strong>n = 2:</strong> CI is enormous. The t critical value for df = 1 is 12.7 — you need the sample mean to be over 12 SEs away from zero to reject. You have almost no power.</li>
+<li><strong>n = 1:</strong> the math breaks. You can’t compute variance, SE, or a CI. One observation tells you nothing about uncertainty.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="simulation-2-no-variation-in-x" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-2-no-variation-in-x">Simulation 2: No variation in X</h2>
+<p>The OLS slope formula is:</p>
+<p><span class="math display">\[\hat{\beta} = \frac{\text{Cov}(X, Y)}{\text{Var}(X)}\]</span></p>
+<p>If <span class="math inline">\(\text{Var}(X) = 0\)</span> (the regressor is constant), you’re dividing by zero. You can’t estimate a slope because there’s no variation in X to “explain” variation in Y.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 600
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+    .warning { color: #e74c3c; font-weight: bold; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("sd_x", "SD of X (variation in regressor):",
+                  min = 0, max = 5, value = 3, step = 0.1),
+
+      sliderInput("beta_true", "True slope:",
+                  min = 0.5, max = 3, value = 1.5, step = 0.1),
+
+      sliderInput("n_obs", "Sample size:",
+                  min = 30, max = 200, value = 100, step = 10),
+
+      uiOutput("results2")
+    ),
+
+    mainPanel(
+      width = 9,
+      plotOutput("ols_plot", height = "500px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  base_noise &lt;- reactive({
+    n &lt;- input$n_obs
+    list(z = rnorm(n), u = rnorm(n))
+  })
+
+  sim &lt;- reactive({
+    d    &lt;- base_noise()
+    sd_x &lt;- input$sd_x
+    b    &lt;- input$beta_true
+    n    &lt;- input$n_obs
+
+    x &lt;- 5 + sd_x * d$z
+    y &lt;- 1 + b * x + d$u
+
+    if (sd_x &lt; 0.05) {
+      list(x = x, y = y, beta = b, sd_x = sd_x,
+           degenerate = TRUE)
+    } else {
+      fit &lt;- lm(y ~ x)
+      ci  &lt;- confint(fit)[2, ]
+      se  &lt;- summary(fit)$coefficients[2, 2]
+      list(x = x, y = y, beta = b, sd_x = sd_x,
+           b_hat = coef(fit)[2], se = se,
+           ci_lo = ci[1], ci_hi = ci[2],
+           degenerate = FALSE)
+    }
+  })
+
+  output$ols_plot &lt;- renderPlot({
+    d &lt;- sim()
+    par(mar = c(4.5, 4.5, 3.5, 1))
+
+    plot(d$x, d$y, pch = 16, cex = 0.7,
+         col = adjustcolor("#3498db", 0.5),
+         xlab = "X", ylab = "Y",
+         main = if (d$degenerate) "Var(X) = 0: Slope is UNDEFINED"
+                else paste0("SD(X) = ", round(d$sd_x, 1),
+                            " — Slope SE = ", round(d$se, 2)))
+
+    if (!d$degenerate) {
+      abline(lm(d$y ~ d$x), col = "#e74c3c", lwd = 3)
+      abline(a = 1, b = d$beta, col = "#27ae60", lwd = 2, lty = 2)
+      legend("topleft", bty = "n", cex = 0.9,
+             legend = c(paste0("OLS: ", round(d$b_hat, 3)),
+                        paste0("True: ", d$beta)),
+             col = c("#e74c3c", "#27ae60"), lwd = c(3, 2), lty = c(1, 2))
+    } else {
+      text(mean(d$x), mean(d$y),
+           "All X values are the same.\nCan't fit a line through\na vertical stack of points.",
+           cex = 1.4, font = 2, col = "#e74c3c")
+    }
+  })
+
+  output$results2 &lt;- renderUI({
+    d &lt;- sim()
+
+    if (d$degenerate) {
+      tags$div(class = "stats-box",
+        HTML(paste0(
+          "&lt;span class='warning'&gt;DEGENERATE&lt;/span&gt;&lt;br&gt;",
+          "Var(X) = 0&lt;br&gt;",
+          "Slope = 0/0 = undefined&lt;br&gt;",
+          "SE = undefined&lt;br&gt;",
+          "&lt;hr style='margin:8px 0'&gt;",
+          "&lt;small&gt;No variation in X means you",
+          " can't tell if Y changes with X.",
+          " Every value of \u03b2 fits equally well.&lt;/small&gt;"
+        ))
+      )
+    } else {
+      tags$div(class = "stats-box",
+        HTML(paste0(
+          "&lt;b&gt;True \u03b2:&lt;/b&gt; ", d$beta, "&lt;br&gt;",
+          "&lt;b&gt;OLS \u03b2:&lt;/b&gt; ", round(d$b_hat, 3), "&lt;br&gt;",
+          "&lt;b&gt;SE:&lt;/b&gt; ", round(d$se, 3), "&lt;br&gt;",
+          "&lt;b&gt;95% CI:&lt;/b&gt; [", round(d$ci_lo, 3),
+          ", ", round(d$ci_hi, 3), "]&lt;br&gt;",
+          "&lt;b&gt;CI width:&lt;/b&gt; ", round(d$ci_hi - d$ci_lo, 3), "&lt;br&gt;",
+          "&lt;hr style='margin:8px 0'&gt;",
+          "&lt;small&gt;SE(\u03b2) = \u03c3 / [\u221an \u00b7 SD(X)]&lt;br&gt;",
+          "Less variation in X \u2192 larger SE&lt;/small&gt;"
+        ))
+      )
+    }
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<section id="things-to-try-1" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try-1">Things to try</h3>
+<ul>
+<li><strong>SD(X) = 3:</strong> data fans out horizontally, OLS estimates the slope precisely.</li>
+<li><strong>SD(X) = 1:</strong> the cloud compresses horizontally. SE roughly triples — harder to pin down the slope.</li>
+<li><strong>SD(X) = 0.3:</strong> the data is nearly a vertical column. The SE is huge, the CI is wide, and the estimate bounces wildly.</li>
+<li><strong>SD(X) = 0:</strong> complete degeneracy. All X values are identical. You can’t draw a line through a point.</li>
+</ul>
+<p>The formula makes it obvious: <span class="math inline">\(SE(\hat{\beta}) = \frac{\sigma}{\sqrt{n} \cdot SD(X)}\)</span>. When <span class="math inline">\(SD(X) \to 0\)</span>, the SE <span class="math inline">\(\to \infty\)</span>.</p>
+<hr>
+</section>
+</section>
+<section id="simulation-3-multicollinearity" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-3-multicollinearity">Simulation 3: Multicollinearity</h2>
+<p>When two regressors are highly correlated, OLS can estimate their <strong>combined</strong> effect but can’t tell which one is doing the work. The individual coefficient SEs explode even though predictions remain fine.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 650
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+    .warning { color: #e74c3c; font-weight: bold; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("rho", "Correlation between X1 and X2:",
+                  min = 0, max = 0.99, value = 0.3, step = 0.01),
+
+      sliderInput("b1", "True effect of X1:",
+                  min = 0.5, max = 3, value = 1.5, step = 0.25),
+
+      sliderInput("b2", "True effect of X2:",
+                  min = 0.5, max = 3, value = 1.0, step = 0.25),
+
+      sliderInput("n3", "Sample size:",
+                  min = 50, max = 300, value = 100, step = 50),
+
+      uiOutput("results3")
     ),
 
     mainPanel(
       width = 9,
       fluidRow(
-        column(6, plotOutput("scatter_plot", height = "420px")),
-        column(6, plotOutput("resid_plot",   height = "420px"))
+        column(6, plotOutput("coef_plot", height = "500px")),
+        column(6, plotOutput("vif_plot", height = "500px"))
       )
     )
   )
@@ -440,128 +759,177 @@ ui &lt;- fluidPage(
 
 server &lt;- function(input, output, session) {
 
-  dat &lt;- reactive({
-    input$redraw
-    n     &lt;- input$n
-    sigma &lt;- input$sigma
-    dgp   &lt;- input$dgp
+  sim &lt;- reactive({
+    n   &lt;- input$n3
+    rho &lt;- input$rho
+    b1  &lt;- input$b1
+    b2  &lt;- input$b2
 
-    # X range depends on DGP
-    if (dgp == "Log (diminishing returns)") {
-      x &lt;- runif(n, 0, 6)
-    } else if (dgp == "Step function") {
-      x &lt;- runif(n, -3, 3)
-    } else if (dgp == "Sine wave") {
-      x &lt;- runif(n, -pi, 2 * pi)
-    } else {
-      x &lt;- runif(n, -3, 5)
+    nsims &lt;- 300
+
+    betas1 &lt;- numeric(nsims)
+    betas2 &lt;- numeric(nsims)
+
+    for (i in seq_len(nsims)) {
+      z1 &lt;- rnorm(n)
+      z2 &lt;- rnorm(n)
+      x1 &lt;- z1
+      x2 &lt;- rho * z1 + sqrt(1 - rho^2) * z2
+      y  &lt;- 1 + b1 * x1 + b2 * x2 + rnorm(n)
+      fit &lt;- lm(y ~ x1 + x2)
+      betas1[i] &lt;- coef(fit)[2]
+      betas2[i] &lt;- coef(fit)[3]
     }
 
-    mu &lt;- cef_fun(x, dgp)
-    y  &lt;- mu + rnorm(n, sd = sigma)
+    vif &lt;- 1 / (1 - rho^2)
 
-    ols &lt;- lm(y ~ x)
-
-    # Bin X and compute conditional means
-    nbins &lt;- input$nbins
-    breaks &lt;- seq(min(x), max(x), length.out = nbins + 1)
-    bin    &lt;- cut(x, breaks, include.lowest = TRUE)
-    bin_mid &lt;- tapply(x, bin, mean)
-    bin_cef &lt;- tapply(y, bin, mean)
-    bin_n   &lt;- tapply(y, bin, length)
-
-    list(x = x, y = y, mu = mu, ols = ols, dgp = dgp,
-         bin_mid = bin_mid, bin_cef = bin_cef, bin_n = bin_n)
+    list(betas1 = betas1, betas2 = betas2,
+         b1 = b1, b2 = b2, rho = rho, vif = vif)
   })
 
-  # --- Main scatter plot ---
-  output$scatter_plot &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
+  output$coef_plot &lt;- renderPlot({
+    d &lt;- sim()
+    par(mar = c(4.5, 4.5, 3.5, 1))
 
-    plot(d$x, d$y, pch = 16, col = "#bdc3c780", cex = 0.6,
-         xlab = "X", ylab = "Y",
-         main = paste("DGP:", d$dgp))
+    xlim &lt;- range(c(d$betas1, d$betas2, d$b1, d$b2)) + c(-0.3, 0.3)
 
-    # True CEF curve
-    xo &lt;- sort(d$x)
-    lines(xo, cef_fun(xo, d$dgp), col = "#2ecc71", lwd = 2.5)
+    hist(d$betas1, breaks = 30,
+         col = adjustcolor("#3498db", 0.5), border = "white",
+         main = paste0("Coefficient estimates (\u03c1 = ", d$rho, ")"),
+         xlab = "Estimated coefficient", xlim = xlim,
+         freq = FALSE, cex.main = 1.2)
+    hist(d$betas2, breaks = 30,
+         col = adjustcolor("#e74c3c", 0.4), border = "white",
+         add = TRUE, freq = FALSE)
 
-    # OLS line
-    abline(d$ols, col = "#3498db", lwd = 2.5)
+    abline(v = d$b1, col = "#3498db", lwd = 2.5, lty = 2)
+    abline(v = d$b2, col = "#e74c3c", lwd = 2.5, lty = 2)
 
-    # Binned conditional means (empirical CEF)
-    keep &lt;- !is.na(d$bin_cef) &amp; !is.na(d$bin_mid)
-    points(d$bin_mid[keep], d$bin_cef[keep],
-           pch = 19, col = "#e74c3c", cex = 1.6)
-
-    legend("topleft", bty = "n", cex = 0.85,
-           legend = c(expression("True " * E * "[Y|X]"),
-                      "OLS regression",
-                      expression("Binned " * bar(Y) * " (empirical CEF)")),
-           col = c("#2ecc71", "#3498db", "#e74c3c"),
-           lwd = c(2.5, 2.5, NA),
-           pch = c(NA, NA, 19),
-           pt.cex = c(NA, NA, 1.4))
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c(
+             paste0("X1 (true=", d$b1, ", SD=", round(sd(d$betas1), 3), ")"),
+             paste0("X2 (true=", d$b2, ", SD=", round(sd(d$betas2), 3), ")")
+           ),
+           fill = c(adjustcolor("#3498db", 0.5),
+                    adjustcolor("#e74c3c", 0.4)),
+           border = "white")
   })
 
-  # --- Residual plot ---
-  output$resid_plot &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
+  output$vif_plot &lt;- renderPlot({
+    d &lt;- sim()
+    par(mar = c(4.5, 4.5, 3.5, 1))
 
-    r &lt;- resid(d$ols)
-    fv &lt;- fitted(d$ols)
+    rhos &lt;- seq(0, 0.99, by = 0.01)
+    vifs &lt;- 1 / (1 - rhos^2)
 
-    plot(fv, r, pch = 16, col = "#9b59b680", cex = 0.6,
-         xlab = "Fitted values", ylab = "Residuals",
-         main = "Residuals vs Fitted")
-    abline(h = 0, lty = 2, col = "gray40", lwd = 1.5)
+    plot(rhos, vifs, type = "l", lwd = 2.5, col = "#2c3e50",
+         xlab = "Correlation between X1 and X2",
+         ylab = "Variance Inflation Factor (VIF)",
+         main = "VIF: How much SEs inflate",
+         ylim = c(1, min(50, max(vifs))),
+         cex.main = 1.2)
 
-    # Loess smoother to reveal nonlinearity
-    lo &lt;- loess(r ~ fv)
-    ox &lt;- order(fv)
-    lines(fv[ox], predict(lo)[ox], col = "#e74c3c", lwd = 2)
+    points(d$rho, d$vif, pch = 19, cex = 2, col = "#e74c3c")
+    segments(d$rho, 1, d$rho, d$vif, lty = 2, col = "#e74c3c")
 
-    legend("topleft", bty = "n", cex = 0.85,
-           legend = c("Loess smoother", "Zero line"),
-           col = c("#e74c3c", "gray40"),
-           lwd = c(2, 1.5),
-           lty = c(1, 2))
+    abline(h = 1, lty = 2, col = "#95a5a6")
+    abline(h = 10, lty = 3, col = "#e67e22")
+    text(0.5, 11, "Rule of thumb: VIF &gt; 10 = serious problem",
+         cex = 0.8, col = "#e67e22")
+
+    text(d$rho + 0.03, d$vif + 1.5,
+         paste0("VIF = ", round(d$vif, 1)),
+         col = "#e74c3c", font = 2, cex = 1.1, adj = 0)
   })
 
-  # --- Info box ---
-  output$info_box &lt;- renderUI({
-    d &lt;- dat()
-    b0 &lt;- round(coef(d$ols)[1], 3)
-    b1 &lt;- round(coef(d$ols)[2], 3)
-    r2 &lt;- round(summary(d$ols)$r.squared, 3)
+  output$results3 &lt;- renderUI({
+    d &lt;- sim()
 
-    linear &lt;- d$dgp == "Linear"
-
-    tags$div(class = "info-box",
+    tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;OLS:&lt;/b&gt; Y = ", b0, " + ", b1, "X&lt;br&gt;",
-        "&lt;b&gt;R&amp;sup2;:&lt;/b&gt; ", r2, "&lt;br&gt;&lt;br&gt;",
-        if (linear) {
-          "&lt;span style='color:#27ae60;'&gt;&lt;b&gt;&amp;#10003; CEF is linear &amp;mdash; OLS recovers it exactly.&lt;/b&gt;&lt;/span&gt;"
-        } else {
-          "&lt;span style='color:#e67e22;'&gt;&lt;b&gt;CEF is nonlinear &amp;mdash; OLS is the best linear approximation.&lt;/b&gt;&lt;br&gt;Check the residual plot for the pattern.&lt;/span&gt;"
-        }
+        if (d$vif &gt; 10) "&lt;span class='warning'&gt;HIGH COLLINEARITY&lt;/span&gt;&lt;br&gt;" else "",
+        "&lt;b&gt;Correlation:&lt;/b&gt; ", d$rho, "&lt;br&gt;",
+        "&lt;b&gt;VIF:&lt;/b&gt; ", round(d$vif, 1), "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;SD of \u03b21 estimates:&lt;/b&gt; ", round(sd(d$betas1), 3), "&lt;br&gt;",
+        "&lt;b&gt;SD of \u03b22 estimates:&lt;/b&gt; ", round(sd(d$betas2), 3), "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;small&gt;VIF = 1/(1 \u2212 \u03c1\u00b2)&lt;br&gt;",
+        "SE inflates by \u221aVIF = ",
+        round(sqrt(d$vif), 2), "x&lt;/small&gt;"
       ))
     )
   })
 }
 
 shinyApp(ui, server)</code></pre>
+<section id="things-to-try-2" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try-2">Things to try</h3>
+<ul>
+<li><strong><span class="math inline">\(\rho\)</span> = 0:</strong> the two coefficient distributions are tight, centered on their true values. No collinearity, no problem.</li>
+<li><strong><span class="math inline">\(\rho\)</span> = 0.7:</strong> distributions visibly wider. VIF = 2. SEs inflate by ~40%.</li>
+<li><strong><span class="math inline">\(\rho\)</span> = 0.9:</strong> distributions are quite wide. VIF = 5.3. Hard to tell X1 and X2 apart.</li>
+<li><strong><span class="math inline">\(\rho\)</span> = 0.99:</strong> distributions are enormous. VIF = 50. The estimates are <em>unbiased</em> (still centered at the truth!) but so noisy they’re useless. One regression might say X1 has a huge effect and X2 has none; the next says the opposite.</li>
+</ul>
+<p><strong>The key insight:</strong> multicollinearity doesn’t cause bias — it causes <em>imprecision</em>. OLS still gets it right <em>on average</em>, but any single estimate can be wildly off.</p>
 <hr>
 </section>
-<section id="did-you-know" class="level3">
-<h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
+</section>
+<section id="the-unifying-principle" class="level2">
+<h2 class="anchored" data-anchor-id="the-unifying-principle">The unifying principle</h2>
+<p>Every formula in statistics has variation in the denominator:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Formula</th>
+<th>Denominator contains</th>
+<th>Goes to zero when</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(s^2 = \frac{\sum(x_i - \bar{x})^2}{n-1}\)</span></td>
+<td><span class="math inline">\(n - 1\)</span></td>
+<td><span class="math inline">\(n = 1\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(SE = \frac{s}{\sqrt{n}}\)</span></td>
+<td><span class="math inline">\(\sqrt{n}\)</span></td>
+<td><span class="math inline">\(n = 0\)</span> (no data)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\hat{\beta} = \frac{\text{Cov}(X,Y)}{\text{Var}(X)}\)</span></td>
+<td><span class="math inline">\(\text{Var}(X)\)</span></td>
+<td>All X values identical</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(SE(\hat{\beta}_j) \propto \frac{1}{\sqrt{1 - R_j^2}}\)</span></td>
+<td><span class="math inline">\(1 - R_j^2\)</span></td>
+<td>Perfect collinearity (<span class="math inline">\(R_j^2 = 1\)</span>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variation is the fuel of inference.</strong> No variation, no learning.</p>
 <ul>
-<li>The word <strong>“regression”</strong> comes from Francis Galton’s 1886 study of heights. He noticed that tall parents tended to have children who were tall — but not <em>as</em> tall. Short parents had children who were short — but not <em>as</em> short. Children’s heights “regressed toward the mean.” The statistical technique kept the name, even though modern regression has nothing to do with reverting to averages.</li>
-<li>Galton was also Charles Darwin’s half-cousin. He applied statistical thinking to heredity, fingerprints, and even the optimal way to brew tea.</li>
-<li>The <strong>conditional expectation function</strong> is sometimes called the “regression function” — which makes sense once you know Galton’s story. OLS literally estimates the function that tells you the expected value of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span>.</li>
+<li>No variation in <strong>your data</strong> → can’t estimate spread</li>
+<li>No variation in <strong>your regressor</strong> → can’t estimate slopes</li>
+<li>No variation <strong>between regressors</strong> → can’t separate effects</li>
+<li>No variation in <strong>treatment assignment</strong> → can’t estimate causal effects</li>
+</ul>
+<p>Understanding <em>where</em> the variation comes from — and when it might disappear — is the difference between statistics that works and statistics that lies.</p>
+<hr>
+</section>
+<section id="did-you-know" class="level2">
+<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
+<ul>
+<li><p>The problem of <strong>perfect multicollinearity</strong> is sometimes called the <strong>identification problem</strong> — there are infinitely many combinations of <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_2\)</span> that fit the data equally well. This is the same issue that arises in causal inference when you try to separate selection from treatment without an experiment.</p></li>
+<li><p><strong>Near-degeneracy</strong> can be worse than <strong>full degeneracy</strong> in practice. When Var(X) = 0, your software throws an error and you know something is wrong. When Var(X) is tiny but nonzero, OLS happily produces an estimate with a massive SE that you might not notice — especially if you don’t look at standard errors. This is why <strong>always report SEs</strong>, not just point estimates.</p></li>
+<li><p>The <strong>condition number</strong> of the <span class="math inline">\(X'X\)</span> matrix is used in numerical linear algebra to detect near-degeneracy. A condition number above <span class="math inline">\(10^6\)</span> means your computer’s floating-point arithmetic is losing significant digits when inverting the matrix — your regression coefficients may be numerically unreliable even if they’re theoretically defined.</p></li>
 </ul>
 
 
