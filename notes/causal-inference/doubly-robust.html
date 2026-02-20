@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Measurement Error &amp; Attenuation Bias – Foundations of Statistical Inference</title>
+<title>Doubly Robust Estimation – Applied Causal Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -104,7 +104,6 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light">
@@ -116,7 +115,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./heteroskedasticity.html">Standard Errors &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./measurement-error.html">Measurement Error</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./regression-adjustment.html">Estimation Tools</a></li><li class="breadcrumb-item"><a href="./doubly-robust.html">Doubly Robust</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -131,7 +130,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Foundations of Statistical Inference</a> 
+      <a href="./">Applied Causal Inference</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -150,7 +149,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Probability &amp; Uncertainty</span></a>
+ <span class="menu-text">Framework</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -158,20 +157,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./foundations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Foundations</span></a>
+  <a href="./potential-outcomes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Potential Outcomes &amp; ATE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./variance-sd-se.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Variance, SD &amp; Standard Error</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./sampling-distribution.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Sampling Distribution</span></a>
+  <a href="./identification-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Identification vs Estimation</span></a>
   </div>
 </li>
       </ul>
@@ -179,7 +172,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">The Central Limit Theorem</span></a>
+ <span class="menu-text">Methods</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -187,14 +180,32 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./simulations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CLT Simulator</span></a>
+  <a href="./selection-observables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Selection on Observables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lln.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">LLN vs CLT</span></a>
+  <a href="./did.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Difference-in-Differences</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./iv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Instrumental Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rdd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regression Discontinuity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./synth.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Synthetic Control</span></a>
   </div>
 </li>
       </ul>
@@ -202,7 +213,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Inference</span></a>
+ <span class="menu-text">Estimation Tools</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -210,136 +221,32 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pvalues-ci.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">p-values &amp; Confidence Intervals</span></a>
+  <a href="./regression-adjustment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regression Adjustment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Bootstrap</span></a>
+  <a href="./ipw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">IPW</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./power.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Power, Alpha, Beta &amp; MDE</span></a>
+  <a href="./matching.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Matching</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./monte-carlo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Monte Carlo Experiments</span></a>
+  <a href="./entropy-balancing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropy Balancing</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./multiple-testing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Multiple Testing</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Regression</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./cef.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Regression &amp; the CEF</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./residuals.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Residuals &amp; Controls</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./fwl.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Frisch-Waugh-Lovell</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Standard Errors &amp; Diagnostics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./heteroskedasticity.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Heteroskedasticity</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./clustered-se.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Clustered SEs</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./measurement-error.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Measurement Error</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./bias-variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bias-Variance Tradeoff</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./degeneracy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">When Inference Breaks Down</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Causal Thinking</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./correlation-causation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">From Correlation to Causation</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">Bayesian Thinking</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./bayesian-updating.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bayesian Updating</span></a>
+  <a href="./doubly-robust.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Doubly Robust</span></a>
   </div>
 </li>
       </ul>
@@ -354,20 +261,14 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem">The problem</a>
+  <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
   <ul class="collapse">
-  <li><a href="#why-does-it-shrink-toward-zero" id="toc-why-does-it-shrink-toward-zero" class="nav-link" data-scroll-target="#why-does-it-shrink-toward-zero">Why does it shrink toward zero?</a></li>
-  </ul></li>
-  <li><a href="#simulation-1-watch-the-slope-attenuate" id="toc-simulation-1-watch-the-slope-attenuate" class="nav-link" data-scroll-target="#simulation-1-watch-the-slope-attenuate">Simulation 1: Watch the slope attenuate</a>
-  <ul class="collapse">
+  <li><a href="#the-aipw-estimator" id="toc-the-aipw-estimator" class="nav-link" data-scroll-target="#the-aipw-estimator">The AIPW estimator</a></li>
+  <li><a href="#the-doubly-robust-property" id="toc-the-doubly-robust-property" class="nav-link" data-scroll-target="#the-doubly-robust-property">The “doubly robust” property</a></li>
+  <li><a href="#the-dgp" id="toc-the-dgp" class="nav-link" data-scroll-target="#the-dgp">The DGP</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
-  <li><a href="#simulation-2-attenuation-is-systematic-not-just-noisy" id="toc-simulation-2-attenuation-is-systematic-not-just-noisy" class="nav-link" data-scroll-target="#simulation-2-attenuation-is-systematic-not-just-noisy">Simulation 2: Attenuation is systematic, not just noisy</a>
-  <ul class="collapse">
-  <li><a href="#things-to-try-1" id="toc-things-to-try-1" class="nav-link" data-scroll-target="#things-to-try-1">Things to try</a></li>
-  </ul></li>
-  <li><a href="#measurement-error-in-y-vs-x" id="toc-measurement-error-in-y-vs-x" class="nav-link" data-scroll-target="#measurement-error-in-y-vs-x">Measurement error in Y vs X</a></li>
-  <li><a href="#what-can-you-do-about-it" id="toc-what-can-you-do-about-it" class="nav-link" data-scroll-target="#what-can-you-do-about-it">What can you do about it?</a></li>
+  <li><a href="#why-not-always-use-dr" id="toc-why-not-always-use-dr" class="nav-link" data-scroll-target="#why-not-always-use-dr">Why not always use DR?</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -375,9 +276,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./heteroskedasticity.html">Standard Errors &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./measurement-error.html">Measurement Error</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./regression-adjustment.html">Estimation Tools</a></li><li class="breadcrumb-item"><a href="./doubly-robust.html">Doubly Robust</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Measurement Error &amp; Attenuation Bias</h1>
+<h1 class="title">Doubly Robust Estimation</h1>
 </div>
 
 
@@ -394,38 +295,69 @@ window.Quarto = {
 </header>
 
 
-<section id="the-problem" class="level2">
-<h2 class="anchored" data-anchor-id="the-problem">The problem</h2>
-<p>You want to estimate the effect of <span class="math inline">\(X^*\)</span> on <span class="math inline">\(Y\)</span>:</p>
-<p><span class="math display">\[Y_i = \alpha + \beta X_i^* + u_i\]</span></p>
-<p>But you don’t observe <span class="math inline">\(X^*\)</span> perfectly. Instead you observe <span class="math inline">\(X\)</span> with noise:</p>
-<p><span class="math display">\[X_i = X_i^* + \eta_i, \qquad \eta_i \sim (0, \sigma_\eta^2)\]</span></p>
-<p>where <span class="math inline">\(\eta\)</span> is <strong>measurement error</strong> — independent of <span class="math inline">\(X^*\)</span> and <span class="math inline">\(u\)</span>.</p>
-<p>When you run OLS on the mismeasured <span class="math inline">\(X\)</span>, you don’t get <span class="math inline">\(\beta\)</span>. You get:</p>
-<p><span class="math display">\[\hat{\beta}_{OLS} \xrightarrow{p} \beta \times \underbrace{\frac{\text{Var}(X^*)}{\text{Var}(X^*) + \sigma_\eta^2}}_{\lambda}\]</span></p>
-<p>That fraction <span class="math inline">\(\lambda\)</span> is always between 0 and 1. So the estimate is <strong>biased toward zero</strong>. This is <strong>attenuation bias</strong>.</p>
-<section id="why-does-it-shrink-toward-zero" class="level3">
-<h3 class="anchored" data-anchor-id="why-does-it-shrink-toward-zero">Why does it shrink toward zero?</h3>
-<p>Think of it this way. The measurement error adds random noise to <span class="math inline">\(X\)</span>. From OLS’s perspective, some of the variation in <span class="math inline">\(X\)</span> is real signal (correlated with <span class="math inline">\(Y\)</span>) and some is pure noise (uncorrelated with <span class="math inline">\(Y\)</span>). OLS can’t tell which is which, so it averages over both — diluting the estimated slope.</p>
-<p>More noise → more dilution → flatter slope.</p>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>The Oracle View.</strong> In these simulations, we know the true <span class="math inline">\(X^*\)</span> and we set <span class="math inline">\(\sigma_\eta\)</span> (the measurement error). We can compare the regression on true <span class="math inline">\(X^*\)</span> vs mismeasured <span class="math inline">\(X\)</span> side by side. In practice, you only observe <span class="math inline">\(X\)</span> — you never see <span class="math inline">\(X^*\)</span> and you don’t know how much noise <span class="math inline">\(\eta\)</span> adds. That’s what makes measurement error so insidious: you can’t tell it’s there just by looking at your data.</p>
-</div>
-</div>
-</div>
-<hr>
+<section id="the-idea" class="level2">
+<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
+<p>Every estimation tool under <a href="selection-observables.html">selection on observables</a> relies on getting a model right:</p>
+<ul>
+<li><a href="regression-adjustment.html">Regression adjustment</a> needs the <strong>outcome model</strong> <span class="math inline">\(E[Y \mid X, D]\)</span> to be correct.</li>
+<li><a href="ipw.html">IPW</a> needs the <strong>propensity score model</strong> <span class="math inline">\(P(D = 1 \mid X)\)</span> to be correct.</li>
+</ul>
+<p>What if you’re not sure which one you got right? <strong>Doubly robust (DR) estimation</strong> combines both models and gives you a consistent estimate if <strong>either</strong> one is correctly specified.</p>
+<section id="the-aipw-estimator" class="level3">
+<h3 class="anchored" data-anchor-id="the-aipw-estimator">The AIPW estimator</h3>
+<p>The most common DR estimator is <strong>Augmented Inverse Probability Weighting (AIPW)</strong>:</p>
+<p><span class="math display">\[\hat{\tau}_{DR} = \frac{1}{N} \sum_{i=1}^{N} \left[ \hat{\mu}_1(X_i) - \hat{\mu}_0(X_i) + \frac{D_i (Y_i - \hat{\mu}_1(X_i))}{\hat{e}(X_i)} - \frac{(1 - D_i)(Y_i - \hat{\mu}_0(X_i))}{1 - \hat{e}(X_i)} \right]\]</span></p>
+<p>where <span class="math inline">\(\hat{\mu}_d(X)\)</span> is the estimated outcome under treatment <span class="math inline">\(d\)</span>, and <span class="math inline">\(\hat{e}(X)\)</span> is the estimated propensity score.</p>
+<p><strong>Intuition:</strong> start with the regression prediction (<span class="math inline">\(\hat{\mu}_1 - \hat{\mu}_0\)</span>), then correct it using the IPW-weighted residuals. If the outcome model is perfect, the residuals are zero and the correction vanishes. If the outcome model is wrong but the propensity score is right, the correction fixes the bias.</p>
 </section>
+<section id="the-doubly-robust-property" class="level3">
+<h3 class="anchored" data-anchor-id="the-doubly-robust-property">The “doubly robust” property</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Outcome model</th>
+<th>Propensity score</th>
+<th>DR consistent?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Correct</td>
+<td>Correct</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>Correct</td>
+<td>Wrong</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>Wrong</td>
+<td>Correct</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>Wrong</td>
+<td>Wrong</td>
+<td><strong>No</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Three out of four — you get two shots at a consistent estimate. This is the key advantage over methods that rely on a single model.</p>
 </section>
-<section id="simulation-1-watch-the-slope-attenuate" class="level2">
-<h2 class="anchored" data-anchor-id="simulation-1-watch-the-slope-attenuate">Simulation 1: Watch the slope attenuate</h2>
-<p>Increase the measurement error and watch the estimated slope shrink toward zero. The true relationship stays the same — only the noise changes.</p>
+<section id="the-dgp" class="level3">
+<h3 class="anchored" data-anchor-id="the-dgp">The DGP</h3>
+<p>To see DR in action, we need a setting where models can be <em>wrong</em>:</p>
+<ul>
+<li><strong>True outcome:</strong> <span class="math inline">\(Y = 1 + 2X^2 + \tau D + \varepsilon\)</span> (quadratic in <span class="math inline">\(X\)</span>)</li>
+<li><strong>True treatment:</strong> <span class="math inline">\(P(D=1 \mid X) = \Phi(1.5 \cdot X)\)</span> (probit)</li>
+<li><strong>“Correct” outcome model:</strong> includes <span class="math inline">\(X^2\)</span></li>
+<li><strong>“Wrong” outcome model:</strong> linear only (<span class="math inline">\(X\)</span>, no <span class="math inline">\(X^2\)</span>)</li>
+<li><strong>“Correct” PS model:</strong> logit on <span class="math inline">\(X\)</span> (close enough to probit)</li>
+<li><strong>“Wrong” PS model:</strong> constant 0.5 (ignores <span class="math inline">\(X\)</span> entirely)</li>
+</ul>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 650
+#| viewerHeight: 680
 
 library(shiny)
 
@@ -436,332 +368,243 @@ ui &lt;- fluidPage(
       margin-top: 12px; font-size: 14px; line-height: 1.9;
     }
     .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
   "))),
 
   sidebarLayout(
     sidebarPanel(
       width = 3,
 
-      sliderInput("beta", "True slope (\u03b2):",
-                  min = 0.5, max = 3, value = 1.5, step = 0.1),
-
       sliderInput("n", "Sample size:",
-                  min = 50, max = 500, value = 200, step = 50),
+                  min = 500, max = 3000, value = 1000, step = 250),
 
-      sliderInput("sigma_x", "SD of true X*:",
-                  min = 1, max = 5, value = 2, step = 0.5),
+      sliderInput("ate", "True ATE:",
+                  min = 0, max = 5, value = 2, step = 0.5),
 
-      sliderInput("sigma_u", "SD of outcome noise (u):",
-                  min = 0.5, max = 3, value = 1, step = 0.25),
+      selectInput("scenario", "Scenario:",
+                  choices = c(
+                    "Both correct"         = "both",
+                    "Only outcome correct"  = "outcome_only",
+                    "Only PS correct"       = "ps_only",
+                    "Neither correct"       = "neither"
+                  )),
 
-      sliderInput("sigma_eta", "Measurement error (\u03c3\u03b7):",
-                  min = 0, max = 5, value = 0, step = 0.25),
+      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
 
       uiOutput("results")
     ),
 
     mainPanel(
       width = 9,
-      plotOutput("scatter", height = "550px")
+      fluidRow(
+        column(6, plotOutput("fit_plot", height = "430px")),
+        column(6, plotOutput("compare_plot", height = "430px"))
+      )
     )
   )
 )
 
 server &lt;- function(input, output, session) {
 
-  # True data — only regenerates when beta, n, sigma_x, sigma_u change
-  base &lt;- reactive({
+  dat &lt;- reactive({
+    input$go
     n   &lt;- input$n
-    b   &lt;- input$beta
-    sx  &lt;- input$sigma_x
-    su  &lt;- input$sigma_u
+    ate &lt;- input$ate
+    sc  &lt;- input$scenario
 
-    x_star &lt;- rnorm(n, 0, sx)
-    u      &lt;- rnorm(n, su)
-    y      &lt;- 2 + b * x_star + u
+    # Data generating process
+    x &lt;- rnorm(n)
 
-    list(x_star = x_star, y = y, beta = b, sx = sx)
+    # True PS: probit
+    p_true &lt;- pnorm(1.5 * x)
+    treat &lt;- rbinom(n, 1, p_true)
+
+    # True outcome: quadratic
+    y &lt;- 1 + 2 * x^2 + ate * treat + rnorm(n)
+
+    # --- Outcome models ---
+    outcome_correct &lt;- sc %in% c("both", "outcome_only")
+    if (outcome_correct) {
+      x2 &lt;- x^2
+      fit1 &lt;- lm(y ~ treat + x + x2)
+      mu1 &lt;- predict(fit1, newdata = data.frame(treat = 1, x = x, x2 = x^2))
+      mu0 &lt;- predict(fit1, newdata = data.frame(treat = 0, x = x, x2 = x^2))
+    } else {
+      fit1 &lt;- lm(y ~ treat + x)
+      mu1 &lt;- predict(fit1, newdata = data.frame(treat = 1, x = x))
+      mu0 &lt;- predict(fit1, newdata = data.frame(treat = 0, x = x))
+    }
+
+    # Regression adjustment estimate
+    reg_est &lt;- mean(mu1 - mu0)
+
+    # --- PS models ---
+    ps_correct &lt;- sc %in% c("both", "ps_only")
+    if (ps_correct) {
+      ps &lt;- fitted(glm(treat ~ x, family = binomial))
+    } else {
+      ps &lt;- rep(0.5, n)
+    }
+
+    # IPW estimate
+    w &lt;- ifelse(treat == 1, 1 / ps, 1 / (1 - ps))
+    ipw_est &lt;- weighted.mean(y[treat == 1], w[treat == 1]) -
+               weighted.mean(y[treat == 0], w[treat == 0])
+
+    # Doubly robust (AIPW)
+    dr_est &lt;- mean(mu1 - mu0 +
+      treat * (y - mu1) / ps -
+      (1 - treat) * (y - mu0) / (1 - ps))
+
+    # Naive
+    naive &lt;- mean(y[treat == 1]) - mean(y[treat == 0])
+
+    # For plotting: outcome model fit curves
+    x_seq &lt;- seq(min(x), max(x), length.out = 200)
+    if (outcome_correct) {
+      pred_t &lt;- predict(fit1, newdata = data.frame(treat = 1, x = x_seq, x2 = x_seq^2))
+      pred_c &lt;- predict(fit1, newdata = data.frame(treat = 0, x = x_seq, x2 = x_seq^2))
+    } else {
+      pred_t &lt;- predict(fit1, newdata = data.frame(treat = 1, x = x_seq))
+      pred_c &lt;- predict(fit1, newdata = data.frame(treat = 0, x = x_seq))
+    }
+    true_t &lt;- 1 + 2 * x_seq^2 + ate
+    true_c &lt;- 1 + 2 * x_seq^2
+
+    list(x = x, y = y, treat = treat,
+         x_seq = x_seq, pred_t = pred_t, pred_c = pred_c,
+         true_t = true_t, true_c = true_c,
+         naive = naive, reg_est = reg_est, ipw_est = ipw_est, dr_est = dr_est,
+         ate = ate, sc = sc,
+         outcome_correct = outcome_correct, ps_correct = ps_correct)
   })
 
-  # Measurement error applied on top — changes when eta slider moves
-  sim &lt;- reactive({
-    d   &lt;- base()
-    se  &lt;- input$sigma_eta
+  output$fit_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
 
-    eta   &lt;- rnorm(length(d$x_star), 0, se)
-    x_obs &lt;- d$x_star + eta
+    plot(d$x, d$y, pch = 16, cex = 0.3,
+         col = ifelse(d$treat == 1, "#3498db30", "#e74c3c30"),
+         xlab = "X (confounder)", ylab = "Y (outcome)",
+         main = "Outcome Model Fit vs Truth")
 
-    fit_true &lt;- lm(d$y ~ d$x_star)
-    fit_obs  &lt;- lm(d$y ~ x_obs)
+    # Fitted curves (solid)
+    lines(d$x_seq, d$pred_t, col = "#3498db", lwd = 2.5)
+    lines(d$x_seq, d$pred_c, col = "#e74c3c", lwd = 2.5)
 
-    lambda &lt;- d$sx^2 / (d$sx^2 + se^2)
+    # True curves (dashed)
+    lines(d$x_seq, d$true_t, col = "#3498db", lwd = 1.5, lty = 3)
+    lines(d$x_seq, d$true_c, col = "#e74c3c", lwd = 1.5, lty = 3)
 
-    list(x_star = d$x_star, x_obs = x_obs, y = d$y,
-         b_true = coef(fit_true)[2], b_obs = coef(fit_obs)[2],
-         beta = d$beta, lambda = lambda, sigma_eta = se)
+    outcome_label &lt;- if (d$outcome_correct) "Correct (quadratic)" else "Wrong (linear)"
+    ps_label &lt;- if (d$ps_correct) "Correct (logit)" else "Wrong (constant)"
+
+    legend("topleft", bty = "n", cex = 0.75,
+           legend = c("Treated data", "Control data",
+                      "Model fit (solid)", "True E[Y|X,D] (dotted)",
+                      paste0("Outcome: ", outcome_label),
+                      paste0("PS: ", ps_label)),
+           col = c("#3498db", "#e74c3c", "gray40", "gray40", NA, NA),
+           pch = c(16, 16, NA, NA, NA, NA),
+           lwd = c(NA, NA, 2.5, 1.5, NA, NA),
+           lty = c(NA, NA, 1, 3, NA, NA))
   })
 
-  output$scatter &lt;- renderPlot({
-    d &lt;- sim()
+  output$compare_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 9, 3, 2))
 
-    par(mfrow = c(1, 2), mar = c(4.5, 4.5, 3.5, 1))
+    ests &lt;- c(d$dr_est, d$ipw_est, d$reg_est, d$naive)
+    labels &lt;- c("Doubly Robust", "IPW", "Regression adj.", "Naive")
+    cols &lt;- c("#9b59b6", "#27ae60", "#3498db", "#e74c3c")
 
-    # Left: true X*
-    plot(d$x_star, d$y, pch = 16, cex = 0.6,
-         col = adjustcolor("#3498db", 0.5),
-         xlab = "True X*", ylab = "Y",
-         main = "Regression on true X*")
-    abline(lm(d$y ~ d$x_star), col = "#27ae60", lwd = 3)
-    mtext(paste0("Slope = ", round(d$b_true, 3)),
-          side = 3, line = 0, cex = 1.1, font = 2, col = "#27ae60")
+    xlim &lt;- range(c(ests, d$ate))
+    pad  &lt;- max(diff(xlim) * 0.4, 0.5)
+    xlim &lt;- xlim + c(-pad, pad)
 
-    # Right: observed X with error
-    plot(d$x_obs, d$y, pch = 16, cex = 0.6,
-         col = adjustcolor("#e74c3c", 0.4),
-         xlab = "Observed X (with error)", ylab = "Y",
-         main = paste0("Regression on mismeasured X"))
-    abline(lm(d$y ~ d$x_obs), col = "#e74c3c", lwd = 3)
-    abline(a = coef(lm(d$y ~ d$x_star))[1],
-           b = d$beta, col = "#27ae60", lwd = 2, lty = 2)
-    mtext(paste0("Slope = ", round(d$b_obs, 3),
-                 "  (true = ", d$beta, ")"),
-          side = 3, line = 0, cex = 1.1, font = 2, col = "#e74c3c")
-    legend("topleft", bty = "n", cex = 0.85,
-           legend = c("OLS on mismeasured X", "True slope"),
-           col = c("#e74c3c", "#27ae60"), lwd = c(3, 2), lty = c(1, 2))
+    plot(ests, 1:4, pch = 19, cex = 2, col = cols,
+         xlim = xlim, ylim = c(0.5, 4.5),
+         yaxt = "n", xlab = "Estimated treatment effect",
+         ylab = "", main = "Estimator Comparison")
+    axis(2, at = 1:4, labels = labels, las = 1, cex.axis = 0.9)
+
+    abline(v = d$ate, lty = 2, col = "#2c3e50", lwd = 2)
+    text(d$ate, 4.45, paste0("True ATE = ", d$ate),
+         cex = 0.85, font = 2, col = "#2c3e50")
+
+    segments(d$ate, 1:4, ests, 1:4, col = cols, lwd = 2, lty = 2)
   })
 
   output$results &lt;- renderUI({
-    d &lt;- sim()
+    d &lt;- dat()
+    b_naive &lt;- d$naive - d$ate
+    b_reg   &lt;- d$reg_est - d$ate
+    b_ipw   &lt;- d$ipw_est - d$ate
+    b_dr    &lt;- d$dr_est - d$ate
+
+    scenario_label &lt;- switch(d$sc,
+      both         = "Both models correct",
+      outcome_only = "Only outcome model correct",
+      ps_only      = "Only propensity score correct",
+      neither      = "Neither model correct")
+
+    dr_ok &lt;- abs(b_dr) &lt; abs(b_naive) * 0.5
 
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;True \u03b2:&lt;/b&gt; ", d$beta, "&lt;br&gt;",
-        "&lt;b&gt;OLS on X*:&lt;/b&gt; ", round(d$b_true, 3), "&lt;br&gt;",
-        "&lt;b&gt;OLS on X:&lt;/b&gt; ", round(d$b_obs, 3), "&lt;br&gt;",
-        "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;Attenuation factor (\u03bb):&lt;/b&gt;&lt;br&gt;",
-        "Var(X*) / [Var(X*) + Var(\u03b7)]&lt;br&gt;",
-        "= ", round(d$lambda, 3), "&lt;br&gt;",
-        "&lt;b&gt;\u03b2 \u00d7 \u03bb = &lt;/b&gt;",
-        round(d$beta * d$lambda, 3)
+        "&lt;b&gt;Scenario:&lt;/b&gt; ", scenario_label, "&lt;br&gt;",
+        "&lt;b&gt;True ATE:&lt;/b&gt; ", d$ate, "&lt;br&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        "&lt;b&gt;Naive:&lt;/b&gt; &lt;span class='bad'&gt;", round(d$naive, 3), "&lt;/span&gt;",
+        " (bias: ", round(b_naive, 3), ")&lt;br&gt;",
+        "&lt;b&gt;Reg. adj:&lt;/b&gt; ", round(d$reg_est, 3),
+        " (bias: ", round(b_reg, 3), ")&lt;br&gt;",
+        "&lt;b&gt;IPW:&lt;/b&gt; ", round(d$ipw_est, 3),
+        " (bias: ", round(b_ipw, 3), ")&lt;br&gt;",
+        "&lt;b&gt;DR:&lt;/b&gt; &lt;span class='", ifelse(dr_ok, "good", "bad"), "'&gt;",
+        round(d$dr_est, 3), "&lt;/span&gt;",
+        " (bias: ", round(b_dr, 3), ")"
       ))
     )
   })
 }
 
 shinyApp(ui, server)</code></pre>
+</section>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<p>Walk through all four scenarios:</p>
 <ul>
-<li><strong>Start with <span class="math inline">\(\eta\)</span> = 0:</strong> both panels are identical. No measurement error, no bias.</li>
-<li><strong>Slowly increase <span class="math inline">\(\eta\)</span>:</strong> watch the right panel’s slope flatten. The cloud of points spreads horizontally (noise in X), so OLS “sees” a weaker relationship.</li>
-<li><strong><span class="math inline">\(\eta\)</span> = 5, SD of X* = 2:</strong> the attenuation factor drops to ~0.14. Your estimate is 86% too small.</li>
-<li><strong>Increase n:</strong> the slope doesn’t recover! Attenuation bias is not a small-sample problem — it persists no matter how much data you have. More data just gives you a more precise estimate of the <em>wrong</em> number.</li>
+<li><strong>Both correct:</strong> all three adjusted estimators (regression, IPW, DR) are close to the truth. The left plot shows the fitted curves matching the true curves. DR works.</li>
+<li><strong>Only outcome correct:</strong> the PS is constant (ignores X), so IPW is just the naive difference — biased. But regression gets the outcome right, and DR inherits that. DR works.</li>
+<li><strong>Only PS correct:</strong> the outcome model fits a line when the truth is quadratic — you can see the misfit on the left plot. Regression is biased. But the PS is right, so the IPW correction rescues DR. DR works.</li>
+<li><strong>Neither correct:</strong> both models are wrong. The left plot shows a bad fit, and the PS can’t correct it. DR fails — garbage in, garbage out.</li>
 </ul>
+<p><strong>Key insight:</strong> DR doesn’t require <em>both</em> models to be right. It requires <em>at least one</em> to be right. That’s the “double robustness” — two chances instead of one.</p>
 <hr>
 </section>
 </section>
-<section id="simulation-2-attenuation-is-systematic-not-just-noisy" class="level2">
-<h2 class="anchored" data-anchor-id="simulation-2-attenuation-is-systematic-not-just-noisy">Simulation 2: Attenuation is systematic, not just noisy</h2>
-<p>Run 500 regressions, each with fresh measurement error. The distribution of slope estimates is centered <em>below</em> the true <span class="math inline">\(\beta\)</span> — it’s not random noise, it’s a systematic downward bias.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 550
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
-    }
-    .stats-box b { color: #2c3e50; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      sliderInput("beta2", "True slope (\u03b2):",
-                  min = 0.5, max = 3, value = 1.5, step = 0.1),
-
-      sliderInput("n2", "Sample size per run:",
-                  min = 50, max = 300, value = 100, step = 50),
-
-      sliderInput("sigma_eta2", "Measurement error (\u03c3\u03b7):",
-                  min = 0, max = 5, value = 2, step = 0.25),
-
-      sliderInput("n_sims", "Number of simulations:",
-                  min = 100, max = 1000, value = 500, step = 100),
-
-      uiOutput("results2")
-    ),
-
-    mainPanel(
-      width = 9,
-      plotOutput("mc_plot", height = "450px")
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  sim &lt;- reactive({
-    n     &lt;- input$n2
-    b     &lt;- input$beta2
-    se    &lt;- input$sigma_eta2
-    nsims &lt;- input$n_sims
-    sx    &lt;- 2
-
-    betas_true &lt;- numeric(nsims)
-    betas_obs  &lt;- numeric(nsims)
-
-    for (i in seq_len(nsims)) {
-      x_star &lt;- rnorm(n, 0, sx)
-      u      &lt;- rnorm(n)
-      y      &lt;- 2 + b * x_star + u
-
-      eta   &lt;- rnorm(n, 0, se)
-      x_obs &lt;- x_star + eta
-
-      betas_true[i] &lt;- coef(lm(y ~ x_star))[2]
-      betas_obs[i]  &lt;- coef(lm(y ~ x_obs))[2]
-    }
-
-    lambda &lt;- sx^2 / (sx^2 + se^2)
-
-    list(betas_true = betas_true, betas_obs = betas_obs,
-         beta = b, lambda = lambda)
-  })
-
-  output$mc_plot &lt;- renderPlot({
-    d &lt;- sim()
-
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    all_b &lt;- c(d$betas_true, d$betas_obs)
-    xlim  &lt;- range(all_b) + c(-0.1, 0.1)
-
-    # No-error distribution
-    hist(d$betas_true, breaks = 40,
-         col = adjustcolor("#27ae60", 0.5), border = "white",
-         main = "Distribution of slope estimates across simulations",
-         xlab = expression(hat(beta)), xlim = xlim,
-         freq = FALSE, cex.main = 1.3)
-
-    # With-error distribution
-    hist(d$betas_obs, breaks = 40,
-         col = adjustcolor("#e74c3c", 0.45), border = "white",
-         add = TRUE, freq = FALSE)
-
-    abline(v = d$beta, col = "#2c3e50", lwd = 2.5, lty = 2)
-    abline(v = d$beta * d$lambda, col = "#e74c3c", lwd = 2, lty = 3)
-    abline(v = mean(d$betas_obs), col = "#e74c3c", lwd = 1.5)
-
-    legend("topright", bty = "n", cex = 0.9,
-           legend = c(
-             paste0("No error (centered at \u03b2 = ", d$beta, ")"),
-             paste0("With error (centered at ", round(mean(d$betas_obs), 3), ")"),
-             paste0("Theory: \u03b2\u03bb = ", round(d$beta * d$lambda, 3))
-           ),
-           fill = c(adjustcolor("#27ae60", 0.5),
-                    adjustcolor("#e74c3c", 0.45), NA),
-           border = c("white", "white", NA),
-           col = c(NA, NA, "#e74c3c"),
-           lwd = c(NA, NA, 2), lty = c(NA, NA, 3))
-  })
-
-  output$results2 &lt;- renderUI({
-    d &lt;- sim()
-
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;True \u03b2:&lt;/b&gt; ", d$beta, "&lt;br&gt;",
-        "&lt;b&gt;Avg estimate (no error):&lt;/b&gt; ",
-        round(mean(d$betas_true), 3), "&lt;br&gt;",
-        "&lt;b&gt;Avg estimate (with error):&lt;/b&gt; ",
-        round(mean(d$betas_obs), 3), "&lt;br&gt;",
-        "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;Attenuation factor:&lt;/b&gt; ", round(d$lambda, 3), "&lt;br&gt;",
-        "&lt;b&gt;\u03b2 \u00d7 \u03bb:&lt;/b&gt; ",
-        round(d$beta * d$lambda, 3), "&lt;br&gt;",
-        "&lt;small&gt;Bias: ",
-        round(mean(d$betas_obs) - d$beta, 3), "&lt;/small&gt;"
-      ))
-    )
-  })
-}
-
-shinyApp(ui, server)</code></pre>
-<section id="things-to-try-1" class="level3">
-<h3 class="anchored" data-anchor-id="things-to-try-1">Things to try</h3>
-<ul>
-<li><strong><span class="math inline">\(\eta\)</span> = 0:</strong> both distributions overlap perfectly — no bias at all.</li>
-<li><strong><span class="math inline">\(\eta\)</span> = 2:</strong> the red distribution shifts left. The average slope is systematically below the truth.</li>
-<li><strong>Increase n to 300:</strong> the distributions get <em>narrower</em> (more precise) but the red one stays centered at the wrong value. Attenuation bias doesn’t go away with more data.</li>
-<li><strong>Compare theory vs simulation:</strong> the theoretical <span class="math inline">\(\beta\lambda\)</span> should closely match the average of the red distribution.</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="measurement-error-in-y-vs-x" class="level2">
-<h2 class="anchored" data-anchor-id="measurement-error-in-y-vs-x">Measurement error in Y vs X</h2>
-<p>A crucial asymmetry:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th><strong>Error in X</strong></th>
-<th><strong>Error in Y</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Bias?</strong></td>
-<td>Yes — toward zero</td>
-<td>No bias</td>
-</tr>
-<tr class="even">
-<td><strong>Precision?</strong></td>
-<td>Slightly worse</td>
-<td>Worse (larger SEs)</td>
-</tr>
-<tr class="odd">
-<td><strong>Goes away with more data?</strong></td>
-<td>No</td>
-<td>SEs shrink, but that’s just precision</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Why the asymmetry?</strong> When <span class="math inline">\(Y\)</span> is measured with error, the noise goes into the residual — it’s just more <span class="math inline">\(u\)</span>. The slope is unbiased; you just estimate it less precisely. When <span class="math inline">\(X\)</span> is measured with error, the noise is in the <em>regressor</em>, which contaminates the covariance between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> and biases the slope.</p>
-<hr>
-</section>
-<section id="what-can-you-do-about-it" class="level2">
-<h2 class="anchored" data-anchor-id="what-can-you-do-about-it">What can you do about it?</h2>
+<section id="why-not-always-use-dr" class="level2">
+<h2 class="anchored" data-anchor-id="why-not-always-use-dr">Why not always use DR?</h2>
+<p>If DR is better than regression alone and IPW alone, why not always use it?</p>
 <ol type="1">
-<li><p><strong>Measure better.</strong> The best fix is reducing <span class="math inline">\(\sigma_\eta\)</span>. Use validated instruments, multiple measurements, averages of repeated measures.</p></li>
-<li><p><strong>Instrumental variables (IV).</strong> Find a variable <span class="math inline">\(Z\)</span> that predicts <span class="math inline">\(X^*\)</span> but isn’t contaminated by the measurement error. Two-stage least squares recovers the true <span class="math inline">\(\beta\)</span>.</p></li>
-<li><p><strong>Reliability ratio correction.</strong> OLS with measurement error shrinks the coefficient by the <strong>signal-to-noise ratio</strong> (also called the reliability ratio):</p></li>
+<li><strong>You still need at least one model right.</strong> DR isn’t magic — it fails when both models are misspecified. In the “neither correct” scenario above, DR is just as biased as the others.</li>
+<li><strong>Variance.</strong> DR can have higher variance than a correctly specified single model. The extra robustness comes at the cost of efficiency. In the “both correct” scenario, regression alone is often more precise.</li>
+<li><strong>Complexity.</strong> Two models to specify, diagnose, and justify instead of one.</li>
 </ol>
-<p><span class="math display">\[\hat{\beta}_{OLS} \xrightarrow{p} \beta \cdot \underbrace{\frac{\text{Var}(X^*)}{\text{Var}(X^*) + \text{Var}(\eta)}}_{\text{SNR}}\]</span></p>
-<p>The SNR is always between 0 and 1. High noise (<span class="math inline">\(\text{Var}(\eta) \gg \text{Var}(X^*)\)</span>) → SNR near 0 → coefficient crushed toward zero. Low noise → SNR near 1 → barely any attenuation. If you know the SNR, you can correct: <span class="math inline">\(\hat{\beta}_{corrected} = \hat{\beta}_{OLS} / \text{SNR}\)</span>.</p>
-<ol start="4" type="1">
-<li><strong>Multiple indicators.</strong> If you have two noisy measures of <span class="math inline">\(X^*\)</span> with independent errors, their covariance identifies <span class="math inline">\(\text{Var}(X^*)\)</span>, letting you compute <span class="math inline">\(\lambda\)</span> directly.</li>
-</ol>
+<p>In practice, DR is most valuable when you’re <strong>uncertain about your models</strong> — which is most of the time.</p>
 <hr>
 </section>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
 <ul>
-<li><p>The attenuation bias formula was derived by <strong>Karl Pearson</strong> in the early 1900s, making it one of the oldest results in regression theory. Pearson was studying the relationship between fathers’ and sons’ heights and realized that imprecise measurements of height would make the hereditary correlation look weaker than it really was.</p></li>
-<li><p>In economics, <strong>Jerry Hausman</strong> (2001) showed that measurement error in survey data on income and consumption can attenuate elasticity estimates by 30–50%. Studies using administrative tax records (with near-zero measurement error) consistently find larger effects than survey-based studies — exactly what attenuation bias predicts.</p></li>
-<li><p>The <strong>errors-in-variables</strong> literature distinguishes between <em>classical</em> measurement error (what we covered: <span class="math inline">\(X = X^* + \eta\)</span> with <span class="math inline">\(\eta\)</span> independent of <span class="math inline">\(X^*\)</span>) and <em>non-classical</em> error (where the error depends on the true value). Non-classical error can bias in either direction, not just toward zero. Mean-reverting error in test scores is a common example.</p></li>
+<li><p>The doubly robust property was established by <strong>Scharfstein, Rotnitzky &amp; Robins (1999)</strong> and <strong>Bang &amp; Robins (2005)</strong>. The key insight is that AIPW belongs to a class of <strong>semiparametrically efficient</strong> estimators — it achieves the lowest possible variance among regular estimators when both models are correct, and remains consistent when either is correct.</p></li>
+<li><p><strong>Doubly robust DID (DR-DID)</strong> extends the idea to difference-in-differences. <strong>Sant’Anna &amp; Zhao (2020)</strong> showed how to combine outcome regression and propensity score weighting in the DID setting, getting double robustness for treatment effect estimation under parallel trends. This is now standard in the staggered DID literature.</p></li>
+<li><p>The DR estimator is connected to <strong>targeted learning</strong> (van der Laan &amp; Rose,</p>
+<ol start="2011" type="1">
+<li>and <strong>debiased machine learning</strong> (Chernozhukov et al., 2018). These frameworks use machine learning for the nuisance models (<span class="math inline">\(\hat{\mu}\)</span> and <span class="math inline">\(\hat{e}\)</span>) while maintaining valid inference for the causal parameter — DR structure is what makes this possible.</li>
+</ol></li>
 </ul>
 
 

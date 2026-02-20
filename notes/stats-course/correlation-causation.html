@@ -370,6 +370,12 @@ window.Quarto = {
   <li><a href="#collider-bias-the-trickiest-one" id="toc-collider-bias-the-trickiest-one" class="nav-link" data-scroll-target="#collider-bias-the-trickiest-one">Collider bias: the trickiest one</a></li>
   </ul></li>
   <li><a href="#when-does-correlation-become-causation" id="toc-when-does-correlation-become-causation" class="nav-link" data-scroll-target="#when-does-correlation-become-causation">When does correlation become causation?</a></li>
+  <li><a href="#simpsons-paradox" id="toc-simpsons-paradox" class="nav-link" data-scroll-target="#simpsons-paradox">Simpson’s Paradox</a>
+  <ul class="collapse">
+  <li><a href="#the-uc-berkeley-admissions-case-1973" id="toc-the-uc-berkeley-admissions-case-1973" class="nav-link" data-scroll-target="#the-uc-berkeley-admissions-case-1973">The UC Berkeley admissions case (1973)</a></li>
+  <li><a href="#the-causal-lesson" id="toc-the-causal-lesson" class="nav-link" data-scroll-target="#the-causal-lesson">The causal lesson</a></li>
+  <li><a href="#things-to-try-2" id="toc-things-to-try-2" class="nav-link" data-scroll-target="#things-to-try-2">Things to try</a></li>
+  </ul></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -866,6 +872,265 @@ shinyApp(ui, server)</code></pre>
 <p>These methods are covered in depth in the <a href="../causal-inference/index.html">Causal Inference course</a>.</p>
 <hr>
 </section>
+<section id="simpsons-paradox" class="level2">
+<h2 class="anchored" data-anchor-id="simpsons-paradox">Simpson’s Paradox</h2>
+<p>A striking example of confounding: a trend that appears in aggregate data <strong>reverses</strong> when you look within subgroups.</p>
+<section id="the-uc-berkeley-admissions-case-1973" class="level3">
+<h3 class="anchored" data-anchor-id="the-uc-berkeley-admissions-case-1973">The UC Berkeley admissions case (1973)</h3>
+<p>Berkeley’s graduate admissions data showed an apparent bias against women: overall, 44% of men were admitted vs 35% of women. Lawsuit-worthy? Not so fast.</p>
+<p>When researchers looked <strong>within departments</strong>, women were admitted at equal or <em>higher</em> rates than men in most departments. The aggregate gap existed because <strong>women applied disproportionately to more competitive departments</strong> (like English) while men applied to less competitive ones (like Engineering). Department was a <strong>confounder</strong>: it drove both the gender composition of applicants and the admission rate.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Level</th>
+<th>Men admitted</th>
+<th>Women admitted</th>
+<th>Looks like…</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Aggregate</strong></td>
+<td>44%</td>
+<td>35%</td>
+<td>Bias against women</td>
+</tr>
+<tr class="even">
+<td><strong>Within departments</strong></td>
+<td>Similar or lower</td>
+<td>Similar or higher</td>
+<td>No bias (or slight bias <em>for</em> women)</td>
+</tr>
+</tbody>
+</table>
+<p>This is Simpson’s paradox: the aggregate trend is the <strong>opposite</strong> of the within-group trend. It’s not a paradox in logic — it’s a consequence of confounding. The aggregate numbers mix together departments with very different admission rates and very different gender ratios.</p>
+</section>
+<section id="the-causal-lesson" class="level3">
+<h3 class="anchored" data-anchor-id="the-causal-lesson">The causal lesson</h3>
+<p>Simpson’s paradox is resolved by asking a <strong>causal question</strong>: what should we condition on?</p>
+<ul>
+<li>If department choice is a pre-treatment variable (a confounder), you should condition on it — and the “bias” disappears.</li>
+<li>If department choice is a consequence of discrimination (e.g., women are steered away from certain fields), conditioning on it would <em>hide</em> the discrimination.</li>
+</ul>
+<p><strong>The data alone can’t tell you which is correct.</strong> You need a causal model — a story about what causes what. This is the same lesson as the rest of this page: correlation (the aggregate gap) doesn’t imply causation (discrimination), and the right adjustment depends on the causal structure.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 580
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 8px; font-size: 13px; line-height: 1.7;
+    }
+    .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 4,
+
+      sliderInput("n_simpson", "Applicants per group-dept cell:",
+                  min = 50, max = 500, value = 200, step = 50),
+
+      sliderInput("n_groups", "Number of departments:",
+                  min = 2, max = 6, value = 3, step = 1),
+
+      sliderInput("confound_strength", "Confounding strength:",
+                  min = 0, max = 0.4, value = 0.25, step = 0.05),
+
+      actionButton("go_simp", "New draw", class = "btn-primary", width = "100%"),
+
+      uiOutput("results_simpson")
+    ),
+
+    mainPanel(
+      width = 8,
+      fluidRow(
+        column(6, plotOutput("simpson_agg", height = "350px")),
+        column(6, plotOutput("simpson_dept", height = "350px"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  sim &lt;- reactive({
+    input$go_simp
+    n_cell &lt;- input$n_simpson
+    K &lt;- input$n_groups
+    cf &lt;- input$confound_strength
+
+    # Department base admission rates (decreasing)
+    base_rates &lt;- seq(0.7, 0.2, length.out = K)
+
+    # Group A (e.g., men) applies more to easy departments
+    # Group B (e.g., women) applies more to hard departments
+    weight_a &lt;- seq(1 + cf * K, 1 - cf * K, length.out = K)
+    weight_a &lt;- pmax(weight_a, 0.1)
+    weight_a &lt;- weight_a / sum(weight_a)
+
+    weight_b &lt;- seq(1 - cf * K, 1 + cf * K, length.out = K)
+    weight_b &lt;- pmax(weight_b, 0.1)
+    weight_b &lt;- weight_b / sum(weight_b)
+
+    n_a &lt;- round(weight_a * n_cell * K)
+    n_b &lt;- round(weight_b * n_cell * K)
+
+    # Generate admits with same or slightly higher rate for group B within each dept
+    dept_results &lt;- data.frame(
+      dept = integer(), group = character(),
+      n = integer(), admitted = integer(),
+      stringsAsFactors = FALSE
+    )
+
+    for (k in 1:K) {
+      rate_a &lt;- base_rates[k]
+      rate_b &lt;- base_rates[k] + 0.02  # Slight advantage for group B within dept
+
+      adm_a &lt;- rbinom(1, n_a[k], rate_a)
+      adm_b &lt;- rbinom(1, n_b[k], rate_b)
+
+      dept_results &lt;- rbind(dept_results,
+        data.frame(dept = k, group = "A", n = n_a[k], admitted = adm_a),
+        data.frame(dept = k, group = "B", n = n_b[k], admitted = adm_b))
+    }
+
+    dept_results$rate &lt;- dept_results$admitted / dept_results$n
+
+    # Aggregate rates
+    agg_a &lt;- sum(dept_results$admitted[dept_results$group == "A"]) /
+             sum(dept_results$n[dept_results$group == "A"])
+    agg_b &lt;- sum(dept_results$admitted[dept_results$group == "B"]) /
+             sum(dept_results$n[dept_results$group == "B"])
+
+    list(dept_results = dept_results, agg_a = agg_a, agg_b = agg_b,
+         K = K, base_rates = base_rates,
+         n_a = n_a, n_b = n_b)
+  })
+
+  output$simpson_agg &lt;- renderPlot({
+    d &lt;- sim()
+    par(mar = c(4, 4.5, 3, 1))
+
+    vals &lt;- c(d$agg_a, d$agg_b)
+    cols &lt;- c("#3498db", "#e74c3c")
+    bp &lt;- barplot(vals * 100, col = cols, border = NA,
+                  names.arg = c("Group A", "Group B"),
+                  main = "Aggregate Admission Rate",
+                  ylab = "Admission rate (%)",
+                  ylim = c(0, max(vals * 100) * 1.3))
+    text(bp, vals * 100 + 2, paste0(round(vals * 100, 1), "%"),
+         cex = 1, font = 2)
+
+    if (d$agg_a &gt; d$agg_b) {
+      mtext("Group A admitted at higher rate", side = 1, line = 2.5,
+            col = "#e74c3c", font = 2, cex = 0.9)
+    } else {
+      mtext("Group B admitted at higher rate", side = 1, line = 2.5,
+            col = "#27ae60", font = 2, cex = 0.9)
+    }
+  })
+
+  output$simpson_dept &lt;- renderPlot({
+    d &lt;- sim()
+    dr &lt;- d$dept_results
+    K &lt;- d$K
+    par(mar = c(4, 4.5, 3, 1))
+
+    at_a &lt;- (1:K) * 3 - 1.5
+    at_b &lt;- (1:K) * 3 - 0.5
+
+    rates_a &lt;- dr$rate[dr$group == "A"]
+    rates_b &lt;- dr$rate[dr$group == "B"]
+
+    ylim &lt;- c(0, max(c(rates_a, rates_b) * 100) * 1.25)
+
+    plot(NULL, xlim = c(0, K * 3 + 0.5), ylim = ylim,
+         xaxt = "n", xlab = "", ylab = "Admission rate (%)",
+         main = "Within-Department Rates")
+
+    rect(at_a - 0.4, 0, at_a + 0.4, rates_a * 100,
+         col = "#3498db", border = NA)
+    rect(at_b - 0.4, 0, at_b + 0.4, rates_b * 100,
+         col = "#e74c3c", border = NA)
+
+    text(at_a, rates_a * 100 + 2, paste0(round(rates_a * 100, 0), "%"),
+         cex = 0.7, col = "#3498db", font = 2)
+    text(at_b, rates_b * 100 + 2, paste0(round(rates_b * 100, 0), "%"),
+         cex = 0.7, col = "#e74c3c", font = 2)
+
+    axis(1, at = (1:K) * 3 - 1, labels = paste("Dept", 1:K), cex.axis = 0.85)
+
+    # Show sample sizes
+    n_a &lt;- dr$n[dr$group == "A"]
+    n_b &lt;- dr$n[dr$group == "B"]
+    mtext(paste0("n: ", paste(n_a, collapse = "/")), side = 1,
+          line = 2.3, cex = 0.7, col = "#3498db", adj = 0)
+    mtext(paste0("n: ", paste(n_b, collapse = "/")), side = 1,
+          line = 3, cex = 0.7, col = "#e74c3c", adj = 0)
+
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c("Group A", "Group B"),
+           fill = c("#3498db", "#e74c3c"), border = NA)
+
+    b_wins &lt;- sum(rates_b &gt;= rates_a)
+    mtext(paste0("Group B higher in ", b_wins, "/", K, " departments"),
+          side = 1, line = 2.5, col = "#27ae60", font = 2, cex = 0.85,
+          adj = 1)
+  })
+
+  output$results_simpson &lt;- renderUI({
+    d &lt;- sim()
+    dr &lt;- d$dept_results
+    rates_a &lt;- dr$rate[dr$group == "A"]
+    rates_b &lt;- dr$rate[dr$group == "B"]
+    b_higher &lt;- sum(rates_b &gt;= rates_a)
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;Aggregate:&lt;/b&gt;&lt;br&gt;",
+        "Group A: ", round(d$agg_a * 100, 1), "%&lt;br&gt;",
+        "Group B: ", round(d$agg_b * 100, 1), "%&lt;br&gt;",
+        if (d$agg_a &gt; d$agg_b)
+          "&lt;span class='bad'&gt;A looks favored overall&lt;/span&gt;"
+        else
+          "&lt;span class='good'&gt;No aggregate reversal&lt;/span&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        "&lt;b&gt;Within departments:&lt;/b&gt;&lt;br&gt;",
+        "B higher in &lt;span class='good'&gt;", b_higher, "/", d$K,
+        "&lt;/span&gt; depts&lt;br&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        "&lt;small&gt;The reversal happens because Group B applies more to ",
+        "harder departments. Department is a confounder.&lt;/small&gt;"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</section>
+<section id="things-to-try-2" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try-2">Things to try</h3>
+<ul>
+<li><strong>Confounding strength = 0.25:</strong> Group A has a higher aggregate rate, but Group B has a higher (or equal) rate in most individual departments. That’s the paradox.</li>
+<li><strong>Confounding strength = 0:</strong> both groups apply to departments at the same rates. The paradox disappears — aggregate and within-department trends agree.</li>
+<li><strong>Increase confounding:</strong> the aggregate gap widens even though within-department rates stay the same. More confounding = more misleading aggregate data.</li>
+<li><strong>2 departments:</strong> the paradox is easy to see. With 6 departments, it’s harder to spot without the visualization.</li>
+</ul>
+<hr>
+</section>
+</section>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
 <ul>
@@ -1285,7 +1550,7 @@ shinyApp(ui, server)</code></pre>
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>© 2026 <a href="https://nencydhameja.com">Nency Dhameja</a> | <a href="../index.html">All Notes</a><br>Built with AI assistance · Inspired by my advisor, <a href="https://sites.google.com/site/slichterdavid/home">David Slichter</a></p>
+<p>© 2026 <a href="https://nencydhameja.com">Nency Dhameja</a> | <a href="../index.html">All Notes</a><br>Inspired by my advisor, <a href="https://sites.google.com/site/slichterdavid/home">David Slichter</a> · Developed with AI assistance</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

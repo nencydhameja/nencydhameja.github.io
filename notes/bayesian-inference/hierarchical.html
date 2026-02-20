@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Regression Discontinuity – Applied Causal Inference</title>
+<title>Hierarchical Models – Introduction to Bayesian Thinking</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +115,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Methods</a></li><li class="breadcrumb-item"><a href="./rdd.html">Regression Discontinuity</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mcmc.html">Beyond Conjugates</a></li><li class="breadcrumb-item"><a href="./hierarchical.html">Hierarchical Models</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -130,7 +130,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Applied Causal Inference</a> 
+      <a href="./">Introduction to Bayesian Thinking</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -143,13 +143,37 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayes’ Theorem</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./priors-posteriors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Priors &amp; Posteriors</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./shrinkage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shrinkage</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes-vs-freq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian vs Frequentist</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Framework</span></a>
+ <span class="menu-text">Beyond Conjugates</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -157,96 +181,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./potential-outcomes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Potential Outcomes &amp; ATE</span></a>
+  <a href="./mcmc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MCMC</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./identification-estimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Identification vs Estimation</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Methods</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./selection-observables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Selection on Observables</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./did.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Difference-in-Differences</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./iv.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Instrumental Variables</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./rdd.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Regression Discontinuity</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./synth.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Synthetic Control</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Estimation Tools</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./regression-adjustment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Regression Adjustment</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ipw.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">IPW</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./matching.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Matching</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./entropy-balancing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Entropy Balancing</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./doubly-robust.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Doubly Robust</span></a>
+  <a href="./hierarchical.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Hierarchical Models</span></a>
   </div>
 </li>
       </ul>
@@ -261,14 +203,16 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
+  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem">The problem</a></li>
+  <li><a href="#hierarchical-models-partial-pooling" id="toc-hierarchical-models-partial-pooling" class="nav-link" data-scroll-target="#hierarchical-models-partial-pooling">Hierarchical models: partial pooling</a>
   <ul class="collapse">
-  <li><a href="#sharp-vs-fuzzy" id="toc-sharp-vs-fuzzy" class="nav-link" data-scroll-target="#sharp-vs-fuzzy">Sharp vs Fuzzy</a></li>
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
-  <li><a href="#when-does-rdd-fail" id="toc-when-does-rdd-fail" class="nav-link" data-scroll-target="#when-does-rdd-fail">When does RDD fail?</a></li>
+  <li><a href="#simulation-school-test-scores" id="toc-simulation-school-test-scores" class="nav-link" data-scroll-target="#simulation-school-test-scores">Simulation: School test scores</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
-  <li><a href="#the-bandwidth-tradeoff" id="toc-the-bandwidth-tradeoff" class="nav-link" data-scroll-target="#the-bandwidth-tradeoff">The bandwidth tradeoff</a></li>
+  <li><a href="#why-partial-pooling-wins" id="toc-why-partial-pooling-wins" class="nav-link" data-scroll-target="#why-partial-pooling-wins">Why partial pooling wins</a>
+  <ul class="collapse">
+  <li><a href="#where-hierarchical-models-show-up" id="toc-where-hierarchical-models-show-up" class="nav-link" data-scroll-target="#where-hierarchical-models-show-up">Where hierarchical models show up</a></li>
+  </ul></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -276,9 +220,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Methods</a></li><li class="breadcrumb-item"><a href="./rdd.html">Regression Discontinuity</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mcmc.html">Beyond Conjugates</a></li><li class="breadcrumb-item"><a href="./hierarchical.html">Hierarchical Models</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Regression Discontinuity</h1>
+<h1 class="title">Hierarchical Models</h1>
 </div>
 
 
@@ -295,36 +239,40 @@ window.Quarto = {
 </header>
 
 
-<section id="the-idea" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>Some treatments are assigned by a <strong>cutoff rule</strong>: you get a scholarship if your test score is above 80, you qualify for a program if your income is below $30k, you win an election if your vote share exceeds 50%.</p>
-<p>Right around the cutoff, people just above and just below are nearly identical — they differ by a fraction of a point. The cutoff creates <strong>near-random assignment</strong> in a narrow window. That’s the identifying variation.</p>
-<p><span class="math display">\[\tau_{RDD} = \lim_{x \downarrow c} E[Y \mid X = x] - \lim_{x \uparrow c} E[Y \mid X = x]\]</span></p>
-<p>The treatment effect is the <strong>jump in the outcome at the cutoff</strong>. If the outcome is smooth everywhere except at the cutoff, that discontinuity is the causal effect.</p>
-<section id="sharp-vs-fuzzy" class="level3">
-<h3 class="anchored" data-anchor-id="sharp-vs-fuzzy">Sharp vs Fuzzy</h3>
+<section id="the-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem">The problem</h2>
+<p>You have data from <span class="math inline">\(K\)</span> groups — schools, hospitals, factories, regions — and you want to estimate a parameter (say, the mean) for each group. Two extreme approaches:</p>
 <ul>
-<li><strong>Sharp RDD:</strong> treatment is a deterministic function of the running variable. Score <span class="math inline">\(\geq\)</span> 80 → treated, period. Everyone complies.</li>
-<li><strong>Fuzzy RDD:</strong> the cutoff changes the <em>probability</em> of treatment, but not perfectly. Some people above the cutoff don’t take treatment, some below do. This is essentially an IV problem — the cutoff is the instrument.</li>
+<li><strong>No pooling:</strong> estimate each group separately using only its own data. With small groups, the estimates are noisy and unreliable.</li>
+<li><strong>Complete pooling:</strong> ignore groups entirely and estimate a single grand mean. This throws away real group differences.</li>
 </ul>
+<p>Neither is satisfying. No pooling overfits to noise. Complete pooling underfits by ignoring structure. You want something in between.</p>
 </section>
-<section id="assumptions" class="level3">
-<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
-<ol type="1">
-<li><strong>Continuity:</strong> the potential outcomes <span class="math inline">\(E[Y(0) \mid X = x]\)</span> and <span class="math inline">\(E[Y(1) \mid X = x]\)</span> are continuous at the cutoff — no other jump happens at exactly that point</li>
-<li><strong>No manipulation:</strong> units cannot precisely control their running variable to sort across the cutoff. If they can, the “as good as random” logic breaks.</li>
-<li><strong>Local randomization:</strong> units just above and just below the cutoff are comparable on all observed and unobserved characteristics</li>
-<li><strong>Correct functional form:</strong> the relationship between the running variable and outcome is correctly modeled within the bandwidth window</li>
-</ol>
-</section>
-<section id="when-does-rdd-fail" class="level3">
-<h3 class="anchored" data-anchor-id="when-does-rdd-fail">When does RDD fail?</h3>
+<section id="hierarchical-models-partial-pooling" class="level2">
+<h2 class="anchored" data-anchor-id="hierarchical-models-partial-pooling">Hierarchical models: partial pooling</h2>
+<p>A <strong>hierarchical (multilevel) model</strong> learns the group-level variation <em>from the data</em> and uses it to <strong>shrink</strong> each group’s estimate toward the grand mean — more for small groups, less for large groups.</p>
+<p>The model:</p>
+<p><span class="math display">\[y_{ij} \sim N(\theta_j, \sigma^2) \quad \text{(data within group } j\text{)}\]</span> <span class="math display">\[\theta_j \sim N(\mu, \tau^2) \quad \text{(group means come from a population)}\]</span></p>
 <ul>
-<li><strong>Manipulation:</strong> if people can precisely control their score to land just above or below the cutoff, the “as good as random” logic breaks. Check for bunching at the cutoff (McCrary test).</li>
-<li><strong>Wrong functional form:</strong> if you fit a straight line but the true relationship is curved, you might mistake curvature for a jump. Use local polynomials and check sensitivity to bandwidth.</li>
+<li><span class="math inline">\(\theta_j\)</span> is the true mean for group <span class="math inline">\(j\)</span></li>
+<li><span class="math inline">\(\mu\)</span> is the overall population mean</li>
+<li><span class="math inline">\(\tau^2\)</span> is the between-group variance (how different groups really are)</li>
+<li><span class="math inline">\(\sigma^2\)</span> is the within-group variance (noise)</li>
+</ul>
+<p>The posterior for each <span class="math inline">\(\theta_j\)</span> is a weighted average of the group’s own data and the grand mean:</p>
+<p><span class="math display">\[\hat{\theta}_j^{partial} = w_j \cdot \bar{y}_j + (1 - w_j) \cdot \hat{\mu}\]</span></p>
+<p>where the weight <span class="math inline">\(w_j = \frac{n_j / \sigma^2}{n_j / \sigma^2 + 1/\tau^2}\)</span> depends on the group sample size <span class="math inline">\(n_j\)</span>. <strong>Small groups shrink more</strong> because their data is less informative relative to the population prior.</p>
+<p>This is the same shrinkage logic from the <a href="shrinkage.html">shrinkage page</a>, but now applied within a formal model that estimates <span class="math inline">\(\tau^2\)</span> from the data.</p>
+<section id="simulation-school-test-scores" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-school-test-scores">Simulation: School test scores</h3>
+<p><span class="math inline">\(K\)</span> schools, each with <span class="math inline">\(n_k\)</span> students. Compare three estimates for each school’s true mean:</p>
+<ul>
+<li><strong>No pooling</strong> (red): each school’s raw sample mean</li>
+<li><strong>Complete pooling</strong> (gray): the grand mean for all schools</li>
+<li><strong>Partial pooling</strong> (blue): the hierarchical Bayes estimate</li>
 </ul>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 650
+#| viewerHeight: 680
 
 library(shiny)
 
@@ -343,22 +291,14 @@ ui &lt;- fluidPage(
     sidebarPanel(
       width = 3,
 
-      sliderInput("n", "Sample size:",
-                  min = 200, max = 2000, value = 500, step = 100),
+      sliderInput("K", "Number of schools:",
+                  min = 5, max = 30, value = 12, step = 1),
 
-      sliderInput("tau", "True treatment effect:",
-                  min = 0, max = 5, value = 2, step = 0.25),
+      sliderInput("n_per", "Students per school:",
+                  min = 5, max = 100, value = 15, step = 5),
 
-      sliderInput("sigma", "Noise (SD):",
-                  min = 0.5, max = 4, value = 1.5, step = 0.25),
-
-      sliderInput("bw", "Bandwidth around cutoff:",
-                  min = 0.05, max = 0.5, value = 0.2, step = 0.05),
-
-      selectInput("curve", "True relationship:",
-                  choices = c("Linear" = "linear",
-                              "Quadratic" = "quad",
-                              "Flat" = "flat")),
+      sliderInput("tau", "Between-school SD (\u03C4):",
+                  min = 1, max = 15, value = 5, step = 1),
 
       actionButton("go", "New draw", class = "btn-primary", width = "100%"),
 
@@ -367,7 +307,10 @@ ui &lt;- fluidPage(
 
     mainPanel(
       width = 9,
-      plotOutput("rdd_plot", height = "480px")
+      fluidRow(
+        column(6, plotOutput("school_plot", height = "450px")),
+        column(6, plotOutput("mse_plot",    height = "450px"))
+      )
     )
   )
 )
@@ -376,131 +319,130 @@ server &lt;- function(input, output, session) {
 
   dat &lt;- reactive({
     input$go
-    n     &lt;- input$n
+    K     &lt;- input$K
+    n_per &lt;- input$n_per
     tau   &lt;- input$tau
-    sigma &lt;- input$sigma
-    bw    &lt;- input$bw
-    curve &lt;- input$curve
+    sigma &lt;- 10  # within-school SD (fixed)
 
-    # Running variable: uniform on [0, 1], cutoff at 0.5
-    x &lt;- runif(n)
-    cutoff &lt;- 0.5
-    treat &lt;- as.numeric(x &gt;= cutoff)
+    # True school means
+    mu &lt;- 70  # grand mean
+    theta_true &lt;- rnorm(K, mean = mu, sd = tau)
 
-    # Potential outcome (smooth function of x)
-    if (curve == "linear") {
-      mu &lt;- 2 + 1.5 * x
-    } else if (curve == "quad") {
-      mu &lt;- 2 + 3 * (x - 0.5)^2
-    } else {
-      mu &lt;- rep(3, n)
+    # Generate student scores
+    y_bar &lt;- numeric(K)
+    for (j in 1:K) {
+      scores &lt;- rnorm(n_per, mean = theta_true[j], sd = sigma)
+      y_bar[j] &lt;- mean(scores)
     }
 
-    y &lt;- mu + tau * treat + rnorm(n, sd = sigma)
+    # No pooling: raw means
+    no_pool &lt;- y_bar
 
-    # Local linear regression within bandwidth
-    in_bw &lt;- abs(x - cutoff) &lt;= bw
-    x_bw &lt;- x[in_bw]
-    y_bw &lt;- y[in_bw]
-    t_bw &lt;- treat[in_bw]
+    # Complete pooling: grand mean
+    grand_mean &lt;- mean(y_bar)
+    complete_pool &lt;- rep(grand_mean, K)
 
-    # Separate regressions left and right
-    left  &lt;- x_bw &lt; cutoff
-    right &lt;- x_bw &gt;= cutoff
+    # Partial pooling (empirical Bayes)
+    # Estimate tau from data
+    between_var &lt;- var(y_bar)
+    within_var  &lt;- sigma^2 / n_per
+    tau_hat_sq  &lt;- max(between_var - within_var, 0.01)
 
-    if (sum(left) &gt; 2 &amp;&amp; sum(right) &gt; 2) {
-      fit_l &lt;- lm(y_bw[left] ~ x_bw[left])
-      fit_r &lt;- lm(y_bw[right] ~ x_bw[right])
+    w &lt;- (n_per / sigma^2) / (n_per / sigma^2 + 1 / tau_hat_sq)
+    partial_pool &lt;- w * y_bar + (1 - w) * grand_mean
 
-      # Predicted values at cutoff
-      pred_l &lt;- coef(fit_l)[1] + coef(fit_l)[2] * cutoff
-      pred_r &lt;- coef(fit_r)[1] + coef(fit_r)[2] * cutoff
+    # MSE
+    mse_no   &lt;- mean((no_pool - theta_true)^2)
+    mse_comp &lt;- mean((complete_pool - theta_true)^2)
+    mse_part &lt;- mean((partial_pool - theta_true)^2)
 
-      rdd_est &lt;- pred_r - pred_l
-
-      # Fitted lines for plotting
-      xseq_l &lt;- seq(cutoff - bw, cutoff, length.out = 100)
-      xseq_r &lt;- seq(cutoff, cutoff + bw, length.out = 100)
-      yhat_l &lt;- coef(fit_l)[1] + coef(fit_l)[2] * xseq_l
-      yhat_r &lt;- coef(fit_r)[1] + coef(fit_r)[2] * xseq_r
-    } else {
-      rdd_est &lt;- NA
-      xseq_l &lt;- xseq_r &lt;- yhat_l &lt;- yhat_r &lt;- NULL
-      pred_l &lt;- pred_r &lt;- NA
-    }
-
-    list(x = x, y = y, treat = treat, cutoff = cutoff,
-         bw = bw, in_bw = in_bw, rdd_est = rdd_est,
-         tau = tau, sigma = sigma,
-         xseq_l = xseq_l, xseq_r = xseq_r,
-         yhat_l = yhat_l, yhat_r = yhat_r,
-         pred_l = pred_l, pred_r = pred_r)
+    list(theta_true = theta_true, no_pool = no_pool,
+         complete_pool = complete_pool, partial_pool = partial_pool,
+         grand_mean = grand_mean, w = w,
+         mse_no = mse_no, mse_comp = mse_comp, mse_part = mse_part,
+         K = K, n_per = n_per, tau = tau)
   })
 
-  output$rdd_plot &lt;- renderPlot({
+  output$school_plot &lt;- renderPlot({
     d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
+    par(mar = c(4.5, 5.5, 3, 1))
 
-    # Color by treatment
-    cols &lt;- ifelse(d$treat == 1, adjustcolor("#3498db", 0.25),
-                   adjustcolor("#e74c3c", 0.25))
+    K &lt;- d$K
+    ord &lt;- order(d$no_pool)
 
-    # Dim points outside bandwidth
-    cols[!d$in_bw] &lt;- adjustcolor("gray70", 0.15)
+    xlim &lt;- range(c(d$no_pool, d$partial_pool, d$theta_true, d$grand_mean))
+    xlim &lt;- xlim + c(-2, 2)
 
-    plot(d$x, d$y, pch = 16, cex = 0.5, col = cols,
-         xlab = "Running variable (X)", ylab = "Outcome (Y)",
-         main = "Regression Discontinuity Design")
+    plot(NULL, xlim = xlim, ylim = c(1, K),
+         yaxt = "n", xlab = "Score",
+         ylab = "", main = "School Mean Estimates")
+    axis(2, at = 1:K, labels = paste0("School ", ord), las = 1, cex.axis = 0.7)
 
-    # Cutoff line
-    abline(v = d$cutoff, lty = 2, col = "gray40", lwd = 1.5)
+    # Grand mean line
+    abline(v = d$grand_mean, lty = 2, col = "gray50", lwd = 1.5)
 
-    # Bandwidth shading
-    rect(d$cutoff - d$bw, par("usr")[3],
-         d$cutoff + d$bw, par("usr")[4],
-         col = adjustcolor("#f39c12", 0.08), border = NA)
+    for (i in 1:K) {
+      j &lt;- ord[i]
 
-    # Local linear fits
-    if (!is.null(d$xseq_l)) {
-      lines(d$xseq_l, d$yhat_l, col = "#e74c3c", lwd = 3)
-      lines(d$xseq_r, d$yhat_r, col = "#3498db", lwd = 3)
+      # Arrow from no-pooling to partial-pooling
+      arrows(d$no_pool[j], i, d$partial_pool[j], i,
+             length = 0.04, col = "#bdc3c780", lwd = 1)
 
-      # Jump arrow
-      arrows(d$cutoff + 0.01, d$pred_l, d$cutoff + 0.01, d$pred_r,
-             code = 3, lwd = 2.5, col = "#27ae60", length = 0.1)
-
-      text(d$cutoff + 0.03,
-           (d$pred_l + d$pred_r) / 2,
-           paste0("Jump = ", round(d$rdd_est, 2)),
-           col = "#27ae60", cex = 0.95, adj = 0, font = 2)
+      # Points
+      points(d$no_pool[j], i, pch = 16, col = "#e74c3c", cex = 1.2)
+      points(d$partial_pool[j], i, pch = 17, col = "#3498db", cex = 1.2)
+      points(d$theta_true[j], i, pch = 4, col = "#27ae60", cex = 1, lwd = 2)
     }
 
-    text(d$cutoff, par("usr")[4] * 0.98, "Cutoff",
-         col = "gray40", cex = 0.8, pos = 4)
+    legend("bottomright", bty = "n", cex = 0.8,
+           legend = c("No pooling (raw mean)", "Partial pooling",
+                      "True mean", "Grand mean"),
+           col = c("#e74c3c", "#3498db", "#27ae60", "gray50"),
+           pch = c(16, 17, 4, NA),
+           lty = c(NA, NA, NA, 2), lwd = c(NA, NA, 2, 1.5))
+  })
 
-    legend("topleft", bty = "n", cex = 0.85,
-           legend = c("Control (below cutoff)", "Treated (above cutoff)",
-                      "Estimation window"),
-           pch = c(16, 16, 15),
-           col = c("#e74c3c", "#3498db", adjustcolor("#f39c12", 0.3)))
+  output$mse_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4, 3, 1))
+
+    vals &lt;- c(d$mse_no, d$mse_comp, d$mse_part)
+    cols &lt;- c("#e74c3c", "gray60", "#3498db")
+    labels &lt;- c("No pooling", "Complete\npooling", "Partial\npooling")
+
+    bp &lt;- barplot(vals, col = cols, border = NA,
+                  names.arg = labels, cex.names = 0.85,
+                  main = "Mean Squared Error",
+                  ylab = "MSE")
+    text(bp, vals + max(vals) * 0.03, round(vals, 1), cex = 0.85, font = 2)
+
+    pct &lt;- round((1 - d$mse_part / d$mse_no) * 100, 0)
+    mtext(paste0("Partial pooling reduces MSE by ~", pct, "% vs no pooling"),
+          side = 1, line = 3.5, cex = 0.85, col = "#2c3e50")
   })
 
   output$results &lt;- renderUI({
     d &lt;- dat()
-    if (is.na(d$rdd_est)) {
-      return(tags$div(class = "stats-box",
-        HTML("&lt;b&gt;Not enough observations in bandwidth.&lt;/b&gt; Widen it.")))
-    }
+    pct_np &lt;- round((1 - d$mse_part / d$mse_no) * 100, 1)
+    pct_cp &lt;- round((1 - d$mse_part / d$mse_comp) * 100, 1)
 
-    bias &lt;- d$rdd_est - d$tau
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;True effect:&lt;/b&gt; ", d$tau, "&lt;br&gt;",
-        "&lt;b&gt;RDD estimate:&lt;/b&gt; ", round(d$rdd_est, 3), "&lt;br&gt;",
-        "&lt;b&gt;Bias:&lt;/b&gt; &lt;span class='", ifelse(abs(bias) &lt; 0.3, "good", "bad"), "'&gt;",
-        round(bias, 3), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;small&gt;Bandwidth: &amp;plusmn;", d$bw, " around cutoff&lt;/small&gt;"
+        "&lt;b&gt;Shrinkage weight:&lt;/b&gt; ", round(d$w * 100, 1),
+        "% on group data&lt;br&gt;",
+        "&lt;small&gt;(", round((1 - d$w) * 100, 1), "% on grand mean)&lt;/small&gt;&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;MSE no pooling:&lt;/b&gt; &lt;span class='bad'&gt;",
+        round(d$mse_no, 1), "&lt;/span&gt;&lt;br&gt;",
+        "&lt;b&gt;MSE complete pooling:&lt;/b&gt; ",
+        round(d$mse_comp, 1), "&lt;br&gt;",
+        "&lt;b&gt;MSE partial pooling:&lt;/b&gt; &lt;span class='good'&gt;",
+        round(d$mse_part, 1), "&lt;/span&gt;&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;vs no pooling:&lt;/b&gt; &lt;span class='good'&gt;",
+        pct_np, "% lower&lt;/span&gt;&lt;br&gt;",
+        "&lt;b&gt;vs complete pooling:&lt;/b&gt; &lt;span class='good'&gt;",
+        pct_cp, "% lower&lt;/span&gt;"
       ))
     )
   })
@@ -511,58 +453,72 @@ shinyApp(ui, server)</code></pre>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Default settings:</strong> the jump at the cutoff is clear. The RDD estimate is close to the true effect.</li>
-<li><strong>Narrow the bandwidth (0.05):</strong> fewer observations, noisier estimate — but less bias from misspecification. Widen it (0.5): more data, more precise, but you’re using observations far from the cutoff.</li>
-<li><strong>Switch to quadratic:</strong> with a narrow bandwidth, the local linear fit still works fine. But widen the bandwidth with a quadratic DGP and the estimate gets biased — the line can’t capture the curve.</li>
-<li><strong>Set true effect = 0:</strong> there should be no visible jump. If you see one, it’s noise (or a bad bandwidth choice).</li>
-<li><strong>Crank up noise:</strong> the jump gets harder to see, and you need more data or a wider bandwidth to detect it. This is the bias-variance tradeoff of bandwidth selection.</li>
+<li><strong>Students per school = 5, between-school SD = 5:</strong> small samples, real group differences. The no-pooling estimates (red) are scattered — some far from the truth. Partial pooling (blue triangles) shrinks them toward the grand mean, landing closer to the true values (green crosses). MSE drops substantially.</li>
+<li><strong>Students per school = 100:</strong> with lots of data per group, the raw means are already precise. Shrinkage is minimal — blue and red nearly overlap. <strong>With enough data, partial pooling = no pooling.</strong></li>
+<li><strong>Between-school SD = 1:</strong> schools are very similar. Complete pooling is nearly optimal because the group differences are tiny. Partial pooling agrees — it shrinks almost entirely to the grand mean.</li>
+<li><strong>Between-school SD = 15:</strong> schools differ a lot. Complete pooling is terrible because it ignores real differences. No pooling is better, and partial pooling is best — it respects both the data and the group structure.</li>
+<li><strong>Look at the left plot:</strong> the arrows show shrinkage. Extreme schools (raw means far from the grand mean) shrink the most. Schools near the middle barely move. This is adaptive — the model learns how much shrinkage is appropriate.</li>
 </ul>
 <hr>
 </section>
 </section>
-<section id="the-bandwidth-tradeoff" class="level2">
-<h2 class="anchored" data-anchor-id="the-bandwidth-tradeoff">The bandwidth tradeoff</h2>
-<p>Bandwidth is the central tuning parameter in RDD:</p>
+<section id="why-partial-pooling-wins" class="level2">
+<h2 class="anchored" data-anchor-id="why-partial-pooling-wins">Why partial pooling wins</h2>
+<p>The logic is identical to the <a href="shrinkage.html">shrinkage page</a>, but in a structured model:</p>
+<ul>
+<li><strong>No pooling</strong> has zero bias but high variance (each estimate uses only local data).</li>
+<li><strong>Complete pooling</strong> has high bias but zero variance across groups.</li>
+<li><strong>Partial pooling</strong> trades a little bias for a large reduction in variance. The bias-variance tradeoff is optimized by the model.</li>
+</ul>
+<p>The more groups you have, the better the model estimates <span class="math inline">\(\tau^2\)</span> (the between-group variance), and the more precisely it calibrates the amount of shrinkage.</p>
+<section id="where-hierarchical-models-show-up" class="level3">
+<h3 class="anchored" data-anchor-id="where-hierarchical-models-show-up">Where hierarchical models show up</h3>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr class="header">
-<th></th>
-<th>Narrow bandwidth</th>
-<th>Wide bandwidth</th>
+<th>Application</th>
+<th>Groups</th>
+<th>What gets shrunk</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Bias</strong></td>
-<td>Low — only using near-identical units</td>
-<td>High — far-away units may differ systematically</td>
+<td><strong>Education</strong></td>
+<td>Schools / districts</td>
+<td>Test score means</td>
 </tr>
 <tr class="even">
-<td><strong>Variance</strong></td>
-<td>High — few observations</td>
-<td>Low — more data</td>
+<td><strong>Sports analytics</strong></td>
+<td>Players / teams</td>
+<td>Batting averages, win rates</td>
 </tr>
 <tr class="odd">
-<td><strong>Risk</strong></td>
-<td>Noisy, imprecise estimate</td>
-<td>Precise but potentially wrong</td>
+<td><strong>Clinical trials</strong></td>
+<td>Study sites / subgroups</td>
+<td>Treatment effects</td>
+</tr>
+<tr class="even">
+<td><strong>Marketing</strong></td>
+<td>Regions / customer segments</td>
+<td>Response rates</td>
+</tr>
+<tr class="odd">
+<td><strong>Ecology</strong></td>
+<td>Species / habitats</td>
+<td>Population parameters</td>
 </tr>
 </tbody>
 </table>
-<p>In practice, researchers use <strong>data-driven bandwidth selectors</strong> (Imbens &amp; Kalyanaraman 2012, Calonico, Cattaneo &amp; Titiunik 2014) that optimize this tradeoff. You should always check that your results are robust to different bandwidth choices.</p>
+<p>In each case, the hierarchical structure lets you <strong>borrow strength</strong> across groups — improving estimates for every group, especially the small ones.</p>
 <hr>
+</section>
 </section>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
 <ul>
-<li><p>The RDD idea goes back to <strong>Thistlethwaite &amp; Campbell (1960)</strong>, who studied the effect of merit scholarships on career outcomes using the score cutoff. It was largely ignored for decades until economists rediscovered it in the late 1990s.</p></li>
-<li><p><strong>Lee (2008)</strong> used RDD to study the incumbency advantage in US elections — candidates who barely win vs barely lose. This paper helped establish RDD as a workhorse method in political economy.</p></li>
-<li><p>Cattaneo, Idrobo &amp; Titiunik wrote an excellent practical guide: <em>A Practical Introduction to Regression Discontinuity Designs</em>. It’s freely available and covers everything from basic plots to formal inference.</p></li>
+<li><p>The “8 schools” example from <strong>Rubin (1981)</strong> and <strong>Gelman et al.&nbsp;(2013, <em>Bayesian Data Analysis</em>)</strong> is the canonical textbook example of hierarchical modeling. Eight schools ran a coaching program; the hierarchical model showed that the most impressive result (School A, +28 points) was largely noise, and the true effects were more modest and similar across schools.</p></li>
+<li><p>Hierarchical models are the Bayesian counterpart of <strong>random effects models</strong> in frequentist statistics. The key difference: Bayesian hierarchical models provide full posterior distributions for each group parameter, while frequentist random effects models typically give only point estimates (BLUPs — Best Linear Unbiased Predictors).</p></li>
+<li><p><strong>Stein’s paradox (1956)</strong> proved that when estimating 3 or more means simultaneously, the sample means are <strong>inadmissible</strong> — there always exists an estimator with lower total MSE. The James-Stein estimator and hierarchical models both exploit this: by shrinking toward a common mean, they beat the “obvious” estimator that uses each group’s data alone.</p></li>
 </ul>
 
 

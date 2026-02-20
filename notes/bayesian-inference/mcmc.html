@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Regression Discontinuity – Applied Causal Inference</title>
+<title>Markov Chain Monte Carlo – Introduction to Bayesian Thinking</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +115,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Methods</a></li><li class="breadcrumb-item"><a href="./rdd.html">Regression Discontinuity</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mcmc.html">Beyond Conjugates</a></li><li class="breadcrumb-item"><a href="./mcmc.html">MCMC</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -130,7 +130,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Applied Causal Inference</a> 
+      <a href="./">Introduction to Bayesian Thinking</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -143,13 +143,37 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayes’ Theorem</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./priors-posteriors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Priors &amp; Posteriors</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./shrinkage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shrinkage</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes-vs-freq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian vs Frequentist</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Framework</span></a>
+ <span class="menu-text">Beyond Conjugates</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -157,96 +181,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./potential-outcomes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Potential Outcomes &amp; ATE</span></a>
+  <a href="./mcmc.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">MCMC</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./identification-estimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Identification vs Estimation</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Methods</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./selection-observables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Selection on Observables</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./did.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Difference-in-Differences</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./iv.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Instrumental Variables</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./rdd.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Regression Discontinuity</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./synth.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Synthetic Control</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Estimation Tools</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./regression-adjustment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Regression Adjustment</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ipw.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">IPW</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./matching.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Matching</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./entropy-balancing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Entropy Balancing</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./doubly-robust.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Doubly Robust</span></a>
+  <a href="./hierarchical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hierarchical Models</span></a>
   </div>
 </li>
       </ul>
@@ -261,14 +203,18 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
+  <li><a href="#why-mcmc" id="toc-why-mcmc" class="nav-link active" data-scroll-target="#why-mcmc">Why MCMC?</a></li>
+  <li><a href="#the-metropolis-hastings-algorithm" id="toc-the-metropolis-hastings-algorithm" class="nav-link" data-scroll-target="#the-metropolis-hastings-algorithm">The Metropolis-Hastings algorithm</a>
   <ul class="collapse">
-  <li><a href="#sharp-vs-fuzzy" id="toc-sharp-vs-fuzzy" class="nav-link" data-scroll-target="#sharp-vs-fuzzy">Sharp vs Fuzzy</a></li>
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
-  <li><a href="#when-does-rdd-fail" id="toc-when-does-rdd-fail" class="nav-link" data-scroll-target="#when-does-rdd-fail">When does RDD fail?</a></li>
+  <li><a href="#simulation-1-metropolis-hastings-in-action" id="toc-simulation-1-metropolis-hastings-in-action" class="nav-link" data-scroll-target="#simulation-1-metropolis-hastings-in-action">Simulation 1: Metropolis-Hastings in action</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
-  <li><a href="#the-bandwidth-tradeoff" id="toc-the-bandwidth-tradeoff" class="nav-link" data-scroll-target="#the-bandwidth-tradeoff">The bandwidth tradeoff</a></li>
+  <li><a href="#burn-in-and-convergence" id="toc-burn-in-and-convergence" class="nav-link" data-scroll-target="#burn-in-and-convergence">Burn-in and convergence</a>
+  <ul class="collapse">
+  <li><a href="#simulation-2-multiple-chains-and-convergence" id="toc-simulation-2-multiple-chains-and-convergence" class="nav-link" data-scroll-target="#simulation-2-multiple-chains-and-convergence">Simulation 2: Multiple chains and convergence</a></li>
+  <li><a href="#things-to-try-1" id="toc-things-to-try-1" class="nav-link" data-scroll-target="#things-to-try-1">Things to try</a></li>
+  </ul></li>
+  <li><a href="#the-key-message" id="toc-the-key-message" class="nav-link" data-scroll-target="#the-key-message">The key message</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -276,9 +222,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Methods</a></li><li class="breadcrumb-item"><a href="./rdd.html">Regression Discontinuity</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mcmc.html">Beyond Conjugates</a></li><li class="breadcrumb-item"><a href="./mcmc.html">MCMC</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Regression Discontinuity</h1>
+<h1 class="title">Markov Chain Monte Carlo</h1>
 </div>
 
 
@@ -295,34 +241,31 @@ window.Quarto = {
 </header>
 
 
-<section id="the-idea" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>Some treatments are assigned by a <strong>cutoff rule</strong>: you get a scholarship if your test score is above 80, you qualify for a program if your income is below $30k, you win an election if your vote share exceeds 50%.</p>
-<p>Right around the cutoff, people just above and just below are nearly identical — they differ by a fraction of a point. The cutoff creates <strong>near-random assignment</strong> in a narrow window. That’s the identifying variation.</p>
-<p><span class="math display">\[\tau_{RDD} = \lim_{x \downarrow c} E[Y \mid X = x] - \lim_{x \uparrow c} E[Y \mid X = x]\]</span></p>
-<p>The treatment effect is the <strong>jump in the outcome at the cutoff</strong>. If the outcome is smooth everywhere except at the cutoff, that discontinuity is the causal effect.</p>
-<section id="sharp-vs-fuzzy" class="level3">
-<h3 class="anchored" data-anchor-id="sharp-vs-fuzzy">Sharp vs Fuzzy</h3>
+<section id="why-mcmc" class="level2">
+<h2 class="anchored" data-anchor-id="why-mcmc">Why MCMC?</h2>
+<p>On the <a href="priors-posteriors.html">Priors &amp; Posteriors</a> page, we used <strong>conjugate priors</strong> — special prior-likelihood pairs where the posterior has a closed-form solution. That’s elegant but limiting. Most real models don’t have conjugate posteriors:</p>
 <ul>
-<li><strong>Sharp RDD:</strong> treatment is a deterministic function of the running variable. Score <span class="math inline">\(\geq\)</span> 80 → treated, period. Everyone complies.</li>
-<li><strong>Fuzzy RDD:</strong> the cutoff changes the <em>probability</em> of treatment, but not perfectly. Some people above the cutoff don’t take treatment, some below do. This is essentially an IV problem — the cutoff is the instrument.</li>
+<li>Logistic regression with a prior on coefficients</li>
+<li>Hierarchical models with multiple levels of parameters</li>
+<li>Any model where the posterior <span class="math inline">\(p(\theta \mid y) \propto p(y \mid \theta) \, p(\theta)\)</span> doesn’t simplify to a known distribution</li>
 </ul>
+<p>For these models, we can’t write down the posterior analytically. We need to <strong>sample from it numerically</strong>. That’s what MCMC does.</p>
 </section>
-<section id="assumptions" class="level3">
-<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
+<section id="the-metropolis-hastings-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="the-metropolis-hastings-algorithm">The Metropolis-Hastings algorithm</h2>
+<p>The core idea is beautifully simple:</p>
 <ol type="1">
-<li><strong>Continuity:</strong> the potential outcomes <span class="math inline">\(E[Y(0) \mid X = x]\)</span> and <span class="math inline">\(E[Y(1) \mid X = x]\)</span> are continuous at the cutoff — no other jump happens at exactly that point</li>
-<li><strong>No manipulation:</strong> units cannot precisely control their running variable to sort across the cutoff. If they can, the “as good as random” logic breaks.</li>
-<li><strong>Local randomization:</strong> units just above and just below the cutoff are comparable on all observed and unobserved characteristics</li>
-<li><strong>Correct functional form:</strong> the relationship between the running variable and outcome is correctly modeled within the bandwidth window</li>
+<li>Start at some value <span class="math inline">\(\theta_0\)</span>.</li>
+<li><strong>Propose</strong> a new value <span class="math inline">\(\theta^*\)</span> from a proposal distribution <span class="math inline">\(q(\theta^* \mid \theta_t)\)</span> — typically <span class="math inline">\(\theta^* \sim N(\theta_t, \sigma_{prop}^2)\)</span>.</li>
+<li><strong>Compute the acceptance ratio:</strong> <span class="math display">\[\alpha = \min\left(1, \, \frac{p(\theta^* \mid y)}{p(\theta_t \mid y)}\right)\]</span></li>
+<li><strong>Accept</strong> <span class="math inline">\(\theta^*\)</span> with probability <span class="math inline">\(\alpha\)</span> (set <span class="math inline">\(\theta_{t+1} = \theta^*\)</span>). Otherwise stay: <span class="math inline">\(\theta_{t+1} = \theta_t\)</span>.</li>
+<li>Repeat.</li>
 </ol>
-</section>
-<section id="when-does-rdd-fail" class="level3">
-<h3 class="anchored" data-anchor-id="when-does-rdd-fail">When does RDD fail?</h3>
-<ul>
-<li><strong>Manipulation:</strong> if people can precisely control their score to land just above or below the cutoff, the “as good as random” logic breaks. Check for bunching at the cutoff (McCrary test).</li>
-<li><strong>Wrong functional form:</strong> if you fit a straight line but the true relationship is curved, you might mistake curvature for a jump. Use local polynomials and check sensitivity to bandwidth.</li>
-</ul>
+<p><strong>Key insight:</strong> you never need to compute the normalizing constant <span class="math inline">\(p(y) = \int p(y \mid \theta) \, p(\theta) \, d\theta\)</span>. The ratio <span class="math inline">\(p(\theta^* \mid y) / p(\theta_t \mid y)\)</span> cancels it out. You only need to evaluate the <strong>unnormalized posterior</strong> — the numerator of Bayes’ theorem.</p>
+<p>After enough iterations, the chain converges to the posterior distribution. The samples <span class="math inline">\(\theta_1, \theta_2, \ldots\)</span> are (correlated) draws from <span class="math inline">\(p(\theta \mid y)\)</span>.</p>
+<section id="simulation-1-metropolis-hastings-in-action" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-1-metropolis-hastings-in-action">Simulation 1: Metropolis-Hastings in action</h3>
+<p>Estimate the mean <span class="math inline">\(\mu\)</span> of normally distributed data with unknown true value. The proposal width controls exploration: too narrow and the chain moves slowly; too wide and most proposals get rejected.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 650
 
@@ -343,31 +286,29 @@ ui &lt;- fluidPage(
     sidebarPanel(
       width = 3,
 
-      sliderInput("n", "Sample size:",
-                  min = 200, max = 2000, value = 500, step = 100),
+      sliderInput("true_mu", HTML("True &amp;mu;:"),
+                  min = -3, max = 3, value = 1, step = 0.5),
 
-      sliderInput("tau", "True treatment effect:",
-                  min = 0, max = 5, value = 2, step = 0.25),
+      sliderInput("n_data", "Data points:",
+                  min = 5, max = 100, value = 20, step = 5),
 
-      sliderInput("sigma", "Noise (SD):",
-                  min = 0.5, max = 4, value = 1.5, step = 0.25),
+      sliderInput("prop_sd", "Proposal width (SD):",
+                  min = 0.05, max = 5, value = 0.5, step = 0.05),
 
-      sliderInput("bw", "Bandwidth around cutoff:",
-                  min = 0.05, max = 0.5, value = 0.2, step = 0.05),
+      sliderInput("n_iter", "Iterations:",
+                  min = 500, max = 5000, value = 2000, step = 500),
 
-      selectInput("curve", "True relationship:",
-                  choices = c("Linear" = "linear",
-                              "Quadratic" = "quad",
-                              "Flat" = "flat")),
-
-      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
+      actionButton("go", "Run chain", class = "btn-primary", width = "100%"),
 
       uiOutput("results")
     ),
 
     mainPanel(
       width = 9,
-      plotOutput("rdd_plot", height = "480px")
+      fluidRow(
+        column(6, plotOutput("trace_plot", height = "420px")),
+        column(6, plotOutput("hist_plot", height = "420px"))
+      )
     )
   )
 )
@@ -376,131 +317,119 @@ server &lt;- function(input, output, session) {
 
   dat &lt;- reactive({
     input$go
-    n     &lt;- input$n
-    tau   &lt;- input$tau
-    sigma &lt;- input$sigma
-    bw    &lt;- input$bw
-    curve &lt;- input$curve
+    true_mu  &lt;- input$true_mu
+    n_data   &lt;- input$n_data
+    prop_sd  &lt;- input$prop_sd
+    n_iter   &lt;- input$n_iter
+    sigma    &lt;- 2  # known SD
 
-    # Running variable: uniform on [0, 1], cutoff at 0.5
-    x &lt;- runif(n)
-    cutoff &lt;- 0.5
-    treat &lt;- as.numeric(x &gt;= cutoff)
+    # Generate data
+    y &lt;- rnorm(n_data, mean = true_mu, sd = sigma)
 
-    # Potential outcome (smooth function of x)
-    if (curve == "linear") {
-      mu &lt;- 2 + 1.5 * x
-    } else if (curve == "quad") {
-      mu &lt;- 2 + 3 * (x - 0.5)^2
-    } else {
-      mu &lt;- rep(3, n)
+    # Log posterior (unnormalized): normal likelihood + flat prior
+    log_post &lt;- function(mu) {
+      sum(dnorm(y, mean = mu, sd = sigma, log = TRUE))
     }
 
-    y &lt;- mu + tau * treat + rnorm(n, sd = sigma)
+    # Metropolis-Hastings
+    chain &lt;- numeric(n_iter)
+    chain[1] &lt;- 0  # start at 0
+    accepted &lt;- 0
 
-    # Local linear regression within bandwidth
-    in_bw &lt;- abs(x - cutoff) &lt;= bw
-    x_bw &lt;- x[in_bw]
-    y_bw &lt;- y[in_bw]
-    t_bw &lt;- treat[in_bw]
+    for (t in 2:n_iter) {
+      proposal &lt;- rnorm(1, mean = chain[t - 1], sd = prop_sd)
+      log_ratio &lt;- log_post(proposal) - log_post(chain[t - 1])
 
-    # Separate regressions left and right
-    left  &lt;- x_bw &lt; cutoff
-    right &lt;- x_bw &gt;= cutoff
-
-    if (sum(left) &gt; 2 &amp;&amp; sum(right) &gt; 2) {
-      fit_l &lt;- lm(y_bw[left] ~ x_bw[left])
-      fit_r &lt;- lm(y_bw[right] ~ x_bw[right])
-
-      # Predicted values at cutoff
-      pred_l &lt;- coef(fit_l)[1] + coef(fit_l)[2] * cutoff
-      pred_r &lt;- coef(fit_r)[1] + coef(fit_r)[2] * cutoff
-
-      rdd_est &lt;- pred_r - pred_l
-
-      # Fitted lines for plotting
-      xseq_l &lt;- seq(cutoff - bw, cutoff, length.out = 100)
-      xseq_r &lt;- seq(cutoff, cutoff + bw, length.out = 100)
-      yhat_l &lt;- coef(fit_l)[1] + coef(fit_l)[2] * xseq_l
-      yhat_r &lt;- coef(fit_r)[1] + coef(fit_r)[2] * xseq_r
-    } else {
-      rdd_est &lt;- NA
-      xseq_l &lt;- xseq_r &lt;- yhat_l &lt;- yhat_r &lt;- NULL
-      pred_l &lt;- pred_r &lt;- NA
+      if (log(runif(1)) &lt; log_ratio) {
+        chain[t] &lt;- proposal
+        accepted &lt;- accepted + 1
+      } else {
+        chain[t] &lt;- chain[t - 1]
+      }
     }
 
-    list(x = x, y = y, treat = treat, cutoff = cutoff,
-         bw = bw, in_bw = in_bw, rdd_est = rdd_est,
-         tau = tau, sigma = sigma,
-         xseq_l = xseq_l, xseq_r = xseq_r,
-         yhat_l = yhat_l, yhat_r = yhat_r,
-         pred_l = pred_l, pred_r = pred_r)
+    accept_rate &lt;- accepted / (n_iter - 1)
+
+    # Analytic posterior for comparison (conjugate: flat prior + normal)
+    post_mean &lt;- mean(y)
+    post_sd   &lt;- sigma / sqrt(n_data)
+
+    list(chain = chain, accept_rate = accept_rate,
+         true_mu = true_mu, post_mean = post_mean, post_sd = post_sd,
+         n_iter = n_iter, prop_sd = prop_sd)
   })
 
-  output$rdd_plot &lt;- renderPlot({
+  output$trace_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    # Color by treatment
-    cols &lt;- ifelse(d$treat == 1, adjustcolor("#3498db", 0.25),
-                   adjustcolor("#e74c3c", 0.25))
+    plot(d$chain, type = "l", col = "#3498db80", lwd = 0.5,
+         xlab = "Iteration", ylab = expression(mu),
+         main = "Trace Plot")
 
-    # Dim points outside bandwidth
-    cols[!d$in_bw] &lt;- adjustcolor("gray70", 0.15)
+    abline(h = d$true_mu, lty = 2, col = "#e74c3c", lwd = 2)
+    abline(h = d$post_mean, lty = 3, col = "#27ae60", lwd = 2)
 
-    plot(d$x, d$y, pch = 16, cex = 0.5, col = cols,
-         xlab = "Running variable (X)", ylab = "Outcome (Y)",
-         main = "Regression Discontinuity Design")
+    legend("topright", bty = "n", cex = 0.8,
+           legend = c(expression("True " * mu),
+                      "Posterior mean (analytic)"),
+           col = c("#e74c3c", "#27ae60"),
+           lty = c(2, 3), lwd = 2)
+  })
 
-    # Cutoff line
-    abline(v = d$cutoff, lty = 2, col = "gray40", lwd = 1.5)
+  output$hist_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
 
-    # Bandwidth shading
-    rect(d$cutoff - d$bw, par("usr")[3],
-         d$cutoff + d$bw, par("usr")[4],
-         col = adjustcolor("#f39c12", 0.08), border = NA)
+    # Discard first 20% as burn-in
+    burnin &lt;- floor(d$n_iter * 0.2)
+    samples &lt;- d$chain[(burnin + 1):d$n_iter]
 
-    # Local linear fits
-    if (!is.null(d$xseq_l)) {
-      lines(d$xseq_l, d$yhat_l, col = "#e74c3c", lwd = 3)
-      lines(d$xseq_r, d$yhat_r, col = "#3498db", lwd = 3)
+    hist(samples, breaks = 40, freq = FALSE,
+         col = "#3498db40", border = "#3498db",
+         xlab = expression(mu), main = "Posterior Distribution",
+         xlim = range(c(samples, d$true_mu - 0.5, d$true_mu + 0.5)))
 
-      # Jump arrow
-      arrows(d$cutoff + 0.01, d$pred_l, d$cutoff + 0.01, d$pred_r,
-             code = 3, lwd = 2.5, col = "#27ae60", length = 0.1)
+    # Analytic posterior
+    x_seq &lt;- seq(min(samples) - 0.5, max(samples) + 0.5, length.out = 200)
+    lines(x_seq, dnorm(x_seq, d$post_mean, d$post_sd),
+          col = "#27ae60", lwd = 2.5)
 
-      text(d$cutoff + 0.03,
-           (d$pred_l + d$pred_r) / 2,
-           paste0("Jump = ", round(d$rdd_est, 2)),
-           col = "#27ae60", cex = 0.95, adj = 0, font = 2)
-    }
+    abline(v = d$true_mu, lty = 2, col = "#e74c3c", lwd = 2)
 
-    text(d$cutoff, par("usr")[4] * 0.98, "Cutoff",
-         col = "gray40", cex = 0.8, pos = 4)
-
-    legend("topleft", bty = "n", cex = 0.85,
-           legend = c("Control (below cutoff)", "Treated (above cutoff)",
-                      "Estimation window"),
-           pch = c(16, 16, 15),
-           col = c("#e74c3c", "#3498db", adjustcolor("#f39c12", 0.3)))
+    legend("topright", bty = "n", cex = 0.8,
+           legend = c("MCMC samples", "Analytic posterior",
+                      expression("True " * mu)),
+           col = c("#3498db", "#27ae60", "#e74c3c"),
+           lwd = c(NA, 2.5, 2), lty = c(NA, 1, 2),
+           pch = c(15, NA, NA), pt.cex = c(1.5, NA, NA))
   })
 
   output$results &lt;- renderUI({
     d &lt;- dat()
-    if (is.na(d$rdd_est)) {
-      return(tags$div(class = "stats-box",
-        HTML("&lt;b&gt;Not enough observations in bandwidth.&lt;/b&gt; Widen it.")))
+    burnin &lt;- floor(d$n_iter * 0.2)
+    samples &lt;- d$chain[(burnin + 1):d$n_iter]
+
+    rate_class &lt;- if (d$accept_rate &gt; 0.15 &amp;&amp; d$accept_rate &lt; 0.5) "good" else "bad"
+    rate_note &lt;- if (d$accept_rate &lt; 0.15) {
+      "Too low — proposal too wide"
+    } else if (d$accept_rate &gt; 0.5) {
+      "Too high — proposal too narrow"
+    } else {
+      "Good range (0.15-0.50)"
     }
 
-    bias &lt;- d$rdd_est - d$tau
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;True effect:&lt;/b&gt; ", d$tau, "&lt;br&gt;",
-        "&lt;b&gt;RDD estimate:&lt;/b&gt; ", round(d$rdd_est, 3), "&lt;br&gt;",
-        "&lt;b&gt;Bias:&lt;/b&gt; &lt;span class='", ifelse(abs(bias) &lt; 0.3, "good", "bad"), "'&gt;",
-        round(bias, 3), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;small&gt;Bandwidth: &amp;plusmn;", d$bw, " around cutoff&lt;/small&gt;"
+        "&lt;b&gt;Acceptance rate:&lt;/b&gt; &lt;span class='", rate_class, "'&gt;",
+        round(d$accept_rate * 100, 1), "%&lt;/span&gt;&lt;br&gt;",
+        "&lt;small&gt;", rate_note, "&lt;/small&gt;&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;MCMC posterior mean:&lt;/b&gt; ", round(mean(samples), 3), "&lt;br&gt;",
+        "&lt;b&gt;Analytic posterior mean:&lt;/b&gt; ", round(d$post_mean, 3), "&lt;br&gt;",
+        "&lt;b&gt;True &amp;mu;:&lt;/b&gt; ", d$true_mu, "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;Proposal width:&lt;/b&gt; ", d$prop_sd
       ))
     )
   })
@@ -511,58 +440,194 @@ shinyApp(ui, server)</code></pre>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Default settings:</strong> the jump at the cutoff is clear. The RDD estimate is close to the true effect.</li>
-<li><strong>Narrow the bandwidth (0.05):</strong> fewer observations, noisier estimate — but less bias from misspecification. Widen it (0.5): more data, more precise, but you’re using observations far from the cutoff.</li>
-<li><strong>Switch to quadratic:</strong> with a narrow bandwidth, the local linear fit still works fine. But widen the bandwidth with a quadratic DGP and the estimate gets biased — the line can’t capture the curve.</li>
-<li><strong>Set true effect = 0:</strong> there should be no visible jump. If you see one, it’s noise (or a bad bandwidth choice).</li>
-<li><strong>Crank up noise:</strong> the jump gets harder to see, and you need more data or a wider bandwidth to detect it. This is the bias-variance tradeoff of bandwidth selection.</li>
+<li><strong>Proposal width = 0.5:</strong> a well-tuned chain. The trace plot shows good mixing (bouncing around the posterior), and the histogram matches the analytic posterior (green curve). Acceptance rate is in the sweet spot (20–40%).</li>
+<li><strong>Proposal width = 0.05:</strong> too narrow. The chain takes tiny steps — the trace plot shows slow, random-walk behavior. Acceptance rate is near 100% (almost every proposal is accepted because it’s barely different). The chain explores the posterior very slowly.</li>
+<li><strong>Proposal width = 5:</strong> too wide. Most proposals jump far from the current value and land in low-probability regions — they get rejected. The trace plot shows long flat stretches (the chain is stuck). Acceptance rate is very low.</li>
+<li><strong>The goldilocks principle:</strong> you want a proposal width that’s “just right” — large enough to explore, small enough to get accepted. The theoretical optimum for 1D is an acceptance rate around 44% (Roberts et al., 1997).</li>
 </ul>
 <hr>
 </section>
 </section>
-<section id="the-bandwidth-tradeoff" class="level2">
-<h2 class="anchored" data-anchor-id="the-bandwidth-tradeoff">The bandwidth tradeoff</h2>
-<p>Bandwidth is the central tuning parameter in RDD:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th>Narrow bandwidth</th>
-<th>Wide bandwidth</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Bias</strong></td>
-<td>Low — only using near-identical units</td>
-<td>High — far-away units may differ systematically</td>
-</tr>
-<tr class="even">
-<td><strong>Variance</strong></td>
-<td>High — few observations</td>
-<td>Low — more data</td>
-</tr>
-<tr class="odd">
-<td><strong>Risk</strong></td>
-<td>Noisy, imprecise estimate</td>
-<td>Precise but potentially wrong</td>
-</tr>
-</tbody>
-</table>
-<p>In practice, researchers use <strong>data-driven bandwidth selectors</strong> (Imbens &amp; Kalyanaraman 2012, Calonico, Cattaneo &amp; Titiunik 2014) that optimize this tradeoff. You should always check that your results are robust to different bandwidth choices.</p>
+<section id="burn-in-and-convergence" class="level2">
+<h2 class="anchored" data-anchor-id="burn-in-and-convergence">Burn-in and convergence</h2>
+<p>A practical concern: the chain starts at an arbitrary value (<span class="math inline">\(\theta_0 = 0\)</span> above). The early samples reflect the starting point, not the posterior. You need to <strong>discard</strong> these initial samples — the “burn-in” period.</p>
+<p><strong>How do you know the chain has converged?</strong> Run multiple chains from different starting points. If they all end up exploring the same region, you have evidence of convergence. If they’re stuck in different places, the chains haven’t converged and you need more iterations.</p>
+<section id="simulation-2-multiple-chains-and-convergence" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-2-multiple-chains-and-convergence">Simulation 2: Multiple chains and convergence</h3>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 580
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("n_iter2", "Iterations:",
+                  min = 200, max = 3000, value = 1000, step = 200),
+
+      sliderInput("burnin", "Burn-in (discard first %):",
+                  min = 0, max = 50, value = 20, step = 5),
+
+      sliderInput("prop_sd2", "Proposal width:",
+                  min = 0.1, max = 3, value = 0.5, step = 0.1),
+
+      actionButton("go2", "Run chains", class = "btn-primary", width = "100%"),
+
+      uiOutput("results2")
+    ),
+
+    mainPanel(
+      width = 9,
+      plotOutput("multi_trace", height = "420px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  dat2 &lt;- reactive({
+    input$go2
+    n_iter  &lt;- input$n_iter2
+    burnin  &lt;- input$burnin / 100
+    prop_sd &lt;- input$prop_sd2
+    sigma   &lt;- 2
+    true_mu &lt;- 1.5
+
+    # Generate data once
+    y &lt;- rnorm(30, mean = true_mu, sd = sigma)
+
+    log_post &lt;- function(mu) {
+      sum(dnorm(y, mean = mu, sd = sigma, log = TRUE))
+    }
+
+    # Run 4 chains from different starting points
+    starts &lt;- c(-5, -2, 4, 7)
+    chain_cols &lt;- c("#e74c3c", "#3498db", "#27ae60", "#f39c12")
+    chains &lt;- matrix(0, nrow = n_iter, ncol = 4)
+
+    for (ch in 1:4) {
+      chains[1, ch] &lt;- starts[ch]
+      for (t in 2:n_iter) {
+        proposal &lt;- rnorm(1, chains[t - 1, ch], prop_sd)
+        log_r &lt;- log_post(proposal) - log_post(chains[t - 1, ch])
+        if (log(runif(1)) &lt; log_r) {
+          chains[t, ch] &lt;- proposal
+        } else {
+          chains[t, ch] &lt;- chains[t - 1, ch]
+        }
+      }
+    }
+
+    # Posterior (analytic)
+    post_mean &lt;- mean(y)
+
+    list(chains = chains, starts = starts, chain_cols = chain_cols,
+         n_iter = n_iter, burnin = burnin, true_mu = true_mu,
+         post_mean = post_mean)
+  })
+
+  output$multi_trace &lt;- renderPlot({
+    d &lt;- dat2()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    burnin_line &lt;- floor(d$n_iter * d$burnin)
+
+    ylim &lt;- range(d$chains)
+    plot(NULL, xlim = c(1, d$n_iter), ylim = ylim,
+         xlab = "Iteration", ylab = expression(mu),
+         main = "Four Chains from Different Starting Points")
+
+    # Shade burn-in region
+    if (burnin_line &gt; 0) {
+      rect(0, ylim[1] - 1, burnin_line, ylim[2] + 1,
+           col = "#f0f0f080", border = NA)
+      abline(v = burnin_line, lty = 2, col = "gray40", lwd = 1.5)
+      text(burnin_line, ylim[2], "burn-in", pos = 2,
+           cex = 0.8, col = "gray40")
+    }
+
+    for (ch in 1:4) {
+      lines(d$chains[, ch], col = paste0(d$chain_cols[ch], "90"),
+            lwd = 0.8)
+    }
+
+    abline(h = d$true_mu, lty = 2, col = "#2c3e50", lwd = 2)
+    text(d$n_iter * 0.98, d$true_mu, expression("True " * mu),
+         pos = 3, cex = 0.85, col = "#2c3e50")
+
+    legend("topright", bty = "n", cex = 0.75,
+           legend = paste0("Chain ", 1:4, " (start = ", d$starts, ")"),
+           col = d$chain_cols, lwd = 2)
+  })
+
+  output$results2 &lt;- renderUI({
+    d &lt;- dat2()
+    burnin_n &lt;- floor(d$n_iter * d$burnin)
+
+    # Post-burnin means per chain
+    if (burnin_n &lt; d$n_iter) {
+      post_samples &lt;- d$chains[(burnin_n + 1):d$n_iter, ]
+      chain_means &lt;- round(colMeans(post_samples), 3)
+      spread &lt;- round(max(chain_means) - min(chain_means), 3)
+    } else {
+      chain_means &lt;- rep(NA, 4)
+      spread &lt;- NA
+    }
+
+    converged &lt;- !is.na(spread) &amp;&amp; spread &lt; 0.3
+    conv_class &lt;- if (converged) "good" else "bad"
+    conv_label &lt;- if (converged) "Chains agree" else "Chains disagree"
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;Post-burn-in means:&lt;/b&gt;&lt;br&gt;",
+        paste0("Chain ", 1:4, ": ", chain_means, collapse = "&lt;br&gt;"), "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;Spread:&lt;/b&gt; &lt;span class='", conv_class, "'&gt;",
+        spread, "&lt;/span&gt;&lt;br&gt;",
+        "&lt;span class='", conv_class, "'&gt;", conv_label, "&lt;/span&gt;"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</section>
+<section id="things-to-try-1" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try-1">Things to try</h3>
+<ul>
+<li><strong>Default settings (1000 iterations, burn-in = 20%):</strong> all four chains start at different values (-5, -2, 4, 7) but converge to the same region within ~100 iterations. After burn-in, all chain means agree. This is convergence.</li>
+<li><strong>Burn-in = 0%:</strong> the early samples (from the starting points) contaminate the posterior. The chain means diverge because each chain’s average is pulled toward its start.</li>
+<li><strong>Proposal width = 0.1:</strong> very slow exploration. The chains take longer to converge — you can see them creeping slowly toward the true value. With only 1000 iterations, they might not fully converge. Increase iterations to fix this.</li>
+<li><strong>Proposal width = 3:</strong> the chains converge quickly but the trace plot shows many flat stretches (rejected proposals). The posterior is explored but inefficiently.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="the-key-message" class="level2">
+<h2 class="anchored" data-anchor-id="the-key-message">The key message</h2>
+<p>MCMC lets you compute posteriors for <strong>any</strong> model — not just conjugate ones. Specify the likelihood and the prior, and the algorithm samples from the posterior. This is what makes Bayesian inference practical for real-world problems like <a href="hierarchical.html">hierarchical models</a>, where closed-form posteriors don’t exist.</p>
+<p>Modern tools like <strong>Stan</strong>, <strong>JAGS</strong>, and <strong>PyMC</strong> automate this — you specify the model and they handle the sampling. But understanding the basics (proposal tuning, burn-in, convergence checks) helps you diagnose problems when things go wrong.</p>
 <hr>
 </section>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
 <ul>
-<li><p>The RDD idea goes back to <strong>Thistlethwaite &amp; Campbell (1960)</strong>, who studied the effect of merit scholarships on career outcomes using the score cutoff. It was largely ignored for decades until economists rediscovered it in the late 1990s.</p></li>
-<li><p><strong>Lee (2008)</strong> used RDD to study the incumbency advantage in US elections — candidates who barely win vs barely lose. This paper helped establish RDD as a workhorse method in political economy.</p></li>
-<li><p>Cattaneo, Idrobo &amp; Titiunik wrote an excellent practical guide: <em>A Practical Introduction to Regression Discontinuity Designs</em>. It’s freely available and covers everything from basic plots to formal inference.</p></li>
+<li><p>The Metropolis algorithm was developed at <strong>Los Alamos National Laboratory</strong> by <strong>Nicholas Metropolis, Arianna Rosenbluth, Marshall Rosenbluth, Augusta Teller, and Edward Teller (1953)</strong> — originally for simulating equations of state in statistical mechanics, not statistics. <strong>W.K. Hastings (1970)</strong> generalized it to asymmetric proposal distributions.</p></li>
+<li><p>MCMC was named one of the <strong>top 10 algorithms of the 20th century</strong> by Computing in Science &amp; Engineering (2000). It’s used across physics, chemistry, biology, statistics, and machine learning.</p></li>
+<li><p>Modern Bayesian computation has largely moved beyond basic Metropolis-Hastings to <strong>Hamiltonian Monte Carlo (HMC)</strong> and its adaptive variant <strong>NUTS</strong> (Hoffman &amp; Gelman, 2014). HMC uses gradient information to make smarter proposals, dramatically improving efficiency in high-dimensional problems. This is what Stan uses under the hood.</p></li>
 </ul>
 
 

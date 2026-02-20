@@ -233,8 +233,20 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./matching.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Matching</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./entropy-balancing.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Entropy Balancing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./doubly-robust.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Doubly Robust</span></a>
   </div>
 </li>
       </ul>
@@ -298,8 +310,41 @@ window.Quarto = {
 </section>
 <section id="the-vulnerability-functional-form" class="level3">
 <h3 class="anchored" data-anchor-id="the-vulnerability-functional-form">The vulnerability: functional form</h3>
-<p>Regression adjustment <strong>models the outcome</strong>. If the model is wrong, the estimate is biased — even when all confounders are observed. This is an <em>estimation</em> bias, not an identification failure.</p>
-<p>Compare this to <a href="ipw.html">IPW</a>, which models the <em>treatment assignment</em> instead. IPW doesn’t care how <span class="math inline">\(Y\)</span> relates to <span class="math inline">\(X\)</span> — it only needs the propensity score to be correct. Different models, different vulnerabilities.</p>
+<p>Regression adjustment <strong>models the outcome</strong> — it writes down a specific equation for how <span class="math inline">\(Y\)</span> relates to <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span>. That equation is the <strong>functional form</strong>:</p>
+<ul>
+<li><strong>Linear:</strong> <span class="math inline">\(Y = \alpha + \tau D + \beta X\)</span> — assumes <span class="math inline">\(Y\)</span> changes at a constant rate with <span class="math inline">\(X\)</span>. A straight line.</li>
+<li><strong>Quadratic:</strong> <span class="math inline">\(Y = \alpha + \tau D + \beta_1 X + \beta_2 X^2\)</span> — allows curvature.</li>
+<li><strong>Log:</strong> <span class="math inline">\(Y = \alpha + \tau D + \beta \log(X)\)</span> — assumes diminishing returns.</li>
+</ul>
+<p>When you run <code>lm(y ~ treat + x)</code>, you’ve chosen the linear form. If the truth is quadratic but you fit a line, the line can’t capture the curvature — and that misfit contaminates your estimate of <span class="math inline">\(\hat{\tau}\)</span>. The model is wrong, so the estimate is biased, even when all confounders are observed. This is an <em>estimation</em> bias, not an identification failure.</p>
+<p>Compare this to <a href="ipw.html">IPW</a>, which <strong>models the treatment assignment</strong> instead — it writes down an equation for <span class="math inline">\(P(D = 1 \mid X)\)</span>, not for <span class="math inline">\(Y\)</span>. IPW never touches the outcome. It just reweights the raw <span class="math inline">\(Y\)</span> values using the propensity score. So if the outcome-<span class="math inline">\(X\)</span> relationship is nonlinear, IPW doesn’t care — as long as the propensity score model is right.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>What it models</th>
+<th>What can go wrong</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Regression adjustment</strong></td>
+<td><span class="math inline">\(E[Y \mid X, D]\)</span> (the outcome)</td>
+<td>Wrong functional form for <span class="math inline">\(Y\)</span></td>
+</tr>
+<tr class="even">
+<td><strong><a href="ipw.html">IPW</a></strong></td>
+<td><span class="math inline">\(P(D=1 \mid X)\)</span> (the treatment)</td>
+<td>Wrong propensity score model</td>
+</tr>
+<tr class="odd">
+<td><strong><a href="doubly-robust.html">Doubly robust</a></strong></td>
+<td>Both</td>
+<td>Fails only if <em>both</em> are wrong</td>
+</tr>
+</tbody>
+</table>
+<p>Each method bets on getting one model right. <a href="doubly-robust.html">Doubly robust</a> estimation hedges by combining both — it only needs one to be correct.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 620
 
@@ -509,7 +554,7 @@ shinyApp(ui, server)</code></pre>
 <section id="the-bottom-line" class="level3">
 <h3 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h3>
 <p>Regression adjustment is the simplest and most common tool. It works great when the outcome model is correctly specified. But it’s <strong>fragile to functional form misspecification</strong> — fitting a line when the truth is curved introduces bias even when all confounders are observed.</p>
-<p>This is why alternatives like <a href="ipw.html">IPW</a> and <a href="entropy-balancing.html">entropy balancing</a> exist: they avoid modeling the outcome entirely. And <a href="https://en.wikipedia.org/wiki/Doubly_robust_estimation">doubly robust</a> methods hedge both bets.</p>
+<p>This is why alternatives like <a href="ipw.html">IPW</a> and <a href="entropy-balancing.html">entropy balancing</a> exist: they avoid modeling the outcome entirely. And <a href="doubly-robust.html">doubly robust</a> methods hedge both bets.</p>
 <hr>
 </section>
 <section id="did-you-know" class="level3">
@@ -931,7 +976,7 @@ shinyApp(ui, server)</code></pre>
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>© 2026 <a href="https://nencydhameja.com">Nency Dhameja</a> | <a href="../index.html">All Notes</a><br>Built with AI assistance · Inspired by my advisor, <a href="https://sites.google.com/site/slichterdavid/home">David Slichter</a></p>
+<p>© 2026 <a href="https://nencydhameja.com">Nency Dhameja</a> | <a href="../index.html">All Notes</a><br>Inspired by my advisor, <a href="https://sites.google.com/site/slichterdavid/home">David Slichter</a> · Developed with AI assistance</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

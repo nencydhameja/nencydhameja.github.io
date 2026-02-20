@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Measurement Error &amp; Attenuation Bias – Foundations of Statistical Inference</title>
+<title>Matching – Applied Causal Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -104,7 +104,6 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light">
@@ -116,7 +115,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./heteroskedasticity.html">Standard Errors &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./measurement-error.html">Measurement Error</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./regression-adjustment.html">Estimation Tools</a></li><li class="breadcrumb-item"><a href="./matching.html">Matching</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -131,7 +130,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Foundations of Statistical Inference</a> 
+      <a href="./">Applied Causal Inference</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -150,7 +149,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Probability &amp; Uncertainty</span></a>
+ <span class="menu-text">Framework</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -158,20 +157,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./foundations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Foundations</span></a>
+  <a href="./potential-outcomes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Potential Outcomes &amp; ATE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./variance-sd-se.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Variance, SD &amp; Standard Error</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./sampling-distribution.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Sampling Distribution</span></a>
+  <a href="./identification-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Identification vs Estimation</span></a>
   </div>
 </li>
       </ul>
@@ -179,7 +172,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">The Central Limit Theorem</span></a>
+ <span class="menu-text">Methods</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -187,14 +180,32 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./simulations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CLT Simulator</span></a>
+  <a href="./selection-observables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Selection on Observables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lln.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">LLN vs CLT</span></a>
+  <a href="./did.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Difference-in-Differences</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./iv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Instrumental Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rdd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regression Discontinuity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./synth.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Synthetic Control</span></a>
   </div>
 </li>
       </ul>
@@ -202,7 +213,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Inference</span></a>
+ <span class="menu-text">Estimation Tools</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -210,136 +221,32 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pvalues-ci.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">p-values &amp; Confidence Intervals</span></a>
+  <a href="./regression-adjustment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regression Adjustment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Bootstrap</span></a>
+  <a href="./ipw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">IPW</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./power.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Power, Alpha, Beta &amp; MDE</span></a>
+  <a href="./matching.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Matching</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./monte-carlo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Monte Carlo Experiments</span></a>
+  <a href="./entropy-balancing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropy Balancing</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./multiple-testing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Multiple Testing</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Regression</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./cef.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Regression &amp; the CEF</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./residuals.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Residuals &amp; Controls</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./fwl.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Frisch-Waugh-Lovell</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Standard Errors &amp; Diagnostics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./heteroskedasticity.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Heteroskedasticity</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./clustered-se.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Clustered SEs</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./measurement-error.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Measurement Error</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./bias-variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bias-Variance Tradeoff</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./degeneracy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">When Inference Breaks Down</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Causal Thinking</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./correlation-causation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">From Correlation to Causation</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">Bayesian Thinking</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./bayesian-updating.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bayesian Updating</span></a>
+  <a href="./doubly-robust.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Doubly Robust</span></a>
   </div>
 </li>
       </ul>
@@ -354,20 +261,14 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem">The problem</a>
+  <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
   <ul class="collapse">
-  <li><a href="#why-does-it-shrink-toward-zero" id="toc-why-does-it-shrink-toward-zero" class="nav-link" data-scroll-target="#why-does-it-shrink-toward-zero">Why does it shrink toward zero?</a></li>
-  </ul></li>
-  <li><a href="#simulation-1-watch-the-slope-attenuate" id="toc-simulation-1-watch-the-slope-attenuate" class="nav-link" data-scroll-target="#simulation-1-watch-the-slope-attenuate">Simulation 1: Watch the slope attenuate</a>
-  <ul class="collapse">
+  <li><a href="#types-of-matching" id="toc-types-of-matching" class="nav-link" data-scroll-target="#types-of-matching">Types of matching</a></li>
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
+  <li><a href="#the-vulnerability-match-quality" id="toc-the-vulnerability-match-quality" class="nav-link" data-scroll-target="#the-vulnerability-match-quality">The vulnerability: match quality</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
-  <li><a href="#simulation-2-attenuation-is-systematic-not-just-noisy" id="toc-simulation-2-attenuation-is-systematic-not-just-noisy" class="nav-link" data-scroll-target="#simulation-2-attenuation-is-systematic-not-just-noisy">Simulation 2: Attenuation is systematic, not just noisy</a>
-  <ul class="collapse">
-  <li><a href="#things-to-try-1" id="toc-things-to-try-1" class="nav-link" data-scroll-target="#things-to-try-1">Things to try</a></li>
-  </ul></li>
-  <li><a href="#measurement-error-in-y-vs-x" id="toc-measurement-error-in-y-vs-x" class="nav-link" data-scroll-target="#measurement-error-in-y-vs-x">Measurement error in Y vs X</a></li>
-  <li><a href="#what-can-you-do-about-it" id="toc-what-can-you-do-about-it" class="nav-link" data-scroll-target="#what-can-you-do-about-it">What can you do about it?</a></li>
+  <li><a href="#how-does-matching-compare-to-other-tools" id="toc-how-does-matching-compare-to-other-tools" class="nav-link" data-scroll-target="#how-does-matching-compare-to-other-tools">How does matching compare to other tools?</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -375,9 +276,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./heteroskedasticity.html">Standard Errors &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./measurement-error.html">Measurement Error</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./regression-adjustment.html">Estimation Tools</a></li><li class="breadcrumb-item"><a href="./matching.html">Matching</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Measurement Error &amp; Attenuation Bias</h1>
+<h1 class="title">Matching</h1>
 </div>
 
 
@@ -394,36 +295,80 @@ window.Quarto = {
 </header>
 
 
-<section id="the-problem" class="level2">
-<h2 class="anchored" data-anchor-id="the-problem">The problem</h2>
-<p>You want to estimate the effect of <span class="math inline">\(X^*\)</span> on <span class="math inline">\(Y\)</span>:</p>
-<p><span class="math display">\[Y_i = \alpha + \beta X_i^* + u_i\]</span></p>
-<p>But you don’t observe <span class="math inline">\(X^*\)</span> perfectly. Instead you observe <span class="math inline">\(X\)</span> with noise:</p>
-<p><span class="math display">\[X_i = X_i^* + \eta_i, \qquad \eta_i \sim (0, \sigma_\eta^2)\]</span></p>
-<p>where <span class="math inline">\(\eta\)</span> is <strong>measurement error</strong> — independent of <span class="math inline">\(X^*\)</span> and <span class="math inline">\(u\)</span>.</p>
-<p>When you run OLS on the mismeasured <span class="math inline">\(X\)</span>, you don’t get <span class="math inline">\(\beta\)</span>. You get:</p>
-<p><span class="math display">\[\hat{\beta}_{OLS} \xrightarrow{p} \beta \times \underbrace{\frac{\text{Var}(X^*)}{\text{Var}(X^*) + \sigma_\eta^2}}_{\lambda}\]</span></p>
-<p>That fraction <span class="math inline">\(\lambda\)</span> is always between 0 and 1. So the estimate is <strong>biased toward zero</strong>. This is <strong>attenuation bias</strong>.</p>
-<section id="why-does-it-shrink-toward-zero" class="level3">
-<h3 class="anchored" data-anchor-id="why-does-it-shrink-toward-zero">Why does it shrink toward zero?</h3>
-<p>Think of it this way. The measurement error adds random noise to <span class="math inline">\(X\)</span>. From OLS’s perspective, some of the variation in <span class="math inline">\(X\)</span> is real signal (correlated with <span class="math inline">\(Y\)</span>) and some is pure noise (uncorrelated with <span class="math inline">\(Y\)</span>). OLS can’t tell which is which, so it averages over both — diluting the estimated slope.</p>
-<p>More noise → more dilution → flatter slope.</p>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>The Oracle View.</strong> In these simulations, we know the true <span class="math inline">\(X^*\)</span> and we set <span class="math inline">\(\sigma_\eta\)</span> (the measurement error). We can compare the regression on true <span class="math inline">\(X^*\)</span> vs mismeasured <span class="math inline">\(X\)</span> side by side. In practice, you only observe <span class="math inline">\(X\)</span> — you never see <span class="math inline">\(X^*\)</span> and you don’t know how much noise <span class="math inline">\(\eta\)</span> adds. That’s what makes measurement error so insidious: you can’t tell it’s there just by looking at your data.</p>
-</div>
-</div>
-</div>
-<hr>
+<section id="the-idea" class="level2">
+<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
+<p>You want the causal effect of a treatment, and you believe <a href="selection-observables.html">selection on observables</a> holds — all confounders are observed. <strong>Matching</strong> implements this by finding, for each treated unit, a control unit that looks similar on covariates <span class="math inline">\(X\)</span>.</p>
+<p>The logic is simple: if two people have the same <span class="math inline">\(X\)</span>, and one got treated while the other didn’t, the difference in their outcomes estimates the treatment effect for that value of <span class="math inline">\(X\)</span>. Average across all matched pairs and you get the ATT.</p>
+<p><span class="math display">\[\hat{\tau}_{match} = \frac{1}{N_1} \sum_{i: D_i=1} \Big[ Y_i - Y_{j(i)} \Big]\]</span></p>
+<p>where <span class="math inline">\(j(i)\)</span> is the control unit matched to treated unit <span class="math inline">\(i\)</span>.</p>
+<section id="types-of-matching" class="level3">
+<h3 class="anchored" data-anchor-id="types-of-matching">Types of matching</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>How it matches</th>
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Exact</strong></td>
+<td>Identical X values</td>
+<td>No approximation error</td>
+<td>Infeasible with continuous or many covariates</td>
+</tr>
+<tr class="even">
+<td><strong>Nearest neighbor (on X)</strong></td>
+<td>Closest <span class="math inline">\(\|X_i - X_j\|\)</span></td>
+<td>Simple, intuitive</td>
+<td>Curse of dimensionality with many covariates</td>
+</tr>
+<tr class="odd">
+<td><strong>Nearest neighbor (on PS)</strong></td>
+<td>Closest <span class="math inline">\(\|e(X_i) - e(X_j)\|\)</span></td>
+<td>Reduces to 1D; Rosenbaum &amp; Rubin (1983)</td>
+<td>Inherits PS model risk</td>
+</tr>
+<tr class="even">
+<td><strong>Caliper</strong></td>
+<td>NN, but reject if distance <span class="math inline">\(&gt; c\)</span></td>
+<td>Drops bad matches</td>
+<td>Loses observations</td>
+</tr>
+<tr class="odd">
+<td><strong>Mahalanobis</strong></td>
+<td>Distance accounts for correlations</td>
+<td>Better than Euclidean for correlated X</td>
+<td>Still suffers in high dimensions</td>
+</tr>
+</tbody>
+</table>
 </section>
+<section id="assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
+<p>Same as all <a href="selection-observables.html">selection on observables</a> methods:</p>
+<ol type="1">
+<li><strong>Conditional independence (CIA):</strong> <span class="math inline">\(Y(0), Y(1) \perp D \mid X\)</span>. All confounders are observed.</li>
+<li><strong>Overlap (common support):</strong> <span class="math inline">\(0 &lt; P(D = 1 \mid X) &lt; 1\)</span>. For every treated unit, a comparable control exists.</li>
+<li><strong>SUTVA:</strong> no interference between units.</li>
+</ol>
 </section>
-<section id="simulation-1-watch-the-slope-attenuate" class="level2">
-<h2 class="anchored" data-anchor-id="simulation-1-watch-the-slope-attenuate">Simulation 1: Watch the slope attenuate</h2>
-<p>Increase the measurement error and watch the estimated slope shrink toward zero. The true relationship stays the same — only the noise changes.</p>
+<section id="the-vulnerability-match-quality" class="level3">
+<h3 class="anchored" data-anchor-id="the-vulnerability-match-quality">The vulnerability: match quality</h3>
+<p>Matching <strong>finds comparisons</strong> rather than modeling outcomes. But the quality of those comparisons depends on:</p>
+<ul>
+<li><strong>Overlap:</strong> if treated and control units live in different parts of the covariate space, the “nearest” neighbor may be far away. The match is bad and the estimate is biased.</li>
+<li><strong>Dimensionality:</strong> with many covariates, even the nearest neighbor can be quite distant (“curse of dimensionality”). This is why propensity score matching collapses <span class="math inline">\(X\)</span> to a single dimension.</li>
+</ul>
+<p>Compare this to <a href="regression-adjustment.html">regression adjustment</a>, which extrapolates using a model, and <a href="ipw.html">IPW</a>, which reweights instead of pairing. Each has different failure modes.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 650
 
@@ -436,332 +381,286 @@ ui &lt;- fluidPage(
       margin-top: 12px; font-size: 14px; line-height: 1.9;
     }
     .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
   "))),
 
   sidebarLayout(
     sidebarPanel(
       width = 3,
 
-      sliderInput("beta", "True slope (\u03b2):",
-                  min = 0.5, max = 3, value = 1.5, step = 0.1),
-
       sliderInput("n", "Sample size:",
-                  min = 50, max = 500, value = 200, step = 50),
+                  min = 200, max = 2000, value = 500, step = 100),
 
-      sliderInput("sigma_x", "SD of true X*:",
-                  min = 1, max = 5, value = 2, step = 0.5),
+      sliderInput("ate", "True ATE:",
+                  min = 0, max = 5, value = 2, step = 0.5),
 
-      sliderInput("sigma_u", "SD of outcome noise (u):",
-                  min = 0.5, max = 3, value = 1, step = 0.25),
+      sliderInput("confounding", "Confounding strength:",
+                  min = 0, max = 3, value = 1.5, step = 0.25),
 
-      sliderInput("sigma_eta", "Measurement error (\u03c3\u03b7):",
-                  min = 0, max = 5, value = 0, step = 0.25),
+      selectInput("match_type", "Matching method:",
+                  choices = c("NN on X" = "nn_x",
+                              "NN on propensity score" = "nn_ps",
+                              "Caliper (on X)" = "caliper")),
+
+      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
 
       uiOutput("results")
     ),
 
     mainPanel(
       width = 9,
-      plotOutput("scatter", height = "550px")
+      fluidRow(
+        column(6, plotOutput("match_plot", height = "420px")),
+        column(6, plotOutput("compare_plot", height = "420px"))
+      )
     )
   )
 )
 
 server &lt;- function(input, output, session) {
 
-  # True data — only regenerates when beta, n, sigma_x, sigma_u change
-  base &lt;- reactive({
-    n   &lt;- input$n
-    b   &lt;- input$beta
-    sx  &lt;- input$sigma_x
-    su  &lt;- input$sigma_u
+  dat &lt;- reactive({
+    input$go
+    n    &lt;- input$n
+    ate  &lt;- input$ate
+    conf &lt;- input$confounding
+    mtype &lt;- input$match_type
 
-    x_star &lt;- rnorm(n, 0, sx)
-    u      &lt;- rnorm(n, su)
-    y      &lt;- 2 + b * x_star + u
+    # Confounder
+    x &lt;- rnorm(n)
 
-    list(x_star = x_star, y = y, beta = b, sx = sx)
+    # Treatment depends on x
+    p_true &lt;- pnorm(conf * x)
+    treat &lt;- rbinom(n, 1, p_true)
+
+    # Outcome
+    y &lt;- 1 + 2 * x + ate * treat + rnorm(n)
+
+    idx_t &lt;- which(treat == 1)
+    idx_c &lt;- which(treat == 0)
+
+    # Propensity score (for PS matching)
+    ps &lt;- fitted(glm(treat ~ x, family = binomial))
+
+    # Matching
+    matched_j &lt;- integer(length(idx_t))
+    match_dist &lt;- numeric(length(idx_t))
+
+    if (mtype == "nn_x") {
+      for (k in seq_along(idx_t)) {
+        dists &lt;- abs(x[idx_t[k]] - x[idx_c])
+        best &lt;- which.min(dists)
+        matched_j[k] &lt;- idx_c[best]
+        match_dist[k] &lt;- dists[best]
+      }
+    } else if (mtype == "nn_ps") {
+      for (k in seq_along(idx_t)) {
+        dists &lt;- abs(ps[idx_t[k]] - ps[idx_c])
+        best &lt;- which.min(dists)
+        matched_j[k] &lt;- idx_c[best]
+        match_dist[k] &lt;- abs(x[idx_t[k]] - x[idx_c[best]])
+      }
+    } else {
+      # Caliper on X (caliper = 0.25 * sd(x))
+      cal &lt;- 0.25 * sd(x)
+      for (k in seq_along(idx_t)) {
+        dists &lt;- abs(x[idx_t[k]] - x[idx_c])
+        best &lt;- which.min(dists)
+        if (dists[best] &lt;= cal) {
+          matched_j[k] &lt;- idx_c[best]
+          match_dist[k] &lt;- dists[best]
+        } else {
+          matched_j[k] &lt;- NA
+          match_dist[k] &lt;- NA
+        }
+      }
+    }
+
+    # Matching estimate
+    valid &lt;- !is.na(matched_j)
+    n_matched &lt;- sum(valid)
+    if (n_matched &gt; 0) {
+      match_est &lt;- mean(y[idx_t[valid]] - y[matched_j[valid]])
+    } else {
+      match_est &lt;- NA
+    }
+    avg_dist &lt;- mean(match_dist[valid])
+
+    # Naive
+    naive &lt;- mean(y[treat == 1]) - mean(y[treat == 0])
+
+    # Regression adjustment
+    reg_est &lt;- coef(lm(y ~ treat + x))["treat"]
+
+    list(x = x, y = y, treat = treat, ps = ps,
+         idx_t = idx_t, idx_c = idx_c,
+         matched_j = matched_j, valid = valid,
+         match_est = match_est, naive = naive, reg_est = reg_est,
+         ate = ate, n_matched = n_matched, avg_dist = avg_dist,
+         mtype = mtype)
   })
 
-  # Measurement error applied on top — changes when eta slider moves
-  sim &lt;- reactive({
-    d   &lt;- base()
-    se  &lt;- input$sigma_eta
+  output$match_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
 
-    eta   &lt;- rnorm(length(d$x_star), 0, se)
-    x_obs &lt;- d$x_star + eta
+    plot(d$x, d$y, pch = 16, cex = 0.5,
+         col = ifelse(d$treat == 1, "#3498db40", "#e74c3c40"),
+         xlab = "X (confounder)", ylab = "Y (outcome)",
+         main = "Matched Pairs")
 
-    fit_true &lt;- lm(d$y ~ d$x_star)
-    fit_obs  &lt;- lm(d$y ~ x_obs)
+    # Draw match lines for a subset (first 30 valid matches)
+    valid_idx &lt;- which(d$valid)
+    show &lt;- valid_idx[seq_len(min(30, length(valid_idx)))]
 
-    lambda &lt;- d$sx^2 / (d$sx^2 + se^2)
+    for (k in show) {
+      i &lt;- d$idx_t[k]
+      j &lt;- d$matched_j[k]
+      segments(d$x[i], d$y[i], d$x[j], d$y[j],
+               col = "#9b59b680", lwd = 1)
+    }
 
-    list(x_star = d$x_star, x_obs = x_obs, y = d$y,
-         b_true = coef(fit_true)[2], b_obs = coef(fit_obs)[2],
-         beta = d$beta, lambda = lambda, sigma_eta = se)
+    # Re-draw matched points on top
+    for (k in show) {
+      i &lt;- d$idx_t[k]
+      j &lt;- d$matched_j[k]
+      points(d$x[i], d$y[i], pch = 16, cex = 0.7, col = "#3498db")
+      points(d$x[j], d$y[j], pch = 16, cex = 0.7, col = "#e74c3c")
+    }
+
+    n_show &lt;- length(show)
+    legend("topleft", bty = "n", cex = 0.8,
+           legend = c("Treated", "Control",
+                      paste0("Match link (", n_show, " shown)")),
+           col = c("#3498db", "#e74c3c", "#9b59b6"),
+           pch = c(16, 16, NA), lwd = c(NA, NA, 1.5))
   })
 
-  output$scatter &lt;- renderPlot({
-    d &lt;- sim()
+  output$compare_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 9, 3, 2))
 
-    par(mfrow = c(1, 2), mar = c(4.5, 4.5, 3.5, 1))
+    ests &lt;- c(d$reg_est, d$match_est, d$naive)
+    labels &lt;- c("Regression adj.", "Matching", "Naive")
+    cols &lt;- c("#3498db", "#9b59b6", "#e74c3c")
 
-    # Left: true X*
-    plot(d$x_star, d$y, pch = 16, cex = 0.6,
-         col = adjustcolor("#3498db", 0.5),
-         xlab = "True X*", ylab = "Y",
-         main = "Regression on true X*")
-    abline(lm(d$y ~ d$x_star), col = "#27ae60", lwd = 3)
-    mtext(paste0("Slope = ", round(d$b_true, 3)),
-          side = 3, line = 0, cex = 1.1, font = 2, col = "#27ae60")
+    valid_ests &lt;- !is.na(ests)
+    xlim &lt;- range(c(ests[valid_ests], d$ate))
+    pad  &lt;- max(diff(xlim) * 0.4, 0.5)
+    xlim &lt;- xlim + c(-pad, pad)
 
-    # Right: observed X with error
-    plot(d$x_obs, d$y, pch = 16, cex = 0.6,
-         col = adjustcolor("#e74c3c", 0.4),
-         xlab = "Observed X (with error)", ylab = "Y",
-         main = paste0("Regression on mismeasured X"))
-    abline(lm(d$y ~ d$x_obs), col = "#e74c3c", lwd = 3)
-    abline(a = coef(lm(d$y ~ d$x_star))[1],
-           b = d$beta, col = "#27ae60", lwd = 2, lty = 2)
-    mtext(paste0("Slope = ", round(d$b_obs, 3),
-                 "  (true = ", d$beta, ")"),
-          side = 3, line = 0, cex = 1.1, font = 2, col = "#e74c3c")
-    legend("topleft", bty = "n", cex = 0.85,
-           legend = c("OLS on mismeasured X", "True slope"),
-           col = c("#e74c3c", "#27ae60"), lwd = c(3, 2), lty = c(1, 2))
+    plot(ests, 1:3, pch = 19, cex = 2, col = cols,
+         xlim = xlim, ylim = c(0.5, 3.5),
+         yaxt = "n", xlab = "Estimated treatment effect",
+         ylab = "", main = "Estimator Comparison")
+    axis(2, at = 1:3, labels = labels, las = 1, cex.axis = 0.9)
+
+    abline(v = d$ate, lty = 2, col = "#2c3e50", lwd = 2)
+    text(d$ate, 3.45, paste0("True ATE = ", d$ate),
+         cex = 0.85, font = 2, col = "#2c3e50")
+
+    segments(d$ate, 1:3, ests, 1:3, col = cols, lwd = 2, lty = 2)
   })
 
   output$results &lt;- renderUI({
-    d &lt;- sim()
+    d &lt;- dat()
+    b_naive &lt;- d$naive - d$ate
+    b_match &lt;- if (!is.na(d$match_est)) d$match_est - d$ate else NA
+    b_reg   &lt;- d$reg_est - d$ate
+
+    match_class &lt;- if (!is.na(b_match) &amp;&amp; abs(b_match) &lt; abs(b_naive) * 0.5) "good" else "bad"
+    reg_class   &lt;- if (abs(b_reg) &lt; abs(b_naive) * 0.5) "good" else "bad"
+
+    method_label &lt;- switch(d$mtype,
+      nn_x    = "NN on X",
+      nn_ps   = "NN on propensity score",
+      caliper = "Caliper on X")
 
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;True \u03b2:&lt;/b&gt; ", d$beta, "&lt;br&gt;",
-        "&lt;b&gt;OLS on X*:&lt;/b&gt; ", round(d$b_true, 3), "&lt;br&gt;",
-        "&lt;b&gt;OLS on X:&lt;/b&gt; ", round(d$b_obs, 3), "&lt;br&gt;",
-        "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;Attenuation factor (\u03bb):&lt;/b&gt;&lt;br&gt;",
-        "Var(X*) / [Var(X*) + Var(\u03b7)]&lt;br&gt;",
-        "= ", round(d$lambda, 3), "&lt;br&gt;",
-        "&lt;b&gt;\u03b2 \u00d7 \u03bb = &lt;/b&gt;",
-        round(d$beta * d$lambda, 3)
+        "&lt;b&gt;Method:&lt;/b&gt; ", method_label, "&lt;br&gt;",
+        "&lt;b&gt;True ATE:&lt;/b&gt; ", d$ate, "&lt;br&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        "&lt;b&gt;Naive:&lt;/b&gt; &lt;span class='bad'&gt;", round(d$naive, 3), "&lt;/span&gt;",
+        " (bias: ", round(b_naive, 3), ")&lt;br&gt;",
+        "&lt;b&gt;Matching:&lt;/b&gt; &lt;span class='", match_class, "'&gt;",
+        if (!is.na(d$match_est)) round(d$match_est, 3) else "N/A",
+        "&lt;/span&gt;",
+        if (!is.na(b_match)) paste0(" (bias: ", round(b_match, 3), ")") else "", "&lt;br&gt;",
+        "&lt;b&gt;Reg. adj:&lt;/b&gt; &lt;span class='", reg_class, "'&gt;",
+        round(d$reg_est, 3), "&lt;/span&gt;",
+        " (bias: ", round(b_reg, 3), ")&lt;br&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        "&lt;b&gt;Pairs matched:&lt;/b&gt; ", d$n_matched, " / ", length(d$idx_t), "&lt;br&gt;",
+        "&lt;b&gt;Avg match distance:&lt;/b&gt; ",
+        if (!is.na(d$avg_dist)) round(d$avg_dist, 3) else "N/A"
       ))
     )
   })
 }
 
 shinyApp(ui, server)</code></pre>
+</section>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Start with <span class="math inline">\(\eta\)</span> = 0:</strong> both panels are identical. No measurement error, no bias.</li>
-<li><strong>Slowly increase <span class="math inline">\(\eta\)</span>:</strong> watch the right panel’s slope flatten. The cloud of points spreads horizontally (noise in X), so OLS “sees” a weaker relationship.</li>
-<li><strong><span class="math inline">\(\eta\)</span> = 5, SD of X* = 2:</strong> the attenuation factor drops to ~0.14. Your estimate is 86% too small.</li>
-<li><strong>Increase n:</strong> the slope doesn’t recover! Attenuation bias is not a small-sample problem — it persists no matter how much data you have. More data just gives you a more precise estimate of the <em>wrong</em> number.</li>
+<li><strong>NN on X, confounding = 1.5:</strong> matching works well. The purple lines connecting matched pairs are short — each treated unit finds a similar control. The matching estimate is close to the true ATE.</li>
+<li><strong>Switch to caliper:</strong> some treated units in the tails can’t find a close match and get dropped. “Pairs matched” drops below the total. The remaining matches are better quality (shorter distances).</li>
+<li><strong>Confounding = 3:</strong> treated and control units are far apart in X space. Match distances increase, match quality degrades, and the estimate gets noisier. This is the <strong>overlap problem</strong> — matching can’t fix it.</li>
+<li><strong>Small sample (n = 200) with high confounding:</strong> matching struggles because there aren’t enough control units in the right part of the covariate space. Regression adjustment extrapolates, which helps here but can hurt elsewhere (see the <a href="regression-adjustment.html">regression adjustment</a> page).</li>
+<li><strong>NN on propensity score:</strong> matches on the estimated <span class="math inline">\(e(X)\)</span> instead of <span class="math inline">\(X\)</span> directly. With one confounder, results are similar. The advantage appears with multiple covariates (not shown here).</li>
 </ul>
 <hr>
 </section>
 </section>
-<section id="simulation-2-attenuation-is-systematic-not-just-noisy" class="level2">
-<h2 class="anchored" data-anchor-id="simulation-2-attenuation-is-systematic-not-just-noisy">Simulation 2: Attenuation is systematic, not just noisy</h2>
-<p>Run 500 regressions, each with fresh measurement error. The distribution of slope estimates is centered <em>below</em> the true <span class="math inline">\(\beta\)</span> — it’s not random noise, it’s a systematic downward bias.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 550
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
-    }
-    .stats-box b { color: #2c3e50; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      sliderInput("beta2", "True slope (\u03b2):",
-                  min = 0.5, max = 3, value = 1.5, step = 0.1),
-
-      sliderInput("n2", "Sample size per run:",
-                  min = 50, max = 300, value = 100, step = 50),
-
-      sliderInput("sigma_eta2", "Measurement error (\u03c3\u03b7):",
-                  min = 0, max = 5, value = 2, step = 0.25),
-
-      sliderInput("n_sims", "Number of simulations:",
-                  min = 100, max = 1000, value = 500, step = 100),
-
-      uiOutput("results2")
-    ),
-
-    mainPanel(
-      width = 9,
-      plotOutput("mc_plot", height = "450px")
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  sim &lt;- reactive({
-    n     &lt;- input$n2
-    b     &lt;- input$beta2
-    se    &lt;- input$sigma_eta2
-    nsims &lt;- input$n_sims
-    sx    &lt;- 2
-
-    betas_true &lt;- numeric(nsims)
-    betas_obs  &lt;- numeric(nsims)
-
-    for (i in seq_len(nsims)) {
-      x_star &lt;- rnorm(n, 0, sx)
-      u      &lt;- rnorm(n)
-      y      &lt;- 2 + b * x_star + u
-
-      eta   &lt;- rnorm(n, 0, se)
-      x_obs &lt;- x_star + eta
-
-      betas_true[i] &lt;- coef(lm(y ~ x_star))[2]
-      betas_obs[i]  &lt;- coef(lm(y ~ x_obs))[2]
-    }
-
-    lambda &lt;- sx^2 / (sx^2 + se^2)
-
-    list(betas_true = betas_true, betas_obs = betas_obs,
-         beta = b, lambda = lambda)
-  })
-
-  output$mc_plot &lt;- renderPlot({
-    d &lt;- sim()
-
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    all_b &lt;- c(d$betas_true, d$betas_obs)
-    xlim  &lt;- range(all_b) + c(-0.1, 0.1)
-
-    # No-error distribution
-    hist(d$betas_true, breaks = 40,
-         col = adjustcolor("#27ae60", 0.5), border = "white",
-         main = "Distribution of slope estimates across simulations",
-         xlab = expression(hat(beta)), xlim = xlim,
-         freq = FALSE, cex.main = 1.3)
-
-    # With-error distribution
-    hist(d$betas_obs, breaks = 40,
-         col = adjustcolor("#e74c3c", 0.45), border = "white",
-         add = TRUE, freq = FALSE)
-
-    abline(v = d$beta, col = "#2c3e50", lwd = 2.5, lty = 2)
-    abline(v = d$beta * d$lambda, col = "#e74c3c", lwd = 2, lty = 3)
-    abline(v = mean(d$betas_obs), col = "#e74c3c", lwd = 1.5)
-
-    legend("topright", bty = "n", cex = 0.9,
-           legend = c(
-             paste0("No error (centered at \u03b2 = ", d$beta, ")"),
-             paste0("With error (centered at ", round(mean(d$betas_obs), 3), ")"),
-             paste0("Theory: \u03b2\u03bb = ", round(d$beta * d$lambda, 3))
-           ),
-           fill = c(adjustcolor("#27ae60", 0.5),
-                    adjustcolor("#e74c3c", 0.45), NA),
-           border = c("white", "white", NA),
-           col = c(NA, NA, "#e74c3c"),
-           lwd = c(NA, NA, 2), lty = c(NA, NA, 3))
-  })
-
-  output$results2 &lt;- renderUI({
-    d &lt;- sim()
-
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;True \u03b2:&lt;/b&gt; ", d$beta, "&lt;br&gt;",
-        "&lt;b&gt;Avg estimate (no error):&lt;/b&gt; ",
-        round(mean(d$betas_true), 3), "&lt;br&gt;",
-        "&lt;b&gt;Avg estimate (with error):&lt;/b&gt; ",
-        round(mean(d$betas_obs), 3), "&lt;br&gt;",
-        "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;Attenuation factor:&lt;/b&gt; ", round(d$lambda, 3), "&lt;br&gt;",
-        "&lt;b&gt;\u03b2 \u00d7 \u03bb:&lt;/b&gt; ",
-        round(d$beta * d$lambda, 3), "&lt;br&gt;",
-        "&lt;small&gt;Bias: ",
-        round(mean(d$betas_obs) - d$beta, 3), "&lt;/small&gt;"
-      ))
-    )
-  })
-}
-
-shinyApp(ui, server)</code></pre>
-<section id="things-to-try-1" class="level3">
-<h3 class="anchored" data-anchor-id="things-to-try-1">Things to try</h3>
-<ul>
-<li><strong><span class="math inline">\(\eta\)</span> = 0:</strong> both distributions overlap perfectly — no bias at all.</li>
-<li><strong><span class="math inline">\(\eta\)</span> = 2:</strong> the red distribution shifts left. The average slope is systematically below the truth.</li>
-<li><strong>Increase n to 300:</strong> the distributions get <em>narrower</em> (more precise) but the red one stays centered at the wrong value. Attenuation bias doesn’t go away with more data.</li>
-<li><strong>Compare theory vs simulation:</strong> the theoretical <span class="math inline">\(\beta\lambda\)</span> should closely match the average of the red distribution.</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="measurement-error-in-y-vs-x" class="level2">
-<h2 class="anchored" data-anchor-id="measurement-error-in-y-vs-x">Measurement error in Y vs X</h2>
-<p>A crucial asymmetry:</p>
+<section id="how-does-matching-compare-to-other-tools" class="level2">
+<h2 class="anchored" data-anchor-id="how-does-matching-compare-to-other-tools">How does matching compare to other tools?</h2>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr class="header">
-<th></th>
-<th><strong>Error in X</strong></th>
-<th><strong>Error in Y</strong></th>
+<th>Tool</th>
+<th>Strategy</th>
+<th>Vulnerability</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Bias?</strong></td>
-<td>Yes — toward zero</td>
-<td>No bias</td>
+<td><strong>Matching</strong></td>
+<td>Find similar units</td>
+<td>Bad matches when overlap is poor</td>
 </tr>
 <tr class="even">
-<td><strong>Precision?</strong></td>
-<td>Slightly worse</td>
-<td>Worse (larger SEs)</td>
+<td><strong><a href="regression-adjustment.html">Regression adj.</a></strong></td>
+<td>Model the outcome</td>
+<td>Wrong functional form</td>
 </tr>
 <tr class="odd">
-<td><strong>Goes away with more data?</strong></td>
-<td>No</td>
-<td>SEs shrink, but that’s just precision</td>
+<td><strong><a href="ipw.html">IPW</a></strong></td>
+<td>Reweight by propensity score</td>
+<td>Extreme weights</td>
+</tr>
+<tr class="even">
+<td><strong><a href="entropy-balancing.html">Entropy Balancing</a></strong></td>
+<td>Balance moments exactly</td>
+<td>Missing higher-order moments</td>
+</tr>
+<tr class="odd">
+<td><strong><a href="doubly-robust.html">Doubly Robust</a></strong></td>
+<td>Combine outcome model + PS</td>
+<td>Fails only if <em>both</em> models wrong</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Why the asymmetry?</strong> When <span class="math inline">\(Y\)</span> is measured with error, the noise goes into the residual — it’s just more <span class="math inline">\(u\)</span>. The slope is unbiased; you just estimate it less precisely. When <span class="math inline">\(X\)</span> is measured with error, the noise is in the <em>regressor</em>, which contaminates the covariance between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> and biases the slope.</p>
-<hr>
-</section>
-<section id="what-can-you-do-about-it" class="level2">
-<h2 class="anchored" data-anchor-id="what-can-you-do-about-it">What can you do about it?</h2>
-<ol type="1">
-<li><p><strong>Measure better.</strong> The best fix is reducing <span class="math inline">\(\sigma_\eta\)</span>. Use validated instruments, multiple measurements, averages of repeated measures.</p></li>
-<li><p><strong>Instrumental variables (IV).</strong> Find a variable <span class="math inline">\(Z\)</span> that predicts <span class="math inline">\(X^*\)</span> but isn’t contaminated by the measurement error. Two-stage least squares recovers the true <span class="math inline">\(\beta\)</span>.</p></li>
-<li><p><strong>Reliability ratio correction.</strong> OLS with measurement error shrinks the coefficient by the <strong>signal-to-noise ratio</strong> (also called the reliability ratio):</p></li>
-</ol>
-<p><span class="math display">\[\hat{\beta}_{OLS} \xrightarrow{p} \beta \cdot \underbrace{\frac{\text{Var}(X^*)}{\text{Var}(X^*) + \text{Var}(\eta)}}_{\text{SNR}}\]</span></p>
-<p>The SNR is always between 0 and 1. High noise (<span class="math inline">\(\text{Var}(\eta) \gg \text{Var}(X^*)\)</span>) → SNR near 0 → coefficient crushed toward zero. Low noise → SNR near 1 → barely any attenuation. If you know the SNR, you can correct: <span class="math inline">\(\hat{\beta}_{corrected} = \hat{\beta}_{OLS} / \text{SNR}\)</span>.</p>
-<ol start="4" type="1">
-<li><strong>Multiple indicators.</strong> If you have two noisy measures of <span class="math inline">\(X^*\)</span> with independent errors, their covariance identifies <span class="math inline">\(\text{Var}(X^*)\)</span>, letting you compute <span class="math inline">\(\lambda\)</span> directly.</li>
-</ol>
+<p>All rely on the same identification assumption (CIA). They differ in how they use <span class="math inline">\(X\)</span> to make the comparison fair.</p>
 <hr>
 </section>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
 <ul>
-<li><p>The attenuation bias formula was derived by <strong>Karl Pearson</strong> in the early 1900s, making it one of the oldest results in regression theory. Pearson was studying the relationship between fathers’ and sons’ heights and realized that imprecise measurements of height would make the hereditary correlation look weaker than it really was.</p></li>
-<li><p>In economics, <strong>Jerry Hausman</strong> (2001) showed that measurement error in survey data on income and consumption can attenuate elasticity estimates by 30–50%. Studies using administrative tax records (with near-zero measurement error) consistently find larger effects than survey-based studies — exactly what attenuation bias predicts.</p></li>
-<li><p>The <strong>errors-in-variables</strong> literature distinguishes between <em>classical</em> measurement error (what we covered: <span class="math inline">\(X = X^* + \eta\)</span> with <span class="math inline">\(\eta\)</span> independent of <span class="math inline">\(X^*\)</span>) and <em>non-classical</em> error (where the error depends on the true value). Non-classical error can bias in either direction, not just toward zero. Mean-reverting error in test scores is a common example.</p></li>
+<li><p><strong>Abadie &amp; Imbens (2006)</strong> showed that nearest-neighbor matching is <strong>not <span class="math inline">\(\sqrt{n}\)</span>-consistent</strong> — its convergence rate is slower than parametric estimators when matching on more than one continuous covariate. The bias from imperfect matches doesn’t vanish fast enough. Their <strong>bias-corrected matching</strong> estimator fixes this by running a regression within each matched pair to adjust for the remaining covariate difference.</p></li>
+<li><p><strong>Propensity score matching</strong> was proposed by <strong>Rosenbaum &amp; Rubin (1983)</strong>, who proved that matching on the scalar <span class="math inline">\(e(X) = P(D=1 \mid X)\)</span> is sufficient for removing confounding — you don’t need to match on every covariate separately. This was a breakthrough because it collapsed the high-dimensional matching problem to one dimension.</p></li>
+<li><p><strong>King &amp; Nielsen (2019)</strong> argued that propensity score matching can paradoxically <em>increase</em> imbalance and model dependence. Their critique centers on the fact that exact PS matches don’t guarantee covariate balance — two units with the same propensity score can have very different covariate values.</p></li>
 </ul>
 
 
