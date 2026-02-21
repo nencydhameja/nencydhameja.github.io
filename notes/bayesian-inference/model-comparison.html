@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Bayesian Shrinkage – Introduction to Bayesian Thinking</title>
+<title>Model Comparison – Introduction to Bayesian Thinking</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -116,7 +151,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./shrinkage.html">Shrinkage</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./model-comparison.html">Putting It Together</a></li><li class="breadcrumb-item"><a href="./model-comparison.html">Model Comparison</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -161,7 +196,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./shrinkage.html" class="sidebar-item-text sidebar-link active">
+  <a href="./shrinkage.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Shrinkage</span></a>
   </div>
 </li>
@@ -211,7 +246,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./model-comparison.html" class="sidebar-item-text sidebar-link">
+  <a href="./model-comparison.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Model Comparison</span></a>
   </div>
 </li>
@@ -239,23 +274,23 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-is-shrinkage" id="toc-what-is-shrinkage" class="nav-link active" data-scroll-target="#what-is-shrinkage">What is shrinkage?</a>
+  <li><a href="#which-model-is-better" id="toc-which-model-is-better" class="nav-link active" data-scroll-target="#which-model-is-better">Which model is better?</a></li>
+  <li><a href="#connection-to-bic" id="toc-connection-to-bic" class="nav-link" data-scroll-target="#connection-to-bic">Connection to BIC</a>
   <ul class="collapse">
+  <li><a href="#simulation-does-x-belong-in-the-model" id="toc-simulation-does-x-belong-in-the-model" class="nav-link" data-scroll-target="#simulation-does-x-belong-in-the-model">Simulation: Does X belong in the model?</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
-  <li><a href="#why-does-this-work" id="toc-why-does-this-work" class="nav-link" data-scroll-target="#why-does-this-work">Why does this work?</a>
-  <ul class="collapse">
-  <li><a href="#where-you-see-this-in-practice" id="toc-where-you-see-this-in-practice" class="nav-link" data-scroll-target="#where-you-see-this-in-practice">Where you see this in practice</a></li>
-  </ul></li>
+  <li><a href="#in-stata" id="toc-in-stata" class="nav-link" data-scroll-target="#in-stata">In Stata</a></li>
+  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./model-comparison.html">Putting It Together</a></li><li class="breadcrumb-item"><a href="./model-comparison.html">Model Comparison</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Bayesian Shrinkage</h1>
+<h1 class="title">Model Comparison</h1>
 </div>
 
 
@@ -272,13 +307,125 @@ window.Quarto = {
 </header>
 
 
-<section id="what-is-shrinkage" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-shrinkage">What is shrinkage?</h2>
-<p>Imagine you’re a baseball scout. It’s early in the season and you need to estimate the true batting average for 50 players, each with only 20 at-bats.</p>
-<p>One player went 10-for-20 (.500). Another went 1-for-20 (.050). Are those their true abilities? Probably not — with only 20 at-bats, there’s a ton of noise. The .500 hitter probably got lucky. The .050 hitter probably got unlucky.</p>
-<p><strong>Shrinkage</strong> says: don’t take the raw numbers at face value. Pull (“shrink”) every estimate toward the overall average. The more uncertain you are about an individual estimate, the more you pull.</p>
-<p><span class="math display">\[\hat{\theta}_i^{shrunk} = w_i \cdot \bar{\theta}_{overall} + (1 - w_i) \cdot \hat{\theta}_i^{raw}\]</span></p>
-<p>This is the core of <strong>empirical Bayes</strong> and <strong>James-Stein estimation</strong>. It sounds like you’re adding bias — and you are — but you’re reducing variance by more than enough to compensate. The result: better predictions overall.</p>
+<section id="which-model-is-better" class="level2">
+<h2 class="anchored" data-anchor-id="which-model-is-better">Which model is better?</h2>
+<p>You’ve built a model — maybe a regression with three predictors. A colleague suggests dropping one. Frequentists compare models with F-tests or likelihood ratio tests. Bayesians have their own answer: <strong>Bayes factors</strong>.</p>
+<p>The idea is simple. Compute the <strong>marginal likelihood</strong> of each model — how well the model predicted the data, averaging over all possible parameter values — and take the ratio:</p>
+<p><span class="math display">\[
+\text{BF}_{10} = \frac{p(\mathbf{y} \mid M_1)}{p(\mathbf{y} \mid M_0)}
+\]</span></p>
+<p>where <span class="math inline">\(p(\mathbf{y} \mid M_k) = \int p(\mathbf{y} \mid \theta, M_k) \, p(\theta \mid M_k) \, d\theta\)</span>.</p>
+<p>A Bayes factor of 10 means the data are 10 times more likely under <span class="math inline">\(M_1\)</span> than <span class="math inline">\(M_0\)</span>. Unlike a p-value, Bayes factors can support the null — a BF of 0.1 means the data favor <span class="math inline">\(M_0\)</span> by a factor of 10.</p>
+<p>To get <strong>posterior odds</strong> between models, multiply the Bayes factor by your <strong>prior odds</strong>:</p>
+<p><span class="math display">\[
+\underbrace{\frac{P(M_1 \mid \mathbf{y})}{P(M_0 \mid \mathbf{y})}}_{\text{posterior odds}}
+= \underbrace{\frac{P(M_1)}{P(M_0)}}_{\text{prior odds}}
+\times \underbrace{\text{BF}_{10}}_{\text{Bayes factor}}
+\]</span></p>
+<p>With equal prior odds (50/50 between models), the posterior odds equal the Bayes factor.</p>
+<p><strong>Jeffreys’ interpretation scale:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>BF₁₀</th>
+<th>Evidence for M₁</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1–3</td>
+<td>Anecdotal</td>
+</tr>
+<tr class="even">
+<td>3–10</td>
+<td>Substantial</td>
+</tr>
+<tr class="odd">
+<td>10–30</td>
+<td>Strong</td>
+</tr>
+<tr class="even">
+<td>30–100</td>
+<td>Very strong</td>
+</tr>
+<tr class="odd">
+<td>&gt; 100</td>
+<td>Decisive</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Reading BF &lt; 1:</strong> If BF₁₀ = 0.05, that’s the same as BF₀₁ = 20 — strong evidence <em>for</em> the null. Bayes factors are symmetric: just flip the ratio.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="connection-to-bic" class="level2">
+<h2 class="anchored" data-anchor-id="connection-to-bic">Connection to BIC</h2>
+<p>Computing the marginal likelihood exactly requires integrating over the prior — often intractable. But there’s a shortcut you already have.</p>
+<p>The <strong>Bayesian Information Criterion</strong> (BIC) approximates the log marginal likelihood:</p>
+<p><span class="math display">\[
+\text{BIC} \approx -2 \log p(\mathbf{y} \mid M) + \text{const}
+\]</span></p>
+<p>So the difference in BIC between two models approximates the log Bayes factor:</p>
+<p><span class="math display">\[
+\Delta\text{BIC} = \text{BIC}_1 - \text{BIC}_0 \approx -2 \log \text{BF}_{10}
+\]</span></p>
+<p>which gives us:</p>
+<p><span class="math display">\[
+\text{BF}_{10} \approx \exp\!\left(-\tfrac{\Delta\text{BIC}}{2}\right)
+\]</span></p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>BIC is the lazy Bayes factor.</strong> It doesn’t require specifying priors — it uses an implicit “unit information prior.” You already get BIC from Stata’s <code>estat ic</code>. To approximate a Bayes factor, just compute <span class="math inline">\(\exp(-\Delta\text{BIC}/2)\)</span>.</p>
+</div>
+</div>
+</div>
+<p><strong>Three approaches compared:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Approach</th>
+<th>Favors M₁ when</th>
+<th>Can support null?</th>
+<th>Requires prior?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>p-value</td>
+<td>p &lt; 0.05</td>
+<td>No (only rejects)</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td>BIC</td>
+<td>ΔBIC &lt; 0</td>
+<td>Yes (ΔBIC &gt; 0)</td>
+<td>No (implicit)</td>
+</tr>
+<tr class="odd">
+<td>Bayes factor</td>
+<td>BF₁₀ &gt; 1</td>
+<td>Yes (BF₁₀ &lt; 1)</td>
+<td>Yes (explicit)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<section id="simulation-does-x-belong-in-the-model" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-does-x-belong-in-the-model">Simulation: Does X belong in the model?</h3>
+<p>Compare two models: <span class="math inline">\(M_0\)</span>: <span class="math inline">\(y = \text{noise}\)</span> vs <span class="math inline">\(M_1\)</span>: <span class="math inline">\(y = \beta x + \text{noise}\)</span>. The Bayes factor tells you whether the data support including <span class="math inline">\(x\)</span>.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 620
 
@@ -291,24 +438,28 @@ ui &lt;- fluidPage(
       margin-top: 12px; font-size: 14px; line-height: 1.9;
     }
     .stats-box b { color: #2c3e50; }
-    .good { color: #27ae60; font-weight: bold; }
-    .bad  { color: #e74c3c; font-weight: bold; }
+    .good  { color: #27ae60; font-weight: bold; }
+    .bad   { color: #e74c3c; font-weight: bold; }
+    .muted { color: #7f8c8d; }
   "))),
 
   sidebarLayout(
     sidebarPanel(
       width = 3,
 
-      sliderInput("n_players", "Number of players:",
-                  min = 10, max = 100, value = 40, step = 5),
+      sliderInput("true_beta", HTML("True &amp;beta;:"),
+                  min = 0, max = 3, value = 0, step = 0.25),
 
-      sliderInput("at_bats", "At-bats per player:",
-                  min = 5, max = 200, value = 20, step = 5),
+      sliderInput("prior_sd", "Prior SD on &amp;beta;:",
+                  min = 0.1, max = 5, value = 1, step = 0.1),
 
-      sliderInput("true_spread", "True talent spread (SD):",
-                  min = 0.01, max = 0.08, value = 0.03, step = 0.005),
+      sliderInput("n", "Sample size (n):",
+                  min = 10, max = 300, value = 50, step = 10),
 
-      actionButton("go", "New season", class = "btn-primary", width = "100%"),
+      sliderInput("sigma", HTML("Noise (&amp;sigma;):"),
+                  min = 0.5, max = 5, value = 2, step = 0.5),
+
+      actionButton("go", "New data", class = "btn-primary", width = "100%"),
 
       uiOutput("results")
     ),
@@ -316,8 +467,8 @@ ui &lt;- fluidPage(
     mainPanel(
       width = 9,
       fluidRow(
-        column(6, plotOutput("shrinkage_plot", height = "420px")),
-        column(6, plotOutput("mse_plot", height = "420px"))
+        column(6, plotOutput("density_plot", height = "420px")),
+        column(6, plotOutput("bf_plot", height = "420px"))
       )
     )
   )
@@ -327,184 +478,209 @@ server &lt;- function(input, output, session) {
 
   dat &lt;- reactive({
     input$go
-    k   &lt;- input$n_players
-    n   &lt;- input$at_bats
-    tau &lt;- input$true_spread
+    true_beta &lt;- input$true_beta
+    prior_sd  &lt;- input$prior_sd
+    n         &lt;- input$n
+    sigma     &lt;- input$sigma
 
-    # True batting averages (centered around .260)
-    true_avg &lt;- rnorm(k, mean = 0.260, sd = tau)
-    true_avg &lt;- pmin(pmax(true_avg, 0.100), 0.400)
+    # Generate data
+    x &lt;- rnorm(n, 0, 1)
+    y &lt;- true_beta * x + rnorm(n, 0, sigma)
 
-    # Observed: hits in n at-bats
-    hits &lt;- rbinom(k, size = n, prob = true_avg)
-    obs_avg &lt;- hits / n
+    # OLS estimate under M1
+    beta_ols &lt;- sum(x * y) / sum(x^2)
+    se_ols   &lt;- sigma / sqrt(sum(x^2))
 
-    # Grand mean
-    grand_mean &lt;- mean(obs_avg)
+    # Bayesian posterior under M1 (prior: beta ~ N(0, prior_sd^2))
+    prior_prec &lt;- 1 / prior_sd^2
+    data_prec  &lt;- sum(x^2) / sigma^2
+    post_prec  &lt;- prior_prec + data_prec
+    post_sd    &lt;- 1 / sqrt(post_prec)
+    post_mean  &lt;- (0 * prior_prec + beta_ols * data_prec) / post_prec
 
-    # Empirical Bayes shrinkage
-    # Estimate prior variance from data
-    obs_var &lt;- var(obs_avg)
-    sampling_var &lt;- mean(obs_avg * (1 - obs_avg) / n)
-    prior_var &lt;- max(obs_var - sampling_var, 0.0001)
+    # Savage-Dickey BF: BF10 = prior density at 0 / posterior density at 0
+    prior_at_0 &lt;- dnorm(0, 0, prior_sd)
+    post_at_0  &lt;- dnorm(0, post_mean, post_sd)
+    bf_10      &lt;- prior_at_0 / post_at_0
 
-    # Shrinkage weight (toward grand mean)
-    w &lt;- sampling_var / (sampling_var + prior_var)
-    shrunk_avg &lt;- w * grand_mean + (1 - w) * obs_avg
+    # BIC approximation
+    # Under M0: RSS = sum(y^2); Under M1: RSS = sum((y - beta_ols*x)^2)
+    rss0 &lt;- sum(y^2)
+    rss1 &lt;- sum((y - beta_ols * x)^2)
+    bic0 &lt;- n * log(rss0 / n) + 0 * log(n)
+    bic1 &lt;- n * log(rss1 / n) + 1 * log(n)
+    delta_bic &lt;- bic1 - bic0
+    bf_bic    &lt;- exp(-delta_bic / 2)
 
-    # MSE
-    mse_raw   &lt;- mean((obs_avg - true_avg)^2)
-    mse_shrunk &lt;- mean((shrunk_avg - true_avg)^2)
+    # Jeffreys label
+    abf &lt;- bf_10
+    label &lt;- if (abf &gt; 100) "Decisive for M1"
+             else if (abf &gt; 30) "Very strong for M1"
+             else if (abf &gt; 10) "Strong for M1"
+             else if (abf &gt; 3) "Substantial for M1"
+             else if (abf &gt; 1) "Anecdotal for M1"
+             else if (abf &gt; 1/3) "Anecdotal for M0"
+             else if (abf &gt; 1/10) "Substantial for M0"
+             else if (abf &gt; 1/30) "Strong for M0"
+             else if (abf &gt; 1/100) "Very strong for M0"
+             else "Decisive for M0"
 
-    # Future performance (another n at-bats from true ability)
-    future_hits &lt;- rbinom(k, size = n, prob = true_avg)
-    future_avg  &lt;- future_hits / n
-
-    pred_err_raw   &lt;- mean((obs_avg - future_avg)^2)
-    pred_err_shrunk &lt;- mean((shrunk_avg - future_avg)^2)
-
-    list(true_avg = true_avg, obs_avg = obs_avg, shrunk_avg = shrunk_avg,
-         grand_mean = grand_mean, w = w,
-         mse_raw = mse_raw, mse_shrunk = mse_shrunk,
-         pred_err_raw = pred_err_raw, pred_err_shrunk = pred_err_shrunk,
-         k = k, n = n)
+    list(x = x, y = y, beta_ols = beta_ols, se_ols = se_ols,
+         prior_sd = prior_sd, post_mean = post_mean, post_sd = post_sd,
+         prior_at_0 = prior_at_0, post_at_0 = post_at_0,
+         bf_10 = bf_10, delta_bic = delta_bic, bf_bic = bf_bic,
+         label = label, true_beta = true_beta)
   })
 
-  output$shrinkage_plot &lt;- renderPlot({
+  output$density_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    ord &lt;- order(d$obs_avg)
+    # Plot range
+    xlim &lt;- c(min(-3 * d$prior_sd, d$post_mean - 4 * d$post_sd),
+              max(3 * d$prior_sd, d$post_mean + 4 * d$post_sd))
+    x_seq &lt;- seq(xlim[1], xlim[2], length.out = 400)
 
-    plot(d$obs_avg[ord], seq_along(ord), pch = 16, col = "#e74c3c",
-         xlab = "Batting average", ylab = "Player (sorted by raw avg)",
-         main = "Shrinkage in Action",
-         xlim = range(c(d$obs_avg, d$shrunk_avg, d$true_avg)))
+    prior_y &lt;- dnorm(x_seq, 0, d$prior_sd)
+    post_y  &lt;- dnorm(x_seq, d$post_mean, d$post_sd)
 
-    points(d$shrunk_avg[ord], seq_along(ord), pch = 17, col = "#3498db")
-    points(d$true_avg[ord], seq_along(ord), pch = 4, col = "#27ae60", cex = 0.8)
+    ylim &lt;- c(0, max(c(prior_y, post_y)) * 1.2)
 
-    # Draw arrows from raw to shrunk
-    arrows(d$obs_avg[ord], seq_along(ord),
-           d$shrunk_avg[ord], seq_along(ord),
-           length = 0.05, col = "#bdc3c780", lwd = 1)
+    plot(NULL, xlim = xlim, ylim = ylim,
+         xlab = expression(beta), ylab = "Density",
+         main = "Savage-Dickey: Prior vs Posterior at \u03b2 = 0")
 
-    # Grand mean
-    abline(v = d$grand_mean, lty = 2, col = "gray50", lwd = 1.5)
+    # Prior (red dashed)
+    lines(x_seq, prior_y, col = "#e74c3c", lwd = 2, lty = 2)
 
-    legend("bottomright", bty = "n", cex = 0.8,
-           legend = c("Raw average", "Shrunk estimate",
-                      "True ability", "Grand mean"),
-           col = c("#e74c3c", "#3498db", "#27ae60", "gray50"),
-           pch = c(16, 17, 4, NA),
-           lty = c(NA, NA, NA, 2), lwd = c(NA, NA, NA, 1.5))
+    # Posterior (blue filled)
+    polygon(c(x_seq, rev(x_seq)), c(post_y, rep(0, length(x_seq))),
+            col = "#3498db30", border = NA)
+    lines(x_seq, post_y, col = "#3498db", lwd = 2.5)
+
+    # Mark densities at beta = 0
+    segments(0, 0, 0, d$prior_at_0, col = "#e74c3c", lwd = 2, lty = 3)
+    points(0, d$prior_at_0, pch = 16, col = "#e74c3c", cex = 1.5)
+
+    segments(0, 0, 0, d$post_at_0, col = "#3498db", lwd = 2, lty = 3)
+    points(0, d$post_at_0, pch = 16, col = "#3498db", cex = 1.5)
+
+    # Labels
+    text(0, d$prior_at_0, pos = 4, cex = 0.8, col = "#e74c3c",
+         labels = paste0("Prior(0) = ", round(d$prior_at_0, 3)))
+    text(0, d$post_at_0, pos = 4, cex = 0.8, col = "#3498db",
+         labels = paste0("Post(0) = ", round(d$post_at_0, 3)))
+
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c("Prior", "Posterior"),
+           col = c("#e74c3c", "#3498db"),
+           lwd = c(2, 2.5), lty = c(2, 1))
   })
 
-  output$mse_plot &lt;- renderPlot({
+  output$bf_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 6, 3, 1))
 
-    vals &lt;- c(d$mse_raw, d$mse_shrunk, d$pred_err_raw, d$pred_err_shrunk)
-    cols &lt;- c("#e74c3c", "#3498db", "#e74c3c80", "#3498db80")
-    labels &lt;- c("Raw\nvs truth", "Shrunk\nvs truth",
-                "Raw\nvs future", "Shrunk\nvs future")
+    log_bf  &lt;- log10(d$bf_10)
+    log_bic &lt;- log10(d$bf_bic)
 
-    bp &lt;- barplot(vals, col = cols, border = NA,
-                  names.arg = labels, cex.names = 0.8,
-                  main = "Mean Squared Error",
-                  ylab = "MSE", las = 1)
-    text(bp, vals + max(vals) * 0.03, round(vals, 5), cex = 0.8)
+    vals &lt;- c(log_bf, log_bic)
+    xlim &lt;- range(c(vals, -2.5, 2.5))
+    xlim &lt;- c(min(xlim[1], -2.5), max(xlim[2], 2.5))
 
-    pct1 &lt;- round((1 - d$mse_shrunk / d$mse_raw) * 100, 0)
-    pct2 &lt;- round((1 - d$pred_err_shrunk / d$pred_err_raw) * 100, 0)
+    bp &lt;- barplot(vals, horiz = TRUE,
+                  names.arg = c("Bayes Factor", "BIC approx"),
+                  col = c("#3498db", "#f39c12"),
+                  xlim = xlim, las = 1, border = NA,
+                  main = expression("log"[10] * "(BF"[10] * ")"),
+                  xlab = expression("log"[10] * "(BF"[10] * ")"))
 
-    mtext(paste0("Shrinkage reduces estimation error by ~", pct1, "%"),
-          side = 1, line = 3.5, cex = 0.85, col = "#2c3e50")
+    # Jeffreys reference lines
+    abline(v = 0, lty = 1, col = "#2c3e50", lwd = 1.5)
+    ref_vals &lt;- c(log10(3), log10(10), log10(30), log10(100),
+                  -log10(3), -log10(10), -log10(30), -log10(100))
+    ref_labs &lt;- c("3", "10", "30", "100", "1/3", "1/10", "1/30", "1/100")
+
+    for (i in seq_along(ref_vals)) {
+      if (ref_vals[i] &gt;= xlim[1] &amp;&amp; ref_vals[i] &lt;= xlim[2]) {
+        abline(v = ref_vals[i], lty = 3, col = "#bdc3c7")
+      }
+    }
+
+    # Label regions
+    text(xlim[2] * 0.85, mean(bp), "Favors M1 \u2192", cex = 0.8, col = "#27ae60")
+    text(xlim[1] * 0.85, mean(bp), "\u2190 Favors M0", cex = 0.8, col = "#e74c3c")
   })
 
   output$results &lt;- renderUI({
     d &lt;- dat()
-    pct_est &lt;- round((1 - d$mse_shrunk / d$mse_raw) * 100, 1)
-    pct_pred &lt;- round((1 - d$pred_err_shrunk / d$pred_err_raw) * 100, 1)
+    label_class &lt;- if (d$bf_10 &gt;= 3) "good"
+                   else if (d$bf_10 &lt;= 1/3) "bad"
+                   else "muted"
 
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;Shrinkage weight:&lt;/b&gt; ", round(d$w * 100, 1),
-        "% toward grand mean&lt;br&gt;",
-        "&lt;b&gt;Grand mean:&lt;/b&gt; ", round(d$grand_mean, 3), "&lt;br&gt;",
+        "&lt;b&gt;BF\u2081\u2080:&lt;/b&gt; ", round(d$bf_10, 3), "&lt;br&gt;",
+        "&lt;b&gt;log\u2081\u2080(BF):&lt;/b&gt; ", round(log10(d$bf_10), 3), "&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;MSE (raw):&lt;/b&gt; ", round(d$mse_raw, 5), "&lt;br&gt;",
-        "&lt;b&gt;MSE (shrunk):&lt;/b&gt; &lt;span class='good'&gt;",
-        round(d$mse_shrunk, 5), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;b&gt;Improvement:&lt;/b&gt; &lt;span class='good'&gt;", pct_est, "%&lt;/span&gt;&lt;br&gt;",
+        "&lt;b&gt;\u0394BIC:&lt;/b&gt; ", round(d$delta_bic, 2), "&lt;br&gt;",
+        "&lt;b&gt;BIC-approx BF:&lt;/b&gt; ", round(d$bf_bic, 3), "&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;Prediction error (raw):&lt;/b&gt; ", round(d$pred_err_raw, 5), "&lt;br&gt;",
-        "&lt;b&gt;Prediction error (shrunk):&lt;/b&gt; &lt;span class='good'&gt;",
-        round(d$pred_err_shrunk, 5), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;b&gt;Improvement:&lt;/b&gt; &lt;span class='good'&gt;", pct_pred, "%&lt;/span&gt;"
+        "&lt;b&gt;Verdict:&lt;/b&gt; &lt;span class='", label_class, "'&gt;",
+        d$label, "&lt;/span&gt;"
       ))
     )
   })
 }
 
 shinyApp(ui, server)</code></pre>
+</section>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>At-bats = 5:</strong> extreme noise. Raw averages are all over the place (some players show .000 or .600). Shrinkage pulls them heavily toward the mean — and the green crosses (true ability) confirm the shrunk estimates are closer.</li>
-<li><strong>At-bats = 200:</strong> lots of data per player. Shrinkage is minimal because the raw averages are already precise. <strong>With enough data, shrinkage vanishes.</strong></li>
-<li><strong>Look at the MSE bars:</strong> shrinkage almost always wins, especially with small samples. It also predicts future performance better.</li>
-<li><strong>True talent spread = 0.01</strong> (everyone is similar): shrinkage is aggressive because individual differences are small relative to noise.</li>
-<li><strong>True talent spread = 0.08</strong> (wide range of talent): shrinkage is lighter because individual differences are real, not noise.</li>
+<li><strong>True β = 0 (null is true):</strong> the Bayes factor favors <span class="math inline">\(M_0\)</span>. Unlike a p-value that can only “fail to reject,” the BF actively supports the null.</li>
+<li><strong>True β = 2:</strong> the BF strongly favors <span class="math inline">\(M_1\)</span>. Increase n to make the evidence decisive.</li>
+<li><strong>Wide prior (prior SD = 5):</strong> even when β is truly nonzero, a very wide prior penalizes <span class="math inline">\(M_1\)</span>. The prior spreads probability over implausible values, wasting “predictive budget.” This is <strong>Lindley’s paradox</strong>: a vague Bayesian can reject a true effect.</li>
+<li><strong>Narrow prior (prior SD = 0.5) centered at 0:</strong> a tight prior makes <span class="math inline">\(M_1\)</span> more efficient — if the truth is near 0, <span class="math inline">\(M_1\)</span> predicts nearly as well as <span class="math inline">\(M_0\)</span>.</li>
+<li><strong>Watch the left panel:</strong> the Savage-Dickey ratio is literally prior density at 0 divided by posterior density at 0. When the posterior shifts away from 0, the denominator shrinks and the BF grows.</li>
+<li><strong>Compare BF and BIC:</strong> they usually agree in direction but the magnitudes differ. BIC is a large-sample approximation, so they converge with bigger n.</li>
 </ul>
 <hr>
 </section>
 </section>
-<section id="why-does-this-work" class="level2">
-<h2 class="anchored" data-anchor-id="why-does-this-work">Why does this work?</h2>
-<p>It seems wrong to move estimates <em>away</em> from the data. But consider what happens without shrinkage:</p>
-<ul>
-<li>Players who got lucky are <strong>overestimated</strong></li>
-<li>Players who got unlucky are <strong>underestimated</strong></li>
-<li>These errors don’t cancel — they inflate the overall MSE</li>
-</ul>
-<p>Shrinkage dampens both overestimates <em>and</em> underestimates simultaneously. The small bias it introduces (pulling everyone toward the mean) is more than offset by the massive reduction in variance. This is the <strong>bias-variance tradeoff</strong> in action.</p>
-<section id="where-you-see-this-in-practice" class="level3">
-<h3 class="anchored" data-anchor-id="where-you-see-this-in-practice">Where you see this in practice</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Method</th>
-<th>What gets shrunk</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Ridge regression</strong></td>
-<td>Coefficients toward zero</td>
-</tr>
-<tr class="even">
-<td><strong>LASSO</strong></td>
-<td>Coefficients toward zero (with selection)</td>
-</tr>
-<tr class="odd">
-<td><strong>Random effects models</strong></td>
-<td>Group means toward grand mean</td>
-</tr>
-<tr class="even">
-<td><strong>Empirical Bayes</strong></td>
-<td>Individual estimates toward overall mean</td>
-</tr>
-<tr class="odd">
-<td><strong>Bayesian priors</strong></td>
-<td>Posteriors toward prior mean</td>
-</tr>
-</tbody>
-</table>
-<p>They all share the same logic: when you have many noisy estimates, borrowing strength across them improves every single one.</p>
-
-
+<section id="in-stata" class="level2">
+<h2 class="anchored" data-anchor-id="in-stata">In Stata</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>* Fit <span class="kw">two</span> competing models</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>bayes: <span class="kw">reg</span> <span class="fu">y</span> x1 <span class="kw">x2</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>bayesstats <span class="kw">ic</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>bayes: <span class="kw">reg</span> <span class="fu">y</span> x1</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>bayesstats <span class="kw">ic</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>* Compare DIC/WAIC across models</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>* Lower DIC <span class="kw">or</span> WAIC = better predictive <span class="kw">fit</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>* ΔDIC works like ΔBIC: bigger gap = stronger preference</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Quick BIC-based Bayes factor:</strong> Run frequentist models, use <code>estat ic</code> to get BIC, then compute <code>display exp(-(BIC1 - BIC0)/2)</code> for an approximate Bayes factor. No MCMC needed.</p>
+</div>
+</div>
+</div>
+<hr>
 </section>
+<section id="did-you-know" class="level2">
+<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
+<ul>
+<li><p><strong>Jeffreys (1961)</strong> proposed the interpretation scale for Bayes factors in <em>Theory of Probability</em>. His categories — anecdotal, substantial, strong, very strong, decisive — remain the standard reference, though some Bayesians caution against rigid thresholds (just as with p = 0.05).</p></li>
+<li><p><strong>Lindley’s paradox (1957):</strong> with a sufficiently large sample, a vague prior can lead the Bayes factor to favor the null even when the p-value is tiny. The resolution: the BF is sensitive to the <em>spread</em> of the prior, not just its center. A prior of <span class="math inline">\(N(0, 1000^2)\)</span> says you think β could be anywhere from -3000 to 3000 — that’s a real claim, and the data punish it.</p></li>
+<li><p><strong>Kass &amp; Raftery (1995)</strong> wrote the definitive review of Bayes factors, proposing modified guidelines and advocating BIC as a practical approximation. Their paper remains one of the most cited in Bayesian statistics.</p></li>
+</ul>
+
+
 </section>
 
 </main> <!-- /main -->

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Bayesian Shrinkage – Introduction to Bayesian Thinking</title>
+<title>Application: Returns to Education – Introduction to Bayesian Thinking</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -116,7 +151,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./shrinkage.html">Shrinkage</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./model-comparison.html">Putting It Together</a></li><li class="breadcrumb-item"><a href="./application.html">Application: Returns to Education</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -161,7 +196,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./shrinkage.html" class="sidebar-item-text sidebar-link active">
+  <a href="./shrinkage.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Shrinkage</span></a>
   </div>
 </li>
@@ -223,7 +258,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./application.html" class="sidebar-item-text sidebar-link">
+  <a href="./application.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Application: Returns to Education</span></a>
   </div>
 </li>
@@ -239,23 +274,23 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-is-shrinkage" id="toc-what-is-shrinkage" class="nav-link active" data-scroll-target="#what-is-shrinkage">What is shrinkage?</a>
+  <li><a href="#putting-it-all-together-returns-to-education" id="toc-putting-it-all-together-returns-to-education" class="nav-link active" data-scroll-target="#putting-it-all-together-returns-to-education">Putting it all together: returns to education</a>
   <ul class="collapse">
+  <li><a href="#simulation-full-bayesian-workflow" id="toc-simulation-full-bayesian-workflow" class="nav-link" data-scroll-target="#simulation-full-bayesian-workflow">Simulation: Full Bayesian workflow</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
-  <li><a href="#why-does-this-work" id="toc-why-does-this-work" class="nav-link" data-scroll-target="#why-does-this-work">Why does this work?</a>
-  <ul class="collapse">
-  <li><a href="#where-you-see-this-in-practice" id="toc-where-you-see-this-in-practice" class="nav-link" data-scroll-target="#where-you-see-this-in-practice">Where you see this in practice</a></li>
-  </ul></li>
+  <li><a href="#the-stata-workflow" id="toc-the-stata-workflow" class="nav-link" data-scroll-target="#the-stata-workflow">The Stata workflow</a></li>
+  <li><a href="#what-did-we-learn" id="toc-what-did-we-learn" class="nav-link" data-scroll-target="#what-did-we-learn">What did we learn?</a></li>
+  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./model-comparison.html">Putting It Together</a></li><li class="breadcrumb-item"><a href="./application.html">Application: Returns to Education</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Bayesian Shrinkage</h1>
+<h1 class="title">Application: Returns to Education</h1>
 </div>
 
 
@@ -272,15 +307,31 @@ window.Quarto = {
 </header>
 
 
-<section id="what-is-shrinkage" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-shrinkage">What is shrinkage?</h2>
-<p>Imagine you’re a baseball scout. It’s early in the season and you need to estimate the true batting average for 50 players, each with only 20 at-bats.</p>
-<p>One player went 10-for-20 (.500). Another went 1-for-20 (.050). Are those their true abilities? Probably not — with only 20 at-bats, there’s a ton of noise. The .500 hitter probably got lucky. The .050 hitter probably got unlucky.</p>
-<p><strong>Shrinkage</strong> says: don’t take the raw numbers at face value. Pull (“shrink”) every estimate toward the overall average. The more uncertain you are about an individual estimate, the more you pull.</p>
-<p><span class="math display">\[\hat{\theta}_i^{shrunk} = w_i \cdot \bar{\theta}_{overall} + (1 - w_i) \cdot \hat{\theta}_i^{raw}\]</span></p>
-<p>This is the core of <strong>empirical Bayes</strong> and <strong>James-Stein estimation</strong>. It sounds like you’re adding bias — and you are — but you’re reducing variance by more than enough to compensate. The result: better predictions overall.</p>
+<section id="putting-it-all-together-returns-to-education" class="level2">
+<h2 class="anchored" data-anchor-id="putting-it-all-together-returns-to-education">Putting it all together: returns to education</h2>
+<p>You’ve learned the pieces — <a href="bayes-theorem.html">Bayes’ theorem</a>, <a href="priors-posteriors.html">priors and posteriors</a>, <a href="shrinkage.html">shrinkage</a>, <a href="mcmc.html">MCMC</a>, <a href="bayesian-regression.html">Bayesian regression</a>. Now let’s use them on a real question.</p>
+<p><strong>What’s the causal return to an extra year of education on wages?</strong></p>
+<p>This is one of the most studied questions in labor economics. The standard approach uses the <strong>Mincer equation</strong>:</p>
+<p><span class="math display">\[
+\log(\text{wage}) = \beta_0 + \beta_1 \cdot \text{educ} + \beta_2 \cdot \text{exper} + \beta_3 \cdot \text{exper}^2 + \varepsilon
+\]</span></p>
+<p>We’ll simulate data from this model and walk through the full Bayesian workflow: estimate, interpret, check sensitivity, and compare to OLS.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>What the literature says:</strong> Estimates of the return to education typically range from 5% to 15% per year (β₁ ≈ 0.05–0.15 in log points). Card (1999) found ~10% using instrumental variables. We’ll use this as our prior information.</p>
+</div>
+</div>
+</div>
+<hr>
+<section id="simulation-full-bayesian-workflow" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-full-bayesian-workflow">Simulation: Full Bayesian workflow</h3>
+<p>Walk through all five steps. The left panel shows the posterior for the education coefficient with the prior and OLS estimate. The right panel shows how the posterior shifts as you change the prior strength.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 620
+#| viewerHeight: 680
 
 library(shiny)
 
@@ -288,27 +339,34 @@ ui &lt;- fluidPage(
   tags$head(tags$style(HTML("
     .stats-box {
       background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
+      margin-top: 12px; font-size: 13px; line-height: 1.8;
     }
     .stats-box b { color: #2c3e50; }
-    .good { color: #27ae60; font-weight: bold; }
-    .bad  { color: #e74c3c; font-weight: bold; }
+    .good  { color: #27ae60; font-weight: bold; }
+    .bad   { color: #e74c3c; font-weight: bold; }
   "))),
 
   sidebarLayout(
     sidebarPanel(
       width = 3,
 
-      sliderInput("n_players", "Number of players:",
-                  min = 10, max = 100, value = 40, step = 5),
+      tags$h5("Data"),
+      sliderInput("n", "Sample size (n):",
+                  min = 30, max = 1000, value = 200, step = 10),
 
-      sliderInput("at_bats", "At-bats per player:",
-                  min = 5, max = 200, value = 20, step = 5),
+      sliderInput("true_beta", HTML("True &amp;beta;&lt;sub&gt;educ&lt;/sub&gt;:"),
+                  min = 0.01, max = 0.20, value = 0.10, step = 0.01),
 
-      sliderInput("true_spread", "True talent spread (SD):",
-                  min = 0.01, max = 0.08, value = 0.03, step = 0.005),
+      tags$hr(),
+      tags$h5("Prior"),
 
-      actionButton("go", "New season", class = "btn-primary", width = "100%"),
+      sliderInput("prior_mean", HTML("Prior mean for &amp;beta;&lt;sub&gt;educ&lt;/sub&gt;:"),
+                  min = 0, max = 0.20, value = 0.10, step = 0.01),
+
+      sliderInput("prior_sd", HTML("Prior SD for &amp;beta;&lt;sub&gt;educ&lt;/sub&gt;:"),
+                  min = 0.005, max = 0.10, value = 0.03, step = 0.005),
+
+      actionButton("go", "New data", class = "btn-primary", width = "100%"),
 
       uiOutput("results")
     ),
@@ -316,8 +374,8 @@ ui &lt;- fluidPage(
     mainPanel(
       width = 9,
       fluidRow(
-        column(6, plotOutput("shrinkage_plot", height = "420px")),
-        column(6, plotOutput("mse_plot", height = "420px"))
+        column(6, plotOutput("posterior_plot", height = "440px")),
+        column(6, plotOutput("sensitivity_plot", height = "440px"))
       )
     )
   )
@@ -327,184 +385,284 @@ server &lt;- function(input, output, session) {
 
   dat &lt;- reactive({
     input$go
-    k   &lt;- input$n_players
-    n   &lt;- input$at_bats
-    tau &lt;- input$true_spread
+    n          &lt;- input$n
+    true_beta  &lt;- input$true_beta
+    prior_mean &lt;- input$prior_mean
+    prior_sd   &lt;- input$prior_sd
 
-    # True batting averages (centered around .260)
-    true_avg &lt;- rnorm(k, mean = 0.260, sd = tau)
-    true_avg &lt;- pmin(pmax(true_avg, 0.100), 0.400)
+    # Simulate Mincer equation
+    educ  &lt;- round(rnorm(n, 13, 2.5))   # years of education ~13 mean
+    educ  &lt;- pmax(educ, 8)               # floor at 8 years
+    exper &lt;- round(pmax(rnorm(n, 15, 8), 0))  # years of experience
+    sigma &lt;- 0.4                          # residual SD in log wages
 
-    # Observed: hits in n at-bats
-    hits &lt;- rbinom(k, size = n, prob = true_avg)
-    obs_avg &lt;- hits / n
+    log_wage &lt;- 1.0 + true_beta * educ + 0.03 * exper - 0.0005 * exper^2 +
+                rnorm(n, 0, sigma)
 
-    # Grand mean
-    grand_mean &lt;- mean(obs_avg)
+    # OLS: regress log_wage on educ, exper, exper^2
+    X &lt;- cbind(1, educ, exper, exper^2)
+    XtX_inv &lt;- solve(t(X) %*% X)
+    beta_ols &lt;- as.numeric(XtX_inv %*% t(X) %*% log_wage)
+    resid &lt;- log_wage - X %*% beta_ols
+    s2 &lt;- sum(resid^2) / (n - 4)
+    se_ols &lt;- sqrt(s2 * diag(XtX_inv))
 
-    # Empirical Bayes shrinkage
-    # Estimate prior variance from data
-    obs_var &lt;- var(obs_avg)
-    sampling_var &lt;- mean(obs_avg * (1 - obs_avg) / n)
-    prior_var &lt;- max(obs_var - sampling_var, 0.0001)
+    # Extract education coefficient (index 2)
+    b_ols  &lt;- beta_ols[2]
+    se_b   &lt;- se_ols[2]
 
-    # Shrinkage weight (toward grand mean)
-    w &lt;- sampling_var / (sampling_var + prior_var)
-    shrunk_avg &lt;- w * grand_mean + (1 - w) * obs_avg
+    # Bayesian posterior (conjugate, focusing on educ coeff)
+    prior_prec &lt;- 1 / prior_sd^2
+    data_prec  &lt;- 1 / se_b^2
+    post_prec  &lt;- prior_prec + data_prec
+    post_sd    &lt;- 1 / sqrt(post_prec)
+    post_mean  &lt;- (prior_mean * prior_prec + b_ols * data_prec) / post_prec
 
-    # MSE
-    mse_raw   &lt;- mean((obs_avg - true_avg)^2)
-    mse_shrunk &lt;- mean((shrunk_avg - true_avg)^2)
+    w_prior &lt;- prior_prec / post_prec
+    w_data  &lt;- data_prec / post_prec
 
-    # Future performance (another n at-bats from true ability)
-    future_hits &lt;- rbinom(k, size = n, prob = true_avg)
-    future_avg  &lt;- future_hits / n
+    # CrI
+    cri_lo &lt;- qnorm(0.025, post_mean, post_sd)
+    cri_hi &lt;- qnorm(0.975, post_mean, post_sd)
 
-    pred_err_raw   &lt;- mean((obs_avg - future_avg)^2)
-    pred_err_shrunk &lt;- mean((shrunk_avg - future_avg)^2)
+    # CI
+    ci_lo &lt;- b_ols - 1.96 * se_b
+    ci_hi &lt;- b_ols + 1.96 * se_b
 
-    list(true_avg = true_avg, obs_avg = obs_avg, shrunk_avg = shrunk_avg,
-         grand_mean = grand_mean, w = w,
-         mse_raw = mse_raw, mse_shrunk = mse_shrunk,
-         pred_err_raw = pred_err_raw, pred_err_shrunk = pred_err_shrunk,
-         k = k, n = n)
+    # P(beta &gt; 0 | data)
+    p_positive &lt;- 1 - pnorm(0, post_mean, post_sd)
+
+    # P(beta &gt; 0.05 | data)
+    p_above_05 &lt;- 1 - pnorm(0.05, post_mean, post_sd)
+
+    # Sensitivity: how posterior mean changes with prior SD
+    prior_sd_grid &lt;- seq(0.005, 0.15, length.out = 100)
+    sens_means &lt;- numeric(length(prior_sd_grid))
+    sens_lo    &lt;- numeric(length(prior_sd_grid))
+    sens_hi    &lt;- numeric(length(prior_sd_grid))
+
+    for (i in seq_along(prior_sd_grid)) {
+      pp &lt;- 1 / prior_sd_grid[i]^2
+      posp &lt;- pp + data_prec
+      pm &lt;- (prior_mean * pp + b_ols * data_prec) / posp
+      ps &lt;- 1 / sqrt(posp)
+      sens_means[i] &lt;- pm
+      sens_lo[i] &lt;- qnorm(0.025, pm, ps)
+      sens_hi[i] &lt;- qnorm(0.975, pm, ps)
+    }
+
+    list(educ = educ, log_wage = log_wage, exper = exper,
+         b_ols = b_ols, se_b = se_b, ci_lo = ci_lo, ci_hi = ci_hi,
+         prior_mean = prior_mean, prior_sd = prior_sd,
+         post_mean = post_mean, post_sd = post_sd,
+         cri_lo = cri_lo, cri_hi = cri_hi,
+         w_prior = w_prior, w_data = w_data,
+         p_positive = p_positive, p_above_05 = p_above_05,
+         true_beta = true_beta, sigma = sigma,
+         prior_sd_grid = prior_sd_grid, sens_means = sens_means,
+         sens_lo = sens_lo, sens_hi = sens_hi)
   })
 
-  output$shrinkage_plot &lt;- renderPlot({
+  output$posterior_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    ord &lt;- order(d$obs_avg)
+    # Range for plotting
+    all_means &lt;- c(d$prior_mean, d$b_ols, d$post_mean)
+    all_sds   &lt;- c(d$prior_sd, d$se_b, d$post_sd)
+    xlim &lt;- range(c(all_means - 3.5 * all_sds, all_means + 3.5 * all_sds))
+    x_seq &lt;- seq(xlim[1], xlim[2], length.out = 400)
 
-    plot(d$obs_avg[ord], seq_along(ord), pch = 16, col = "#e74c3c",
-         xlab = "Batting average", ylab = "Player (sorted by raw avg)",
-         main = "Shrinkage in Action",
-         xlim = range(c(d$obs_avg, d$shrunk_avg, d$true_avg)))
+    prior_y &lt;- dnorm(x_seq, d$prior_mean, d$prior_sd)
+    lik_y   &lt;- dnorm(x_seq, d$b_ols, d$se_b)
+    post_y  &lt;- dnorm(x_seq, d$post_mean, d$post_sd)
 
-    points(d$shrunk_avg[ord], seq_along(ord), pch = 17, col = "#3498db")
-    points(d$true_avg[ord], seq_along(ord), pch = 4, col = "#27ae60", cex = 0.8)
+    ylim &lt;- c(0, max(c(prior_y, lik_y, post_y)) * 1.15)
 
-    # Draw arrows from raw to shrunk
-    arrows(d$obs_avg[ord], seq_along(ord),
-           d$shrunk_avg[ord], seq_along(ord),
-           length = 0.05, col = "#bdc3c780", lwd = 1)
+    plot(NULL, xlim = xlim, ylim = ylim,
+         xlab = expression(beta[educ]),
+         ylab = "Density",
+         main = expression("Posterior for " * beta[educ]))
 
-    # Grand mean
-    abline(v = d$grand_mean, lty = 2, col = "gray50", lwd = 1.5)
+    # Prior (red dashed)
+    lines(x_seq, prior_y, col = "#e74c3c", lwd = 2, lty = 2)
 
-    legend("bottomright", bty = "n", cex = 0.8,
-           legend = c("Raw average", "Shrunk estimate",
-                      "True ability", "Grand mean"),
-           col = c("#e74c3c", "#3498db", "#27ae60", "gray50"),
-           pch = c(16, 17, 4, NA),
-           lty = c(NA, NA, NA, 2), lwd = c(NA, NA, NA, 1.5))
+    # Likelihood (gray dotted)
+    lines(x_seq, lik_y, col = "gray50", lwd = 2, lty = 3)
+
+    # Posterior (blue filled)
+    polygon(c(x_seq, rev(x_seq)), c(post_y, rep(0, length(x_seq))),
+            col = "#3498db30", border = NA)
+    lines(x_seq, post_y, col = "#3498db", lwd = 2.5)
+
+    # True value
+    abline(v = d$true_beta, lty = 2, col = "#27ae60", lwd = 1.5)
+
+    # CrI bracket
+    arrows(d$cri_lo, max(post_y) * 0.05, d$cri_hi, max(post_y) * 0.05,
+           code = 3, angle = 90, length = 0.05, lwd = 2, col = "#3498db")
+    text(d$post_mean, max(post_y) * 0.12, "95% CrI", cex = 0.75,
+         col = "#3498db", font = 2)
+
+    legend("topright", bty = "n", cex = 0.8,
+           legend = c("Prior", "Likelihood (OLS)",
+                      "Posterior", expression("True " * beta[educ])),
+           col = c("#e74c3c", "gray50", "#3498db", "#27ae60"),
+           lwd = c(2, 2, 2.5, 1.5),
+           lty = c(2, 3, 1, 2))
   })
 
-  output$mse_plot &lt;- renderPlot({
+  output$sensitivity_plot &lt;- renderPlot({
     d &lt;- dat()
-    par(mar = c(4.5, 6, 3, 1))
+    par(mar = c(4.5, 4.5, 3, 1))
 
-    vals &lt;- c(d$mse_raw, d$mse_shrunk, d$pred_err_raw, d$pred_err_shrunk)
-    cols &lt;- c("#e74c3c", "#3498db", "#e74c3c80", "#3498db80")
-    labels &lt;- c("Raw\nvs truth", "Shrunk\nvs truth",
-                "Raw\nvs future", "Shrunk\nvs future")
+    ylim &lt;- range(c(d$sens_lo, d$sens_hi, d$b_ols, d$true_beta))
 
-    bp &lt;- barplot(vals, col = cols, border = NA,
-                  names.arg = labels, cex.names = 0.8,
-                  main = "Mean Squared Error",
-                  ylab = "MSE", las = 1)
-    text(bp, vals + max(vals) * 0.03, round(vals, 5), cex = 0.8)
+    plot(d$prior_sd_grid, d$sens_means, type = "l",
+         lwd = 2.5, col = "#3498db",
+         xlab = expression("Prior SD for " * beta[educ]),
+         ylab = expression("Posterior mean of " * beta[educ]),
+         main = "Sensitivity to Prior Strength",
+         ylim = ylim)
 
-    pct1 &lt;- round((1 - d$mse_shrunk / d$mse_raw) * 100, 0)
-    pct2 &lt;- round((1 - d$pred_err_shrunk / d$pred_err_raw) * 100, 0)
+    # CrI band
+    polygon(c(d$prior_sd_grid, rev(d$prior_sd_grid)),
+            c(d$sens_lo, rev(d$sens_hi)),
+            col = "#3498db15", border = NA)
+    lines(d$prior_sd_grid, d$sens_lo, col = "#3498db50", lty = 2)
+    lines(d$prior_sd_grid, d$sens_hi, col = "#3498db50", lty = 2)
 
-    mtext(paste0("Shrinkage reduces estimation error by ~", pct1, "%"),
-          side = 1, line = 3.5, cex = 0.85, col = "#2c3e50")
+    # OLS reference
+    abline(h = d$b_ols, col = "#e74c3c", lwd = 1.5, lty = 3)
+
+    # True value
+    abline(h = d$true_beta, col = "#27ae60", lwd = 1.5, lty = 2)
+
+    # Prior mean reference
+    abline(h = d$prior_mean, col = "#f39c12", lwd = 1.5, lty = 3)
+
+    # Current prior SD
+    abline(v = d$prior_sd, col = "#2c3e50", lwd = 1, lty = 3)
+    points(d$prior_sd, d$post_mean, pch = 16, col = "#2c3e50", cex = 1.5)
+
+    legend("bottomright", bty = "n", cex = 0.8,
+           legend = c("Posterior mean", "95% CrI",
+                      "OLS estimate", expression("True " * beta),
+                      "Prior mean", "Current prior SD"),
+           col = c("#3498db", "#3498db50", "#e74c3c",
+                   "#27ae60", "#f39c12", "#2c3e50"),
+           lwd = c(2.5, 1.5, 1.5, 1.5, 1.5, 1),
+           lty = c(1, 2, 3, 2, 3, 3),
+           pch = c(NA, NA, NA, NA, NA, 16))
   })
 
   output$results &lt;- renderUI({
     d &lt;- dat()
-    pct_est &lt;- round((1 - d$mse_shrunk / d$mse_raw) * 100, 1)
-    pct_pred &lt;- round((1 - d$pred_err_shrunk / d$pred_err_raw) * 100, 1)
 
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;Shrinkage weight:&lt;/b&gt; ", round(d$w * 100, 1),
-        "% toward grand mean&lt;br&gt;",
-        "&lt;b&gt;Grand mean:&lt;/b&gt; ", round(d$grand_mean, 3), "&lt;br&gt;",
+        "&lt;b&gt;OLS:&lt;/b&gt; ", round(d$b_ols, 4),
+        " [", round(d$ci_lo, 4), ", ", round(d$ci_hi, 4), "]&lt;br&gt;",
+        "&lt;b&gt;Posterior:&lt;/b&gt; ", round(d$post_mean, 4),
+        " [", round(d$cri_lo, 4), ", ", round(d$cri_hi, 4), "]&lt;br&gt;",
+        "&lt;b&gt;True:&lt;/b&gt; ", d$true_beta, "&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;MSE (raw):&lt;/b&gt; ", round(d$mse_raw, 5), "&lt;br&gt;",
-        "&lt;b&gt;MSE (shrunk):&lt;/b&gt; &lt;span class='good'&gt;",
-        round(d$mse_shrunk, 5), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;b&gt;Improvement:&lt;/b&gt; &lt;span class='good'&gt;", pct_est, "%&lt;/span&gt;&lt;br&gt;",
+        "&lt;b&gt;Prior weight:&lt;/b&gt; ", round(d$w_prior * 100, 1), "%&lt;br&gt;",
+        "&lt;b&gt;Data weight:&lt;/b&gt; ", round(d$w_data * 100, 1), "%&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;Prediction error (raw):&lt;/b&gt; ", round(d$pred_err_raw, 5), "&lt;br&gt;",
-        "&lt;b&gt;Prediction error (shrunk):&lt;/b&gt; &lt;span class='good'&gt;",
-        round(d$pred_err_shrunk, 5), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;b&gt;Improvement:&lt;/b&gt; &lt;span class='good'&gt;", pct_pred, "%&lt;/span&gt;"
+        "&lt;b&gt;P(&amp;beta; &gt; 0 | data):&lt;/b&gt; ",
+        round(d$p_positive, 4), "&lt;br&gt;",
+        "&lt;b&gt;P(&amp;beta; &gt; 0.05 | data):&lt;/b&gt; ",
+        round(d$p_above_05, 4)
       ))
     )
   })
 }
 
 shinyApp(ui, server)</code></pre>
+</section>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>At-bats = 5:</strong> extreme noise. Raw averages are all over the place (some players show .000 or .600). Shrinkage pulls them heavily toward the mean — and the green crosses (true ability) confirm the shrunk estimates are closer.</li>
-<li><strong>At-bats = 200:</strong> lots of data per player. Shrinkage is minimal because the raw averages are already precise. <strong>With enough data, shrinkage vanishes.</strong></li>
-<li><strong>Look at the MSE bars:</strong> shrinkage almost always wins, especially with small samples. It also predicts future performance better.</li>
-<li><strong>True talent spread = 0.01</strong> (everyone is similar): shrinkage is aggressive because individual differences are small relative to noise.</li>
-<li><strong>True talent spread = 0.08</strong> (wide range of talent): shrinkage is lighter because individual differences are real, not noise.</li>
+<li><strong>Strong correct prior (prior mean = 0.10, prior SD = 0.02, true β = 0.10):</strong> the CrI is tighter than the OLS CI. Incorporating good prior information genuinely improves precision. This is the Bayesian advantage.</li>
+<li><strong>Wrong prior + small n (prior mean = 0.02, true β = 0.10, n = 30):</strong> the posterior is pulled toward 0.02 — the prior biases the estimate. Now increase n to 500 — the data overwhelm the wrong prior.</li>
+<li><strong>Large n (n = 1000):</strong> the posterior and OLS converge regardless of the prior. The right panel shows the sensitivity curve flattening — the prior SD barely matters.</li>
+<li><strong>P(β &gt; 0 | data):</strong> this direct probability statement is impossible with frequentist methods. A 95% CI of [0.03, 0.12] doesn’t tell you the probability that β &gt; 0. The posterior does.</li>
+<li><strong>Right panel insight:</strong> as prior SD increases (prior gets vaguer), the posterior mean converges to OLS. The x-axis is “how much you trust the prior” and the curve shows the bias-precision tradeoff.</li>
 </ul>
 <hr>
 </section>
 </section>
-<section id="why-does-this-work" class="level2">
-<h2 class="anchored" data-anchor-id="why-does-this-work">Why does this work?</h2>
-<p>It seems wrong to move estimates <em>away</em> from the data. But consider what happens without shrinkage:</p>
-<ul>
-<li>Players who got lucky are <strong>overestimated</strong></li>
-<li>Players who got unlucky are <strong>underestimated</strong></li>
-<li>These errors don’t cancel — they inflate the overall MSE</li>
-</ul>
-<p>Shrinkage dampens both overestimates <em>and</em> underestimates simultaneously. The small bias it introduces (pulling everyone toward the mean) is more than offset by the massive reduction in variance. This is the <strong>bias-variance tradeoff</strong> in action.</p>
-<section id="where-you-see-this-in-practice" class="level3">
-<h3 class="anchored" data-anchor-id="where-you-see-this-in-practice">Where you see this in practice</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Method</th>
-<th>What gets shrunk</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Ridge regression</strong></td>
-<td>Coefficients toward zero</td>
-</tr>
-<tr class="even">
-<td><strong>LASSO</strong></td>
-<td>Coefficients toward zero (with selection)</td>
-</tr>
-<tr class="odd">
-<td><strong>Random effects models</strong></td>
-<td>Group means toward grand mean</td>
-</tr>
-<tr class="even">
-<td><strong>Empirical Bayes</strong></td>
-<td>Individual estimates toward overall mean</td>
-</tr>
-<tr class="odd">
-<td><strong>Bayesian priors</strong></td>
-<td>Posteriors toward prior mean</td>
-</tr>
-</tbody>
-</table>
-<p>They all share the same logic: when you have many noisy estimates, borrowing strength across them improves every single one.</p>
-
-
+<section id="the-stata-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="the-stata-workflow">The Stata workflow</h2>
+<p>Here’s the complete analysis in Stata, mirroring each step above:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>* ----- Step 1: Look <span class="fu">at</span> the <span class="kw">data</span> -----</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">summarize</span> wage education experience</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">scatter</span> wage education</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>* ----- Step 2: OLS -----</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> log_wage = <span class="fu">log</span>(wage)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> exper2 = experience * experience</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> log_wage education experience exper2</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>* ----- Step 3: Bayesian with <span class="kw">default</span> (vague) priors -----</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>bayes: <span class="kw">reg</span> log_wage education experience exper2</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>* ----- Step 4: Bayesian with informative prior -----</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>* Literature says ~10% <span class="fu">return</span>, we're fairly confident</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>bayes, prior({log_wage:education}, <span class="fu">normal</span>(0.10, 0.01)) : <span class="co">///</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">reg</span> log_wage education experience exper2</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>* Note: <span class="fu">normal</span>(0.10, 0.01) <span class="kw">means</span> prior <span class="kw">variance</span> 0.01,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>* so prior <span class="kw">SD</span> = 0.1 — centered <span class="fu">at</span> 10% with moderate spread</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>* ----- Step 5: Check convergence -----</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>bayesgraph diagnostics {log_wage:education}</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>* Look <span class="kw">for</span>: stationary <span class="fu">trace</span>, high ESS, R-hat near 1</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>* ----- Step 6: Compare models -----</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>bayesstats <span class="kw">ic</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>* Compare DIC/WAIC to the <span class="kw">default</span>-prior <span class="kw">model</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Interpreting Stata output:</strong> The key columns are <code>Mean</code> (posterior mean), <code>Std. Dev.</code> (posterior SD), and the <code>Equal-tailed</code> credible interval. Compare these directly to the OLS coefficient, standard error, and confidence interval. With vague priors and moderate n, they’ll be nearly identical.</p>
+</div>
+</div>
+</div>
+<hr>
 </section>
+<section id="what-did-we-learn" class="level2">
+<h2 class="anchored" data-anchor-id="what-did-we-learn">What did we learn?</h2>
+<ol type="1">
+<li><p><strong>With a reasonable prior, Bayesian and OLS agree</strong> — especially with large samples. The prior adds almost no bias but can reduce uncertainty.</p></li>
+<li><p><strong>The prior adds value when samples are small</strong> or when you have genuine outside information (literature, expert knowledge, previous studies).</p></li>
+<li><p><strong>The posterior gives direct probability statements</strong> that OLS can’t: <span class="math inline">\(P(\beta &gt; 0.05 \mid \text{data})\)</span> answers the question “how confident should I be that the return exceeds 5%?” directly.</p></li>
+<li><p><strong>Sensitivity analysis is easy and important.</strong> The right panel shows exactly how your conclusions depend on the prior. If the answer doesn’t change much across reasonable priors, your results are robust.</p></li>
+</ol>
+<p><strong>Where to go deeper:</strong></p>
+<ul>
+<li><a href="bayes-theorem.html">Bayes’ theorem</a> — the updating formula behind everything</li>
+<li><a href="priors-posteriors.html">Priors &amp; Posteriors</a> — mechanics of conjugate updating</li>
+<li><a href="shrinkage.html">Shrinkage</a> — why the prior pulls estimates and when it helps</li>
+<li><a href="bayesian-regression.html">Bayesian Regression</a> — the full OLS vs Bayesian comparison</li>
+<li><a href="model-comparison.html">Model Comparison</a> — Bayes factors for choosing between models</li>
+<li><a href="posterior-predictive.html">Posterior Predictive Checks</a> — does the model fit?</li>
+</ul>
+<hr>
+</section>
+<section id="did-you-know" class="level2">
+<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
+<ul>
+<li><p><strong>Mincer (1974)</strong> introduced the log-linear earnings equation in <em>Schooling, Experience, and Earnings</em>. The specification — log wages regressed on education and a quadratic in experience — became the workhorse of labor economics. Nearly every study of returns to education starts from this framework.</p></li>
+<li><p><strong>Card (1999, 2001)</strong> used instrumental variables (geographic proximity to colleges) to address the endogeneity of education, finding returns of about 10% per year. His work highlighted that OLS may underestimate the return for marginal students — those on the fence about attending college.</p></li>
+<li><p><strong>Bayesian approaches in development economics:</strong> researchers studying returns to education in developing countries often face small samples and noisy data. Informative priors based on findings from similar countries can stabilize estimates — a natural application of the framework you just practiced.</p></li>
+</ul>
+
+
 </section>
 
 </main> <!-- /main -->

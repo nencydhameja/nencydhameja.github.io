@@ -166,6 +166,35 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Putting It Together</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./model-comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Comparison</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./posterior-predictive.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Posterior Predictive Checks</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Application: Returns to Education</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -179,6 +208,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#the-workflow" id="toc-the-workflow" class="nav-link active" data-scroll-target="#the-workflow">The workflow</a></li>
   <li><a href="#topics" id="toc-topics" class="nav-link" data-scroll-target="#topics">Topics</a></li>
   <li><a href="#beyond-conjugates" id="toc-beyond-conjugates" class="nav-link" data-scroll-target="#beyond-conjugates">Beyond Conjugates</a></li>
+  <li><a href="#putting-it-together" id="toc-putting-it-together" class="nav-link" data-scroll-target="#putting-it-together">Putting It Together</a></li>
   <li><a href="#how-does-bayesian-inference-relate-to-causal-inference" id="toc-how-does-bayesian-inference-relate-to-causal-inference" class="nav-link" data-scroll-target="#how-does-bayesian-inference-relate-to-causal-inference">How does Bayesian inference relate to causal inference?</a></li>
   </ul>
 </nav>
@@ -250,6 +280,16 @@ ul.task-list li input[type="checkbox"] {
 <td>Multiple groups? Partial pooling via hierarchical models.</td>
 <td><a href="hierarchical.html">Hierarchical Models</a> — let groups borrow strength from each other</td>
 </tr>
+<tr class="odd">
+<td><strong>7. Compare models</strong></td>
+<td>Which model fits better? Bayes factors and BIC.</td>
+<td><a href="model-comparison.html">Model Comparison</a> — Bayes factors, BIC, and Lindley’s paradox</td>
+</tr>
+<tr class="even">
+<td><strong>8. Check model fit</strong></td>
+<td>Does the model actually describe the data?</td>
+<td><a href="posterior-predictive.html">Posterior Predictive Checks</a> — simulate from the model and compare</td>
+</tr>
 </tbody>
 </table>
 <p>The core loop: <strong>likelihood + prior → posterior → interpret → check.</strong></p>
@@ -269,6 +309,14 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="mcmc.html">MCMC</a> — Sampling from posteriors when closed-form solutions don’t exist</li>
 <li><a href="hierarchical.html">Hierarchical Models</a> — Partial pooling: the killer app of Bayesian inference</li>
 <li><a href="bayesian-regression.html">Bayesian Regression</a> — From Stata’s <code>reg y x</code> to full posterior inference on coefficients</li>
+</ul>
+</section>
+<section id="putting-it-together" class="level2">
+<h2 class="anchored" data-anchor-id="putting-it-together">Putting It Together</h2>
+<ul>
+<li><a href="model-comparison.html">Model Comparison</a> — Bayes factors, BIC, and choosing between models</li>
+<li><a href="posterior-predictive.html">Posterior Predictive Checks</a> — Does the model fit? Simulate and check</li>
+<li><a href="application.html">Application: Returns to Education</a> — Full worked example: OLS vs Bayesian on the Mincer equation</li>
 </ul>
 </section>
 <section id="how-does-bayesian-inference-relate-to-causal-inference" class="level2">

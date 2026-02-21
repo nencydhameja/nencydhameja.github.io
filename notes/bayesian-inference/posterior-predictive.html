@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Bayesian Shrinkage – Introduction to Bayesian Thinking</title>
+<title>Posterior Predictive Checks – Introduction to Bayesian Thinking</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -116,7 +151,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./shrinkage.html">Shrinkage</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./model-comparison.html">Putting It Together</a></li><li class="breadcrumb-item"><a href="./posterior-predictive.html">Posterior Predictive Checks</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -161,7 +196,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./shrinkage.html" class="sidebar-item-text sidebar-link active">
+  <a href="./shrinkage.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Shrinkage</span></a>
   </div>
 </li>
@@ -217,7 +252,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./posterior-predictive.html" class="sidebar-item-text sidebar-link">
+  <a href="./posterior-predictive.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Posterior Predictive Checks</span></a>
   </div>
 </li>
@@ -239,23 +274,23 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-is-shrinkage" id="toc-what-is-shrinkage" class="nav-link active" data-scroll-target="#what-is-shrinkage">What is shrinkage?</a>
+  <li><a href="#does-the-model-fit" id="toc-does-the-model-fit" class="nav-link active" data-scroll-target="#does-the-model-fit">Does the model fit?</a></li>
+  <li><a href="#how-it-works" id="toc-how-it-works" class="nav-link" data-scroll-target="#how-it-works">How it works</a>
   <ul class="collapse">
+  <li><a href="#simulation-is-the-normal-model-right" id="toc-simulation-is-the-normal-model-right" class="nav-link" data-scroll-target="#simulation-is-the-normal-model-right">Simulation: Is the normal model right?</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
-  <li><a href="#why-does-this-work" id="toc-why-does-this-work" class="nav-link" data-scroll-target="#why-does-this-work">Why does this work?</a>
-  <ul class="collapse">
-  <li><a href="#where-you-see-this-in-practice" id="toc-where-you-see-this-in-practice" class="nav-link" data-scroll-target="#where-you-see-this-in-practice">Where you see this in practice</a></li>
-  </ul></li>
+  <li><a href="#in-stata" id="toc-in-stata" class="nav-link" data-scroll-target="#in-stata">In Stata</a></li>
+  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./model-comparison.html">Putting It Together</a></li><li class="breadcrumb-item"><a href="./posterior-predictive.html">Posterior Predictive Checks</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Bayesian Shrinkage</h1>
+<h1 class="title">Posterior Predictive Checks</h1>
 </div>
 
 
@@ -272,13 +307,55 @@ window.Quarto = {
 </header>
 
 
-<section id="what-is-shrinkage" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-shrinkage">What is shrinkage?</h2>
-<p>Imagine you’re a baseball scout. It’s early in the season and you need to estimate the true batting average for 50 players, each with only 20 at-bats.</p>
-<p>One player went 10-for-20 (.500). Another went 1-for-20 (.050). Are those their true abilities? Probably not — with only 20 at-bats, there’s a ton of noise. The .500 hitter probably got lucky. The .050 hitter probably got unlucky.</p>
-<p><strong>Shrinkage</strong> says: don’t take the raw numbers at face value. Pull (“shrink”) every estimate toward the overall average. The more uncertain you are about an individual estimate, the more you pull.</p>
-<p><span class="math display">\[\hat{\theta}_i^{shrunk} = w_i \cdot \bar{\theta}_{overall} + (1 - w_i) \cdot \hat{\theta}_i^{raw}\]</span></p>
-<p>This is the core of <strong>empirical Bayes</strong> and <strong>James-Stein estimation</strong>. It sounds like you’re adding bias — and you are — but you’re reducing variance by more than enough to compensate. The result: better predictions overall.</p>
+<section id="does-the-model-fit" class="level2">
+<h2 class="anchored" data-anchor-id="does-the-model-fit">Does the model fit?</h2>
+<p>You’ve chosen a prior, computed the posterior, maybe even compared models. But there’s a question you haven’t asked: <strong>does the model actually fit the data?</strong></p>
+<p>Frequentists check model fit with residual plots, Q-Q plots, and goodness-of-fit tests. Bayesians have their own tool: <strong>posterior predictive checks</strong> (PPCs).</p>
+<p>The idea is beautifully simple: if your model is correct, then data simulated from it should look like the real data. If they don’t, something is wrong.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Example:</strong> You fit a normal model to income data. The model says incomes are symmetric. But real income data has a long right tail — a few people earn much more than average. Simulated datasets from your model won’t have those extreme values. The mismatch tells you the normal model is wrong.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="how-it-works" class="level2">
+<h2 class="anchored" data-anchor-id="how-it-works">How it works</h2>
+<p>The posterior predictive distribution generates “fake data” from your fitted model:</p>
+<ol type="1">
+<li><strong>Draw</strong> <span class="math inline">\(\theta^*\)</span> from the posterior <span class="math inline">\(p(\theta \mid \mathbf{y})\)</span></li>
+<li><strong>Generate</strong> <span class="math inline">\(\mathbf{y}^{\text{rep}} \sim p(\mathbf{y} \mid \theta^*)\)</span></li>
+<li><strong>Repeat</strong> many times to get many replicated datasets</li>
+</ol>
+<p>Each <span class="math inline">\(\mathbf{y}^{\text{rep}}\)</span> is a dataset that <em>could have been generated</em> by the model, given what you learned from the data. If the model is right, the real data should look like a “typical” replicated dataset.</p>
+<p>To make this concrete, pick a <strong>test statistic</strong> <span class="math inline">\(T\)</span> — anything that captures a feature you care about (the max, the skewness, the standard deviation) — and compare:</p>
+<p><span class="math display">\[
+T(\mathbf{y}^{\text{obs}}) \quad \text{vs} \quad T(\mathbf{y}^{\text{rep}}_1),\; T(\mathbf{y}^{\text{rep}}_2),\; \ldots
+\]</span></p>
+<p>The <strong>posterior predictive p-value</strong> is:</p>
+<p><span class="math display">\[
+p_{pp} = P\!\left(T(\mathbf{y}^{\text{rep}}) \geq T(\mathbf{y}^{\text{obs}})\right)
+\]</span></p>
+<p>If <span class="math inline">\(p_{pp}\)</span> is near 0 or 1, the observed statistic is extreme relative to what the model predicts — evidence of <strong>model misfit</strong>.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Not a “real” p-value:</strong> The posterior predictive p-value uses the data twice (once to fit, once to compare), so it’s not a proper significance test. Think of it as a <strong>diagnostic</strong>, not a hypothesis test. Values near 0.5 mean the model is consistent with the data on that feature.</p>
+</div>
+</div>
+</div>
+<hr>
+<section id="simulation-is-the-normal-model-right" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-is-the-normal-model-right">Simulation: Is the normal model right?</h3>
+<p>Fit a normal model (<span class="math inline">\(y \sim N(\mu, \sigma^2)\)</span>) to data that may or may not be normal. The posterior predictive check reveals the mismatch.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 620
 
@@ -291,24 +368,26 @@ ui &lt;- fluidPage(
       margin-top: 12px; font-size: 14px; line-height: 1.9;
     }
     .stats-box b { color: #2c3e50; }
-    .good { color: #27ae60; font-weight: bold; }
-    .bad  { color: #e74c3c; font-weight: bold; }
+    .good  { color: #27ae60; font-weight: bold; }
+    .bad   { color: #e74c3c; font-weight: bold; }
   "))),
 
   sidebarLayout(
     sidebarPanel(
       width = 3,
 
-      sliderInput("n_players", "Number of players:",
-                  min = 10, max = 100, value = 40, step = 5),
+      selectInput("dgp", "True DGP:",
+                  choices = c("Normal", "Heavy-tailed (t, df=3)", "Skewed (exp)"),
+                  selected = "Normal"),
 
-      sliderInput("at_bats", "At-bats per player:",
-                  min = 5, max = 200, value = 20, step = 5),
+      sliderInput("n", "Sample size (n):",
+                  min = 30, max = 500, value = 100, step = 10),
 
-      sliderInput("true_spread", "True talent spread (SD):",
-                  min = 0.01, max = 0.08, value = 0.03, step = 0.005),
+      selectInput("stat", "Test statistic T:",
+                  choices = c("Max" = "max", "Skewness" = "skew", "SD" = "sd"),
+                  selected = "max"),
 
-      actionButton("go", "New season", class = "btn-primary", width = "100%"),
+      actionButton("go", "New data", class = "btn-primary", width = "100%"),
 
       uiOutput("results")
     ),
@@ -316,8 +395,8 @@ ui &lt;- fluidPage(
     mainPanel(
       width = 9,
       fluidRow(
-        column(6, plotOutput("shrinkage_plot", height = "420px")),
-        column(6, plotOutput("mse_plot", height = "420px"))
+        column(6, plotOutput("data_plot", height = "420px")),
+        column(6, plotOutput("ppc_plot", height = "420px"))
       )
     )
   )
@@ -325,186 +404,221 @@ ui &lt;- fluidPage(
 
 server &lt;- function(input, output, session) {
 
+  n_rep &lt;- 500  # number of replicated datasets
+
   dat &lt;- reactive({
     input$go
-    k   &lt;- input$n_players
-    n   &lt;- input$at_bats
-    tau &lt;- input$true_spread
+    n   &lt;- input$n
+    dgp &lt;- input$dgp
 
-    # True batting averages (centered around .260)
-    true_avg &lt;- rnorm(k, mean = 0.260, sd = tau)
-    true_avg &lt;- pmin(pmax(true_avg, 0.100), 0.400)
+    # Generate observed data from true DGP
+    y_obs &lt;- if (dgp == "Normal") {
+      rnorm(n, 5, 2)
+    } else if (dgp == "Heavy-tailed (t, df=3)") {
+      5 + 2 * rt(n, df = 3)
+    } else {
+      rexp(n, rate = 0.5)  # mean = 2, skewed right
+    }
 
-    # Observed: hits in n at-bats
-    hits &lt;- rbinom(k, size = n, prob = true_avg)
-    obs_avg &lt;- hits / n
+    # Fit normal model: posterior for mu and sigma
+    # Using conjugate with vague priors:
+    # mu | sigma, y ~ N(ybar, sigma^2/n)
+    # sigma^2 | y ~ InvGamma(...)
+    ybar &lt;- mean(y_obs)
+    s2   &lt;- var(y_obs)
 
-    # Grand mean
-    grand_mean &lt;- mean(obs_avg)
+    # Compute test statistic
+    calc_stat &lt;- function(y, type) {
+      if (type == "max") return(max(y))
+      if (type == "skew") {
+        m &lt;- mean(y); s &lt;- sd(y)
+        return(mean(((y - m) / s)^3))
+      }
+      if (type == "sd") return(sd(y))
+    }
 
-    # Empirical Bayes shrinkage
-    # Estimate prior variance from data
-    obs_var &lt;- var(obs_avg)
-    sampling_var &lt;- mean(obs_avg * (1 - obs_avg) / n)
-    prior_var &lt;- max(obs_var - sampling_var, 0.0001)
+    stat_type &lt;- input$stat
+    t_obs &lt;- calc_stat(y_obs, stat_type)
 
-    # Shrinkage weight (toward grand mean)
-    w &lt;- sampling_var / (sampling_var + prior_var)
-    shrunk_avg &lt;- w * grand_mean + (1 - w) * obs_avg
+    # Generate replicated datasets from posterior predictive
+    t_rep &lt;- numeric(n_rep)
+    y_rep_curves &lt;- list()
+    n_curves &lt;- 50  # store some for visual overlay
 
-    # MSE
-    mse_raw   &lt;- mean((obs_avg - true_avg)^2)
-    mse_shrunk &lt;- mean((shrunk_avg - true_avg)^2)
+    for (r in 1:n_rep) {
+      # Draw sigma^2 from scaled inv-chi-sq (approximate with posterior)
+      sig2_star &lt;- s2 * (n - 1) / rchisq(1, df = n - 1)
+      sig_star  &lt;- sqrt(sig2_star)
 
-    # Future performance (another n at-bats from true ability)
-    future_hits &lt;- rbinom(k, size = n, prob = true_avg)
-    future_avg  &lt;- future_hits / n
+      # Draw mu from conditional posterior
+      mu_star &lt;- rnorm(1, ybar, sig_star / sqrt(n))
 
-    pred_err_raw   &lt;- mean((obs_avg - future_avg)^2)
-    pred_err_shrunk &lt;- mean((shrunk_avg - future_avg)^2)
+      # Generate replicated data
+      y_r &lt;- rnorm(n, mu_star, sig_star)
+      t_rep[r] &lt;- calc_stat(y_r, stat_type)
 
-    list(true_avg = true_avg, obs_avg = obs_avg, shrunk_avg = shrunk_avg,
-         grand_mean = grand_mean, w = w,
-         mse_raw = mse_raw, mse_shrunk = mse_shrunk,
-         pred_err_raw = pred_err_raw, pred_err_shrunk = pred_err_shrunk,
-         k = k, n = n)
+      if (r &lt;= n_curves) {
+        y_rep_curves[[r]] &lt;- y_r
+      }
+    }
+
+    # Posterior predictive p-value
+    p_pp &lt;- mean(t_rep &gt;= t_obs)
+
+    list(y_obs = y_obs, t_obs = t_obs, t_rep = t_rep,
+         y_rep_curves = y_rep_curves, p_pp = p_pp,
+         stat_type = stat_type, dgp = dgp, ybar = ybar, s2 = s2)
   })
 
-  output$shrinkage_plot &lt;- renderPlot({
+  output$data_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    ord &lt;- order(d$obs_avg)
+    # Histogram of observed data
+    h &lt;- hist(d$y_obs, breaks = 25, plot = FALSE)
 
-    plot(d$obs_avg[ord], seq_along(ord), pch = 16, col = "#e74c3c",
-         xlab = "Batting average", ylab = "Player (sorted by raw avg)",
-         main = "Shrinkage in Action",
-         xlim = range(c(d$obs_avg, d$shrunk_avg, d$true_avg)))
+    hist(d$y_obs, breaks = 25, freq = FALSE,
+         col = "#3498db40", border = "#3498db",
+         xlab = "y", main = "Observed Data + Posterior Predictive",
+         ylim = c(0, max(h$density) * 1.5))
 
-    points(d$shrunk_avg[ord], seq_along(ord), pch = 17, col = "#3498db")
-    points(d$true_avg[ord], seq_along(ord), pch = 4, col = "#27ae60", cex = 0.8)
+    # Overlay density curves from replicated datasets
+    x_range &lt;- range(c(d$y_obs, unlist(d$y_rep_curves)))
+    x_seq &lt;- seq(x_range[1] - 1, x_range[2] + 1, length.out = 200)
 
-    # Draw arrows from raw to shrunk
-    arrows(d$obs_avg[ord], seq_along(ord),
-           d$shrunk_avg[ord], seq_along(ord),
-           length = 0.05, col = "#bdc3c780", lwd = 1)
+    for (i in seq_along(d$y_rep_curves)) {
+      dens &lt;- density(d$y_rep_curves[[i]], from = x_range[1] - 1,
+                      to = x_range[2] + 1, n = 200)
+      lines(dens$x, dens$y, col = "#e74c3c15", lwd = 1)
+    }
 
-    # Grand mean
-    abline(v = d$grand_mean, lty = 2, col = "gray50", lwd = 1.5)
+    # Observed density on top
+    dens_obs &lt;- density(d$y_obs)
+    lines(dens_obs$x, dens_obs$y, col = "#2c3e50", lwd = 2.5)
 
-    legend("bottomright", bty = "n", cex = 0.8,
-           legend = c("Raw average", "Shrunk estimate",
-                      "True ability", "Grand mean"),
-           col = c("#e74c3c", "#3498db", "#27ae60", "gray50"),
-           pch = c(16, 17, 4, NA),
-           lty = c(NA, NA, NA, 2), lwd = c(NA, NA, NA, 1.5))
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c("Observed data", "Replicated (model)"),
+           col = c("#2c3e50", "#e74c3c80"),
+           lwd = c(2.5, 1.5))
   })
 
-  output$mse_plot &lt;- renderPlot({
+  output$ppc_plot &lt;- renderPlot({
     d &lt;- dat()
-    par(mar = c(4.5, 6, 3, 1))
+    par(mar = c(4.5, 4.5, 3, 1))
 
-    vals &lt;- c(d$mse_raw, d$mse_shrunk, d$pred_err_raw, d$pred_err_shrunk)
-    cols &lt;- c("#e74c3c", "#3498db", "#e74c3c80", "#3498db80")
-    labels &lt;- c("Raw\nvs truth", "Shrunk\nvs truth",
-                "Raw\nvs future", "Shrunk\nvs future")
+    stat_label &lt;- switch(d$stat_type,
+                         "max" = "max(y)",
+                         "skew" = "skewness(y)",
+                         "sd" = "sd(y)")
 
-    bp &lt;- barplot(vals, col = cols, border = NA,
-                  names.arg = labels, cex.names = 0.8,
-                  main = "Mean Squared Error",
-                  ylab = "MSE", las = 1)
-    text(bp, vals + max(vals) * 0.03, round(vals, 5), cex = 0.8)
+    h &lt;- hist(d$t_rep, breaks = 30, plot = FALSE)
 
-    pct1 &lt;- round((1 - d$mse_shrunk / d$mse_raw) * 100, 0)
-    pct2 &lt;- round((1 - d$pred_err_shrunk / d$pred_err_raw) * 100, 0)
+    # Color bins by whether they're &gt;= t_obs
+    bin_cols &lt;- ifelse(h$mids &gt;= d$t_obs, "#e74c3c80", "#bdc3c780")
 
-    mtext(paste0("Shrinkage reduces estimation error by ~", pct1, "%"),
-          side = 1, line = 3.5, cex = 0.85, col = "#2c3e50")
+    hist(d$t_rep, breaks = 30, freq = FALSE,
+         col = bin_cols, border = "white",
+         xlab = paste0("T = ", stat_label),
+         main = paste0("Posterior Predictive Check: ", stat_label))
+
+    # Vertical line at observed
+    abline(v = d$t_obs, col = "#2c3e50", lwd = 2.5, lty = 1)
+    text(d$t_obs, max(h$density) * 0.9, pos = 4, cex = 0.85,
+         col = "#2c3e50", font = 2,
+         labels = paste0("T(obs) = ", round(d$t_obs, 3)))
+
+    # p-value label
+    p_label &lt;- if (d$p_pp &lt; 0.05 || d$p_pp &gt; 0.95) {
+      paste0("p_pp = ", round(d$p_pp, 3), "  MISFIT")
+    } else {
+      paste0("p_pp = ", round(d$p_pp, 3), "  OK")
+    }
+    p_col &lt;- if (d$p_pp &lt; 0.05 || d$p_pp &gt; 0.95) "#e74c3c" else "#27ae60"
+    mtext(p_label, side = 3, line = -1.5, cex = 0.9, col = p_col, font = 2)
+
+    legend("topleft", bty = "n", cex = 0.8,
+           legend = c("T(y_rep) distribution",
+                      paste0("T(y_obs) = ", round(d$t_obs, 3)),
+                      "p-value region"),
+           col = c("#bdc3c7", "#2c3e50", "#e74c3c80"),
+           pch = c(15, NA, 15), lwd = c(NA, 2.5, NA), lty = c(NA, 1, NA))
   })
 
   output$results &lt;- renderUI({
     d &lt;- dat()
-    pct_est &lt;- round((1 - d$mse_shrunk / d$mse_raw) * 100, 1)
-    pct_pred &lt;- round((1 - d$pred_err_shrunk / d$pred_err_raw) * 100, 1)
+
+    stat_label &lt;- switch(d$stat_type,
+                         "max" = "max(y)",
+                         "skew" = "skewness",
+                         "sd" = "sd(y)")
+
+    verdict &lt;- if (d$p_pp &lt; 0.05 || d$p_pp &gt; 0.95) {
+      "&lt;span class='bad'&gt;FAIL — model misfit&lt;/span&gt;"
+    } else {
+      "&lt;span class='good'&gt;PASS — consistent&lt;/span&gt;"
+    }
 
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;Shrinkage weight:&lt;/b&gt; ", round(d$w * 100, 1),
-        "% toward grand mean&lt;br&gt;",
-        "&lt;b&gt;Grand mean:&lt;/b&gt; ", round(d$grand_mean, 3), "&lt;br&gt;",
+        "&lt;b&gt;T(y_obs):&lt;/b&gt; ", round(d$t_obs, 3), "&lt;br&gt;",
+        "&lt;b&gt;Mean T(y_rep):&lt;/b&gt; ", round(mean(d$t_rep), 3), "&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;MSE (raw):&lt;/b&gt; ", round(d$mse_raw, 5), "&lt;br&gt;",
-        "&lt;b&gt;MSE (shrunk):&lt;/b&gt; &lt;span class='good'&gt;",
-        round(d$mse_shrunk, 5), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;b&gt;Improvement:&lt;/b&gt; &lt;span class='good'&gt;", pct_est, "%&lt;/span&gt;&lt;br&gt;",
+        "&lt;b&gt;p&lt;sub&gt;pp&lt;/sub&gt;:&lt;/b&gt; ", round(d$p_pp, 3), "&lt;br&gt;",
+        "&lt;b&gt;Verdict:&lt;/b&gt; ", verdict, "&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;Prediction error (raw):&lt;/b&gt; ", round(d$pred_err_raw, 5), "&lt;br&gt;",
-        "&lt;b&gt;Prediction error (shrunk):&lt;/b&gt; &lt;span class='good'&gt;",
-        round(d$pred_err_shrunk, 5), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;b&gt;Improvement:&lt;/b&gt; &lt;span class='good'&gt;", pct_pred, "%&lt;/span&gt;"
+        "&lt;b&gt;DGP:&lt;/b&gt; ", d$dgp, "&lt;br&gt;",
+        "&lt;b&gt;Statistic:&lt;/b&gt; ", stat_label
       ))
     )
   })
 }
 
 shinyApp(ui, server)</code></pre>
+</section>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>At-bats = 5:</strong> extreme noise. Raw averages are all over the place (some players show .000 or .600). Shrinkage pulls them heavily toward the mean — and the green crosses (true ability) confirm the shrunk estimates are closer.</li>
-<li><strong>At-bats = 200:</strong> lots of data per player. Shrinkage is minimal because the raw averages are already precise. <strong>With enough data, shrinkage vanishes.</strong></li>
-<li><strong>Look at the MSE bars:</strong> shrinkage almost always wins, especially with small samples. It also predicts future performance better.</li>
-<li><strong>True talent spread = 0.01</strong> (everyone is similar): shrinkage is aggressive because individual differences are small relative to noise.</li>
-<li><strong>True talent spread = 0.08</strong> (wide range of talent): shrinkage is lighter because individual differences are real, not noise.</li>
+<li><strong>Normal DGP, any statistic:</strong> the check passes. The model is correct, so <span class="math inline">\(T(\mathbf{y}^{\text{obs}})\)</span> falls comfortably within the replicated distribution. The posterior predictive p-value is near 0.5.</li>
+<li><strong>Heavy-tailed (t, df=3), test stat = Max:</strong> the normal model can’t produce the extreme values that a heavy-tailed distribution generates. <span class="math inline">\(\max(y)\)</span> is far into the tail of the replicated distribution. The check fails.</li>
+<li><strong>Skewed (exponential), test stat = Skewness:</strong> the normal model is symmetric, so replicated datasets have skewness near 0. But the exponential data is heavily right-skewed. The check catches this.</li>
+<li><strong>Large n makes failures sharper:</strong> with n = 500, the replicated distribution concentrates tightly, making any mismatch glaringly obvious. Small samples are more forgiving.</li>
+<li><strong>Left panel clue:</strong> when the model is wrong, the light red replicated curves don’t match the shape of the observed histogram. That visual mismatch is what the p-value quantifies.</li>
+<li><strong>SD statistic, Normal DGP:</strong> a good check that the variance is well-captured. Switch to heavy-tailed data — the SD check may or may not fail depending on the specific draw.</li>
 </ul>
 <hr>
 </section>
 </section>
-<section id="why-does-this-work" class="level2">
-<h2 class="anchored" data-anchor-id="why-does-this-work">Why does this work?</h2>
-<p>It seems wrong to move estimates <em>away</em> from the data. But consider what happens without shrinkage:</p>
-<ul>
-<li>Players who got lucky are <strong>overestimated</strong></li>
-<li>Players who got unlucky are <strong>underestimated</strong></li>
-<li>These errors don’t cancel — they inflate the overall MSE</li>
-</ul>
-<p>Shrinkage dampens both overestimates <em>and</em> underestimates simultaneously. The small bias it introduces (pulling everyone toward the mean) is more than offset by the massive reduction in variance. This is the <strong>bias-variance tradeoff</strong> in action.</p>
-<section id="where-you-see-this-in-practice" class="level3">
-<h3 class="anchored" data-anchor-id="where-you-see-this-in-practice">Where you see this in practice</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Method</th>
-<th>What gets shrunk</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Ridge regression</strong></td>
-<td>Coefficients toward zero</td>
-</tr>
-<tr class="even">
-<td><strong>LASSO</strong></td>
-<td>Coefficients toward zero (with selection)</td>
-</tr>
-<tr class="odd">
-<td><strong>Random effects models</strong></td>
-<td>Group means toward grand mean</td>
-</tr>
-<tr class="even">
-<td><strong>Empirical Bayes</strong></td>
-<td>Individual estimates toward overall mean</td>
-</tr>
-<tr class="odd">
-<td><strong>Bayesian priors</strong></td>
-<td>Posteriors toward prior mean</td>
-</tr>
-</tbody>
-</table>
-<p>They all share the same logic: when you have many noisy estimates, borrowing strength across them improves every single one.</p>
-
-
+<section id="in-stata" class="level2">
+<h2 class="anchored" data-anchor-id="in-stata">In Stata</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>* Fit the Bayesian <span class="kw">model</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>bayes: <span class="kw">reg</span> <span class="fu">y</span> x1 <span class="kw">x2</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>* Posterior predictive <span class="kw">p</span>-<span class="kw">values</span> <span class="kw">for</span> <span class="kw">test</span> <span class="kw">statistics</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>bayesstats ppvalues (<span class="kw">mean</span>) (<span class="fu">sd</span>) (<span class="fu">max</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>* If p_pp near 0 <span class="kw">or</span> 1, the <span class="kw">model</span> struggles</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>* to reproduce that feature <span class="kw">of</span> the <span class="kw">data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Which statistics to check?</strong> Pick statistics that matter for your research question. If you care about tail behavior (risk analysis), check <code>max</code> and <code>min</code>. If you’re modeling skewed outcomes (wages, prices), check skewness. If your model should capture variability, check <code>sd</code>.</p>
+</div>
+</div>
+</div>
+<hr>
 </section>
+<section id="did-you-know" class="level2">
+<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
+<ul>
+<li><p><strong>Rubin (1984)</strong> introduced posterior predictive checks as a general framework for model criticism. The key insight: use the model to generate data, then see if the generated data resemble reality. Simple, powerful, and applicable to any model.</p></li>
+<li><p><strong>Gelman, Meng &amp; Stern (1996)</strong> formalized posterior predictive p-values and showed how to choose test statistics that target specific model assumptions. Their paper established PPCs as a standard tool in applied Bayesian work.</p></li>
+<li><p><strong>Connection to cross-validation:</strong> LOO-CV (leave-one-out cross-validation) is another model checking tool. While PPCs ask “can the model reproduce features of the data?”, LOO-CV asks “can the model predict held-out observations?” Both catch model problems, but from different angles. The <code>loo</code> package in R and Stata’s <code>bayesstats ic</code> with WAIC approximate LOO-CV efficiently.</p></li>
+</ul>
+
+
 </section>
 
 </main> <!-- /main -->
