@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Matching – Applied Causal Inference</title>
+<title>Fixed vs Random Effects – Applied Causal Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./regression-adjustment.html">Estimation Tools</a></li><li class="breadcrumb-item"><a href="./matching.html">Matching</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./panel-fe-re.html">Panel Data</a></li><li class="breadcrumb-item"><a href="./panel-fe-re.html">Fixed vs Random Effects</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -222,7 +222,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./panel-fe-re.html" class="sidebar-item-text sidebar-link">
+  <a href="./panel-fe-re.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Fixed vs Random Effects</span></a>
   </div>
 </li>
@@ -251,7 +251,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./matching.html" class="sidebar-item-text sidebar-link active">
+  <a href="./matching.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Matching</span></a>
   </div>
 </li>
@@ -279,14 +279,26 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
+  <li><a href="#panel-data-the-same-units-over-time-or-nested-units" id="toc-panel-data-the-same-units-over-time-or-nested-units" class="nav-link active" data-scroll-target="#panel-data-the-same-units-over-time-or-nested-units">Panel data: the same units over time (or nested units)</a></li>
+  <li><a href="#fixed-effects-fe" id="toc-fixed-effects-fe" class="nav-link" data-scroll-target="#fixed-effects-fe">Fixed effects (FE)</a>
   <ul class="collapse">
-  <li><a href="#types-of-matching" id="toc-types-of-matching" class="nav-link" data-scroll-target="#types-of-matching">Types of matching</a></li>
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
-  <li><a href="#the-vulnerability-match-quality" id="toc-the-vulnerability-match-quality" class="nav-link" data-scroll-target="#the-vulnerability-match-quality">The vulnerability: match quality</a></li>
+  <li><a href="#what-fe-eliminates" id="toc-what-fe-eliminates" class="nav-link" data-scroll-target="#what-fe-eliminates">What FE eliminates</a></li>
+  <li><a href="#what-fe-cant-do" id="toc-what-fe-cant-do" class="nav-link" data-scroll-target="#what-fe-cant-do">What FE can’t do</a></li>
+  </ul></li>
+  <li><a href="#random-effects-re" id="toc-random-effects-re" class="nav-link" data-scroll-target="#random-effects-re">Random effects (RE)</a>
+  <ul class="collapse">
+  <li><a href="#the-critical-assumption" id="toc-the-critical-assumption" class="nav-link" data-scroll-target="#the-critical-assumption">The critical assumption</a></li>
+  </ul></li>
+  <li><a href="#the-tradeoff" id="toc-the-tradeoff" class="nav-link" data-scroll-target="#the-tradeoff">The tradeoff</a>
+  <ul class="collapse">
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
-  <li><a href="#how-does-matching-compare-to-other-tools" id="toc-how-does-matching-compare-to-other-tools" class="nav-link" data-scroll-target="#how-does-matching-compare-to-other-tools">How does matching compare to other tools?</a></li>
+  <li><a href="#the-hausman-test" id="toc-the-hausman-test" class="nav-link" data-scroll-target="#the-hausman-test">The Hausman test</a>
+  <ul class="collapse">
+  <li><a href="#the-logic" id="toc-the-logic" class="nav-link" data-scroll-target="#the-logic">The logic</a></li>
+  <li><a href="#hausman-test-in-practice" id="toc-hausman-test-in-practice" class="nav-link" data-scroll-target="#hausman-test-in-practice">Hausman test in practice</a></li>
+  </ul></li>
+  <li><a href="#connection-to-other-methods" id="toc-connection-to-other-methods" class="nav-link" data-scroll-target="#connection-to-other-methods">Connection to other methods</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -294,9 +306,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./regression-adjustment.html">Estimation Tools</a></li><li class="breadcrumb-item"><a href="./matching.html">Matching</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./panel-fe-re.html">Panel Data</a></li><li class="breadcrumb-item"><a href="./panel-fe-re.html">Fixed vs Random Effects</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Matching</h1>
+<h1 class="title">Fixed vs Random Effects</h1>
 </div>
 
 
@@ -313,90 +325,109 @@ window.Quarto = {
 </header>
 
 
-<section id="the-idea" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>You want the causal effect of a treatment, and you believe <a href="selection-observables.html">selection on observables</a> holds — all confounders are observed. <strong>Matching</strong> implements this by finding, for each treated unit, a control unit that looks similar on covariates <span class="math inline">\(X\)</span>.</p>
-<p>The logic is simple: if two people have the same <span class="math inline">\(X\)</span>, and one got treated while the other didn’t, the difference in their outcomes estimates the treatment effect for that value of <span class="math inline">\(X\)</span>. Average across all matched pairs and you get the ATT.</p>
+<section id="panel-data-the-same-units-over-time-or-nested-units" class="level2">
+<h2 class="anchored" data-anchor-id="panel-data-the-same-units-over-time-or-nested-units">Panel data: the same units over time (or nested units)</h2>
+<p>Most of the methods in this course use <strong>cross-sectional</strong> data — you see each unit once. But often you observe units <strong>repeatedly</strong>:</p>
+<ul>
+<li>The same people surveyed each year (panel)</li>
+<li>Students nested within schools (clusters)</li>
+<li>Census tracts nested within counties (hierarchical)</li>
+</ul>
+<p>Panel/grouped data has a superpower: you can separate <strong>within-group variation</strong> (what changes over time for the same person) from <strong>between-group variation</strong> (how different people differ from each other). This distinction is the key to fixed vs random effects.</p>
 <div class="callout callout-style-simple callout-tip no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Example: job training programs.</strong> The government runs a job training program. People who enroll earn more afterward — but is that the program, or did motivated people self-select? Matching says: for each enrollee, find a non-enrollee with the same age, education, prior income, and industry. Compare <em>their</em> earnings. If the enrollee still earns more after matching on everything observable, that’s the program’s effect. This is exactly what <strong>LaLonde (1986)</strong> studied — and found that naive comparisons badly overestimated the program’s impact.</p>
+<p><strong>Example: dollar stores and obesity.</strong> You have census tracts nested within counties, observed over multiple years. Some tracts get a new dollar store, others don’t. The question: does dollar store presence <em>cause</em> higher obesity? The problem: counties that attract dollar stores may already be different — poorer, more rural, less access to grocery stores. That’s a group-level confounder. Fixed effects can absorb it.</p>
 </div>
 </div>
 </div>
-<p><span class="math display">\[\hat{\tau}_{match} = \frac{1}{N_1} \sum_{i: D_i=1} \Big[ Y_i - Y_{j(i)} \Big]\]</span></p>
-<p>where <span class="math inline">\(j(i)\)</span> is the control unit matched to treated unit <span class="math inline">\(i\)</span>.</p>
-<section id="types-of-matching" class="level3">
-<h3 class="anchored" data-anchor-id="types-of-matching">Types of matching</h3>
+</section>
+<section id="fixed-effects-fe" class="level2">
+<h2 class="anchored" data-anchor-id="fixed-effects-fe">Fixed effects (FE)</h2>
+<p><strong>The idea:</strong> include a separate intercept <span class="math inline">\(\alpha_j\)</span> for each group. This absorbs <em>everything</em> that is constant within the group — observed or unobserved.</p>
+<p><span class="math display">\[Y_{it} = \alpha_i + \tau D_{it} + \beta X_{it} + \varepsilon_{it}\]</span></p>
+<p>In practice, you <strong>demean</strong> each variable by its group average:</p>
+<p><span class="math display">\[\tilde{Y}_{it} = Y_{it} - \bar{Y}_i, \quad \tilde{D}_{it} = D_{it} - \bar{D}_i, \quad \tilde{X}_{it} = X_{it} - \bar{X}_i\]</span></p>
+<p>Then regress <span class="math inline">\(\tilde{Y}\)</span> on <span class="math inline">\(\tilde{D}\)</span> and <span class="math inline">\(\tilde{X}\)</span>. The demeaning eliminates <span class="math inline">\(\alpha_i\)</span> entirely — you only use <strong>within-group variation</strong>.</p>
+<section id="what-fe-eliminates" class="level3">
+<h3 class="anchored" data-anchor-id="what-fe-eliminates">What FE eliminates</h3>
+<p>Any variable that is constant within a group gets differenced out:</p>
+<ul>
+<li>County-level: food culture, geography, baseline poverty level</li>
+<li>Person-level (in a panel): ability, motivation, family background</li>
+<li>Firm-level: management quality, industry</li>
+</ul>
+<p><strong>This is the power of FE:</strong> you don’t need to measure or even name the confounders. If they’re constant within groups, they’re gone.</p>
+</section>
+<section id="what-fe-cant-do" class="level3">
+<h3 class="anchored" data-anchor-id="what-fe-cant-do">What FE can’t do</h3>
+<ul>
+<li><strong>Can’t estimate effects of group-level variables.</strong> If you want to know the effect of being rural vs urban, FE absorbs that — it’s constant within county.</li>
+<li><strong>Can’t handle time-varying unobservables.</strong> If something changes within the group <em>and</em> is correlated with treatment, FE doesn’t help.</li>
+<li><strong>Uses only within-group variation.</strong> If treatment barely varies within groups, FE has little to work with and estimates are imprecise.</li>
+</ul>
+</section>
+</section>
+<section id="random-effects-re" class="level2">
+<h2 class="anchored" data-anchor-id="random-effects-re">Random effects (RE)</h2>
+<p><strong>The idea:</strong> instead of treating each <span class="math inline">\(\alpha_j\)</span> as a fixed parameter, assume the group effects are <strong>random draws from a population:</strong></p>
+<p><span class="math display">\[\alpha_j \sim N(\mu, \tau^2)\]</span></p>
+<p>This is the same structure as the <a href="../bayesian-inference/hierarchical.html">hierarchical model</a> on the Bayesian course — RE is its frequentist counterpart. It produces <strong>partial pooling</strong>: small groups are shrunk toward the grand mean.</p>
+<section id="the-critical-assumption" class="level3">
+<h3 class="anchored" data-anchor-id="the-critical-assumption">The critical assumption</h3>
+<p>RE assumes group effects are <strong>uncorrelated with the covariates:</strong></p>
+<p><span class="math display">\[E[\alpha_j \mid X_{it}, D_{it}] = \mu \quad \text{(no correlation)}\]</span></p>
+<p>If this holds, RE is more <strong>efficient</strong> than FE — it uses both within-group <em>and</em> between-group variation, so estimates are more precise.</p>
+<p>If this fails — if groups with higher <span class="math inline">\(\alpha_j\)</span> systematically differ in their <span class="math inline">\(X\)</span> or <span class="math inline">\(D\)</span> values — <strong>RE is biased.</strong> This is the same selection bias problem from the <a href="potential-outcomes.html">potential outcomes</a> page, but at the group level.</p>
+</section>
+</section>
+<section id="the-tradeoff" class="level2">
+<h2 class="anchored" data-anchor-id="the-tradeoff">The tradeoff</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Method</th>
-<th>How it matches</th>
-<th>Pros</th>
-<th>Cons</th>
+<th></th>
+<th>Fixed effects</th>
+<th>Random effects</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Exact</strong></td>
-<td>Identical X values</td>
-<td>No approximation error</td>
-<td>Infeasible with continuous or many covariates</td>
+<td><strong>Eliminates group-level confounders</strong></td>
+<td>Yes</td>
+<td>Only if uncorrelated with X</td>
 </tr>
 <tr class="even">
-<td><strong>Nearest neighbor (on X)</strong></td>
-<td>Closest <span class="math inline">\(\|X_i - X_j\|\)</span></td>
-<td>Simple, intuitive</td>
-<td>Curse of dimensionality with many covariates</td>
+<td><strong>Uses between-group variation</strong></td>
+<td>No (only within)</td>
+<td>Yes (within + between)</td>
 </tr>
 <tr class="odd">
-<td><strong>Nearest neighbor (on PS)</strong></td>
-<td>Closest <span class="math inline">\(\|e(X_i) - e(X_j)\|\)</span></td>
-<td>Reduces to 1D; Rosenbaum &amp; Rubin (1983)</td>
-<td>Inherits PS model risk</td>
+<td><strong>Efficiency</strong></td>
+<td>Lower (discards information)</td>
+<td>Higher (if assumption holds)</td>
 </tr>
 <tr class="even">
-<td><strong>Caliper</strong></td>
-<td>NN, but reject if distance <span class="math inline">\(&gt; c\)</span></td>
-<td>Drops bad matches</td>
-<td>Loses observations</td>
+<td><strong>Can estimate group-level predictors</strong></td>
+<td>No</td>
+<td>Yes</td>
 </tr>
 <tr class="odd">
-<td><strong>Mahalanobis</strong></td>
-<td>Distance accounts for correlations</td>
-<td>Better than Euclidean for correlated X</td>
-<td>Still suffers in high dimensions</td>
+<td><strong>Bias when <span class="math inline">\(\alpha_j\)</span> correlated with X</strong></td>
+<td>None</td>
+<td><strong>Biased</strong></td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="assumptions" class="level3">
-<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
-<p>Same as all <a href="selection-observables.html">selection on observables</a> methods:</p>
-<ol type="1">
-<li><strong>Conditional independence (CIA):</strong> <span class="math inline">\(Y(0), Y(1) \perp D \mid X\)</span>. All confounders are observed.</li>
-<li><strong>Overlap (common support):</strong> <span class="math inline">\(0 &lt; P(D = 1 \mid X) &lt; 1\)</span>. For every treated unit, a comparable control exists.</li>
-<li><strong>SUTVA:</strong> no interference between units.</li>
-</ol>
-</section>
-<section id="the-vulnerability-match-quality" class="level3">
-<h3 class="anchored" data-anchor-id="the-vulnerability-match-quality">The vulnerability: match quality</h3>
-<p>Matching <strong>finds comparisons</strong> rather than modeling outcomes. But the quality of those comparisons depends on:</p>
-<ul>
-<li><strong>Overlap:</strong> if treated and control units live in different parts of the covariate space, the “nearest” neighbor may be far away. The match is bad and the estimate is biased.</li>
-<li><strong>Dimensionality:</strong> with many covariates, even the nearest neighbor can be quite distant (“curse of dimensionality”). This is why propensity score matching collapses <span class="math inline">\(X\)</span> to a single dimension.</li>
-</ul>
-<p>Compare this to <a href="regression-adjustment.html">regression adjustment</a>, which extrapolates using a model, and <a href="ipw.html">IPW</a>, which reweights instead of pairing. Each has different failure modes.</p>
+<p><strong>The rule:</strong> if you’re after a causal effect and you’re worried about group-level confounders, use FE. If you believe the RE assumption (no correlation) or you need group-level predictors, use RE. When in doubt, FE is the safer choice.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 650
 
@@ -417,19 +448,17 @@ ui &lt;- fluidPage(
     sidebarPanel(
       width = 3,
 
-      sliderInput("n", "Sample size:",
-                  min = 200, max = 2000, value = 500, step = 100),
+      sliderInput("n_groups", "Number of groups:",
+                  min = 10, max = 50, value = 20, step = 5),
+
+      sliderInput("n_per", "Observations per group:",
+                  min = 5, max = 50, value = 10, step = 5),
 
       sliderInput("ate", "True ATE:",
                   min = 0, max = 5, value = 2, step = 0.5),
 
-      sliderInput("confounding", "Confounding strength:",
-                  min = 0, max = 3, value = 1.5, step = 0.25),
-
-      selectInput("match_type", "Matching method:",
-                  choices = c("NN on X" = "nn_x",
-                              "NN on propensity score" = "nn_ps",
-                              "Caliper (on X)" = "caliper")),
+      sliderInput("corr_alpha", "Correlation (\u03B1 with D):",
+                  min = 0, max = 3, value = 0, step = 0.25),
 
       actionButton("go", "New draw", class = "btn-primary", width = "100%"),
 
@@ -439,7 +468,7 @@ ui &lt;- fluidPage(
     mainPanel(
       width = 9,
       fluidRow(
-        column(6, plotOutput("match_plot", height = "420px")),
+        column(6, plotOutput("scatter_plot", height = "420px")),
         column(6, plotOutput("compare_plot", height = "420px"))
       )
     )
@@ -450,131 +479,110 @@ server &lt;- function(input, output, session) {
 
   dat &lt;- reactive({
     input$go
-    n    &lt;- input$n
-    ate  &lt;- input$ate
-    conf &lt;- input$confounding
-    mtype &lt;- input$match_type
+    J     &lt;- input$n_groups
+    n_per &lt;- input$n_per
+    ate   &lt;- input$ate
+    rho   &lt;- input$corr_alpha
 
-    # Confounder
-    x &lt;- rnorm(n)
+    # Group effects
+    alpha &lt;- rnorm(J, mean = 0, sd = 3)
 
-    # Treatment depends on x
-    p_true &lt;- pnorm(conf * x)
-    treat &lt;- rbinom(n, 1, p_true)
+    # Expand to individual level
+    group &lt;- rep(1:J, each = n_per)
+    alpha_i &lt;- rep(alpha, each = n_per)
+    N &lt;- J * n_per
+
+    # Treatment: correlated with group effect (the confounding)
+    x &lt;- rnorm(N)
+    p_treat &lt;- pnorm(0.5 * x + rho * alpha_i / 3)
+    treat &lt;- rbinom(N, 1, p_treat)
 
     # Outcome
-    y &lt;- 1 + 2 * x + ate * treat + rnorm(n)
+    y &lt;- alpha_i + ate * treat + 1.5 * x + rnorm(N)
 
-    idx_t &lt;- which(treat == 1)
-    idx_c &lt;- which(treat == 0)
+    # Naive (pooled OLS, no group effects)
+    naive &lt;- coef(lm(y ~ treat + x))["treat"]
 
-    # Propensity score (for PS matching)
-    ps &lt;- fitted(glm(treat ~ x, family = binomial))
+    # Fixed effects (demean within group)
+    y_dm &lt;- y - ave(y, group)
+    d_dm &lt;- treat - ave(treat, group)
+    x_dm &lt;- x - ave(x, group)
+    fe_est &lt;- coef(lm(y_dm ~ d_dm + x_dm - 1))["d_dm"]
 
-    # Matching
-    matched_j &lt;- integer(length(idx_t))
-    match_dist &lt;- numeric(length(idx_t))
+    # Random effects (partial pooling via weighted average)
+    # Simple RE: GLS with estimated variance components
+    # Use between and within estimators
+    y_bar_j &lt;- ave(y, group)
+    d_bar_j &lt;- ave(treat, group)
+    x_bar_j &lt;- ave(x, group)
 
-    if (mtype == "nn_x") {
-      for (k in seq_along(idx_t)) {
-        dists &lt;- abs(x[idx_t[k]] - x[idx_c])
-        best &lt;- which.min(dists)
-        matched_j[k] &lt;- idx_c[best]
-        match_dist[k] &lt;- dists[best]
-      }
-    } else if (mtype == "nn_ps") {
-      for (k in seq_along(idx_t)) {
-        dists &lt;- abs(ps[idx_t[k]] - ps[idx_c])
-        best &lt;- which.min(dists)
-        matched_j[k] &lt;- idx_c[best]
-        match_dist[k] &lt;- abs(x[idx_t[k]] - x[idx_c[best]])
-      }
+    # Within estimator = FE
+    # Between estimator
+    uj &lt;- tapply(y, group, mean)
+    dj &lt;- tapply(treat, group, mean)
+    xj &lt;- tapply(x, group, mean)
+    if (sd(dj) &gt; 0.01) {
+      be_est &lt;- coef(lm(uj ~ dj + xj))["dj"]
     } else {
-      # Caliper on X (caliper = 0.25 * sd(x))
-      cal &lt;- 0.25 * sd(x)
-      for (k in seq_along(idx_t)) {
-        dists &lt;- abs(x[idx_t[k]] - x[idx_c])
-        best &lt;- which.min(dists)
-        if (dists[best] &lt;= cal) {
-          matched_j[k] &lt;- idx_c[best]
-          match_dist[k] &lt;- dists[best]
-        } else {
-          matched_j[k] &lt;- NA
-          match_dist[k] &lt;- NA
-        }
-      }
+      be_est &lt;- naive
     }
 
-    # Matching estimate
-    valid &lt;- !is.na(matched_j)
-    n_matched &lt;- sum(valid)
-    if (n_matched &gt; 0) {
-      match_est &lt;- mean(y[idx_t[valid]] - y[matched_j[valid]])
-    } else {
-      match_est &lt;- NA
-    }
-    avg_dist &lt;- mean(match_dist[valid])
+    # RE is a weighted combo of within and between
+    sigma2_e &lt;- var(y_dm - fe_est * d_dm - coef(lm(y_dm ~ d_dm + x_dm - 1))["x_dm"] * x_dm)
+    sigma2_a &lt;- max(var(uj - fe_est * dj) - sigma2_e / n_per, 0.01)
+    theta &lt;- 1 - sqrt(sigma2_e / (sigma2_e + n_per * sigma2_a))
 
-    # Naive
-    naive &lt;- mean(y[treat == 1]) - mean(y[treat == 0])
+    y_re &lt;- y - theta * y_bar_j
+    d_re &lt;- treat - theta * d_bar_j
+    x_re &lt;- x - theta * x_bar_j
+    re_est &lt;- coef(lm(y_re ~ d_re + x_re))["d_re"]
 
-    # Regression adjustment
-    reg_est &lt;- coef(lm(y ~ treat + x))["treat"]
-
-    list(x = x, y = y, treat = treat, ps = ps,
-         idx_t = idx_t, idx_c = idx_c,
-         matched_j = matched_j, valid = valid,
-         match_est = match_est, naive = naive, reg_est = reg_est,
-         ate = ate, n_matched = n_matched, avg_dist = avg_dist,
-         mtype = mtype)
+    list(y = y, treat = treat, x = x, group = group, alpha_i = alpha_i,
+         naive = naive, fe_est = fe_est, re_est = re_est, be_est = be_est,
+         ate = ate, rho = rho, J = J, n_per = n_per,
+         alpha = alpha)
   })
 
-  output$match_plot &lt;- renderPlot({
+  output$scatter_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    plot(d$x, d$y, pch = 16, cex = 0.5,
-         col = ifelse(d$treat == 1, "#3498db40", "#e74c3c40"),
-         xlab = "X (confounder)", ylab = "Y (outcome)",
-         main = "Matched Pairs")
+    # Color by group (cycle through colors)
+    palette &lt;- rep(c("#3498db", "#e74c3c", "#27ae60", "#f39c12",
+                     "#9b59b6", "#1abc9c", "#e67e22", "#2c3e50"),
+                   length.out = d$J)
+    cols &lt;- paste0(palette[d$group], "50")
 
-    # Draw match lines for a subset (first 30 valid matches)
-    valid_idx &lt;- which(d$valid)
-    show &lt;- valid_idx[seq_len(min(30, length(valid_idx)))]
+    plot(d$x, d$y, pch = 16, cex = 0.4, col = cols,
+         xlab = "X (covariate)", ylab = "Y (outcome)",
+         main = "Data by Group (colors = groups)")
 
-    for (k in show) {
-      i &lt;- d$idx_t[k]
-      j &lt;- d$matched_j[k]
-      segments(d$x[i], d$y[i], d$x[j], d$y[j],
-               col = "#9b59b680", lwd = 1)
+    # Show a few group means
+    show_groups &lt;- 1:min(5, d$J)
+    for (j in show_groups) {
+      idx &lt;- d$group == j
+      points(mean(d$x[idx]), mean(d$y[idx]),
+             pch = 17, cex = 1.5, col = palette[j])
     }
 
-    # Re-draw matched points on top
-    for (k in show) {
-      i &lt;- d$idx_t[k]
-      j &lt;- d$matched_j[k]
-      points(d$x[i], d$y[i], pch = 16, cex = 0.7, col = "#3498db")
-      points(d$x[j], d$y[j], pch = 16, cex = 0.7, col = "#e74c3c")
+    if (d$rho &gt; 0) {
+      mtext(expression(alpha[j] * " correlated with D — RE is biased"),
+            side = 3, line = 0, cex = 0.8, col = "#e74c3c", font = 2)
+    } else {
+      mtext(expression(alpha[j] * " independent of D — RE is valid"),
+            side = 3, line = 0, cex = 0.8, col = "#27ae60", font = 2)
     }
-
-    n_show &lt;- length(show)
-    legend("topleft", bty = "n", cex = 0.8,
-           legend = c("Treated", "Control",
-                      paste0("Match link (", n_show, " shown)")),
-           col = c("#3498db", "#e74c3c", "#9b59b6"),
-           pch = c(16, 16, NA), lwd = c(NA, NA, 1.5))
   })
 
   output$compare_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 9, 3, 2))
 
-    ests &lt;- c(d$reg_est, d$match_est, d$naive)
-    labels &lt;- c("Regression adj.", "Matching", "Naive")
-    cols &lt;- c("#3498db", "#9b59b6", "#e74c3c")
+    ests &lt;- c(d$fe_est, d$re_est, d$naive)
+    labels &lt;- c("Fixed effects", "Random effects", "Pooled OLS")
+    cols &lt;- c("#27ae60", "#3498db", "#e74c3c")
 
-    valid_ests &lt;- !is.na(ests)
-    xlim &lt;- range(c(ests[valid_ests], d$ate))
+    xlim &lt;- range(c(ests, d$ate))
     pad  &lt;- max(diff(xlim) * 0.4, 0.5)
     xlim &lt;- xlim + c(-pad, pad)
 
@@ -594,101 +602,175 @@ server &lt;- function(input, output, session) {
   output$results &lt;- renderUI({
     d &lt;- dat()
     b_naive &lt;- d$naive - d$ate
-    b_match &lt;- if (!is.na(d$match_est)) d$match_est - d$ate else NA
-    b_reg   &lt;- d$reg_est - d$ate
+    b_fe    &lt;- d$fe_est - d$ate
+    b_re    &lt;- d$re_est - d$ate
 
-    match_class &lt;- if (!is.na(b_match) &amp;&amp; abs(b_match) &lt; abs(b_naive) * 0.5) "good" else "bad"
-    reg_class   &lt;- if (abs(b_reg) &lt; abs(b_naive) * 0.5) "good" else "bad"
+    fe_class &lt;- if (abs(b_fe) &lt; abs(b_naive) * 0.5) "good" else "bad"
+    re_class &lt;- if (abs(b_re) &lt; abs(b_naive) * 0.5) "good" else "bad"
 
-    method_label &lt;- switch(d$mtype,
-      nn_x    = "NN on X",
-      nn_ps   = "NN on propensity score",
-      caliper = "Caliper on X")
+    hausman &lt;- abs(d$fe_est - d$re_est)
+    h_class &lt;- if (hausman &lt; 0.3) "good" else "bad"
+    h_label &lt;- if (hausman &lt; 0.3) "FE \u2248 RE (RE likely OK)" else "FE \u2260 RE (use FE)"
 
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;Method:&lt;/b&gt; ", method_label, "&lt;br&gt;",
         "&lt;b&gt;True ATE:&lt;/b&gt; ", d$ate, "&lt;br&gt;",
         "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;b&gt;Naive:&lt;/b&gt; &lt;span class='bad'&gt;", round(d$naive, 3), "&lt;/span&gt;",
+        "&lt;b&gt;Pooled OLS:&lt;/b&gt; &lt;span class='bad'&gt;", round(d$naive, 3), "&lt;/span&gt;",
         " (bias: ", round(b_naive, 3), ")&lt;br&gt;",
-        "&lt;b&gt;Matching:&lt;/b&gt; &lt;span class='", match_class, "'&gt;",
-        if (!is.na(d$match_est)) round(d$match_est, 3) else "N/A",
-        "&lt;/span&gt;",
-        if (!is.na(b_match)) paste0(" (bias: ", round(b_match, 3), ")") else "", "&lt;br&gt;",
-        "&lt;b&gt;Reg. adj:&lt;/b&gt; &lt;span class='", reg_class, "'&gt;",
-        round(d$reg_est, 3), "&lt;/span&gt;",
-        " (bias: ", round(b_reg, 3), ")&lt;br&gt;",
+        "&lt;b&gt;Fixed effects:&lt;/b&gt; &lt;span class='", fe_class, "'&gt;",
+        round(d$fe_est, 3), "&lt;/span&gt;",
+        " (bias: ", round(b_fe, 3), ")&lt;br&gt;",
+        "&lt;b&gt;Random effects:&lt;/b&gt; &lt;span class='", re_class, "'&gt;",
+        round(d$re_est, 3), "&lt;/span&gt;",
+        " (bias: ", round(b_re, 3), ")&lt;br&gt;",
         "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;b&gt;Pairs matched:&lt;/b&gt; ", d$n_matched, " / ", length(d$idx_t), "&lt;br&gt;",
-        "&lt;b&gt;Avg match distance:&lt;/b&gt; ",
-        if (!is.na(d$avg_dist)) round(d$avg_dist, 3) else "N/A"
+        "&lt;b&gt;|FE \u2212 RE|:&lt;/b&gt; &lt;span class='", h_class, "'&gt;",
+        round(hausman, 3), "&lt;/span&gt;&lt;br&gt;",
+        "&lt;span class='", h_class, "'&gt;", h_label, "&lt;/span&gt;"
       ))
     )
   })
 }
 
 shinyApp(ui, server)</code></pre>
-</section>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>NN on X, confounding = 1.5:</strong> matching works well. The purple lines connecting matched pairs are short — each treated unit finds a similar control. The matching estimate is close to the true ATE.</li>
-<li><strong>Switch to caliper:</strong> some treated units in the tails can’t find a close match and get dropped. “Pairs matched” drops below the total. The remaining matches are better quality (shorter distances).</li>
-<li><strong>Confounding = 3:</strong> treated and control units are far apart in X space. Match distances increase, match quality degrades, and the estimate gets noisier. This is the <strong>overlap problem</strong> — matching can’t fix it.</li>
-<li><strong>Small sample (n = 200) with high confounding:</strong> matching struggles because there aren’t enough control units in the right part of the covariate space. Regression adjustment extrapolates, which helps here but can hurt elsewhere (see the <a href="regression-adjustment.html">regression adjustment</a> page).</li>
-<li><strong>NN on propensity score:</strong> matches on the estimated <span class="math inline">\(e(X)\)</span> instead of <span class="math inline">\(X\)</span> directly. With one confounder, results are similar. The advantage appears with multiple covariates (not shown here).</li>
+<li><strong>Correlation = 0:</strong> group effects are independent of treatment. All three estimators work, but RE and FE are close to the truth while pooled OLS may show some bias. The |FE − RE| gap is small — Hausman says RE is fine.</li>
+<li><strong>Correlation = 1.5:</strong> now groups with higher <span class="math inline">\(\alpha_j\)</span> are more likely to get treated. Pooled OLS is badly biased. <strong>FE still works</strong> (it eliminates <span class="math inline">\(\alpha_j\)</span>). <strong>RE is biased</strong> — it uses between-group variation that’s contaminated by the correlation. The |FE − RE| gap is large — Hausman says use FE.</li>
+<li><strong>Correlation = 3:</strong> extreme confounding. RE is nearly as biased as pooled OLS. FE remains unbiased. This is why FE is the default in applied economics.</li>
+<li><strong>Small groups (5 obs per group):</strong> FE is noisier because it uses less data. RE is more precise <em>when valid</em> — that’s the efficiency gain. But precision doesn’t help if the estimate is biased.</li>
 </ul>
 <hr>
 </section>
 </section>
-<section id="how-does-matching-compare-to-other-tools" class="level2">
-<h2 class="anchored" data-anchor-id="how-does-matching-compare-to-other-tools">How does matching compare to other tools?</h2>
+<section id="the-hausman-test" class="level2">
+<h2 class="anchored" data-anchor-id="the-hausman-test">The Hausman test</h2>
+<p>You’ve seen it informally in the simulation: when |FE − RE| is large, RE is suspect. The <strong>Hausman test</strong> formalizes this.</p>
+<section id="the-logic" class="level3">
+<h3 class="anchored" data-anchor-id="the-logic">The logic</h3>
+<p>Under the RE assumption (<span class="math inline">\(\alpha_j\)</span> uncorrelated with <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span>):</p>
+<ul>
+<li>FE is <strong>consistent</strong> (unbiased) but <strong>inefficient</strong> (throws away between-group info)</li>
+<li>RE is <strong>consistent</strong> <em>and</em> <strong>efficient</strong> (uses all the data)</li>
+<li>So FE and RE should give <strong>approximately the same answer</strong></li>
+</ul>
+<p>If the RE assumption fails:</p>
+<ul>
+<li>FE is still <strong>consistent</strong> (within-group variation is clean)</li>
+<li>RE is <strong>inconsistent</strong> (between-group variation is contaminated)</li>
+<li>FE and RE will <strong>diverge</strong></li>
+</ul>
+<p>The Hausman test exploits this:</p>
+<p><span class="math display">\[H = (\hat{\tau}_{FE} - \hat{\tau}_{RE})' \, [\text{Var}(\hat{\tau}_{FE}) - \text{Var}(\hat{\tau}_{RE})]^{-1} \, (\hat{\tau}_{FE} - \hat{\tau}_{RE})\]</span></p>
+<p>Under <span class="math inline">\(H_0\)</span> (RE is valid), <span class="math inline">\(H \sim \chi^2_k\)</span> where <span class="math inline">\(k\)</span> is the number of coefficients being compared.</p>
+<ul>
+<li><strong>Large <span class="math inline">\(H\)</span> (small p-value):</strong> reject <span class="math inline">\(H_0\)</span>. FE and RE disagree → the RE assumption fails → use FE.</li>
+<li><strong>Small <span class="math inline">\(H\)</span> (large p-value):</strong> fail to reject. FE and RE agree → RE assumption is plausible → RE is OK (and more efficient).</li>
+</ul>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Example: returns to education.</strong> You have panel data on workers observed over multiple years. You want the causal effect of an extra year of education on wages.</p>
+<ul>
+<li><strong>RE assumes:</strong> workers who get more education don’t have systematically higher unobserved ability. Ability is random across education levels.</li>
+<li><strong>FE says:</strong> doesn’t matter — I’ll control for each worker’s fixed ability by only using within-person wage changes when they get more education.</li>
+</ul>
+<p>You run both. FE gives <span class="math inline">\(\hat{\tau} = 0.06\)</span> (6% wage increase per year of education). RE gives <span class="math inline">\(\hat{\tau} = 0.10\)</span> (10%). The gap is large.</p>
+<p><strong>Hausman test:</strong> <span class="math inline">\(H = 15.3\)</span>, <span class="math inline">\(p &lt; 0.001\)</span>. Reject <span class="math inline">\(H_0\)</span>. The RE estimate is inflated because high-ability workers get more education <em>and</em> earn more — classic selection bias at the group level. <strong>Use FE.</strong></p>
+<p>The FE estimate (6%) is the return to education <em>holding ability constant</em>. The RE estimate (10%) is contaminated by ability differences.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="hausman-test-in-practice" class="level3">
+<h3 class="anchored" data-anchor-id="hausman-test-in-practice">Hausman test in practice</h3>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Tool</th>
-<th>Strategy</th>
-<th>Vulnerability</th>
+<th>Result</th>
+<th>Interpretation</th>
+<th>Action</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Matching</strong></td>
-<td>Find similar units</td>
-<td>Bad matches when overlap is poor</td>
+<td><span class="math inline">\(p &lt; 0.05\)</span></td>
+<td>FE and RE significantly differ</td>
+<td>Use FE (RE assumption violated)</td>
 </tr>
 <tr class="even">
-<td><strong><a href="regression-adjustment.html">Regression adj.</a></strong></td>
-<td>Model the outcome</td>
-<td>Wrong functional form</td>
-</tr>
-<tr class="odd">
-<td><strong><a href="ipw.html">IPW</a></strong></td>
-<td>Reweight by propensity score</td>
-<td>Extreme weights</td>
-</tr>
-<tr class="even">
-<td><strong><a href="entropy-balancing.html">Entropy Balancing</a></strong></td>
-<td>Balance moments exactly</td>
-<td>Missing higher-order moments</td>
-</tr>
-<tr class="odd">
-<td><strong><a href="doubly-robust.html">Doubly Robust</a></strong></td>
-<td>Combine outcome model + PS</td>
-<td>Fails only if <em>both</em> models wrong</td>
+<td><span class="math inline">\(p &gt; 0.05\)</span></td>
+<td>No significant difference</td>
+<td>RE is OK — more efficient</td>
 </tr>
 </tbody>
 </table>
-<p>All rely on the same identification assumption (CIA). They differ in how they use <span class="math inline">\(X\)</span> to make the comparison fair.</p>
+<p><strong>Caveats:</strong></p>
+<ul>
+<li>The Hausman test has low power with small samples — it may fail to reject even when RE is biased.</li>
+<li>A non-rejection doesn’t <em>prove</em> RE is valid. It means you can’t <em>detect</em> the violation with your data.</li>
+<li>In practice, most applied economists default to FE for causal questions and use the Hausman test as a check, not as the primary decision tool.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="connection-to-other-methods" class="level2">
+<h2 class="anchored" data-anchor-id="connection-to-other-methods">Connection to other methods</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>What it controls for</th>
+<th>Assumption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Fixed effects</strong></td>
+<td>All time-invariant group confounders</td>
+<td>No time-varying confounders</td>
+</tr>
+<tr class="even">
+<td><strong>Random effects</strong></td>
+<td>Group-level variation (partial pooling)</td>
+<td>Group effects uncorrelated with X</td>
+</tr>
+<tr class="odd">
+<td><strong><a href="did.html">DID</a></strong></td>
+<td>Group FE + time FE</td>
+<td>Parallel trends</td>
+</tr>
+<tr class="even">
+<td><strong><a href="../bayesian-inference/hierarchical.html">Hierarchical models</a></strong></td>
+<td>Bayesian version of RE</td>
+<td>Same as RE, with priors</td>
+</tr>
+<tr class="odd">
+<td><strong><a href="../stats-course/clustered-se.html">Clustered SEs</a></strong></td>
+<td>Not a model — fixes standard errors</td>
+<td>Doesn’t change point estimates</td>
+</tr>
+</tbody>
+</table>
+<p><strong>FE is an identification strategy.</strong> It tells you <em>why</em> your comparison is valid (within-group variation eliminates group-level confounders). RE is a modeling assumption that may or may not hold. When in doubt, FE is the conservative choice for causal inference.</p>
 <hr>
 </section>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
 <ul>
-<li><p><strong>Abadie &amp; Imbens (2006)</strong> showed that nearest-neighbor matching is <strong>not <span class="math inline">\(\sqrt{n}\)</span>-consistent</strong> — its convergence rate is slower than parametric estimators when matching on more than one continuous covariate. The bias from imperfect matches doesn’t vanish fast enough. Their <strong>bias-corrected matching</strong> estimator fixes this by running a regression within each matched pair to adjust for the remaining covariate difference.</p></li>
-<li><p><strong>Propensity score matching</strong> was proposed by <strong>Rosenbaum &amp; Rubin (1983)</strong>, who proved that matching on the scalar <span class="math inline">\(e(X) = P(D=1 \mid X)\)</span> is sufficient for removing confounding — you don’t need to match on every covariate separately. This was a breakthrough because it collapsed the high-dimensional matching problem to one dimension.</p></li>
-<li><p><strong>King &amp; Nielsen (2019)</strong> argued that propensity score matching can paradoxically <em>increase</em> imbalance and model dependence. Their critique centers on the fact that exact PS matches don’t guarantee covariate balance — two units with the same propensity score can have very different covariate values.</p></li>
+<li><p>The Hausman test was introduced by <strong>Jerry Hausman (1978)</strong> in one of the most cited papers in econometrics. The general principle extends beyond FE/RE: any time you have a consistent-but-inefficient estimator and an efficient-but-possibly-inconsistent estimator, you can compare them. If they agree, the efficient one is probably fine.</p></li>
+<li><p><strong>Mundlak (1978)</strong> showed a clever alternative: add the group means <span class="math inline">\(\bar{X}_j\)</span> as regressors in the RE model. If the coefficient on <span class="math inline">\(\bar{X}_j\)</span> is significant, the RE assumption is violated (same information as the Hausman test, but easier to implement and interpret). This is called the <strong>correlated random effects</strong> approach.</p></li>
+<li><p>In the machine learning world, random effects are closely related to <strong>mixed-effects models</strong> (e.g., <code>lme4</code> in R). The terminology differs across fields: what economists call “fixed effects” (unit dummies), statisticians sometimes call “fixed effects” too, but the random effects tradition is much more developed in biostatistics and multilevel modeling (Raudenbush &amp; Bryk, 2002).</p></li>
 </ul>
 
 
