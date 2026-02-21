@@ -273,6 +273,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#the-formula" id="toc-the-formula" class="nav-link active" data-scroll-target="#the-formula">The formula</a></li>
+  <li><a href="#why-each-piece-exists" id="toc-why-each-piece-exists" class="nav-link" data-scroll-target="#why-each-piece-exists">Why each piece exists</a></li>
   <li><a href="#the-medical-test-example" id="toc-the-medical-test-example" class="nav-link" data-scroll-target="#the-medical-test-example">The medical test example</a>
   <ul class="collapse">
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
@@ -313,6 +314,45 @@ window.Quarto = {
 <p><span class="math display">\[P(H \mid D) = \frac{P(D \mid H) \cdot P(H)}{P(D)}\]</span></p>
 <p>In words:</p>
 <p><span class="math display">\[\text{Posterior} = \frac{\text{Likelihood} \times \text{Prior}}{\text{Evidence}}\]</span></p>
+</section>
+<section id="why-each-piece-exists" class="level2">
+<h2 class="anchored" data-anchor-id="why-each-piece-exists">Why each piece exists</h2>
+<p>Every term in Bayes’ theorem does a specific job. Drop any one and the reasoning breaks:</p>
+<p><strong>Prior — <span class="math inline">\(P(H)\)</span>:</strong> What you believe before seeing data. Without it, you’re implicitly assuming all hypotheses are equally likely, which is often absurd. The medical test below makes this vivid: the disease has a 0.1% base rate. Ignoring that makes you think a positive test means a 99% chance of being sick. The prior encodes that the disease is rare — which is why the real answer is 9%.</p>
+<p><strong>Likelihood — <span class="math inline">\(P(D \mid H)\)</span>:</strong> How well the hypothesis explains the data you actually observed. This is the same ingredient frequentists use — the data model. Without it, your beliefs never contact reality. The likelihood is what makes Bayesian inference empirical rather than just opinion.</p>
+<p><strong>Evidence — <span class="math inline">\(P(D)\)</span>:</strong> The total probability of seeing this data under <em>all</em> hypotheses. It’s a normalizing constant — it ensures the posterior is a valid probability distribution (sums/integrates to 1). You often don’t need to compute it directly (conjugate models and MCMC both avoid it), but conceptually it makes the comparison fair across hypotheses.</p>
+<p><strong>Posterior — <span class="math inline">\(P(H \mid D)\)</span>:</strong> The answer. Your updated belief after seeing data. Neither the prior nor the likelihood alone gives you this. The prior ignores data; the likelihood ignores context. The posterior combines both.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 59%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Drop this</th>
+<th>What goes wrong</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Prior</td>
+<td>You get MLE — no regularization, overfits with small samples, can’t express “this is rare”</td>
+</tr>
+<tr class="even">
+<td>Likelihood</td>
+<td>Pure opinion — beliefs never update with evidence</td>
+</tr>
+<tr class="odd">
+<td>Evidence</td>
+<td>Posterior isn’t a proper distribution — can’t compare hypotheses on equal footing</td>
+</tr>
+<tr class="even">
+<td>Posterior</td>
+<td>You have ingredients but no answer — flour and eggs but no cake</td>
+</tr>
+</tbody>
+</table>
+<p>The two simulations below let you feel this. In the medical test, the prior (base rate) is the piece most people forget. In the coin-flip, try a flat prior (<span class="math inline">\(\alpha = \beta = 1\)</span>) and the posterior equals the likelihood — the prior contributes nothing. Set a strong prior and few flips — the posterior barely moves from the prior. You need both pieces pulling on each other.</p>
 <p>That looks abstract. Let’s make it concrete.</p>
 </section>
 <section id="the-medical-test-example" class="level2">
