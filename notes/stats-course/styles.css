@@ -62,6 +62,16 @@ div.callout.callout-note.callout-style-simple {
   border-radius: 4px;
 }
 
+/* Example callouts (light blue) */
+div.callout.callout-tip.callout-style-simple {
+  background: #ebf5fb !important;
+  border-left: 4px solid #3498db !important;
+  border-top: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+  border-radius: 4px;
+}
+
 /* Narrower right-side TOC */
 #quarto-margin-sidebar {
   max-width: 180px;

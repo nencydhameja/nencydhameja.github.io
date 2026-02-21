@@ -304,6 +304,16 @@ window.Quarto = {
 <li><a href="ipw.html">IPW</a> needs the <strong>propensity score model</strong> <span class="math inline">\(P(D = 1 \mid X)\)</span> to be correct.</li>
 </ul>
 <p>What if you’re not sure which one you got right? <strong>Doubly robust (DR) estimation</strong> combines both models and gives you a consistent estimate if <strong>either</strong> one is correctly specified.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Example: vaccine effectiveness.</strong> You want to know if a vaccine reduces hospitalization. You model <strong>who gets vaccinated</strong> (propensity score: older people and healthcare workers vaccinate more) and you model <strong>hospitalization risk</strong> (outcome model: depends on age, comorbidities, obesity). DR combines both. If your outcome model misses a nonlinear age effect but your propensity score is right — you’re fine. If your propensity score ignores rural vs urban but your outcome model captures it — also fine. You only fail if <em>both</em> models are wrong simultaneously.</p>
+</div>
+</div>
+</div>
 <section id="the-aipw-estimator" class="level3">
 <h3 class="anchored" data-anchor-id="the-aipw-estimator">The AIPW estimator</h3>
 <p>The most common DR estimator is <strong>Augmented Inverse Probability Weighting (AIPW)</strong>:</p>

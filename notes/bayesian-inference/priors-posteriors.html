@@ -249,6 +249,16 @@ window.Quarto = {
 <li><strong>Combine them</strong> — Bayes’ theorem multiplies the prior by the likelihood to give you the <strong>posterior</strong>: your updated belief <em>after</em> seeing the data.</li>
 </ol>
 <p><span class="math display">\[\underbrace{P(\theta \mid \text{data})}_{\text{posterior}} \propto \underbrace{P(\text{data} \mid \theta)}_{\text{likelihood}} \times \underbrace{P(\theta)}_{\text{prior}}\]</span></p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Example: diagnosing a headache.</strong> A doctor sees a patient with a headache. Before any tests, her <strong>prior</strong> is: 99.9% chance it’s a tension headache, 0.1% chance it’s a brain tumor (base rates from experience). Then an MRI shows something unusual — that’s the <strong>data</strong>. The posterior updates: maybe now it’s 95% tension headache, 5% tumor. The prior didn’t disappear — it got updated by the evidence. A second MRI (more data) updates it further. With enough evidence, even a strong prior gets overwhelmed. That’s Bayesian inference: start with what you know, update with what you see.</p>
+</div>
+</div>
+</div>
 <p>The simulation below makes this tangible. You’re estimating the true mean of a normal distribution. Set a prior, generate data, and watch the posterior form.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 600

@@ -254,6 +254,16 @@ window.Quarto = {
 <li><strong>Markov Chain:</strong> a sequence of random values where each value depends only on the previous one — not on the full history. The “chain” is a random walk through parameter space, where each step proposes a new value based on where you currently are.</li>
 </ul>
 <p>Put them together: <strong>MCMC constructs a Markov chain whose long-run distribution equals the posterior.</strong> Run it long enough, and the samples you collect are (approximately) draws from <span class="math inline">\(p(\theta \mid y)\)</span> — even though you never computed that distribution directly.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>The blindfolded hiker.</strong> Imagine you’re blindfolded on a hilly landscape and want to map out the shape of a mountain. You can’t see the whole thing, but at each step you can feel whether the ground goes up or down. You take a step — if it’s uphill (higher probability), you go. If it’s downhill, you <em>might</em> go (sometimes you need to cross valleys to find higher peaks). After thousands of steps, plot everywhere you’ve been on a map — the places you visited most often are the peaks. You’ve mapped the mountain without ever seeing it. That’s MCMC.</p>
+</div>
+</div>
+</div>
 <section id="watch-it-happen" class="level3">
 <h3 class="anchored" data-anchor-id="watch-it-happen">Watch it happen</h3>
 <p>The chain wanders through parameter space. Early on, the histogram of visited values looks nothing like the target. But as samples accumulate, the histogram converges to the true posterior — the chain has “learned” the distribution just by random walking.</p>

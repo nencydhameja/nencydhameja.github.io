@@ -300,6 +300,16 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
 <p>You want the causal effect of a treatment, and you believe <a href="selection-observables.html">selection on observables</a> holds — all confounders are observed. <strong>Matching</strong> implements this by finding, for each treated unit, a control unit that looks similar on covariates <span class="math inline">\(X\)</span>.</p>
 <p>The logic is simple: if two people have the same <span class="math inline">\(X\)</span>, and one got treated while the other didn’t, the difference in their outcomes estimates the treatment effect for that value of <span class="math inline">\(X\)</span>. Average across all matched pairs and you get the ATT.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Example: job training programs.</strong> The government runs a job training program. People who enroll earn more afterward — but is that the program, or did motivated people self-select? Matching says: for each enrollee, find a non-enrollee with the same age, education, prior income, and industry. Compare <em>their</em> earnings. If the enrollee still earns more after matching on everything observable, that’s the program’s effect. This is exactly what <strong>LaLonde (1986)</strong> studied — and found that naive comparisons badly overestimated the program’s impact.</p>
+</div>
+</div>
+</div>
 <p><span class="math display">\[\hat{\tau}_{match} = \frac{1}{N_1} \sum_{i: D_i=1} \Big[ Y_i - Y_{j(i)} \Big]\]</span></p>
 <p>where <span class="math inline">\(j(i)\)</span> is the control unit matched to treated unit <span class="math inline">\(i\)</span>.</p>
 <section id="types-of-matching" class="level3">

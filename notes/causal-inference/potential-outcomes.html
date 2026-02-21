@@ -329,6 +329,16 @@ window.Quarto = {
 <p>This is the <strong>fundamental decomposition</strong>:</p>
 <p><span class="math display">\[\text{Difference in means} = \text{ATT} + \text{Selection bias}\]</span></p>
 <p>The <strong>selection bias</strong> term asks: would the treated group have had different outcomes <em>even without treatment</em>? If sicker people seek treatment, then <span class="math inline">\(E[Y(0) \mid D=1] &lt; E[Y(0) \mid D=0]\)</span> — the treated group would have done worse anyway — and the naive comparison underestimates the effect.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Example: the college earnings premium.</strong> People who go to college earn more than those who don’t. But is that because college <em>causes</em> higher earnings, or because the same people who go to college — smart, motivated, from wealthier families — would have earned more anyway? That’s selection bias: <span class="math inline">\(E[Y(0) \mid D=1] &gt; E[Y(0) \mid D=0]\)</span>. College-goers would have out-earned non-college-goers <em>even without college</em>. The naive earnings gap overestimates the causal effect of college because it bundles the true effect with the selection bias.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="under-random-assignment-selection-bias-0" class="level3">
 <h3 class="anchored" data-anchor-id="under-random-assignment-selection-bias-0">Under random assignment, selection bias = 0</h3>

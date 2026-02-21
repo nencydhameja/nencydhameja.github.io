@@ -248,6 +248,16 @@ window.Quarto = {
 <li><strong>Complete pooling:</strong> ignore groups entirely and estimate a single grand mean. This throws away real group differences.</li>
 </ul>
 <p>Neither is satisfying. No pooling overfits to noise. Complete pooling underfits by ignoring structure. You want something in between.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Example: Uber driver ratings.</strong> Uber has millions of drivers. A new driver with 3 rides and a perfect 5.0 rating — is she really the best driver on the platform? A veteran with 2,000 rides and a 4.7 — is he worse? Common sense says no: the 5.0 is mostly luck (small sample), and the 4.7 is a reliable signal (large sample). Partial pooling formalizes this: shrink the new driver’s 5.0 toward the platform average (say, 4.8), but barely touch the veteran’s 4.7. Every driver’s estimate improves — especially the ones with few rides.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="hierarchical-models-partial-pooling" class="level2">
 <h2 class="anchored" data-anchor-id="hierarchical-models-partial-pooling">Hierarchical models: partial pooling</h2>
