@@ -151,7 +151,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mcmc.html">Beyond Conjugates</a></li><li class="breadcrumb-item"><a href="./bayesian-regression.html">Bayesian Regression</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bayes-theorem.html">Foundations</a></li><li class="breadcrumb-item"><a href="./bayesian-regression.html">Bayesian Regression</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -182,34 +182,10 @@ window.Quarto = {
  <span class="menu-text">Welcome</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./bayes-theorem.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bayes’ Theorem</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./priors-posteriors.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Priors &amp; Posteriors</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./shrinkage.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shrinkage</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./bayes-vs-freq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bayesian vs Frequentist</span></a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Beyond Conjugates</span></a>
+ <span class="menu-text">Foundations</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -217,14 +193,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./mcmc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">MCMC</span></a>
+  <a href="./bayes-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayes’ Theorem</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./hierarchical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Hierarchical Models</span></a>
+  <a href="./priors-posteriors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Priors &amp; Posteriors</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes-vs-freq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian vs Frequentist</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -238,12 +220,52 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Putting It Together</span></a>
+ <span class="menu-text">Computation</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mcmc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MCMC</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Hierarchical Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./shrinkage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shrinkage</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hierarchical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hierarchical Models</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Model Checking</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./model-comparison.html" class="sidebar-item-text sidebar-link">
@@ -256,10 +278,21 @@ window.Quarto = {
  <span class="menu-text">Posterior Predictive Checks</span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Application</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./application.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Application: Returns to Education</span></a>
+ <span class="menu-text">Returns to Education</span></a>
   </div>
 </li>
       </ul>
@@ -282,6 +315,7 @@ window.Quarto = {
   <li><a href="#credible-intervals-vs-confidence-intervals" id="toc-credible-intervals-vs-confidence-intervals" class="nav-link" data-scroll-target="#credible-intervals-vs-confidence-intervals">Credible intervals vs confidence intervals</a></li>
   <li><a href="#the-prior-as-regularization" id="toc-the-prior-as-regularization" class="nav-link" data-scroll-target="#the-prior-as-regularization">The prior as regularization</a>
   <ul class="collapse">
+  <li><a href="#map-vs-mle-where-the-prior-shows-up-in-optimization" id="toc-map-vs-mle-where-the-prior-shows-up-in-optimization" class="nav-link" data-scroll-target="#map-vs-mle-where-the-prior-shows-up-in-optimization">MAP vs MLE: where the prior shows up in optimization</a></li>
   <li><a href="#simulation-repeated-experiments-ci-vs-cri-coverage" id="toc-simulation-repeated-experiments-ci-vs-cri-coverage" class="nav-link" data-scroll-target="#simulation-repeated-experiments-ci-vs-cri-coverage">Simulation: Repeated experiments — CI vs CrI coverage</a></li>
   <li><a href="#things-to-try-1" id="toc-things-to-try-1" class="nav-link" data-scroll-target="#things-to-try-1">Things to try</a></li>
   </ul></li>
@@ -293,7 +327,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mcmc.html">Beyond Conjugates</a></li><li class="breadcrumb-item"><a href="./bayesian-regression.html">Bayesian Regression</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bayes-theorem.html">Foundations</a></li><li class="breadcrumb-item"><a href="./bayesian-regression.html">Bayesian Regression</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Bayesian Regression</h1>
 </div>
@@ -648,6 +682,74 @@ shinyApp(ui, server)</code></pre>
 </div>
 </div>
 <p>A tighter prior (smaller <span class="math inline">\(\sigma_0^2\)</span>) implies stronger regularization (larger <span class="math inline">\(\lambda\)</span>). This is why Bayesian regression with an informative prior produces <a href="shrinkage.html">shrinkage</a> — it pulls estimates toward the prior mean, just like ridge regression pulls coefficients toward zero.</p>
+<section id="map-vs-mle-where-the-prior-shows-up-in-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="map-vs-mle-where-the-prior-shows-up-in-optimization">MAP vs MLE: where the prior shows up in optimization</h3>
+<p>Three ways to estimate <span class="math inline">\(\beta\)</span>, each using a different objective:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>MLE</strong></th>
+<th><strong>MAP</strong></th>
+<th><strong>Full Bayesian</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Objective</strong></td>
+<td><span class="math inline">\(\arg\max_\beta \; p(y \mid \beta)\)</span></td>
+<td><span class="math inline">\(\arg\max_\beta \; p(y \mid \beta)\,p(\beta)\)</span></td>
+<td>Compute <span class="math inline">\(p(\beta \mid y)\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>What you get</strong></td>
+<td>Point estimate</td>
+<td>Point estimate</td>
+<td>Entire distribution</td>
+</tr>
+<tr class="odd">
+<td><strong>Uncertainty?</strong></td>
+<td>Only via SE / asymptotics</td>
+<td>No (just the peak)</td>
+<td>Yes — built in</td>
+</tr>
+<tr class="even">
+<td><strong>Equivalent to</strong></td>
+<td>OLS</td>
+<td>Ridge / LASSO</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>In log space the relationship is transparent:</p>
+<p><span class="math display">\[\log p(\beta \mid y) = \underbrace{\log p(y \mid \beta)}_{\text{log-likelihood}} + \underbrace{\log p(\beta)}_{\text{log-prior}} - \text{const}\]</span></p>
+<ul>
+<li><strong>MLE</strong> maximizes the first term alone.</li>
+<li><strong>MAP</strong> maximizes the first <em>plus</em> the second — the prior acts as a penalty.</li>
+</ul>
+<p>What does that penalty look like?</p>
+<ul>
+<li><strong>Normal prior</strong> <span class="math inline">\(\beta \sim N(0, \sigma_0^2)\)</span>: <span class="math inline">\(\log p(\beta) = -\beta^2 / 2\sigma_0^2 + \text{const}\)</span> — that’s the <strong>ridge</strong> (<span class="math inline">\(L_2\)</span>) penalty.</li>
+<li><strong>Laplace prior</strong> <span class="math inline">\(\beta \sim \text{Laplace}(0, b)\)</span>: <span class="math inline">\(\log p(\beta) = -|\beta| / b + \text{const}\)</span> — that’s the <strong>LASSO</strong> (<span class="math inline">\(L_1\)</span>) penalty.</li>
+</ul>
+<p>So MAP = regularized MLE. Full Bayesian = MAP + uncertainty. The posterior mean, posterior median, and MAP (posterior mode) are three different summaries of the same posterior distribution. For symmetric posteriors (like the normal-normal case in the simulation above) they coincide, but in general they can differ.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Connecting to the simulation above:</strong> the OLS line is the MLE. For the symmetric normal posterior in this simulation, the posterior mean essentially equals the MAP. Try a strong prior (SD = 0.3) and watch both get pulled toward the prior mean — that’s the ridge penalty at work. Then set the prior SD to 5 and watch MAP converge to MLE — a vague prior means almost no penalty.</p>
+</div>
+</div>
+</div>
+</section>
 <section id="simulation-repeated-experiments-ci-vs-cri-coverage" class="level3">
 <h3 class="anchored" data-anchor-id="simulation-repeated-experiments-ci-vs-cri-coverage">Simulation: Repeated experiments — CI vs CrI coverage</h3>
 <p>Run the same experiment many times. Each repetition generates new data from the true model, computes both a frequentist CI and a Bayesian CrI, and checks whether each contains the true <span class="math inline">\(\beta\)</span>. The prior is centered at 0 (like ridge regression).</p>
