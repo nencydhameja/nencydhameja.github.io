@@ -34,7 +34,7 @@ in economics and political science (2014–2024).
 }
 </style>
 
-<div class="chart-wrapper" style="max-width: 800px; margin: 0 auto;">
+<div class="chart-wrapper" style="max-width: 800px;">
   <iframe
     src="/assets/projects/diversity/treatment_trend.html"
     title="Treatment Trend"
