@@ -374,8 +374,11 @@ ui &lt;- fluidPage(
     mainPanel(
       width = 9,
       fluidRow(
-        column(6, plotOutput("posterior_plot", height = "440px")),
-        column(6, plotOutput("sensitivity_plot", height = "440px"))
+        column(6, plotOutput("scatter_plot", height = "300px")),
+        column(6, plotOutput("posterior_plot", height = "300px"))
+      ),
+      fluidRow(
+        column(12, plotOutput("sensitivity_plot", height = "280px"))
       )
     )
   )
@@ -452,6 +455,7 @@ server &lt;- function(input, output, session) {
     }
 
     list(educ = educ, log_wage = log_wage, exper = exper,
+         beta_ols_all = beta_ols, se_ols_all = se_ols,
          b_ols = b_ols, se_b = se_b, ci_lo = ci_lo, ci_hi = ci_hi,
          prior_mean = prior_mean, prior_sd = prior_sd,
          post_mean = post_mean, post_sd = post_sd,
@@ -463,6 +467,45 @@ server &lt;- function(input, output, session) {
          sens_lo = sens_lo, sens_hi = sens_hi)
   })
 
+  # --- Left: scatterplot with OLS and Bayesian regression lines ---
+  output$scatter_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    plot(d$educ, d$log_wage, pch = 16, col = "#2c3e5040", cex = 0.9,
+         xlab = "Years of education", ylab = "log(wage)",
+         main = "Data + Regression Lines")
+
+    # Predict at education values, holding experience at mean
+    educ_seq &lt;- seq(min(d$educ), max(d$educ), length.out = 100)
+    mean_exp &lt;- mean(d$exper)
+
+    # OLS fitted line (red)
+    ols_pred &lt;- d$beta_ols_all[1] + d$beta_ols_all[2] * educ_seq +
+                d$beta_ols_all[3] * mean_exp + d$beta_ols_all[4] * mean_exp^2
+    lines(educ_seq, ols_pred, col = "#e74c3c", lwd = 2.5)
+
+    # Bayesian fitted line (blue) — same intercept/exper coeffs, Bayesian educ slope
+    bayes_pred &lt;- d$beta_ols_all[1] + d$post_mean * educ_seq +
+                  d$beta_ols_all[3] * mean_exp + d$beta_ols_all[4] * mean_exp^2
+    lines(educ_seq, bayes_pred, col = "#3498db", lwd = 2.5)
+
+    # True line (green dashed)
+    true_pred &lt;- 1.0 + d$true_beta * educ_seq +
+                 0.03 * mean_exp - 0.0005 * mean_exp^2
+    lines(educ_seq, true_pred, col = "#27ae60", lwd = 2, lty = 2)
+
+    legend("topleft", bty = "n", cex = 0.8,
+           legend = c(
+             paste0("OLS: ", round(d$b_ols, 4)),
+             paste0("Bayesian: ", round(d$post_mean, 4)),
+             paste0("True: ", d$true_beta)
+           ),
+           col = c("#e74c3c", "#3498db", "#27ae60"),
+           lwd = c(2.5, 2.5, 2), lty = c(1, 1, 2))
+  })
+
+  # --- Right: posterior density with OLS comparison ---
   output$posterior_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
@@ -477,17 +520,17 @@ server &lt;- function(input, output, session) {
     lik_y   &lt;- dnorm(x_seq, d$b_ols, d$se_b)
     post_y  &lt;- dnorm(x_seq, d$post_mean, d$post_sd)
 
-    ylim &lt;- c(0, max(c(prior_y, lik_y, post_y)) * 1.15)
+    ylim &lt;- c(0, max(c(prior_y, lik_y, post_y)) * 1.25)
 
     plot(NULL, xlim = xlim, ylim = ylim,
          xlab = expression(beta[educ]),
          ylab = "Density",
-         main = expression("Posterior for " * beta[educ]))
+         main = expression("OLS vs Bayesian: " * beta[educ]))
 
     # Prior (red dashed)
     lines(x_seq, prior_y, col = "#e74c3c", lwd = 2, lty = 2)
 
-    # Likelihood (gray dotted)
+    # Likelihood / OLS (gray dotted)
     lines(x_seq, lik_y, col = "gray50", lwd = 2, lty = 3)
 
     # Posterior (blue filled)
@@ -498,23 +541,32 @@ server &lt;- function(input, output, session) {
     # True value
     abline(v = d$true_beta, lty = 2, col = "#27ae60", lwd = 1.5)
 
-    # CrI bracket
-    arrows(d$cri_lo, max(post_y) * 0.05, d$cri_hi, max(post_y) * 0.05,
-           code = 3, angle = 90, length = 0.05, lwd = 2, col = "#3498db")
-    text(d$post_mean, max(post_y) * 0.12, "95% CrI", cex = 0.75,
+    # OLS CI bracket (red)
+    y_ci &lt;- max(post_y) * 0.05
+    arrows(d$ci_lo, y_ci, d$ci_hi, y_ci,
+           code = 3, angle = 90, length = 0.04, lwd = 2, col = "#e74c3c")
+    text(d$b_ols, y_ci + max(post_y) * 0.07, "95% CI", cex = 0.7,
+         col = "#e74c3c", font = 2)
+
+    # Bayesian CrI bracket (blue)
+    y_cri &lt;- max(post_y) * 0.15
+    arrows(d$cri_lo, y_cri, d$cri_hi, y_cri,
+           code = 3, angle = 90, length = 0.04, lwd = 2, col = "#3498db")
+    text(d$post_mean, y_cri + max(post_y) * 0.07, "95% CrI", cex = 0.7,
          col = "#3498db", font = 2)
 
-    legend("topright", bty = "n", cex = 0.8,
-           legend = c("Prior", "Likelihood (OLS)",
+    legend("topright", bty = "n", cex = 0.75,
+           legend = c("Prior", "OLS (likelihood)",
                       "Posterior", expression("True " * beta[educ])),
            col = c("#e74c3c", "gray50", "#3498db", "#27ae60"),
            lwd = c(2, 2, 2.5, 1.5),
            lty = c(2, 3, 1, 2))
   })
 
+  # --- Bottom: sensitivity to prior strength ---
   output$sensitivity_plot &lt;- renderPlot({
     d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
+    par(mar = c(4.5, 4.5, 2.5, 1))
 
     ylim &lt;- range(c(d$sens_lo, d$sens_hi, d$b_ols, d$true_beta))
 
@@ -522,7 +574,7 @@ server &lt;- function(input, output, session) {
          lwd = 2.5, col = "#3498db",
          xlab = expression("Prior SD for " * beta[educ]),
          ylab = expression("Posterior mean of " * beta[educ]),
-         main = "Sensitivity to Prior Strength",
+         main = "Sensitivity: How Much Does the Prior Matter?",
          ylim = ylim)
 
     # CrI band
@@ -545,14 +597,14 @@ server &lt;- function(input, output, session) {
     abline(v = d$prior_sd, col = "#2c3e50", lwd = 1, lty = 3)
     points(d$prior_sd, d$post_mean, pch = 16, col = "#2c3e50", cex = 1.5)
 
-    legend("bottomright", bty = "n", cex = 0.8,
+    legend("bottomright", bty = "n", cex = 0.75,
            legend = c("Posterior mean", "95% CrI",
                       "OLS estimate", expression("True " * beta),
-                      "Prior mean", "Current prior SD"),
+                      "Prior mean", "You are here"),
            col = c("#3498db", "#3498db50", "#e74c3c",
                    "#27ae60", "#f39c12", "#2c3e50"),
-           lwd = c(2.5, 1.5, 1.5, 1.5, 1.5, 1),
-           lty = c(1, 2, 3, 2, 3, 3),
+           lwd = c(2.5, 1.5, 1.5, 1.5, 1.5, NA),
+           lty = c(1, 2, 3, 2, 3, NA),
            pch = c(NA, NA, NA, NA, NA, 16))
   })
 
