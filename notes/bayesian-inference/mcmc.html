@@ -802,6 +802,7 @@ shinyApp(ui, server)</code></pre>
 <section id="the-key-message" class="level2">
 <h2 class="anchored" data-anchor-id="the-key-message">The key message</h2>
 <p>MCMC lets you compute posteriors for <strong>any</strong> model — not just conjugate ones. Specify the likelihood and the prior, and the algorithm samples from the posterior. This is what makes Bayesian inference practical for real-world problems like <a href="hierarchical.html">hierarchical models</a>, where closed-form posteriors don’t exist.</p>
+<p>This is also the engine behind <a href="bayesian-regression.html">Bayesian regression</a>. When you type <code>bayes: reg y x</code> in Stata, it runs Metropolis-Hastings to sample from the posterior over regression coefficients — the same algorithm you just watched above, applied to a model you already know.</p>
 <p>Modern tools like <strong>Stan</strong>, <strong>JAGS</strong>, and <strong>PyMC</strong> automate this — you specify the model and they handle the sampling. But understanding the basics (proposal tuning, burn-in, convergence checks) helps you diagnose problems when things go wrong.</p>
 <hr>
 </section>

@@ -285,6 +285,7 @@ window.Quarto = {
 
 <section id="from-reg-y-x-to-bayesian-regression" class="level2">
 <h2 class="anchored" data-anchor-id="from-reg-y-x-to-bayesian-regression">From <code>reg y x</code> to Bayesian regression</h2>
+<p>On the <a href="mcmc.html">MCMC</a> page, you saw how to sample from any posterior — even when no closed-form solution exists. Now we apply that machinery to something familiar: regression.</p>
 <p>In Stata, you type <code>reg y x</code> and get a point estimate <span class="math inline">\(\hat{\beta}\)</span>, a standard error, and a 95% confidence interval. That’s OLS — it picks the single line that minimizes the sum of squared residuals.</p>
 <p>Bayesian regression starts from the same place (the same likelihood) but adds one ingredient: a <strong>prior distribution</strong> on <span class="math inline">\(\beta\)</span>. Instead of a single best-fit line, you get a full <strong>posterior distribution</strong> — a curve showing how plausible each value of <span class="math inline">\(\beta\)</span> is, given both the data and your prior beliefs.</p>
 <div class="callout callout-style-simple callout-tip no-icon">
