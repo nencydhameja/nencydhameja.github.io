@@ -423,10 +423,11 @@ shinyApp(ui, server)</code></pre>
 <ol type="1">
 <li>Start at some value <span class="math inline">\(\theta_0\)</span>.</li>
 <li><strong>Propose</strong> a new value <span class="math inline">\(\theta^*\)</span> from a proposal distribution <span class="math inline">\(q(\theta^* \mid \theta_t)\)</span> — typically <span class="math inline">\(\theta^* \sim N(\theta_t, \sigma_{prop}^2)\)</span>.</li>
-<li><strong>Compute the acceptance ratio:</strong> <span class="math display">\[\alpha = \min\left(1, \, \frac{p(\theta^* \mid y)}{p(\theta_t \mid y)}\right)\]</span></li>
+<li><strong>Compute the acceptance ratio:</strong> <span class="math display">\[\alpha = \min\left(1, \, \frac{p(\theta^* \mid y) \; q(\theta_t \mid \theta^*)}{p(\theta_t \mid y) \; q(\theta^* \mid \theta_t)}\right)\]</span></li>
 <li><strong>Accept</strong> <span class="math inline">\(\theta^*\)</span> with probability <span class="math inline">\(\alpha\)</span> (set <span class="math inline">\(\theta_{t+1} = \theta^*\)</span>). Otherwise stay: <span class="math inline">\(\theta_{t+1} = \theta_t\)</span>.</li>
 <li>Repeat.</li>
 </ol>
+<p>When the proposal is symmetric — e.g.&nbsp;<span class="math inline">\(q(\theta^* \mid \theta_t) = N(\theta_t, \sigma_{prop}^2)\)</span> — the proposal ratio <span class="math inline">\(q(\theta_t \mid \theta^*) / q(\theta^* \mid \theta_t) = 1\)</span> and the acceptance ratio simplifies to <span class="math inline">\(\alpha = \min\!\left(1,\; p(\theta^* \mid y) \,/\, p(\theta_t \mid y)\right)\)</span>. This is the original <strong>Metropolis</strong> algorithm. The Hastings (1970) generalization adds the proposal ratio so that asymmetric proposals can be used.</p>
 <p><strong>Key insight:</strong> you never need to compute the normalizing constant <span class="math inline">\(p(y) = \int p(y \mid \theta) \, p(\theta) \, d\theta\)</span>. The ratio <span class="math inline">\(p(\theta^* \mid y) / p(\theta_t \mid y)\)</span> cancels it out. You only need to evaluate the <strong>unnormalized posterior</strong> — the numerator of Bayes’ theorem.</p>
 <p>After enough iterations, the chain converges to the posterior distribution. The samples <span class="math inline">\(\theta_1, \theta_2, \ldots\)</span> are (correlated) draws from <span class="math inline">\(p(\theta \mid y)\)</span>.</p>
 <section id="simulation-1-metropolis-hastings-in-action" class="level3">
