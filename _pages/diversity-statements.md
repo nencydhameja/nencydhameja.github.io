@@ -46,7 +46,7 @@ in economics and political science (2014–2024).
   </iframe>
 </div>
 
-<div class="chart-wrapper" style="margin-top: 24px;">
+<div class="chart-wrapper" style="max-width: 1000px; margin-top: 24px;">
   <iframe
     src="/assets/projects/diversity/div_state_map.html"
     title="Interactive Map"
