@@ -264,6 +264,16 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Isn’t this just optimization?</strong> It looks like it — both climb hills. But an optimizer (like maximum likelihood in Stata’s <code>reg</code>) only goes uphill, finds the <strong>peak</strong>, and stops. That gives you one number: the best <span class="math inline">\(\hat\beta\)</span>. MCMC deliberately goes downhill sometimes (step 4 above: accepting worse proposals with some probability). That’s what lets it explore the full shape of the posterior — not just <em>where</em> the peak is, but how wide, how skewed, and whether there are multiple peaks. Turn off the downhill moves and you’d have a hill-climbing optimizer. Keep them on and you have a sampler.</p>
+</div>
+</div>
+</div>
 <section id="watch-it-happen" class="level3">
 <h3 class="anchored" data-anchor-id="watch-it-happen">Watch it happen</h3>
 <p>The chain wanders through parameter space. Early on, the histogram of visited values looks nothing like the target. But as samples accumulate, the histogram converges to the true posterior — the chain has “learned” the distribution just by random walking.</p>
