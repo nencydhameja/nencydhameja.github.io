@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -285,6 +320,7 @@ window.Quarto = {
   <li><a href="#when-does-did-fail" id="toc-when-does-did-fail" class="nav-link" data-scroll-target="#when-does-did-fail">When does DID fail?</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
+  <li><a href="#in-stata" id="toc-in-stata" class="nav-link" data-scroll-target="#in-stata">In Stata</a></li>
   </ul>
 </nav>
     </div>
@@ -479,9 +515,26 @@ shinyApp(ui, server)</code></pre>
 <li><strong>Set true effect = 0 with a differential trend:</strong> DID “finds” an effect that doesn’t exist. That’s how pre-trend violations create false positives.</li>
 <li>Look at the pre-treatment periods — if the lines aren’t parallel before treatment, you should worry.</li>
 </ul>
-
-
+<hr>
 </section>
+</section>
+<section id="in-stata" class="level2">
+<h2 class="anchored" data-anchor-id="in-stata">In Stata</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>* Classic 2x2 DID with interaction</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> outcome treated##post</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>* With controls</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> outcome treated##post x1 <span class="kw">x2</span>, <span class="kw">cluster</span>(state)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>* Event study (<span class="kw">test</span> parallel trends visually)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> outcome i.treated#i.<span class="fu">year</span> i.<span class="fu">year</span> i.treated, <span class="kw">cluster</span>(state)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>* Modern staggered DID (Callaway &amp; Sant'Anna 2021)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>* <span class="kw">ssc</span> install csdid</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>csdid outcome x1 <span class="kw">x2</span>, ivar(id) time(<span class="fu">year</span>) gvar(first_treated)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The coefficient on <code>treated#post</code> (or <code>1.treated#1.post</code>) is the DID estimate. Clustering standard errors at the group level (e.g., state) is standard practice.</p>
+
+
 </section>
 
 </main> <!-- /main -->

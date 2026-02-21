@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -287,6 +322,7 @@ window.Quarto = {
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
   <li><a href="#the-bandwidth-tradeoff" id="toc-the-bandwidth-tradeoff" class="nav-link" data-scroll-target="#the-bandwidth-tradeoff">The bandwidth tradeoff</a></li>
+  <li><a href="#in-stata" id="toc-in-stata" class="nav-link" data-scroll-target="#in-stata">In Stata</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -323,8 +359,18 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="sharp-vs-fuzzy">Sharp vs Fuzzy</h3>
 <ul>
 <li><strong>Sharp RDD:</strong> treatment is a deterministic function of the running variable. Score <span class="math inline">\(\geq\)</span> 80 → treated, period. Everyone complies.</li>
-<li><strong>Fuzzy RDD:</strong> the cutoff changes the <em>probability</em> of treatment, but not perfectly. Some people above the cutoff don’t take treatment, some below do. This is essentially an IV problem — the cutoff is the instrument.</li>
+<li><strong>Fuzzy RDD:</strong> the cutoff changes the <em>probability</em> of treatment, but not perfectly. Some people above the cutoff don’t take treatment, some below do. This is essentially an <a href="iv.html">IV</a> problem — the cutoff is the instrument.</li>
 </ul>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Why fuzzy RDD is IV.</strong> Map it directly: the instrument <span class="math inline">\(Z\)</span> is “above the cutoff” (yes/no), the endogenous variable <span class="math inline">\(D\)</span> is actually receiving treatment, and <span class="math inline">\(Y\)</span> is your outcome. The cutoff satisfies the IV assumptions — it’s relevant (shifts treatment probability), excludable (scoring 80 vs 79 doesn’t directly change outcomes), and monotone (crossing the cutoff doesn’t make anyone <em>less</em> likely to be treated). The fuzzy RDD estimate is the Wald estimator: <span class="math inline">\(\tau = \frac{\text{jump in outcome at cutoff}}{\text{jump in treatment probability at cutoff}}\)</span> — reduced form divided by first stage. Like IV, this estimates a <strong>LATE</strong> for compliers (people whose treatment status actually changes at the cutoff).</p>
+</div>
+</div>
+</div>
 </section>
 <section id="assumptions" class="level3">
 <h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
@@ -573,6 +619,25 @@ shinyApp(ui, server)</code></pre>
 </tbody>
 </table>
 <p>In practice, researchers use <strong>data-driven bandwidth selectors</strong> (Imbens &amp; Kalyanaraman 2012, Calonico, Cattaneo &amp; Titiunik 2014) that optimize this tradeoff. You should always check that your results are robust to different bandwidth choices.</p>
+<hr>
+</section>
+<section id="in-stata" class="level2">
+<h2 class="anchored" data-anchor-id="in-stata">In Stata</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>* Install rdrobust (Cattaneo, Idrobo &amp; Titiunik)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>* <span class="kw">ssc</span> install rdrobust</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>* Sharp RDD with optimal bandwidth</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>rdrobust outcome running_var, c(0)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>* RDD plot</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>rdplot outcome running_var, c(0)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>* Check <span class="kw">for</span> manipulation <span class="kw">of</span> the running <span class="kw">variable</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>rddensity running_var, c(0)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>* Fuzzy RDD (treatment is probabilistic <span class="fu">at</span> cutoff)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>rdrobust outcome running_var, c(0) fuzzy(treatment)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>rdrobust</code> handles bandwidth selection, bias correction, and robust standard errors automatically. Always show the <code>rdplot</code> — if you can’t see the jump visually, be skeptical of the estimate.</p>
 <hr>
 </section>
 <section id="did-you-know" class="level2">

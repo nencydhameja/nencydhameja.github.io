@@ -301,6 +301,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
+  <li><a href="#in-stata-identification-estimation-cheat-sheet" id="toc-in-stata-identification-estimation-cheat-sheet" class="nav-link" data-scroll-target="#in-stata-identification-estimation-cheat-sheet">In Stata: identification → estimation cheat sheet</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -833,6 +834,61 @@ shinyApp(ui, server)</code></pre>
 <p>The lesson: <strong>spend your energy on identification, not on the fanciest estimator.</strong></p>
 <hr>
 </section>
+</section>
+<section id="in-stata-identification-estimation-cheat-sheet" class="level2">
+<h2 class="anchored" data-anchor-id="in-stata-identification-estimation-cheat-sheet">In Stata: identification → estimation cheat sheet</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Identification strategy</th>
+<th>Stata command</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Random assignment</td>
+<td><code>reg outcome treatment</code></td>
+</tr>
+<tr class="even">
+<td>Selection on observables</td>
+<td><code>teffects ra (outcome x1 x2) (treatment)</code></td>
+</tr>
+<tr class="odd">
+<td>Inverse probability weighting</td>
+<td><code>teffects ipw (outcome) (treatment x1 x2)</code></td>
+</tr>
+<tr class="even">
+<td>Matching</td>
+<td><code>teffects nnmatch (outcome x1 x2) (treatment)</code></td>
+</tr>
+<tr class="odd">
+<td>Doubly robust</td>
+<td><code>teffects aipw (outcome x1 x2) (treatment x1 x2)</code></td>
+</tr>
+<tr class="even">
+<td>Difference-in-differences</td>
+<td><code>reg outcome treated##post, cluster(group)</code></td>
+</tr>
+<tr class="odd">
+<td>Instrumental variables</td>
+<td><code>ivregress 2sls outcome (treatment = instrument)</code></td>
+</tr>
+<tr class="even">
+<td>Regression discontinuity</td>
+<td><code>rdrobust outcome running_var, c(0)</code></td>
+</tr>
+<tr class="odd">
+<td>Fixed effects</td>
+<td><code>xtreg outcome treatment x1, fe cluster(id)</code></td>
+</tr>
+</tbody>
+</table>
+<p>The right column is the easy part. The hard part is arguing that the left column holds.</p>
+<hr>
 </section>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>

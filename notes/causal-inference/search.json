@@ -33,6 +33,17 @@
     ]
   },
   {
+    "objectID": "iv.html#in-stata",
+    "href": "iv.html#in-stata",
+    "title": "Instrumental Variables",
+    "section": "In Stata",
+    "text": "In Stata\n* Two-stage least squares\nivregress 2sls outcome x1 x2 (treatment = instrument)\n\n* First-stage F statistic (check relevance)\nestat firststage\n\n* Overidentification test (with multiple instruments)\nivregress 2sls outcome x1 (treatment = inst1 inst2)\nestat overid\n\n* Manually run the two stages (to see what's happening)\nreg treatment instrument x1 x2          /* first stage */\npredict treatment_hat, xb\nreg outcome treatment_hat x1 x2         /* second stage */\nThe first-stage F should be well above 10 (Staiger & Stock rule of thumb). If it’s weak, the IV estimate is unreliable — possibly more biased than OLS.",
+    "crumbs": [
+      "Methods",
+      "Instrumental Variables"
+    ]
+  },
+  {
     "objectID": "iv.html#did-you-know",
     "href": "iv.html#did-you-know",
     "title": "Instrumental Variables",
@@ -115,6 +126,17 @@
     "title": "Fixed vs Random Effects",
     "section": "Connection to other methods",
     "text": "Connection to other methods\n\n\n\nMethod\nWhat it controls for\nAssumption\n\n\n\n\nFixed effects\nAll time-invariant group confounders\nNo time-varying confounders\n\n\nRandom effects\nGroup-level variation (partial pooling)\nGroup effects uncorrelated with X\n\n\nDID\nGroup FE + time FE\nParallel trends\n\n\nHierarchical models\nBayesian version of RE\nSame as RE, with priors\n\n\nClustered SEs\nNot a model — fixes standard errors\nDoesn’t change point estimates\n\n\n\nFE is an identification strategy. It tells you why your comparison is valid (within-group variation eliminates group-level confounders). RE is a modeling assumption that may or may not hold. When in doubt, FE is the conservative choice for causal inference.",
+    "crumbs": [
+      "Panel Data",
+      "Fixed vs Random Effects"
+    ]
+  },
+  {
+    "objectID": "panel-fe-re.html#in-stata",
+    "href": "panel-fe-re.html#in-stata",
+    "title": "Fixed vs Random Effects",
+    "section": "In Stata",
+    "text": "In Stata\n* Declare panel structure\nxtset unit_id year\n\n* Fixed effects\nxtreg outcome treatment x1, fe cluster(unit_id)\n\n* Random effects\nxtreg outcome treatment x1, re\n\n* Hausman test (FE vs RE)\nquietly xtreg outcome treatment x1, fe\nestimates store fe_model\nquietly xtreg outcome treatment x1, re\nestimates store re_model\nhausman fe_model re_model\n\n* First-difference (alternative to FE)\nreg D.outcome D.treatment D.x1, cluster(unit_id)\nIf the Hausman test rejects, use FE — the RE assumption that group effects are uncorrelated with regressors doesn’t hold. For causal inference, FE is almost always the safer choice.",
     "crumbs": [
       "Panel Data",
       "Fixed vs Random Effects"
@@ -220,6 +242,17 @@
     ]
   },
   {
+    "objectID": "identification-estimation.html#in-stata-identification-estimation-cheat-sheet",
+    "href": "identification-estimation.html#in-stata-identification-estimation-cheat-sheet",
+    "title": "Identification vs Estimation",
+    "section": "In Stata: identification → estimation cheat sheet",
+    "text": "In Stata: identification → estimation cheat sheet\n\n\n\n\n\n\n\nIdentification strategy\nStata command\n\n\n\n\nRandom assignment\nreg outcome treatment\n\n\nSelection on observables\nteffects ra (outcome x1 x2) (treatment)\n\n\nInverse probability weighting\nteffects ipw (outcome) (treatment x1 x2)\n\n\nMatching\nteffects nnmatch (outcome x1 x2) (treatment)\n\n\nDoubly robust\nteffects aipw (outcome x1 x2) (treatment x1 x2)\n\n\nDifference-in-differences\nreg outcome treated##post, cluster(group)\n\n\nInstrumental variables\nivregress 2sls outcome (treatment = instrument)\n\n\nRegression discontinuity\nrdrobust outcome running_var, c(0)\n\n\nFixed effects\nxtreg outcome treatment x1, fe cluster(id)\n\n\n\nThe right column is the easy part. The hard part is arguing that the left column holds.",
+    "crumbs": [
+      "Framework",
+      "Identification vs Estimation"
+    ]
+  },
+  {
     "objectID": "identification-estimation.html#did-you-know",
     "href": "identification-estimation.html#did-you-know",
     "title": "Identification vs Estimation",
@@ -258,6 +291,17 @@
     "title": "Doubly Robust Estimation",
     "section": "Why not always use DR?",
     "text": "Why not always use DR?\nIf DR is better than regression alone and IPW alone, why not always use it?\n\nYou still need at least one model right. DR isn’t magic — it fails when both models are misspecified. In the “neither correct” scenario above, DR is just as biased as the others.\nVariance. DR can have higher variance than a correctly specified single model. The extra robustness comes at the cost of efficiency. In the “both correct” scenario, regression alone is often more precise.\nComplexity. Two models to specify, diagnose, and justify instead of one.\n\nIn practice, DR is most valuable when you’re uncertain about your models — which is most of the time.",
+    "crumbs": [
+      "Estimation Tools",
+      "Doubly Robust"
+    ]
+  },
+  {
+    "objectID": "doubly-robust.html#in-stata",
+    "href": "doubly-robust.html#in-stata",
+    "title": "Doubly Robust Estimation",
+    "section": "In Stata",
+    "text": "In Stata\n* Augmented IPW (doubly robust)\nteffects aipw (outcome x1 x2) (treatment x1 x2)\n\n* Check overlap\nteffects overlap\n\n* Doubly robust DID (Sant'Anna & Zhao 2020)\n* ssc install drdid\ndrdid outcome x1 x2, ivar(id) time(year) treatment(treated)\nteffects aipw specifies two models in one command: the outcome model (first parentheses) and the treatment model (second parentheses). You get double robustness — consistent if either model is correct.",
     "crumbs": [
       "Estimation Tools",
       "Doubly Robust"
@@ -308,6 +352,17 @@
     ]
   },
   {
+    "objectID": "ipw.html#in-stata",
+    "href": "ipw.html#in-stata",
+    "title": "Inverse Probability Weighting",
+    "section": "In Stata",
+    "text": "In Stata\n* IPW with Stata's teffects\nteffects ipw (outcome) (treatment x1 x2)\n\n* Check propensity score overlap\nteffects overlap\n\n* Manual approach: estimate propensity score, then weight\nlogit treatment x1 x2\npredict pscore, pr\ngen ipw = treatment/pscore + (1-treatment)/(1-pscore)\nreg outcome treatment [pw=ipw]\nteffects ipw handles everything — propensity score estimation, weighting, and correct standard errors. The manual approach is useful for understanding what’s happening under the hood.",
+    "crumbs": [
+      "Estimation Tools",
+      "IPW"
+    ]
+  },
+  {
     "objectID": "did.html",
     "href": "did.html",
     "title": "Difference-in-Differences",
@@ -330,6 +385,17 @@
     ]
   },
   {
+    "objectID": "did.html#in-stata",
+    "href": "did.html#in-stata",
+    "title": "Difference-in-Differences",
+    "section": "In Stata",
+    "text": "In Stata\n* Classic 2x2 DID with interaction\nreg outcome treated##post\n\n* With controls\nreg outcome treated##post x1 x2, cluster(state)\n\n* Event study (test parallel trends visually)\nreg outcome i.treated#i.year i.year i.treated, cluster(state)\n\n* Modern staggered DID (Callaway & Sant'Anna 2021)\n* ssc install csdid\ncsdid outcome x1 x2, ivar(id) time(year) gvar(first_treated)\nThe coefficient on treated#post (or 1.treated#1.post) is the DID estimate. Clustering standard errors at the group level (e.g., state) is standard practice.",
+    "crumbs": [
+      "Methods",
+      "Difference-in-Differences"
+    ]
+  },
+  {
     "objectID": "regression-adjustment.html",
     "href": "regression-adjustment.html",
     "title": "Regression Adjustment",
@@ -346,6 +412,17 @@
     "title": "Regression Adjustment",
     "section": "",
     "text": "The simplest way to estimate a causal effect from observational data: run a regression of the outcome on the treatment indicator and the confounders.\n\\[Y_i = \\alpha + \\tau D_i + \\beta X_i + \\varepsilon_i\\]\nThe coefficient \\(\\hat{\\tau}\\) is your treatment effect estimate, “adjusted” for \\(X\\). OLS compares treated and control units within levels of X — holding the confounder constant to isolate the effect of treatment.\nThe gap between the two regression lines (treated vs control) is \\(\\hat{\\tau}\\).\n\n\n\nSelection on observables (CIA): all confounders are included in \\(X\\). If an unobserved variable drives both treatment and outcome, the estimate is biased — same as every other tool under SOO.\nCorrect functional form: the relationship between \\(X\\) and \\(Y\\) is correctly specified. If you fit a linear model but the truth is quadratic, the adjustment is wrong and \\(\\hat{\\tau}\\) is biased. This is the key vulnerability.\nOverlap: treated and control groups share common support in \\(X\\).\n\n\n\n\nRegression adjustment models the outcome — it writes down a specific equation for how \\(Y\\) relates to \\(X\\) and \\(D\\). That equation is the functional form:\n\nLinear: \\(Y = \\alpha + \\tau D + \\beta X\\) — assumes \\(Y\\) changes at a constant rate with \\(X\\). A straight line.\nQuadratic: \\(Y = \\alpha + \\tau D + \\beta_1 X + \\beta_2 X^2\\) — allows curvature.\nLog: \\(Y = \\alpha + \\tau D + \\beta \\log(X)\\) — assumes diminishing returns.\n\nWhen you run lm(y ~ treat + x), you’ve chosen the linear form. If the truth is quadratic but you fit a line, the line can’t capture the curvature — and that misfit contaminates your estimate of \\(\\hat{\\tau}\\). The model is wrong, so the estimate is biased, even when all confounders are observed. This is an estimation bias, not an identification failure.\nCompare this to IPW, which models the treatment assignment instead — it writes down an equation for \\(P(D = 1 \\mid X)\\), not for \\(Y\\). IPW never touches the outcome. It just reweights the raw \\(Y\\) values using the propensity score. So if the outcome-\\(X\\) relationship is nonlinear, IPW doesn’t care — as long as the propensity score model is right.\n\n\n\n\nWhat it models\nWhat can go wrong\n\n\n\n\nRegression adjustment\n\\(E[Y \\mid X, D]\\) (the outcome)\nWrong functional form for \\(Y\\)\n\n\nIPW\n\\(P(D=1 \\mid X)\\) (the treatment)\nWrong propensity score model\n\n\nDoubly robust\nBoth\nFails only if both are wrong\n\n\n\nEach method bets on getting one model right. Doubly robust estimation hedges by combining both — it only needs one to be correct.\n#| standalone: true\n#| viewerHeight: 620\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  tags$head(tags$style(HTML(\"\n    .stats-box {\n      background: #f0f4f8; border-radius: 6px; padding: 14px;\n      margin-top: 12px; font-size: 14px; line-height: 1.9;\n    }\n    .stats-box b { color: #2c3e50; }\n    .good { color: #27ae60; font-weight: bold; }\n    .bad  { color: #e74c3c; font-weight: bold; }\n  \"))),\n\n  sidebarLayout(\n    sidebarPanel(\n      width = 3,\n\n      sliderInput(\"n\", \"Sample size:\",\n                  min = 200, max = 2000, value = 500, step = 100),\n\n      sliderInput(\"ate\", \"True ATE:\",\n                  min = 0, max = 5, value = 2, step = 0.5),\n\n      sliderInput(\"confounding\", \"Confounding strength:\",\n                  min = 0, max = 3, value = 1.5, step = 0.25),\n\n      selectInput(\"shape\", \"True outcome model:\",\n                  choices = c(\"Linear (Y ~ X)\"      = \"linear\",\n                              \"Quadratic (Y ~ X\\u00b2)\" = \"quadratic\")),\n\n      actionButton(\"go\", \"New draw\",\n                   class = \"btn-primary\", width = \"100%\"),\n\n      uiOutput(\"results\")\n    ),\n\n    mainPanel(\n      width = 9,\n      fluidRow(\n        column(6, plotOutput(\"scatter_plot\", height = \"400px\")),\n        column(6, plotOutput(\"compare_plot\", height = \"400px\"))\n      )\n    )\n  )\n)\n\nserver &lt;- function(input, output, session) {\n\n  dat &lt;- reactive({\n    input$go\n    n    &lt;- input$n\n    ate  &lt;- input$ate\n    conf &lt;- input$confounding\n    is_linear &lt;- input$shape == \"linear\"\n\n    # Confounder\n    x &lt;- rnorm(n)\n\n    # Treatment depends on x\n    p_true &lt;- pnorm(conf * x)\n    treat  &lt;- rbinom(n, 1, p_true)\n\n    # Outcome depends on x (linearly or quadratically) + treatment\n    if (is_linear) {\n      y &lt;- 1 + 2 * x + ate * treat + rnorm(n)\n    } else {\n      y &lt;- 1 + 2 * x^2 + ate * treat + rnorm(n)\n    }\n\n    # Naive (no controls)\n    naive &lt;- mean(y[treat == 1]) - mean(y[treat == 0])\n\n    # Regression adjustment (always linear: Y ~ D + X)\n    fit &lt;- lm(y ~ treat + x)\n    reg_est &lt;- coef(fit)[\"treat\"]\n\n    # IPW for comparison\n    ps &lt;- fitted(glm(treat ~ x, family = binomial))\n    w &lt;- ifelse(treat == 1, 1 / ps, 1 / (1 - ps))\n    ipw_est &lt;- weighted.mean(y[treat == 1], w[treat == 1]) -\n               weighted.mean(y[treat == 0], w[treat == 0])\n\n    list(x = x, treat = treat, y = y, fit = fit,\n         naive = naive, reg_est = reg_est, ipw_est = ipw_est,\n         ate = ate, is_linear = is_linear)\n  })\n\n  output$scatter_plot &lt;- renderPlot({\n    d &lt;- dat()\n    par(mar = c(4.5, 4.5, 3, 1))\n\n    plot(d$x, d$y, pch = 16, cex = 0.5,\n         col = ifelse(d$treat == 1, \"#3498db50\", \"#e74c3c50\"),\n         xlab = \"X (confounder)\", ylab = \"Y (outcome)\",\n         main = \"Data + Regression Fit\")\n\n    # Fitted regression lines (always linear)\n    x_seq &lt;- seq(min(d$x), max(d$x), length.out = 200)\n    pred_t &lt;- predict(d$fit,\n      newdata = data.frame(treat = 1, x = x_seq))\n    pred_c &lt;- predict(d$fit,\n      newdata = data.frame(treat = 0, x = x_seq))\n    lines(x_seq, pred_t, col = \"#3498db\", lwd = 2.5)\n    lines(x_seq, pred_c, col = \"#e74c3c\", lwd = 2.5)\n\n    # True conditional means (dashed)\n    if (d$is_linear) {\n      true_t &lt;- 1 + 2 * x_seq + d$ate\n      true_c &lt;- 1 + 2 * x_seq\n    } else {\n      true_t &lt;- 1 + 2 * x_seq^2 + d$ate\n      true_c &lt;- 1 + 2 * x_seq^2\n    }\n    lines(x_seq, true_t, col = \"#3498db\", lwd = 1.5, lty = 3)\n    lines(x_seq, true_c, col = \"#e74c3c\", lwd = 1.5, lty = 3)\n\n    # Gap arrow at x = 0\n    mid_t &lt;- predict(d$fit,\n      newdata = data.frame(treat = 1, x = 0))\n    mid_c &lt;- predict(d$fit,\n      newdata = data.frame(treat = 0, x = 0))\n    arrows(0, mid_c, 0, mid_t, code = 3,\n           col = \"#2c3e50\", lwd = 2, length = 0.08)\n    text(0.3, (mid_t + mid_c) / 2,\n         bquote(hat(tau) == .(round(coef(d$fit)[\"treat\"], 2))),\n         cex = 0.95, font = 2)\n\n    legend(\"topleft\", bty = \"n\", cex = 0.8,\n           legend = c(\"Treated\", \"Control\",\n                      \"Regression fit\", \"True E[Y|X,D]\"),\n           col = c(\"#3498db\", \"#e74c3c\", \"gray40\", \"gray40\"),\n           pch = c(16, 16, NA, NA),\n           lwd = c(NA, NA, 2.5, 1.5),\n           lty = c(NA, NA, 1, 3))\n  })\n\n  output$compare_plot &lt;- renderPlot({\n    d &lt;- dat()\n    par(mar = c(4.5, 9, 3, 2))\n\n    ests &lt;- c(d$ipw_est, d$reg_est, d$naive)\n    labels &lt;- c(\"IPW\", \"Regression adj.\", \"Naive\")\n    cols &lt;- c(\"#27ae60\", \"#3498db\", \"#e74c3c\")\n\n    xlim &lt;- range(c(ests, d$ate))\n    pad  &lt;- max(diff(xlim) * 0.4, 0.5)\n    xlim &lt;- xlim + c(-pad, pad)\n\n    plot(ests, 1:3, pch = 19, cex = 2, col = cols,\n         xlim = xlim, ylim = c(0.5, 3.5),\n         yaxt = \"n\", xlab = \"Estimated treatment effect\",\n         ylab = \"\", main = \"Estimator Comparison\")\n    axis(2, at = 1:3, labels = labels,\n         las = 1, cex.axis = 0.9)\n\n    abline(v = d$ate, lty = 2, col = \"#2c3e50\", lwd = 2)\n    text(d$ate, 3.45,\n         paste0(\"True ATE = \", d$ate),\n         cex = 0.85, font = 2, col = \"#2c3e50\")\n\n    # Lines from true to estimate\n    segments(d$ate, 1:3, ests, 1:3,\n             col = cols, lwd = 2, lty = 2)\n  })\n\n  output$results &lt;- renderUI({\n    d &lt;- dat()\n    b_naive &lt;- d$naive - d$ate\n    b_reg   &lt;- d$reg_est - d$ate\n    b_ipw   &lt;- d$ipw_est - d$ate\n    reg_ok  &lt;- abs(b_reg) &lt; abs(b_naive) * 0.5\n    ipw_ok  &lt;- abs(b_ipw) &lt; abs(b_naive) * 0.5\n\n    tags$div(class = \"stats-box\",\n      HTML(paste0(\n        \"&lt;b&gt;True ATE:&lt;/b&gt; \", d$ate, \"&lt;br&gt;\",\n        \"&lt;b&gt;Naive:&lt;/b&gt; &lt;span class='bad'&gt;\",\n        round(d$naive, 3), \"&lt;/span&gt;\",\n        \" (bias: \", round(b_naive, 3), \")&lt;br&gt;\",\n        \"&lt;b&gt;Reg. adj:&lt;/b&gt; &lt;span class='\",\n        ifelse(reg_ok, \"good\", \"bad\"), \"'&gt;\",\n        round(d$reg_est, 3), \"&lt;/span&gt;\",\n        \" (bias: \", round(b_reg, 3), \")&lt;br&gt;\",\n        \"&lt;b&gt;IPW:&lt;/b&gt; &lt;span class='\",\n        ifelse(ipw_ok, \"good\", \"bad\"), \"'&gt;\",\n        round(d$ipw_est, 3), \"&lt;/span&gt;\",\n        \" (bias: \", round(b_ipw, 3), \")\"\n      ))\n    )\n  })\n}\n\nshinyApp(ui, server)\n\n\n\n\nLinear outcome, confounding = 1.5: regression adjustment works well. The fitted lines (solid) match the true curves (dotted). The estimate is close to the true ATE.\nSwitch to Quadratic: now the true outcome is \\(Y = 1 + 2X^2 + \\tau D\\), but regression still fits a line. The solid lines miss the curvature (compare to the dotted true curves). The regression estimate is biased — it’s a functional form problem, not a confounding problem.\nQuadratic outcome, compare to IPW: IPW doesn’t model the outcome, so it still works. The green dot (IPW) is close to the true ATE; the blue dot (regression) is not.\nConfounding = 0: treatment is random. All three estimators agree, and functional form doesn’t matter (no confounding to adjust for).\n\n\n\n\nRegression adjustment is the simplest and most common tool. It works great when the outcome model is correctly specified. But it’s fragile to functional form misspecification — fitting a line when the truth is curved introduces bias even when all confounders are observed.\nThis is why alternatives like IPW and entropy balancing exist: they avoid modeling the outcome entirely. And doubly robust methods hedge both bets.",
+    "crumbs": [
+      "Estimation Tools",
+      "Regression Adjustment"
+    ]
+  },
+  {
+    "objectID": "regression-adjustment.html#in-stata",
+    "href": "regression-adjustment.html#in-stata",
+    "title": "Regression Adjustment",
+    "section": "In Stata",
+    "text": "In Stata\n* Basic regression adjustment\nreg outcome treatment x1 x2\n\n* Stata's teffects version (potential outcomes framework)\nteffects ra (outcome x1 x2) (treatment)\n\n* Lin (2013) fix: interact treatment with demeaned covariates\n* (robust to functional form misspecification)\nforeach var of varlist x1 x2 {\n    sum `var', meanonly\n    gen `var'_dm = `var' - r(mean)\n}\nreg outcome treatment c.treatment#c.(x1_dm x2_dm) x1 x2\nPlain reg outcome treatment x1 x2 and teffects ra give the same point estimate under linearity. The Lin (2013) interaction approach is safer when you’re unsure about functional form.",
     "crumbs": [
       "Estimation Tools",
       "Regression Adjustment"
@@ -396,6 +473,17 @@
     ]
   },
   {
+    "objectID": "synth.html#in-stata",
+    "href": "synth.html#in-stata",
+    "title": "Synthetic Control",
+    "section": "In Stata",
+    "text": "In Stata\n* Install synthetic control\n* ssc install synth\n\n* Set up panel data\ntsset unit_id year\n\n* Synthetic control\nsynth outcome x1 x2 outcome(1985) outcome(1988) outcome(1990), ///\n      trunit(3) trperiod(1994) fig\n\n* Placebo tests (permute treatment across donors)\n* ssc install synth_runner\nsynth_runner outcome x1 x2, trunit(3) trperiod(1994) gen_vars\nsynth finds weights on donor units that match the treated unit’s pre-treatment trajectory. Always run placebo tests — if the treated unit’s gap isn’t larger than the placebos, the effect isn’t credible.",
+    "crumbs": [
+      "Methods",
+      "Synthetic Control"
+    ]
+  },
+  {
     "objectID": "synth.html#did-you-know",
     "href": "synth.html#did-you-know",
     "title": "Synthetic Control",
@@ -434,6 +522,17 @@
     "title": "Potential Outcomes & ATE",
     "section": "What if you can’t randomize?",
     "text": "What if you can’t randomize?\nIn a true experiment (RCT):\n\nYou randomly assign people to treatment vs control\nBecause it’s random, the two groups are identical on average — so any difference in outcomes must be caused by the treatment\n\nBut most questions in economics, policy, and social science can’t be answered with an RCT. You can’t randomly assign poverty, or force some cities to build highways and others not to. So how do you estimate causal effects?\n\nNatural experiments\nA natural experiment is when something in the real world — a policy change, a rule, a geographic boundary, a disaster — creates treatment and control groups that are as-if randomly assigned. Nobody designed it as an experiment, but the logic is the same.\nExample: Say the government announced “all tracts in counties with food desert score &gt; X get a healthy food program.” Tracts at X+1 vs X−1 didn’t choose to be on different sides of that line — the cutoff did it for them. So comparing those tracts is like comparing treatment and control in an experiment.\n\nThe word “natural” = it happened in the real world, not in a lab.\nThe word “experiment” = it created as-if random variation in who got treated.\n\nThe whole point is to get around the selection bias problem the simulation above shows. If people (or firms, or cities) choose their treatment status, the naive comparison is biased. A natural experiment gives you variation that the units didn’t choose.\n\n\nThe rest of this course\nEvery method in this course is a strategy for exploiting natural experiments or otherwise correcting for selection bias:\n\n\n\nMethod\nThe idea\n\n\n\n\nSelection on Observables\nCondition on everything that drives both treatment and outcome\n\n\nIPW\nReweight observations so treated and control look similar on observables\n\n\nEntropy Balancing\nDirectly balance covariates between groups without modeling the propensity score\n\n\nDifference-in-Differences\nCompare changes over time between treated and control groups\n\n\nInstrumental Variables\nUse exogenous variation to isolate the causal effect\n\n\nRegression Discontinuity\nExploit a cutoff rule as a natural experiment\n\n\nSynthetic Control\nBuild a weighted counterfactual from donor units\n\n\n\nEach one makes a different assumption about why the comparison is valid. The art of causal inference is choosing the right method for your setting — and being honest about when the assumptions fail.",
+    "crumbs": [
+      "Framework",
+      "Potential Outcomes & ATE"
+    ]
+  },
+  {
+    "objectID": "potential-outcomes.html#in-stata",
+    "href": "potential-outcomes.html#in-stata",
+    "title": "Potential Outcomes & ATE",
+    "section": "In Stata",
+    "text": "In Stata\nThe simplest causal estimate — a difference in means under random assignment:\n* Difference in means (t-test)\nttest outcome, by(treatment)\n\n* Same thing as a regression (identical point estimate)\nreg outcome treatment\n\n* With controls (gains precision in an RCT, required under SOO)\nreg outcome treatment x1 x2 x3\nWith random assignment, reg outcome treatment gives you an unbiased estimate of the ATE. The coefficient on treatment is the causal effect. Adding controls doesn’t change the estimate (in expectation) but can shrink the standard errors.",
     "crumbs": [
       "Framework",
       "Potential Outcomes & ATE"
@@ -523,6 +622,17 @@
     ]
   },
   {
+    "objectID": "rdd.html#in-stata",
+    "href": "rdd.html#in-stata",
+    "title": "Regression Discontinuity",
+    "section": "In Stata",
+    "text": "In Stata\n* Install rdrobust (Cattaneo, Idrobo & Titiunik)\n* ssc install rdrobust\n\n* Sharp RDD with optimal bandwidth\nrdrobust outcome running_var, c(0)\n\n* RDD plot\nrdplot outcome running_var, c(0)\n\n* Check for manipulation of the running variable\nrddensity running_var, c(0)\n\n* Fuzzy RDD (treatment is probabilistic at cutoff)\nrdrobust outcome running_var, c(0) fuzzy(treatment)\nrdrobust handles bandwidth selection, bias correction, and robust standard errors automatically. Always show the rdplot — if you can’t see the jump visually, be skeptical of the estimate.",
+    "crumbs": [
+      "Methods",
+      "Regression Discontinuity"
+    ]
+  },
+  {
     "objectID": "rdd.html#did-you-know",
     "href": "rdd.html#did-you-know",
     "title": "Regression Discontinuity",
@@ -561,6 +671,17 @@
     "title": "Selection on Observables",
     "section": "Estimation tools (not just for selection on observables)",
     "text": "Estimation tools (not just for selection on observables)\nOnce you have an identification strategy, you need a way to implement it. The tools below are often associated with selection on observables, but they’re general-purpose — they show up in other strategies too.\n\n\n\nTool\nUsed in selection on observables\nAlso used in\n\n\n\n\nRegression adjustment\nControl for X in a regression\nDID with covariates, RDD with covariates\n\n\nMatching\nPair treated/control on X\nDID matching estimators\n\n\nIPW\nReweight by propensity score\nIPW-DID (Abadie 2005, Callaway & Sant’Anna 2021)\n\n\nEntropy Balancing\nBalance covariates with weights\nWeighted DID\n\n\nDoubly robust\nCombine regression + weighting\nDR-DID (Sant’Anna & Zhao 2020)\n\n\n\nThe identification strategy tells you why your comparison is valid. The estimation tool tells you how to make the comparison. Don’t confuse the two — IPW is a tool, not a strategy.",
+    "crumbs": [
+      "Methods",
+      "Selection on Observables"
+    ]
+  },
+  {
+    "objectID": "selection-observables.html#in-stata",
+    "href": "selection-observables.html#in-stata",
+    "title": "Selection on Observables",
+    "section": "In Stata",
+    "text": "In Stata\nAll SOO estimators live under teffects:\n* Regression adjustment\nteffects ra (outcome x1 x2) (treatment)\n\n* Inverse probability weighting\nteffects ipw (outcome) (treatment x1 x2)\n\n* Nearest-neighbor matching\nteffects nnmatch (outcome x1 x2) (treatment), nneighbor(1)\n\n* Doubly robust (AIPW)\nteffects aipw (outcome x1 x2) (treatment x1 x2)\n\n* Check overlap after any teffects command\nteffects overlap\nSame identification assumption (CIA) behind all of them — different ways to use \\(X\\) to make the comparison fair. See each page for details.",
     "crumbs": [
       "Methods",
       "Selection on Observables"
@@ -611,6 +732,17 @@
     ]
   },
   {
+    "objectID": "entropy-balancing.html#in-stata",
+    "href": "entropy-balancing.html#in-stata",
+    "title": "Entropy Balancing",
+    "section": "In Stata",
+    "text": "In Stata\n* Install entropy balancing\n* ssc install ebalance\n\n* Generate weights that balance x1, x2, x3 between treated and control\nebalance treatment x1 x2 x3, gen(eb_weight)\n\n* Use the weights in your outcome regression\nreg outcome treatment x1 x2 x3 [pw=eb_weight]\nebalance finds the smoothest set of control-group weights that exactly matches the treated group on the moments you specify (means by default; add targets(2) to also match variances). No propensity score model needed.",
+    "crumbs": [
+      "Estimation Tools",
+      "Entropy Balancing"
+    ]
+  },
+  {
     "objectID": "matching.html",
     "href": "matching.html",
     "title": "Matching",
@@ -638,6 +770,17 @@
     "title": "Matching",
     "section": "How does matching compare to other tools?",
     "text": "How does matching compare to other tools?\n\n\n\nTool\nStrategy\nVulnerability\n\n\n\n\nMatching\nFind similar units\nBad matches when overlap is poor\n\n\nRegression adj.\nModel the outcome\nWrong functional form\n\n\nIPW\nReweight by propensity score\nExtreme weights\n\n\nEntropy Balancing\nBalance moments exactly\nMissing higher-order moments\n\n\nDoubly Robust\nCombine outcome model + PS\nFails only if both models wrong\n\n\n\nAll rely on the same identification assumption (CIA). They differ in how they use \\(X\\) to make the comparison fair.",
+    "crumbs": [
+      "Estimation Tools",
+      "Matching"
+    ]
+  },
+  {
+    "objectID": "matching.html#in-stata",
+    "href": "matching.html#in-stata",
+    "title": "Matching",
+    "section": "In Stata",
+    "text": "In Stata\n* Nearest-neighbor matching (on covariates)\nteffects nnmatch (outcome x1 x2) (treatment), nneighbor(1)\n\n* Bias-corrected matching (Abadie & Imbens)\nteffects nnmatch (outcome x1 x2) (treatment), nneighbor(1) biasadj(x1 x2)\n\n* Propensity score matching\nteffects psmatch (outcome) (treatment x1 x2)\n\n* Coarsened exact matching\n* ssc install cem\ncem x1 (#5) x2 (#3), treatment(treatment)\nreg outcome treatment x1 x2 [iw=cem_weights]\nteffects nnmatch with biasadj() corrects for the remaining covariate imbalance within matched pairs — important when matching on continuous variables.",
     "crumbs": [
       "Estimation Tools",
       "Matching"

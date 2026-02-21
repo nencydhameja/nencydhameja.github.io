@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Markov Chain Monte Carlo – Introduction to Bayesian Thinking</title>
+<title>Bayesian Regression – Introduction to Bayesian Thinking</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -116,7 +151,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mcmc.html">Beyond Conjugates</a></li><li class="breadcrumb-item"><a href="./mcmc.html">MCMC</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mcmc.html">Beyond Conjugates</a></li><li class="breadcrumb-item"><a href="./bayesian-regression.html">Bayesian Regression</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -182,7 +217,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./mcmc.html" class="sidebar-item-text sidebar-link active">
+  <a href="./mcmc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">MCMC</span></a>
   </div>
 </li>
@@ -194,7 +229,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bayesian-regression.html" class="sidebar-item-text sidebar-link">
+  <a href="./bayesian-regression.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Bayesian Regression</span></a>
   </div>
 </li>
@@ -210,22 +245,18 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-is-mcmc" id="toc-what-is-mcmc" class="nav-link active" data-scroll-target="#what-is-mcmc">What is MCMC?</a>
+  <li><a href="#from-reg-y-x-to-bayesian-regression" id="toc-from-reg-y-x-to-bayesian-regression" class="nav-link active" data-scroll-target="#from-reg-y-x-to-bayesian-regression">From <code>reg y x</code> to Bayesian regression</a>
   <ul class="collapse">
-  <li><a href="#watch-it-happen" id="toc-watch-it-happen" class="nav-link" data-scroll-target="#watch-it-happen">Watch it happen</a></li>
-  </ul></li>
-  <li><a href="#why-do-we-need-it" id="toc-why-do-we-need-it" class="nav-link" data-scroll-target="#why-do-we-need-it">Why do we need it?</a></li>
-  <li><a href="#the-metropolis-hastings-algorithm" id="toc-the-metropolis-hastings-algorithm" class="nav-link" data-scroll-target="#the-metropolis-hastings-algorithm">The Metropolis-Hastings algorithm</a>
-  <ul class="collapse">
-  <li><a href="#simulation-1-metropolis-hastings-in-action" id="toc-simulation-1-metropolis-hastings-in-action" class="nav-link" data-scroll-target="#simulation-1-metropolis-hastings-in-action">Simulation 1: Metropolis-Hastings in action</a></li>
+  <li><a href="#simulation-ols-vs-bayesian-the-role-of-the-prior" id="toc-simulation-ols-vs-bayesian-the-role-of-the-prior" class="nav-link" data-scroll-target="#simulation-ols-vs-bayesian-the-role-of-the-prior">Simulation: OLS vs Bayesian — the role of the prior</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
-  <li><a href="#burn-in-and-convergence" id="toc-burn-in-and-convergence" class="nav-link" data-scroll-target="#burn-in-and-convergence">Burn-in and convergence</a>
+  <li><a href="#credible-intervals-vs-confidence-intervals" id="toc-credible-intervals-vs-confidence-intervals" class="nav-link" data-scroll-target="#credible-intervals-vs-confidence-intervals">Credible intervals vs confidence intervals</a></li>
+  <li><a href="#the-prior-as-regularization" id="toc-the-prior-as-regularization" class="nav-link" data-scroll-target="#the-prior-as-regularization">The prior as regularization</a>
   <ul class="collapse">
-  <li><a href="#simulation-2-multiple-chains-and-convergence" id="toc-simulation-2-multiple-chains-and-convergence" class="nav-link" data-scroll-target="#simulation-2-multiple-chains-and-convergence">Simulation 2: Multiple chains and convergence</a></li>
+  <li><a href="#simulation-repeated-experiments-ci-vs-cri-coverage" id="toc-simulation-repeated-experiments-ci-vs-cri-coverage" class="nav-link" data-scroll-target="#simulation-repeated-experiments-ci-vs-cri-coverage">Simulation: Repeated experiments — CI vs CrI coverage</a></li>
   <li><a href="#things-to-try-1" id="toc-things-to-try-1" class="nav-link" data-scroll-target="#things-to-try-1">Things to try</a></li>
   </ul></li>
-  <li><a href="#the-key-message" id="toc-the-key-message" class="nav-link" data-scroll-target="#the-key-message">The key message</a></li>
+  <li><a href="#in-stata-bayes-reg-y-x" id="toc-in-stata-bayes-reg-y-x" class="nav-link" data-scroll-target="#in-stata-bayes-reg-y-x">In Stata: <code>bayes: reg y x</code></a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -233,9 +264,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mcmc.html">Beyond Conjugates</a></li><li class="breadcrumb-item"><a href="./mcmc.html">MCMC</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mcmc.html">Beyond Conjugates</a></li><li class="breadcrumb-item"><a href="./bayesian-regression.html">Bayesian Regression</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Markov Chain Monte Carlo</h1>
+<h1 class="title">Bayesian Regression</h1>
 </div>
 
 
@@ -252,21 +283,17 @@ window.Quarto = {
 </header>
 
 
-<section id="what-is-mcmc" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-mcmc">What is MCMC?</h2>
-<p>The name breaks down into two parts:</p>
-<ul>
-<li><strong>Monte Carlo:</strong> using random sampling to approximate something you can’t compute exactly. Instead of solving an integral analytically, you draw random samples and use their average as an approximation. (Named after the Monte Carlo casino — it’s fundamentally about randomness.)</li>
-<li><strong>Markov Chain:</strong> a sequence of random values where each value depends only on the previous one — not on the full history. The “chain” is a random walk through parameter space, where each step proposes a new value based on where you currently are.</li>
-</ul>
-<p>Put them together: <strong>MCMC constructs a Markov chain whose long-run distribution equals the posterior.</strong> Run it long enough, and the samples you collect are (approximately) draws from <span class="math inline">\(p(\theta \mid y)\)</span> — even though you never computed that distribution directly.</p>
+<section id="from-reg-y-x-to-bayesian-regression" class="level2">
+<h2 class="anchored" data-anchor-id="from-reg-y-x-to-bayesian-regression">From <code>reg y x</code> to Bayesian regression</h2>
+<p>In Stata, you type <code>reg y x</code> and get a point estimate <span class="math inline">\(\hat{\beta}\)</span>, a standard error, and a 95% confidence interval. That’s OLS — it picks the single line that minimizes the sum of squared residuals.</p>
+<p>Bayesian regression starts from the same place (the same likelihood) but adds one ingredient: a <strong>prior distribution</strong> on <span class="math inline">\(\beta\)</span>. Instead of a single best-fit line, you get a full <strong>posterior distribution</strong> — a curve showing how plausible each value of <span class="math inline">\(\beta\)</span> is, given both the data and your prior beliefs.</p>
 <div class="callout callout-style-simple callout-tip no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>The blindfolded hiker.</strong> Imagine you’re blindfolded on a hilly landscape and want to map out the shape of a mountain. You can’t see the whole thing, but at each step you can feel whether the ground goes up or down. You take a step — if it’s uphill (higher probability), you go. If it’s downhill, you <em>might</em> go (sometimes you need to cross valleys to find higher peaks). After thousands of steps, plot everywhere you’ve been on a map — the places you visited most often are the peaks. You’ve mapped the mountain without ever seeing it. That’s MCMC.</p>
+<p><strong>Example:</strong> You’re estimating the effect of an extra year of education on hourly wages. Before seeing your data, you’ve read the literature — most estimates land between $0.50 and $1.50 per year. A Bayesian approach lets you encode this: set a prior of <span class="math inline">\(\beta \sim N(1.0, 0.5^2)\)</span>, centered on $1.00 with moderate uncertainty. OLS ignores this information entirely. The Bayesian estimate blends it with your data.</p>
 </div>
 </div>
 </div>
@@ -276,181 +303,52 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Isn’t this just optimization?</strong> It looks like it — both climb hills. But an optimizer (like maximum likelihood in Stata’s <code>reg</code>) only goes uphill, finds the <strong>peak</strong>, and stops. That gives you one number: the best <span class="math inline">\(\hat\beta\)</span>. MCMC deliberately goes downhill sometimes (step 4 above: accepting worse proposals with some probability). That’s what lets it explore the full shape of the posterior — not just <em>where</em> the peak is, but how wide, how skewed, and whether there are multiple peaks. Turn off the downhill moves and you’d have a hill-climbing optimizer. Keep them on and you have a sampler.</p>
+<p><strong>What “a prior on <span class="math inline">\(\beta\)</span>” means:</strong> it’s a probability distribution expressing your beliefs about the slope <em>before</em> seeing the data. A prior of <span class="math inline">\(N(0, 10^2)\)</span> says “I think <span class="math inline">\(\beta\)</span> is probably near 0 but I’m very uncertain” (vague). A prior of <span class="math inline">\(N(1, 0.3^2)\)</span> says “I’m fairly confident <span class="math inline">\(\beta\)</span> is close to 1” (informative). After seeing data, the prior gets updated to a posterior.</p>
 </div>
 </div>
 </div>
-<section id="watch-it-happen" class="level3">
-<h3 class="anchored" data-anchor-id="watch-it-happen">Watch it happen</h3>
-<p>The chain wanders through parameter space. Early on, the histogram of visited values looks nothing like the target. But as samples accumulate, the histogram converges to the true posterior — the chain has “learned” the distribution just by random walking.</p>
+<p>The math side-by-side:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>OLS</th>
+<th>Bayesian</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Model</strong></td>
+<td><span class="math inline">\(y = X\beta + \varepsilon, \;\; \varepsilon \sim N(0, \sigma^2 I)\)</span></td>
+<td>Same likelihood + prior <span class="math inline">\(\beta \sim N(\mu_0, \sigma_0^2)\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>Estimate</strong></td>
+<td><span class="math inline">\(\hat{\beta}_{OLS} = (X'X)^{-1}X'y\)</span></td>
+<td>Posterior mean <span class="math inline">\(= w \cdot \hat{\beta}_{OLS} + (1-w) \cdot \mu_0\)</span></td>
+</tr>
+<tr class="odd">
+<td><strong>Uncertainty</strong></td>
+<td>SE, confidence interval</td>
+<td>Full posterior distribution, credible interval</td>
+</tr>
+<tr class="even">
+<td><strong>Result</strong></td>
+<td>One number + interval</td>
+<td>Entire distribution</td>
+</tr>
+</tbody>
+</table>
+<p>The posterior mean is a <strong>precision-weighted average</strong> of the prior mean and the OLS estimate, where <span class="math inline">\(w = \frac{\text{data precision}}{\text{data precision} + \text{prior precision}}\)</span>. The more data you have, the more the posterior looks like OLS. The stronger the prior (smaller <span class="math inline">\(\sigma_0^2\)</span>), the more the posterior is pulled toward the prior mean.</p>
+<section id="simulation-ols-vs-bayesian-the-role-of-the-prior" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-ols-vs-bayesian-the-role-of-the-prior">Simulation: OLS vs Bayesian — the role of the prior</h3>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 480
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 8px; font-size: 13px; line-height: 1.7;
-    }
-    .stats-box b { color: #2c3e50; }
-    .good { color: #27ae60; font-weight: bold; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      sliderInput("show_n", "Samples to show:",
-                  min = 10, max = 5000, value = 50, step = 10,
-                  animate = animationOptions(interval = 80, loop = FALSE)),
-
-      actionButton("go_intro", "New chain", class = "btn-primary", width = "100%"),
-
-      uiOutput("results_intro")
-    ),
-
-    mainPanel(
-      width = 9,
-      fluidRow(
-        column(6, plotOutput("trace_intro", height = "340px")),
-        column(6, plotOutput("hist_intro", height = "340px"))
-      )
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  chain_data &lt;- reactive({
-    input$go_intro
-
-    # Target: posterior is N(2, 0.5^2) — we pretend we can't compute this
-    target_mu &lt;- 2
-    target_sd &lt;- 0.5
-    log_target &lt;- function(x) dnorm(x, target_mu, target_sd, log = TRUE)
-
-    # Run a long chain once
-    n_total &lt;- 5000
-    chain &lt;- numeric(n_total)
-    chain[1] &lt;- -1  # start far from the target
-    prop_sd &lt;- 0.4
-
-    for (t in 2:n_total) {
-      proposal &lt;- rnorm(1, chain[t - 1], prop_sd)
-      log_r &lt;- log_target(proposal) - log_target(chain[t - 1])
-      if (log(runif(1)) &lt; log_r) {
-        chain[t] &lt;- proposal
-      } else {
-        chain[t] &lt;- chain[t - 1]
-      }
-    }
-
-    list(chain = chain, target_mu = target_mu, target_sd = target_sd)
-  })
-
-  output$trace_intro &lt;- renderPlot({
-    d &lt;- chain_data()
-    n_show &lt;- min(input$show_n, length(d$chain))
-    par(mar = c(4, 4.5, 3, 1))
-
-    plot(1:n_show, d$chain[1:n_show], type = "l",
-         col = "#3498db80", lwd = 0.6,
-         xlim = c(1, max(200, n_show)),
-         ylim = range(d$chain),
-         xlab = "Step", ylab = expression(theta),
-         main = "The chain explores")
-
-    # Show current position
-    points(n_show, d$chain[n_show], pch = 19, col = "#e74c3c", cex = 1.5)
-
-    abline(h = d$target_mu, lty = 2, col = "#27ae60", lwd = 1.5)
-    text(max(200, n_show) * 0.95, d$target_mu,
-         expression("Target " * mu), pos = 3, cex = 0.8, col = "#27ae60")
-  })
-
-  output$hist_intro &lt;- renderPlot({
-    d &lt;- chain_data()
-    n_show &lt;- min(input$show_n, length(d$chain))
-    samples &lt;- d$chain[1:n_show]
-    par(mar = c(4, 4.5, 3, 1))
-
-    xlim &lt;- c(d$target_mu - 3 * d$target_sd - 1,
-              d$target_mu + 3 * d$target_sd + 1)
-
-    hist(samples, breaks = seq(xlim[1], xlim[2], length.out = 40),
-         freq = FALSE, col = "#3498db40", border = "#3498db",
-         xlim = xlim, ylim = c(0, 1.2),
-         xlab = expression(theta), main = "Histogram vs true posterior")
-
-    # True target
-    x_seq &lt;- seq(xlim[1], xlim[2], length.out = 300)
-    lines(x_seq, dnorm(x_seq, d$target_mu, d$target_sd),
-          col = "#27ae60", lwd = 2.5)
-
-    legend("topright", bty = "n", cex = 0.85,
-           legend = c(paste0("MCMC samples (n=", n_show, ")"),
-                      "True posterior"),
-           col = c("#3498db", "#27ae60"),
-           lwd = c(NA, 2.5), pch = c(15, NA), pt.cex = c(1.5, NA))
-  })
-
-  output$results_intro &lt;- renderUI({
-    d &lt;- chain_data()
-    n_show &lt;- min(input$show_n, length(d$chain))
-    samples &lt;- d$chain[1:n_show]
-
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;Samples:&lt;/b&gt; ", n_show, "&lt;br&gt;",
-        "&lt;b&gt;MCMC mean:&lt;/b&gt; ", round(mean(samples), 3), "&lt;br&gt;",
-        "&lt;b&gt;True mean:&lt;/b&gt; ", d$target_mu, "&lt;br&gt;",
-        "&lt;b&gt;Error:&lt;/b&gt; &lt;span class='good'&gt;",
-        round(abs(mean(samples) - d$target_mu), 3), "&lt;/span&gt;"
-      ))
-    )
-  })
-}
-
-shinyApp(ui, server)</code></pre>
-<p>Drag the slider (or hit the play button) and watch:</p>
-<ul>
-<li><strong>10 samples:</strong> the histogram is jagged, nothing like the green curve. The chain hasn’t explored enough.</li>
-<li><strong>100 samples:</strong> the shape starts to emerge. The chain has found the high-probability region.</li>
-<li><strong>1000+ samples:</strong> the histogram matches the true posterior almost exactly. The chain has “learned” the distribution through random walking alone.</li>
-</ul>
-<p>The chain never knew the formula for the green curve. It only knew how to evaluate the posterior at any single point and compare “is this new spot better or worse?” That’s enough.</p>
-</section>
-</section>
-<section id="why-do-we-need-it" class="level2">
-<h2 class="anchored" data-anchor-id="why-do-we-need-it">Why do we need it?</h2>
-<p>On the <a href="priors-posteriors.html">Priors &amp; Posteriors</a> page, we used <strong>conjugate priors</strong> — special prior-likelihood pairs where the posterior has a <a href="priors-posteriors.html#the-problem-most-real-models-arent-conjugate">closed-form solution</a>. That’s elegant but limiting. Most real models don’t have conjugate posteriors:</p>
-<ul>
-<li>Logistic regression with a prior on coefficients</li>
-<li>Hierarchical models with multiple levels of parameters</li>
-<li>Any model where the posterior <span class="math inline">\(p(\theta \mid y) \propto p(y \mid \theta) \, p(\theta)\)</span> doesn’t simplify to a known distribution</li>
-</ul>
-<p>For these models, we can’t write down the posterior analytically. We need to <strong>sample from it numerically</strong>. That’s what MCMC does.</p>
-</section>
-<section id="the-metropolis-hastings-algorithm" class="level2">
-<h2 class="anchored" data-anchor-id="the-metropolis-hastings-algorithm">The Metropolis-Hastings algorithm</h2>
-<p>The most foundational MCMC algorithm. The core idea is beautifully simple:</p>
-<ol type="1">
-<li>Start at some value <span class="math inline">\(\theta_0\)</span>.</li>
-<li><strong>Propose</strong> a new value <span class="math inline">\(\theta^*\)</span> from a proposal distribution <span class="math inline">\(q(\theta^* \mid \theta_t)\)</span> — typically <span class="math inline">\(\theta^* \sim N(\theta_t, \sigma_{prop}^2)\)</span>.</li>
-<li><strong>Compute the acceptance ratio:</strong> <span class="math display">\[\alpha = \min\left(1, \, \frac{p(\theta^* \mid y) \; q(\theta_t \mid \theta^*)}{p(\theta_t \mid y) \; q(\theta^* \mid \theta_t)}\right)\]</span></li>
-<li><strong>Accept</strong> <span class="math inline">\(\theta^*\)</span> with probability <span class="math inline">\(\alpha\)</span> (set <span class="math inline">\(\theta_{t+1} = \theta^*\)</span>). Otherwise stay: <span class="math inline">\(\theta_{t+1} = \theta_t\)</span>.</li>
-<li>Repeat.</li>
-</ol>
-<p>When the proposal is symmetric — e.g.&nbsp;<span class="math inline">\(q(\theta^* \mid \theta_t) = N(\theta_t, \sigma_{prop}^2)\)</span> — the proposal ratio <span class="math inline">\(q(\theta_t \mid \theta^*) / q(\theta^* \mid \theta_t) = 1\)</span> and the acceptance ratio simplifies to <span class="math inline">\(\alpha = \min\!\left(1,\; p(\theta^* \mid y) \,/\, p(\theta_t \mid y)\right)\)</span>. This is the original <strong>Metropolis</strong> algorithm. The Hastings (1970) generalization adds the proposal ratio so that asymmetric proposals can be used.</p>
-<p><strong>Key insight:</strong> you never need to compute the normalizing constant <span class="math inline">\(p(y) = \int p(y \mid \theta) \, p(\theta) \, d\theta\)</span>. The ratio <span class="math inline">\(p(\theta^* \mid y) / p(\theta_t \mid y)\)</span> cancels it out. You only need to evaluate the <strong>unnormalized posterior</strong> — the numerator of Bayes’ theorem.</p>
-<p>After enough iterations, the chain converges to the posterior distribution. The samples <span class="math inline">\(\theta_1, \theta_2, \ldots\)</span> are (correlated) draws from <span class="math inline">\(p(\theta \mid y)\)</span>.</p>
-<section id="simulation-1-metropolis-hastings-in-action" class="level3">
-<h3 class="anchored" data-anchor-id="simulation-1-metropolis-hastings-in-action">Simulation 1: Metropolis-Hastings in action</h3>
-<p>Estimate the mean <span class="math inline">\(\mu\)</span> of normally distributed data with unknown true value. The proposal width controls exploration: too narrow and the chain moves slowly; too wide and most proposals get rejected.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 650
+#| viewerHeight: 620
 
 library(shiny)
 
@@ -462,26 +360,28 @@ ui &lt;- fluidPage(
     }
     .stats-box b { color: #2c3e50; }
     .good { color: #27ae60; font-weight: bold; }
-    .bad  { color: #e74c3c; font-weight: bold; }
   "))),
 
   sidebarLayout(
     sidebarPanel(
       width = 3,
 
-      sliderInput("true_mu", HTML("True &amp;mu;:"),
-                  min = -3, max = 3, value = 1, step = 0.5),
+      sliderInput("true_beta", HTML("True &amp;beta;:"),
+                  min = -3, max = 3, value = 1.5, step = 0.5),
 
-      sliderInput("n_data", "Data points:",
-                  min = 5, max = 100, value = 20, step = 5),
+      sliderInput("prior_mean", "Prior mean:",
+                  min = -3, max = 3, value = 0, step = 0.5),
 
-      sliderInput("prop_sd", "Proposal width (SD):",
-                  min = 0.05, max = 5, value = 0.5, step = 0.05),
+      sliderInput("prior_sd", "Prior SD:",
+                  min = 0.1, max = 5, value = 1, step = 0.1),
 
-      sliderInput("n_iter", "Iterations:",
-                  min = 500, max = 5000, value = 2000, step = 500),
+      sliderInput("n", "Sample size (n):",
+                  min = 5, max = 200, value = 20, step = 5),
 
-      actionButton("go", "Run chain", class = "btn-primary", width = "100%"),
+      sliderInput("sigma", HTML("Noise (&amp;sigma;):"),
+                  min = 0.5, max = 5, value = 2, step = 0.5),
+
+      actionButton("go", "New data", class = "btn-primary", width = "100%"),
 
       uiOutput("results")
     ),
@@ -489,8 +389,8 @@ ui &lt;- fluidPage(
     mainPanel(
       width = 9,
       fluidRow(
-        column(6, plotOutput("trace_plot", height = "420px")),
-        column(6, plotOutput("hist_plot", height = "420px"))
+        column(6, plotOutput("scatter_plot", height = "420px")),
+        column(6, plotOutput("density_plot", height = "420px"))
       )
     )
   )
@@ -500,119 +400,118 @@ server &lt;- function(input, output, session) {
 
   dat &lt;- reactive({
     input$go
-    true_mu  &lt;- input$true_mu
-    n_data   &lt;- input$n_data
-    prop_sd  &lt;- input$prop_sd
-    n_iter   &lt;- input$n_iter
-    sigma    &lt;- 2  # known SD
+    true_beta  &lt;- input$true_beta
+    prior_mean &lt;- input$prior_mean
+    prior_sd   &lt;- input$prior_sd
+    n          &lt;- input$n
+    sigma      &lt;- input$sigma
 
-    # Generate data
-    y &lt;- rnorm(n_data, mean = true_mu, sd = sigma)
+    # Generate data: y = true_beta * x + noise (centered x, no intercept)
+    x &lt;- rnorm(n, 0, 1)
+    y &lt;- true_beta * x + rnorm(n, 0, sigma)
 
-    # Log posterior (unnormalized): normal likelihood + flat prior
-    log_post &lt;- function(mu) {
-      sum(dnorm(y, mean = mu, sd = sigma, log = TRUE))
-    }
+    # OLS estimate
+    beta_ols &lt;- sum(x * y) / sum(x^2)
+    se_ols   &lt;- sigma / sqrt(sum(x^2))
 
-    # Metropolis-Hastings
-    chain &lt;- numeric(n_iter)
-    chain[1] &lt;- 0  # start at 0
-    accepted &lt;- 0
+    # Bayesian posterior (conjugate normal-normal, known sigma)
+    prior_prec &lt;- 1 / prior_sd^2
+    data_prec  &lt;- sum(x^2) / sigma^2
+    post_prec  &lt;- prior_prec + data_prec
+    post_sd    &lt;- 1 / sqrt(post_prec)
+    post_mean  &lt;- (prior_mean * prior_prec + beta_ols * data_prec) / post_prec
 
-    for (t in 2:n_iter) {
-      proposal &lt;- rnorm(1, mean = chain[t - 1], sd = prop_sd)
-      log_ratio &lt;- log_post(proposal) - log_post(chain[t - 1])
+    # Weights
+    w_data  &lt;- data_prec / post_prec
+    w_prior &lt;- prior_prec / post_prec
 
-      if (log(runif(1)) &lt; log_ratio) {
-        chain[t] &lt;- proposal
-        accepted &lt;- accepted + 1
-      } else {
-        chain[t] &lt;- chain[t - 1]
-      }
-    }
-
-    accept_rate &lt;- accepted / (n_iter - 1)
-
-    # Analytic posterior for comparison (conjugate: flat prior + normal)
-    post_mean &lt;- mean(y)
-    post_sd   &lt;- sigma / sqrt(n_data)
-
-    list(chain = chain, accept_rate = accept_rate,
-         true_mu = true_mu, post_mean = post_mean, post_sd = post_sd,
-         n_iter = n_iter, prop_sd = prop_sd)
+    list(x = x, y = y, true_beta = true_beta,
+         beta_ols = beta_ols, se_ols = se_ols,
+         prior_mean = prior_mean, prior_sd = prior_sd,
+         post_mean = post_mean, post_sd = post_sd,
+         w_data = w_data, w_prior = w_prior, sigma = sigma)
   })
 
-  output$trace_plot &lt;- renderPlot({
+  output$scatter_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    plot(d$chain, type = "l", col = "#3498db80", lwd = 0.5,
-         xlab = "Iteration", ylab = expression(mu),
-         main = "Trace Plot")
+    plot(d$x, d$y, pch = 16, col = "#2c3e5060", cex = 1.2,
+         xlab = "x", ylab = "y", main = "Data + Regression Lines")
 
-    abline(h = d$true_mu, lty = 2, col = "#e74c3c", lwd = 2)
-    abline(h = d$post_mean, lty = 3, col = "#27ae60", lwd = 2)
+    # True line (green, dashed)
+    abline(0, d$true_beta, col = "#27ae60", lwd = 2.5, lty = 2)
+    # OLS line (red)
+    abline(0, d$beta_ols, col = "#e74c3c", lwd = 2.5)
+    # Bayesian line (blue)
+    abline(0, d$post_mean, col = "#3498db", lwd = 2.5)
 
-    legend("topright", bty = "n", cex = 0.8,
-           legend = c(expression("True " * mu),
-                      "Posterior mean (analytic)"),
-           col = c("#e74c3c", "#27ae60"),
-           lty = c(2, 3), lwd = 2)
+    legend("topleft", bty = "n", cex = 0.85,
+           legend = c(
+             paste0("True: ", d$true_beta),
+             paste0("OLS: ", round(d$beta_ols, 3)),
+             paste0("Bayesian: ", round(d$post_mean, 3))
+           ),
+           col = c("#27ae60", "#e74c3c", "#3498db"),
+           lwd = 2.5, lty = c(2, 1, 1))
   })
 
-  output$hist_plot &lt;- renderPlot({
+  output$density_plot &lt;- renderPlot({
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    # Discard first 20% as burn-in
-    burnin &lt;- floor(d$n_iter * 0.2)
-    samples &lt;- d$chain[(burnin + 1):d$n_iter]
+    # Range for plotting
+    all_means &lt;- c(d$prior_mean, d$beta_ols, d$post_mean)
+    all_sds   &lt;- c(d$prior_sd, d$se_ols, d$post_sd)
+    xlim &lt;- range(c(all_means - 3.5 * all_sds, all_means + 3.5 * all_sds))
+    x_seq &lt;- seq(xlim[1], xlim[2], length.out = 300)
 
-    hist(samples, breaks = 40, freq = FALSE,
-         col = "#3498db40", border = "#3498db",
-         xlab = expression(mu), main = "Posterior Distribution",
-         xlim = range(c(samples, d$true_mu - 0.5, d$true_mu + 0.5)))
+    # Densities
+    prior_y &lt;- dnorm(x_seq, d$prior_mean, d$prior_sd)
+    lik_y   &lt;- dnorm(x_seq, d$beta_ols, d$se_ols)
+    post_y  &lt;- dnorm(x_seq, d$post_mean, d$post_sd)
 
-    # Analytic posterior
-    x_seq &lt;- seq(min(samples) - 0.5, max(samples) + 0.5, length.out = 200)
-    lines(x_seq, dnorm(x_seq, d$post_mean, d$post_sd),
-          col = "#27ae60", lwd = 2.5)
+    ylim &lt;- c(0, max(c(prior_y, lik_y, post_y)) * 1.15)
 
-    abline(v = d$true_mu, lty = 2, col = "#e74c3c", lwd = 2)
+    plot(NULL, xlim = xlim, ylim = ylim,
+         xlab = expression(beta), ylab = "Density",
+         main = expression("Prior, Likelihood, &amp; Posterior for " * beta))
+
+    # Prior (red, dashed)
+    lines(x_seq, prior_y, col = "#e74c3c", lwd = 2, lty = 2)
+
+    # Likelihood (gray, dotted)
+    lines(x_seq, lik_y, col = "gray50", lwd = 2, lty = 3)
+
+    # Posterior (blue, shaded)
+    polygon(c(x_seq, rev(x_seq)), c(post_y, rep(0, length(x_seq))),
+            col = "#3498db30", border = NA)
+    lines(x_seq, post_y, col = "#3498db", lwd = 2.5)
+
+    # True beta
+    abline(v = d$true_beta, lty = 2, col = "#27ae60", lwd = 1.5)
 
     legend("topright", bty = "n", cex = 0.8,
-           legend = c("MCMC samples", "Analytic posterior",
-                      expression("True " * mu)),
-           col = c("#3498db", "#27ae60", "#e74c3c"),
-           lwd = c(NA, 2.5, 2), lty = c(NA, 1, 2),
-           pch = c(15, NA, NA), pt.cex = c(1.5, NA, NA))
+           legend = c("Prior", "Likelihood (data)",
+                      "Posterior", expression("True " * beta)),
+           col = c("#e74c3c", "gray50", "#3498db", "#27ae60"),
+           lwd = c(2, 2, 2.5, 1.5),
+           lty = c(2, 3, 1, 2))
   })
 
   output$results &lt;- renderUI({
     d &lt;- dat()
-    burnin &lt;- floor(d$n_iter * 0.2)
-    samples &lt;- d$chain[(burnin + 1):d$n_iter]
-
-    rate_class &lt;- if (d$accept_rate &gt; 0.15 &amp;&amp; d$accept_rate &lt; 0.5) "good" else "bad"
-    rate_note &lt;- if (d$accept_rate &lt; 0.15) {
-      "Too low — proposal too wide"
-    } else if (d$accept_rate &gt; 0.5) {
-      "Too high — proposal too narrow"
-    } else {
-      "Good range (0.15-0.50)"
-    }
-
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;Acceptance rate:&lt;/b&gt; &lt;span class='", rate_class, "'&gt;",
-        round(d$accept_rate * 100, 1), "%&lt;/span&gt;&lt;br&gt;",
-        "&lt;small&gt;", rate_note, "&lt;/small&gt;&lt;br&gt;",
+        "&lt;b&gt;OLS estimate:&lt;/b&gt; ", round(d$beta_ols, 3), "&lt;br&gt;",
+        "&lt;b&gt;Posterior mean:&lt;/b&gt; ", round(d$post_mean, 3), "&lt;br&gt;",
+        "&lt;b&gt;True &amp;beta;:&lt;/b&gt; ", d$true_beta, "&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;MCMC posterior mean:&lt;/b&gt; ", round(mean(samples), 3), "&lt;br&gt;",
-        "&lt;b&gt;Analytic posterior mean:&lt;/b&gt; ", round(d$post_mean, 3), "&lt;br&gt;",
-        "&lt;b&gt;True &amp;mu;:&lt;/b&gt; ", d$true_mu, "&lt;br&gt;",
+        "&lt;b&gt;Weight on data:&lt;/b&gt; ", round(d$w_data * 100, 1), "%&lt;br&gt;",
+        "&lt;b&gt;Weight on prior:&lt;/b&gt; ", round(d$w_prior * 100, 1), "%&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;Proposal width:&lt;/b&gt; ", d$prop_sd
+        "&lt;b&gt;OLS SE:&lt;/b&gt; ", round(d$se_ols, 3), "&lt;br&gt;",
+        "&lt;b&gt;Posterior SD:&lt;/b&gt; ", round(d$post_sd, 3)
       ))
     )
   })
@@ -623,22 +522,107 @@ shinyApp(ui, server)</code></pre>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Proposal width = 0.5:</strong> a well-tuned chain. The trace plot shows good mixing (bouncing around the posterior), and the histogram matches the analytic posterior (green curve). Acceptance rate is in the sweet spot (20–40%).</li>
-<li><strong>Proposal width = 0.05:</strong> too narrow. The chain takes tiny steps — the trace plot shows slow, random-walk behavior. Acceptance rate is near 100% (almost every proposal is accepted because it’s barely different). The chain explores the posterior very slowly.</li>
-<li><strong>Proposal width = 5:</strong> too wide. Most proposals jump far from the current value and land in low-probability regions — they get rejected. The trace plot shows long flat stretches (the chain is stuck). Acceptance rate is very low.</li>
-<li><strong>The goldilocks principle:</strong> you want a proposal width that’s “just right” — large enough to explore, small enough to get accepted. The theoretical optimum for 1D is an acceptance rate around 44% (Roberts et al., 1997).</li>
+<li><strong>Vague prior (prior SD = 5):</strong> the posterior almost exactly matches OLS. With a wide prior, the data dominates — the weight on prior drops near 0%. <strong>A vague Bayesian is a frequentist.</strong></li>
+<li><strong>Strong prior (prior SD = 0.3):</strong> the posterior is pulled heavily toward the prior mean. Even if the data says otherwise, the posterior barely moves. This is shrinkage in action.</li>
+<li><strong>Large n (n = 200):</strong> regardless of the prior, the posterior converges to the OLS estimate. <strong>Data overwhelms the prior.</strong> Watch the weight on data approach 100%.</li>
+<li><strong>Wrong prior (prior mean = -2, true beta = 1.5, n = 10):</strong> the Bayesian estimate is biased toward -2. Now increase n — the data corrects the bad prior. This is why Bayesian inference is “self-correcting” with enough data.</li>
+<li><strong>Compare the right panel:</strong> the posterior (blue) always sits between the prior (red) and the likelihood (gray). It’s literally a compromise between what you believed and what you saw.</li>
 </ul>
 <hr>
 </section>
 </section>
-<section id="burn-in-and-convergence" class="level2">
-<h2 class="anchored" data-anchor-id="burn-in-and-convergence">Burn-in and convergence</h2>
-<p>A practical concern: the chain starts at an arbitrary value (<span class="math inline">\(\theta_0 = 0\)</span> above). The early samples reflect the starting point, not the posterior. You need to <strong>discard</strong> these initial samples — the “burn-in” period.</p>
-<p><strong>How do you know the chain has converged?</strong> Run multiple chains from different starting points. If they all end up exploring the same region, you have evidence of convergence. If they’re stuck in different places, the chains haven’t converged and you need more iterations.</p>
-<section id="simulation-2-multiple-chains-and-convergence" class="level3">
-<h3 class="anchored" data-anchor-id="simulation-2-multiple-chains-and-convergence">Simulation 2: Multiple chains and convergence</h3>
+<section id="credible-intervals-vs-confidence-intervals" class="level2">
+<h2 class="anchored" data-anchor-id="credible-intervals-vs-confidence-intervals">Credible intervals vs confidence intervals</h2>
+<p>Both give you a range of plausible values for <span class="math inline">\(\beta\)</span>. But they answer <strong>different questions</strong>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Confidence interval (frequentist)</th>
+<th>Credible interval (Bayesian)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Statement</strong></td>
+<td>“If I repeated this experiment many times, 95% of my CIs would contain the true <span class="math inline">\(\beta\)</span>”</td>
+<td>“Given the data and my prior, there’s a 95% probability that <span class="math inline">\(\beta\)</span> is in this interval”</td>
+</tr>
+<tr class="even">
+<td><strong>About</strong></td>
+<td>The procedure</td>
+<td>The parameter</td>
+</tr>
+<tr class="odd">
+<td><strong>Depends on prior?</strong></td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td><strong>Interpretation</strong></td>
+<td>Frequency guarantee across experiments</td>
+<td>Direct probability statement for <em>this</em> experiment</td>
+</tr>
+</tbody>
+</table>
+<p>The credible interval says what most people <em>think</em> the confidence interval says. See <a href="bayes-vs-freq.html">Bayesian vs Frequentist</a> for more on this distinction.</p>
+<hr>
+</section>
+<section id="the-prior-as-regularization" class="level2">
+<h2 class="anchored" data-anchor-id="the-prior-as-regularization">The prior as regularization</h2>
+<p>A prior isn’t just a philosophical stance — it has a direct mathematical connection to <strong>regularization</strong>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Prior on <span class="math inline">\(\beta\)</span></th>
+<th>Equivalent to</th>
+<th>Penalty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(N(0, \sigma_0^2)\)</span></td>
+<td>Ridge regression</td>
+<td><span class="math inline">\(\lambda = \sigma^2 / \sigma_0^2\)</span></td>
+</tr>
+<tr class="even">
+<td>Laplace<span class="math inline">\((0, b)\)</span></td>
+<td>LASSO</td>
+<td><span class="math inline">\(\lambda = \sigma^2 / b\)</span></td>
+</tr>
+<tr class="odd">
+<td>Flat (improper)</td>
+<td>OLS</td>
+<td>No penalty</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>MAP vs full Bayesian:</strong> The <strong>maximum a posteriori</strong> (MAP) estimate — the peak of the posterior — equals the ridge/LASSO solution exactly. But full Bayesian inference gives you the entire posterior, not just the peak. You get uncertainty for free.</p>
+</div>
+</div>
+</div>
+<p>A tighter prior (smaller <span class="math inline">\(\sigma_0^2\)</span>) implies stronger regularization (larger <span class="math inline">\(\lambda\)</span>). This is why Bayesian regression with an informative prior produces <a href="shrinkage.html">shrinkage</a> — it pulls estimates toward the prior mean, just like ridge regression pulls coefficients toward zero.</p>
+<section id="simulation-repeated-experiments-ci-vs-cri-coverage" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-repeated-experiments-ci-vs-cri-coverage">Simulation: Repeated experiments — CI vs CrI coverage</h3>
+<p>Run the same experiment many times. Each repetition generates new data from the true model, computes both a frequentist CI and a Bayesian CrI, and checks whether each contains the true <span class="math inline">\(\beta\)</span>. The prior is centered at 0 (like ridge regression).</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 580
+#| viewerHeight: 620
 
 library(shiny)
 
@@ -657,23 +641,29 @@ ui &lt;- fluidPage(
     sidebarPanel(
       width = 3,
 
-      sliderInput("n_iter2", "Iterations:",
-                  min = 200, max = 3000, value = 1000, step = 200),
+      sliderInput("true_beta2", HTML("True &amp;beta;:"),
+                  min = -3, max = 3, value = 1.5, step = 0.5),
 
-      sliderInput("burnin", "Burn-in (discard first %):",
-                  min = 0, max = 50, value = 20, step = 5),
+      sliderInput("prior_sd2", "Prior SD:",
+                  min = 0.1, max = 5, value = 1, step = 0.1),
 
-      sliderInput("prop_sd2", "Proposal width:",
-                  min = 0.1, max = 3, value = 0.5, step = 0.1),
+      sliderInput("n2", "Sample size (n):",
+                  min = 5, max = 200, value = 20, step = 5),
 
-      actionButton("go2", "Run chains", class = "btn-primary", width = "100%"),
+      sliderInput("n_reps", "Repetitions:",
+                  min = 10, max = 100, value = 40, step = 10),
+
+      actionButton("go2", "Run experiments", class = "btn-primary", width = "100%"),
 
       uiOutput("results2")
     ),
 
     mainPanel(
       width = 9,
-      plotOutput("multi_trace", height = "420px")
+      fluidRow(
+        column(6, plotOutput("interval_plot", height = "420px")),
+        column(6, plotOutput("dot_plot", height = "420px"))
+      )
     )
   )
 )
@@ -682,105 +672,138 @@ server &lt;- function(input, output, session) {
 
   dat2 &lt;- reactive({
     input$go2
-    n_iter  &lt;- input$n_iter2
-    burnin  &lt;- input$burnin / 100
-    prop_sd &lt;- input$prop_sd2
-    sigma   &lt;- 2
-    true_mu &lt;- 1.5
+    true_beta  &lt;- input$true_beta2
+    prior_sd   &lt;- input$prior_sd2
+    n          &lt;- input$n2
+    n_reps     &lt;- input$n_reps
+    sigma      &lt;- 2
+    prior_mean &lt;- 0  # centered at 0, like ridge
 
-    # Generate data once
-    y &lt;- rnorm(30, mean = true_mu, sd = sigma)
+    prior_prec &lt;- 1 / prior_sd^2
 
-    log_post &lt;- function(mu) {
-      sum(dnorm(y, mean = mu, sd = sigma, log = TRUE))
+    # Storage: ols_est, ols_lo, ols_hi, bayes_est, bayes_lo, bayes_hi
+    results &lt;- matrix(NA, nrow = n_reps, ncol = 6)
+
+    for (r in 1:n_reps) {
+      x &lt;- rnorm(n, 0, 1)
+      y &lt;- true_beta * x + rnorm(n, 0, sigma)
+
+      beta_ols &lt;- sum(x * y) / sum(x^2)
+      se_ols   &lt;- sigma / sqrt(sum(x^2))
+
+      data_prec &lt;- sum(x^2) / sigma^2
+      post_prec &lt;- prior_prec + data_prec
+      post_sd   &lt;- 1 / sqrt(post_prec)
+      post_mean &lt;- (prior_mean * prior_prec + beta_ols * data_prec) / post_prec
+
+      results[r, ] &lt;- c(
+        beta_ols,
+        beta_ols - 1.96 * se_ols,
+        beta_ols + 1.96 * se_ols,
+        post_mean,
+        qnorm(0.025, post_mean, post_sd),
+        qnorm(0.975, post_mean, post_sd)
+      )
     }
 
-    # Run 4 chains from different starting points
-    starts &lt;- c(-5, -2, 4, 7)
-    chain_cols &lt;- c("#e74c3c", "#3498db", "#27ae60", "#f39c12")
-    chains &lt;- matrix(0, nrow = n_iter, ncol = 4)
+    # Coverage
+    ci_covers  &lt;- results[, 2] &lt;= true_beta &amp; results[, 3] &gt;= true_beta
+    cri_covers &lt;- results[, 5] &lt;= true_beta &amp; results[, 6] &gt;= true_beta
 
-    for (ch in 1:4) {
-      chains[1, ch] &lt;- starts[ch]
-      for (t in 2:n_iter) {
-        proposal &lt;- rnorm(1, chains[t - 1, ch], prop_sd)
-        log_r &lt;- log_post(proposal) - log_post(chains[t - 1, ch])
-        if (log(runif(1)) &lt; log_r) {
-          chains[t, ch] &lt;- proposal
-        } else {
-          chains[t, ch] &lt;- chains[t - 1, ch]
-        }
-      }
-    }
+    # Average widths
+    ci_width  &lt;- mean(results[, 3] - results[, 2])
+    cri_width &lt;- mean(results[, 6] - results[, 5])
 
-    # Posterior (analytic)
-    post_mean &lt;- mean(y)
+    # MSE
+    mse_ols   &lt;- mean((results[, 1] - true_beta)^2)
+    mse_bayes &lt;- mean((results[, 4] - true_beta)^2)
 
-    list(chains = chains, starts = starts, chain_cols = chain_cols,
-         n_iter = n_iter, burnin = burnin, true_mu = true_mu,
-         post_mean = post_mean)
+    # Implied ridge lambda
+    lambda &lt;- sigma^2 / prior_sd^2
+
+    list(results = results, true_beta = true_beta, n_reps = n_reps,
+         ci_covers = ci_covers, cri_covers = cri_covers,
+         ci_width = ci_width, cri_width = cri_width,
+         mse_ols = mse_ols, mse_bayes = mse_bayes, lambda = lambda)
   })
 
-  output$multi_trace &lt;- renderPlot({
+  output$interval_plot &lt;- renderPlot({
     d &lt;- dat2()
     par(mar = c(4.5, 4.5, 3, 1))
 
-    burnin_line &lt;- floor(d$n_iter * d$burnin)
+    n_show &lt;- min(d$n_reps, 40)
+    xlim &lt;- range(c(d$results[1:n_show, 2:3],
+                    d$results[1:n_show, 5:6], d$true_beta)) + c(-0.3, 0.3)
 
-    ylim &lt;- range(d$chains)
-    plot(NULL, xlim = c(1, d$n_iter), ylim = ylim,
-         xlab = "Iteration", ylab = expression(mu),
-         main = "Four Chains from Different Starting Points")
+    plot(NULL, xlim = xlim, ylim = c(0.5, n_show + 0.5),
+         xlab = expression(beta), ylab = "Experiment #",
+         main = "95% Intervals Across Experiments")
 
-    # Shade burn-in region
-    if (burnin_line &gt; 0) {
-      rect(0, ylim[1] - 1, burnin_line, ylim[2] + 1,
-           col = "#f0f0f080", border = NA)
-      abline(v = burnin_line, lty = 2, col = "gray40", lwd = 1.5)
-      text(burnin_line, ylim[2], "burn-in", pos = 2,
-           cex = 0.8, col = "gray40")
+    for (i in 1:n_show) {
+      # CI (red)
+      ci_col &lt;- if (d$ci_covers[i]) "#e74c3c" else "#e74c3c40"
+      segments(d$results[i, 2], i - 0.15, d$results[i, 3], i - 0.15,
+               lwd = 2, col = ci_col)
+
+      # CrI (blue)
+      cri_col &lt;- if (d$cri_covers[i]) "#3498db" else "#3498db40"
+      segments(d$results[i, 5], i + 0.15, d$results[i, 6], i + 0.15,
+               lwd = 2, col = cri_col)
     }
 
-    for (ch in 1:4) {
-      lines(d$chains[, ch], col = paste0(d$chain_cols[ch], "90"),
-            lwd = 0.8)
+    abline(v = d$true_beta, lty = 2, lwd = 2, col = "#2c3e50")
+
+    legend("topright", bty = "n", cex = 0.8,
+           legend = c(
+             paste0("CI (", sum(d$ci_covers[1:n_show]), "/", n_show, " cover)"),
+             paste0("CrI (", sum(d$cri_covers[1:n_show]), "/", n_show, " cover)")
+           ),
+           col = c("#e74c3c", "#3498db"), lwd = 3)
+  })
+
+  output$dot_plot &lt;- renderPlot({
+    d &lt;- dat2()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    n_show &lt;- min(d$n_reps, 40)
+    xlim &lt;- range(c(d$results[1:n_show, 1],
+                    d$results[1:n_show, 4], d$true_beta)) + c(-0.3, 0.3)
+
+    plot(NULL, xlim = xlim, ylim = c(0.5, n_show + 0.5),
+         xlab = expression(hat(beta)), ylab = "Experiment #",
+         main = "Point Estimates Across Experiments")
+
+    for (i in 1:n_show) {
+      points(d$results[i, 1], i - 0.12, pch = 16, col = "#e74c3c", cex = 0.9)
+      points(d$results[i, 4], i + 0.12, pch = 17, col = "#3498db", cex = 0.9)
     }
 
-    abline(h = d$true_mu, lty = 2, col = "#2c3e50", lwd = 2)
-    text(d$n_iter * 0.98, d$true_mu, expression("True " * mu),
-         pos = 3, cex = 0.85, col = "#2c3e50")
+    abline(v = d$true_beta, lty = 2, lwd = 2, col = "#2c3e50")
 
-    legend("topright", bty = "n", cex = 0.75,
-           legend = paste0("Chain ", 1:4, " (start = ", d$starts, ")"),
-           col = d$chain_cols, lwd = 2)
+    legend("topright", bty = "n", cex = 0.8,
+           legend = c("OLS estimate", "Posterior mean"),
+           col = c("#e74c3c", "#3498db"),
+           pch = c(16, 17))
   })
 
   output$results2 &lt;- renderUI({
     d &lt;- dat2()
-    burnin_n &lt;- floor(d$n_iter * d$burnin)
 
-    # Post-burnin means per chain
-    if (burnin_n &lt; d$n_iter) {
-      post_samples &lt;- d$chains[(burnin_n + 1):d$n_iter, ]
-      chain_means &lt;- round(colMeans(post_samples), 3)
-      spread &lt;- round(max(chain_means) - min(chain_means), 3)
-    } else {
-      chain_means &lt;- rep(NA, 4)
-      spread &lt;- NA
-    }
-
-    converged &lt;- !is.na(spread) &amp;&amp; spread &lt; 0.3
-    conv_class &lt;- if (converged) "good" else "bad"
-    conv_label &lt;- if (converged) "Chains agree" else "Chains disagree"
+    ci_rate  &lt;- round(mean(d$ci_covers) * 100, 1)
+    cri_rate &lt;- round(mean(d$cri_covers) * 100, 1)
 
     tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;Post-burn-in means:&lt;/b&gt;&lt;br&gt;",
-        paste0("Chain ", 1:4, ": ", chain_means, collapse = "&lt;br&gt;"), "&lt;br&gt;",
+        "&lt;b&gt;CI coverage:&lt;/b&gt; ", ci_rate, "%&lt;br&gt;",
+        "&lt;b&gt;CrI coverage:&lt;/b&gt; ", cri_rate, "%&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;Spread:&lt;/b&gt; &lt;span class='", conv_class, "'&gt;",
-        spread, "&lt;/span&gt;&lt;br&gt;",
-        "&lt;span class='", conv_class, "'&gt;", conv_label, "&lt;/span&gt;"
+        "&lt;b&gt;Avg CI width:&lt;/b&gt; ", round(d$ci_width, 3), "&lt;br&gt;",
+        "&lt;b&gt;Avg CrI width:&lt;/b&gt; ", round(d$cri_width, 3), "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;MSE (OLS):&lt;/b&gt; ", round(d$mse_ols, 4), "&lt;br&gt;",
+        "&lt;b&gt;MSE (Bayes):&lt;/b&gt; ", round(d$mse_bayes, 4), "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;Implied ridge &amp;lambda;:&lt;/b&gt; ", round(d$lambda, 3)
       ))
     )
   })
@@ -791,26 +814,47 @@ shinyApp(ui, server)</code></pre>
 <section id="things-to-try-1" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try-1">Things to try</h3>
 <ul>
-<li><strong>Default settings (1000 iterations, burn-in = 20%):</strong> all four chains start at different values (-5, -2, 4, 7) but converge to the same region within ~100 iterations. After burn-in, all chain means agree. This is convergence.</li>
-<li><strong>Burn-in = 0%:</strong> the early samples (from the starting points) contaminate the posterior. The chain means diverge because each chain’s average is pulled toward its start.</li>
-<li><strong>Proposal width = 0.1:</strong> very slow exploration. The chains take longer to converge — you can see them creeping slowly toward the true value. With only 1000 iterations, they might not fully converge. Increase iterations to fix this.</li>
-<li><strong>Proposal width = 3:</strong> the chains converge quickly but the trace plot shows many flat stretches (rejected proposals). The posterior is explored but inefficiently.</li>
+<li><strong>Large n (n = 200):</strong> both intervals are nearly identical. CI and CrI coverage, width, and MSE all converge. <strong>With lots of data, Bayesian = frequentist.</strong></li>
+<li><strong>Strong prior (prior SD = 0.3), true beta = 1.5:</strong> the CrI is narrower but the prior pulls estimates toward 0. Some CrIs miss the true value — the coverage drops below 95%. A strong wrong prior hurts.</li>
+<li><strong>Vague prior (prior SD = 5):</strong> the CrI and CI are virtually the same. The implied ridge <span class="math inline">\(\lambda\)</span> is tiny — almost no regularization.</li>
+<li><strong>True beta = 0, prior SD = 1:</strong> the prior is correct! The CrI has excellent coverage <em>and</em> is narrower than the CI. The Bayesian MSE beats OLS because the prior genuinely helps.</li>
+<li><strong>Right panel:</strong> notice how the blue dots (Bayesian) cluster tighter around the true value than the red dots (OLS) when the prior is reasonable. That’s the bias-variance tradeoff — a little bias from the prior reduces variance enough to lower overall MSE.</li>
 </ul>
 <hr>
 </section>
 </section>
-<section id="the-key-message" class="level2">
-<h2 class="anchored" data-anchor-id="the-key-message">The key message</h2>
-<p>MCMC lets you compute posteriors for <strong>any</strong> model — not just conjugate ones. Specify the likelihood and the prior, and the algorithm samples from the posterior. This is what makes Bayesian inference practical for real-world problems like <a href="hierarchical.html">hierarchical models</a>, where closed-form posteriors don’t exist.</p>
-<p>Modern tools like <strong>Stan</strong>, <strong>JAGS</strong>, and <strong>PyMC</strong> automate this — you specify the model and they handle the sampling. But understanding the basics (proposal tuning, burn-in, convergence checks) helps you diagnose problems when things go wrong.</p>
+<section id="in-stata-bayes-reg-y-x" class="level2">
+<h2 class="anchored" data-anchor-id="in-stata-bayes-reg-y-x">In Stata: <code>bayes: reg y x</code></h2>
+<p>Stata makes Bayesian regression straightforward. Just prepend <code>bayes:</code> to your regression command:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>* Frequentist OLS</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> wage education experience</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>* Bayesian regression (<span class="kw">default</span> priors)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>bayes: <span class="kw">reg</span> wage education experience</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>* With custom priors</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>bayes, prior({wage:education}, <span class="fu">normal</span>(1, 0.25)) <span class="co">///</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      prior({wage:experience}, <span class="fu">normal</span>(0.5, 1))  <span class="co">///</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      : <span class="kw">reg</span> wage education experience</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The output looks different from OLS — instead of a coefficient table with p-values, you get <strong>posterior means</strong>, <strong>standard deviations</strong>, and <strong>credible intervals</strong>. Under the hood, Stata uses the Metropolis-Hastings algorithm (see <a href="mcmc.html">MCMC</a>) to sample from the posterior.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Try it:</strong> run <code>reg y x</code> and <code>bayes: reg y x</code> on the same dataset. With Stata’s default (vague) priors and moderate sample sizes, the results will be nearly identical — confirming that the prior washes out with enough data.</p>
+</div>
+</div>
+</div>
 <hr>
 </section>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
 <ul>
-<li><p>The Metropolis algorithm was developed at <strong>Los Alamos National Laboratory</strong> by <strong>Nicholas Metropolis, Arianna Rosenbluth, Marshall Rosenbluth, Augusta Teller, and Edward Teller (1953)</strong> — originally for simulating equations of state in statistical mechanics, not statistics. <strong>W.K. Hastings (1970)</strong> generalized it to asymmetric proposal distributions.</p></li>
-<li><p>MCMC was named one of the <strong>top 10 algorithms of the 20th century</strong> by Computing in Science &amp; Engineering (2000). It’s used across physics, chemistry, biology, statistics, and machine learning.</p></li>
-<li><p>Modern Bayesian computation has largely moved beyond basic Metropolis-Hastings to <strong>Hamiltonian Monte Carlo (HMC)</strong> and its adaptive variant <strong>NUTS</strong> (Hoffman &amp; Gelman, 2014). HMC uses gradient information to make smarter proposals, dramatically improving efficiency in high-dimensional problems. This is what Stan uses under the hood.</p></li>
+<li><p><strong>Lindley &amp; Smith (1972)</strong> formalized the conjugate Bayesian linear model, showing how hierarchical priors on regression coefficients lead to shrinkage estimators. Their work unified the Bayesian and empirical Bayes approaches to regression.</p></li>
+<li><p><strong>Hoerl &amp; Kennard (1970)</strong> introduced ridge regression as a purely frequentist technique for handling multicollinearity. The Bayesian interpretation — that ridge is equivalent to a normal prior — came later, connecting two literatures that developed independently.</p></li>
+<li><p><strong>Modern frontiers:</strong> Bayesian regression ideas power some of today’s most flexible methods. <strong>BART</strong> (Bayesian Additive Regression Trees) uses priors on tree structures for nonparametric regression. <strong>Bayesian model averaging</strong> puts priors on competing models themselves, not just parameters, to account for model uncertainty.</p></li>
 </ul>
 
 

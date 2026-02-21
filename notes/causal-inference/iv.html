@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -288,6 +323,7 @@ window.Quarto = {
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
   <li><a href="#what-does-iv-actually-estimate" id="toc-what-does-iv-actually-estimate" class="nav-link" data-scroll-target="#what-does-iv-actually-estimate">What does IV actually estimate?</a></li>
+  <li><a href="#in-stata" id="toc-in-stata" class="nav-link" data-scroll-target="#in-stata">In Stata</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -510,6 +546,25 @@ shinyApp(ui, server)</code></pre>
 <p>A subtle point: IV doesn’t estimate the effect for everyone. It estimates the <strong>Local Average Treatment Effect (LATE)</strong> — the effect for <strong>compliers</strong>, people whose treatment status is actually changed by the instrument.</p>
 <p>In the Angrist &amp; Krueger example: IV estimates the return to education for people who <em>would have dropped out</em> if born in a different quarter. It says nothing about people who would have stayed in school regardless.</p>
 <p>This means two different valid instruments can give you two different IV estimates — not because one is wrong, but because they’re identifying effects for different subpopulations.</p>
+<hr>
+</section>
+<section id="in-stata" class="level2">
+<h2 class="anchored" data-anchor-id="in-stata">In Stata</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>* Two-stage least squares</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ivregress 2sls outcome x1 <span class="kw">x2</span> (treatment = instrument)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>* First-stage <span class="fu">F</span> statistic (check relevance)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">estat</span> firststage</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>* Overidentification <span class="kw">test</span> (with multiple instruments)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>ivregress 2sls outcome x1 (treatment = inst1 inst2)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">estat</span> overid</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>* Manually <span class="kw">run</span> the <span class="kw">two</span> stages (to see what's happening)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> treatment instrument x1 <span class="kw">x2</span>          <span class="co">/* first stage */</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="kw">predict</span> treatment_hat, <span class="kw">xb</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> outcome treatment_hat x1 <span class="kw">x2</span>         <span class="co">/* second stage */</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The first-stage F should be well above 10 (Staiger &amp; Stock rule of thumb). If it’s weak, the IV estimate is unreliable — possibly more biased than OLS.</p>
 <hr>
 </section>
 <section id="did-you-know" class="level2">
