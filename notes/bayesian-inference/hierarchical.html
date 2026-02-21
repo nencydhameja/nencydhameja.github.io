@@ -213,6 +213,7 @@ window.Quarto = {
   <li><a href="#why-partial-pooling-wins" id="toc-why-partial-pooling-wins" class="nav-link" data-scroll-target="#why-partial-pooling-wins">Why partial pooling wins</a>
   <ul class="collapse">
   <li><a href="#where-hierarchical-models-show-up" id="toc-where-hierarchical-models-show-up" class="nav-link" data-scroll-target="#where-hierarchical-models-show-up">Where hierarchical models show up</a></li>
+  <li><a href="#when-is-your-data-hierarchical" id="toc-when-is-your-data-hierarchical" class="nav-link" data-scroll-target="#when-is-your-data-hierarchical">When is your data hierarchical?</a></li>
   </ul></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
@@ -521,6 +522,53 @@ shinyApp(ui, server)</code></pre>
 </tbody>
 </table>
 <p>In each case, the hierarchical structure lets you <strong>borrow strength</strong> across groups — improving estimates for every group, especially the small ones.</p>
+</section>
+<section id="when-is-your-data-hierarchical" class="level3">
+<h3 class="anchored" data-anchor-id="when-is-your-data-hierarchical">When is your data hierarchical?</h3>
+<p>Whenever units are <strong>nested</strong> inside groups, and you expect units in the same group to be more similar to each other than to units in other groups.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Example: dollar stores and obesity.</strong> Say you’re studying whether dollar store presence affects obesity rates. Your data has census <strong>tracts</strong> nested within <strong>counties</strong>. That’s hierarchical — tracts in the same county share the local food environment, demographics, and policy context.</p>
+<ul>
+<li><strong>Level 1 (tracts):</strong> each tract has its own obesity rate, influenced by dollar store presence + tract-level covariates</li>
+<li><strong>Level 2 (counties):</strong> tract-level effects come from a county-level distribution — tracts in the same county are more similar to each other than to tracts in other counties</li>
+</ul>
+<p>Partial pooling matters for <strong>small counties</strong> with few tracts. If a county has only 2 tracts, the raw county average is noisy. The hierarchical model shrinks it toward the overall pattern — borrowing strength from larger counties.</p>
+</div>
+</div>
+</div>
+<p>Without a hierarchical model, you’d have to choose:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Approach</th>
+<th>Problem</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ignore counties, pool all tracts</td>
+<td>Misses that tracts in the same county share unobserved factors</td>
+</tr>
+<tr class="even">
+<td>County fixed effects</td>
+<td>Eats degrees of freedom; can’t estimate county-level predictors; small counties get noisy estimates</td>
+</tr>
+<tr class="odd">
+<td>Hierarchical model</td>
+<td>Best of both — partial pooling, can include county-level predictors, small counties get regularized</td>
+</tr>
+</tbody>
+</table>
+<p>The rule of thumb: if your research question involves <strong>variation across groups</strong> (does the effect differ by county? do rural vs urban counties respond differently?), a hierarchical model is the natural fit. If you’re just estimating one overall effect and groups are a nuisance, fixed effects or <a href="../stats-course/clustered-se.html">clustered SEs</a> might be enough.</p>
 <hr>
 </section>
 </section>
