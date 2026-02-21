@@ -12,6 +12,15 @@ in economics and political science (2014–2024).
 ---
 
 <style>
+/* Make page content use full width (no sidebar on this page) */
+.page {
+  float: none !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
 .chart-wrapper {
   width: 100%;
   overflow: hidden;
@@ -23,7 +32,6 @@ in economics and political science (2014–2024).
   border: 0;
   display: block;
 }
-
 </style>
 
 <div class="chart-wrapper">
