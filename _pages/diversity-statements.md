@@ -38,7 +38,7 @@ in economics and political science (2014–2024).
   <iframe
     src="/assets/projects/diversity/treatment_trend.html"
     title="Treatment Trend"
-    height="500"
+    height="420"
     loading="lazy"
     scrolling="no"
     style="pointer-events: auto;"
@@ -50,7 +50,7 @@ in economics and political science (2014–2024).
   <iframe
     src="/assets/projects/diversity/div_state_map.html"
     title="Interactive Map"
-    height="600"
+    height="520"
     loading="lazy"
     scrolling="no"
     style="pointer-events: auto;"
