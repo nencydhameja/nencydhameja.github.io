@@ -459,6 +459,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#neural-networks-are-typically-miscalibrated" id="toc-neural-networks-are-typically-miscalibrated" class="nav-link" data-scroll-target="#neural-networks-are-typically-miscalibrated">Neural networks are typically miscalibrated</a>
   <ul class="collapse">
+  <li><a href="#how-to-read-a-calibration-curve" id="toc-how-to-read-a-calibration-curve" class="nav-link" data-scroll-target="#how-to-read-a-calibration-curve">How to read a calibration curve</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
   <li><a href="#post-hoc-calibration" id="toc-post-hoc-calibration" class="nav-link" data-scroll-target="#post-hoc-calibration">Post-hoc calibration</a></li>
@@ -516,6 +517,28 @@ P(Y = 1 \mid \hat{p}(X) = q) = q \qquad \text{for all } q \in [0, 1]
 <p>Modern deep neural networks tend to be <strong>overconfident</strong>: they assign high probabilities to their predictions even when they are wrong. This is a well-documented empirical finding (Guo et al., 2017).</p>
 <p>The cause is related to <a href="training-as-mle.html">training as MLE</a>. The cross-entropy loss encourages the model to push predicted probabilities toward 0 or 1 — the loss is minimized when the model is maximally confident on every training example. With enough capacity, the model memorizes the training set and becomes overconfident on the test set.</p>
 <p>This is the <a href="bias-variance.html">bias-variance tradeoff</a> manifesting in probability space: an overparameterized model fits the training data perfectly (low bias) but produces overconfident predictions on new data (high variance in the probability estimates).</p>
+<section id="how-to-read-a-calibration-curve" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-read-a-calibration-curve">How to read a calibration curve</h3>
+<p>A <strong>reliability diagram</strong> (calibration curve) plots predicted probability on the x-axis against observed frequency on the y-axis. Here’s what to look for:</p>
+<pre><code>  Observed frequency
+  1.0 |                          /
+      |                        / ← Perfect calibration
+      |                      /     (diagonal)
+      |                    /
+  0.5 |         ____------
+      |       /  ↑ Overconfident model:
+      |     /    predicts 0.8, actual is 0.6
+      |   /
+  0.0 |_/___________________________
+      0.0              0.5        1.0
+              Predicted probability</code></pre>
+<ul>
+<li><strong>On the diagonal:</strong> the model is perfectly calibrated. Predicted 70% → actually happens 70% of the time.</li>
+<li><strong>Below the diagonal:</strong> the model is <strong>overconfident</strong>. It predicts higher probabilities than the actual rate. Says 80%, reality is 60%.</li>
+<li><strong>Above the diagonal:</strong> the model is <strong>underconfident</strong>. It predicts lower probabilities than the actual rate. Says 30%, reality is 50%.</li>
+</ul>
+<p>The <strong>gap</strong> between the curve and the diagonal is the calibration error at that probability level. The <strong>Expected Calibration Error (ECE)</strong> is the weighted average of these gaps across all bins.</p>
+<p>Try it in the simulation below — set miscalibration to 0 to see the diagonal, then increase it to watch the curve bow away.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 680
 
@@ -675,6 +698,7 @@ server &lt;- function(input, output, session) {
 }
 
 shinyApp(ui, server)</code></pre>
+</section>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
