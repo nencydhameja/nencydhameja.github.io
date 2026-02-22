@@ -403,6 +403,7 @@ window.Quarto = {
   <ul>
   <li><a href="#from-scalar-to-matrix" id="toc-from-scalar-to-matrix" class="nav-link active" data-scroll-target="#from-scalar-to-matrix">From scalar to matrix</a></li>
   <li><a href="#the-ols-solution" id="toc-the-ols-solution" class="nav-link" data-scroll-target="#the-ols-solution">The OLS solution</a></li>
+  <li><a href="#the-gauss-markov-assumptions" id="toc-the-gauss-markov-assumptions" class="nav-link" data-scroll-target="#the-gauss-markov-assumptions">The Gauss-Markov assumptions</a></li>
   <li><a href="#the-variance-covariance-matrix" id="toc-the-variance-covariance-matrix" class="nav-link" data-scroll-target="#the-variance-covariance-matrix">The variance-covariance matrix</a></li>
   <li><a href="#what-makes-standard-errors-big-or-small" id="toc-what-makes-standard-errors-big-or-small" class="nav-link" data-scroll-target="#what-makes-standard-errors-big-or-small">What makes standard errors big or small</a></li>
   <li><a href="#connecting-to-the-rest-of-the-course" id="toc-connecting-to-the-rest-of-the-course" class="nav-link" data-scroll-target="#connecting-to-the-rest-of-the-course">Connecting to the rest of the course</a></li>
@@ -470,9 +471,33 @@ X'X\hat{\beta} = X'y
 </div>
 </div>
 </section>
+<section id="the-gauss-markov-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="the-gauss-markov-assumptions">The Gauss-Markov assumptions</h2>
+<p>The OLS formula <span class="math inline">\(\hat{\beta} = (X'X)^{-1}X'y\)</span> is purely mechanical — it always gives you a number. But whether that number has <em>good properties</em> (unbiased, minimum variance) depends on a set of assumptions known as the <strong>Gauss-Markov conditions</strong>:</p>
+<ol type="1">
+<li><strong>Linearity.</strong> The true model is <span class="math inline">\(y = X\beta + \varepsilon\)</span> — the relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(X\)</span> is linear in the parameters.</li>
+<li><strong>Strict exogeneity.</strong> <span class="math inline">\(E[\varepsilon \mid X] = 0\)</span> — the errors are mean-zero and uncorrelated with the regressors. This rules out omitted variable bias, reverse causality, and measurement error in <span class="math inline">\(X\)</span>.</li>
+<li><strong>No perfect multicollinearity.</strong> The columns of <span class="math inline">\(X\)</span> are linearly independent, so <span class="math inline">\(X'X\)</span> is invertible. (Near-collinearity is allowed but inflates standard errors — see below.)</li>
+<li><strong>Homoskedasticity.</strong> <span class="math inline">\(\text{Var}(\varepsilon \mid X) = \sigma^2 I\)</span> — the error variance is constant across observations.</li>
+<li><strong>No autocorrelation.</strong> <span class="math inline">\(\text{Cov}(\varepsilon_i, \varepsilon_j \mid X) = 0\)</span> for <span class="math inline">\(i \neq j\)</span> — errors are uncorrelated with each other.</li>
+</ol>
+<p>Under assumptions 1-3, OLS is <strong>unbiased</strong>: <span class="math inline">\(E[\hat{\beta} \mid X] = \beta\)</span>. Add 4 and 5, and the <strong>Gauss-Markov theorem</strong> kicks in: OLS is the <strong>Best Linear Unbiased Estimator (BLUE)</strong> — no other linear, unbiased estimator has smaller variance.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>What BLUE does and doesn’t say.</strong> Gauss-Markov says OLS is the best among <em>linear</em> unbiased estimators. It says nothing about nonlinear estimators — and it doesn’t require normality. If you add a sixth assumption (<span class="math inline">\(\varepsilon \sim
+N(0, \sigma^2 I)\)</span>), then OLS is also <a href="maximum-likelihood.html">MLE</a> and is the best unbiased estimator, period (not just among linear ones).</p>
+</div>
+</div>
+</div>
+<p>Notice that assumptions 4 and 5 are about the <strong>standard errors</strong>, not the coefficient estimates. If they fail, <span class="math inline">\(\hat{\beta}\)</span> is still unbiased — but the formula for its variance changes. That’s exactly what <a href="heteroskedasticity.html">heteroskedasticity-robust SEs</a> and <a href="clustered-se.html">clustered SEs</a> fix.</p>
+</section>
 <section id="the-variance-covariance-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="the-variance-covariance-matrix">The variance-covariance matrix</h2>
-<p>We have estimates <span class="math inline">\(\hat{\beta}\)</span>. How precise are they? Under the classical assumptions (errors are homoskedastic with variance <span class="math inline">\(\sigma^2\)</span> and uncorrelated with <span class="math inline">\(X\)</span>):</p>
+<p>We have estimates <span class="math inline">\(\hat{\beta}\)</span>. How precise are they? Under the Gauss-Markov assumptions (homoskedastic errors with variance <span class="math inline">\(\sigma^2\)</span>, uncorrelated with <span class="math inline">\(X\)</span>):</p>
 <p><span class="math display">\[
 \boxed{\text{Var}(\hat{\beta}) = \sigma^2 (X'X)^{-1}}
 \]</span></p>
