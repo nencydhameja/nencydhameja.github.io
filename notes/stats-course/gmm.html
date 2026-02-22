@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Multiple Testing &amp; the Replication Crisis – Foundations of Statistical Inference</title>
+<title>Generalized Method of Moments – Foundations of Statistical Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -41,11 +41,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -116,7 +111,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./multiple-testing.html">Multiple Testing</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./method-of-moments.html">Estimation</a></li><li class="breadcrumb-item"><a href="./gmm.html">Generalized Method of Moments</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -234,7 +229,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./multiple-testing.html" class="sidebar-item-text sidebar-link active">
+  <a href="./multiple-testing.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Multiple Testing</span></a>
   </div>
 </li>
@@ -309,7 +304,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gmm.html" class="sidebar-item-text sidebar-link">
+  <a href="./gmm.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Generalized Method of Moments</span></a>
   </div>
 </li>
@@ -406,27 +401,28 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-problem-test-enough-things-and-something-will-be-significant" id="toc-the-problem-test-enough-things-and-something-will-be-significant" class="nav-link active" data-scroll-target="#the-problem-test-enough-things-and-something-will-be-significant">The problem: test enough things and something will be “significant”</a>
+  <li><a href="#from-mom-to-gmm" id="toc-from-mom-to-gmm" class="nav-link active" data-scroll-target="#from-mom-to-gmm">From MoM to GMM</a></li>
+  <li><a href="#the-gmm-estimator" id="toc-the-gmm-estimator" class="nav-link" data-scroll-target="#the-gmm-estimator">The GMM estimator</a>
   <ul class="collapse">
-  <li><a href="#how-it-happens-in-practice" id="toc-how-it-happens-in-practice" class="nav-link" data-scroll-target="#how-it-happens-in-practice">How it happens in practice</a></li>
+  <li><a href="#choosing-w" id="toc-choosing-w" class="nav-link" data-scroll-target="#choosing-w">Choosing <span class="math inline">\(W\)</span></a></li>
   </ul></li>
-  <li><a href="#simulation-1-false-discoveries-from-multiple-tests" id="toc-simulation-1-false-discoveries-from-multiple-tests" class="nav-link" data-scroll-target="#simulation-1-false-discoveries-from-multiple-tests">Simulation 1: False discoveries from multiple tests</a></li>
-  <li><a href="#simulation-2-correction-methods-compared" id="toc-simulation-2-correction-methods-compared" class="nav-link" data-scroll-target="#simulation-2-correction-methods-compared">Simulation 2: Correction methods compared</a>
+  <li><a href="#examples-that-build-on-the-course" id="toc-examples-that-build-on-the-course" class="nav-link" data-scroll-target="#examples-that-build-on-the-course">Examples that build on the course</a>
   <ul class="collapse">
-  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
-  <li><a href="#when-to-use-which-correction" id="toc-when-to-use-which-correction" class="nav-link" data-scroll-target="#when-to-use-which-correction">When to use which correction</a></li>
-  <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
-  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
+  <li><a href="#ols-as-gmm" id="toc-ols-as-gmm" class="nav-link" data-scroll-target="#ols-as-gmm">OLS as GMM</a></li>
+  <li><a href="#iv2sls-as-gmm" id="toc-iv2sls-as-gmm" class="nav-link" data-scroll-target="#iv2sls-as-gmm">IV/2SLS as GMM</a></li>
   </ul></li>
+  <li><a href="#the-j-test-overidentification-test" id="toc-the-j-test-overidentification-test" class="nav-link" data-scroll-target="#the-j-test-overidentification-test">The J-test (overidentification test)</a></li>
+  <li><a href="#when-to-use-gmm" id="toc-when-to-use-gmm" class="nav-link" data-scroll-target="#when-to-use-gmm">When to use GMM</a></li>
+  <li><a href="#connecting-to-mle" id="toc-connecting-to-mle" class="nav-link" data-scroll-target="#connecting-to-mle">Connecting to MLE</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./multiple-testing.html">Multiple Testing</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./method-of-moments.html">Estimation</a></li><li class="breadcrumb-item"><a href="./gmm.html">Generalized Method of Moments</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Multiple Testing &amp; the Replication Crisis</h1>
+<h1 class="title">Generalized Method of Moments</h1>
 </div>
 
 
@@ -443,480 +439,113 @@ window.Quarto = {
 </header>
 
 
-<section id="the-problem-test-enough-things-and-something-will-be-significant" class="level2">
-<h2 class="anchored" data-anchor-id="the-problem-test-enough-things-and-something-will-be-significant">The problem: test enough things and something will be “significant”</h2>
-<p>If you test one null hypothesis at <span class="math inline">\(\alpha = 0.05\)</span>, there’s a 5% chance of a false positive. But if you test <strong>20</strong> null hypotheses, the chance that <em>at least one</em> is falsely significant is:</p>
-<p><span class="math display">\[P(\text{at least one false positive}) = 1 - (1 - 0.05)^{20} \approx 0.64\]</span></p>
-<p>That’s a <strong>64% chance</strong> of finding something “significant” even when nothing is real. This is the <strong>multiple testing problem</strong>, and it’s at the heart of the replication crisis.</p>
-<section id="how-it-happens-in-practice" class="level3">
-<h3 class="anchored" data-anchor-id="how-it-happens-in-practice">How it happens in practice</h3>
-<ul>
-<li>A researcher tests 20 outcome variables and reports the one with p &lt; 0.05</li>
-<li>A genetics study tests 500,000 SNPs for association with a disease</li>
-<li>An A/B test checks conversions, clicks, revenue, time on page, bounce rate…</li>
-<li>A psychology experiment tests the effect on 10 different mood scales</li>
-</ul>
-<p>In each case, the nominal <span class="math inline">\(\alpha = 0.05\)</span> no longer controls the actual false positive rate. You need a <strong>correction</strong>.</p>
-<div class="callout callout-style-simple callout-note no-icon">
+<p><a href="method-of-moments.html">Method of Moments</a> is simple but leaves a key question unanswered: <em>which</em> moments should you match? And what if you have more moment conditions than parameters? GMM formalizes this. It takes a set of moment conditions — potentially more than you need — and finds the parameters that satisfy them as closely as possible in a precise, optimal sense.</p>
+<section id="from-mom-to-gmm" class="level2">
+<h2 class="anchored" data-anchor-id="from-mom-to-gmm">From MoM to GMM</h2>
+<p>Recall how MoM works: you have <span class="math inline">\(k\)</span> parameters and you pick <span class="math inline">\(k\)</span> moment conditions. Set the sample moments equal to zero and solve. When you have exactly as many conditions as parameters — the <strong>just-identified</strong> case — there’s a unique solution and everything is clean.</p>
+<p>But in practice, economic theory or statistical reasoning often gives you <em>more</em> moment conditions than parameters. Suppose you have <span class="math inline">\(m\)</span> conditions for <span class="math inline">\(k\)</span> parameters, with <span class="math inline">\(m &gt; k\)</span>. Now the system is <strong>over-identified</strong>: you can’t satisfy all <span class="math inline">\(m\)</span> conditions exactly, so you need a way to get as close as possible.</p>
+<p>That’s what GMM does. Instead of solving a system of equations, it minimizes a measure of how far the sample moments are from zero.</p>
+</section>
+<section id="the-gmm-estimator" class="level2">
+<h2 class="anchored" data-anchor-id="the-gmm-estimator">The GMM estimator</h2>
+<p>Start with a vector of <strong>moment conditions</strong>. The theory says that at the true parameter <span class="math inline">\(\theta_0\)</span>:</p>
+<p><span class="math display">\[
+E[g(X_i, \theta_0)] = 0
+\]</span></p>
+<p>where <span class="math inline">\(g\)</span> is an <span class="math inline">\(m\)</span>-dimensional vector (one entry per moment condition). The sample analog is:</p>
+<p><span class="math display">\[
+\bar{g}(\theta) = \frac{1}{n}\sum_{i=1}^n g(X_i, \theta)
+\]</span></p>
+<p>If <span class="math inline">\(m = k\)</span> (just-identified), you can set <span class="math inline">\(\bar{g}(\theta) = 0\)</span> and solve — that’s MoM. If <span class="math inline">\(m &gt; k\)</span> (over-identified), you can’t make all entries of <span class="math inline">\(\bar{g}\)</span> exactly zero. GMM minimizes a weighted quadratic form:</p>
+<p><span class="math display">\[
+\hat{\theta}_{\text{GMM}} = \arg\min_\theta \; \bar{g}(\theta)' \, W \, \bar{g}(\theta)
+\]</span></p>
+<p>where <span class="math inline">\(W\)</span> is an <span class="math inline">\(m \times m\)</span> positive definite <strong>weighting matrix</strong>. This is like a weighted sum of squared moment violations — GMM finds the <span class="math inline">\(\theta\)</span> that makes the sample moments as close to zero as possible, with <span class="math inline">\(W\)</span> determining how much each moment condition matters.</p>
+<section id="choosing-w" class="level3">
+<h3 class="anchored" data-anchor-id="choosing-w">Choosing <span class="math inline">\(W\)</span></h3>
+<p>The choice of <span class="math inline">\(W\)</span> affects efficiency but not consistency — any positive definite <span class="math inline">\(W\)</span> gives a consistent estimator. But some choices are better than others.</p>
+<p><strong>Feasible two-step GMM.</strong> The most common approach:</p>
+<ol type="1">
+<li>Start with <span class="math inline">\(W = I\)</span> (or any reasonable <span class="math inline">\(W\)</span>) and get a preliminary estimate <span class="math inline">\(\hat{\theta}_1\)</span></li>
+<li>Use <span class="math inline">\(\hat{\theta}_1\)</span> to estimate the optimal weighting matrix: <span class="math inline">\(\hat{W} = \left[\frac{1}{n}\sum_i g(X_i, \hat{\theta}_1) \, g(X_i, \hat{\theta}_1)'\right]^{-1}\)</span></li>
+<li>Re-estimate with <span class="math inline">\(\hat{W}\)</span> to get <span class="math inline">\(\hat{\theta}_2\)</span></li>
+</ol>
+<p>The optimal <span class="math inline">\(W\)</span> is the inverse of the variance of the moment conditions. This weights precisely-estimated moments more heavily and noisy moments less — exactly the right thing to do.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>The Oracle View.</strong> In these simulations, we know which effects are real and which are null — so we can count exactly how many “significant” results are true discoveries vs false alarms. In practice, when you get a significant p-value, you never know which kind it is. That’s why corrections matter.</p>
+<p><strong>Intuition.</strong> If one moment condition has a lot of sampling noise and another is very precise, you should trust the precise one more. The optimal weighting matrix does this automatically.</p>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="simulation-1-false-discoveries-from-multiple-tests" class="level2">
-<h2 class="anchored" data-anchor-id="simulation-1-false-discoveries-from-multiple-tests">Simulation 1: False discoveries from multiple tests</h2>
-<p>Test 20 true null hypotheses at <span class="math inline">\(\alpha = 0.05\)</span>. Watch how many come up “significant” purely by chance. Repeat to see the pattern.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 650
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
-    }
-    .stats-box b { color: #2c3e50; }
-    .good { color: #27ae60; font-weight: bold; }
-    .bad  { color: #e74c3c; font-weight: bold; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      sliderInput("n_tests", "Number of hypotheses tested:",
-                  min = 5, max = 50, value = 20, step = 5),
-
-      sliderInput("n_obs", "Sample size per test:",
-                  min = 20, max = 200, value = 50, step = 10),
-
-      sliderInput("alpha", HTML("&amp;alpha; (per-test):"),
-                  min = 0.01, max = 0.10, value = 0.05, step = 0.01),
-
-      sliderInput("n_real", "Number with real effects:",
-                  min = 0, max = 10, value = 0, step = 1),
-
-      actionButton("go", "Run tests",
-                   class = "btn-primary", width = "100%"),
-
-      uiOutput("results")
-    ),
-
-    mainPanel(
-      width = 9,
-      plotOutput("pval_plot", height = "520px")
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  dat &lt;- reactive({
-    input$go
-    m     &lt;- input$n_tests
-    n     &lt;- input$n_obs
-    alpha &lt;- input$alpha
-    n_real &lt;- min(input$n_real, m)
-
-    p_vals &lt;- numeric(m)
-    is_real &lt;- rep(FALSE, m)
-
-    for (i in seq_len(m)) {
-      if (i &lt;= n_real) {
-        # Real effect (d = 0.5)
-        x &lt;- rnorm(n, mean = 0.5, sd = 1)
-        is_real[i] &lt;- TRUE
-      } else {
-        # Null is true
-        x &lt;- rnorm(n, mean = 0, sd = 1)
-      }
-      p_vals[i] &lt;- t.test(x, mu = 0)$p.value
-    }
-
-    # Bonferroni correction
-    bonf_alpha &lt;- alpha / m
-    bonf_reject &lt;- p_vals &lt; bonf_alpha
-
-    # BH (FDR) correction
-    sorted_idx &lt;- order(p_vals)
-    sorted_p &lt;- p_vals[sorted_idx]
-    bh_threshold &lt;- (seq_len(m) / m) * alpha
-    bh_max &lt;- max(c(0, which(sorted_p &lt;= bh_threshold)))
-    bh_reject &lt;- rep(FALSE, m)
-    if (bh_max &gt; 0) bh_reject[sorted_idx[seq_len(bh_max)]] &lt;- TRUE
-
-    list(p_vals = p_vals, is_real = is_real, m = m, n = n,
-         alpha = alpha, n_real = n_real,
-         raw_reject = p_vals &lt; alpha,
-         bonf_reject = bonf_reject,
-         bh_reject = bh_reject,
-         bonf_alpha = bonf_alpha)
-  })
-
-  output$pval_plot &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 6, 3, 1))
-
-    ord &lt;- order(d$p_vals)
-    p_sorted &lt;- d$p_vals[ord]
-    real_sorted &lt;- d$is_real[ord]
-
-    cols &lt;- ifelse(real_sorted, "#3498db", "#95a5a6")
-    pch_vals &lt;- ifelse(real_sorted, 17, 16)
-
-    plot(p_sorted, seq_len(d$m), pch = pch_vals, cex = 1.5,
-         col = cols, xlim = c(0, 1),
-         xlab = "p-value", ylab = "Test (sorted by p-value)",
-         main = paste0(d$m, " hypothesis tests (", d$n_real,
-                      " real effects)"),
-         yaxt = "n")
-    axis(2, at = seq_len(d$m), labels = seq_len(d$m),
-         las = 1, cex.axis = 0.7)
-
-    # Alpha threshold
-    abline(v = d$alpha, lty = 2, lwd = 2, col = "#e74c3c")
-    text(d$alpha + 0.02, d$m, paste0("\u03b1 = ", d$alpha),
-         col = "#e74c3c", cex = 0.8, adj = 0)
-
-    # Bonferroni threshold
-    abline(v = d$bonf_alpha, lty = 2, lwd = 2, col = "#e67e22")
-    text(d$bonf_alpha + 0.02, d$m - 1,
-         paste0("Bonf = ", round(d$bonf_alpha, 4)),
-         col = "#e67e22", cex = 0.8, adj = 0)
-
-    # BH line
-    bh_line &lt;- (seq_len(d$m) / d$m) * d$alpha
-    lines(bh_line[ord], seq_len(d$m), lty = 3, lwd = 2, col = "#27ae60")
-
-    # Highlight rejections
-    raw_sig &lt;- which(p_sorted &lt; d$alpha)
-    if (length(raw_sig) &gt; 0) {
-      points(p_sorted[raw_sig], raw_sig, pch = 1, cex = 2.5,
-             col = "#e74c3c", lwd = 2)
-    }
-
-    legend("bottomright", bty = "n", cex = 0.8,
-           legend = c(
-             ifelse(d$n_real &gt; 0, "Real effect", ""),
-             "Null (no effect)",
-             paste0("Uncorrected \u03b1 = ", d$alpha),
-             paste0("Bonferroni \u03b1 = ", round(d$bonf_alpha, 4)),
-             "BH (FDR) threshold"
-           )[c(d$n_real &gt; 0, TRUE, TRUE, TRUE, TRUE)],
-           col = c(
-             if (d$n_real &gt; 0) "#3498db",
-             "#95a5a6", "#e74c3c", "#e67e22", "#27ae60"
-           ),
-           pch = c(
-             if (d$n_real &gt; 0) 17,
-             16, NA, NA, NA
-           ),
-           lwd = c(
-             if (d$n_real &gt; 0) NA,
-             NA, 2, 2, 2
-           ),
-           lty = c(
-             if (d$n_real &gt; 0) NA,
-             NA, 2, 2, 3
-           ))
-  })
-
-  output$results &lt;- renderUI({
-    d &lt;- dat()
-
-    raw_fp &lt;- sum(d$raw_reject &amp; !d$is_real)
-    bonf_fp &lt;- sum(d$bonf_reject &amp; !d$is_real)
-    bh_fp &lt;- sum(d$bh_reject &amp; !d$is_real)
-
-    raw_tp &lt;- sum(d$raw_reject &amp; d$is_real)
-    bonf_tp &lt;- sum(d$bonf_reject &amp; d$is_real)
-    bh_tp &lt;- sum(d$bh_reject &amp; d$is_real)
-
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;Uncorrected:&lt;/b&gt;&lt;br&gt;",
-        "&amp;nbsp; Reject: ", sum(d$raw_reject),
-        " (FP: &lt;span class='bad'&gt;", raw_fp, "&lt;/span&gt;",
-        if (d$n_real &gt; 0) paste0(", TP: ", raw_tp), ")&lt;br&gt;",
-        "&lt;b&gt;Bonferroni:&lt;/b&gt;&lt;br&gt;",
-        "&amp;nbsp; Reject: ", sum(d$bonf_reject),
-        " (FP: ", bonf_fp,
-        if (d$n_real &gt; 0) paste0(", TP: ", bonf_tp), ")&lt;br&gt;",
-        "&lt;b&gt;BH (FDR):&lt;/b&gt;&lt;br&gt;",
-        "&amp;nbsp; Reject: ", sum(d$bh_reject),
-        " (FP: ", bh_fp,
-        if (d$n_real &gt; 0) paste0(", TP: ", bh_tp), ")&lt;br&gt;",
-        "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;small&gt;FP = false positive&lt;br&gt;",
-        "TP = true positive&lt;/small&gt;"
-      ))
-    )
-  })
-}
-
-shinyApp(ui, server)</code></pre>
+<section id="examples-that-build-on-the-course" class="level2">
+<h2 class="anchored" data-anchor-id="examples-that-build-on-the-course">Examples that build on the course</h2>
+<section id="ols-as-gmm" class="level3">
+<h3 class="anchored" data-anchor-id="ols-as-gmm">OLS as GMM</h3>
+<p>The population moment condition behind OLS is:</p>
+<p><span class="math display">\[
+E[X_i(Y_i - X_i'\beta)] = 0
+\]</span></p>
+<p>This says the regressors are uncorrelated with the error — exactly the identification assumption from <a href="cef.html">Regression &amp; the CEF</a>. The sample analog is:</p>
+<p><span class="math display">\[
+\bar{g}(\beta) = \frac{1}{n}\sum_{i=1}^n X_i(Y_i - X_i'\beta) = \frac{1}{n}X'(y - X\beta)
+\]</span></p>
+<p>Setting this to zero and solving gives <span class="math inline">\(X'X\hat{\beta} = X'y\)</span>, or <span class="math inline">\(\hat{\beta} = (X'X)^{-1}X'y\)</span> — the OLS formula from <a href="regression-algebra.html">The Algebra Behind OLS</a>. OLS is just-identified GMM: <span class="math inline">\(k\)</span> regressors, <span class="math inline">\(k\)</span> moment conditions, and <span class="math inline">\(W\)</span> drops out because you can solve exactly.</p>
 </section>
-<section id="simulation-2-correction-methods-compared" class="level2">
-<h2 class="anchored" data-anchor-id="simulation-2-correction-methods-compared">Simulation 2: Correction methods compared</h2>
-<p>Run the multiple testing experiment many times to see the long-run performance of each correction method. Track the <strong>family-wise error rate</strong> (FWER: any false positive?) and <strong>false discovery rate</strong> (FDR: what fraction of discoveries are false?).</p>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 520
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
-    }
-    .stats-box b { color: #2c3e50; }
-    .good { color: #27ae60; font-weight: bold; }
-    .bad  { color: #e74c3c; font-weight: bold; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      sliderInput("m2", "Number of tests:",
-                  min = 5, max = 50, value = 20, step = 5),
-
-      sliderInput("n_real2", "Tests with real effects:",
-                  min = 0, max = 10, value = 3, step = 1),
-
-      sliderInput("sims2", "Simulations:",
-                  min = 200, max = 1000, value = 500, step = 100),
-
-      actionButton("go2", "Run simulations",
-                   class = "btn-primary", width = "100%"),
-
-      uiOutput("results2")
-    ),
-
-    mainPanel(
-      width = 9,
-      plotOutput("compare_plot", height = "420px")
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  dat &lt;- reactive({
-    input$go2
-    m      &lt;- input$m2
-    n_real &lt;- min(input$n_real2, m)
-    sims   &lt;- input$sims2
-    n      &lt;- 50
-    alpha  &lt;- 0.05
-
-    fwer &lt;- c(raw = 0, bonf = 0, bh = 0)
-    power &lt;- c(raw = 0, bonf = 0, bh = 0)
-    fdr_sum &lt;- c(raw = 0, bonf = 0, bh = 0)
-    fdr_count &lt;- c(raw = 0, bonf = 0, bh = 0)
-
-    for (s in seq_len(sims)) {
-      p_vals &lt;- numeric(m)
-      is_real &lt;- rep(FALSE, m)
-
-      for (i in seq_len(m)) {
-        if (i &lt;= n_real) {
-          x &lt;- rnorm(n, mean = 0.5, sd = 1)
-          is_real[i] &lt;- TRUE
-        } else {
-          x &lt;- rnorm(n, mean = 0, sd = 1)
-        }
-        p_vals[i] &lt;- t.test(x, mu = 0)$p.value
-      }
-
-      # Raw
-      raw_rej &lt;- p_vals &lt; alpha
-
-      # Bonferroni
-      bonf_rej &lt;- p_vals &lt; (alpha / m)
-
-      # BH
-      sorted_idx &lt;- order(p_vals)
-      sorted_p &lt;- p_vals[sorted_idx]
-      bh_thresh &lt;- (seq_len(m) / m) * alpha
-      bh_max &lt;- max(c(0, which(sorted_p &lt;= bh_thresh)))
-      bh_rej &lt;- rep(FALSE, m)
-      if (bh_max &gt; 0) bh_rej[sorted_idx[seq_len(bh_max)]] &lt;- TRUE
-
-      for (method in list(list("raw", raw_rej),
-                          list("bonf", bonf_rej),
-                          list("bh", bh_rej))) {
-        nm &lt;- method[[1]]
-        rej &lt;- method[[2]]
-
-        # FWER
-        if (any(rej &amp; !is_real)) fwer[nm] &lt;- fwer[nm] + 1
-
-        # Power (if any real effects)
-        if (n_real &gt; 0) {
-          power[nm] &lt;- power[nm] + sum(rej &amp; is_real)
-        }
-
-        # FDR
-        if (sum(rej) &gt; 0) {
-          fdr_sum[nm] &lt;- fdr_sum[nm] + sum(rej &amp; !is_real) / sum(rej)
-          fdr_count[nm] &lt;- fdr_count[nm] + 1
-        }
-      }
-    }
-
-    fwer &lt;- fwer / sims
-    if (n_real &gt; 0) power &lt;- power / (sims * n_real)
-    fdr &lt;- ifelse(fdr_count &gt; 0, fdr_sum / fdr_count, 0)
-
-    list(fwer = fwer, power = power, fdr = fdr,
-         m = m, n_real = n_real, sims = sims)
-  })
-
-  output$compare_plot &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 6), xpd = TRUE)
-
-    methods &lt;- c("Uncorrected", "Bonferroni", "BH (FDR)")
-    cols &lt;- c("#e74c3c", "#e67e22", "#27ae60")
-    x_pos &lt;- seq_along(methods)
-
-    if (d$n_real &gt; 0) {
-      # Show both FWER and power
-      mat &lt;- rbind(d$fwer * 100, d$power * 100)
-      bp &lt;- barplot(mat, beside = TRUE, names.arg = methods,
-                    col = c("#e74c3c80", "#3498db80"),
-                    border = c("#e74c3c", "#3498db"),
-                    ylim = c(0, 100),
-                    ylab = "Rate (%)",
-                    main = paste0("FWER &amp; Power (", d$sims,
-                                 " simulations, ", d$n_real,
-                                 " real effects)"))
-
-      abline(h = 5, lty = 2, lwd = 2, col = "#7f8c8d")
-      text(max(bp) + 1, 7, "\u03b1 = 5%", cex = 0.8, col = "#7f8c8d")
-
-      legend("topright", inset = c(-0.18, 0), bty = "n", cex = 0.85,
-             legend = c("FWER", "Power"),
-             fill = c("#e74c3c80", "#3498db80"),
-             border = c("#e74c3c", "#3498db"))
-    } else {
-      bp &lt;- barplot(d$fwer * 100, names.arg = methods,
-                    col = cols, border = NA,
-                    ylim = c(0, max(d$fwer * 100) * 1.3),
-                    ylab = "Family-wise error rate (%)",
-                    main = paste0("FWER under H\u2080 (",
-                                 d$sims, " simulations)"))
-
-      abline(h = 5, lty = 2, lwd = 2, col = "#7f8c8d")
-      text(max(bp) + 0.3, 7, "Target: 5%", cex = 0.8, col = "#7f8c8d")
-
-      text(bp, d$fwer * 100 + 2,
-           paste0(round(d$fwer * 100, 1), "%"), cex = 0.9)
-    }
-  })
-
-  output$results2 &lt;- renderUI({
-    d &lt;- dat()
-
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;FWER (any false positive):&lt;/b&gt;&lt;br&gt;",
-        "&amp;nbsp; Uncorrected: &lt;span class='bad'&gt;",
-        round(d$fwer["raw"] * 100, 1), "%&lt;/span&gt;&lt;br&gt;",
-        "&amp;nbsp; Bonferroni: &lt;span class='good'&gt;",
-        round(d$fwer["bonf"] * 100, 1), "%&lt;/span&gt;&lt;br&gt;",
-        "&amp;nbsp; BH: ", round(d$fwer["bh"] * 100, 1), "%&lt;br&gt;",
-        if (d$n_real &gt; 0) paste0(
-          "&lt;hr style='margin:8px 0'&gt;",
-          "&lt;b&gt;Power (detect real effects):&lt;/b&gt;&lt;br&gt;",
-          "&amp;nbsp; Uncorrected: ", round(d$power["raw"] * 100, 1), "%&lt;br&gt;",
-          "&amp;nbsp; Bonferroni: ", round(d$power["bonf"] * 100, 1), "%&lt;br&gt;",
-          "&amp;nbsp; BH: ", round(d$power["bh"] * 100, 1), "%"
-        ) else ""
-      ))
-    )
-  })
-}
-
-shinyApp(ui, server)</code></pre>
-<section id="things-to-try" class="level3">
-<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
-<ul>
-<li><strong>20 tests, 0 real effects:</strong> uncorrected FWER is ~64%. Bonferroni brings it to ~5%. BH is somewhere in between.</li>
-<li><strong>20 tests, 3 real effects:</strong> Bonferroni controls FWER tightly but has lower power. BH controls the <em>false discovery rate</em> (what fraction of your discoveries are wrong) while maintaining better power.</li>
-<li><strong>50 tests, 0 real effects:</strong> uncorrected FWER is over 90%. The more you test, the worse it gets.</li>
-<li><strong>Sim 1 with 0 real effects:</strong> click “Run tests” repeatedly. Each time, a different set of null hypotheses appears “significant.” This is exactly how researchers accidentally find spurious results.</li>
-</ul>
+<section id="iv2sls-as-gmm" class="level3">
+<h3 class="anchored" data-anchor-id="iv2sls-as-gmm">IV/2SLS as GMM</h3>
+<p>When regressors are endogenous, you need instruments <span class="math inline">\(Z_i\)</span> that are correlated with <span class="math inline">\(X_i\)</span> but uncorrelated with <span class="math inline">\(\varepsilon_i\)</span>. The moment condition becomes:</p>
+<p><span class="math display">\[
+E[Z_i(Y_i - X_i'\beta)] = 0
+\]</span></p>
+<p>If you have more instruments than endogenous regressors (<span class="math inline">\(m &gt; k\)</span>), this is over-identified — and GMM handles it naturally. Two-stage least squares (2SLS) is a specific GMM estimator with a particular choice of weighting matrix.</p>
 </section>
-<section id="when-to-use-which-correction" class="level3">
-<h3 class="anchored" data-anchor-id="when-to-use-which-correction">When to use which correction</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 28%">
-<col style="width: 35%">
-<col style="width: 35%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Method</th>
-<th>Controls</th>
-<th>Best for</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>None</strong></td>
-<td>Per-comparison <span class="math inline">\(\alpha\)</span></td>
-<td>Single pre-registered hypothesis</td>
-</tr>
-<tr class="even">
-<td><strong>Bonferroni</strong></td>
-<td>FWER (any false positive)</td>
-<td>Safety-critical decisions; few tests</td>
-</tr>
-<tr class="odd">
-<td><strong>BH (Benjamini-Hochberg)</strong></td>
-<td>FDR (false discovery proportion)</td>
-<td>Exploratory analysis; many tests</td>
-</tr>
-<tr class="even">
-<td><strong>Pre-registration</strong></td>
-<td>Everything</td>
-<td>Specify your hypothesis <em>before</em> seeing data</td>
-</tr>
-</tbody>
-</table>
 </section>
-<section id="the-bottom-line" class="level3">
-<h3 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h3>
-<ul>
-<li><strong>If you test enough things, something will be significant.</strong> The question is whether it’s real.</li>
-<li><strong>Bonferroni</strong> is conservative — it controls the probability of <em>any</em> false positive but sacrifices power.</li>
-<li><strong>BH</strong> is more permissive — it controls the <em>proportion</em> of discoveries that are false, giving you better power.</li>
-<li>The best correction is <strong>not testing everything.</strong> Pre-register your primary hypothesis and keep the number of tests small.</li>
-</ul>
-<hr>
+<section id="the-j-test-overidentification-test" class="level2">
+<h2 class="anchored" data-anchor-id="the-j-test-overidentification-test">The J-test (overidentification test)</h2>
+<p>When you’re over-identified (<span class="math inline">\(m &gt; k\)</span>), you have a built-in specification test. The logic: if the model is correct and all moment conditions are valid, the minimized GMM objective should be “small” (close to zero). If it’s “large,” at least some moment conditions are being violated, which suggests the model is misspecified.</p>
+<p>Formally, under the null that the model is correct:</p>
+<p><span class="math display">\[
+J = n \cdot \bar{g}(\hat{\theta})' \hat{W} \, \bar{g}(\hat{\theta}) \;\xrightarrow{d}\; \chi^2_{m-k}
+\]</span></p>
+<p>where <span class="math inline">\(m - k\)</span> is the number of “extra” moment conditions (the degree of over-identification). A large <span class="math inline">\(J\)</span> (relative to the <span class="math inline">\(\chi^2_{m-k}\)</span> distribution) rejects the model.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>What the J-test can and can’t do.</strong> The J-test can detect when your moment conditions are mutually inconsistent — they can’t all be true at the same time. But it can’t tell you <em>which</em> condition is wrong. And if you’re just-identified (<span class="math inline">\(m = k\)</span>), <span class="math inline">\(J = 0\)</span> by construction — there’s no overidentification to test.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="did-you-know" class="level3">
-<h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
-<ul>
-<li>The XKCD comic <a href="https://xkcd.com/882/">“Significant”</a> perfectly illustrates the multiple testing problem: researchers test whether jelly beans cause acne, testing 20 different colors. Green jelly beans come up significant at p &lt; 0.05 — and the newspaper headline reads “Green Jelly Beans Linked to Acne!”</li>
-<li><strong>John Ioannidis</strong> published “Why Most Published Research Findings Are False” in 2005. His argument: when studies are underpowered, when many hypotheses are tested, and when researchers have flexibility in their analysis, the majority of “significant” findings are likely false positives. The paper has been cited over 10,000 times and helped launch the <strong>replication crisis</strong> movement.</li>
-<li><strong>Benjamini and Hochberg</strong> published their FDR procedure in 1995. It was initially met with skepticism — why would you <em>allow</em> some false discoveries? But in fields like genomics, where you test thousands of genes simultaneously, controlling the <em>proportion</em> of false discoveries turns out to be much more practical (and powerful) than trying to prevent any single false positive.</li>
-</ul>
+<section id="when-to-use-gmm" class="level2">
+<h2 class="anchored" data-anchor-id="when-to-use-gmm">When to use GMM</h2>
+<p><strong>When economic theory gives you moment conditions but not a full likelihood.</strong> Many structural models in economics specify relationships between variables (Euler equations, equilibrium conditions) that translate directly into moment conditions. You don’t need to know the full distribution of the data — just these conditions. This is much less demanding than <a href="maximum-likelihood.html">MLE</a>.</p>
+<p><strong>When you want robustness to distributional assumptions.</strong> GMM only assumes the moment conditions hold; it’s agnostic about the rest of the distribution. If you use MLE with the wrong distributional assumption, your estimator converges to the wrong thing. GMM avoids this risk by not making that assumption in the first place.</p>
+<p><strong>When you have instruments or panel data.</strong> These settings naturally produce moment conditions (instrument exogeneity, sequential exogeneity), making GMM a natural framework.</p>
+<p><strong>The tradeoff.</strong> GMM is more robust than MLE but less efficient when MLE’s distributional assumptions actually hold. If you know the distribution and it’s correctly specified, MLE squeezes out every last bit of information. GMM leaves some information on the table by not using the full distribution.</p>
+</section>
+<section id="connecting-to-mle" class="level2">
+<h2 class="anchored" data-anchor-id="connecting-to-mle">Connecting to MLE</h2>
+<p>MLE is actually a special case of GMM. The MLE score equations — the first-order conditions from maximizing the log-likelihood — are moment conditions:</p>
+<p><span class="math display">\[
+E\!\left[\frac{\partial \log f(X_i \mid \theta_0)}{\partial \theta}\right] = 0
+\]</span></p>
+<p>These are the “moment conditions” that MLE implicitly uses. When you use these specific conditions with the optimal GMM weighting matrix, GMM produces exactly the MLE. So the hierarchy is:</p>
+<p><span class="math display">\[
+\text{MoM} \;\subset\; \text{GMM} \;\supset\; \text{MLE}
+\]</span></p>
+<p>MoM is GMM with a specific (often suboptimal) choice of moments and <span class="math inline">\(W = I\)</span>. MLE is GMM with the score as the moment condition and the optimal <span class="math inline">\(W\)</span>. GMM is the general framework that nests both.</p>
+<p>This is why GMM achieves MLE-level efficiency when the likelihood is correctly specified and the optimal weighting matrix is used — it’s <em>doing</em> MLE, just expressed in the language of moments.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

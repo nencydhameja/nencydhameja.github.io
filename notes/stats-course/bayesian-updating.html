@@ -73,6 +73,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -272,12 +275,64 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Standard Errors &amp; Diagnostics</span></a>
+ <span class="menu-text">Algebra of Regression</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regression-algebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Algebra Behind OLS</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Estimation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./method-of-moments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Method of Moments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./maximum-likelihood.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Maximum Likelihood</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gmm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generalized Method of Moments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayesian-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian Estimation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Standard Errors &amp; Diagnostics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./heteroskedasticity.html" class="sidebar-item-text sidebar-link">
@@ -312,13 +367,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
  <span class="menu-text">Causal Thinking</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./correlation-causation.html" class="sidebar-item-text sidebar-link">
@@ -329,13 +384,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
  <span class="menu-text">Bayesian Thinking</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./bayesian-updating.html" class="sidebar-item-text sidebar-link active">
@@ -363,6 +418,9 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
+  </ul></li>
+  <li><a href="#how-the-pieces-fit-together" id="toc-how-the-pieces-fit-together" class="nav-link" data-scroll-target="#how-the-pieces-fit-together">How the pieces fit together</a>
+  <ul class="collapse">
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul></li>
   </ul>
@@ -766,8 +824,47 @@ shinyApp(ui, server)</code></pre>
 <li>With enough data, <strong>the prior doesn’t matter.</strong> All reasonable priors converge to the same posterior. This is reassuring: Bayesian inference isn’t “subjective” in the long run.</li>
 <li>The <strong>credible interval</strong> has the interpretation people <em>want</em> from a confidence interval: “There’s a 95% probability that <span class="math inline">\(\theta\)</span> is in this interval.” But this requires accepting the Bayesian framework (and a prior).</li>
 </ul>
-<hr>
 </section>
+</section>
+<section id="how-the-pieces-fit-together" class="level2">
+<h2 class="anchored" data-anchor-id="how-the-pieces-fit-together">How the pieces fit together</h2>
+<p>People sometimes use <em>updating</em>, <em>estimation</em>, and <em>inference</em> interchangeably. They’re related but distinct:</p>
+<div class="cell" data-fig-width="7" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    INF("&lt;b&gt;Bayesian Inference&lt;/b&gt;&lt;br/&gt;&lt;i&gt;The whole framework&lt;/i&gt;")
+    UPD("&lt;b&gt;Updating&lt;/b&gt;&lt;br/&gt;Prior × Likelihood → Posterior&lt;br/&gt;&lt;i&gt;this page&lt;/i&gt;")
+    EST("&lt;b&gt;Estimation&lt;/b&gt;&lt;br/&gt;Posterior → point estimates&lt;br/&gt;MAP · posterior mean")
+    UNC("&lt;b&gt;Uncertainty&lt;/b&gt;&lt;br/&gt;Posterior → credible intervals")
+    PRED("&lt;b&gt;Prediction&lt;/b&gt;&lt;br/&gt;Posterior → forecasts")
+
+    INF --&gt; UPD
+    UPD --&gt; EST
+    UPD --&gt; UNC
+    UPD --&gt; PRED
+
+    style INF fill:#2c3e50,color:#fff,stroke:#2c3e50
+    style UPD fill:#3498db,color:#fff,stroke:#3498db
+    style EST fill:#27ae60,color:#fff,stroke:#27ae60
+    style UNC fill:#8e44ad,color:#fff,stroke:#8e44ad
+    style PRED fill:#e67e22,color:#fff,stroke:#e67e22
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Inference</strong> is the umbrella — the entire Bayesian approach to learning from data.</li>
+<li><strong>Updating</strong> is the engine inside: take a prior, combine it with the likelihood, get a posterior. That’s what the simulations above demonstrate.</li>
+<li><strong>Estimation</strong> takes the posterior and extracts a single “best guess” — the MAP (the peak) or the posterior mean (the center of mass). With a flat prior, MAP reduces to <a href="maximum-likelihood.html">MLE</a>. With a normal prior, MAP gives you ridge regression. This is covered in <a href="bayesian-estimation.html">Bayesian Estimation</a>.</li>
+<li><strong>Uncertainty</strong> and <strong>prediction</strong> also flow from the posterior — credible intervals, posterior predictive checks, and forecasting all start from the same updated distribution.</li>
+</ul>
+<p>The key insight: <strong>updating comes first.</strong> You can’t estimate or quantify uncertainty until you have a posterior. Everything downstream depends on the prior-to-posterior step.</p>
+<hr>
 <section id="did-you-know" class="level3">
 <h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
 <ul>
