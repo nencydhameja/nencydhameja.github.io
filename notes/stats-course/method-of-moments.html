@@ -41,6 +41,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -449,7 +454,10 @@ window.Quarto = {
    
   <ul>
   <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a></li>
-  <li><a href="#a-worked-example" id="toc-a-worked-example" class="nav-link" data-scroll-target="#a-worked-example">A worked example</a></li>
+  <li><a href="#a-worked-example" id="toc-a-worked-example" class="nav-link" data-scroll-target="#a-worked-example">A worked example</a>
+  <ul class="collapse">
+  <li><a href="#simulation-mom-vs-mle-for-uniform0-θ" id="toc-simulation-mom-vs-mle-for-uniform0-θ" class="nav-link" data-scroll-target="#simulation-mom-vs-mle-for-uniform0-θ">Simulation: MoM vs MLE for Uniform(0, θ)</a></li>
+  </ul></li>
   <li><a href="#when-mom-works-well" id="toc-when-mom-works-well" class="nav-link" data-scroll-target="#when-mom-works-well">When MoM works well</a></li>
   <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
   <li><a href="#connecting-forward" id="toc-connecting-forward" class="nav-link" data-scroll-target="#connecting-forward">Connecting forward</a></li>
@@ -524,6 +532,155 @@ E[X] = \frac{\theta}{2}
 \]</span></p>
 <p>That’s it — double the sample mean. Now here’s what’s interesting: the <strong>MLE</strong> for the same problem is <span class="math inline">\(\hat{\theta}_{\text{MLE}} = \max(X_1, \ldots, X_n)\)</span> — the largest observation. Same data, same model, completely different estimator.</p>
 <p>This is important. Different estimation principles can give you different answers. MoM matched a moment; <a href="maximum-likelihood.html">MLE</a> maximized a likelihood. Neither is “wrong” — they’re optimizing different things.</p>
+<section id="simulation-mom-vs-mle-for-uniform0-θ" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-mom-vs-mle-for-uniform0-θ">Simulation: MoM vs MLE for Uniform(0, θ)</h3>
+<p>See this difference in action. Both estimators target the same parameter, but the MLE (maximum of the sample) has dramatically lower variance than the MoM estimator (twice the sample mean). The right panel shows the sampling distributions across 500 repeated samples — watch how much tighter the MLE distribution is.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 680
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("theta", "True \u03b8:",
+                  min = 1, max = 10, value = 5, step = 0.5),
+
+      sliderInput("n", "Sample size n:",
+                  min = 5, max = 500, value = 30, step = 5),
+
+      actionButton("go", "New draw",
+                   class = "btn-primary", width = "100%"),
+
+      uiOutput("results")
+    ),
+
+    mainPanel(
+      width = 9,
+      fluidRow(
+        column(6, plotOutput("hist_plot", height = "520px")),
+        column(6, plotOutput("sampling_plot", height = "520px"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  dat &lt;- reactive({
+    input$go
+    theta &lt;- input$theta
+    n     &lt;- input$n
+
+    # One draw for the left panel
+    x &lt;- runif(n, min = 0, max = theta)
+    mom_est &lt;- 2 * mean(x)
+    mle_est &lt;- max(x)
+
+    # 500 repeated samples for the right panel
+    mom_reps &lt;- replicate(500, {
+      xs &lt;- runif(n, min = 0, max = theta)
+      2 * mean(xs)
+    })
+    mle_reps &lt;- replicate(500, {
+      xs &lt;- runif(n, min = 0, max = theta)
+      max(xs)
+    })
+
+    list(x = x, theta = theta, n = n,
+         mom_est = mom_est, mle_est = mle_est,
+         mom_reps = mom_reps, mle_reps = mle_reps)
+  })
+
+  output$hist_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    hist(d$x, breaks = 25, probability = TRUE,
+         col = "#95a5a620", border = "#95a5a680",
+         main = paste0("One sample (n = ", d$n, ")"),
+         xlab = "x", ylab = "Density",
+         xlim = c(0, max(d$theta * 1.15, d$mom_est * 1.05)))
+
+    abline(v = d$theta, lty = 2, lwd = 2.5, col = "#2c3e50")
+    abline(v = d$mom_est, lwd = 2.5, col = "#3498db")
+    abline(v = d$mle_est, lwd = 2.5, col = "#e74c3c")
+
+    legend("topright", bty = "n", cex = 0.9,
+           legend = c(paste0("True \u03b8 = ", d$theta),
+                      paste0("MoM = 2x\u0305 = ", round(d$mom_est, 3)),
+                      paste0("MLE = max = ", round(d$mle_est, 3))),
+           col = c("#2c3e50", "#3498db", "#e74c3c"),
+           lwd = 2.5, lty = c(2, 1, 1))
+  })
+
+  output$sampling_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    all_vals &lt;- c(d$mom_reps, d$mle_reps)
+    xlim &lt;- range(all_vals)
+    xlim &lt;- xlim + c(-0.1, 0.1) * diff(xlim)
+
+    mom_dens &lt;- density(d$mom_reps, from = xlim[1], to = xlim[2])
+    mle_dens &lt;- density(d$mle_reps, from = xlim[1], to = xlim[2])
+
+    ylim &lt;- c(0, max(mom_dens$y, mle_dens$y) * 1.1)
+
+    plot(NULL, xlim = xlim, ylim = ylim,
+         xlab = "Estimate of \u03b8", ylab = "Density",
+         main = "Sampling distributions (500 reps)")
+
+    polygon(mom_dens$x, mom_dens$y,
+            col = adjustcolor("#3498db", 0.25), border = "#3498db", lwd = 2)
+    polygon(mle_dens$x, mle_dens$y,
+            col = adjustcolor("#e74c3c", 0.25), border = "#e74c3c", lwd = 2)
+
+    abline(v = d$theta, lty = 2, lwd = 2.5, col = "#2c3e50")
+
+    legend("topleft", bty = "n", cex = 0.9,
+           legend = c(paste0("MoM (SD = ", round(sd(d$mom_reps), 3), ")"),
+                      paste0("MLE (SD = ", round(sd(d$mle_reps), 3), ")"),
+                      paste0("True \u03b8 = ", d$theta)),
+           col = c("#3498db", "#e74c3c", "#2c3e50"),
+           lwd = c(2, 2, 2.5), lty = c(1, 1, 2),
+           fill = c(adjustcolor("#3498db", 0.25),
+                    adjustcolor("#e74c3c", 0.25), NA),
+           border = c("#3498db", "#e74c3c", NA))
+  })
+
+  output$results &lt;- renderUI({
+    d &lt;- dat()
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;True \u03b8:&lt;/b&gt; ", d$theta, "&lt;br&gt;",
+        "&lt;b&gt;This draw:&lt;/b&gt;&lt;br&gt;",
+        "MoM = 2x\u0305 = ", round(d$mom_est, 4), "&lt;br&gt;",
+        "MLE = max = ", round(d$mle_est, 4), "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;Across 500 reps:&lt;/b&gt;&lt;br&gt;",
+        "MoM mean: ", round(mean(d$mom_reps), 4),
+        " &amp;nbsp; SD: ", round(sd(d$mom_reps), 4), "&lt;br&gt;",
+        "MLE mean: ", round(mean(d$mle_reps), 4),
+        " &amp;nbsp; SD: ", round(sd(d$mle_reps), 4)
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</section>
 </section>
 <section id="when-mom-works-well" class="level2">
 <h2 class="anchored" data-anchor-id="when-mom-works-well">When MoM works well</h2>

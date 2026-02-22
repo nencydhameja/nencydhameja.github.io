@@ -41,6 +41,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -452,7 +457,10 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#why-calibration-matters" id="toc-why-calibration-matters" class="nav-link" data-scroll-target="#why-calibration-matters">Why calibration matters</a></li>
   </ul></li>
-  <li><a href="#neural-networks-are-typically-miscalibrated" id="toc-neural-networks-are-typically-miscalibrated" class="nav-link" data-scroll-target="#neural-networks-are-typically-miscalibrated">Neural networks are typically miscalibrated</a></li>
+  <li><a href="#neural-networks-are-typically-miscalibrated" id="toc-neural-networks-are-typically-miscalibrated" class="nav-link" data-scroll-target="#neural-networks-are-typically-miscalibrated">Neural networks are typically miscalibrated</a>
+  <ul class="collapse">
+  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  </ul></li>
   <li><a href="#post-hoc-calibration" id="toc-post-hoc-calibration" class="nav-link" data-scroll-target="#post-hoc-calibration">Post-hoc calibration</a></li>
   <li><a href="#bayesian-approaches-to-uncertainty" id="toc-bayesian-approaches-to-uncertainty" class="nav-link" data-scroll-target="#bayesian-approaches-to-uncertainty">Bayesian approaches to uncertainty</a></li>
   <li><a href="#two-kinds-of-uncertainty" id="toc-two-kinds-of-uncertainty" class="nav-link" data-scroll-target="#two-kinds-of-uncertainty">Two kinds of uncertainty</a></li>
@@ -508,6 +516,173 @@ P(Y = 1 \mid \hat{p}(X) = q) = q \qquad \text{for all } q \in [0, 1]
 <p>Modern deep neural networks tend to be <strong>overconfident</strong>: they assign high probabilities to their predictions even when they are wrong. This is a well-documented empirical finding (Guo et al., 2017).</p>
 <p>The cause is related to <a href="training-as-mle.html">training as MLE</a>. The cross-entropy loss encourages the model to push predicted probabilities toward 0 or 1 — the loss is minimized when the model is maximally confident on every training example. With enough capacity, the model memorizes the training set and becomes overconfident on the test set.</p>
 <p>This is the <a href="bias-variance.html">bias-variance tradeoff</a> manifesting in probability space: an overparameterized model fits the training data perfectly (low bias) but produces overconfident predictions on new data (high variance in the probability estimates).</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 680
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("n", "Sample size (n):",
+                  min = 500, max = 5000, value = 1000, step = 500),
+
+      sliderInput("miscal", "Miscalibration level:",
+                  min = 0, max = 1, value = 0.5, step = 0.1),
+
+      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
+
+      uiOutput("results")
+    ),
+
+    mainPanel(
+      width = 9,
+      fluidRow(
+        column(7, plotOutput("reliability_plot", height = "470px")),
+        column(5, plotOutput("hist_plot", height = "470px"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  dat &lt;- reactive({
+    input$go
+    n      &lt;- input$n
+    miscal &lt;- input$miscal
+
+    # True probabilities and outcomes
+    p_true &lt;- runif(n)
+    Y      &lt;- rbinom(n, 1, p_true)
+
+    # Model predictions: push toward 0/1 when miscal &gt; 0
+    q &lt;- p_true^(1 / (1 + miscal))
+
+    # Bin predictions into 10 bins
+    n_bins &lt;- 10
+    breaks &lt;- seq(0, 1, length.out = n_bins + 1)
+    bins   &lt;- cut(q, breaks = breaks, include.lowest = TRUE, labels = FALSE)
+
+    bin_mid  &lt;- numeric(n_bins)
+    bin_acc  &lt;- numeric(n_bins)
+    bin_conf &lt;- numeric(n_bins)
+    bin_n    &lt;- numeric(n_bins)
+
+    for (j in 1:n_bins) {
+      idx &lt;- which(bins == j)
+      bin_n[j]    &lt;- length(idx)
+      bin_conf[j] &lt;- if (length(idx) &gt; 0) mean(q[idx]) else NA
+      bin_acc[j]  &lt;- if (length(idx) &gt; 0) mean(Y[idx]) else NA
+      bin_mid[j]  &lt;- (breaks[j] + breaks[j + 1]) / 2
+    }
+
+    # Brier score
+    brier &lt;- mean((q - Y)^2)
+
+    # ECE: weighted average of |accuracy - confidence| per bin
+    valid   &lt;- bin_n &gt; 0
+    ece     &lt;- sum(bin_n[valid] * abs(bin_acc[valid] - bin_conf[valid])) / n
+
+    list(q = q, Y = Y, n = n, miscal = miscal,
+         bin_conf = bin_conf, bin_acc = bin_acc, bin_n = bin_n,
+         breaks = breaks, n_bins = n_bins,
+         mean_pred = mean(q), pos_rate = mean(Y),
+         brier = brier, ece = ece)
+  })
+
+  output$reliability_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    valid &lt;- d$bin_n &gt; 0
+
+    plot(NULL, xlim = c(0, 1), ylim = c(0, 1),
+         xlab = "Mean predicted probability",
+         ylab = "Fraction of positives",
+         main = "Reliability (Calibration) Diagram",
+         asp = 1)
+
+    # Perfect calibration diagonal
+    abline(0, 1, lty = 2, lwd = 2, col = "#7f8c8d")
+
+    # Reliability curve
+    lines(d$bin_conf[valid], d$bin_acc[valid],
+          col = "#e74c3c", lwd = 2.5, type = "o", pch = 19, cex = 1.3)
+
+    # Shaded gap between curve and diagonal
+    for (j in which(valid)) {
+      if (!is.na(d$bin_conf[j]) &amp;&amp; !is.na(d$bin_acc[j])) {
+        segments(d$bin_conf[j], d$bin_conf[j],
+                 d$bin_conf[j], d$bin_acc[j],
+                 col = adjustcolor("#e74c3c", 0.3), lwd = 6)
+      }
+    }
+
+    legend("topleft", bty = "n", cex = 0.85,
+           legend = c("Perfect calibration", "Model"),
+           col = c("#7f8c8d", "#e74c3c"),
+           lwd = c(2, 2.5), lty = c(2, 1), pch = c(NA, 19))
+
+    # Annotate miscalibration level
+    text(0.95, 0.05, paste0("Miscal = ", d$miscal),
+         cex = 0.85, font = 2, col = "#2c3e50", pos = 2)
+  })
+
+  output$hist_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    hist(d$q, breaks = 20, col = adjustcolor("#3498db", 0.5),
+         border = "#3498db", main = "Predicted Probabilities",
+         xlab = "Predicted probability", ylab = "Frequency",
+         xlim = c(0, 1))
+
+    abline(v = mean(d$q), lty = 2, lwd = 2, col = "#2c3e50")
+    text(mean(d$q), par("usr")[4] * 0.9,
+         paste0("Mean = ", round(mean(d$q), 3)),
+         cex = 0.8, font = 2, col = "#2c3e50", pos = 4)
+  })
+
+  output$results &lt;- renderUI({
+    d &lt;- dat()
+
+    ece_class &lt;- if (d$ece &lt; 0.05) "good" else if (d$ece &lt; 0.1) "bad" else "bad"
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;Mean predicted prob:&lt;/b&gt; ", round(d$mean_pred, 3), "&lt;br&gt;",
+        "&lt;b&gt;Actual positive rate:&lt;/b&gt; ", round(d$pos_rate, 3), "&lt;br&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        "&lt;b&gt;Brier score:&lt;/b&gt; ", round(d$brier, 4), "&lt;br&gt;",
+        "&lt;b&gt;ECE:&lt;/b&gt; &lt;span class='", ece_class, "'&gt;",
+        round(d$ece, 4), "&lt;/span&gt;"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<section id="things-to-try" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<ul>
+<li><strong>Miscalibration = 0:</strong> the reliability curve lies on the diagonal — the model is perfectly calibrated. The histogram of predictions is roughly uniform (matching the true probability distribution).</li>
+<li><strong>Increase miscalibration:</strong> the reliability curve bows below the diagonal. The model predicts probabilities that are too extreme — when it says 80%, the actual rate is lower. This is <strong>overconfidence</strong>. The ECE increases.</li>
+<li><strong>Large n:</strong> the reliability curve becomes smoother and the ECE estimate becomes more precise. With small <span class="math inline">\(n\)</span>, the binned estimates are noisy even for a well-calibrated model.</li>
+</ul>
+</section>
 </section>
 <section id="post-hoc-calibration" class="level2">
 <h2 class="anchored" data-anchor-id="post-hoc-calibration">Post-hoc calibration</h2>

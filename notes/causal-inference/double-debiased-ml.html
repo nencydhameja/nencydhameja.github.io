@@ -41,6 +41,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -315,7 +320,10 @@ window.Quarto = {
   <li><a href="#ingredient-1-neyman-orthogonal-scores" id="toc-ingredient-1-neyman-orthogonal-scores" class="nav-link" data-scroll-target="#ingredient-1-neyman-orthogonal-scores">Ingredient 1: Neyman orthogonal scores</a></li>
   <li><a href="#ingredient-2-cross-fitting" id="toc-ingredient-2-cross-fitting" class="nav-link" data-scroll-target="#ingredient-2-cross-fitting">Ingredient 2: Cross-fitting</a></li>
   </ul></li>
-  <li><a href="#the-partially-linear-model" id="toc-the-partially-linear-model" class="nav-link" data-scroll-target="#the-partially-linear-model">The partially linear model</a></li>
+  <li><a href="#the-partially-linear-model" id="toc-the-partially-linear-model" class="nav-link" data-scroll-target="#the-partially-linear-model">The partially linear model</a>
+  <ul class="collapse">
+  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  </ul></li>
   <li><a href="#what-dml-assumes" id="toc-what-dml-assumes" class="nav-link" data-scroll-target="#what-dml-assumes">What DML assumes</a></li>
   <li><a href="#connecting-to-the-course" id="toc-connecting-to-the-course" class="nav-link" data-scroll-target="#connecting-to-the-course">Connecting to the course</a></li>
   </ul>
@@ -413,6 +421,182 @@ Y_i = \tau D_i + g(X_i) + \varepsilon_i
 <li>Regress <span class="math inline">\(\tilde{Y}\)</span> on <span class="math inline">\(\tilde{D}\)</span> to get <span class="math inline">\(\hat{\tau}\)</span></li>
 </ol>
 <p>This is <a href="../stats-course/fwl.html">Frisch-Waugh-Lovell</a> with ML residualization. Instead of controlling for <span class="math inline">\(X\)</span> linearly, you partial it out flexibly. The treatment effect <span class="math inline">\(\tau\)</span> remains a simple, interpretable parameter — only the nuisance part uses ML.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 680
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("n", "Sample size (n):",
+                  min = 200, max = 2000, value = 500, step = 200),
+
+      sliderInput("tau", "True treatment effect (\u03C4):",
+                  min = 0, max = 5, value = 2, step = 0.5),
+
+      sliderInput("p", "Number of confounders (p):",
+                  min = 2, max = 20, value = 5, step = 1),
+
+      actionButton("go", "Run simulation", class = "btn-primary", width = "100%"),
+
+      uiOutput("results")
+    ),
+
+    mainPanel(
+      width = 9,
+      plotOutput("density_plot", height = "500px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  sim &lt;- reactive({
+    input$go
+    n   &lt;- input$n
+    tau &lt;- input$tau
+    p   &lt;- input$p
+    B   &lt;- 200
+
+    naive_ests &lt;- numeric(B)
+    ols_ests   &lt;- numeric(B)
+    dml_ests   &lt;- numeric(B)
+
+    for (b in 1:B) {
+      # Generate confounders
+      X &lt;- matrix(rnorm(n * p), n, p)
+
+      # Propensity and treatment
+      e_x &lt;- plogis(X[, 1] + 0.5 * X[, 2])
+      D   &lt;- rbinom(n, 1, e_x)
+
+      # Outcome
+      Y &lt;- tau * D + sin(X[, 1]) + X[, 2]^2 + rnorm(n)
+
+      # 1. Naive: unadjusted difference in means
+      naive_ests[b] &lt;- mean(Y[D == 1]) - mean(Y[D == 0])
+
+      # 2. OLS: lm(Y ~ D + X)
+      dat_ols  &lt;- data.frame(Y = Y, D = D, X)
+      ols_fit  &lt;- lm(Y ~ D + ., data = dat_ols)
+      ols_ests[b] &lt;- coef(ols_fit)["D"]
+
+      # 3. DML-style: residualize Y and D on X with cross-fitting
+      fold &lt;- rep(1:2, length.out = n)
+      fold &lt;- sample(fold)
+
+      Y_resid &lt;- numeric(n)
+      D_resid &lt;- numeric(n)
+
+      for (k in 1:2) {
+        train &lt;- fold != k
+        test  &lt;- fold == k
+
+        X_train &lt;- X[train, , drop = FALSE]
+        X_test  &lt;- X[test, , drop = FALSE]
+
+        # Fit nuisance models on training fold
+        dat_y &lt;- data.frame(Y = Y[train], X_train)
+        dat_d &lt;- data.frame(D = D[train], X_train)
+
+        fit_y &lt;- lm(Y ~ ., data = dat_y)
+        fit_d &lt;- lm(D ~ ., data = dat_d)
+
+        # Predict on test fold
+        newdat &lt;- data.frame(X_test)
+        names(newdat) &lt;- names(dat_y)[-1]
+
+        Y_resid[test] &lt;- Y[test] - predict(fit_y, newdata = newdat)
+        D_resid[test] &lt;- D[test] - predict(fit_d, newdata = newdat)
+      }
+
+      # Regress residualized Y on residualized D
+      dml_ests[b] &lt;- coef(lm(Y_resid ~ D_resid - 1))
+    }
+
+    list(naive = naive_ests, ols = ols_ests, dml = dml_ests, tau = tau)
+  })
+
+  output$density_plot &lt;- renderPlot({
+    s &lt;- sim()
+    par(mar = c(5, 4.5, 3, 1))
+
+    # Compute densities
+    d_naive &lt;- density(s$naive, adjust = 1.2)
+    d_ols   &lt;- density(s$ols,   adjust = 1.2)
+    d_dml   &lt;- density(s$dml,   adjust = 1.2)
+
+    xlim &lt;- range(c(d_naive$x, d_ols$x, d_dml$x))
+    ylim &lt;- c(0, max(c(d_naive$y, d_ols$y, d_dml$y)) * 1.15)
+
+    plot(NULL, xlim = xlim, ylim = ylim,
+         xlab = expression("Estimated " * tau),
+         ylab = "Density",
+         main = "Sampling Distributions (200 Monte Carlo Reps)")
+
+    # Density curves
+    polygon(d_naive$x, d_naive$y, col = adjustcolor("#e74c3c", 0.25), border = "#e74c3c", lwd = 2)
+    polygon(d_ols$x,   d_ols$y,   col = adjustcolor("#3498db", 0.25), border = "#3498db", lwd = 2)
+    polygon(d_dml$x,   d_dml$y,   col = adjustcolor("#27ae60", 0.25), border = "#27ae60", lwd = 2)
+
+    # True tau
+    abline(v = s$tau, lty = 2, lwd = 2.5, col = "#2c3e50")
+    text(s$tau, ylim[2] * 0.95,
+         bquote("True " * tau == .(s$tau)),
+         cex = 0.9, font = 2, col = "#2c3e50", pos = 4)
+
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c("Naive (diff. in means)", "OLS (with controls)", "DML-style (cross-fitted)"),
+           col = c("#e74c3c", "#3498db", "#27ae60"),
+           lwd = 2, fill = adjustcolor(c("#e74c3c", "#3498db", "#27ae60"), 0.25),
+           border = c("#e74c3c", "#3498db", "#27ae60"))
+  })
+
+  output$results &lt;- renderUI({
+    s &lt;- sim()
+    tau &lt;- s$tau
+
+    mn &lt;- c(mean(s$naive), mean(s$ols), mean(s$dml))
+    sd &lt;- c(sd(s$naive), sd(s$ols), sd(s$dml))
+    bias &lt;- mn - tau
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;True \u03C4:&lt;/b&gt; ", tau, "&lt;br&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        "&lt;b&gt;Naive:&lt;/b&gt; mean = &lt;span class='bad'&gt;", round(mn[1], 3), "&lt;/span&gt;",
+        " (SD: ", round(sd[1], 3), ", bias: ", round(bias[1], 3), ")&lt;br&gt;",
+        "&lt;b&gt;OLS:&lt;/b&gt; mean = ", round(mn[2], 3),
+        " (SD: ", round(sd[2], 3), ", bias: ", round(bias[2], 3), ")&lt;br&gt;",
+        "&lt;b&gt;DML:&lt;/b&gt; mean = &lt;span class='good'&gt;", round(mn[3], 3), "&lt;/span&gt;",
+        " (SD: ", round(sd[3], 3), ", bias: ", round(bias[3], 3), ")"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<section id="things-to-try" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<ul>
+<li><strong>Increase confounders:</strong> with more confounders <span class="math inline">\(p\)</span>, the naive estimator gets worse because there is more confounding. OLS and DML both adjust, but DML’s cross-fitting avoids overfitting bias that can creep in when <span class="math inline">\(p\)</span> is large relative to <span class="math inline">\(n\)</span>.</li>
+<li><strong>Set <span class="math inline">\(\tau = 0\)</span>:</strong> all estimators should center near zero if unbiased. The naive estimator will still be biased because treatment is confounded.</li>
+<li><strong>Small <span class="math inline">\(n\)</span>, large <span class="math inline">\(p\)</span>:</strong> with <span class="math inline">\(n = 200\)</span> and <span class="math inline">\(p = 20\)</span>, OLS starts to overfit the confounders. The cross-fitted DML approach is more robust because it never evaluates predictions on the same data used to fit the nuisance models.</li>
+</ul>
+</section>
 </section>
 <section id="what-dml-assumes" class="level2">
 <h2 class="anchored" data-anchor-id="what-dml-assumes">What DML assumes</h2>

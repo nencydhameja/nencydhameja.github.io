@@ -41,6 +41,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -449,7 +454,10 @@ window.Quarto = {
    
   <ul>
   <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a></li>
-  <li><a href="#a-worked-example" id="toc-a-worked-example" class="nav-link" data-scroll-target="#a-worked-example">A worked example</a></li>
+  <li><a href="#a-worked-example" id="toc-a-worked-example" class="nav-link" data-scroll-target="#a-worked-example">A worked example</a>
+  <ul class="collapse">
+  <li><a href="#simulation-likelihood-surface-for-coin-flips" id="toc-simulation-likelihood-surface-for-coin-flips" class="nav-link" data-scroll-target="#simulation-likelihood-surface-for-coin-flips">Simulation: Likelihood surface for coin flips</a></li>
+  </ul></li>
   <li><a href="#ols-is-mle-under-normality" id="toc-ols-is-mle-under-normality" class="nav-link" data-scroll-target="#ols-is-mle-under-normality">OLS is MLE under normality</a></li>
   <li><a href="#properties-of-mle" id="toc-properties-of-mle" class="nav-link" data-scroll-target="#properties-of-mle">Properties of MLE</a></li>
   <li><a href="#fisher-information-and-standard-errors" id="toc-fisher-information-and-standard-errors" class="nav-link" data-scroll-target="#fisher-information-and-standard-errors">Fisher information and standard errors</a></li>
@@ -528,6 +536,127 @@ L(p) = p^k (1-p)^{n-k}
 </div>
 </div>
 </div>
+<section id="simulation-likelihood-surface-for-coin-flips" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-likelihood-surface-for-coin-flips">Simulation: Likelihood surface for coin flips</h3>
+<p>Watch the log-likelihood curve sharpen as you increase the number of flips. With few flips, many values of <span class="math inline">\(p\)</span> look plausible (flat curve). With many flips, the curve becomes sharply peaked around the MLE — the data strongly distinguish the true parameter. This is Fisher information in action.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 680
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("true_p", "True p:",
+                  min = 0.1, max = 0.9, value = 0.6, step = 0.05),
+
+      sliderInput("n_flips", "Number of flips n:",
+                  min = 5, max = 200, value = 20, step = 5),
+
+      actionButton("go", "Flip coins",
+                   class = "btn-primary", width = "100%"),
+
+      uiOutput("results")
+    ),
+
+    mainPanel(
+      width = 9,
+      plotOutput("ll_plot", height = "520px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  dat &lt;- reactive({
+    input$go
+    true_p  &lt;- input$true_p
+    n_flips &lt;- input$n_flips
+
+    # Simulate flips
+    flips &lt;- rbinom(n_flips, size = 1, prob = true_p)
+    k     &lt;- sum(flips)
+    mle   &lt;- k / n_flips
+
+    list(true_p = true_p, n_flips = n_flips, k = k, mle = mle)
+  })
+
+  output$ll_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    p_seq &lt;- seq(0.001, 0.999, length.out = 1000)
+
+    # Log-likelihood: k*log(p) + (n-k)*log(1-p)
+    ll &lt;- d$k * log(p_seq) + (d$n_flips - d$k) * log(1 - p_seq)
+
+    # Normalize so the max is 0 (relative log-likelihood)
+    ll &lt;- ll - max(ll)
+
+    plot(p_seq, ll, type = "l", lwd = 2.5, col = "#3498db",
+         xlab = "p", ylab = "Log-likelihood (relative)",
+         main = paste0("Log-likelihood: ", d$k, " heads in ",
+                       d$n_flips, " flips"),
+         ylim = c(max(min(ll), -10), 0.5))
+
+    # MLE vertical line
+    abline(v = d$mle, lwd = 2.5, col = "#e74c3c")
+
+    # True p dashed line
+    abline(v = d$true_p, lty = 2, lwd = 2.5, col = "#2c3e50")
+
+    legend("topright", bty = "n", cex = 0.9,
+           legend = c(paste0("MLE = k/n = ", round(d$mle, 4)),
+                      paste0("True p = ", d$true_p),
+                      "Log-likelihood"),
+           col = c("#e74c3c", "#2c3e50", "#3498db"),
+           lwd = 2.5, lty = c(1, 2, 1))
+  })
+
+  output$results &lt;- renderUI({
+    d &lt;- dat()
+
+    # Observed Fisher information: curvature at MLE
+    # Second derivative of ll: -k/p^2 - (n-k)/(1-p)^2
+    # At the MLE p_hat = k/n:
+    # -n/p_hat - n/(1-p_hat) = -n/(p_hat*(1-p_hat))
+    # Fisher info = negative of that = n/(p_hat*(1-p_hat))
+    if (d$mle &gt; 0 &amp;&amp; d$mle &lt; 1) {
+      fisher &lt;- d$n_flips / (d$mle * (1 - d$mle))
+    } else {
+      fisher &lt;- NA
+    }
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;n flips:&lt;/b&gt; ", d$n_flips, "&lt;br&gt;",
+        "&lt;b&gt;k heads:&lt;/b&gt; ", d$k, "&lt;br&gt;",
+        "&lt;b&gt;MLE = k/n:&lt;/b&gt; ", round(d$mle, 4), "&lt;br&gt;",
+        "&lt;b&gt;True p:&lt;/b&gt; ", d$true_p, "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;Observed Fisher info:&lt;/b&gt; ",
+        if (!is.na(fisher)) round(fisher, 2) else "undefined",
+        "&lt;br&gt;",
+        "&lt;b&gt;Approx SE:&lt;/b&gt; ",
+        if (!is.na(fisher) &amp;&amp; fisher &gt; 0)
+          round(1 / sqrt(fisher), 4) else "undefined"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</section>
 </section>
 <section id="ols-is-mle-under-normality" class="level2">
 <h2 class="anchored" data-anchor-id="ols-is-mle-under-normality">OLS is MLE under normality</h2>

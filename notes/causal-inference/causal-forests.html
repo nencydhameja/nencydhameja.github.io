@@ -41,6 +41,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -315,6 +320,7 @@ window.Quarto = {
   <li><a href="#effect-splitting" id="toc-effect-splitting" class="nav-link" data-scroll-target="#effect-splitting">Effect-splitting</a></li>
   <li><a href="#honesty" id="toc-honesty" class="nav-link" data-scroll-target="#honesty">Honesty</a></li>
   <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference">Inference</a></li>
+  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
   <li><a href="#meta-learners" id="toc-meta-learners" class="nav-link" data-scroll-target="#meta-learners">Meta-learners</a>
   <ul class="collapse">
@@ -391,6 +397,192 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 680
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("n", "Sample size (n):",
+                  min = 200, max = 2000, value = 500, step = 200),
+
+      selectInput("pattern", "Heterogeneity pattern:",
+                  choices = c(
+                    "Linear: \u03C4(x) = 2 + 3x"       = "linear",
+                    "Step: \u03C4(x) = 1 if x&lt;0, 4 if x\u22650" = "step",
+                    "No heterogeneity: \u03C4(x) = 2"   = "constant"
+                  )),
+
+      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
+
+      uiOutput("results")
+    ),
+
+    mainPanel(
+      width = 9,
+      fluidRow(
+        column(6, plotOutput("scatter_plot", height = "430px")),
+        column(6, plotOutput("cate_plot", height = "430px"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  dat &lt;- reactive({
+    input$go
+    n       &lt;- input$n
+    pattern &lt;- input$pattern
+
+    # Generate data (randomized experiment)
+    X &lt;- rnorm(n)
+    D &lt;- rbinom(n, 1, 0.5)
+
+    # True CATE function
+    tau_fn &lt;- switch(pattern,
+      linear   = function(x) 2 + 3 * x,
+      step     = function(x) ifelse(x &lt; 0, 1, 4),
+      constant = function(x) rep(2, length(x))
+    )
+
+    tau_x &lt;- tau_fn(X)
+    Y &lt;- tau_x * D + X + rnorm(n)
+
+    # Binned CATE estimation
+    n_bins &lt;- 10
+    breaks &lt;- quantile(X, probs = seq(0, 1, length.out = n_bins + 1))
+    breaks[1] &lt;- breaks[1] - 0.01
+    breaks[n_bins + 1] &lt;- breaks[n_bins + 1] + 0.01
+    bins &lt;- cut(X, breaks = breaks, labels = FALSE)
+
+    bin_mids  &lt;- numeric(n_bins)
+    bin_ests  &lt;- numeric(n_bins)
+    bin_valid &lt;- logical(n_bins)
+
+    for (j in 1:n_bins) {
+      idx &lt;- bins == j
+      bin_mids[j] &lt;- mean(X[idx])
+      t_idx &lt;- idx &amp; D == 1
+      c_idx &lt;- idx &amp; D == 0
+      if (sum(t_idx) &gt; 1 &amp;&amp; sum(c_idx) &gt; 1) {
+        bin_ests[j] &lt;- mean(Y[t_idx]) - mean(Y[c_idx])
+        bin_valid[j] &lt;- TRUE
+      } else {
+        bin_ests[j] &lt;- NA
+        bin_valid[j] &lt;- FALSE
+      }
+    }
+
+    # ATE: true and estimated
+    true_ate &lt;- mean(tau_x)
+    est_ate  &lt;- mean(Y[D == 1]) - mean(Y[D == 0])
+
+    # For plotting the true curve
+    x_seq &lt;- seq(min(X), max(X), length.out = 200)
+    tau_seq &lt;- tau_fn(x_seq)
+
+    list(X = X, Y = Y, D = D, tau_x = tau_x,
+         x_seq = x_seq, tau_seq = tau_seq,
+         bin_mids = bin_mids, bin_ests = bin_ests, bin_valid = bin_valid,
+         true_ate = true_ate, est_ate = est_ate,
+         pattern = pattern, n = n, tau_fn = tau_fn)
+  })
+
+  output$scatter_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    plot(d$X, d$Y, pch = 16, cex = 0.4,
+         col = ifelse(d$D == 1, "#3498db40", "#e74c3c40"),
+         xlab = "X (covariate)", ylab = "Y (outcome)",
+         main = "Observed Data")
+
+    # True tau(x) curve
+    lines(d$x_seq, d$tau_seq, col = "#2c3e50", lwd = 2.5)
+
+    legend("topleft", bty = "n", cex = 0.8,
+           legend = c("Treated", "Control", expression("True " * tau * "(x)")),
+           col = c("#3498db", "#e74c3c", "#2c3e50"),
+           pch = c(16, 16, NA), lwd = c(NA, NA, 2.5))
+  })
+
+  output$cate_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    valid &lt;- d$bin_valid
+    ylim &lt;- range(c(d$tau_seq, d$bin_ests[valid]), na.rm = TRUE)
+    pad  &lt;- diff(ylim) * 0.15
+    ylim &lt;- ylim + c(-pad, pad)
+
+    plot(NULL, xlim = range(d$x_seq), ylim = ylim,
+         xlab = "X (covariate)",
+         ylab = expression("Treatment effect " * tau * "(x)"),
+         main = "CATE: Binned Estimates vs Truth")
+
+    # True curve
+    lines(d$x_seq, d$tau_seq, col = "#2c3e50", lwd = 2.5)
+
+    # Binned estimates
+    points(d$bin_mids[valid], d$bin_ests[valid],
+           pch = 19, cex = 1.6, col = "#9b59b6")
+
+    # Connect with segments for clarity
+    segments(d$bin_mids[valid], d$tau_fn(d$bin_mids[valid]),
+             d$bin_mids[valid], d$bin_ests[valid],
+             col = "#9b59b680", lty = 2, lwd = 1.5)
+
+    legend("topleft", bty = "n", cex = 0.8,
+           legend = c(expression("True " * tau * "(x)"), "Binned estimate"),
+           col = c("#2c3e50", "#9b59b6"),
+           lwd = c(2.5, NA), pch = c(NA, 19))
+  })
+
+  output$results &lt;- renderUI({
+    d &lt;- dat()
+    pat_label &lt;- switch(d$pattern,
+      linear   = "Linear: \u03C4(x) = 2 + 3x",
+      step     = "Step: \u03C4(x) = 1 if x&lt;0, 4 if x\u22650",
+      constant = "No heterogeneity: \u03C4(x) = 2"
+    )
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;Pattern:&lt;/b&gt; ", pat_label, "&lt;br&gt;",
+        "&lt;b&gt;n:&lt;/b&gt; ", d$n, "&lt;br&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        "&lt;b&gt;True ATE:&lt;/b&gt; ", round(d$true_ate, 3), "&lt;br&gt;",
+        "&lt;b&gt;Estimated ATE:&lt;/b&gt; ", round(d$est_ate, 3), "&lt;br&gt;",
+        "&lt;b&gt;Bias:&lt;/b&gt; ", round(d$est_ate - d$true_ate, 3)
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</section>
+<section id="things-to-try" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<ul>
+<li><strong>Linear heterogeneity:</strong> the treatment effect increases with <span class="math inline">\(X\)</span>. The binned estimates trace out the linear relationship. With larger <span class="math inline">\(n\)</span>, the estimates get tighter around the truth.</li>
+<li><strong>Step function:</strong> a sharp change at <span class="math inline">\(X = 0\)</span>. The binned estimator smooths over this discontinuity — bins near the cutoff mix units from both regimes. More data and finer bins would help.</li>
+<li><strong>No heterogeneity:</strong> all bins should estimate roughly the same effect. If they look scattered, that’s sampling noise — there is no real heterogeneity to find.</li>
+</ul>
 </section>
 </section>
 <section id="meta-learners" class="level2">

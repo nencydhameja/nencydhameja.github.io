@@ -41,6 +41,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -458,6 +463,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#chi-squared-chi2" id="toc-chi-squared-chi2" class="nav-link" data-scroll-target="#chi-squared-chi2">Chi-squared (<span class="math inline">\(\chi^2\)</span>)</a></li>
   <li><a href="#f-statistic" id="toc-f-statistic" class="nav-link" data-scroll-target="#f-statistic">F-statistic</a></li>
+  <li><a href="#simulation-watch-t-converge-to-z-and-f-converge-to-chi-squared-as-n-grows" id="toc-simulation-watch-t-converge-to-z-and-f-converge-to-chi-squared-as-n-grows" class="nav-link" data-scroll-target="#simulation-watch-t-converge-to-z-and-f-converge-to-chi-squared-as-n-grows">Simulation: Watch t converge to Z and F converge to chi-squared as n grows</a></li>
   </ul></li>
   <li><a href="#iii.-the-likelihood-based-trinity" id="toc-iii.-the-likelihood-based-trinity" class="nav-link" data-scroll-target="#iii.-the-likelihood-based-trinity">III. The likelihood-based trinity</a>
   <ul class="collapse">
@@ -572,6 +578,105 @@ F = \frac{(\text{RSS}_r - \text{RSS}_u) / q}{\text{RSS}_u / (n - k)}
 F_{1, \, df} = t^2
 \]</span></p>
 <p>An F-test with one restriction is exactly the square of the corresponding t-test. The F generalizes the t to multiple restrictions. And just as <span class="math inline">\(t \to Z\)</span> as <span class="math inline">\(n \to \infty\)</span>, we have <span class="math inline">\(q \cdot F_{q, n-k} \to \chi^2_q\)</span> — the F-test converges to a scaled chi-squared test in large samples.</p>
+</section>
+<section id="simulation-watch-t-converge-to-z-and-f-converge-to-chi-squared-as-n-grows" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-watch-t-converge-to-z-and-f-converge-to-chi-squared-as-n-grows">Simulation: Watch t converge to Z and F converge to chi-squared as n grows</h3>
+<p>Drag the degrees-of-freedom slider and watch two convergences happen simultaneously: the t distribution collapses onto the standard normal, and F(1, df) collapses onto chi-squared(1).</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 680
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("df", "Degrees of freedom (df):",
+                  min = 2, max = 200, value = 10, step = 1),
+
+      uiOutput("stats")
+    ),
+
+    mainPanel(
+      width = 9,
+      plotOutput("conv_plot", height = "540px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  output$conv_plot &lt;- renderPlot({
+    df &lt;- input$df
+    par(mfrow = c(2, 1), mar = c(4.5, 4.5, 3, 1))
+
+    # --- Top panel: t vs Z ---
+    xseq &lt;- seq(-4.5, 4.5, length.out = 500)
+    y_t &lt;- dt(xseq, df = df)
+    y_z &lt;- dnorm(xseq)
+
+    plot(xseq, y_z, type = "l", lwd = 2, lty = 2, col = "black",
+         xlab = "x", ylab = "Density",
+         main = paste0("t(", df, ") vs Standard Normal"),
+         ylim = c(0, max(y_z) * 1.15))
+    lines(xseq, y_t, lwd = 3, col = "#3498db")
+
+    legend("topright", bty = "n", cex = 0.9,
+           legend = c(paste0("t(", df, ")"), "N(0, 1)"),
+           col = c("#3498db", "black"),
+           lwd = c(3, 2), lty = c(1, 2))
+
+    # --- Bottom panel: F(1, df) vs chi-sq(1) ---
+    xf &lt;- seq(0.001, 8, length.out = 500)
+    y_f  &lt;- df(xf, df1 = 1, df2 = df)
+    y_ch &lt;- dchisq(xf, df = 1)
+
+    ymax &lt;- min(max(c(y_f, y_ch), na.rm = TRUE) * 1.1, 5)
+
+    plot(xf, y_f, type = "l", lwd = 3, col = "#27ae60",
+         xlab = "x", ylab = "Density",
+         main = paste0("F(1, ", df, ") vs \u03c7\u00b2(1)"),
+         ylim = c(0, ymax))
+    lines(xf, y_ch, lwd = 2, lty = 2, col = "#e74c3c")
+
+    legend("topright", bty = "n", cex = 0.9,
+           legend = c(paste0("F(1, ", df, ")"),
+                      expression(chi^2 * "(1)")),
+           col = c("#27ae60", "#e74c3c"),
+           lwd = c(3, 2), lty = c(1, 2))
+  })
+
+  output$stats &lt;- renderUI({
+    df &lt;- input$df
+    p_t  &lt;- 2 * pt(-1.96, df = df)
+    p_z  &lt;- 0.05
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;df:&lt;/b&gt; ", df, "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;P(|t| &gt; 1.96):&lt;/b&gt; ", round(p_t, 4), "&lt;br&gt;",
+        "&lt;b&gt;P(|Z| &gt; 1.96):&lt;/b&gt; ", round(p_z, 4), "&lt;br&gt;",
+        "&lt;b&gt;Difference:&lt;/b&gt; ", round(abs(p_t - p_z), 4), "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;small&gt;As df &amp;rarr; &amp;infin;, the t-tail&lt;br&gt;",
+        "probability converges to 0.05&lt;br&gt;",
+        "and F(1, df) &amp;rarr; &amp;chi;&amp;sup2;(1).&lt;/small&gt;"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
 </section>
 </section>
 <section id="iii.-the-likelihood-based-trinity" class="level2">
