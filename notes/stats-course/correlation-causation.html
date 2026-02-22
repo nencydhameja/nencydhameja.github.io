@@ -795,11 +795,10 @@ server &lt;- function(input, output, session) {
     par(mfrow = c(1, 2), mar = c(5, 5, 4, 2))
 
     # Left: Observational
-    cols_obs &lt;- ifelse(d$treat_obs == 1, "#e74c3c", "#3498db")
     stripchart(d$y_obs ~ d$treat_obs,
                method = "jitter", jitter = 0.15,
                vertical = TRUE, pch = 16, cex = 0.6,
-               col = adjustcolor(cols_obs, 0.4),
+               col = adjustcolor(c("#3498db", "#e74c3c"), 0.4),
                group.names = c("Control", "Treated"),
                xlab = "", ylab = "Outcome (Y)",
                main = "Observational study")
@@ -815,11 +814,10 @@ server &lt;- function(input, output, session) {
           side = 3, line = 0, cex = 1, font = 2, col = "#e74c3c")
 
     # Right: RCT
-    cols_rct &lt;- ifelse(d$treat_rct == 1, "#e74c3c", "#3498db")
     stripchart(d$y_rct ~ d$treat_rct,
                method = "jitter", jitter = 0.15,
                vertical = TRUE, pch = 16, cex = 0.6,
-               col = adjustcolor(cols_rct, 0.4),
+               col = adjustcolor(c("#3498db", "#e74c3c"), 0.4),
                group.names = c("Control", "Treated"),
                xlab = "", ylab = "Outcome (Y)",
                main = "Randomized experiment")
