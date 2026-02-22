@@ -477,7 +477,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="simulation-does-x-belong-in-the-model">Simulation: Does X belong in the model?</h3>
 <p>Compare two models: <span class="math inline">\(M_0\)</span>: <span class="math inline">\(y = \text{noise}\)</span> vs <span class="math inline">\(M_1\)</span>: <span class="math inline">\(y = \beta x + \text{noise}\)</span>. The Bayes factor tells you whether the data support including <span class="math inline">\(x\)</span>.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 620
+#| viewerHeight: 920
 
 library(shiny)
 
@@ -516,10 +516,8 @@ ui &lt;- fluidPage(
 
     mainPanel(
       width = 9,
-      fluidRow(
-        column(6, plotOutput("density_plot", height = "420px")),
-        column(6, plotOutput("bf_plot", height = "420px"))
-      )
+      plotOutput("density_plot", height = "420px"),
+      plotOutput("bf_plot", height = "420px")
     )
   )
 )
