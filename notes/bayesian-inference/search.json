@@ -311,6 +311,17 @@
     ]
   },
   {
+    "objectID": "mcmc.html#what-you-do-with-the-draws",
+    "href": "mcmc.html#what-you-do-with-the-draws",
+    "title": "Markov Chain Monte Carlo",
+    "section": "What you do with the draws",
+    "text": "What you do with the draws\nEverything above was about getting posterior draws. Here’s the payoff: once you have draws, any question about the posterior is just counting.\nSuppose you run a Bayesian regression in Stan and get 4,000 draws of \\(\\beta\\) (4 chains \\(\\times\\) 1,000 each). Those 4,000 numbers are the posterior. To answer any question, you just look at the draws:\n\n\n\n\n\n\n\n\nQuestion\nCode\nWhat it does\n\n\n\n\nWhat’s \\(P(\\beta &lt; 0)\\)?\nmean(beta_draws &lt; 0)\nFraction of draws where \\(\\beta &lt; 0\\)\n\n\nWhat’s \\(P(\\beta &gt; 0.5)\\)?\nmean(beta_draws &gt; 0.5)\nFraction of draws above 0.5\n\n\nPosterior mean?\nmean(beta_draws)\nAverage of the draws\n\n\n95% credible interval?\nquantile(beta_draws, c(0.025, 0.975))\n2.5th and 97.5th percentiles\n\n\nPosterior SD?\nsd(beta_draws)\nStandard deviation of the draws\n\n\n\nThat’s it. No formulas, no distributional assumptions on the output, no asymptotics. The posterior can be skewed, bimodal, heavy-tailed — it doesn’t matter. You just count.\n\n\n\n\n\n\nExample: You estimate the effect of education on wages. Out of 4,000 posterior draws for \\(\\beta\\), every single one is positive. Then \\(P(\\beta &gt; 0) = 4000/4000 = 100\\%\\). Not a p-value. Not “fail to reject.” A direct probability statement: “given the data and prior, I am essentially certain the effect is positive.” This is the core advantage of Bayesian estimation — you get direct probability statements about parameters.\n\n\n\n\n\n\n\n\n\nContrast with frequentist inference: A frequentist p-value of 0.03 does not mean “3% chance \\(\\beta = 0\\).” It means “if \\(\\beta\\) were 0, there’s a 3% chance of seeing data this extreme.” The Bayesian posterior probability \\(P(\\beta &gt; 0) = 97\\%\\) does mean what it sounds like: given everything you know, there’s a 97% probability the effect is positive. The draws make this trivial to compute.\n\n\n\nThis is what connects MCMC to the rest of the site. The Bayes’ Theorem page shows the logic: prior \\(\\times\\) likelihood \\(=\\) posterior. The coin-flip simulation there gives you the posterior in closed form. But for real models — regression with multiple predictors, hierarchical structures, non-conjugate priors — there is no closed form. MCMC gives you draws from that posterior, and then you count. The logic is the same; only the computation changes.",
+    "crumbs": [
+      "Computation",
+      "MCMC"
+    ]
+  },
+  {
     "objectID": "mcmc.html#did-you-know",
     "href": "mcmc.html#did-you-know",
     "title": "Markov Chain Monte Carlo",

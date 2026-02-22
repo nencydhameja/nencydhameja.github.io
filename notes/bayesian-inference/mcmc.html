@@ -288,6 +288,7 @@ window.Quarto = {
   <li><a href="#things-to-try-1" id="toc-things-to-try-1" class="nav-link" data-scroll-target="#things-to-try-1">Things to try</a></li>
   </ul></li>
   <li><a href="#the-key-message" id="toc-the-key-message" class="nav-link" data-scroll-target="#the-key-message">The key message</a></li>
+  <li><a href="#what-you-do-with-the-draws" id="toc-what-you-do-with-the-draws" class="nav-link" data-scroll-target="#what-you-do-with-the-draws">What you do with the draws</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -866,6 +867,75 @@ shinyApp(ui, server)</code></pre>
 <p>MCMC lets you compute posteriors for <strong>any</strong> model — not just conjugate ones. Specify the likelihood and the prior, and the algorithm samples from the posterior. This is what makes Bayesian inference practical for real-world problems like <a href="hierarchical.html">hierarchical models</a>, where closed-form posteriors don’t exist.</p>
 <p>This is also the engine behind <a href="bayesian-regression.html">Bayesian regression</a>. When you type <code>bayes: reg y x</code> in Stata, it runs Metropolis-Hastings to sample from the posterior over regression coefficients — the same algorithm you just watched above, applied to a model you already know.</p>
 <p>Modern tools like <strong>Stan</strong>, <strong>JAGS</strong>, and <strong>PyMC</strong> automate this — you specify the model and they handle the sampling. But understanding the basics (proposal tuning, burn-in, convergence checks) helps you diagnose problems when things go wrong.</p>
+<hr>
+</section>
+<section id="what-you-do-with-the-draws" class="level2">
+<h2 class="anchored" data-anchor-id="what-you-do-with-the-draws">What you do with the draws</h2>
+<p>Everything above was about <em>getting</em> posterior draws. Here’s the payoff: <strong>once you have draws, any question about the posterior is just counting.</strong></p>
+<p>Suppose you run a Bayesian regression in Stan and get 4,000 draws of <span class="math inline">\(\beta\)</span> (4 chains <span class="math inline">\(\times\)</span> 1,000 each). Those 4,000 numbers <em>are</em> the posterior. To answer any question, you just look at the draws:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 20%">
+<col style="width: 46%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Code</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>What’s <span class="math inline">\(P(\beta &lt; 0)\)</span>?</td>
+<td><code>mean(beta_draws &lt; 0)</code></td>
+<td>Fraction of draws where <span class="math inline">\(\beta &lt; 0\)</span></td>
+</tr>
+<tr class="even">
+<td>What’s <span class="math inline">\(P(\beta &gt; 0.5)\)</span>?</td>
+<td><code>mean(beta_draws &gt; 0.5)</code></td>
+<td>Fraction of draws above 0.5</td>
+</tr>
+<tr class="odd">
+<td>Posterior mean?</td>
+<td><code>mean(beta_draws)</code></td>
+<td>Average of the draws</td>
+</tr>
+<tr class="even">
+<td>95% credible interval?</td>
+<td><code>quantile(beta_draws, c(0.025, 0.975))</code></td>
+<td>2.5th and 97.5th percentiles</td>
+</tr>
+<tr class="odd">
+<td>Posterior SD?</td>
+<td><code>sd(beta_draws)</code></td>
+<td>Standard deviation of the draws</td>
+</tr>
+</tbody>
+</table>
+<p>That’s it. No formulas, no distributional assumptions on the output, no asymptotics. The posterior can be skewed, bimodal, heavy-tailed — it doesn’t matter. You just count.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Example:</strong> You estimate the effect of education on wages. Out of 4,000 posterior draws for <span class="math inline">\(\beta\)</span>, every single one is positive. Then <span class="math inline">\(P(\beta &gt; 0) = 4000/4000 = 100\%\)</span>. Not a p-value. Not “fail to reject.” A direct probability statement: “given the data and prior, I am essentially certain the effect is positive.” This is the core advantage of Bayesian estimation — you get <strong>direct probability statements about parameters</strong>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Contrast with frequentist inference:</strong> A frequentist p-value of 0.03 does <em>not</em> mean “3% chance <span class="math inline">\(\beta = 0\)</span>.” It means “if <span class="math inline">\(\beta\)</span> were 0, there’s a 3% chance of seeing data this extreme.” The Bayesian posterior probability <span class="math inline">\(P(\beta &gt; 0) = 97\%\)</span> <em>does</em> mean what it sounds like: given everything you know, there’s a 97% probability the effect is positive. The draws make this trivial to compute.</p>
+</div>
+</div>
+</div>
+<p>This is what connects MCMC to the rest of the site. The <a href="bayes-theorem.html">Bayes’ Theorem</a> page shows the logic: prior <span class="math inline">\(\times\)</span> likelihood <span class="math inline">\(=\)</span> posterior. The coin-flip simulation there gives you the posterior in closed form. But for real models — regression with multiple predictors, hierarchical structures, non-conjugate priors — there is no closed form. MCMC gives you draws from that posterior, and then you count. The logic is the same; only the computation changes.</p>
 <hr>
 </section>
 <section id="did-you-know" class="level2">
