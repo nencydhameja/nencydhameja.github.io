@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Instrumental Variables – Applied Causal Inference</title>
+<title>Heterogeneous Treatment Effects – Applied Causal Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -76,11 +41,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -151,7 +111,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Methods</a></li><li class="breadcrumb-item"><a href="./iv.html">Instrumental Variables</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./double-debiased-ml.html">Causal Machine Learning</a></li><li class="breadcrumb-item"><a href="./heterogeneous-effects.html">Heterogeneous Treatment Effects</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -228,7 +188,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iv.html" class="sidebar-item-text sidebar-link active">
+  <a href="./iv.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Instrumental Variables</span></a>
   </div>
 </li>
@@ -321,7 +281,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./heterogeneous-effects.html" class="sidebar-item-text sidebar-link">
+  <a href="./heterogeneous-effects.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Heterogeneous Treatment Effects</span></a>
   </div>
 </li>
@@ -343,26 +303,30 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
+  <li><a href="#why-cate-is-hard" id="toc-why-cate-is-hard" class="nav-link active" data-scroll-target="#why-cate-is-hard">Why CATE is hard</a></li>
+  <li><a href="#causal-forests" id="toc-causal-forests" class="nav-link" data-scroll-target="#causal-forests">Causal forests</a>
   <ul class="collapse">
-  <li><a href="#two-stage-least-squares-2sls" id="toc-two-stage-least-squares-2sls" class="nav-link" data-scroll-target="#two-stage-least-squares-2sls">Two-stage least squares (2SLS)</a></li>
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
-  <li><a href="#classic-example" id="toc-classic-example" class="nav-link" data-scroll-target="#classic-example">Classic example</a></li>
-  <li><a href="#when-does-iv-fail" id="toc-when-does-iv-fail" class="nav-link" data-scroll-target="#when-does-iv-fail">When does IV fail?</a></li>
-  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  <li><a href="#how-it-works" id="toc-how-it-works" class="nav-link" data-scroll-target="#how-it-works">How it works</a></li>
+  <li><a href="#honesty" id="toc-honesty" class="nav-link" data-scroll-target="#honesty">Honesty</a></li>
+  <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference">Inference</a></li>
   </ul></li>
-  <li><a href="#what-does-iv-actually-estimate" id="toc-what-does-iv-actually-estimate" class="nav-link" data-scroll-target="#what-does-iv-actually-estimate">What does IV actually estimate?</a></li>
-  <li><a href="#in-stata" id="toc-in-stata" class="nav-link" data-scroll-target="#in-stata">In Stata</a></li>
-  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
+  <li><a href="#the-r-learner-and-other-meta-learners" id="toc-the-r-learner-and-other-meta-learners" class="nav-link" data-scroll-target="#the-r-learner-and-other-meta-learners">The R-learner and other meta-learners</a>
+  <ul class="collapse">
+  <li><a href="#t-learner" id="toc-t-learner" class="nav-link" data-scroll-target="#t-learner">T-learner</a></li>
+  <li><a href="#s-learner" id="toc-s-learner" class="nav-link" data-scroll-target="#s-learner">S-learner</a></li>
+  <li><a href="#r-learner-robinson-1988-nie-and-wager-2021" id="toc-r-learner-robinson-1988-nie-and-wager-2021" class="nav-link" data-scroll-target="#r-learner-robinson-1988-nie-and-wager-2021">R-learner (Robinson, 1988; Nie and Wager, 2021)</a></li>
+  </ul></li>
+  <li><a href="#what-heterogeneity-analysis-can-and-cannot-do" id="toc-what-heterogeneity-analysis-can-and-cannot-do" class="nav-link" data-scroll-target="#what-heterogeneity-analysis-can-and-cannot-do">What heterogeneity analysis can and cannot do</a></li>
+  <li><a href="#connecting-to-the-course" id="toc-connecting-to-the-course" class="nav-link" data-scroll-target="#connecting-to-the-course">Connecting to the course</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Methods</a></li><li class="breadcrumb-item"><a href="./iv.html">Instrumental Variables</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./double-debiased-ml.html">Causal Machine Learning</a></li><li class="breadcrumb-item"><a href="./heterogeneous-effects.html">Heterogeneous Treatment Effects</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Instrumental Variables</h1>
+<h1 class="title">Heterogeneous Treatment Effects</h1>
 </div>
 
 
@@ -379,229 +343,158 @@ window.Quarto = {
 </header>
 
 
-<section id="the-idea" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>You want the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>, but <span class="math inline">\(X\)</span> is <strong>endogenous</strong> — correlated with the error term because of confounding, reverse causality, or measurement error. OLS is biased.</p>
-<p>The fix: find a variable <span class="math inline">\(Z\)</span> (the <strong>instrument</strong>) that:</p>
-<ol type="1">
-<li><strong>Relevance:</strong> <span class="math inline">\(Z\)</span> is correlated with <span class="math inline">\(X\)</span> — it actually moves <span class="math inline">\(X\)</span></li>
-<li><strong>Exclusion restriction:</strong> <span class="math inline">\(Z\)</span> affects <span class="math inline">\(Y\)</span> <em>only through</em> <span class="math inline">\(X\)</span> — no back doors</li>
-</ol>
-<p><span class="math display">\[Z \to X \to Y\]</span></p>
-<p>If both conditions hold, you can use <span class="math inline">\(Z\)</span> to isolate the part of <span class="math inline">\(X\)</span> that’s “as good as random” and estimate the causal effect.</p>
-<section id="two-stage-least-squares-2sls" class="level3">
-<h3 class="anchored" data-anchor-id="two-stage-least-squares-2sls">Two-stage least squares (2SLS)</h3>
-<p>The mechanics are simple:</p>
-<p><strong>First stage:</strong> regress <span class="math inline">\(X\)</span> on <span class="math inline">\(Z\)</span> to get predicted values <span class="math inline">\(\hat{X}\)</span></p>
-<p><span class="math display">\[X = \pi_0 + \pi_1 Z + v\]</span></p>
-<p><strong>Second stage:</strong> regress <span class="math inline">\(Y\)</span> on <span class="math inline">\(\hat{X}\)</span> instead of <span class="math inline">\(X\)</span></p>
-<p><span class="math display">\[Y = \beta_0 + \beta_1 \hat{X} + \varepsilon\]</span></p>
-<p>Why does this work? <span class="math inline">\(\hat{X}\)</span> contains only the variation in <span class="math inline">\(X\)</span> that comes from <span class="math inline">\(Z\)</span>. Since <span class="math inline">\(Z\)</span> is exogenous (by assumption), <span class="math inline">\(\hat{X}\)</span> is uncorrelated with the error term. The confounding is gone.</p>
-</section>
-<section id="assumptions" class="level3">
-<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
-<ol type="1">
-<li><strong>Relevance:</strong> <span class="math inline">\(Z\)</span> is correlated with <span class="math inline">\(X\)</span> — the instrument actually moves the endogenous variable. Testable: check the first-stage F-statistic.</li>
-<li><strong>Exclusion restriction:</strong> <span class="math inline">\(Z\)</span> affects <span class="math inline">\(Y\)</span> <em>only through</em> <span class="math inline">\(X\)</span> — no direct effect and no back-door paths. <strong>Not testable</strong> — you argue it.</li>
-<li><strong>Independence:</strong> <span class="math inline">\(Z\)</span> is as good as randomly assigned — uncorrelated with the error term in the outcome equation</li>
-<li><strong>Monotonicity (for LATE):</strong> the instrument moves everyone in the same direction — no “defiers” who do the opposite of what the instrument encourages</li>
-</ol>
-</section>
-<section id="classic-example" class="level3">
-<h3 class="anchored" data-anchor-id="classic-example">Classic example</h3>
-<p><strong>Returns to education.</strong> You want to know if more schooling causes higher earnings. But ability confounds: smarter people get more education <em>and</em> earn more. OLS overstates the return.</p>
-<p>Angrist &amp; Krueger (1991) used <strong>quarter of birth</strong> as an instrument. Because of compulsory schooling laws, people born in Q1 can drop out slightly earlier than Q4 births — so quarter of birth affects education (relevance) but presumably doesn’t affect earnings directly (exclusion).</p>
-</section>
-<section id="when-does-iv-fail" class="level3">
-<h3 class="anchored" data-anchor-id="when-does-iv-fail">When does IV fail?</h3>
+<p>Everything so far has focused on <strong>average</strong> treatment effects — the ATE or ATT from <a href="potential-outcomes.html">Potential Outcomes</a>. But averages can hide enormous variation. A drug that helps most patients and harms a few has a positive ATE, but the few who are harmed would like to know that. A policy that benefits one demographic and hurts another looks mediocre on average.</p>
+<p><strong>Heterogeneous treatment effects</strong> ask: how does the treatment effect vary across individuals or subgroups? The target is the <strong>Conditional Average Treatment Effect (CATE)</strong>:</p>
+<p><span class="math display">\[
+\tau(x) = E[Y(1) - Y(0) \mid X = x]
+\]</span></p>
+<p>This is a function, not a number — it maps covariates to treatment effects.</p>
+<section id="why-cate-is-hard" class="level2">
+<h2 class="anchored" data-anchor-id="why-cate-is-hard">Why CATE is hard</h2>
+<p>Estimating the ATE is already challenging because of the <a href="potential-outcomes.html#the-fundamental-problem-of-causal-inference">fundamental problem of causal inference</a>: you never observe both <span class="math inline">\(Y(1)\)</span> and <span class="math inline">\(Y(0)\)</span> for the same unit. Estimating the CATE is harder because you need to estimate a <em>function</em> — not just a single parameter — from data where the target is never directly observed.</p>
+<p>The standard approach in applied work is <strong>subgroup analysis</strong>: split the data by a covariate (age, gender, income) and estimate the ATE within each subgroup. This works when you have a small number of pre-specified subgroups and large samples within each. It breaks down when:</p>
 <ul>
-<li><strong>Weak instruments:</strong> if <span class="math inline">\(Z\)</span> barely moves <span class="math inline">\(X\)</span>, the first stage is weak and the IV estimate becomes wildly noisy and biased. Rule of thumb: first-stage F-statistic &gt; 10.</li>
-<li><strong>Exclusion restriction violated:</strong> if <span class="math inline">\(Z\)</span> affects <span class="math inline">\(Y\)</span> through channels other than <span class="math inline">\(X\)</span>, the estimate is biased. This assumption is <strong>untestable</strong> — you argue it, you don’t prove it.</li>
+<li>You have many covariates and don’t know which ones matter</li>
+<li>Interactions between covariates drive heterogeneity (e.g., the effect differs for <em>young women</em> vs <em>old men</em>, not just by age or gender alone)</li>
+<li>Sample sizes within subgroups are too small for precise estimation</li>
 </ul>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 620
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
-    }
-    .stats-box b { color: #2c3e50; }
-    .good { color: #27ae60; font-weight: bold; }
-    .bad  { color: #e74c3c; font-weight: bold; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      sliderInput("n", "Sample size:",
-                  min = 100, max = 2000, value = 500, step = 100),
-
-      sliderInput("true_b", "True causal effect of X on Y:",
-                  min = 0, max = 5, value = 2, step = 0.25),
-
-      sliderInput("confound", "Confounding strength:",
-                  min = 0, max = 5, value = 3, step = 0.25),
-
-      sliderInput("inst_str", "Instrument strength:",
-                  min = 0, max = 3, value = 1.5, step = 0.1),
-
-      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
-
-      uiOutput("results")
-    ),
-
-    mainPanel(
-      width = 9,
-      plotOutput("iv_plot", height = "470px")
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  dat &lt;- reactive({
-    input$go
-    n   &lt;- input$n
-    b   &lt;- input$true_b
-    cf  &lt;- input$confound
-    pi1 &lt;- input$inst_str
-
-    # Confounder (unobserved ability)
-    u &lt;- rnorm(n)
-
-    # Instrument
-    z &lt;- rnorm(n)
-
-    # Endogenous regressor: driven by instrument + confounder
-    x &lt;- pi1 * z + cf * u + rnorm(n)
-
-    # Outcome: causal effect of x + confounder
-    y &lt;- b * x + cf * u + rnorm(n)
-
-    # OLS (biased)
-    ols &lt;- lm(y ~ x)
-
-    # 2SLS by hand
-    first &lt;- lm(x ~ z)
-    x_hat &lt;- fitted(first)
-    second &lt;- lm(y ~ x_hat)
-
-    # First-stage F
-    f_stat &lt;- summary(first)$fstatistic[1]
-
-    list(x = x, y = y, z = z, x_hat = x_hat,
-         b_ols = coef(ols)[2],
-         b_iv = coef(second)[2],
-         first_coef = coef(first)[2],
-         f_stat = f_stat,
-         true_b = b, confound = cf, inst_str = pi1)
-  })
-
-  output$iv_plot &lt;- renderPlot({
-    d &lt;- dat()
-    par(mfrow = c(1, 2), mar = c(4.5, 4.5, 3, 1))
-
-    # Left: OLS scatter (X vs Y)
-    plot(d$x, d$y, pch = 16, cex = 0.4,
-         col = adjustcolor("#3498db", 0.3),
-         xlab = "X (endogenous)", ylab = "Y",
-         main = "OLS: Y on X")
-    abline(lm(d$y ~ d$x), col = "#e74c3c", lwd = 3)
-    abline(a = 0, b = d$true_b, col = "#27ae60", lwd = 2, lty = 2)
-    legend("topleft", bty = "n", cex = 0.85,
-           legend = c(paste0("OLS = ", round(d$b_ols, 2)),
-                      paste0("True = ", d$true_b)),
-           col = c("#e74c3c", "#27ae60"), lwd = c(3, 2), lty = c(1, 2))
-
-    # Right: IV scatter (X-hat vs Y)
-    plot(d$x_hat, d$y, pch = 16, cex = 0.4,
-         col = adjustcolor("#9b59b6", 0.3),
-         xlab = expression(hat(X) ~ "(from first stage)"), ylab = "Y",
-         main = expression("2SLS: Y on " * hat(X)))
-    abline(lm(d$y ~ d$x_hat), col = "#e74c3c", lwd = 3)
-    abline(a = 0, b = d$true_b, col = "#27ae60", lwd = 2, lty = 2)
-    legend("topleft", bty = "n", cex = 0.85,
-           legend = c(paste0("IV = ", round(d$b_iv, 2)),
-                      paste0("True = ", d$true_b)),
-           col = c("#e74c3c", "#27ae60"), lwd = c(3, 2), lty = c(1, 2))
-  })
-
-  output$results &lt;- renderUI({
-    d &lt;- dat()
-    ols_bias &lt;- d$b_ols - d$true_b
-    iv_bias  &lt;- d$b_iv - d$true_b
-    weak &lt;- d$f_stat &lt; 10
-
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;True effect:&lt;/b&gt; ", d$true_b, "&lt;br&gt;",
-        "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;b&gt;OLS:&lt;/b&gt; ", round(d$b_ols, 3),
-        " &amp;nbsp; Bias: &lt;span class='bad'&gt;", round(ols_bias, 3), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;b&gt;IV (2SLS):&lt;/b&gt; ", round(d$b_iv, 3),
-        " &amp;nbsp; Bias: &lt;span class='", ifelse(abs(iv_bias) &lt; abs(ols_bias), "good", "bad"), "'&gt;",
-        round(iv_bias, 3), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;b&gt;First-stage F:&lt;/b&gt; ", round(d$f_stat, 1),
-        if (weak) " &lt;span class='bad'&gt;&amp;lt; 10 (weak!)&lt;/span&gt;"
-        else " &lt;span class='good'&gt;&amp;ge; 10&lt;/span&gt;"
-      ))
-    )
-  })
-}
-
-shinyApp(ui, server)</code></pre>
+<p>This is where machine learning helps — not by changing the identification problem, but by providing flexible estimators for the CATE function.</p>
 </section>
-<section id="things-to-try" class="level3">
-<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<section id="causal-forests" class="level2">
+<h2 class="anchored" data-anchor-id="causal-forests">Causal forests</h2>
+<p><strong>Causal forests</strong> (Wager and Athey, 2018) adapt random forests to estimate <span class="math inline">\(\tau(x)\)</span> directly. The key idea: instead of splitting to predict the outcome <span class="math inline">\(Y\)</span>, split to maximize the <strong>heterogeneity in treatment effects</strong> across the resulting subgroups.</p>
+<section id="how-it-works" class="level3">
+<h3 class="anchored" data-anchor-id="how-it-works">How it works</h3>
+<ol type="1">
+<li>For each tree, draw a subsample (honesty splitting — see below)</li>
+<li>At each node, find the covariate split that maximizes the difference in treatment effects between the two child nodes</li>
+<li>Within each terminal leaf, estimate the treatment effect by comparing treated and control outcomes (a local difference in means)</li>
+<li>Average predictions across all trees in the forest</li>
+</ol>
+<p>The forest produces an estimate <span class="math inline">\(\hat{\tau}(x)\)</span> for any covariate vector <span class="math inline">\(x\)</span> — a personalized treatment effect prediction.</p>
+</section>
+<section id="honesty" class="level3">
+<h3 class="anchored" data-anchor-id="honesty">Honesty</h3>
+<p>A critical innovation. Each tree uses one subsample to determine the splits (the tree structure) and a separate subsample to estimate the treatment effects within leaves. This prevents overfitting: the splits are chosen to find heterogeneity, but the effect estimates are uncontaminated by this search.</p>
+<p>This is the same logic as <strong>cross-fitting</strong> in <a href="double-debiased-ml.html">DML</a> — separate the model selection step from the estimation step.</p>
+</section>
+<section id="inference" class="level3">
+<h3 class="anchored" data-anchor-id="inference">Inference</h3>
+<p>Causal forests come with valid, asymptotic confidence intervals for <span class="math inline">\(\hat{\tau}(x)\)</span>. The variance is estimated via the jackknife (related to the <a href="../stats-course/bootstrap.html">bootstrap</a>):</p>
+<p><span class="math display">\[
+\hat{\tau}(x) \pm z_{\alpha/2} \cdot \hat{\sigma}(x)
+\]</span></p>
+<p>This is remarkable: a machine learning method with valid frequentist inference. The key is that the forest targets a <em>local</em> parameter (the CATE at a point), and the honesty + subsampling structure ensures regularity.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>What causal forests assume.</strong> The same identification assumptions as any selection-on-observables estimator: <a href="selection-observables.html">unconfoundedness</a> and overlap. The forest does not weaken these requirements — it only provides a flexible estimator for <span class="math inline">\(\tau(x)\)</span> given that identification holds.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="the-r-learner-and-other-meta-learners" class="level2">
+<h2 class="anchored" data-anchor-id="the-r-learner-and-other-meta-learners">The R-learner and other meta-learners</h2>
+<p>Causal forests are one approach to CATE estimation. A broader framework organizes methods by how they decompose the problem:</p>
+<section id="t-learner" class="level3">
+<h3 class="anchored" data-anchor-id="t-learner">T-learner</h3>
+<p>Estimate two separate outcome models — one for treated, one for control — and take the difference:</p>
+<p><span class="math display">\[
+\hat{\tau}(x) = \hat{\mu}_1(x) - \hat{\mu}_0(x)
+\]</span></p>
+<p>Simple, but the two models are fit independently and may not be optimized for estimating the <em>difference</em>.</p>
+</section>
+<section id="s-learner" class="level3">
+<h3 class="anchored" data-anchor-id="s-learner">S-learner</h3>
+<p>Estimate a single model with treatment as a feature:</p>
+<p><span class="math display">\[
+\hat{\mu}(x, d) = \hat{E}[Y \mid X = x, D = d]
+\]</span></p>
+<p>Then <span class="math inline">\(\hat{\tau}(x) = \hat{\mu}(x, 1) - \hat{\mu}(x, 0)\)</span>. The model can capture treatment effect heterogeneity through interactions between <span class="math inline">\(D\)</span> and <span class="math inline">\(X\)</span>. Risk: the model may not prioritize learning the treatment effect if the main effects of <span class="math inline">\(X\)</span> dominate.</p>
+</section>
+<section id="r-learner-robinson-1988-nie-and-wager-2021" class="level3">
+<h3 class="anchored" data-anchor-id="r-learner-robinson-1988-nie-and-wager-2021">R-learner (Robinson, 1988; Nie and Wager, 2021)</h3>
+<p>Residualize both the outcome and treatment on <span class="math inline">\(X\)</span> (as in the partially linear model from <a href="double-debiased-ml.html">DML</a>):</p>
+<p><span class="math display">\[
+\tilde{Y}_i = Y_i - \hat{m}(X_i), \qquad \tilde{D}_i = D_i - \hat{e}(X_i)
+\]</span></p>
+<p>Then estimate <span class="math inline">\(\tau(x)\)</span> by minimizing:</p>
+<p><span class="math display">\[
+\hat{\tau}(\cdot) = \arg\min_\tau \sum_{i=1}^n \left(\tilde{Y}_i - \tau(X_i)\tilde{D}_i\right)^2
+\]</span></p>
+<p>This is <a href="../stats-course/fwl.html">Frisch-Waugh-Lovell</a> generalized to heterogeneous effects. The R-learner is efficient and directly targets the CATE function.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 21%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Meta-learner</th>
+<th style="text-align: left;">Models to fit</th>
+<th style="text-align: left;">Strengths</th>
+<th style="text-align: left;">Weaknesses</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">T-learner</td>
+<td style="text-align: left;">Two outcome models</td>
+<td style="text-align: left;">Simple, any ML method</td>
+<td style="text-align: left;">Doesn’t optimize for <span class="math inline">\(\tau\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">S-learner</td>
+<td style="text-align: left;">One outcome model</td>
+<td style="text-align: left;">Uses all data jointly</td>
+<td style="text-align: left;">May underweight treatment heterogeneity</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R-learner</td>
+<td style="text-align: left;">Two nuisance + CATE model</td>
+<td style="text-align: left;">Directly targets <span class="math inline">\(\tau(x)\)</span></td>
+<td style="text-align: left;">More complex to implement</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Causal forest</td>
+<td style="text-align: left;">Forest with effect-splitting</td>
+<td style="text-align: left;">Valid inference, adaptive</td>
+<td style="text-align: left;">Requires unconfoundedness</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="what-heterogeneity-analysis-can-and-cannot-do" class="level2">
+<h2 class="anchored" data-anchor-id="what-heterogeneity-analysis-can-and-cannot-do">What heterogeneity analysis can and cannot do</h2>
+<p><strong>It can:</strong> reveal which subgroups benefit most or least from a treatment, guide targeting of interventions, identify unexpected effect modifiers, and generate hypotheses for future studies.</p>
+<p><strong>It cannot:</strong> fix identification problems. If the ATE is biased by unobserved confounding, the CATE will be biased too — just differently across subgroups. As <a href="identification-estimation.html">Identification vs Estimation</a> emphasizes, the estimator (however flexible) cannot recover what the research design does not identify.</p>
+<p><strong>It requires caution about multiple testing.</strong> Searching over many possible subgroups for heterogeneity is a <a href="../stats-course/multiple-testing.html">multiple testing</a> problem. If you test 100 subgroups, you expect 5 “significant” effects by chance at the 5% level. Pre-specifying subgroups of interest, or using methods with built-in regularization (like causal forests), mitigates this.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Best practice.</strong> Use causal forests or meta-learners to <em>discover</em> potential heterogeneity, then <em>confirm</em> it in a held-out sample or a pre-registered replication. Discovery and confirmation should use different data.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="connecting-to-the-course" class="level2">
+<h2 class="anchored" data-anchor-id="connecting-to-the-course">Connecting to the course</h2>
 <ul>
-<li><strong>Confounding = 3, instrument = 1.5:</strong> OLS is badly biased. IV recovers the true effect. This is the whole point.</li>
-<li><strong>Set confounding = 0:</strong> OLS and IV agree — when there’s no endogeneity, you don’t need an instrument.</li>
-<li><strong>Slide instrument strength toward 0:</strong> the first-stage F drops below 10. The IV estimate becomes erratic — sometimes worse than OLS. That’s the weak instrument problem.</li>
-<li><strong>Increase sample size with a weak instrument:</strong> it doesn’t help much. Weak instruments bias IV toward OLS, and more data doesn’t fix that.</li>
-<li><strong>True effect = 0, confounding = 3:</strong> OLS “finds” a large effect. IV correctly shows ~0.</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="what-does-iv-actually-estimate" class="level2">
-<h2 class="anchored" data-anchor-id="what-does-iv-actually-estimate">What does IV actually estimate?</h2>
-<p>A subtle point: IV doesn’t estimate the effect for everyone. It estimates the <strong>Local Average Treatment Effect (LATE)</strong> — the effect for <strong>compliers</strong>, people whose treatment status is actually changed by the instrument.</p>
-<p>In the Angrist &amp; Krueger example: IV estimates the return to education for people who <em>would have dropped out</em> if born in a different quarter. It says nothing about people who would have stayed in school regardless.</p>
-<p>This means two different valid instruments can give you two different IV estimates — not because one is wrong, but because they’re identifying effects for different subpopulations.</p>
-<hr>
-</section>
-<section id="in-stata" class="level2">
-<h2 class="anchored" data-anchor-id="in-stata">In Stata</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>* Two-stage least squares</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ivregress 2sls outcome x1 <span class="kw">x2</span> (treatment = instrument)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>* First-stage <span class="fu">F</span> statistic (check relevance)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">estat</span> firststage</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>* Overidentification <span class="kw">test</span> (with multiple instruments)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>ivregress 2sls outcome x1 (treatment = inst1 inst2)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">estat</span> overid</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>* Manually <span class="kw">run</span> the <span class="kw">two</span> stages (to see what's happening)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> treatment instrument x1 <span class="kw">x2</span>          <span class="co">/* first stage */</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="kw">predict</span> treatment_hat, <span class="kw">xb</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> outcome treatment_hat x1 <span class="kw">x2</span>         <span class="co">/* second stage */</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The first-stage F should be well above 10 (Staiger &amp; Stock rule of thumb). If it’s weak, the IV estimate is unreliable — possibly more biased than OLS.</p>
-<hr>
-</section>
-<section id="did-you-know" class="level2">
-<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
-<ul>
-<li><p>The instrumental variables method dates back to <strong>Philip Wright (1928)</strong>, who used it to estimate supply and demand curves for butter and flax seed. Some historians credit his son, Sewall Wright, with the actual derivation.</p></li>
-<li><p>The <strong>“weak instruments” problem</strong> was formalized by Staiger &amp; Stock (1997). They showed that when the first-stage F is below 10, IV can be <em>more biased</em> than OLS — the cure becomes worse than the disease.</p></li>
-<li><p>Joshua Angrist, one of the 2021 Nobel laureates, built much of his career on clever instruments: quarter of birth for schooling, draft lottery numbers for military service, religious composition for family size. The art is finding instruments that are both relevant and excludable.</p></li>
+<li><strong><a href="potential-outcomes.html">Potential Outcomes</a>:</strong> defines the CATE as <span class="math inline">\(\tau(x) = E[Y(1) - Y(0) \mid X = x]\)</span></li>
+<li><strong><a href="selection-observables.html">Selection on Observables</a>:</strong> the identification assumption that all methods here rely on</li>
+<li><strong><a href="double-debiased-ml.html">DML</a>:</strong> the R-learner uses DML-style residualization; causal forests use similar cross-fitting logic</li>
+<li><strong><a href="doubly-robust.html">Doubly Robust</a>:</strong> the AIPW score can be extended to target CATE instead of ATE</li>
+<li><strong><a href="../stats-course/multiple-testing.html">Multiple Testing</a>:</strong> subgroup analysis without correction is a multiple testing problem</li>
 </ul>
 
 

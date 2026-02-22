@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Instrumental Variables – Applied Causal Inference</title>
+<title>Double/Debiased Machine Learning – Applied Causal Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -76,11 +41,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -151,7 +111,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Methods</a></li><li class="breadcrumb-item"><a href="./iv.html">Instrumental Variables</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./double-debiased-ml.html">Causal Machine Learning</a></li><li class="breadcrumb-item"><a href="./double-debiased-ml.html">Double/Debiased ML</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -228,7 +188,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iv.html" class="sidebar-item-text sidebar-link active">
+  <a href="./iv.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Instrumental Variables</span></a>
   </div>
 </li>
@@ -315,7 +275,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./double-debiased-ml.html" class="sidebar-item-text sidebar-link">
+  <a href="./double-debiased-ml.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Double/Debiased ML</span></a>
   </div>
 </li>
@@ -343,26 +303,24 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
+  <li><a href="#the-problem-with-naively-plugging-in-ml" id="toc-the-problem-with-naively-plugging-in-ml" class="nav-link active" data-scroll-target="#the-problem-with-naively-plugging-in-ml">The problem with naively plugging in ML</a></li>
+  <li><a href="#the-dml-solution-neyman-orthogonality-cross-fitting" id="toc-the-dml-solution-neyman-orthogonality-cross-fitting" class="nav-link" data-scroll-target="#the-dml-solution-neyman-orthogonality-cross-fitting">The DML solution: Neyman orthogonality + cross-fitting</a>
   <ul class="collapse">
-  <li><a href="#two-stage-least-squares-2sls" id="toc-two-stage-least-squares-2sls" class="nav-link" data-scroll-target="#two-stage-least-squares-2sls">Two-stage least squares (2SLS)</a></li>
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
-  <li><a href="#classic-example" id="toc-classic-example" class="nav-link" data-scroll-target="#classic-example">Classic example</a></li>
-  <li><a href="#when-does-iv-fail" id="toc-when-does-iv-fail" class="nav-link" data-scroll-target="#when-does-iv-fail">When does IV fail?</a></li>
-  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  <li><a href="#ingredient-1-neyman-orthogonal-scores" id="toc-ingredient-1-neyman-orthogonal-scores" class="nav-link" data-scroll-target="#ingredient-1-neyman-orthogonal-scores">Ingredient 1: Neyman orthogonal scores</a></li>
+  <li><a href="#ingredient-2-cross-fitting" id="toc-ingredient-2-cross-fitting" class="nav-link" data-scroll-target="#ingredient-2-cross-fitting">Ingredient 2: Cross-fitting</a></li>
   </ul></li>
-  <li><a href="#what-does-iv-actually-estimate" id="toc-what-does-iv-actually-estimate" class="nav-link" data-scroll-target="#what-does-iv-actually-estimate">What does IV actually estimate?</a></li>
-  <li><a href="#in-stata" id="toc-in-stata" class="nav-link" data-scroll-target="#in-stata">In Stata</a></li>
-  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
+  <li><a href="#the-partially-linear-model" id="toc-the-partially-linear-model" class="nav-link" data-scroll-target="#the-partially-linear-model">The partially linear model</a></li>
+  <li><a href="#what-dml-assumes" id="toc-what-dml-assumes" class="nav-link" data-scroll-target="#what-dml-assumes">What DML assumes</a></li>
+  <li><a href="#connecting-to-the-course" id="toc-connecting-to-the-course" class="nav-link" data-scroll-target="#connecting-to-the-course">Connecting to the course</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Methods</a></li><li class="breadcrumb-item"><a href="./iv.html">Instrumental Variables</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./double-debiased-ml.html">Causal Machine Learning</a></li><li class="breadcrumb-item"><a href="./double-debiased-ml.html">Double/Debiased ML</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Instrumental Variables</h1>
+<h1 class="title">Double/Debiased Machine Learning</h1>
 </div>
 
 
@@ -379,229 +337,110 @@ window.Quarto = {
 </header>
 
 
-<section id="the-idea" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>You want the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>, but <span class="math inline">\(X\)</span> is <strong>endogenous</strong> — correlated with the error term because of confounding, reverse causality, or measurement error. OLS is biased.</p>
-<p>The fix: find a variable <span class="math inline">\(Z\)</span> (the <strong>instrument</strong>) that:</p>
+<p><a href="doubly-robust.html">Doubly robust estimation</a> showed that combining an outcome model with a propensity score model gives you two shots at consistency. But both models were specified parametrically — linear regression for the outcome, logit for the propensity score. What if you want to use machine learning for these nuisance functions? The answer is not as simple as “plug in a random forest.”</p>
+<section id="the-problem-with-naively-plugging-in-ml" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem-with-naively-plugging-in-ml">The problem with naively plugging in ML</h2>
+<p>Suppose you want to estimate the ATE under <a href="selection-observables.html">selection on observables</a>:</p>
+<p><span class="math display">\[
+\tau = E[Y(1) - Y(0)]
+\]</span></p>
+<p>You need two nuisance functions: the outcome model <span class="math inline">\(\mu_d(X) = E[Y \mid X, D=d]\)</span> and the propensity score <span class="math inline">\(e(X) = P(D=1 \mid X)\)</span>. The AIPW estimator from the <a href="doubly-robust.html">doubly robust page</a> uses both:</p>
+<p><span class="math display">\[
+\hat{\tau}_{DR} = \frac{1}{n}\sum_{i=1}^n \left[\hat{\mu}_1(X_i) - \hat{\mu}_0(X_i) + \frac{D_i(Y_i - \hat{\mu}_1(X_i))}{\hat{e}(X_i)} - \frac{(1-D_i)(Y_i - \hat{\mu}_0(X_i))}{1 - \hat{e}(X_i)}\right]
+\]</span></p>
+<p>If you estimate <span class="math inline">\(\hat{\mu}\)</span> and <span class="math inline">\(\hat{e}\)</span> with OLS and logit, standard asymptotic theory gives you <span class="math inline">\(\sqrt{n}\)</span>-consistent inference on <span class="math inline">\(\hat{\tau}\)</span>. But if you estimate them with a random forest, lasso, or neural network, the standard theory breaks down. The problem is <strong>regularization bias</strong>: ML estimators are biased (they trade bias for variance — the <a href="../stats-course/bias-variance.html">bias-variance tradeoff</a>), and this bias contaminates the estimate of <span class="math inline">\(\tau\)</span>.</p>
+<p>Concretely, the bias of <span class="math inline">\(\hat{\tau}\)</span> depends on the product of the biases of <span class="math inline">\(\hat{\mu}\)</span> and <span class="math inline">\(\hat{e}\)</span>:</p>
+<p><span class="math display">\[
+\text{Bias}(\hat{\tau}) \approx \text{Bias}(\hat{\mu}) \times \text{Bias}(\hat{e})
+\]</span></p>
+<p>For parametric models with <span class="math inline">\(\sqrt{n}\)</span> convergence, both biases are <span class="math inline">\(O(1/\sqrt{n})\)</span>, so the product is <span class="math inline">\(O(1/n)\)</span> — negligible. But ML estimators typically converge slower than <span class="math inline">\(\sqrt{n}\)</span>, and the bias product can be large enough to distort inference.</p>
+</section>
+<section id="the-dml-solution-neyman-orthogonality-cross-fitting" class="level2">
+<h2 class="anchored" data-anchor-id="the-dml-solution-neyman-orthogonality-cross-fitting">The DML solution: Neyman orthogonality + cross-fitting</h2>
+<p>Chernozhukov, Chetverikov, Demirer, Duflo, Hansen, Newey, and Robins (2018) showed that two ingredients fix this problem.</p>
+<section id="ingredient-1-neyman-orthogonal-scores" class="level3">
+<h3 class="anchored" data-anchor-id="ingredient-1-neyman-orthogonal-scores">Ingredient 1: Neyman orthogonal scores</h3>
+<p>Use an estimating equation (a “score”) whose expectation is <strong>insensitive to small perturbations in the nuisance functions</strong>. The AIPW score from <a href="doubly-robust.html">doubly robust estimation</a> has this property — it is <em>Neyman orthogonal</em>:</p>
+<p><span class="math display">\[
+\psi(Y, D, X; \tau, \mu, e) = \hat{\mu}_1(X) - \hat{\mu}_0(X) + \frac{D(Y - \hat{\mu}_1(X))}{e(X)} - \frac{(1-D)(Y - \hat{\mu}_0(X))}{1 - e(X)} - \tau
+\]</span></p>
+<p>The Neyman orthogonality condition means that the derivative of <span class="math inline">\(E[\psi]\)</span> with respect to the nuisance functions <span class="math inline">\((\mu, e)\)</span> is zero at the true values. Intuitively, the score is “locally robust” to errors in the nuisance estimates — first-order mistakes in <span class="math inline">\(\hat{\mu}\)</span> and <span class="math inline">\(\hat{e}\)</span> don’t affect <span class="math inline">\(\hat{\tau}\)</span>.</p>
+<p>This is what “debiased” means. The AIPW structure removes the first-order bias from the nuisance estimation. What remains is the product of biases — which is second-order.</p>
+</section>
+<section id="ingredient-2-cross-fitting" class="level3">
+<h3 class="anchored" data-anchor-id="ingredient-2-cross-fitting">Ingredient 2: Cross-fitting</h3>
+<p>Even with an orthogonal score, using the same data to estimate nuisance functions and the causal parameter creates an <strong>overfitting bias</strong>. ML estimators can overfit in subtle ways that parametric models don’t, and this leaks into <span class="math inline">\(\hat{\tau}\)</span>.</p>
+<p>The fix is <strong>cross-fitting</strong> — a form of sample splitting:</p>
 <ol type="1">
-<li><strong>Relevance:</strong> <span class="math inline">\(Z\)</span> is correlated with <span class="math inline">\(X\)</span> — it actually moves <span class="math inline">\(X\)</span></li>
-<li><strong>Exclusion restriction:</strong> <span class="math inline">\(Z\)</span> affects <span class="math inline">\(Y\)</span> <em>only through</em> <span class="math inline">\(X\)</span> — no back doors</li>
+<li>Split the data into <span class="math inline">\(K\)</span> folds (typically <span class="math inline">\(K = 5\)</span>)</li>
+<li>For each fold <span class="math inline">\(k\)</span>:
+<ul>
+<li>Estimate <span class="math inline">\(\hat{\mu}\)</span> and <span class="math inline">\(\hat{e}\)</span> using data <strong>outside</strong> fold <span class="math inline">\(k\)</span></li>
+<li>Compute the score <span class="math inline">\(\psi_i\)</span> for observations <strong>inside</strong> fold <span class="math inline">\(k\)</span></li>
+</ul></li>
+<li>Average all scores: <span class="math inline">\(\hat{\tau} = \frac{1}{n}\sum_{i=1}^n \psi_i\)</span></li>
 </ol>
-<p><span class="math display">\[Z \to X \to Y\]</span></p>
-<p>If both conditions hold, you can use <span class="math inline">\(Z\)</span> to isolate the part of <span class="math inline">\(X\)</span> that’s “as good as random” and estimate the causal effect.</p>
-<section id="two-stage-least-squares-2sls" class="level3">
-<h3 class="anchored" data-anchor-id="two-stage-least-squares-2sls">Two-stage least squares (2SLS)</h3>
-<p>The mechanics are simple:</p>
-<p><strong>First stage:</strong> regress <span class="math inline">\(X\)</span> on <span class="math inline">\(Z\)</span> to get predicted values <span class="math inline">\(\hat{X}\)</span></p>
-<p><span class="math display">\[X = \pi_0 + \pi_1 Z + v\]</span></p>
-<p><strong>Second stage:</strong> regress <span class="math inline">\(Y\)</span> on <span class="math inline">\(\hat{X}\)</span> instead of <span class="math inline">\(X\)</span></p>
-<p><span class="math display">\[Y = \beta_0 + \beta_1 \hat{X} + \varepsilon\]</span></p>
-<p>Why does this work? <span class="math inline">\(\hat{X}\)</span> contains only the variation in <span class="math inline">\(X\)</span> that comes from <span class="math inline">\(Z\)</span>. Since <span class="math inline">\(Z\)</span> is exogenous (by assumption), <span class="math inline">\(\hat{X}\)</span> is uncorrelated with the error term. The confounding is gone.</p>
+<p>This ensures the nuisance estimates are never evaluated on the same data used to construct them. Cross-fitting eliminates the overfitting bias while using all data for both nuisance estimation and causal estimation (unlike simple sample splitting, which wastes half the data).</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>The DML recipe.</strong> (1) Choose a Neyman orthogonal score — AIPW for the ATE, the partially linear model score for a coefficient. (2) Estimate nuisance functions with any ML method, using cross-fitting. (3) Compute the causal parameter from the averaged scores. (4) Standard errors from the variance of the scores: <span class="math inline">\(\widehat{\text{Var}}(\hat{\tau}) = \frac{1}{n^2}\sum_i \hat{\psi}_i^2\)</span>.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="assumptions" class="level3">
-<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
+</section>
+<section id="the-partially-linear-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-partially-linear-model">The partially linear model</h2>
+<p>A common DML application. Suppose the model is:</p>
+<p><span class="math display">\[
+Y_i = \tau D_i + g(X_i) + \varepsilon_i
+\]</span></p>
+<p>where <span class="math inline">\(g(X_i)\)</span> is a potentially complex function of high-dimensional controls. You want <span class="math inline">\(\tau\)</span> — the treatment effect — but <span class="math inline">\(g\)</span> is a nuisance function.</p>
+<p>The DML approach:</p>
 <ol type="1">
-<li><strong>Relevance:</strong> <span class="math inline">\(Z\)</span> is correlated with <span class="math inline">\(X\)</span> — the instrument actually moves the endogenous variable. Testable: check the first-stage F-statistic.</li>
-<li><strong>Exclusion restriction:</strong> <span class="math inline">\(Z\)</span> affects <span class="math inline">\(Y\)</span> <em>only through</em> <span class="math inline">\(X\)</span> — no direct effect and no back-door paths. <strong>Not testable</strong> — you argue it.</li>
-<li><strong>Independence:</strong> <span class="math inline">\(Z\)</span> is as good as randomly assigned — uncorrelated with the error term in the outcome equation</li>
-<li><strong>Monotonicity (for LATE):</strong> the instrument moves everyone in the same direction — no “defiers” who do the opposite of what the instrument encourages</li>
+<li>Use ML to estimate <span class="math inline">\(\hat{g}(X) \approx E[Y \mid X]\)</span> and <span class="math inline">\(\hat{m}(X) \approx E[D \mid X]\)</span> via cross-fitting</li>
+<li>Compute residuals: <span class="math inline">\(\tilde{Y}_i = Y_i - \hat{g}(X_i)\)</span> and <span class="math inline">\(\tilde{D}_i = D_i - \hat{m}(X_i)\)</span></li>
+<li>Regress <span class="math inline">\(\tilde{Y}\)</span> on <span class="math inline">\(\tilde{D}\)</span> to get <span class="math inline">\(\hat{\tau}\)</span></li>
 </ol>
+<p>This is <a href="../stats-course/fwl.html">Frisch-Waugh-Lovell</a> with ML residualization. Instead of controlling for <span class="math inline">\(X\)</span> linearly, you partial it out flexibly. The treatment effect <span class="math inline">\(\tau\)</span> remains a simple, interpretable parameter — only the nuisance part uses ML.</p>
 </section>
-<section id="classic-example" class="level3">
-<h3 class="anchored" data-anchor-id="classic-example">Classic example</h3>
-<p><strong>Returns to education.</strong> You want to know if more schooling causes higher earnings. But ability confounds: smarter people get more education <em>and</em> earn more. OLS overstates the return.</p>
-<p>Angrist &amp; Krueger (1991) used <strong>quarter of birth</strong> as an instrument. Because of compulsory schooling laws, people born in Q1 can drop out slightly earlier than Q4 births — so quarter of birth affects education (relevance) but presumably doesn’t affect earnings directly (exclusion).</p>
-</section>
-<section id="when-does-iv-fail" class="level3">
-<h3 class="anchored" data-anchor-id="when-does-iv-fail">When does IV fail?</h3>
+<section id="what-dml-assumes" class="level2">
+<h2 class="anchored" data-anchor-id="what-dml-assumes">What DML assumes</h2>
+<p>DML does not weaken the <strong>identification</strong> assumptions. You still need:</p>
 <ul>
-<li><strong>Weak instruments:</strong> if <span class="math inline">\(Z\)</span> barely moves <span class="math inline">\(X\)</span>, the first stage is weak and the IV estimate becomes wildly noisy and biased. Rule of thumb: first-stage F-statistic &gt; 10.</li>
-<li><strong>Exclusion restriction violated:</strong> if <span class="math inline">\(Z\)</span> affects <span class="math inline">\(Y\)</span> through channels other than <span class="math inline">\(X\)</span>, the estimate is biased. This assumption is <strong>untestable</strong> — you argue it, you don’t prove it.</li>
+<li><a href="selection-observables.html">Selection on observables</a>: <span class="math inline">\(Y(0), Y(1) \perp D \mid X\)</span></li>
+<li>Overlap: <span class="math inline">\(0 &lt; P(D=1 \mid X) &lt; 1\)</span> for all <span class="math inline">\(X\)</span></li>
+<li>SUTVA and consistency from <a href="potential-outcomes.html">Potential Outcomes</a></li>
 </ul>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 620
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
-    }
-    .stats-box b { color: #2c3e50; }
-    .good { color: #27ae60; font-weight: bold; }
-    .bad  { color: #e74c3c; font-weight: bold; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      sliderInput("n", "Sample size:",
-                  min = 100, max = 2000, value = 500, step = 100),
-
-      sliderInput("true_b", "True causal effect of X on Y:",
-                  min = 0, max = 5, value = 2, step = 0.25),
-
-      sliderInput("confound", "Confounding strength:",
-                  min = 0, max = 5, value = 3, step = 0.25),
-
-      sliderInput("inst_str", "Instrument strength:",
-                  min = 0, max = 3, value = 1.5, step = 0.1),
-
-      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
-
-      uiOutput("results")
-    ),
-
-    mainPanel(
-      width = 9,
-      plotOutput("iv_plot", height = "470px")
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  dat &lt;- reactive({
-    input$go
-    n   &lt;- input$n
-    b   &lt;- input$true_b
-    cf  &lt;- input$confound
-    pi1 &lt;- input$inst_str
-
-    # Confounder (unobserved ability)
-    u &lt;- rnorm(n)
-
-    # Instrument
-    z &lt;- rnorm(n)
-
-    # Endogenous regressor: driven by instrument + confounder
-    x &lt;- pi1 * z + cf * u + rnorm(n)
-
-    # Outcome: causal effect of x + confounder
-    y &lt;- b * x + cf * u + rnorm(n)
-
-    # OLS (biased)
-    ols &lt;- lm(y ~ x)
-
-    # 2SLS by hand
-    first &lt;- lm(x ~ z)
-    x_hat &lt;- fitted(first)
-    second &lt;- lm(y ~ x_hat)
-
-    # First-stage F
-    f_stat &lt;- summary(first)$fstatistic[1]
-
-    list(x = x, y = y, z = z, x_hat = x_hat,
-         b_ols = coef(ols)[2],
-         b_iv = coef(second)[2],
-         first_coef = coef(first)[2],
-         f_stat = f_stat,
-         true_b = b, confound = cf, inst_str = pi1)
-  })
-
-  output$iv_plot &lt;- renderPlot({
-    d &lt;- dat()
-    par(mfrow = c(1, 2), mar = c(4.5, 4.5, 3, 1))
-
-    # Left: OLS scatter (X vs Y)
-    plot(d$x, d$y, pch = 16, cex = 0.4,
-         col = adjustcolor("#3498db", 0.3),
-         xlab = "X (endogenous)", ylab = "Y",
-         main = "OLS: Y on X")
-    abline(lm(d$y ~ d$x), col = "#e74c3c", lwd = 3)
-    abline(a = 0, b = d$true_b, col = "#27ae60", lwd = 2, lty = 2)
-    legend("topleft", bty = "n", cex = 0.85,
-           legend = c(paste0("OLS = ", round(d$b_ols, 2)),
-                      paste0("True = ", d$true_b)),
-           col = c("#e74c3c", "#27ae60"), lwd = c(3, 2), lty = c(1, 2))
-
-    # Right: IV scatter (X-hat vs Y)
-    plot(d$x_hat, d$y, pch = 16, cex = 0.4,
-         col = adjustcolor("#9b59b6", 0.3),
-         xlab = expression(hat(X) ~ "(from first stage)"), ylab = "Y",
-         main = expression("2SLS: Y on " * hat(X)))
-    abline(lm(d$y ~ d$x_hat), col = "#e74c3c", lwd = 3)
-    abline(a = 0, b = d$true_b, col = "#27ae60", lwd = 2, lty = 2)
-    legend("topleft", bty = "n", cex = 0.85,
-           legend = c(paste0("IV = ", round(d$b_iv, 2)),
-                      paste0("True = ", d$true_b)),
-           col = c("#e74c3c", "#27ae60"), lwd = c(3, 2), lty = c(1, 2))
-  })
-
-  output$results &lt;- renderUI({
-    d &lt;- dat()
-    ols_bias &lt;- d$b_ols - d$true_b
-    iv_bias  &lt;- d$b_iv - d$true_b
-    weak &lt;- d$f_stat &lt; 10
-
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;True effect:&lt;/b&gt; ", d$true_b, "&lt;br&gt;",
-        "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;b&gt;OLS:&lt;/b&gt; ", round(d$b_ols, 3),
-        " &amp;nbsp; Bias: &lt;span class='bad'&gt;", round(ols_bias, 3), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;b&gt;IV (2SLS):&lt;/b&gt; ", round(d$b_iv, 3),
-        " &amp;nbsp; Bias: &lt;span class='", ifelse(abs(iv_bias) &lt; abs(ols_bias), "good", "bad"), "'&gt;",
-        round(iv_bias, 3), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;b&gt;First-stage F:&lt;/b&gt; ", round(d$f_stat, 1),
-        if (weak) " &lt;span class='bad'&gt;&amp;lt; 10 (weak!)&lt;/span&gt;"
-        else " &lt;span class='good'&gt;&amp;ge; 10&lt;/span&gt;"
-      ))
-    )
-  })
-}
-
-shinyApp(ui, server)</code></pre>
-</section>
-<section id="things-to-try" class="level3">
-<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<p>What DML relaxes are the <strong>estimation</strong> assumptions:</p>
 <ul>
-<li><strong>Confounding = 3, instrument = 1.5:</strong> OLS is badly biased. IV recovers the true effect. This is the whole point.</li>
-<li><strong>Set confounding = 0:</strong> OLS and IV agree — when there’s no endogeneity, you don’t need an instrument.</li>
-<li><strong>Slide instrument strength toward 0:</strong> the first-stage F drops below 10. The IV estimate becomes erratic — sometimes worse than OLS. That’s the weak instrument problem.</li>
-<li><strong>Increase sample size with a weak instrument:</strong> it doesn’t help much. Weak instruments bias IV toward OLS, and more data doesn’t fix that.</li>
-<li><strong>True effect = 0, confounding = 3:</strong> OLS “finds” a large effect. IV correctly shows ~0.</li>
+<li>The nuisance functions <span class="math inline">\(\mu(X)\)</span> and <span class="math inline">\(e(X)\)</span> can be nonparametric — estimated by lasso, random forest, boosting, neural network, or any method</li>
+<li>The nuisance estimators need to converge at rate <span class="math inline">\(n^{-1/4}\)</span> (not <span class="math inline">\(n^{-1/2}\)</span>) — a much weaker requirement that many ML methods satisfy</li>
+<li>No need to correctly specify a parametric model for <span class="math inline">\(\mu\)</span> or <span class="math inline">\(e\)</span></li>
 </ul>
-<hr>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>The key distinction.</strong> DML separates the causal problem (identification) from the statistical problem (nuisance estimation). Identification comes from the research design — the argument for why treatment is as-good-as-random conditional on <span class="math inline">\(X\)</span>. ML handles the high-dimensional, potentially nonlinear adjustment for <span class="math inline">\(X\)</span>. These are complementary, not substitutes. As noted in <a href="identification-estimation.html">Identification vs Estimation</a>: identification comes first, and no estimator — parametric or ML — can fix a failure of identification.</p>
+</div>
+</div>
+</div>
 </section>
-</section>
-<section id="what-does-iv-actually-estimate" class="level2">
-<h2 class="anchored" data-anchor-id="what-does-iv-actually-estimate">What does IV actually estimate?</h2>
-<p>A subtle point: IV doesn’t estimate the effect for everyone. It estimates the <strong>Local Average Treatment Effect (LATE)</strong> — the effect for <strong>compliers</strong>, people whose treatment status is actually changed by the instrument.</p>
-<p>In the Angrist &amp; Krueger example: IV estimates the return to education for people who <em>would have dropped out</em> if born in a different quarter. It says nothing about people who would have stayed in school regardless.</p>
-<p>This means two different valid instruments can give you two different IV estimates — not because one is wrong, but because they’re identifying effects for different subpopulations.</p>
-<hr>
-</section>
-<section id="in-stata" class="level2">
-<h2 class="anchored" data-anchor-id="in-stata">In Stata</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>* Two-stage least squares</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ivregress 2sls outcome x1 <span class="kw">x2</span> (treatment = instrument)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>* First-stage <span class="fu">F</span> statistic (check relevance)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">estat</span> firststage</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>* Overidentification <span class="kw">test</span> (with multiple instruments)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>ivregress 2sls outcome x1 (treatment = inst1 inst2)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">estat</span> overid</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>* Manually <span class="kw">run</span> the <span class="kw">two</span> stages (to see what's happening)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> treatment instrument x1 <span class="kw">x2</span>          <span class="co">/* first stage */</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="kw">predict</span> treatment_hat, <span class="kw">xb</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> outcome treatment_hat x1 <span class="kw">x2</span>         <span class="co">/* second stage */</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The first-stage F should be well above 10 (Staiger &amp; Stock rule of thumb). If it’s weak, the IV estimate is unreliable — possibly more biased than OLS.</p>
-<hr>
-</section>
-<section id="did-you-know" class="level2">
-<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
+<section id="connecting-to-the-course" class="level2">
+<h2 class="anchored" data-anchor-id="connecting-to-the-course">Connecting to the course</h2>
+<p>DML builds directly on several pages:</p>
 <ul>
-<li><p>The instrumental variables method dates back to <strong>Philip Wright (1928)</strong>, who used it to estimate supply and demand curves for butter and flax seed. Some historians credit his son, Sewall Wright, with the actual derivation.</p></li>
-<li><p>The <strong>“weak instruments” problem</strong> was formalized by Staiger &amp; Stock (1997). They showed that when the first-stage F is below 10, IV can be <em>more biased</em> than OLS — the cure becomes worse than the disease.</p></li>
-<li><p>Joshua Angrist, one of the 2021 Nobel laureates, built much of his career on clever instruments: quarter of birth for schooling, draft lottery numbers for military service, religious composition for family size. The art is finding instruments that are both relevant and excludable.</p></li>
+<li><strong><a href="doubly-robust.html">Doubly robust estimation</a></strong>: the AIPW estimator is the score function that DML uses. DML adds cross-fitting and ML nuisance estimation.</li>
+<li><strong><a href="ipw.html">IPW</a></strong>: the propensity score <span class="math inline">\(e(X)\)</span> can now be estimated flexibly instead of by logit.</li>
+<li><strong><a href="../stats-course/fwl.html">FWL</a></strong>: the partially linear model is FWL with ML residualization.</li>
+<li><strong><a href="identification-estimation.html">Identification vs Estimation</a></strong>: DML is the clearest example of this separation — ML for estimation, research design for identification.</li>
 </ul>
 
 

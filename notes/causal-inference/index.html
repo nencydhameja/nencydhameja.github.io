@@ -235,6 +235,35 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Causal Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./double-debiased-ml.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Double/Debiased ML</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./heterogeneous-effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Heterogeneous Treatment Effects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./when-ml-helps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">When ML Helps and When It Doesn’t</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -249,6 +278,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
   <li><a href="#panel-data" id="toc-panel-data" class="nav-link" data-scroll-target="#panel-data">Panel Data</a></li>
   <li><a href="#estimation-tools" id="toc-estimation-tools" class="nav-link" data-scroll-target="#estimation-tools">Estimation Tools</a></li>
+  <li><a href="#causal-machine-learning" id="toc-causal-machine-learning" class="nav-link" data-scroll-target="#causal-machine-learning">Causal Machine Learning</a></li>
   </ul>
 </nav>
     </div>
@@ -309,6 +339,15 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="ipw.html">Inverse Probability Weighting</a> — Reweighting to balance treated and control</li>
 <li><a href="entropy-balancing.html">Entropy Balancing</a> — Exact moment balancing without a propensity score model</li>
 <li><a href="doubly-robust.html">Doubly Robust</a> — Combine outcome model + propensity score for double protection</li>
+</ul>
+</section>
+<section id="causal-machine-learning" class="level2">
+<h2 class="anchored" data-anchor-id="causal-machine-learning">Causal Machine Learning</h2>
+<p>Using ML for causal estimation — without confusing prediction with identification.</p>
+<ul>
+<li><a href="double-debiased-ml.html">Double/Debiased ML</a> — Neyman orthogonality, cross-fitting, and ML for nuisance functions</li>
+<li><a href="heterogeneous-effects.html">Heterogeneous Treatment Effects</a> — CATE, causal forests, and meta-learners</li>
+<li><a href="when-ml-helps.html">When ML Helps and When It Doesn’t</a> — The boundary between estimation and identification</li>
 </ul>
 
 
