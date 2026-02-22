@@ -388,7 +388,7 @@
     "href": "index.html#framework",
     "title": "Applied Causal Inference",
     "section": "Framework",
-    "text": "Framework\n\nPotential Outcomes & ATE — The framework behind all causal questions\nIdentification vs Estimation — The distinction that organizes everything",
+    "text": "Framework\n\nPotential Outcomes & ATE — The framework behind all causal questions\nIdentification vs Estimation — The distinction that organizes everything\nWhen ML Helps and When It Doesn’t — The boundary between estimation and identification",
     "crumbs": [
       "Home"
     ]
@@ -418,17 +418,17 @@
     "href": "index.html#estimation-tools",
     "title": "Applied Causal Inference",
     "section": "Estimation Tools",
-    "text": "Estimation Tools\nTools that can be paired with different research designs.\n\nRegression Adjustment — Model the outcome, adjust for confounders\nMatching — Pair treated and control units on covariates\nInverse Probability Weighting — Reweighting to balance treated and control\nEntropy Balancing — Exact moment balancing without a propensity score model\nDoubly Robust — Combine outcome model + propensity score for double protection",
+    "text": "Estimation Tools\nTools that can be paired with different research designs.\n\nRegression Adjustment — Model the outcome, adjust for confounders\nMatching — Pair treated and control units on covariates\nInverse Probability Weighting — Reweighting to balance treated and control\nEntropy Balancing — Exact moment balancing without a propensity score model\nDoubly Robust — Combine outcome model + propensity score for double protection\nDouble/Debiased ML — Doubly robust + cross-fitting + ML nuisance estimation",
     "crumbs": [
       "Home"
     ]
   },
   {
-    "objectID": "index.html#causal-machine-learning",
-    "href": "index.html#causal-machine-learning",
+    "objectID": "index.html#beyond-average-effects",
+    "href": "index.html#beyond-average-effects",
     "title": "Applied Causal Inference",
-    "section": "Causal Machine Learning",
-    "text": "Causal Machine Learning\nUsing ML for causal estimation — without confusing prediction with identification.\n\nDouble/Debiased ML — Neyman orthogonality, cross-fitting, and ML for nuisance functions\nHeterogeneous Treatment Effects — CATE, causal forests, and meta-learners\nWhen ML Helps and When It Doesn’t — The boundary between estimation and identification",
+    "section": "Beyond Average Effects",
+    "text": "Beyond Average Effects\n\nHeterogeneous Treatment Effects — CATE, causal forests, and meta-learners",
     "crumbs": [
       "Home"
     ]
@@ -484,7 +484,7 @@
     "section": "",
     "text": "Machine learning is transforming parts of empirical research. But it is not transforming all parts equally, and understanding where ML helps is as important as knowing the methods. This page draws the boundary.",
     "crumbs": [
-      "Causal Machine Learning",
+      "Framework",
       "When ML Helps and When It Doesn't"
     ]
   },
@@ -495,7 +495,7 @@
     "section": "The separation principle",
     "text": "The separation principle\nIdentification vs Estimation established that every causal study has two components:\n\nIdentification: the argument for why a comparison is causal\nEstimation: the procedure for computing the causal parameter from data\n\nMachine learning helps with estimation. It does not help with identification. This is the separation principle, and it is the single most important idea in causal ML.\n\n\n\n\n\n\n\n\n\nWhat ML improves\nWhat ML does not improve\n\n\n\n\nNuisance estimation\nPropensity scores, outcome models\nThe argument for unconfoundedness\n\n\nFunctional form\nNonlinear, high-dimensional adjustment\nWhether the adjustment variables are sufficient\n\n\nHeterogeneity\nFlexible CATE estimation\nWhether the ATE is identified in the first place\n\n\nPrediction\nOut-of-sample forecasting\nWhether the forecast has a causal interpretation\n\n\n\n\n\n\n\n\n\nThe Manski principle, restated. No estimator — OLS, random forest, neural network, or transformer — can identify a causal parameter that the research design does not identify. Identification is a property of the data-generating process and the assumptions you’re willing to make, not the statistical method you apply. ML makes estimation more flexible; it does not make identification less necessary.",
     "crumbs": [
-      "Causal Machine Learning",
+      "Framework",
       "When ML Helps and When It Doesn't"
     ]
   },
@@ -506,7 +506,7 @@
     "section": "Where ML helps",
     "text": "Where ML helps\n\n1. High-dimensional confounders\nWhen the set of potential confounders is large — dozens or hundreds of variables — traditional methods struggle. You can’t include 200 variables in a logistic regression for the propensity score without overfitting. ML methods (lasso, random forests, boosting) handle high-dimensional covariate adjustment naturally.\nDML provides the framework: use ML for the nuisance functions (propensity score, outcome model), cross-fit to avoid overfitting bias, and use Neyman orthogonal scores for valid inference on the causal parameter.\n\n\n2. Nonlinear relationships\nIf the outcome depends on covariates in complex, nonlinear ways, a linear outcome model is misspecified. ML methods can capture these nonlinearities without the researcher having to specify them in advance (which polynomial terms, which interactions).\nThis is where doubly robust estimation and DML intersect: the DR structure protects against misspecification of either model, and ML provides flexible estimators that reduce the risk of misspecification in the first place.\n\n\n3. Discovering treatment effect heterogeneity\nHeterogeneous treatment effects showed that causal forests and meta-learners can estimate \\(\\tau(x)\\) — revealing which subgroups benefit most from treatment. This is genuinely new: traditional subgroup analysis requires pre-specifying which subgroups to examine, while ML-based methods can search over many covariates simultaneously.\n\n\n4. Improving precision\nEven when a simple estimator is consistent, ML-based covariate adjustment can reduce variance. In randomized experiments, the ATE is identified by randomization — you don’t need covariate adjustment for consistency. But adjusting for predictive covariates reduces the residual variance and tightens confidence intervals. ML can identify which covariates are most predictive without the researcher specifying a functional form.",
     "crumbs": [
-      "Causal Machine Learning",
+      "Framework",
       "When ML Helps and When It Doesn't"
     ]
   },
@@ -517,7 +517,7 @@
     "section": "Where ML does not help",
     "text": "Where ML does not help\n\n1. Unobserved confounding\nIf treatment assignment depends on an unobserved variable \\(U\\):\n\\[\nY(0), Y(1) \\not\\perp D \\mid X\n\\]\nthen no method — parametric or nonparametric — can estimate the ATE consistently from observational data on \\((Y, D, X)\\) alone. ML estimates \\(E[Y \\mid X, D]\\) more flexibly, but a more flexible approximation to a confounded conditional expectation is still confounded.\nThis is the failure mode that identification guards against. The solution is not a better estimator — it is a better research design (an instrument, a discontinuity, a natural experiment).\n\n\n2. Providing identification\nML can estimate \\(P(Y \\mid X)\\) but not \\(P(Y \\mid do(X))\\) — the distinction from the stats course. The interventional distribution requires knowledge of the causal structure (a DAG, an exclusion restriction, a parallel trends argument). ML methods are agnostic about causal structure by design — they optimize prediction, not identification.\n\n\n3. Small samples\nML methods generally require large samples to outperform simple parametric models. With \\(n = 200\\), a lasso propensity score is unlikely to improve on a carefully specified logit. DML’s cross-fitting further reduces effective sample size. In small samples, domain knowledge and parametric modeling often dominate data-driven flexibility.\n\n\n4. Interpretability of nuisance functions\nWhen a random forest estimates the propensity score, you lose the ability to inspect and interpret the model. You can’t point to specific coefficients and say “age increases treatment probability by X percentage points.” This matters when the propensity score model is of substantive interest (understanding selection into treatment) rather than just a statistical tool.",
     "crumbs": [
-      "Causal Machine Learning",
+      "Framework",
       "When ML Helps and When It Doesn't"
     ]
   },
@@ -528,7 +528,7 @@
     "section": "A decision framework",
     "text": "A decision framework\nWhen deciding whether to use ML in a causal study:\nIs the causal parameter identified?\n├── No → Fix the research design. ML cannot help.\n└── Yes → Are nuisance functions well-approximated by simple models?\n    ├── Yes → Standard parametric methods are fine. ML adds complexity\n    │         without clear benefit.\n    └── No → ML-based estimation (DML, causal forests) can help.\n        ├── Is the sample large enough? (n &gt; 1000 as rough guide)\n        │   ├── Yes → Proceed with DML / causal forests\n        │   └── No → Consider regularized parametric models (lasso)\n        └── Do you need heterogeneous effects?\n            ├── Yes → Causal forests, meta-learners\n            └── No → DML for ATE\n\n\n\n\n\n\nThe honest summary. ML is a powerful tool for the estimation half of causal inference. It handles high-dimensional confounders, nonlinear relationships, and heterogeneous effects better than traditional parametric methods. But it is entirely silent on the identification half — the question of whether the causal parameter can be recovered at all. The most sophisticated ML pipeline applied to a confounded comparison produces a precise, confident, wrong answer.",
     "crumbs": [
-      "Causal Machine Learning",
+      "Framework",
       "When ML Helps and When It Doesn't"
     ]
   },
@@ -539,7 +539,7 @@
     "section": "Connecting to the course",
     "text": "Connecting to the course\nThis page synthesizes the entire causal ML section:\n\nIdentification vs Estimation: the foundational distinction that structures everything above\nDML: the primary framework for using ML in causal estimation\nHeterogeneous Effects: the main setting where ML provides genuinely new capabilities\nDoubly Robust: the estimation structure that DML builds on\nPrediction vs Causation: the distinction between \\(P(Y \\mid X)\\) and \\(P(Y \\mid do(X))\\), applied to foundation models",
     "crumbs": [
-      "Causal Machine Learning",
+      "Framework",
       "When ML Helps and When It Doesn't"
     ]
   },
@@ -550,7 +550,7 @@
     "section": "",
     "text": "Everything so far has focused on average treatment effects — the ATE or ATT from Potential Outcomes. But averages can hide enormous variation. A drug that helps most patients and harms a few has a positive ATE, but the few who are harmed would like to know that. A policy that benefits one demographic and hurts another looks mediocre on average.\nHeterogeneous treatment effects ask: how does the treatment effect vary across individuals or subgroups? The target is the Conditional Average Treatment Effect (CATE):\n\\[\n\\tau(x) = E[Y(1) - Y(0) \\mid X = x]\n\\]\nThis is a function, not a number — it maps covariates to treatment effects.",
     "crumbs": [
-      "Causal Machine Learning",
+      "Beyond Average Effects",
       "Heterogeneous Treatment Effects"
     ]
   },
@@ -561,7 +561,7 @@
     "section": "Why CATE is hard",
     "text": "Why CATE is hard\nEstimating the ATE is already challenging because of the fundamental problem of causal inference: you never observe both \\(Y(1)\\) and \\(Y(0)\\) for the same unit. Estimating the CATE is harder because you need to estimate a function — not just a single parameter — from data where the target is never directly observed.\nThe standard approach in applied work is subgroup analysis: split the data by a covariate (age, gender, income) and estimate the ATE within each subgroup. This works when you have a small number of pre-specified subgroups and large samples within each. It breaks down when:\n\nYou have many covariates and don’t know which ones matter\nInteractions between covariates drive heterogeneity (e.g., the effect differs for young women vs old men, not just by age or gender alone)\nSample sizes within subgroups are too small for precise estimation\n\nThis is where machine learning helps — not by changing the identification problem, but by providing flexible estimators for the CATE function.",
     "crumbs": [
-      "Causal Machine Learning",
+      "Beyond Average Effects",
       "Heterogeneous Treatment Effects"
     ]
   },
@@ -572,7 +572,7 @@
     "section": "Causal forests",
     "text": "Causal forests\nCausal forests (Wager and Athey, 2018) adapt random forests to estimate \\(\\tau(x)\\) directly. The key idea: instead of splitting to predict the outcome \\(Y\\), split to maximize the heterogeneity in treatment effects across the resulting subgroups.\n\nHow it works\n\nFor each tree, draw a subsample (honesty splitting — see below)\nAt each node, find the covariate split that maximizes the difference in treatment effects between the two child nodes\nWithin each terminal leaf, estimate the treatment effect by comparing treated and control outcomes (a local difference in means)\nAverage predictions across all trees in the forest\n\nThe forest produces an estimate \\(\\hat{\\tau}(x)\\) for any covariate vector \\(x\\) — a personalized treatment effect prediction.\n\n\nHonesty\nA critical innovation. Each tree uses one subsample to determine the splits (the tree structure) and a separate subsample to estimate the treatment effects within leaves. This prevents overfitting: the splits are chosen to find heterogeneity, but the effect estimates are uncontaminated by this search.\nThis is the same logic as cross-fitting in DML — separate the model selection step from the estimation step.\n\n\nInference\nCausal forests come with valid, asymptotic confidence intervals for \\(\\hat{\\tau}(x)\\). The variance is estimated via the jackknife (related to the bootstrap):\n\\[\n\\hat{\\tau}(x) \\pm z_{\\alpha/2} \\cdot \\hat{\\sigma}(x)\n\\]\nThis is remarkable: a machine learning method with valid frequentist inference. The key is that the forest targets a local parameter (the CATE at a point), and the honesty + subsampling structure ensures regularity.\n\n\n\n\n\n\nWhat causal forests assume. The same identification assumptions as any selection-on-observables estimator: unconfoundedness and overlap. The forest does not weaken these requirements — it only provides a flexible estimator for \\(\\tau(x)\\) given that identification holds.",
     "crumbs": [
-      "Causal Machine Learning",
+      "Beyond Average Effects",
       "Heterogeneous Treatment Effects"
     ]
   },
@@ -583,7 +583,7 @@
     "section": "The R-learner and other meta-learners",
     "text": "The R-learner and other meta-learners\nCausal forests are one approach to CATE estimation. A broader framework organizes methods by how they decompose the problem:\n\nT-learner\nEstimate two separate outcome models — one for treated, one for control — and take the difference:\n\\[\n\\hat{\\tau}(x) = \\hat{\\mu}_1(x) - \\hat{\\mu}_0(x)\n\\]\nSimple, but the two models are fit independently and may not be optimized for estimating the difference.\n\n\nS-learner\nEstimate a single model with treatment as a feature:\n\\[\n\\hat{\\mu}(x, d) = \\hat{E}[Y \\mid X = x, D = d]\n\\]\nThen \\(\\hat{\\tau}(x) = \\hat{\\mu}(x, 1) - \\hat{\\mu}(x, 0)\\). The model can capture treatment effect heterogeneity through interactions between \\(D\\) and \\(X\\). Risk: the model may not prioritize learning the treatment effect if the main effects of \\(X\\) dominate.\n\n\nR-learner (Robinson, 1988; Nie and Wager, 2021)\nResidualize both the outcome and treatment on \\(X\\) (as in the partially linear model from DML):\n\\[\n\\tilde{Y}_i = Y_i - \\hat{m}(X_i), \\qquad \\tilde{D}_i = D_i - \\hat{e}(X_i)\n\\]\nThen estimate \\(\\tau(x)\\) by minimizing:\n\\[\n\\hat{\\tau}(\\cdot) = \\arg\\min_\\tau \\sum_{i=1}^n \\left(\\tilde{Y}_i - \\tau(X_i)\\tilde{D}_i\\right)^2\n\\]\nThis is Frisch-Waugh-Lovell generalized to heterogeneous effects. The R-learner is efficient and directly targets the CATE function.\n\n\n\n\n\n\n\n\n\nMeta-learner\nModels to fit\nStrengths\nWeaknesses\n\n\n\n\nT-learner\nTwo outcome models\nSimple, any ML method\nDoesn’t optimize for \\(\\tau\\)\n\n\nS-learner\nOne outcome model\nUses all data jointly\nMay underweight treatment heterogeneity\n\n\nR-learner\nTwo nuisance + CATE model\nDirectly targets \\(\\tau(x)\\)\nMore complex to implement\n\n\nCausal forest\nForest with effect-splitting\nValid inference, adaptive\nRequires unconfoundedness",
     "crumbs": [
-      "Causal Machine Learning",
+      "Beyond Average Effects",
       "Heterogeneous Treatment Effects"
     ]
   },
@@ -594,7 +594,7 @@
     "section": "What heterogeneity analysis can and cannot do",
     "text": "What heterogeneity analysis can and cannot do\nIt can: reveal which subgroups benefit most or least from a treatment, guide targeting of interventions, identify unexpected effect modifiers, and generate hypotheses for future studies.\nIt cannot: fix identification problems. If the ATE is biased by unobserved confounding, the CATE will be biased too — just differently across subgroups. As Identification vs Estimation emphasizes, the estimator (however flexible) cannot recover what the research design does not identify.\nIt requires caution about multiple testing. Searching over many possible subgroups for heterogeneity is a multiple testing problem. If you test 100 subgroups, you expect 5 “significant” effects by chance at the 5% level. Pre-specifying subgroups of interest, or using methods with built-in regularization (like causal forests), mitigates this.\n\n\n\n\n\n\nBest practice. Use causal forests or meta-learners to discover potential heterogeneity, then confirm it in a held-out sample or a pre-registered replication. Discovery and confirmation should use different data.",
     "crumbs": [
-      "Causal Machine Learning",
+      "Beyond Average Effects",
       "Heterogeneous Treatment Effects"
     ]
   },
@@ -605,7 +605,7 @@
     "section": "Connecting to the course",
     "text": "Connecting to the course\n\nPotential Outcomes: defines the CATE as \\(\\tau(x) = E[Y(1) - Y(0) \\mid X = x]\\)\nSelection on Observables: the identification assumption that all methods here rely on\nDML: the R-learner uses DML-style residualization; causal forests use similar cross-fitting logic\nDoubly Robust: the AIPW score can be extended to target CATE instead of ATE\nMultiple Testing: subgroup analysis without correction is a multiple testing problem",
     "crumbs": [
-      "Causal Machine Learning",
+      "Beyond Average Effects",
       "Heterogeneous Treatment Effects"
     ]
   },
@@ -847,7 +847,7 @@
     "section": "",
     "text": "Doubly robust estimation showed that combining an outcome model with a propensity score model gives you two shots at consistency. But both models were specified parametrically — linear regression for the outcome, logit for the propensity score. What if you want to use machine learning for these nuisance functions? The answer is not as simple as “plug in a random forest.”",
     "crumbs": [
-      "Causal Machine Learning",
+      "Estimation Tools",
       "Double/Debiased ML"
     ]
   },
@@ -858,7 +858,7 @@
     "section": "The problem with naively plugging in ML",
     "text": "The problem with naively plugging in ML\nSuppose you want to estimate the ATE under selection on observables:\n\\[\n\\tau = E[Y(1) - Y(0)]\n\\]\nYou need two nuisance functions: the outcome model \\(\\mu_d(X) = E[Y \\mid X, D=d]\\) and the propensity score \\(e(X) = P(D=1 \\mid X)\\). The AIPW estimator from the doubly robust page uses both:\n\\[\n\\hat{\\tau}_{DR} = \\frac{1}{n}\\sum_{i=1}^n \\left[\\hat{\\mu}_1(X_i) - \\hat{\\mu}_0(X_i) + \\frac{D_i(Y_i - \\hat{\\mu}_1(X_i))}{\\hat{e}(X_i)} - \\frac{(1-D_i)(Y_i - \\hat{\\mu}_0(X_i))}{1 - \\hat{e}(X_i)}\\right]\n\\]\nIf you estimate \\(\\hat{\\mu}\\) and \\(\\hat{e}\\) with OLS and logit, standard asymptotic theory gives you \\(\\sqrt{n}\\)-consistent inference on \\(\\hat{\\tau}\\). But if you estimate them with a random forest, lasso, or neural network, the standard theory breaks down. The problem is regularization bias: ML estimators are biased (they trade bias for variance — the bias-variance tradeoff), and this bias contaminates the estimate of \\(\\tau\\).\nConcretely, the bias of \\(\\hat{\\tau}\\) depends on the product of the biases of \\(\\hat{\\mu}\\) and \\(\\hat{e}\\):\n\\[\n\\text{Bias}(\\hat{\\tau}) \\approx \\text{Bias}(\\hat{\\mu}) \\times \\text{Bias}(\\hat{e})\n\\]\nFor parametric models with \\(\\sqrt{n}\\) convergence, both biases are \\(O(1/\\sqrt{n})\\), so the product is \\(O(1/n)\\) — negligible. But ML estimators typically converge slower than \\(\\sqrt{n}\\), and the bias product can be large enough to distort inference.",
     "crumbs": [
-      "Causal Machine Learning",
+      "Estimation Tools",
       "Double/Debiased ML"
     ]
   },
@@ -869,7 +869,7 @@
     "section": "The DML solution: Neyman orthogonality + cross-fitting",
     "text": "The DML solution: Neyman orthogonality + cross-fitting\nChernozhukov, Chetverikov, Demirer, Duflo, Hansen, Newey, and Robins (2018) showed that two ingredients fix this problem.\n\nIngredient 1: Neyman orthogonal scores\nUse an estimating equation (a “score”) whose expectation is insensitive to small perturbations in the nuisance functions. The AIPW score from doubly robust estimation has this property — it is Neyman orthogonal:\n\\[\n\\psi(Y, D, X; \\tau, \\mu, e) = \\hat{\\mu}_1(X) - \\hat{\\mu}_0(X) + \\frac{D(Y - \\hat{\\mu}_1(X))}{e(X)} - \\frac{(1-D)(Y - \\hat{\\mu}_0(X))}{1 - e(X)} - \\tau\n\\]\nThe Neyman orthogonality condition means that the derivative of \\(E[\\psi]\\) with respect to the nuisance functions \\((\\mu, e)\\) is zero at the true values. Intuitively, the score is “locally robust” to errors in the nuisance estimates — first-order mistakes in \\(\\hat{\\mu}\\) and \\(\\hat{e}\\) don’t affect \\(\\hat{\\tau}\\).\nThis is what “debiased” means. The AIPW structure removes the first-order bias from the nuisance estimation. What remains is the product of biases — which is second-order.\n\n\nIngredient 2: Cross-fitting\nEven with an orthogonal score, using the same data to estimate nuisance functions and the causal parameter creates an overfitting bias. ML estimators can overfit in subtle ways that parametric models don’t, and this leaks into \\(\\hat{\\tau}\\).\nThe fix is cross-fitting — a form of sample splitting:\n\nSplit the data into \\(K\\) folds (typically \\(K = 5\\))\nFor each fold \\(k\\):\n\nEstimate \\(\\hat{\\mu}\\) and \\(\\hat{e}\\) using data outside fold \\(k\\)\nCompute the score \\(\\psi_i\\) for observations inside fold \\(k\\)\n\nAverage all scores: \\(\\hat{\\tau} = \\frac{1}{n}\\sum_{i=1}^n \\psi_i\\)\n\nThis ensures the nuisance estimates are never evaluated on the same data used to construct them. Cross-fitting eliminates the overfitting bias while using all data for both nuisance estimation and causal estimation (unlike simple sample splitting, which wastes half the data).\n\n\n\n\n\n\nThe DML recipe. (1) Choose a Neyman orthogonal score — AIPW for the ATE, the partially linear model score for a coefficient. (2) Estimate nuisance functions with any ML method, using cross-fitting. (3) Compute the causal parameter from the averaged scores. (4) Standard errors from the variance of the scores: \\(\\widehat{\\text{Var}}(\\hat{\\tau}) = \\frac{1}{n^2}\\sum_i \\hat{\\psi}_i^2\\).",
     "crumbs": [
-      "Causal Machine Learning",
+      "Estimation Tools",
       "Double/Debiased ML"
     ]
   },
@@ -880,7 +880,7 @@
     "section": "The partially linear model",
     "text": "The partially linear model\nA common DML application. Suppose the model is:\n\\[\nY_i = \\tau D_i + g(X_i) + \\varepsilon_i\n\\]\nwhere \\(g(X_i)\\) is a potentially complex function of high-dimensional controls. You want \\(\\tau\\) — the treatment effect — but \\(g\\) is a nuisance function.\nThe DML approach:\n\nUse ML to estimate \\(\\hat{g}(X) \\approx E[Y \\mid X]\\) and \\(\\hat{m}(X) \\approx E[D \\mid X]\\) via cross-fitting\nCompute residuals: \\(\\tilde{Y}_i = Y_i - \\hat{g}(X_i)\\) and \\(\\tilde{D}_i = D_i - \\hat{m}(X_i)\\)\nRegress \\(\\tilde{Y}\\) on \\(\\tilde{D}\\) to get \\(\\hat{\\tau}\\)\n\nThis is Frisch-Waugh-Lovell with ML residualization. Instead of controlling for \\(X\\) linearly, you partial it out flexibly. The treatment effect \\(\\tau\\) remains a simple, interpretable parameter — only the nuisance part uses ML.",
     "crumbs": [
-      "Causal Machine Learning",
+      "Estimation Tools",
       "Double/Debiased ML"
     ]
   },
@@ -891,7 +891,7 @@
     "section": "What DML assumes",
     "text": "What DML assumes\nDML does not weaken the identification assumptions. You still need:\n\nSelection on observables: \\(Y(0), Y(1) \\perp D \\mid X\\)\nOverlap: \\(0 &lt; P(D=1 \\mid X) &lt; 1\\) for all \\(X\\)\nSUTVA and consistency from Potential Outcomes\n\nWhat DML relaxes are the estimation assumptions:\n\nThe nuisance functions \\(\\mu(X)\\) and \\(e(X)\\) can be nonparametric — estimated by lasso, random forest, boosting, neural network, or any method\nThe nuisance estimators need to converge at rate \\(n^{-1/4}\\) (not \\(n^{-1/2}\\)) — a much weaker requirement that many ML methods satisfy\nNo need to correctly specify a parametric model for \\(\\mu\\) or \\(e\\)\n\n\n\n\n\n\n\nThe key distinction. DML separates the causal problem (identification) from the statistical problem (nuisance estimation). Identification comes from the research design — the argument for why treatment is as-good-as-random conditional on \\(X\\). ML handles the high-dimensional, potentially nonlinear adjustment for \\(X\\). These are complementary, not substitutes. As noted in Identification vs Estimation: identification comes first, and no estimator — parametric or ML — can fix a failure of identification.",
     "crumbs": [
-      "Causal Machine Learning",
+      "Estimation Tools",
       "Double/Debiased ML"
     ]
   },
@@ -902,7 +902,7 @@
     "section": "Connecting to the course",
     "text": "Connecting to the course\nDML builds directly on several pages:\n\nDoubly robust estimation: the AIPW estimator is the score function that DML uses. DML adds cross-fitting and ML nuisance estimation.\nIPW: the propensity score \\(e(X)\\) can now be estimated flexibly instead of by logit.\nFWL: the partially linear model is FWL with ML residualization.\nIdentification vs Estimation: DML is the clearest example of this separation — ML for estimation, research design for identification.",
     "crumbs": [
-      "Causal Machine Learning",
+      "Estimation Tools",
       "Double/Debiased ML"
     ]
   },
