@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Entropy Balancing – Applied Causal Inference</title>
+<title>Estimating Heterogeneous Effects – Applied Causal Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -76,11 +41,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -151,7 +111,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./regression-adjustment.html">Estimation Tools</a></li><li class="breadcrumb-item"><a href="./entropy-balancing.html">Entropy Balancing</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./heterogeneous-effects.html">Beyond Average Effects</a></li><li class="breadcrumb-item"><a href="./causal-forests.html">Estimating Heterogeneous Effects</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -298,7 +258,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./entropy-balancing.html" class="sidebar-item-text sidebar-link active">
+  <a href="./entropy-balancing.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Entropy Balancing</span></a>
   </div>
 </li>
@@ -333,7 +293,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./causal-forests.html" class="sidebar-item-text sidebar-link">
+  <a href="./causal-forests.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Estimating Heterogeneous Effects</span></a>
   </div>
 </li>
@@ -349,23 +309,31 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-problem-with-ipw" id="toc-the-problem-with-ipw" class="nav-link active" data-scroll-target="#the-problem-with-ipw">The problem with IPW</a></li>
-  <li><a href="#entropy-balancing-a-different-approach" id="toc-entropy-balancing-a-different-approach" class="nav-link" data-scroll-target="#entropy-balancing-a-different-approach">Entropy balancing: a different approach</a>
+  <li><a href="#causal-forests" id="toc-causal-forests" class="nav-link active" data-scroll-target="#causal-forests">Causal forests</a>
   <ul class="collapse">
-  <li><a href="#ipw-vs-entropy-balancing" id="toc-ipw-vs-entropy-balancing" class="nav-link" data-scroll-target="#ipw-vs-entropy-balancing">IPW vs Entropy Balancing</a></li>
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
-  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  <li><a href="#how-it-works" id="toc-how-it-works" class="nav-link" data-scroll-target="#how-it-works">How it works</a></li>
+  <li><a href="#effect-splitting" id="toc-effect-splitting" class="nav-link" data-scroll-target="#effect-splitting">Effect-splitting</a></li>
+  <li><a href="#honesty" id="toc-honesty" class="nav-link" data-scroll-target="#honesty">Honesty</a></li>
+  <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference">Inference</a></li>
   </ul></li>
-  <li><a href="#in-stata" id="toc-in-stata" class="nav-link" data-scroll-target="#in-stata">In Stata</a></li>
+  <li><a href="#meta-learners" id="toc-meta-learners" class="nav-link" data-scroll-target="#meta-learners">Meta-learners</a>
+  <ul class="collapse">
+  <li><a href="#t-learner" id="toc-t-learner" class="nav-link" data-scroll-target="#t-learner">T-learner</a></li>
+  <li><a href="#s-learner" id="toc-s-learner" class="nav-link" data-scroll-target="#s-learner">S-learner</a></li>
+  <li><a href="#r-learner-robinson-1988-nie-and-wager-2021" id="toc-r-learner-robinson-1988-nie-and-wager-2021" class="nav-link" data-scroll-target="#r-learner-robinson-1988-nie-and-wager-2021">R-learner (Robinson, 1988; Nie and Wager, 2021)</a></li>
+  <li><a href="#comparison" id="toc-comparison" class="nav-link" data-scroll-target="#comparison">Comparison</a></li>
+  </ul></li>
+  <li><a href="#practical-cautions" id="toc-practical-cautions" class="nav-link" data-scroll-target="#practical-cautions">Practical cautions</a></li>
+  <li><a href="#connecting-to-the-course" id="toc-connecting-to-the-course" class="nav-link" data-scroll-target="#connecting-to-the-course">Connecting to the course</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./regression-adjustment.html">Estimation Tools</a></li><li class="breadcrumb-item"><a href="./entropy-balancing.html">Entropy Balancing</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./heterogeneous-effects.html">Beyond Average Effects</a></li><li class="breadcrumb-item"><a href="./causal-forests.html">Estimating Heterogeneous Effects</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Entropy Balancing</h1>
+<h1 class="title">Estimating Heterogeneous Effects</h1>
 </div>
 
 
@@ -382,244 +350,155 @@ window.Quarto = {
 </header>
 
 
-<section id="the-problem-with-ipw" class="level2">
-<h2 class="anchored" data-anchor-id="the-problem-with-ipw">The problem with IPW</h2>
-<p>IPW relies on correctly specifying the propensity score model. If you get the model wrong, the weights are wrong, and the estimate is biased. Even if the model is right, extreme propensity scores create extreme weights and noisy estimates.</p>
+<p>The <a href="heterogeneous-effects.html">previous page</a> defined the estimand: <span class="math inline">\(\tau(x) = E[Y(1) - Y(0) \mid X = x]\)</span>. This page covers the <strong>estimation machinery</strong> — how to recover <span class="math inline">\(\tau(x)\)</span> from data when you don’t know in advance which covariates drive heterogeneity or what functional form it takes.</p>
+<section id="causal-forests" class="level2">
+<h2 class="anchored" data-anchor-id="causal-forests">Causal forests</h2>
+<p><strong>Causal forests</strong> (Wager and Athey, 2018) adapt random forests to estimate <span class="math inline">\(\tau(x)\)</span> directly. The key idea: instead of splitting to predict the outcome <span class="math inline">\(Y\)</span>, split to maximize the <strong>heterogeneity in treatment effects</strong> across the resulting subgroups.</p>
+<section id="how-it-works" class="level3">
+<h3 class="anchored" data-anchor-id="how-it-works">How it works</h3>
+<ol type="1">
+<li>For each tree, draw a subsample (honesty splitting — see below)</li>
+<li>At each node, find the covariate split that maximizes the difference in treatment effects between the two child nodes</li>
+<li>Within each terminal leaf, estimate the treatment effect by comparing treated and control outcomes (a local difference in means)</li>
+<li>Average predictions across all trees in the forest</li>
+</ol>
+<p>The forest produces an estimate <span class="math inline">\(\hat{\tau}(x)\)</span> for any covariate vector <span class="math inline">\(x\)</span> — a personalized treatment effect prediction.</p>
 </section>
-<section id="entropy-balancing-a-different-approach" class="level2">
-<h2 class="anchored" data-anchor-id="entropy-balancing-a-different-approach">Entropy balancing: a different approach</h2>
-<p><strong>Entropy balancing</strong> (Hainmueller, 2012) skips the propensity score entirely. Instead, it directly finds weights for the control group that make the covariate distributions <strong>exactly match</strong> the treated group on specified moments (mean, variance, skewness).</p>
-<p>The weights are chosen to be as close to uniform as possible (maximum entropy) subject to the balance constraints. This guarantees:</p>
-<ul>
-<li><strong>Exact balance</strong> on the moments you specify</li>
-<li><strong>Smooth weights</strong> (no extreme values like IPW can produce)</li>
-</ul>
-<section id="ipw-vs-entropy-balancing" class="level3">
-<h3 class="anchored" data-anchor-id="ipw-vs-entropy-balancing">IPW vs Entropy Balancing</h3>
+<section id="effect-splitting" class="level3">
+<h3 class="anchored" data-anchor-id="effect-splitting">Effect-splitting</h3>
+<p>In a standard random forest, the splitting criterion is variance reduction in <span class="math inline">\(Y\)</span>: find the split that makes <span class="math inline">\(Y\)</span> most predictable within each child node. In a causal forest, the splitting criterion is <strong>treatment effect heterogeneity</strong>: find the split such that the treatment effect in the left child differs maximally from the treatment effect in the right child.</p>
+<p>This is what makes it a <em>causal</em> forest rather than a predictive one. The algorithm is optimized for finding the covariates that best explain variation in <span class="math inline">\(\tau(x)\)</span>, not variation in <span class="math inline">\(Y\)</span>.</p>
+</section>
+<section id="honesty" class="level3">
+<h3 class="anchored" data-anchor-id="honesty">Honesty</h3>
+<p>A critical innovation. Each tree uses one subsample to determine the splits (the tree structure) and a <strong>separate</strong> subsample to estimate the treatment effects within leaves. This prevents overfitting: the splits are chosen to find heterogeneity, but the effect estimates are uncontaminated by this search.</p>
+<p>This is the same logic as <strong>cross-fitting</strong> in <a href="double-debiased-ml.html">DML</a> — separate the model selection step from the estimation step. If you use the same data for both, the effect estimates are biased toward finding heterogeneity even when none exists.</p>
+</section>
+<section id="inference" class="level3">
+<h3 class="anchored" data-anchor-id="inference">Inference</h3>
+<p>Causal forests come with valid, asymptotic confidence intervals for <span class="math inline">\(\hat{\tau}(x)\)</span>. The variance is estimated via the jackknife (related to the <a href="../stats-course/bootstrap.html">bootstrap</a>):</p>
+<p><span class="math display">\[
+\hat{\tau}(x) \pm z_{\alpha/2} \cdot \hat{\sigma}(x)
+\]</span></p>
+<p>This is remarkable for a machine learning method: valid frequentist inference on a nonparametric estimand. The key is that the forest targets a <em>local</em> parameter (the CATE at a point), and the honesty + subsampling structure ensures regularity conditions hold.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>What causal forests assume.</strong> The same identification assumptions as any selection-on-observables estimator: <a href="selection-observables.html">unconfoundedness</a> and overlap. The forest does not weaken these requirements — it only provides a flexible estimator for <span class="math inline">\(\tau(x)\)</span> given that identification holds. A causal forest applied to a confounded comparison produces a detailed, confident, <em>wrong</em> function.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="meta-learners" class="level2">
+<h2 class="anchored" data-anchor-id="meta-learners">Meta-learners</h2>
+<p>Causal forests are one approach to CATE estimation. A broader framework organizes methods by how they decompose the problem into standard supervised learning tasks:</p>
+<section id="t-learner" class="level3">
+<h3 class="anchored" data-anchor-id="t-learner">T-learner</h3>
+<p>Estimate two separate outcome models — one for treated, one for control — and take the difference:</p>
+<p><span class="math display">\[
+\hat{\tau}(x) = \hat{\mu}_1(x) - \hat{\mu}_0(x)
+\]</span></p>
+<p>where <span class="math inline">\(\hat{\mu}_1(x) = \hat{E}[Y \mid X = x, D = 1]\)</span> and <span class="math inline">\(\hat{\mu}_0(x) = \hat{E}[Y \mid X = x, D = 0]\)</span>.</p>
+<p>Simple and works with any ML method. But the two models are fit independently — each optimizes prediction of <span class="math inline">\(Y\)</span>, not estimation of the <em>difference</em>. Small treatment effects can be lost in the noise of predicting outcomes.</p>
+</section>
+<section id="s-learner" class="level3">
+<h3 class="anchored" data-anchor-id="s-learner">S-learner</h3>
+<p>Estimate a single model with treatment as a feature:</p>
+<p><span class="math display">\[
+\hat{\mu}(x, d) = \hat{E}[Y \mid X = x, D = d]
+\]</span></p>
+<p>Then <span class="math inline">\(\hat{\tau}(x) = \hat{\mu}(x, 1) - \hat{\mu}(x, 0)\)</span>. The model can capture treatment effect heterogeneity through interactions between <span class="math inline">\(D\)</span> and <span class="math inline">\(X\)</span>.</p>
+<p>Risk: the model may not prioritize learning the treatment effect if the main effects of <span class="math inline">\(X\)</span> dominate. With many strong predictors and a small treatment effect, the model may effectively ignore <span class="math inline">\(D\)</span>.</p>
+</section>
+<section id="r-learner-robinson-1988-nie-and-wager-2021" class="level3">
+<h3 class="anchored" data-anchor-id="r-learner-robinson-1988-nie-and-wager-2021">R-learner (Robinson, 1988; Nie and Wager, 2021)</h3>
+<p>Residualize both the outcome and treatment on <span class="math inline">\(X\)</span> (as in the partially linear model from <a href="double-debiased-ml.html">DML</a>):</p>
+<p><span class="math display">\[
+\tilde{Y}_i = Y_i - \hat{m}(X_i), \qquad \tilde{D}_i = D_i - \hat{e}(X_i)
+\]</span></p>
+<p>Then estimate <span class="math inline">\(\tau(x)\)</span> by minimizing:</p>
+<p><span class="math display">\[
+\hat{\tau}(\cdot) = \arg\min_\tau \sum_{i=1}^n \left(\tilde{Y}_i - \tau(X_i)\tilde{D}_i\right)^2
+\]</span></p>
+<p>This is <a href="../stats-course/fwl.html">Frisch-Waugh-Lovell</a> generalized to heterogeneous effects. By partialling out the main effects of <span class="math inline">\(X\)</span> on both <span class="math inline">\(Y\)</span> and <span class="math inline">\(D\)</span>, the R-learner isolates the treatment effect signal. It directly targets <span class="math inline">\(\tau(x)\)</span> rather than backing it out from outcome predictions.</p>
+</section>
+<section id="comparison" class="level3">
+<h3 class="anchored" data-anchor-id="comparison">Comparison</h3>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 31%">
+<col style="width: 24%">
+<col style="width: 26%">
+</colgroup>
 <thead>
 <tr class="header">
-<th></th>
-<th>IPW</th>
-<th>Entropy Balancing</th>
+<th style="text-align: left;">Method</th>
+<th style="text-align: left;">Models to fit</th>
+<th style="text-align: left;">Strengths</th>
+<th style="text-align: left;">Weaknesses</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Requires a propensity score model</td>
-<td>Yes</td>
-<td>No</td>
+<td style="text-align: left;">T-learner</td>
+<td style="text-align: left;">Two outcome models</td>
+<td style="text-align: left;">Simple, any ML method</td>
+<td style="text-align: left;">Doesn’t optimize for <span class="math inline">\(\tau\)</span></td>
 </tr>
 <tr class="even">
-<td>Balance is…</td>
-<td>Approximate (check after)</td>
-<td>Exact (by construction)</td>
+<td style="text-align: left;">S-learner</td>
+<td style="text-align: left;">One outcome model</td>
+<td style="text-align: left;">Uses all data jointly</td>
+<td style="text-align: left;">May underweight treatment heterogeneity</td>
 </tr>
 <tr class="odd">
-<td>Extreme weights?</td>
-<td>Can be severe</td>
-<td>Controlled</td>
+<td style="text-align: left;">R-learner</td>
+<td style="text-align: left;">Two nuisance + CATE model</td>
+<td style="text-align: left;">Directly targets <span class="math inline">\(\tau(x)\)</span></td>
+<td style="text-align: left;">More complex to implement</td>
 </tr>
 <tr class="even">
-<td>Sensitive to misspecification?</td>
-<td>Yes</td>
-<td>Less so</td>
+<td style="text-align: left;">Causal forest</td>
+<td style="text-align: left;">Forest with effect-splitting</td>
+<td style="text-align: left;">Valid inference, adaptive</td>
+<td style="text-align: left;">Requires unconfoundedness</td>
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Choosing a method.</strong> If you need confidence intervals for <span class="math inline">\(\hat{\tau}(x)\)</span>, use causal forests — they’re the only method above with built-in inference. If you want flexibility in the ML method (boosting, neural nets), use the R-learner. If you want simplicity and a quick baseline, start with the T-learner.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="assumptions" class="level3">
-<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
-<ol type="1">
-<li><strong>Selection on observables:</strong> conditional on the covariates you balance on, treatment is independent of potential outcomes. Same as IPW — if you’re missing a confounder, balancing the observed ones doesn’t help.</li>
-<li><strong>Overlap:</strong> treated and control groups share common support in covariate space. You can’t reweight controls to look like treated units if no controls exist in that part of the distribution.</li>
-<li><strong>Correct moments:</strong> you need to balance the <em>right</em> moments. If the outcome depends on <span class="math inline">\(X^2\)</span> but you only balance on <span class="math inline">\(E[X]\)</span>, you’ll miss the confounding.</li>
-</ol>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 650
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
-    }
-    .stats-box b { color: #2c3e50; }
-    .good { color: #27ae60; font-weight: bold; }
-    .bad  { color: #e74c3c; font-weight: bold; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      sliderInput("n", "Sample size:",
-                  min = 200, max = 2000, value = 500, step = 100),
-
-      sliderInput("ate", "True ATE:",
-                  min = 0, max = 5, value = 2, step = 0.5),
-
-      sliderInput("confounding", "Confounding strength:",
-                  min = 0, max = 3, value = 1.5, step = 0.25),
-
-      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
-
-      uiOutput("results")
-    ),
-
-    mainPanel(
-      width = 9,
-      fluidRow(
-        column(6, plotOutput("balance_plot", height = "380px")),
-        column(6, plotOutput("weight_plot",  height = "380px"))
-      )
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  # Simple entropy balancing: find weights for control group
-  # that match treated group mean of X
-  ebal &lt;- function(x_ctrl, target_mean, max_iter = 200, tol = 1e-6) {
-    n &lt;- length(x_ctrl)
-    lambda &lt;- 0
-    for (i in seq_len(max_iter)) {
-      w &lt;- exp(lambda * x_ctrl)
-      w &lt;- w / sum(w) * n
-      current &lt;- weighted.mean(x_ctrl, w)
-      grad &lt;- current - target_mean
-      if (abs(grad) &lt; tol) break
-      lambda &lt;- lambda - 0.5 * grad
-    }
-    w / sum(w) * n
-  }
-
-  dat &lt;- reactive({
-    input$go
-    n    &lt;- input$n
-    ate  &lt;- input$ate
-    conf &lt;- input$confounding
-
-    x &lt;- rnorm(n)
-    p_true &lt;- pnorm(conf * x)
-    treat &lt;- rbinom(n, 1, p_true)
-
-    y &lt;- 1 + 2 * x + ate * treat + rnorm(n)
-
-    # Naive
-    naive &lt;- mean(y[treat == 1]) - mean(y[treat == 0])
-
-    # IPW
-    ps &lt;- fitted(glm(treat ~ x, family = binomial))
-    w_ipw &lt;- ifelse(treat == 1, 1 / ps, 1 / (1 - ps))
-    ipw_est &lt;- weighted.mean(y[treat == 1], w_ipw[treat == 1]) -
-               weighted.mean(y[treat == 0], w_ipw[treat == 0])
-
-    # Entropy balancing (balance control to match treated mean of X)
-    x_ctrl &lt;- x[treat == 0]
-    x_treat_mean &lt;- mean(x[treat == 1])
-    w_eb &lt;- ebal(x_ctrl, x_treat_mean)
-
-    eb_est &lt;- mean(y[treat == 1]) - weighted.mean(y[treat == 0], w_eb)
-
-    # Balance diagnostics
-    ctrl_mean_raw &lt;- mean(x[treat == 0])
-    ctrl_mean_eb  &lt;- weighted.mean(x[treat == 0], w_eb)
-    treat_mean_x  &lt;- x_treat_mean
-
-    list(x = x, treat = treat, y = y,
-         w_ipw = w_ipw, w_eb = w_eb,
-         naive = naive, ipw_est = ipw_est, eb_est = eb_est,
-         ate = ate,
-         ctrl_mean_raw = ctrl_mean_raw,
-         ctrl_mean_eb = ctrl_mean_eb,
-         treat_mean_x = treat_mean_x)
-  })
-
-  output$balance_plot &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 1, 3, 1))
-
-    means &lt;- c(d$treat_mean_x, d$ctrl_mean_raw, d$ctrl_mean_eb)
-    cols &lt;- c("#3498db", "#e74c3c", "#27ae60")
-    labels &lt;- c("Treated", "Control\n(unweighted)", "Control\n(EB weighted)")
-
-    bp &lt;- barplot(means, col = cols, border = NA,
-                  names.arg = labels, cex.names = 0.85,
-                  main = "Mean of X: Balance Check",
-                  ylab = "", ylim = range(means) * c(0.8, 1.3))
-    text(bp, means + 0.05, round(means, 3), cex = 0.9)
-  })
-
-  output$weight_plot &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    ctrl_idx &lt;- which(d$treat == 0)
-
-    w_ipw_ctrl &lt;- d$w_ipw[ctrl_idx]
-    w_eb_ctrl  &lt;- d$w_eb
-
-    xlim &lt;- c(0, max(c(w_ipw_ctrl, w_eb_ctrl)) * 1.1)
-
-    d_ipw &lt;- density(w_ipw_ctrl, from = 0)
-    d_eb  &lt;- density(w_eb_ctrl, from = 0)
-    ylim &lt;- c(0, max(d_ipw$y, d_eb$y) * 1.2)
-
-    plot(d_ipw, col = "#e74c3c", lwd = 2.5,
-         main = "Weight Distributions (Control Units)",
-         xlab = "Weight", ylab = "Density",
-         xlim = xlim, ylim = ylim)
-    lines(d_eb, col = "#27ae60", lwd = 2.5)
-
-    legend("topright", bty = "n", cex = 0.85,
-           legend = c("IPW weights", "Entropy balancing weights"),
-           col = c("#e74c3c", "#27ae60"), lwd = 2.5)
-  })
-
-  output$results &lt;- renderUI({
-    d &lt;- dat()
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;True ATE:&lt;/b&gt; ", d$ate, "&lt;br&gt;",
-        "&lt;b&gt;Naive:&lt;/b&gt; &lt;span class='bad'&gt;", round(d$naive, 3), "&lt;/span&gt;",
-        " (bias: ", round(d$naive - d$ate, 3), ")&lt;br&gt;",
-        "&lt;b&gt;IPW:&lt;/b&gt; ", round(d$ipw_est, 3),
-        " (bias: ", round(d$ipw_est - d$ate, 3), ")&lt;br&gt;",
-        "&lt;b&gt;Entropy Bal:&lt;/b&gt; &lt;span class='good'&gt;", round(d$eb_est, 3), "&lt;/span&gt;",
-        " (bias: ", round(d$eb_est - d$ate, 3), ")"
-      ))
-    )
-  })
-}
-
-shinyApp(ui, server)</code></pre>
 </section>
-<section id="things-to-try" class="level3">
-<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<section id="practical-cautions" class="level2">
+<h2 class="anchored" data-anchor-id="practical-cautions">Practical cautions</h2>
+<p><strong>Discovery vs confirmation.</strong> These methods are powerful for <em>discovering</em> heterogeneity — finding subgroups where effects differ. But discovery is not confirmation. Best practice: use causal forests or meta-learners to identify potential heterogeneity in one sample, then confirm it in a held-out sample or a pre-registered replication. Discovery and confirmation should use different data.</p>
+<p><strong>Multiple testing.</strong> Reporting that “the effect is significant for subgroup A but not subgroup B” is a comparison, not a test. To claim the effects <em>differ</em>, you need to test the interaction — and if you searched over many subgroups to find A, you have a <a href="../stats-course/multiple-testing.html">multiple testing</a> problem.</p>
+<p><strong>Sample size.</strong> Estimating <span class="math inline">\(\tau(x)\)</span> requires more data than estimating <span class="math inline">\(\tau\)</span>. You’re estimating a function, not a number, and you need enough treated and control units at each value of <span class="math inline">\(x\)</span>. With small samples, the CATE estimates will be noisy and shrunk toward the ATE.</p>
+<p><strong>Overlap.</strong> The CATE at <span class="math inline">\(x\)</span> requires both treated and control units near <span class="math inline">\(x\)</span>. If overlap fails in some region — few treated units with <span class="math inline">\(X\)</span> near <span class="math inline">\(x\)</span> — the CATE estimate there is unreliable. Causal forests handle this gracefully (they simply don’t split in sparse regions), but the conceptual limitation remains.</p>
+</section>
+<section id="connecting-to-the-course" class="level2">
+<h2 class="anchored" data-anchor-id="connecting-to-the-course">Connecting to the course</h2>
 <ul>
-<li><strong>Confounding = 1.5:</strong> look at the right plot. IPW weights have a long tail (some control units get huge weight). Entropy balancing weights are much smoother.</li>
-<li><strong>Confounding = 3:</strong> IPW weights become extreme. EB stays stable.</li>
-<li><strong>Left plot:</strong> the green bar (EB-weighted control mean) exactly matches the blue bar (treated mean). That’s the guarantee — exact balance by construction.</li>
-<li>Compare the bias numbers in the sidebar: EB is typically closer to the true ATE, especially under strong confounding.</li>
+<li><strong><a href="heterogeneous-effects.html">Heterogeneous Treatment Effects</a>:</strong> defines the estimand <span class="math inline">\(\tau(x)\)</span> — the conceptual foundation this page builds on</li>
+<li><strong><a href="double-debiased-ml.html">DML</a>:</strong> the R-learner uses DML-style residualization; causal forests use similar honesty/cross-fitting logic</li>
+<li><strong><a href="doubly-robust.html">Doubly Robust</a>:</strong> the AIPW score can be extended to target CATE instead of ATE — doubly robust CATE estimation</li>
+<li><strong><a href="../stats-course/fwl.html">FWL</a>:</strong> the R-learner is FWL generalized to heterogeneous effects</li>
+<li><strong><a href="../stats-course/multiple-testing.html">Multiple Testing</a>:</strong> subgroup analysis without correction is a multiple testing problem</li>
+<li><strong><a href="../stats-course/bootstrap.html">Bootstrap</a>:</strong> the jackknife variance estimator in causal forests is related to bootstrap inference</li>
 </ul>
-<hr>
-</section>
-</section>
-<section id="in-stata" class="level2">
-<h2 class="anchored" data-anchor-id="in-stata">In Stata</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>* Install entropy balancing</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>* <span class="kw">ssc</span> install ebalance</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>* Generate weights that balance x1, <span class="kw">x2</span>, x3 between treated and control</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ebalance treatment x1 <span class="kw">x2</span> x3, <span class="kw">gen</span>(eb_weight)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>* Use the weights <span class="kw">in</span> your outcome regression</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> outcome treatment x1 <span class="kw">x2</span> x3 [pw=eb_weight]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>ebalance</code> finds the smoothest set of control-group weights that exactly matches the treated group on the moments you specify (means by default; add <code>targets(2)</code> to also match variances). No propensity score model needed.</p>
 
 
 </section>

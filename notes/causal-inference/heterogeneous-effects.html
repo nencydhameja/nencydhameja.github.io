@@ -291,6 +291,12 @@ window.Quarto = {
  <span class="menu-text">Heterogeneous Treatment Effects</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./causal-forests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estimating Heterogeneous Effects</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -303,20 +309,15 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#why-cate-is-hard" id="toc-why-cate-is-hard" class="nav-link active" data-scroll-target="#why-cate-is-hard">Why CATE is hard</a></li>
-  <li><a href="#causal-forests" id="toc-causal-forests" class="nav-link" data-scroll-target="#causal-forests">Causal forests</a>
+  <li><a href="#from-tau-to-taux" id="toc-from-tau-to-taux" class="nav-link active" data-scroll-target="#from-tau-to-taux">From <span class="math inline">\(\tau\)</span> to <span class="math inline">\(\tau(x)\)</span></a></li>
+  <li><a href="#why-average-effects-can-mislead" id="toc-why-average-effects-can-mislead" class="nav-link" data-scroll-target="#why-average-effects-can-mislead">Why average effects can mislead</a>
   <ul class="collapse">
-  <li><a href="#how-it-works" id="toc-how-it-works" class="nav-link" data-scroll-target="#how-it-works">How it works</a></li>
-  <li><a href="#honesty" id="toc-honesty" class="nav-link" data-scroll-target="#honesty">Honesty</a></li>
-  <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference">Inference</a></li>
+  <li><a href="#sign-reversal" id="toc-sign-reversal" class="nav-link" data-scroll-target="#sign-reversal">Sign reversal</a></li>
+  <li><a href="#optimal-targeting" id="toc-optimal-targeting" class="nav-link" data-scroll-target="#optimal-targeting">Optimal targeting</a></li>
+  <li><a href="#external-validity" id="toc-external-validity" class="nav-link" data-scroll-target="#external-validity">External validity</a></li>
   </ul></li>
-  <li><a href="#the-r-learner-and-other-meta-learners" id="toc-the-r-learner-and-other-meta-learners" class="nav-link" data-scroll-target="#the-r-learner-and-other-meta-learners">The R-learner and other meta-learners</a>
-  <ul class="collapse">
-  <li><a href="#t-learner" id="toc-t-learner" class="nav-link" data-scroll-target="#t-learner">T-learner</a></li>
-  <li><a href="#s-learner" id="toc-s-learner" class="nav-link" data-scroll-target="#s-learner">S-learner</a></li>
-  <li><a href="#r-learner-robinson-1988-nie-and-wager-2021" id="toc-r-learner-robinson-1988-nie-and-wager-2021" class="nav-link" data-scroll-target="#r-learner-robinson-1988-nie-and-wager-2021">R-learner (Robinson, 1988; Nie and Wager, 2021)</a></li>
-  </ul></li>
-  <li><a href="#what-heterogeneity-analysis-can-and-cannot-do" id="toc-what-heterogeneity-analysis-can-and-cannot-do" class="nav-link" data-scroll-target="#what-heterogeneity-analysis-can-and-cannot-do">What heterogeneity analysis can and cannot do</a></li>
+  <li><a href="#identification-of-the-cate" id="toc-identification-of-the-cate" class="nav-link" data-scroll-target="#identification-of-the-cate">Identification of the CATE</a></li>
+  <li><a href="#subgroup-analysis-the-traditional-approach" id="toc-subgroup-analysis-the-traditional-approach" class="nav-link" data-scroll-target="#subgroup-analysis-the-traditional-approach">Subgroup analysis: the traditional approach</a></li>
   <li><a href="#connecting-to-the-course" id="toc-connecting-to-the-course" class="nav-link" data-scroll-target="#connecting-to-the-course">Connecting to the course</a></li>
   </ul>
 </nav>
@@ -344,157 +345,138 @@ window.Quarto = {
 
 
 <p>Everything so far has focused on <strong>average</strong> treatment effects — the ATE or ATT from <a href="potential-outcomes.html">Potential Outcomes</a>. But averages can hide enormous variation. A drug that helps most patients and harms a few has a positive ATE, but the few who are harmed would like to know that. A policy that benefits one demographic and hurts another looks mediocre on average.</p>
-<p><strong>Heterogeneous treatment effects</strong> ask: how does the treatment effect vary across individuals or subgroups? The target is the <strong>Conditional Average Treatment Effect (CATE)</strong>:</p>
+<p>This page introduces a new estimand: the treatment effect as a <em>function</em> of covariates. The <a href="causal-forests.html">next page</a> covers the estimation machinery — causal forests, meta-learners — for recovering it from data.</p>
+<section id="from-tau-to-taux" class="level2">
+<h2 class="anchored" data-anchor-id="from-tau-to-taux">From <span class="math inline">\(\tau\)</span> to <span class="math inline">\(\tau(x)\)</span></h2>
+<p>The ATE is a single number:</p>
+<p><span class="math display">\[
+\tau = E[Y(1) - Y(0)]
+\]</span></p>
+<p>The <strong>Conditional Average Treatment Effect (CATE)</strong> is a function:</p>
 <p><span class="math display">\[
 \tau(x) = E[Y(1) - Y(0) \mid X = x]
 \]</span></p>
-<p>This is a function, not a number — it maps covariates to treatment effects.</p>
-<section id="why-cate-is-hard" class="level2">
-<h2 class="anchored" data-anchor-id="why-cate-is-hard">Why CATE is hard</h2>
-<p>Estimating the ATE is already challenging because of the <a href="potential-outcomes.html#the-fundamental-problem-of-causal-inference">fundamental problem of causal inference</a>: you never observe both <span class="math inline">\(Y(1)\)</span> and <span class="math inline">\(Y(0)\)</span> for the same unit. Estimating the CATE is harder because you need to estimate a <em>function</em> — not just a single parameter — from data where the target is never directly observed.</p>
-<p>The standard approach in applied work is <strong>subgroup analysis</strong>: split the data by a covariate (age, gender, income) and estimate the ATE within each subgroup. This works when you have a small number of pre-specified subgroups and large samples within each. It breaks down when:</p>
-<ul>
-<li>You have many covariates and don’t know which ones matter</li>
-<li>Interactions between covariates drive heterogeneity (e.g., the effect differs for <em>young women</em> vs <em>old men</em>, not just by age or gender alone)</li>
-<li>Sample sizes within subgroups are too small for precise estimation</li>
-</ul>
-<p>This is where machine learning helps — not by changing the identification problem, but by providing flexible estimators for the CATE function.</p>
-</section>
-<section id="causal-forests" class="level2">
-<h2 class="anchored" data-anchor-id="causal-forests">Causal forests</h2>
-<p><strong>Causal forests</strong> (Wager and Athey, 2018) adapt random forests to estimate <span class="math inline">\(\tau(x)\)</span> directly. The key idea: instead of splitting to predict the outcome <span class="math inline">\(Y\)</span>, split to maximize the <strong>heterogeneity in treatment effects</strong> across the resulting subgroups.</p>
-<section id="how-it-works" class="level3">
-<h3 class="anchored" data-anchor-id="how-it-works">How it works</h3>
-<ol type="1">
-<li>For each tree, draw a subsample (honesty splitting — see below)</li>
-<li>At each node, find the covariate split that maximizes the difference in treatment effects between the two child nodes</li>
-<li>Within each terminal leaf, estimate the treatment effect by comparing treated and control outcomes (a local difference in means)</li>
-<li>Average predictions across all trees in the forest</li>
-</ol>
-<p>The forest produces an estimate <span class="math inline">\(\hat{\tau}(x)\)</span> for any covariate vector <span class="math inline">\(x\)</span> — a personalized treatment effect prediction.</p>
-</section>
-<section id="honesty" class="level3">
-<h3 class="anchored" data-anchor-id="honesty">Honesty</h3>
-<p>A critical innovation. Each tree uses one subsample to determine the splits (the tree structure) and a separate subsample to estimate the treatment effects within leaves. This prevents overfitting: the splits are chosen to find heterogeneity, but the effect estimates are uncontaminated by this search.</p>
-<p>This is the same logic as <strong>cross-fitting</strong> in <a href="double-debiased-ml.html">DML</a> — separate the model selection step from the estimation step.</p>
-</section>
-<section id="inference" class="level3">
-<h3 class="anchored" data-anchor-id="inference">Inference</h3>
-<p>Causal forests come with valid, asymptotic confidence intervals for <span class="math inline">\(\hat{\tau}(x)\)</span>. The variance is estimated via the jackknife (related to the <a href="../stats-course/bootstrap.html">bootstrap</a>):</p>
+<p>This answers: “What is the treatment effect for individuals with characteristics <span class="math inline">\(X = x\)</span>?” The ATE is the average of the CATE across the population:</p>
 <p><span class="math display">\[
-\hat{\tau}(x) \pm z_{\alpha/2} \cdot \hat{\sigma}(x)
+\tau = E[\tau(X)]
 \]</span></p>
-<p>This is remarkable: a machine learning method with valid frequentist inference. The key is that the forest targets a <em>local</em> parameter (the CATE at a point), and the honesty + subsampling structure ensures regularity.</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>What causal forests assume.</strong> The same identification assumptions as any selection-on-observables estimator: <a href="selection-observables.html">unconfoundedness</a> and overlap. The forest does not weaken these requirements — it only provides a flexible estimator for <span class="math inline">\(\tau(x)\)</span> given that identification holds.</p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="the-r-learner-and-other-meta-learners" class="level2">
-<h2 class="anchored" data-anchor-id="the-r-learner-and-other-meta-learners">The R-learner and other meta-learners</h2>
-<p>Causal forests are one approach to CATE estimation. A broader framework organizes methods by how they decompose the problem:</p>
-<section id="t-learner" class="level3">
-<h3 class="anchored" data-anchor-id="t-learner">T-learner</h3>
-<p>Estimate two separate outcome models — one for treated, one for control — and take the difference:</p>
-<p><span class="math display">\[
-\hat{\tau}(x) = \hat{\mu}_1(x) - \hat{\mu}_0(x)
-\]</span></p>
-<p>Simple, but the two models are fit independently and may not be optimized for estimating the <em>difference</em>.</p>
-</section>
-<section id="s-learner" class="level3">
-<h3 class="anchored" data-anchor-id="s-learner">S-learner</h3>
-<p>Estimate a single model with treatment as a feature:</p>
-<p><span class="math display">\[
-\hat{\mu}(x, d) = \hat{E}[Y \mid X = x, D = d]
-\]</span></p>
-<p>Then <span class="math inline">\(\hat{\tau}(x) = \hat{\mu}(x, 1) - \hat{\mu}(x, 0)\)</span>. The model can capture treatment effect heterogeneity through interactions between <span class="math inline">\(D\)</span> and <span class="math inline">\(X\)</span>. Risk: the model may not prioritize learning the treatment effect if the main effects of <span class="math inline">\(X\)</span> dominate.</p>
-</section>
-<section id="r-learner-robinson-1988-nie-and-wager-2021" class="level3">
-<h3 class="anchored" data-anchor-id="r-learner-robinson-1988-nie-and-wager-2021">R-learner (Robinson, 1988; Nie and Wager, 2021)</h3>
-<p>Residualize both the outcome and treatment on <span class="math inline">\(X\)</span> (as in the partially linear model from <a href="double-debiased-ml.html">DML</a>):</p>
-<p><span class="math display">\[
-\tilde{Y}_i = Y_i - \hat{m}(X_i), \qquad \tilde{D}_i = D_i - \hat{e}(X_i)
-\]</span></p>
-<p>Then estimate <span class="math inline">\(\tau(x)\)</span> by minimizing:</p>
-<p><span class="math display">\[
-\hat{\tau}(\cdot) = \arg\min_\tau \sum_{i=1}^n \left(\tilde{Y}_i - \tau(X_i)\tilde{D}_i\right)^2
-\]</span></p>
-<p>This is <a href="../stats-course/fwl.html">Frisch-Waugh-Lovell</a> generalized to heterogeneous effects. The R-learner is efficient and directly targets the CATE function.</p>
+<p>The CATE sits alongside the other estimands in the course:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 27%">
-<col style="width: 27%">
-<col style="width: 21%">
 <col style="width: 23%">
+<col style="width: 28%">
+<col style="width: 47%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Meta-learner</th>
-<th style="text-align: left;">Models to fit</th>
-<th style="text-align: left;">Strengths</th>
-<th style="text-align: left;">Weaknesses</th>
+<th style="text-align: left;">Estimand</th>
+<th style="text-align: left;">Definition</th>
+<th style="text-align: left;">Question it answers</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">T-learner</td>
-<td style="text-align: left;">Two outcome models</td>
-<td style="text-align: left;">Simple, any ML method</td>
-<td style="text-align: left;">Doesn’t optimize for <span class="math inline">\(\tau\)</span></td>
+<td style="text-align: left;">ATE</td>
+<td style="text-align: left;"><span class="math inline">\(E[Y(1) - Y(0)]\)</span></td>
+<td style="text-align: left;">What is the average effect?</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">S-learner</td>
-<td style="text-align: left;">One outcome model</td>
-<td style="text-align: left;">Uses all data jointly</td>
-<td style="text-align: left;">May underweight treatment heterogeneity</td>
+<td style="text-align: left;">ATT</td>
+<td style="text-align: left;"><span class="math inline">\(E[Y(1) - Y(0) \mid D = 1]\)</span></td>
+<td style="text-align: left;">What is the effect on the treated?</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">R-learner</td>
-<td style="text-align: left;">Two nuisance + CATE model</td>
-<td style="text-align: left;">Directly targets <span class="math inline">\(\tau(x)\)</span></td>
-<td style="text-align: left;">More complex to implement</td>
+<td style="text-align: left;">LATE</td>
+<td style="text-align: left;">Effect for compliers (IV)</td>
+<td style="text-align: left;">What is the effect for those moved by the instrument?</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Causal forest</td>
-<td style="text-align: left;">Forest with effect-splitting</td>
-<td style="text-align: left;">Valid inference, adaptive</td>
-<td style="text-align: left;">Requires unconfoundedness</td>
+<td style="text-align: left;"><strong>CATE</strong></td>
+<td style="text-align: left;"><span class="math inline">\(E[Y(1) - Y(0) \mid X = x]\)</span></td>
+<td style="text-align: left;">How does the effect vary with <span class="math inline">\(x\)</span>?</td>
 </tr>
 </tbody>
 </table>
+<p>The first three are numbers. The CATE is a function — and that changes the estimation problem fundamentally.</p>
+</section>
+<section id="why-average-effects-can-mislead" class="level2">
+<h2 class="anchored" data-anchor-id="why-average-effects-can-mislead">Why average effects can mislead</h2>
+<section id="sign-reversal" class="level3">
+<h3 class="anchored" data-anchor-id="sign-reversal">Sign reversal</h3>
+<p>The ATE can be positive even if the treatment harms a substantial subgroup. Suppose a job training program increases earnings by $5,000 for workers without a college degree but decreases earnings by $1,000 for workers with a degree (perhaps by diverting them from better opportunities). If 80% of participants lack a degree:</p>
+<p><span class="math display">\[
+\tau = 0.8 \times 5000 + 0.2 \times (-1000) = 3800
+\]</span></p>
+<p>The ATE is $3,800 — positive and “significant.” But the policy is actively harmful for 20% of participants. Without estimating <span class="math inline">\(\tau(x)\)</span>, you would never know.</p>
+</section>
+<section id="optimal-targeting" class="level3">
+<h3 class="anchored" data-anchor-id="optimal-targeting">Optimal targeting</h3>
+<p>If a treatment has heterogeneous effects and resources are limited, you want to treat the people who benefit most. This requires knowing <span class="math inline">\(\tau(x)\)</span>, not just <span class="math inline">\(\tau\)</span>. The optimal treatment rule is:</p>
+<p><span class="math display">\[
+D^*(x) = \mathbf{1}\{\tau(x) &gt; 0\}
+\]</span></p>
+<p>Treat if and only if the expected effect is positive. This is <strong>policy targeting</strong> — and it requires the CATE.</p>
+</section>
+<section id="external-validity" class="level3">
+<h3 class="anchored" data-anchor-id="external-validity">External validity</h3>
+<p>An RCT in one population gives you <span class="math inline">\(\tau\)</span> for that population. If you want to know what would happen in a different population with different <span class="math inline">\(X\)</span> distributions, you need <span class="math inline">\(\tau(x)\)</span>. The CATE is transportable across populations in a way that the ATE is not (provided the effect heterogeneity is stable).</p>
 </section>
 </section>
-<section id="what-heterogeneity-analysis-can-and-cannot-do" class="level2">
-<h2 class="anchored" data-anchor-id="what-heterogeneity-analysis-can-and-cannot-do">What heterogeneity analysis can and cannot do</h2>
-<p><strong>It can:</strong> reveal which subgroups benefit most or least from a treatment, guide targeting of interventions, identify unexpected effect modifiers, and generate hypotheses for future studies.</p>
-<p><strong>It cannot:</strong> fix identification problems. If the ATE is biased by unobserved confounding, the CATE will be biased too — just differently across subgroups. As <a href="identification-estimation.html">Identification vs Estimation</a> emphasizes, the estimator (however flexible) cannot recover what the research design does not identify.</p>
-<p><strong>It requires caution about multiple testing.</strong> Searching over many possible subgroups for heterogeneity is a <a href="../stats-course/multiple-testing.html">multiple testing</a> problem. If you test 100 subgroups, you expect 5 “significant” effects by chance at the 5% level. Pre-specifying subgroups of interest, or using methods with built-in regularization (like causal forests), mitigates this.</p>
+<section id="identification-of-the-cate" class="level2">
+<h2 class="anchored" data-anchor-id="identification-of-the-cate">Identification of the CATE</h2>
+<p>The CATE requires the same identification assumptions as the ATE, but applied <strong>conditionally</strong>:</p>
+<p><span class="math display">\[
+Y(0), Y(1) \perp D \mid X = x \qquad \text{(conditional unconfoundedness)}
+\]</span></p>
+<p><span class="math display">\[
+0 &lt; P(D = 1 \mid X = x) &lt; 1 \qquad \text{(overlap)}
+\]</span></p>
+<p>These are the <a href="selection-observables.html">selection on observables</a> conditions, now required at every value of <span class="math inline">\(x\)</span>. This is a <strong>stronger</strong> requirement than for the ATE: the ATE can be identified even if overlap fails in some regions (the failures cancel out in expectation), but the CATE at <span class="math inline">\(x\)</span> requires overlap <em>at that specific <span class="math inline">\(x\)</span></em>.</p>
 <div class="callout callout-style-simple callout-tip no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Best practice.</strong> Use causal forests or meta-learners to <em>discover</em> potential heterogeneity, then <em>confirm</em> it in a held-out sample or a pre-registered replication. Discovery and confirmation should use different data.</p>
+<p><strong>The identification warning.</strong> If the ATE is not identified (unobserved confounders), the CATE is not identified either — and the problem is worse, not better. A biased ATE is one wrong number. A biased CATE is a wrong <em>function</em> — it tells you confidently that subgroup A benefits and subgroup B doesn’t, when in reality the entire comparison is confounded. <a href="identification-estimation.html">Identification</a> comes before estimation, and this is even more true for the CATE than for the ATE.</p>
 </div>
 </div>
 </div>
 </section>
+<section id="subgroup-analysis-the-traditional-approach" class="level2">
+<h2 class="anchored" data-anchor-id="subgroup-analysis-the-traditional-approach">Subgroup analysis: the traditional approach</h2>
+<p>The simplest way to look for heterogeneity: split the sample by a covariate and estimate the ATE within each subgroup. Run the regression separately for men and women, for young and old, for high-income and low-income.</p>
+<p>This works when:</p>
+<ul>
+<li>You have a small number of <strong>pre-specified</strong> subgroups</li>
+<li>You have large samples within each subgroup</li>
+<li>The heterogeneity is along a single, known dimension</li>
+</ul>
+<p>It breaks down when:</p>
+<ul>
+<li>You have many covariates and don’t know which ones drive heterogeneity</li>
+<li>Interactions matter (the effect differs for <em>young women</em> vs <em>old men</em>, not just by age or gender separately)</li>
+<li>You test many subgroups without correction — a <a href="../stats-course/multiple-testing.html">multiple testing</a> problem</li>
+</ul>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>The garden of forking paths.</strong> If you test 20 subgroups at the 5% level, you expect one “significant” interaction by chance. Subgroup analysis that is not pre-specified is exploratory, not confirmatory. This is the lesson from <a href="../stats-course/multiple-testing.html">Multiple Testing</a>, applied to heterogeneity.</p>
+</div>
+</div>
+</div>
+<p>The limitations of subgroup analysis motivate data-driven methods — causal forests and meta-learners — covered in the <a href="causal-forests.html">next page</a>. These methods search over many covariates simultaneously while controlling for overfitting, providing a principled way to discover heterogeneity that traditional subgroup analysis cannot.</p>
+</section>
 <section id="connecting-to-the-course" class="level2">
 <h2 class="anchored" data-anchor-id="connecting-to-the-course">Connecting to the course</h2>
 <ul>
-<li><strong><a href="potential-outcomes.html">Potential Outcomes</a>:</strong> defines the CATE as <span class="math inline">\(\tau(x) = E[Y(1) - Y(0) \mid X = x]\)</span></li>
-<li><strong><a href="selection-observables.html">Selection on Observables</a>:</strong> the identification assumption that all methods here rely on</li>
-<li><strong><a href="double-debiased-ml.html">DML</a>:</strong> the R-learner uses DML-style residualization; causal forests use similar cross-fitting logic</li>
-<li><strong><a href="doubly-robust.html">Doubly Robust</a>:</strong> the AIPW score can be extended to target CATE instead of ATE</li>
-<li><strong><a href="../stats-course/multiple-testing.html">Multiple Testing</a>:</strong> subgroup analysis without correction is a multiple testing problem</li>
+<li><strong><a href="potential-outcomes.html">Potential Outcomes</a>:</strong> the CATE is defined within the potential outcomes framework — <span class="math inline">\(\tau(x) = E[Y(1) - Y(0) \mid X = x]\)</span></li>
+<li><strong><a href="selection-observables.html">Selection on Observables</a>:</strong> conditional unconfoundedness is the identification assumption for the CATE</li>
+<li><strong><a href="identification-estimation.html">Identification vs Estimation</a>:</strong> the CATE is a new estimand, not a new identification strategy — the research design must still justify the causal interpretation</li>
+<li><strong><a href="causal-forests.html">Causal Forests</a>:</strong> the estimation machinery for recovering <span class="math inline">\(\tau(x)\)</span> from data</li>
 </ul>
 
 
