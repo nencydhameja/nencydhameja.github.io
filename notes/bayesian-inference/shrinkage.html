@@ -280,6 +280,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#where-you-see-this-in-practice" id="toc-where-you-see-this-in-practice" class="nav-link" data-scroll-target="#where-you-see-this-in-practice">Where you see this in practice</a></li>
   </ul></li>
+  <li><a href="#subsample-shrinkage-when-subgroups-borrow-from-the-whole" id="toc-subsample-shrinkage-when-subgroups-borrow-from-the-whole" class="nav-link" data-scroll-target="#subsample-shrinkage-when-subgroups-borrow-from-the-whole">Subsample shrinkage: when subgroups borrow from the whole</a></li>
   </ul>
 </nav>
     </div>
@@ -535,9 +536,38 @@ shinyApp(ui, server)</code></pre>
 </tbody>
 </table>
 <p>They all share the same logic: when you have many noisy estimates, borrowing strength across them improves every single one.</p>
-
-
+<hr>
 </section>
+</section>
+<section id="subsample-shrinkage-when-subgroups-borrow-from-the-whole" class="level2">
+<h2 class="anchored" data-anchor-id="subsample-shrinkage-when-subgroups-borrow-from-the-whole">Subsample shrinkage: when subgroups borrow from the whole</h2>
+<p>A common applied setting: you estimate an overall effect from the full sample, then ask “does the effect differ across subgroups?” — by gender, by race, by region, by income bracket. Each subgroup gives you a separate estimate, but some subgroups are small.</p>
+<p>An empirical Bayes / hierarchical model treats the <span class="math inline">\(K\)</span> subsample effects as drawn from a common distribution centered on the overall effect. The posterior for each subsample becomes a precision-weighted average:</p>
+<p><span class="math display">\[\hat{\theta}_{\text{shrunk}} = w \cdot \hat{\theta}_{\text{subsample}} + (1-w) \cdot \hat{\theta}_{\text{full sample}}\]</span></p>
+<p>The weight <span class="math inline">\(w\)</span> depends on the ratio of subsample precision to total precision:</p>
+<p><span class="math display">\[w = \frac{1/\sigma_{\text{sub}}^2}{1/\sigma_{\text{sub}}^2 + 1/\tau^2}\]</span></p>
+<p>where <span class="math inline">\(\sigma_{\text{sub}}^2\)</span> is the sampling variance of the subsample estimate and <span class="math inline">\(\tau^2\)</span> is the between-group variance.</p>
+<p><strong>When is <span class="math inline">\(w\)</span> small?</strong> When the subsample is noisy — few observations or high variance. A small <span class="math inline">\(w\)</span> means the estimate gets pulled heavily toward the full-sample effect. You don’t trust the noisy subsample on its own.</p>
+<p><strong>When is <span class="math inline">\(w\)</span> large?</strong> When the subsample is precise — many observations, low variance. The estimate stays close to the subsample’s own value. The data speaks for itself.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Example:</strong> You estimate that a policy reduces obesity rates by 2 percentage points overall (<span class="math inline">\(n = 50{,}000\)</span>). You break this down by 8 racial/ethnic subgroups. One subgroup (<span class="math inline">\(n = 200\)</span>) shows a 6 pp effect — three times the overall. Another subgroup (<span class="math inline">\(n = 15{,}000\)</span>) shows a 1.5 pp effect.</p>
+<p>Without shrinkage, you’d report both at face value. With shrinkage:</p>
+<ul>
+<li>The small subgroup (<span class="math inline">\(n = 200\)</span>): high <span class="math inline">\(\sigma_{\text{sub}}^2\)</span>, low <span class="math inline">\(w\)</span> → its 6 pp gets pulled substantially toward the 2 pp overall effect. That extreme estimate was probably noise.</li>
+<li>The large subgroup (<span class="math inline">\(n = 15{,}000\)</span>): low <span class="math inline">\(\sigma_{\text{sub}}^2\)</span>, high <span class="math inline">\(w\)</span> → its 1.5 pp barely moves. That estimate is precise enough to stand on its own.</li>
+</ul>
+</div>
+</div>
+</div>
+<p>This is the same logic as the baseball simulation above — just replace “players” with “subgroups” and “batting average” with “treatment effect.” Small subsamples are like players with few at-bats: their raw estimates are noisy, so you pull them toward the overall mean. Large subsamples are like veterans with hundreds of at-bats: their estimates are reliable and barely move.</p>
+<p>The <a href="hierarchical.html">hierarchical models</a> page formalizes this into a multilevel model where the amount of shrinkage (<span class="math inline">\(\tau^2\)</span>) is estimated from the data rather than assumed.</p>
+
+
 </section>
 
 </main> <!-- /main -->

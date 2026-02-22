@@ -88,6 +88,17 @@
     ]
   },
   {
+    "objectID": "shrinkage.html#subsample-shrinkage-when-subgroups-borrow-from-the-whole",
+    "href": "shrinkage.html#subsample-shrinkage-when-subgroups-borrow-from-the-whole",
+    "title": "Bayesian Shrinkage",
+    "section": "Subsample shrinkage: when subgroups borrow from the whole",
+    "text": "Subsample shrinkage: when subgroups borrow from the whole\nA common applied setting: you estimate an overall effect from the full sample, then ask “does the effect differ across subgroups?” — by gender, by race, by region, by income bracket. Each subgroup gives you a separate estimate, but some subgroups are small.\nAn empirical Bayes / hierarchical model treats the \\(K\\) subsample effects as drawn from a common distribution centered on the overall effect. The posterior for each subsample becomes a precision-weighted average:\n\\[\\hat{\\theta}_{\\text{shrunk}} = w \\cdot \\hat{\\theta}_{\\text{subsample}} + (1-w) \\cdot \\hat{\\theta}_{\\text{full sample}}\\]\nThe weight \\(w\\) depends on the ratio of subsample precision to total precision:\n\\[w = \\frac{1/\\sigma_{\\text{sub}}^2}{1/\\sigma_{\\text{sub}}^2 + 1/\\tau^2}\\]\nwhere \\(\\sigma_{\\text{sub}}^2\\) is the sampling variance of the subsample estimate and \\(\\tau^2\\) is the between-group variance.\nWhen is \\(w\\) small? When the subsample is noisy — few observations or high variance. A small \\(w\\) means the estimate gets pulled heavily toward the full-sample effect. You don’t trust the noisy subsample on its own.\nWhen is \\(w\\) large? When the subsample is precise — many observations, low variance. The estimate stays close to the subsample’s own value. The data speaks for itself.\n\n\n\n\n\n\nExample: You estimate that a policy reduces obesity rates by 2 percentage points overall (\\(n = 50{,}000\\)). You break this down by 8 racial/ethnic subgroups. One subgroup (\\(n = 200\\)) shows a 6 pp effect — three times the overall. Another subgroup (\\(n = 15{,}000\\)) shows a 1.5 pp effect.\nWithout shrinkage, you’d report both at face value. With shrinkage:\n\nThe small subgroup (\\(n = 200\\)): high \\(\\sigma_{\\text{sub}}^2\\), low \\(w\\) → its 6 pp gets pulled substantially toward the 2 pp overall effect. That extreme estimate was probably noise.\nThe large subgroup (\\(n = 15{,}000\\)): low \\(\\sigma_{\\text{sub}}^2\\), high \\(w\\) → its 1.5 pp barely moves. That estimate is precise enough to stand on its own.\n\n\n\n\nThis is the same logic as the baseball simulation above — just replace “players” with “subgroups” and “batting average” with “treatment effect.” Small subsamples are like players with few at-bats: their raw estimates are noisy, so you pull them toward the overall mean. Large subsamples are like veterans with hundreds of at-bats: their estimates are reliable and barely move.\nThe hierarchical models page formalizes this into a multilevel model where the amount of shrinkage (\\(\\tau^2\\)) is estimated from the data rather than assumed.",
+    "crumbs": [
+      "Hierarchical Modeling",
+      "Shrinkage"
+    ]
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Bayesian Thinking",
