@@ -459,6 +459,7 @@ window.Quarto = {
   <li><a href="#simulation-likelihood-surface-for-coin-flips" id="toc-simulation-likelihood-surface-for-coin-flips" class="nav-link" data-scroll-target="#simulation-likelihood-surface-for-coin-flips">Simulation: Likelihood surface for coin flips</a></li>
   </ul></li>
   <li><a href="#ols-is-mle-under-normality" id="toc-ols-is-mle-under-normality" class="nav-link" data-scroll-target="#ols-is-mle-under-normality">OLS is MLE under normality</a></li>
+  <li><a href="#cross-entropy-is-mle-for-classification" id="toc-cross-entropy-is-mle-for-classification" class="nav-link" data-scroll-target="#cross-entropy-is-mle-for-classification">Cross-entropy is MLE for classification</a></li>
   <li><a href="#properties-of-mle" id="toc-properties-of-mle" class="nav-link" data-scroll-target="#properties-of-mle">Properties of MLE</a></li>
   <li><a href="#fisher-information-and-standard-errors" id="toc-fisher-information-and-standard-errors" class="nav-link" data-scroll-target="#fisher-information-and-standard-errors">Fisher information and standard errors</a></li>
   <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
@@ -693,6 +694,38 @@ Y_i = X_i'\beta + \varepsilon_i, \qquad \varepsilon_i \sim N(0, \sigma^2)
 <li><strong>Historical momentum</strong> — Gauss and Legendre published it around 1800. By the time MLE (Fisher, 1920s) and GMM (Hansen, 1982) arrived, OLS had a 120+ year head start in textbooks.</li>
 </ol>
 <p>OLS hit a sweet spot: minimal assumptions, maximum interpretability, and a formula you can compute by hand. The other methods are more general and more powerful — but OLS solved 80% of problems with 20% of the effort.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="cross-entropy-is-mle-for-classification" class="level2">
+<h2 class="anchored" data-anchor-id="cross-entropy-is-mle-for-classification">Cross-entropy is MLE for classification</h2>
+<p>OLS is MLE when the errors are normal. There’s an equally clean equivalence for classification.</p>
+<p>Suppose you have binary outcomes <span class="math inline">\(Y_i \in \{0, 1\}\)</span> and a model that predicts <span class="math inline">\(\hat{p}_i = P(Y_i = 1 \mid X_i)\)</span>. The likelihood is:</p>
+<p><span class="math display">\[
+L = \prod_{i=1}^n \hat{p}_i^{Y_i}(1 - \hat{p}_i)^{1-Y_i}
+\]</span></p>
+<p>The log-likelihood is:</p>
+<p><span class="math display">\[
+\ell = \sum_{i=1}^n \left[Y_i \log \hat{p}_i + (1 - Y_i) \log(1 - \hat{p}_i)\right]
+\]</span></p>
+<p>The <strong>cross-entropy loss</strong> is the negative of this, divided by <span class="math inline">\(n\)</span>:</p>
+<p><span class="math display">\[
+\text{CE} = -\frac{1}{n}\sum_{i=1}^n \left[Y_i \log \hat{p}_i + (1 - Y_i) \log(1 - \hat{p}_i)\right]
+\]</span></p>
+<p>Minimizing cross-entropy = maximizing log-likelihood = MLE. When you train a logistic regression or a neural network with cross-entropy loss, you are doing maximum likelihood estimation. The loss function is not an arbitrary design choice — it comes directly from the Bernoulli likelihood.</p>
+<p>For multi-class problems with <span class="math inline">\(K\)</span> classes, the likelihood is multinomial and the cross-entropy generalizes to:</p>
+<p><span class="math display">\[
+\text{CE} = -\frac{1}{n}\sum_{i=1}^n \sum_{k=1}^K Y_{ik} \log \hat{p}_{ik}
+\]</span></p>
+<p>where <span class="math inline">\(Y_{ik} = 1\)</span> if observation <span class="math inline">\(i\)</span> belongs to class <span class="math inline">\(k\)</span>. This says: maximize the predicted probability of the correct class.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>The pattern.</strong> OLS minimizes squared residuals = MLE under normality. Cross-entropy minimizes negative log-probability = MLE under Bernoulli/multinomial. In both cases, the “loss function” is just the negative log-likelihood of a specific probabilistic model. This is why <a href="training-as-mle.html">Training as MLE</a> argues that neural network training is MLE in disguise — the loss function <em>is</em> the likelihood.</p>
 </div>
 </div>
 </div>
