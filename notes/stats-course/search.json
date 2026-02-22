@@ -660,6 +660,94 @@
     ]
   },
   {
+    "objectID": "test-statistics.html",
+    "href": "test-statistics.html",
+    "title": "Test Statistics",
+    "section": "",
+    "text": "p-values & Confidence Intervals explained what a p-value means. This page explains the machinery that produces them — the test statistics. There are many, but they almost all reduce to the same core idea: how far is the estimate from the null, measured in units of its uncertainty?",
+    "crumbs": [
+      "Inference",
+      "Test Statistics"
+    ]
+  },
+  {
+    "objectID": "test-statistics.html#the-universal-structure",
+    "href": "test-statistics.html#the-universal-structure",
+    "title": "Test Statistics",
+    "section": "The universal structure",
+    "text": "The universal structure\nNearly every classical test statistic has this shape:\n\\[\n\\text{test statistic} = \\frac{(\\text{estimate} - \\text{null value})^2}{\\text{variance of estimate}}\n\\]\nThat’s a quadratic form — a squared distance, scaled by uncertainty. This is why the \\(\\chi^2\\) distribution shows up everywhere: a squared standard normal is \\(\\chi^2_1\\) by definition, and sums of squared standard normals are \\(\\chi^2\\) with more degrees of freedom.\n\n\n\n\n\n\nThe deep pattern. Linear forms (estimate \\(-\\) null, unscaled) give you \\(Z\\) or \\(t\\) statistics. Quadratic forms (squared and variance-scaled) give you \\(\\chi^2\\) or \\(F\\) statistics. Likelihood comparisons give you LR statistics. Rank-based forms give you nonparametric tests. But asymptotically, most of them converge to normal or chi-squared distributions.",
+    "crumbs": [
+      "Inference",
+      "Test Statistics"
+    ]
+  },
+  {
+    "objectID": "test-statistics.html#i.-mean-based-tests",
+    "href": "test-statistics.html#i.-mean-based-tests",
+    "title": "Test Statistics",
+    "section": "I. Mean-based tests",
+    "text": "I. Mean-based tests\n\nZ-statistic\nThe simplest test statistic. Used when the variance is known (rare) or the sample is large enough for the CLT to kick in:\n\\[\nZ = \\frac{\\hat{\\theta} - \\theta_0}{\\text{SE}(\\hat{\\theta})}\n\\]\nUnder \\(H_0\\): \\(Z \\sim N(0, 1)\\).\nYou’ll see Z-tests in large-sample regressions and most asymptotic tests in econometrics. When someone reports a “coefficient divided by its standard error” in a large sample, that’s a Z-statistic.\n\n\nt-statistic\nSame structure as \\(Z\\), but the standard error is estimated rather than known:\n\\[\nt = \\frac{\\hat{\\theta} - \\theta_0}{\\widehat{\\text{SE}}(\\hat{\\theta})}\n\\]\nUnder \\(H_0\\): \\(t \\sim t_{df}\\), where \\(df\\) depends on the sample size and number of parameters.\nThis is what standard regression output reports. Every coefficient row in a regression table has a t-statistic and a p-value derived from it.\nThe t-distribution has heavier tails than the normal — it’s more conservative, accounting for the extra uncertainty from estimating the variance. As \\(n \\to \\infty\\), the t-distribution converges to the normal, so \\(t \\to Z\\).",
+    "crumbs": [
+      "Inference",
+      "Test Statistics"
+    ]
+  },
+  {
+    "objectID": "test-statistics.html#ii.-variance-and-distribution-tests",
+    "href": "test-statistics.html#ii.-variance-and-distribution-tests",
+    "title": "Test Statistics",
+    "section": "II. Variance and distribution tests",
+    "text": "II. Variance and distribution tests\n\nChi-squared (\\(\\chi^2\\))\nThe chi-squared statistic is a general quadratic form:\n\\[\n\\chi^2 = \\sum \\frac{(O - E)^2}{E}\n\\]\nwhere \\(O\\) is observed and \\(E\\) is expected under the null. Used for goodness-of-fit tests, independence in contingency tables, and likelihood ratio tests.\nA key fact that connects everything:\n\\[\n\\text{If } Z \\sim N(0, 1), \\text{ then } Z^2 \\sim \\chi^2_1\n\\]\nThis is why \\(\\chi^2\\) shows up everywhere — many test statistics are squared normals, or sums of squared normals. When you have \\(k\\) independent squared standard normals, you get \\(\\chi^2_k\\).\n\n\nF-statistic\nUsed to test multiple restrictions simultaneously — “are all these coefficients jointly zero?”:\n\\[\nF = \\frac{(\\text{RSS}_r - \\text{RSS}_u) / q}{\\text{RSS}_u / (n - k)}\n\\]\nwhere \\(\\text{RSS}_r\\) is the residual sum of squares from the restricted model, \\(\\text{RSS}_u\\) from the unrestricted model, \\(q\\) is the number of restrictions, and \\(n - k\\) is the degrees of freedom.\nUnder \\(H_0\\): \\(F \\sim F_{q, \\, n-k}\\).\nUsed for joint hypothesis tests (“are all pre-trends zero?” in DiD), ANOVA, and overall model significance.\nThe F-statistic and the t-statistic are directly related:\n\\[\nF_{1, \\, df} = t^2\n\\]\nAn F-test with one restriction is exactly the square of the corresponding t-test. The F generalizes the t to multiple restrictions. And just as \\(t \\to Z\\) as \\(n \\to \\infty\\), we have \\(q \\cdot F_{q, n-k} \\to \\chi^2_q\\) — the F-test converges to a scaled chi-squared test in large samples.",
+    "crumbs": [
+      "Inference",
+      "Test Statistics"
+    ]
+  },
+  {
+    "objectID": "test-statistics.html#iii.-the-likelihood-based-trinity",
+    "href": "test-statistics.html#iii.-the-likelihood-based-trinity",
+    "title": "Test Statistics",
+    "section": "III. The likelihood-based trinity",
+    "text": "III. The likelihood-based trinity\nThese three tests are the workhorses of MLE-based inference. They all test the same null hypothesis and are asymptotically equivalent — but they differ in what you need to estimate.\n\nLikelihood Ratio (LR) test\nEstimate both the restricted and unrestricted models, then compare their log-likelihoods:\n\\[\nLR = -2\\left(\\ell_{\\text{restricted}} - \\ell_{\\text{unrestricted}}\\right)\n\\]\nUnder \\(H_0\\): \\(LR \\sim \\chi^2_q\\), where \\(q\\) is the number of restrictions.\nIntuition: does the likelihood drop much when you impose the restriction? If the restriction is true, the restricted model shouldn’t fit much worse, so \\(LR\\) should be small.\nUsed in logit/probit, structural estimation, and any MLE comparison.\n\n\nWald test\nEstimate only the unrestricted model, then check whether the estimates are far from the restriction:\n\\[\nW = \\frac{(\\hat{\\theta} - \\theta_0)^2}{\\text{Var}(\\hat{\\theta})}\n\\]\nUnder \\(H_0\\): \\(W \\sim \\chi^2_q\\).\nIntuition: if the restriction is true, the unrestricted estimate should land close to \\(\\theta_0\\). A large \\(W\\) means the estimate is far from the null, in variance-scaled units.\nThis is what most regression software gives you by default. In fact, t-tests and F-tests are special cases of Wald tests: the t-statistic is \\(\\sqrt{W}\\) for a single restriction, and the F-statistic is \\(W/q\\) with a finite-sample correction.\n\n\nScore (Lagrange Multiplier) test\nEstimate only the restricted model, then check whether the score (the gradient of the log-likelihood) is far from zero at the restricted estimate:\n\\[\nLM = \\left.\\frac{\\partial \\ell}{\\partial \\theta}\\right|_{\\theta = \\hat{\\theta}_r}^{\\!\\!2} \\bigg/ \\mathcal{I}(\\hat{\\theta}_r)\n\\]\nUnder \\(H_0\\): \\(LM \\sim \\chi^2_q\\).\nIntuition: if the restriction is correct, the restricted estimate should be near the peak of the log-likelihood, so the slope (score) should be near zero. A steep slope at the restricted estimate means the restriction is pushing you away from the peak.\nThe Score test is useful when the unrestricted model is hard to estimate — you only need the restricted model.\n\n\nThe trinity compared\n\n\n\nTest\nRequires estimating\nChecks\n\n\n\n\nLikelihood Ratio\nBoth models\nDid the likelihood drop?\n\n\nWald\nUnrestricted only\nIs the estimate far from the null?\n\n\nScore (LM)\nRestricted only\nIs the score far from zero?\n\n\n\nAll three converge to \\(\\chi^2_q\\) under the null. In finite samples they can disagree, but the ranking is typically: Wald \\(\\geq\\) LR \\(\\geq\\) Score (Wald tends to over-reject, Score tends to under-reject).\n\n\n\n\n\n\nWhen to use which. If you’ve already estimated the full model, use Wald — it’s what your regression output gives you. If you’re comparing nested models via MLE, use LR. If the unrestricted model is computationally expensive or doesn’t converge, use Score.",
+    "crumbs": [
+      "Inference",
+      "Test Statistics"
+    ]
+  },
+  {
+    "objectID": "test-statistics.html#iv.-nonparametric-tests",
+    "href": "test-statistics.html#iv.-nonparametric-tests",
+    "title": "Test Statistics",
+    "section": "IV. Nonparametric tests",
+    "text": "IV. Nonparametric tests\nThese don’t assume normality or any specific distribution.\n\nRank-based tests\nWilcoxon and Mann-Whitney tests replace raw values with ranks. Instead of asking “is the mean different?”, they ask “do observations from one group tend to have higher ranks?” Robust to outliers and non-normal distributions.\n\n\nKolmogorov-Smirnov (KS) test\nTests whether two distributions are equal by finding the maximum distance between their CDFs:\n\\[\nKS = \\sup_x |F_1(x) - F_2(x)|\n\\]\nThis is a whole-distribution test — it detects differences in shape, location, and spread simultaneously.",
+    "crumbs": [
+      "Inference",
+      "Test Statistics"
+    ]
+  },
+  {
+    "objectID": "test-statistics.html#v.-meta-analysis-and-multiple-testing",
+    "href": "test-statistics.html#v.-meta-analysis-and-multiple-testing",
+    "title": "Test Statistics",
+    "section": "V. Meta-analysis and multiple testing",
+    "text": "V. Meta-analysis and multiple testing\n\nFisher’s combined test\nWhen you have \\(k\\) independent p-values from separate studies and want to test whether there’s any signal across them:\n\\[\nX^2 = -2\\sum_{i=1}^k \\ln(p_i)\n\\]\nUnder the global null (all \\(H_0\\)’s are true): \\(X^2 \\sim \\chi^2_{2k}\\).\nThe intuition: under the null, p-values are uniform on \\([0, 1]\\), so \\(-2\\ln(p_i) \\sim \\chi^2_2\\). Summing them gives a \\(\\chi^2\\) with \\(2k\\) degrees of freedom.\n\n\nMultiple testing corrections\nNot a new statistic — instead, these adjust p-values or rejection thresholds when you’re running many tests simultaneously. Bonferroni (divide \\(\\alpha\\) by the number of tests), Holm, Benjamini-Hochberg (FDR control). Covered in Multiple Testing.",
+    "crumbs": [
+      "Inference",
+      "Test Statistics"
+    ]
+  },
+  {
+    "objectID": "test-statistics.html#the-relationships-between-everything",
+    "href": "test-statistics.html#the-relationships-between-everything",
+    "title": "Test Statistics",
+    "section": "The relationships between everything",
+    "text": "The relationships between everything\nHere’s how these test statistics connect to each other:\n\\[\nZ^2 = \\chi^2_1 = F_{1,\\infty} = W \\text{ (one restriction, large sample)}\n\\]\n\\[\nt^2 = F_{1, df}\n\\]\n\\[\nq \\cdot F_{q, n-k} \\;\\xrightarrow{n \\to \\infty}\\; \\chi^2_q\n\\]\n\\[\n\\text{Wald} \\approx \\text{LR} \\approx \\text{Score} \\;\\sim\\; \\chi^2_q \\text{ (asymptotically)}\n\\]\nAnd in causal inference contexts:\n\n\n\n\n\n\n\n\n\nSetting\nIndividual coefficient\nJoint test\nRobust version\n\n\n\n\nRegression\nt-test\nF-test\nCluster-robust t or F\n\n\nDiD / event study\nt (each period)\nF (all pre-trends)\nCluster-robust\n\n\nMLE (logit, probit)\nWald (z)\nLR or Wald \\(\\chi^2\\)\nSandwich-robust Wald\n\n\nBootstrap\n—\n—\nEmpirical distribution\n\n\n\n\n\n\n\n\n\nThe takeaway. Different test statistics differ in their small-sample properties, robustness, and whether they require variance estimation or rely on asymptotics. But the unifying idea is always the same: measure how far the data are from what the null hypothesis predicts, in units that account for sampling variability. The bigger that distance, the stronger the evidence against the null.",
+    "crumbs": [
+      "Inference",
+      "Test Statistics"
+    ]
+  },
+  {
     "objectID": "gmm.html",
     "href": "gmm.html",
     "title": "Generalized Method of Moments",
@@ -928,7 +1016,7 @@
     "href": "maximum-likelihood.html#ols-is-mle-under-normality",
     "title": "Maximum Likelihood Estimation",
     "section": "OLS is MLE under normality",
-    "text": "OLS is MLE under normality\nHere’s a fact that ties the course together. Suppose your regression model is:\n\\[\nY_i = X_i'\\beta + \\varepsilon_i, \\qquad \\varepsilon_i \\sim N(0, \\sigma^2)\n\\]\nThe log-likelihood for one observation is:\n\\[\n\\log f(Y_i \\mid X_i, \\beta, \\sigma^2) = -\\frac{1}{2}\\log(2\\pi\\sigma^2) - \\frac{(Y_i - X_i'\\beta)^2}{2\\sigma^2}\n\\]\nSum across all observations:\n\\[\n\\ell(\\beta, \\sigma^2) = -\\frac{n}{2}\\log(2\\pi\\sigma^2) - \\frac{1}{2\\sigma^2}\\sum_{i=1}^n (Y_i - X_i'\\beta)^2\n\\]\nTo maximize over \\(\\beta\\), you only need to worry about the second term. The \\(\\hat{\\beta}\\) that maximizes this log-likelihood is the one that minimizes \\(\\sum_i (Y_i - X_i'\\beta)^2\\) — which is OLS.\n\\[\n\\hat{\\beta}_{\\text{MLE}} = \\hat{\\beta}_{\\text{OLS}} = (X'X)^{-1}X'y\n\\]\nOLS is maximum likelihood, under the assumption that errors are normal. This is why the OLS formula feels so natural — it’s doing exactly what MLE would do in the Gaussian model. But notice: if errors aren’t normal, OLS is still the best linear unbiased estimator (by Gauss-Markov), but it’s no longer MLE.\nFor the full matrix algebra behind this, see The Algebra Behind OLS.",
+    "text": "OLS is MLE under normality\nHere’s a fact that ties the course together. Suppose your regression model is:\n\\[\nY_i = X_i'\\beta + \\varepsilon_i, \\qquad \\varepsilon_i \\sim N(0, \\sigma^2)\n\\]\nThe log-likelihood for one observation is:\n\\[\n\\log f(Y_i \\mid X_i, \\beta, \\sigma^2) = -\\frac{1}{2}\\log(2\\pi\\sigma^2) - \\frac{(Y_i - X_i'\\beta)^2}{2\\sigma^2}\n\\]\nSum across all observations:\n\\[\n\\ell(\\beta, \\sigma^2) = -\\frac{n}{2}\\log(2\\pi\\sigma^2) - \\frac{1}{2\\sigma^2}\\sum_{i=1}^n (Y_i - X_i'\\beta)^2\n\\]\nTo maximize over \\(\\beta\\), you only need to worry about the second term. The \\(\\hat{\\beta}\\) that maximizes this log-likelihood is the one that minimizes \\(\\sum_i (Y_i - X_i'\\beta)^2\\) — which is OLS.\n\\[\n\\hat{\\beta}_{\\text{MLE}} = \\hat{\\beta}_{\\text{OLS}} = (X'X)^{-1}X'y\n\\]\nOLS is maximum likelihood, under the assumption that errors are normal. This is why the OLS formula feels so natural — it’s doing exactly what MLE would do in the Gaussian model. But notice: if errors aren’t normal, OLS is still the best linear unbiased estimator (by Gauss-Markov), but it’s no longer MLE.\nFor the full matrix algebra behind this, see The Algebra Behind OLS.\n\n\n\n\n\n\nWhy is OLS so famous? If MoM, MLE, GMM, and Bayesian estimation are all valid approaches, why does OLS dominate introductory courses and applied work?\n\nClosed-form solution — \\((X'X)^{-1}X'y\\) is a formula, not an iterative algorithm. Before computers, this mattered enormously.\nMinimal assumptions — Gauss-Markov says OLS is the best linear unbiased estimator without even needing normality. You don’t need to specify the full distribution.\nIt’s MLE when errors are normal — so in the most common case, OLS is the most efficient estimator. You get MLE for free.\nInterpretability — coefficients are partial derivatives of the conditional mean. Everyone can understand “a one-unit change in \\(X\\) is associated with a \\(\\hat{\\beta}\\) change in \\(Y\\).”\nHistorical momentum — Gauss and Legendre published it around 1800. By the time MLE (Fisher, 1920s) and GMM (Hansen, 1982) arrived, OLS had a 120+ year head start in textbooks.\n\nOLS hit a sweet spot: minimal assumptions, maximum interpretability, and a formula you can compute by hand. The other methods are more general and more powerful — but OLS solved 80% of problems with 20% of the effort.",
     "crumbs": [
       "Estimation",
       "Maximum Likelihood"
@@ -1001,11 +1089,22 @@
     ]
   },
   {
+    "objectID": "regression-algebra.html#the-gauss-markov-assumptions",
+    "href": "regression-algebra.html#the-gauss-markov-assumptions",
+    "title": "The Algebra Behind OLS",
+    "section": "The Gauss-Markov assumptions",
+    "text": "The Gauss-Markov assumptions\nThe OLS formula \\(\\hat{\\beta} = (X'X)^{-1}X'y\\) is purely mechanical — it always gives you a number. But whether that number has good properties (unbiased, minimum variance) depends on a set of assumptions known as the Gauss-Markov conditions:\n\nLinearity. The true model is \\(y = X\\beta + \\varepsilon\\) — the relationship between \\(y\\) and \\(X\\) is linear in the parameters.\nStrict exogeneity. \\(E[\\varepsilon \\mid X] = 0\\) — the errors are mean-zero and uncorrelated with the regressors. This rules out omitted variable bias, reverse causality, and measurement error in \\(X\\).\nNo perfect multicollinearity. The columns of \\(X\\) are linearly independent, so \\(X'X\\) is invertible. (Near-collinearity is allowed but inflates standard errors — see below.)\nHomoskedasticity. \\(\\text{Var}(\\varepsilon \\mid X) = \\sigma^2 I\\) — the error variance is constant across observations.\nNo autocorrelation. \\(\\text{Cov}(\\varepsilon_i, \\varepsilon_j \\mid X) = 0\\) for \\(i \\neq j\\) — errors are uncorrelated with each other.\n\nUnder assumptions 1-3, OLS is unbiased: \\(E[\\hat{\\beta} \\mid X] = \\beta\\). Add 4 and 5, and the Gauss-Markov theorem kicks in: OLS is the Best Linear Unbiased Estimator (BLUE) — no other linear, unbiased estimator has smaller variance.\n\n\n\n\n\n\nWhat BLUE does and doesn’t say. Gauss-Markov says OLS is the best among linear unbiased estimators. It says nothing about nonlinear estimators — and it doesn’t require normality. If you add a sixth assumption (\\(\\varepsilon \\sim\nN(0, \\sigma^2 I)\\)), then OLS is also MLE and is the best unbiased estimator, period (not just among linear ones).\n\n\n\nNotice that assumptions 4 and 5 are about the standard errors, not the coefficient estimates. If they fail, \\(\\hat{\\beta}\\) is still unbiased — but the formula for its variance changes. That’s exactly what heteroskedasticity-robust SEs and clustered SEs fix.",
+    "crumbs": [
+      "Algebra of Regression",
+      "The Algebra Behind OLS"
+    ]
+  },
+  {
     "objectID": "regression-algebra.html#the-variance-covariance-matrix",
     "href": "regression-algebra.html#the-variance-covariance-matrix",
     "title": "The Algebra Behind OLS",
     "section": "The variance-covariance matrix",
-    "text": "The variance-covariance matrix\nWe have estimates \\(\\hat{\\beta}\\). How precise are they? Under the classical assumptions (errors are homoskedastic with variance \\(\\sigma^2\\) and uncorrelated with \\(X\\)):\n\\[\n\\boxed{\\text{Var}(\\hat{\\beta}) = \\sigma^2 (X'X)^{-1}}\n\\]\nThis is a \\(k \\times k\\) matrix — one row and column for each coefficient (including the intercept). Here’s what lives inside it:\n\n\n\n\n\n\n\n\nPosition\nContains\nTells you\n\n\n\n\nDiagonal entry \\((j, j)\\)\n\\(\\text{Var}(\\hat{\\beta}_j)\\)\nHow uncertain you are about \\(\\hat{\\beta}_j\\)\n\n\nOff-diagonal entry \\((j, m)\\)\n\\(\\text{Cov}(\\hat{\\beta}_j, \\hat{\\beta}_m)\\)\nHow estimation error in one coefficient relates to another\n\n\n\nStandard errors are the square roots of the diagonal:\n\\[\n\\text{SE}(\\hat{\\beta}_j) = \\sqrt{\\text{Var}(\\hat{\\beta}_j)} = \\sqrt{\\sigma^2 \\left[(X'X)^{-1}\\right]_{jj}}\n\\]\nIn practice, \\(\\sigma^2\\) is unknown and estimated by:\n\\[\n\\hat{\\sigma}^2 = \\frac{e'e}{n - k} = \\frac{\\sum_i \\hat{e}_i^2}{n - k}\n\\]\nwhere \\(e = y - X\\hat{\\beta}\\) are the residuals and \\(n - k\\) corrects for the degrees of freedom used up by estimating \\(k\\) parameters. This is the same \\(n-1\\) logic from Variance, SD & SE, generalized to \\(k\\) parameters.",
+    "text": "The variance-covariance matrix\nWe have estimates \\(\\hat{\\beta}\\). How precise are they? Under the Gauss-Markov assumptions (homoskedastic errors with variance \\(\\sigma^2\\), uncorrelated with \\(X\\)):\n\\[\n\\boxed{\\text{Var}(\\hat{\\beta}) = \\sigma^2 (X'X)^{-1}}\n\\]\nThis is a \\(k \\times k\\) matrix — one row and column for each coefficient (including the intercept). Here’s what lives inside it:\n\n\n\n\n\n\n\n\nPosition\nContains\nTells you\n\n\n\n\nDiagonal entry \\((j, j)\\)\n\\(\\text{Var}(\\hat{\\beta}_j)\\)\nHow uncertain you are about \\(\\hat{\\beta}_j\\)\n\n\nOff-diagonal entry \\((j, m)\\)\n\\(\\text{Cov}(\\hat{\\beta}_j, \\hat{\\beta}_m)\\)\nHow estimation error in one coefficient relates to another\n\n\n\nStandard errors are the square roots of the diagonal:\n\\[\n\\text{SE}(\\hat{\\beta}_j) = \\sqrt{\\text{Var}(\\hat{\\beta}_j)} = \\sqrt{\\sigma^2 \\left[(X'X)^{-1}\\right]_{jj}}\n\\]\nIn practice, \\(\\sigma^2\\) is unknown and estimated by:\n\\[\n\\hat{\\sigma}^2 = \\frac{e'e}{n - k} = \\frac{\\sum_i \\hat{e}_i^2}{n - k}\n\\]\nwhere \\(e = y - X\\hat{\\beta}\\) are the residuals and \\(n - k\\) corrects for the degrees of freedom used up by estimating \\(k\\) parameters. This is the same \\(n-1\\) logic from Variance, SD & SE, generalized to \\(k\\) parameters.",
     "crumbs": [
       "Algebra of Regression",
       "The Algebra Behind OLS"
@@ -1059,7 +1158,7 @@
     "href": "index.html#start-here",
     "title": "Statistical Inference",
     "section": "Start Here",
-    "text": "Start Here\n\nProbability & Uncertainty\n\nFoundations — Distributions, Sampling & Confidence Intervals\nVariance, SD & Standard Error — Population vs Sample, SD vs SE & Why n − 1\nThe Sampling Distribution — Data vs Sampling Distribution & When to Assume Normality\n\n\n\nThe Central Limit Theorem\n\nCLT Simulator — Interactive CLT Simulator\nLLN vs CLT — Why Averages Stabilize Before They Become Normal\n\n\n\nInference\n\np-values & Confidence Intervals — What They Actually Mean\nThe Bootstrap — Resampling-Based Inference\nPower, Alpha, Beta & MDE — Hypothesis Testing & Experiment Design\nMonte Carlo Experiments — How We Understand Estimators\nMultiple Testing — False Discoveries & the Replication Crisis\n\n\n\nRegression\n\nRegression & the CEF — OLS and the Conditional Expectation Function\nResiduals & Controls — Diagnostics, Partialling Out & Omitted Variable Bias\nFrisch-Waugh-Lovell — Partialling Out & OVB\n\n\n\nAlgebra of Regression\n\nThe Algebra Behind OLS — Matrix notation, the VCV matrix, and where standard errors come from\n\n\n\nEstimation\n\nMethod of Moments — Match sample moments to population moments\nMaximum Likelihood — Find the parameters that make the data most probable\nGeneralized Method of Moments — When you have more moment conditions than parameters\nBayesian Estimation — MAP, posterior mean, and the link to regularization\n\n\n\nStandard Errors & Diagnostics\n\nHeteroskedasticity — Constant vs Non-Constant Variance & Robust SEs\nClustered SEs — When Observations Aren’t Independent\nMeasurement Error — Why Noisy Regressors Bias You Toward Zero\nBias-Variance Tradeoff — Underfitting, Overfitting & MSE Decomposition\nWhen Inference Breaks Down — Why Variation Is the Fuel of Inference\n\n\n\nCausal Thinking\n\nFrom Correlation to Causation — Why Correlation Isn’t Enough & When It Becomes Causal\n\n\n\nBayesian Thinking\n\nBayesian Updating — One Gentle Introduction",
+    "text": "Start Here\n\nProbability & Uncertainty\n\nFoundations — Distributions, Sampling & Confidence Intervals\nVariance, SD & Standard Error — Population vs Sample, SD vs SE & Why n − 1\nThe Sampling Distribution — Data vs Sampling Distribution & When to Assume Normality\n\n\n\nThe Central Limit Theorem\n\nCLT Simulator — Interactive CLT Simulator\nLLN vs CLT — Why Averages Stabilize Before They Become Normal\n\n\n\nInference\n\np-values & Confidence Intervals — What They Actually Mean\nTest Statistics — Z, t, F, Chi-Squared, Wald, LR & Score\nThe Bootstrap — Resampling-Based Inference\nPower, Alpha, Beta & MDE — Hypothesis Testing & Experiment Design\nMonte Carlo Experiments — How We Understand Estimators\nMultiple Testing — False Discoveries & the Replication Crisis\n\n\n\nRegression\n\nRegression & the CEF — OLS and the Conditional Expectation Function\nResiduals & Controls — Diagnostics, Partialling Out & Omitted Variable Bias\nFrisch-Waugh-Lovell — Partialling Out & OVB\n\n\n\nAlgebra of Regression\n\nThe Algebra Behind OLS — Matrix notation, the VCV matrix, and where standard errors come from\n\n\n\nEstimation\n\nMethod of Moments — Match sample moments to population moments\nMaximum Likelihood — Find the parameters that make the data most probable\nGeneralized Method of Moments — When you have more moment conditions than parameters\nBayesian Estimation — MAP, posterior mean, and the link to regularization\n\n\n\nStandard Errors & Diagnostics\n\nHeteroskedasticity — Constant vs Non-Constant Variance & Robust SEs\nClustered SEs — When Observations Aren’t Independent\nMeasurement Error — Why Noisy Regressors Bias You Toward Zero\nBias-Variance Tradeoff — Underfitting, Overfitting & MSE Decomposition\nWhen Inference Breaks Down — Why Variation Is the Fuel of Inference\n\n\n\nCausal Thinking\n\nFrom Correlation to Causation — Why Correlation Isn’t Enough & When It Becomes Causal\n\n\n\nBayesian Thinking\n\nBayesian Updating — One Gentle Introduction",
     "crumbs": [
       "Home"
     ]

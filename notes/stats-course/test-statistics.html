@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>p-values, Confidence Intervals &amp; What They Actually Mean – Foundations of Statistical Inference</title>
+<title>Test Statistics – Foundations of Statistical Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -41,11 +41,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -116,7 +111,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./pvalues-ci.html">p-values &amp; Confidence Intervals</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./test-statistics.html">Test Statistics</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -210,13 +205,13 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pvalues-ci.html" class="sidebar-item-text sidebar-link active">
+  <a href="./pvalues-ci.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">p-values &amp; Confidence Intervals</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./test-statistics.html" class="sidebar-item-text sidebar-link">
+  <a href="./test-statistics.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Test Statistics</span></a>
   </div>
 </li>
@@ -412,33 +407,44 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#first-estimation.-then-inference." id="toc-first-estimation.-then-inference." class="nav-link active" data-scroll-target="#first-estimation.-then-inference.">First: estimation. Then: inference.</a></li>
-  <li><a href="#part-1-p-values" id="toc-part-1-p-values" class="nav-link" data-scroll-target="#part-1-p-values">Part 1: p-values</a>
+  <li><a href="#the-universal-structure" id="toc-the-universal-structure" class="nav-link active" data-scroll-target="#the-universal-structure">The universal structure</a></li>
+  <li><a href="#i.-mean-based-tests" id="toc-i.-mean-based-tests" class="nav-link" data-scroll-target="#i.-mean-based-tests">I. Mean-based tests</a>
   <ul class="collapse">
-  <li><a href="#what-is-a-test-statistic" id="toc-what-is-a-test-statistic" class="nav-link" data-scroll-target="#what-is-a-test-statistic">What is a test statistic?</a></li>
-  <li><a href="#what-a-p-value-actually-is" id="toc-what-a-p-value-actually-is" class="nav-link" data-scroll-target="#what-a-p-value-actually-is">What a p-value actually is</a></li>
-  <li><a href="#a-concrete-example" id="toc-a-concrete-example" class="nav-link" data-scroll-target="#a-concrete-example">A concrete example</a></li>
-  <li><a href="#simulation-the-p-value-machine" id="toc-simulation-the-p-value-machine" class="nav-link" data-scroll-target="#simulation-the-p-value-machine">Simulation: The p-value machine</a></li>
+  <li><a href="#z-statistic" id="toc-z-statistic" class="nav-link" data-scroll-target="#z-statistic">Z-statistic</a></li>
+  <li><a href="#t-statistic" id="toc-t-statistic" class="nav-link" data-scroll-target="#t-statistic">t-statistic</a></li>
   </ul></li>
-  <li><a href="#part-2-confidence-intervals" id="toc-part-2-confidence-intervals" class="nav-link" data-scroll-target="#part-2-confidence-intervals">Part 2: Confidence intervals</a>
+  <li><a href="#ii.-variance-and-distribution-tests" id="toc-ii.-variance-and-distribution-tests" class="nav-link" data-scroll-target="#ii.-variance-and-distribution-tests">II. Variance and distribution tests</a>
   <ul class="collapse">
-  <li><a href="#what-a-confidence-interval-actually-is" id="toc-what-a-confidence-interval-actually-is" class="nav-link" data-scroll-target="#what-a-confidence-interval-actually-is">What a confidence interval actually is</a></li>
-  <li><a href="#how-a-ci-is-constructed" id="toc-how-a-ci-is-constructed" class="nav-link" data-scroll-target="#how-a-ci-is-constructed">How a CI is constructed</a></li>
-  <li><a href="#simulation-ci-coverage" id="toc-simulation-ci-coverage" class="nav-link" data-scroll-target="#simulation-ci-coverage">Simulation: CI coverage</a></li>
+  <li><a href="#chi-squared-chi2" id="toc-chi-squared-chi2" class="nav-link" data-scroll-target="#chi-squared-chi2">Chi-squared (<span class="math inline">\(\chi^2\)</span>)</a></li>
+  <li><a href="#f-statistic" id="toc-f-statistic" class="nav-link" data-scroll-target="#f-statistic">F-statistic</a></li>
   </ul></li>
-  <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a>
+  <li><a href="#iii.-the-likelihood-based-trinity" id="toc-iii.-the-likelihood-based-trinity" class="nav-link" data-scroll-target="#iii.-the-likelihood-based-trinity">III. The likelihood-based trinity</a>
   <ul class="collapse">
-  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
+  <li><a href="#likelihood-ratio-lr-test" id="toc-likelihood-ratio-lr-test" class="nav-link" data-scroll-target="#likelihood-ratio-lr-test">Likelihood Ratio (LR) test</a></li>
+  <li><a href="#wald-test" id="toc-wald-test" class="nav-link" data-scroll-target="#wald-test">Wald test</a></li>
+  <li><a href="#score-lagrange-multiplier-test" id="toc-score-lagrange-multiplier-test" class="nav-link" data-scroll-target="#score-lagrange-multiplier-test">Score (Lagrange Multiplier) test</a></li>
+  <li><a href="#the-trinity-compared" id="toc-the-trinity-compared" class="nav-link" data-scroll-target="#the-trinity-compared">The trinity compared</a></li>
   </ul></li>
+  <li><a href="#iv.-nonparametric-tests" id="toc-iv.-nonparametric-tests" class="nav-link" data-scroll-target="#iv.-nonparametric-tests">IV. Nonparametric tests</a>
+  <ul class="collapse">
+  <li><a href="#rank-based-tests" id="toc-rank-based-tests" class="nav-link" data-scroll-target="#rank-based-tests">Rank-based tests</a></li>
+  <li><a href="#kolmogorov-smirnov-ks-test" id="toc-kolmogorov-smirnov-ks-test" class="nav-link" data-scroll-target="#kolmogorov-smirnov-ks-test">Kolmogorov-Smirnov (KS) test</a></li>
+  </ul></li>
+  <li><a href="#v.-meta-analysis-and-multiple-testing" id="toc-v.-meta-analysis-and-multiple-testing" class="nav-link" data-scroll-target="#v.-meta-analysis-and-multiple-testing">V. Meta-analysis and multiple testing</a>
+  <ul class="collapse">
+  <li><a href="#fishers-combined-test" id="toc-fishers-combined-test" class="nav-link" data-scroll-target="#fishers-combined-test">Fisher’s combined test</a></li>
+  <li><a href="#multiple-testing-corrections" id="toc-multiple-testing-corrections" class="nav-link" data-scroll-target="#multiple-testing-corrections">Multiple testing corrections</a></li>
+  </ul></li>
+  <li><a href="#the-relationships-between-everything" id="toc-the-relationships-between-everything" class="nav-link" data-scroll-target="#the-relationships-between-everything">The relationships between everything</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./pvalues-ci.html">p-values &amp; Confidence Intervals</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./test-statistics.html">Test Statistics</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">p-values, Confidence Intervals &amp; What They Actually Mean</h1>
+<h1 class="title">Test Statistics</h1>
 </div>
 
 
@@ -455,457 +461,254 @@ window.Quarto = {
 </header>
 
 
-<section id="first-estimation.-then-inference." class="level2">
-<h2 class="anchored" data-anchor-id="first-estimation.-then-inference.">First: estimation. Then: inference.</h2>
-<p>These are two separate steps, and confusing them is where most misunderstanding begins.</p>
-<p><strong>Step 1 — Estimation</strong> is about computing numbers from your data:</p>
-<ul>
-<li>You collect a sample and calculate a <strong>point estimate</strong> — your best guess at the true parameter. For example, <span class="math inline">\(\hat{\beta} = -5\)</span> or <span class="math inline">\(\bar{x} = 12.3\)</span>.</li>
-<li>You also calculate a <strong>standard error (SE)</strong> — how much that estimate would bounce around if you repeated the experiment. A small SE means your estimate is precise; a large SE means it’s noisy.</li>
-</ul>
-<p>Estimation gives you a number. It does not tell you what to <em>conclude</em>.</p>
-<p><strong>Step 2 — Inference</strong> is about drawing conclusions from those numbers:</p>
-<ul>
-<li>Is the effect real, or could it be noise? → <strong>p-value</strong></li>
-<li>What range of values is plausible for the true parameter? → <strong>confidence interval</strong></li>
-<li>Both are built from the same two ingredients: the estimate and its SE.</li>
-</ul>
-<p><span class="math display">\[\text{test statistic} = \frac{\text{estimate}}{\text{SE}} \qquad \qquad \text{CI} = \text{estimate} \pm 1.96 \times \text{SE}\]</span></p>
-<p>Everything on this page is Step 2. If the estimation step is wrong (biased estimate, wrong SE), then the inference is wrong too — no matter how sophisticated the test. <strong>Good inference starts with good estimation.</strong></p>
-<div class="callout callout-style-simple callout-note no-icon">
+<p><a href="pvalues-ci.html">p-values &amp; Confidence Intervals</a> explained what a p-value <em>means</em>. This page explains the <strong>machinery that produces them</strong> — the test statistics. There are many, but they almost all reduce to the same core idea: how far is the estimate from the null, measured in units of its uncertainty?</p>
+<section id="the-universal-structure" class="level2">
+<h2 class="anchored" data-anchor-id="the-universal-structure">The universal structure</h2>
+<p>Nearly every classical test statistic has this shape:</p>
+<p><span class="math display">\[
+\text{test statistic} = \frac{(\text{estimate} - \text{null value})^2}{\text{variance of estimate}}
+\]</span></p>
+<p>That’s a <strong>quadratic form</strong> — a squared distance, scaled by uncertainty. This is why the <span class="math inline">\(\chi^2\)</span> distribution shows up everywhere: a squared standard normal is <span class="math inline">\(\chi^2_1\)</span> by definition, and sums of squared standard normals are <span class="math inline">\(\chi^2\)</span> with more degrees of freedom.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>The Oracle View.</strong> In these simulations, we set the true <span class="math inline">\(\mu\)</span> — so we know whether <span class="math inline">\(H_0\)</span> is true, whether each CI covers the truth, and whether each rejection is a correct detection or a false alarm. In practice, you never know if <span class="math inline">\(H_0\)</span> is true. That’s the whole point of the test.</p>
+<p><strong>The deep pattern.</strong> Linear forms (estimate <span class="math inline">\(-\)</span> null, unscaled) give you <span class="math inline">\(Z\)</span> or <span class="math inline">\(t\)</span> statistics. Quadratic forms (squared and variance-scaled) give you <span class="math inline">\(\chi^2\)</span> or <span class="math inline">\(F\)</span> statistics. Likelihood comparisons give you LR statistics. Rank-based forms give you nonparametric tests. But asymptotically, most of them converge to normal or chi-squared distributions.</p>
 </div>
 </div>
 </div>
-<hr>
 </section>
-<section id="part-1-p-values" class="level2">
-<h2 class="anchored" data-anchor-id="part-1-p-values">Part 1: p-values</h2>
-<section id="what-is-a-test-statistic" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-a-test-statistic">What is a test statistic?</h3>
-<p>Before we can talk about p-values, we need the <strong>test statistic</strong> — a single number that measures <strong>how far your estimate is from what the null hypothesis predicts</strong>, in units of standard error.</p>
-<p>The most common one is the <strong>z-statistic</strong> (or <strong>t-statistic</strong> for small samples):</p>
-<p><span class="math display">\[z = \frac{\bar{x} - \mu_0}{\text{SE}} = \frac{\text{estimate} - \text{null value}}{\text{standard error}}\]</span></p>
-<p>It answers: “How many standard errors is my estimate from the null?” A <span class="math inline">\(z\)</span> of 2 means your estimate is 2 SEs away from what H₀ predicts — that’s unusual enough to start doubting H₀.</p>
+<section id="i.-mean-based-tests" class="level2">
+<h2 class="anchored" data-anchor-id="i.-mean-based-tests">I. Mean-based tests</h2>
+<section id="z-statistic" class="level3">
+<h3 class="anchored" data-anchor-id="z-statistic">Z-statistic</h3>
+<p>The simplest test statistic. Used when the variance is known (rare) or the sample is large enough for the CLT to kick in:</p>
+<p><span class="math display">\[
+Z = \frac{\hat{\theta} - \theta_0}{\text{SE}(\hat{\theta})}
+\]</span></p>
+<p>Under <span class="math inline">\(H_0\)</span>: <span class="math inline">\(Z \sim N(0, 1)\)</span>.</p>
+<p>You’ll see Z-tests in large-sample regressions and most asymptotic tests in econometrics. When someone reports a “coefficient divided by its standard error” in a large sample, that’s a Z-statistic.</p>
 </section>
-<section id="what-a-p-value-actually-is" class="level3">
-<h3 class="anchored" data-anchor-id="what-a-p-value-actually-is">What a p-value actually is</h3>
-<p>The “p” stands for <strong>probability</strong>.</p>
-<blockquote class="blockquote">
-<p><strong>The p-value is the probability of getting a test statistic as large as (or larger than) yours, <em>assuming the null hypothesis is true.</em></strong></p>
-</blockquote>
-<p>That’s it. Large <span class="math inline">\(|z|\)</span> → small p-value → more evidence against H₀.</p>
-<p>It is <strong>not</strong>:</p>
-<ul>
-<li>The probability that H₀ is true</li>
-<li>The probability that you made a mistake</li>
-<li>The probability that the result will replicate</li>
-</ul>
-<p>It’s a statement about the <em>data</em>, not about the <em>hypothesis</em>. The p-value asks: “If there really were no effect, how surprising would my data be?”</p>
-</section>
-<section id="a-concrete-example" class="level3">
-<h3 class="anchored" data-anchor-id="a-concrete-example">A concrete example</h3>
-<p>Say you’re testing whether a drug lowers blood pressure. You run a regression and get <span class="math inline">\(\hat{\beta} = -5\)</span> (blood pressure drops 5 points).</p>
-<p><strong>H₀: <span class="math inline">\(\beta = 0\)</span></strong> — the drug does nothing.</p>
-<p>The p-value asks: if the drug truly does nothing (<span class="math inline">\(\beta = 0\)</span>), what’s the probability of observing <span class="math inline">\(\hat{\beta}\)</span> as extreme as <span class="math inline">\(-5\)</span> or more?</p>
-<p>p = 0.03 means: there’s only a 3% chance of seeing an estimate this large purely from random noise. So either:</p>
-<ol type="1">
-<li>H₀ is true and you got unlucky (3% chance), or</li>
-<li>H₀ is false — the drug actually works</li>
-</ol>
-<p>You reject H₀ because 3% feels too unlikely to be just noise.</p>
-<p><strong>But the p-value never tells you <span class="math inline">\(\beta\)</span>’s actual value.</strong> It only tells you the data would be surprising <em>if <span class="math inline">\(\beta\)</span> were exactly zero</em>. This matters:</p>
-<ul>
-<li>p = 0.03 with <span class="math inline">\(\hat{\beta} = -5\)</span> → probably a real, meaningful effect</li>
-<li>p = 0.03 with <span class="math inline">\(\hat{\beta} = -0.001\)</span> and <span class="math inline">\(n = 10{,}000{,}000\)</span> → “statistically significant” but practically meaningless</li>
-</ul>
-<p>That’s why you should always look at the <strong>estimate</strong> (<span class="math inline">\(\hat{\beta}\)</span>) and <strong>confidence interval</strong> together with the p-value — not just whether p &lt; 0.05.</p>
-</section>
-<section id="simulation-the-p-value-machine" class="level3">
-<h3 class="anchored" data-anchor-id="simulation-the-p-value-machine">Simulation: The p-value machine</h3>
-<p>Draw a sample, compute a test statistic, and see where it falls on the null distribution. The shaded area <em>is</em> the p-value. Under H₀, p-values are uniformly distributed — every value between 0 and 1 is equally likely.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 680
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
-    }
-    .stats-box b { color: #2c3e50; }
-    .good { color: #27ae60; font-weight: bold; }
-    .bad  { color: #e74c3c; font-weight: bold; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      sliderInput("n", "Sample size (n):",
-                  min = 10, max = 200, value = 30, step = 5),
-
-      sliderInput("true_mu", HTML("True &amp;mu; (for data generation):"),
-                  min = -1, max = 1, value = 0, step = 0.1),
-
-      sliderInput("reps", "Number of experiments:",
-                  min = 100, max = 2000, value = 500, step = 100),
-
-      helpText("Set true \u03bc = 0 to see p-values under H\u2080.
-               Set it away from 0 to see p-values under H\u2081."),
-
-      actionButton("go", "Run experiments",
-                   class = "btn-primary", width = "100%"),
-
-      uiOutput("results")
-    ),
-
-    mainPanel(
-      width = 9,
-      fluidRow(
-        column(6, plotOutput("null_dist", height = "400px")),
-        column(6, plotOutput("pval_hist", height = "400px"))
-      )
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  dat &lt;- reactive({
-    input$go
-    n      &lt;- input$n
-    mu     &lt;- input$true_mu
-    reps   &lt;- input$reps
-
-    # Draw one sample for display
-    one_sample &lt;- rnorm(n, mean = mu, sd = 1)
-    one_z &lt;- mean(one_sample) / (1 / sqrt(n))
-    one_p &lt;- 2 * pnorm(-abs(one_z))
-
-    # Draw many samples
-    z_stats &lt;- replicate(reps, {
-      x &lt;- rnorm(n, mean = mu, sd = 1)
-      mean(x) / (1 / sqrt(n))
-    })
-    p_vals &lt;- 2 * pnorm(-abs(z_stats))
-
-    reject_rate &lt;- mean(p_vals &lt; 0.05)
-
-    list(one_z = one_z, one_p = one_p, z_stats = z_stats, p_vals = p_vals,
-         n = n, mu = mu, reps = reps, reject_rate = reject_rate)
-  })
-
-  output$null_dist &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    x &lt;- seq(-4, 4, length.out = 300)
-    y &lt;- dnorm(x)
-
-    plot(x, y, type = "l", lwd = 2.5, col = "#2c3e50",
-         xlab = "Test statistic (z)", ylab = "Density",
-         main = "Null distribution &amp; your test statistic")
-
-    # Shade p-value area (two-tailed)
-    z_abs &lt;- abs(d$one_z)
-    if (z_abs &lt; 4) {
-      x_right &lt;- seq(z_abs, 4, length.out = 100)
-      polygon(c(z_abs, x_right, 4), c(0, dnorm(x_right), 0),
-              col = adjustcolor("#e74c3c", 0.4), border = NA)
-      x_left &lt;- seq(-4, -z_abs, length.out = 100)
-      polygon(c(-4, x_left, -z_abs), c(0, dnorm(x_left), 0),
-              col = adjustcolor("#e74c3c", 0.4), border = NA)
-    }
-
-    abline(v = d$one_z, lwd = 2.5, col = "#3498db", lty = 1)
-
-    legend("topright", bty = "n", cex = 0.85,
-           legend = c("Null distribution (H\u2080)",
-                      paste0("Your z = ", round(d$one_z, 3)),
-                      paste0("p-value = ", round(d$one_p, 4))),
-           col = c("#2c3e50", "#3498db", adjustcolor("#e74c3c", 0.6)),
-           lwd = c(2.5, 2.5, 8), lty = c(1, 1, 1))
-  })
-
-  output$pval_hist &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    hist(d$p_vals, breaks = 20, probability = TRUE,
-         col = "#3498db30", border = "#3498db80",
-         main = paste0("Distribution of p-values (",
-                       d$reps, " experiments)"),
-         xlab = "p-value", ylab = "Density",
-         xlim = c(0, 1))
-
-    if (abs(d$mu) &lt; 0.001) {
-      abline(h = 1, lty = 2, lwd = 2, col = "#e74c3c")
-      legend("topright", bty = "n", cex = 0.85,
-             legend = c("p-value histogram",
-                        "Uniform(0,1) reference"),
-             col = c("#3498db80", "#e74c3c"),
-             lwd = c(8, 2), lty = c(1, 2))
-    } else {
-      legend("topright", bty = "n", cex = 0.85,
-             legend = paste0("Under H\u2081 (\u03bc = ", d$mu, "):\n",
-                            "p-values pile up near 0"))
-    }
-  })
-
-  output$results &lt;- renderUI({
-    d &lt;- dat()
-
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;This sample:&lt;/b&gt;&lt;br&gt;",
-        "z = ", round(d$one_z, 3), "&lt;br&gt;",
-        "p = ", round(d$one_p, 4), " ",
-        ifelse(d$one_p &lt; 0.05,
-               "&lt;span class='bad'&gt;(&amp;lt; 0.05)&lt;/span&gt;",
-               "&lt;span class='good'&gt;(\u2265 0.05)&lt;/span&gt;"), "&lt;br&gt;",
-        "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;Across ", d$reps, " experiments:&lt;/b&gt;&lt;br&gt;",
-        "Rejection rate: ", round(d$reject_rate * 100, 1), "%&lt;br&gt;",
-        "&lt;small&gt;",
-        ifelse(abs(d$mu) &lt; 0.001,
-               "Under H\u2080, this should be ~5%.",
-               paste0("Under H\u2081, this is the power.")),
-        "&lt;/small&gt;"
-      ))
-    )
-  })
-}
-
-shinyApp(ui, server)</code></pre>
-<section id="things-to-try" class="level4">
-<h4 class="anchored" data-anchor-id="things-to-try">Things to try</h4>
-<ul>
-<li><strong>True <span class="math inline">\(\mu\)</span> = 0:</strong> p-values are uniform — flat histogram. This is the defining property of a valid test. About 5% of p-values fall below 0.05 purely by chance.</li>
-<li><strong>True <span class="math inline">\(\mu\)</span> = 0.5:</strong> p-values pile up near 0. The further <span class="math inline">\(\mu\)</span> is from 0, the more powerful the test, and the smaller the p-values tend to be.</li>
-</ul>
-<hr>
+<section id="t-statistic" class="level3">
+<h3 class="anchored" data-anchor-id="t-statistic">t-statistic</h3>
+<p>Same structure as <span class="math inline">\(Z\)</span>, but the standard error is <em>estimated</em> rather than known:</p>
+<p><span class="math display">\[
+t = \frac{\hat{\theta} - \theta_0}{\widehat{\text{SE}}(\hat{\theta})}
+\]</span></p>
+<p>Under <span class="math inline">\(H_0\)</span>: <span class="math inline">\(t \sim t_{df}\)</span>, where <span class="math inline">\(df\)</span> depends on the sample size and number of parameters.</p>
+<p>This is what standard regression output reports. Every coefficient row in a regression table has a t-statistic and a p-value derived from it.</p>
+<p>The t-distribution has heavier tails than the normal — it’s more conservative, accounting for the extra uncertainty from estimating the variance. As <span class="math inline">\(n \to \infty\)</span>, the t-distribution converges to the normal, so <span class="math inline">\(t \to Z\)</span>.</p>
 </section>
 </section>
+<section id="ii.-variance-and-distribution-tests" class="level2">
+<h2 class="anchored" data-anchor-id="ii.-variance-and-distribution-tests">II. Variance and distribution tests</h2>
+<section id="chi-squared-chi2" class="level3">
+<h3 class="anchored" data-anchor-id="chi-squared-chi2">Chi-squared (<span class="math inline">\(\chi^2\)</span>)</h3>
+<p>The chi-squared statistic is a general quadratic form:</p>
+<p><span class="math display">\[
+\chi^2 = \sum \frac{(O - E)^2}{E}
+\]</span></p>
+<p>where <span class="math inline">\(O\)</span> is observed and <span class="math inline">\(E\)</span> is expected under the null. Used for goodness-of-fit tests, independence in contingency tables, and likelihood ratio tests.</p>
+<p>A key fact that connects everything:</p>
+<p><span class="math display">\[
+\text{If } Z \sim N(0, 1), \text{ then } Z^2 \sim \chi^2_1
+\]</span></p>
+<p>This is why <span class="math inline">\(\chi^2\)</span> shows up everywhere — many test statistics are squared normals, or sums of squared normals. When you have <span class="math inline">\(k\)</span> independent squared standard normals, you get <span class="math inline">\(\chi^2_k\)</span>.</p>
 </section>
-<section id="part-2-confidence-intervals" class="level2">
-<h2 class="anchored" data-anchor-id="part-2-confidence-intervals">Part 2: Confidence intervals</h2>
-<section id="what-a-confidence-interval-actually-is" class="level3">
-<h3 class="anchored" data-anchor-id="what-a-confidence-interval-actually-is">What a confidence interval actually is</h3>
-<blockquote class="blockquote">
-<p><strong>A 95% CI is constructed by a procedure that, in repeated sampling, captures the true parameter 95% of the time.</strong></p>
-</blockquote>
-<p>It is <strong>not</strong>:</p>
-<ul>
-<li>A 95% probability that the true parameter is inside <em>this particular</em> interval</li>
-<li>A range where 95% of the data falls</li>
-<li>A range where 95% of sample means fall</li>
-</ul>
-<p>Once you compute a specific CI, the true parameter is either in it or it isn’t — there’s no probability about it. The 95% refers to the <em>method</em>, not to any single interval.</p>
+<section id="f-statistic" class="level3">
+<h3 class="anchored" data-anchor-id="f-statistic">F-statistic</h3>
+<p>Used to test <strong>multiple restrictions simultaneously</strong> — “are all these coefficients jointly zero?”:</p>
+<p><span class="math display">\[
+F = \frac{(\text{RSS}_r - \text{RSS}_u) / q}{\text{RSS}_u / (n - k)}
+\]</span></p>
+<p>where <span class="math inline">\(\text{RSS}_r\)</span> is the residual sum of squares from the restricted model, <span class="math inline">\(\text{RSS}_u\)</span> from the unrestricted model, <span class="math inline">\(q\)</span> is the number of restrictions, and <span class="math inline">\(n - k\)</span> is the degrees of freedom.</p>
+<p>Under <span class="math inline">\(H_0\)</span>: <span class="math inline">\(F \sim F_{q, \, n-k}\)</span>.</p>
+<p>Used for joint hypothesis tests (“are all pre-trends zero?” in DiD), ANOVA, and overall model significance.</p>
+<p>The F-statistic and the t-statistic are directly related:</p>
+<p><span class="math display">\[
+F_{1, \, df} = t^2
+\]</span></p>
+<p>An F-test with one restriction is exactly the square of the corresponding t-test. The F generalizes the t to multiple restrictions. And just as <span class="math inline">\(t \to Z\)</span> as <span class="math inline">\(n \to \infty\)</span>, we have <span class="math inline">\(q \cdot F_{q, n-k} \to \chi^2_q\)</span> — the F-test converges to a scaled chi-squared test in large samples.</p>
 </section>
-<section id="how-a-ci-is-constructed" class="level3">
-<h3 class="anchored" data-anchor-id="how-a-ci-is-constructed">How a CI is constructed</h3>
-<p>The recipe is simple. You need three ingredients:</p>
-<ol type="1">
-<li><strong>A point estimate</strong> — your best guess (e.g., <span class="math inline">\(\bar{x}\)</span> or <span class="math inline">\(\hat{\beta}\)</span>)</li>
-<li><strong>A standard error</strong> — how much the estimate bounces around due to sampling</li>
-<li><strong>A critical value</strong> — how many SEs to go out for your desired confidence level</li>
-</ol>
-<p>The formula for a 95% CI for a mean:</p>
-<p><span class="math display">\[\text{CI} = \bar{x} \pm z_{0.975} \times \text{SE} = \bar{x} \pm 1.96 \times \frac{s}{\sqrt{n}}\]</span></p>
-<p>That’s it: <strong>estimate ± margin of error</strong>. The margin of error is just a scaled-up standard error.</p>
+</section>
+<section id="iii.-the-likelihood-based-trinity" class="level2">
+<h2 class="anchored" data-anchor-id="iii.-the-likelihood-based-trinity">III. The likelihood-based trinity</h2>
+<p>These three tests are the workhorses of <a href="maximum-likelihood.html">MLE</a>-based inference. They all test the same null hypothesis and are <strong>asymptotically equivalent</strong> — but they differ in what you need to estimate.</p>
+<section id="likelihood-ratio-lr-test" class="level3">
+<h3 class="anchored" data-anchor-id="likelihood-ratio-lr-test">Likelihood Ratio (LR) test</h3>
+<p>Estimate <strong>both</strong> the restricted and unrestricted models, then compare their log-likelihoods:</p>
+<p><span class="math display">\[
+LR = -2\left(\ell_{\text{restricted}} - \ell_{\text{unrestricted}}\right)
+\]</span></p>
+<p>Under <span class="math inline">\(H_0\)</span>: <span class="math inline">\(LR \sim \chi^2_q\)</span>, where <span class="math inline">\(q\)</span> is the number of restrictions.</p>
+<p><strong>Intuition:</strong> does the likelihood drop much when you impose the restriction? If the restriction is true, the restricted model shouldn’t fit much worse, so <span class="math inline">\(LR\)</span> should be small.</p>
+<p>Used in logit/probit, structural estimation, and any MLE comparison.</p>
+</section>
+<section id="wald-test" class="level3">
+<h3 class="anchored" data-anchor-id="wald-test">Wald test</h3>
+<p>Estimate only the <strong>unrestricted</strong> model, then check whether the estimates are far from the restriction:</p>
+<p><span class="math display">\[
+W = \frac{(\hat{\theta} - \theta_0)^2}{\text{Var}(\hat{\theta})}
+\]</span></p>
+<p>Under <span class="math inline">\(H_0\)</span>: <span class="math inline">\(W \sim \chi^2_q\)</span>.</p>
+<p><strong>Intuition:</strong> if the restriction is true, the unrestricted estimate should land close to <span class="math inline">\(\theta_0\)</span>. A large <span class="math inline">\(W\)</span> means the estimate is far from the null, in variance-scaled units.</p>
+<p>This is what most regression software gives you by default. In fact, <strong>t-tests and F-tests are special cases of Wald tests</strong>: the t-statistic is <span class="math inline">\(\sqrt{W}\)</span> for a single restriction, and the F-statistic is <span class="math inline">\(W/q\)</span> with a finite-sample correction.</p>
+</section>
+<section id="score-lagrange-multiplier-test" class="level3">
+<h3 class="anchored" data-anchor-id="score-lagrange-multiplier-test">Score (Lagrange Multiplier) test</h3>
+<p>Estimate only the <strong>restricted</strong> model, then check whether the score (the gradient of the log-likelihood) is far from zero at the restricted estimate:</p>
+<p><span class="math display">\[
+LM = \left.\frac{\partial \ell}{\partial \theta}\right|_{\theta = \hat{\theta}_r}^{\!\!2} \bigg/ \mathcal{I}(\hat{\theta}_r)
+\]</span></p>
+<p>Under <span class="math inline">\(H_0\)</span>: <span class="math inline">\(LM \sim \chi^2_q\)</span>.</p>
+<p><strong>Intuition:</strong> if the restriction is correct, the restricted estimate should be near the peak of the log-likelihood, so the slope (score) should be near zero. A steep slope at the restricted estimate means the restriction is pushing you away from the peak.</p>
+<p>The Score test is useful when the <em>unrestricted</em> model is hard to estimate — you only need the restricted model.</p>
+</section>
+<section id="the-trinity-compared" class="level3">
+<h3 class="anchored" data-anchor-id="the-trinity-compared">The trinity compared</h3>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th style="text-align: center;">Confidence level</th>
-<th style="text-align: center;">Critical value (<span class="math inline">\(z\)</span>)</th>
-<th style="text-align: center;">Margin of error</th>
+<th style="text-align: left;">Test</th>
+<th style="text-align: left;">Requires estimating</th>
+<th style="text-align: left;">Checks</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">90%</td>
-<td style="text-align: center;">1.645</td>
-<td style="text-align: center;">Narrower CI</td>
+<td style="text-align: left;">Likelihood Ratio</td>
+<td style="text-align: left;">Both models</td>
+<td style="text-align: left;">Did the likelihood drop?</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">95%</td>
-<td style="text-align: center;">1.960</td>
-<td style="text-align: center;">Standard</td>
+<td style="text-align: left;">Wald</td>
+<td style="text-align: left;">Unrestricted only</td>
+<td style="text-align: left;">Is the estimate far from the null?</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">99%</td>
-<td style="text-align: center;">2.576</td>
-<td style="text-align: center;">Wider CI</td>
+<td style="text-align: left;">Score (LM)</td>
+<td style="text-align: left;">Restricted only</td>
+<td style="text-align: left;">Is the score far from zero?</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Where does the 1.96 come from?</strong> The middle 95% of a standard normal distribution falls between <span class="math inline">\(-1.96\)</span> and <span class="math inline">\(+1.96\)</span>. So if the sampling distribution of <span class="math inline">\(\bar{x}\)</span> is approximately normal (CLT), going out 1.96 SEs in each direction captures the true mean 95% of the time.</p>
-<p><strong>For small samples</strong> (roughly <span class="math inline">\(n &lt; 30\)</span>), replace the <span class="math inline">\(z\)</span> critical value with a <span class="math inline">\(t\)</span> critical value from the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n - 1\)</span> degrees of freedom. The <span class="math inline">\(t\)</span>-distribution has heavier tails, making the CI wider to account for the extra uncertainty in estimating the SE from small samples. As <span class="math inline">\(n\)</span> grows, the <span class="math inline">\(t\)</span> and <span class="math inline">\(z\)</span> values converge.</p>
-<p><strong>The key insight:</strong> a CI is wide when (a) the data is noisy (large <span class="math inline">\(s\)</span>), (b) the sample is small (small <span class="math inline">\(n\)</span>), or (c) you demand more confidence (larger critical value). You can’t have precision, small samples, and high confidence all at once — pick two.</p>
-</section>
-<section id="simulation-ci-coverage" class="level3">
-<h3 class="anchored" data-anchor-id="simulation-ci-coverage">Simulation: CI coverage</h3>
-<p>Draw 100 confidence intervals. Each one either contains the true <span class="math inline">\(\mu\)</span> (blue) or misses it (red). Over many experiments, about 95% contain <span class="math inline">\(\mu\)</span> — but any <em>single</em> CI either does or doesn’t. The 95% is about the procedure, not about your interval.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 680
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
-    }
-    .stats-box b { color: #2c3e50; }
-    .good { color: #27ae60; font-weight: bold; }
-    .bad  { color: #e74c3c; font-weight: bold; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      sliderInput("n2", "Sample size (n):",
-                  min = 5, max = 100, value = 25, step = 5),
-
-      sliderInput("conf", "Confidence level:",
-                  min = 0.80, max = 0.99, value = 0.95, step = 0.01),
-
-      sliderInput("n_ci", "Number of CIs to draw:",
-                  min = 20, max = 200, value = 100, step = 10),
-
-      actionButton("go2", "Draw new CIs",
-                   class = "btn-primary", width = "100%"),
-
-      uiOutput("results2")
-    ),
-
-    mainPanel(
-      width = 9,
-      plotOutput("ci_plot", height = "550px")
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  dat &lt;- reactive({
-    input$go2
-    n     &lt;- input$n2
-    conf  &lt;- input$conf
-    n_ci  &lt;- input$n_ci
-    mu    &lt;- 5  # true mean
-    sigma &lt;- 2
-
-    z &lt;- qnorm(1 - (1 - conf) / 2)
-
-    results &lt;- t(replicate(n_ci, {
-      x &lt;- rnorm(n, mean = mu, sd = sigma)
-      xbar &lt;- mean(x)
-      se &lt;- sd(x) / sqrt(n)
-      lo &lt;- xbar - z * se
-      hi &lt;- xbar + z * se
-      c(xbar = xbar, lo = lo, hi = hi, covers = (lo &lt;= mu &amp; mu &lt;= hi))
-    }))
-
-    list(results = results, mu = mu, n = n, conf = conf, n_ci = n_ci)
-  })
-
-  output$ci_plot &lt;- renderPlot({
-    d &lt;- dat()
-    res &lt;- d$results
-    n_ci &lt;- d$n_ci
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    covers &lt;- as.logical(res[, "covers"])
-    cols &lt;- ifelse(covers, "#3498db", "#e74c3c")
-
-    plot(NULL, xlim = range(res[, c("lo", "hi")]),
-         ylim = c(0.5, n_ci + 0.5),
-         xlab = expression("Value of " * mu),
-         ylab = "Experiment number",
-         main = paste0(n_ci, " Confidence Intervals (",
-                       d$conf * 100, "% level)"),
-         yaxt = "n")
-
-    # Draw CIs
-    segments(res[, "lo"], seq_len(n_ci), res[, "hi"], seq_len(n_ci),
-             col = cols, lwd = 1.5)
-    points(res[, "xbar"], seq_len(n_ci), pch = 16, cex = 0.5, col = cols)
-
-    # True mu
-    abline(v = d$mu, lty = 2, lwd = 2.5, col = "#2c3e50")
-
-    n_miss &lt;- sum(!covers)
-    legend("topright", bty = "n", cex = 0.9,
-           legend = c(paste0("Contains \u03bc (", sum(covers), ")"),
-                      paste0("Misses \u03bc (", n_miss, ")"),
-                      paste0("True \u03bc = ", d$mu)),
-           col = c("#3498db", "#e74c3c", "#2c3e50"),
-           lwd = c(3, 3, 2.5), lty = c(1, 1, 2))
-  })
-
-  output$results2 &lt;- renderUI({
-    d &lt;- dat()
-    covers &lt;- as.logical(d$results[, "covers"])
-    cover_rate &lt;- mean(covers)
-
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;Coverage rate:&lt;/b&gt; &lt;span class='",
-        ifelse(abs(cover_rate - d$conf) &lt; 0.05, "good", "bad"), "'&gt;",
-        round(cover_rate * 100, 1), "%&lt;/span&gt;&lt;br&gt;",
-        "&lt;b&gt;Target:&lt;/b&gt; ", d$conf * 100, "%&lt;br&gt;",
-        "&lt;b&gt;Missed:&lt;/b&gt; ", sum(!covers), " of ", d$n_ci, "&lt;br&gt;",
-        "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;small&gt;Each red line is a CI that&lt;br&gt;",
-        "does not contain the true \u03bc.&lt;br&gt;",
-        "The method gets it right ~",
-        d$conf * 100, "% of the time.&lt;/small&gt;"
-      ))
-    )
-  })
-}
-
-shinyApp(ui, server)</code></pre>
-<section id="things-to-try-1" class="level4">
-<h4 class="anchored" data-anchor-id="things-to-try-1">Things to try</h4>
-<ul>
-<li><strong>95% level:</strong> roughly 5 out of 100 CIs miss <span class="math inline">\(\mu\)</span> (shown in red). Click “Draw new CIs” several times — the exact number varies, but it averages to 5%.</li>
-<li><strong>Change confidence to 99%:</strong> fewer CIs miss <span class="math inline">\(\mu\)</span>, but each CI is wider. There’s always a tradeoff between coverage and precision.</li>
-<li><strong>Small n (n = 5):</strong> the CIs are very wide. With little data, you can’t be precise. This is the price of honesty.</li>
-</ul>
-<hr>
+<p>All three converge to <span class="math inline">\(\chi^2_q\)</span> under the null. In finite samples they can disagree, but the ranking is typically: Wald <span class="math inline">\(\geq\)</span> LR <span class="math inline">\(\geq\)</span> Score (Wald tends to over-reject, Score tends to under-reject).</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>When to use which.</strong> If you’ve already estimated the full model, use Wald — it’s what your regression output gives you. If you’re comparing nested models via MLE, use LR. If the unrestricted model is computationally expensive or doesn’t converge, use Score.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
+<section id="iv.-nonparametric-tests" class="level2">
+<h2 class="anchored" data-anchor-id="iv.-nonparametric-tests">IV. Nonparametric tests</h2>
+<p>These don’t assume normality or any specific distribution.</p>
+<section id="rank-based-tests" class="level3">
+<h3 class="anchored" data-anchor-id="rank-based-tests">Rank-based tests</h3>
+<p><strong>Wilcoxon</strong> and <strong>Mann-Whitney</strong> tests replace raw values with ranks. Instead of asking “is the mean different?”, they ask “do observations from one group tend to have higher ranks?” Robust to outliers and non-normal distributions.</p>
 </section>
-<section id="the-bottom-line" class="level2">
-<h2 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h2>
-<ul>
-<li>A p-value is <strong>not</strong> the probability the null is true. It’s the probability of seeing data this extreme <em>if</em> the null were true.</li>
-<li>A confidence interval is <strong>not</strong> a probability statement about <span class="math inline">\(\mu\)</span>. It’s a statement about the <em>procedure</em>: if you repeated the experiment many times, 95% of your CIs would contain <span class="math inline">\(\mu\)</span>.</li>
-<li>Both concepts are statements about <strong>long-run frequency</strong>, not about any single experiment. This is what makes frequentist inference subtle — and why Bayesian methods (which <em>can</em> make probability statements about parameters) are appealing to many.</li>
-</ul>
-<hr>
-<section id="did-you-know" class="level3">
-<h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
-<ul>
-<li>The p-value was popularized by <strong>R.A. Fisher</strong> in the 1920s as an informal measure of evidence against the null. But the rigid “reject if p &lt; 0.05” framework came from <strong>Jerzy Neyman</strong> and <strong>Egon Pearson</strong> in the 1930s. Fisher and Neyman-Pearson fundamentally disagreed about what statistical testing means, and the debate was never resolved — we use an awkward hybrid of both frameworks to this day.</li>
-<li>In 2016, the <strong>American Statistical Association</strong> issued its first-ever formal statement on p-values, warning against common misinterpretations. Statement #2: “P-values do not measure the probability that the studied hypothesis is true.”</li>
-<li><strong>Confidence intervals</strong> were invented by Neyman in 1937. He was explicit that the 95% refers to the procedure, not to any single interval. He wrote: “It is not possible to say that the probability of the true value falling in any particular interval is 95%.”</li>
-</ul>
+<section id="kolmogorov-smirnov-ks-test" class="level3">
+<h3 class="anchored" data-anchor-id="kolmogorov-smirnov-ks-test">Kolmogorov-Smirnov (KS) test</h3>
+<p>Tests whether two distributions are equal by finding the maximum distance between their CDFs:</p>
+<p><span class="math display">\[
+KS = \sup_x |F_1(x) - F_2(x)|
+\]</span></p>
+<p>This is a whole-distribution test — it detects differences in shape, location, and spread simultaneously.</p>
+</section>
+</section>
+<section id="v.-meta-analysis-and-multiple-testing" class="level2">
+<h2 class="anchored" data-anchor-id="v.-meta-analysis-and-multiple-testing">V. Meta-analysis and multiple testing</h2>
+<section id="fishers-combined-test" class="level3">
+<h3 class="anchored" data-anchor-id="fishers-combined-test">Fisher’s combined test</h3>
+<p>When you have <span class="math inline">\(k\)</span> independent p-values from separate studies and want to test whether there’s <em>any</em> signal across them:</p>
+<p><span class="math display">\[
+X^2 = -2\sum_{i=1}^k \ln(p_i)
+\]</span></p>
+<p>Under the global null (all <span class="math inline">\(H_0\)</span>’s are true): <span class="math inline">\(X^2 \sim \chi^2_{2k}\)</span>.</p>
+<p>The intuition: under the null, p-values are uniform on <span class="math inline">\([0, 1]\)</span>, so <span class="math inline">\(-2\ln(p_i) \sim \chi^2_2\)</span>. Summing them gives a <span class="math inline">\(\chi^2\)</span> with <span class="math inline">\(2k\)</span> degrees of freedom.</p>
+</section>
+<section id="multiple-testing-corrections" class="level3">
+<h3 class="anchored" data-anchor-id="multiple-testing-corrections">Multiple testing corrections</h3>
+<p>Not a new statistic — instead, these adjust p-values or rejection thresholds when you’re running many tests simultaneously. Bonferroni (divide <span class="math inline">\(\alpha\)</span> by the number of tests), Holm, Benjamini-Hochberg (FDR control). Covered in <a href="multiple-testing.html">Multiple Testing</a>.</p>
+</section>
+</section>
+<section id="the-relationships-between-everything" class="level2">
+<h2 class="anchored" data-anchor-id="the-relationships-between-everything">The relationships between everything</h2>
+<p>Here’s how these test statistics connect to each other:</p>
+<p><span class="math display">\[
+Z^2 = \chi^2_1 = F_{1,\infty} = W \text{ (one restriction, large sample)}
+\]</span></p>
+<p><span class="math display">\[
+t^2 = F_{1, df}
+\]</span></p>
+<p><span class="math display">\[
+q \cdot F_{q, n-k} \;\xrightarrow{n \to \infty}\; \chi^2_q
+\]</span></p>
+<p><span class="math display">\[
+\text{Wald} \approx \text{LR} \approx \text{Score} \;\sim\; \chi^2_q \text{ (asymptotically)}
+\]</span></p>
+<p>And in causal inference contexts:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 37%">
+<col style="width: 20%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Setting</th>
+<th style="text-align: left;">Individual coefficient</th>
+<th style="text-align: left;">Joint test</th>
+<th style="text-align: left;">Robust version</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Regression</td>
+<td style="text-align: left;">t-test</td>
+<td style="text-align: left;">F-test</td>
+<td style="text-align: left;">Cluster-robust t or F</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DiD / event study</td>
+<td style="text-align: left;">t (each period)</td>
+<td style="text-align: left;">F (all pre-trends)</td>
+<td style="text-align: left;">Cluster-robust</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MLE (logit, probit)</td>
+<td style="text-align: left;">Wald (z)</td>
+<td style="text-align: left;">LR or Wald <span class="math inline">\(\chi^2\)</span></td>
+<td style="text-align: left;">Sandwich-robust Wald</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bootstrap</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Empirical distribution</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>The takeaway.</strong> Different test statistics differ in their small-sample properties, robustness, and whether they require variance estimation or rely on asymptotics. But the unifying idea is always the same: measure how far the data are from what the null hypothesis predicts, in units that account for sampling variability. The bigger that distance, the stronger the evidence against the null.</p>
+</div>
+</div>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
