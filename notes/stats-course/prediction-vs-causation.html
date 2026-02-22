@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Generalized Method of Moments – Foundations of Statistical Inference</title>
+<title>Prediction vs Causation in Foundation Models – Foundations of Statistical Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -111,7 +111,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./method-of-moments.html">Estimation</a></li><li class="breadcrumb-item"><a href="./gmm.html">Generalized Method of Moments</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./training-as-mle.html">Statistical Foundations of AI</a></li><li class="breadcrumb-item"><a href="./prediction-vs-causation.html">Prediction vs Causation in Foundation Models</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -310,7 +310,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gmm.html" class="sidebar-item-text sidebar-link active">
+  <a href="./gmm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Generalized Method of Moments</span></a>
   </div>
 </li>
@@ -420,7 +420,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./prediction-vs-causation.html" class="sidebar-item-text sidebar-link">
+  <a href="./prediction-vs-causation.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Prediction vs Causation in Foundation Models</span></a>
   </div>
 </li>
@@ -448,28 +448,20 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#from-mom-to-gmm" id="toc-from-mom-to-gmm" class="nav-link active" data-scroll-target="#from-mom-to-gmm">From MoM to GMM</a></li>
-  <li><a href="#the-gmm-estimator" id="toc-the-gmm-estimator" class="nav-link" data-scroll-target="#the-gmm-estimator">The GMM estimator</a>
-  <ul class="collapse">
-  <li><a href="#choosing-w" id="toc-choosing-w" class="nav-link" data-scroll-target="#choosing-w">Choosing <span class="math inline">\(W\)</span></a></li>
-  </ul></li>
-  <li><a href="#examples-that-build-on-the-course" id="toc-examples-that-build-on-the-course" class="nav-link" data-scroll-target="#examples-that-build-on-the-course">Examples that build on the course</a>
-  <ul class="collapse">
-  <li><a href="#ols-as-gmm" id="toc-ols-as-gmm" class="nav-link" data-scroll-target="#ols-as-gmm">OLS as GMM</a></li>
-  <li><a href="#iv2sls-as-gmm" id="toc-iv2sls-as-gmm" class="nav-link" data-scroll-target="#iv2sls-as-gmm">IV/2SLS as GMM</a></li>
-  </ul></li>
-  <li><a href="#the-j-test-overidentification-test" id="toc-the-j-test-overidentification-test" class="nav-link" data-scroll-target="#the-j-test-overidentification-test">The J-test (overidentification test)</a></li>
-  <li><a href="#when-to-use-gmm" id="toc-when-to-use-gmm" class="nav-link" data-scroll-target="#when-to-use-gmm">When to use GMM</a></li>
-  <li><a href="#connecting-to-mle" id="toc-connecting-to-mle" class="nav-link" data-scroll-target="#connecting-to-mle">Connecting to MLE</a></li>
+  <li><a href="#py-mid-x-vs-py-mid-dox" id="toc-py-mid-x-vs-py-mid-dox" class="nav-link active" data-scroll-target="#py-mid-x-vs-py-mid-dox"><span class="math inline">\(P(Y \mid X)\)</span> vs <span class="math inline">\(P(Y \mid do(X))\)</span></a></li>
+  <li><a href="#what-foundation-models-actually-learn" id="toc-what-foundation-models-actually-learn" class="nav-link" data-scroll-target="#what-foundation-models-actually-learn">What foundation models actually learn</a></li>
+  <li><a href="#identification-vs-training" id="toc-identification-vs-training" class="nav-link" data-scroll-target="#identification-vs-training">Identification vs training</a></li>
+  <li><a href="#in-context-learning-and-bayesian-updating" id="toc-in-context-learning-and-bayesian-updating" class="nav-link" data-scroll-target="#in-context-learning-and-bayesian-updating">In-context learning and Bayesian updating</a></li>
+  <li><a href="#implications-for-applied-work" id="toc-implications-for-applied-work" class="nav-link" data-scroll-target="#implications-for-applied-work">Implications for applied work</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./method-of-moments.html">Estimation</a></li><li class="breadcrumb-item"><a href="./gmm.html">Generalized Method of Moments</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./training-as-mle.html">Statistical Foundations of AI</a></li><li class="breadcrumb-item"><a href="./prediction-vs-causation.html">Prediction vs Causation in Foundation Models</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Generalized Method of Moments</h1>
+<h1 class="title">Prediction vs Causation in Foundation Models</h1>
 </div>
 
 
@@ -486,111 +478,120 @@ window.Quarto = {
 </header>
 
 
-<p><a href="method-of-moments.html">Method of Moments</a> is simple but leaves a key question unanswered: <em>which</em> moments should you match? And what if you have more moment conditions than parameters? GMM formalizes this. It takes a set of moment conditions — potentially more than you need — and finds the parameters that satisfy them as closely as possible in a precise, optimal sense.</p>
-<section id="from-mom-to-gmm" class="level2">
-<h2 class="anchored" data-anchor-id="from-mom-to-gmm">From MoM to GMM</h2>
-<p>Recall how MoM works: you have <span class="math inline">\(k\)</span> parameters and you pick <span class="math inline">\(k\)</span> moment conditions. Set the sample moments equal to zero and solve. When you have exactly as many conditions as parameters — the <strong>just-identified</strong> case — there’s a unique solution and everything is clean.</p>
-<p>But in practice, economic theory or statistical reasoning often gives you <em>more</em> moment conditions than parameters. Suppose you have <span class="math inline">\(m\)</span> conditions for <span class="math inline">\(k\)</span> parameters, with <span class="math inline">\(m &gt; k\)</span>. Now the system is <strong>over-identified</strong>: you can’t satisfy all <span class="math inline">\(m\)</span> conditions exactly, so you need a way to get as close as possible.</p>
-<p>That’s what GMM does. Instead of solving a system of equations, it minimizes a measure of how far the sample moments are from zero.</p>
+<p>Foundation models — large language models, vision transformers, multimodal systems — are extraordinarily good at prediction. Given a prompt, they produce a continuation that is statistically plausible. Given an image, they classify it accurately. But prediction and causal reasoning are fundamentally different tasks, and conflating them is one of the most common errors in applied work that uses these models.</p>
+<section id="py-mid-x-vs-py-mid-dox" class="level2">
+<h2 class="anchored" data-anchor-id="py-mid-x-vs-py-mid-dox"><span class="math inline">\(P(Y \mid X)\)</span> vs <span class="math inline">\(P(Y \mid do(X))\)</span></h2>
+<p>The distinction is precise. A predictive model learns the <strong>conditional distribution</strong>:</p>
+<p><span class="math display">\[
+P(Y \mid X)
+\]</span></p>
+<p>This answers: “Given that I observe <span class="math inline">\(X = x\)</span>, what is the distribution of <span class="math inline">\(Y\)</span>?” It captures statistical associations — correlations, patterns, regularities in the training data.</p>
+<p>A causal model targets the <strong>interventional distribution</strong>:</p>
+<p><span class="math display">\[
+P(Y \mid do(X = x))
+\]</span></p>
+<p>This answers: “If I <em>set</em> <span class="math inline">\(X\)</span> to <span class="math inline">\(x\)</span> (intervening, not observing), what happens to <span class="math inline">\(Y\)</span>?” This requires knowing the causal structure — which variables cause which — not just their joint distribution.</p>
+<p>The difference matters whenever the relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is confounded. If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are both driven by an unobserved variable <span class="math inline">\(U\)</span>:</p>
+<p><span class="math display">\[
+P(Y \mid X = x) \neq P(Y \mid do(X = x))
+\]</span></p>
+<p>Observing that <span class="math inline">\(X\)</span> takes a particular value tells you something about <span class="math inline">\(U\)</span> (and hence <span class="math inline">\(Y\)</span>) that <em>setting</em> <span class="math inline">\(X\)</span> does not. This is the omitted variable bias from <a href="residuals.html">Residuals &amp; Controls</a>, expressed in the language of interventions.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Example.</strong> An LLM trained on medical records might learn that patients who receive a certain drug have worse outcomes. But this is because the drug is prescribed to sicker patients (confounding by indication). The conditional distribution <span class="math inline">\(P(\text{outcome} \mid \text{drug})\)</span> reflects the association; the interventional distribution <span class="math inline">\(P(\text{outcome} \mid do(\text{drug}))\)</span> reflects the causal effect. The model learns the first. Policy requires the second.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="the-gmm-estimator" class="level2">
-<h2 class="anchored" data-anchor-id="the-gmm-estimator">The GMM estimator</h2>
-<p>Start with a vector of <strong>moment conditions</strong>. The theory says that at the true parameter <span class="math inline">\(\theta_0\)</span>:</p>
-<p><span class="math display">\[
-E[g(X_i, \theta_0)] = 0
-\]</span></p>
-<p>where <span class="math inline">\(g\)</span> is an <span class="math inline">\(m\)</span>-dimensional vector (one entry per moment condition). The sample analog is:</p>
-<p><span class="math display">\[
-\bar{g}(\theta) = \frac{1}{n}\sum_{i=1}^n g(X_i, \theta)
-\]</span></p>
-<p>If <span class="math inline">\(m = k\)</span> (just-identified), you can set <span class="math inline">\(\bar{g}(\theta) = 0\)</span> and solve — that’s MoM. If <span class="math inline">\(m &gt; k\)</span> (over-identified), you can’t make all entries of <span class="math inline">\(\bar{g}\)</span> exactly zero. GMM minimizes a weighted quadratic form:</p>
-<p><span class="math display">\[
-\hat{\theta}_{\text{GMM}} = \arg\min_\theta \; \bar{g}(\theta)' \, W \, \bar{g}(\theta)
-\]</span></p>
-<p>where <span class="math inline">\(W\)</span> is an <span class="math inline">\(m \times m\)</span> positive definite <strong>weighting matrix</strong>. This is like a weighted sum of squared moment violations — GMM finds the <span class="math inline">\(\theta\)</span> that makes the sample moments as close to zero as possible, with <span class="math inline">\(W\)</span> determining how much each moment condition matters.</p>
-<section id="choosing-w" class="level3">
-<h3 class="anchored" data-anchor-id="choosing-w">Choosing <span class="math inline">\(W\)</span></h3>
-<p>The choice of <span class="math inline">\(W\)</span> affects efficiency but not consistency — any positive definite <span class="math inline">\(W\)</span> gives a consistent estimator. But some choices are better than others.</p>
-<p><strong>Feasible two-step GMM.</strong> The most common approach:</p>
+<section id="what-foundation-models-actually-learn" class="level2">
+<h2 class="anchored" data-anchor-id="what-foundation-models-actually-learn">What foundation models actually learn</h2>
+<p>Large language models are trained to minimize cross-entropy loss — which, as shown in <a href="training-as-mle.html">Training as MLE</a>, is maximum likelihood estimation of the conditional distribution of the next token given the context.</p>
+<p>This means LLMs are, at their core, estimators of <span class="math inline">\(P(\text{next token} \mid
+\text{context})\)</span>. They approximate conditional distributions over text, conditioned on the training corpus. They can reproduce causal statements that appear in their training data (“smoking causes cancer”) because those strings have high conditional probability. But reproducing a causal statement is not the same as performing causal reasoning.</p>
+<p>To perform genuine causal inference, a model would need to:</p>
 <ol type="1">
-<li>Start with <span class="math inline">\(W = I\)</span> (or any reasonable <span class="math inline">\(W\)</span>) and get a preliminary estimate <span class="math inline">\(\hat{\theta}_1\)</span></li>
-<li>Use <span class="math inline">\(\hat{\theta}_1\)</span> to estimate the optimal weighting matrix: <span class="math inline">\(\hat{W} = \left[\frac{1}{n}\sum_i g(X_i, \hat{\theta}_1) \, g(X_i, \hat{\theta}_1)'\right]^{-1}\)</span></li>
-<li>Re-estimate with <span class="math inline">\(\hat{W}\)</span> to get <span class="math inline">\(\hat{\theta}_2\)</span></li>
+<li>Distinguish observational from interventional distributions</li>
+<li>Identify confounders and adjust for them</li>
+<li>Reason counterfactually (“what would have happened if…?”)</li>
 </ol>
-<p>The optimal <span class="math inline">\(W\)</span> is the inverse of the variance of the moment conditions. This weights precisely-estimated moments more heavily and noisy moments less — exactly the right thing to do.</p>
+<p>These capabilities are not guaranteed by minimizing prediction loss, regardless of model scale. Whether and to what extent LLMs develop emergent causal reasoning abilities is an active research question — but the default assumption should be that prediction and causation are distinct.</p>
+</section>
+<section id="identification-vs-training" class="level2">
+<h2 class="anchored" data-anchor-id="identification-vs-training">Identification vs training</h2>
+<p>This is the conceptual anchor that connects statistical foundations to modern AI.</p>
+<p><strong>Training</strong> asks: given data and a loss function, find the parameters <span class="math inline">\(\hat{\theta}\)</span> that minimize prediction error.</p>
+<p><span class="math display">\[
+\hat{\theta} = \arg\min_\theta \; \frac{1}{n}\sum_{i=1}^n \mathcal{L}(Y_i, f_\theta(X_i))
+\]</span></p>
+<p>This is an <strong>optimization</strong> problem. With enough data and a flexible enough model, you can drive the loss arbitrarily close to the Bayes-optimal predictor.</p>
+<p><strong>Identification</strong> asks: given the data-generating process, can the quantity of interest be recovered from the observable data <em>at all</em> — regardless of sample size, model complexity, or computational power?</p>
+<p><span class="math display">\[
+\text{Is } P(Y \mid do(X)) \text{ recoverable from } P(Y, X, Z)?
+\]</span></p>
+<p>This is a <strong>logical</strong> problem. If the causal effect is not identified — because of unobserved confounders, selection bias, or measurement error — no amount of data or model sophistication will recover it. A billion observations and a trillion-parameter model will converge to the wrong answer just as confidently as a simple regression.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 35%">
+<col style="width: 53%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Training</th>
+<th style="text-align: left;">Identification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Question</td>
+<td style="text-align: left;">“What minimizes prediction error?”</td>
+<td style="text-align: left;">“Can the causal parameter be recovered?”</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Constraint</td>
+<td style="text-align: left;">Computational (optimization)</td>
+<td style="text-align: left;">Logical (causal structure)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Solved by</td>
+<td style="text-align: left;">More data, bigger models</td>
+<td style="text-align: left;">Research design, assumptions</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Failure mode</td>
+<td style="text-align: left;">Overfitting, distribution shift</td>
+<td style="text-align: left;">Bias, confounding</td>
+</tr>
+</tbody>
+</table>
 <div class="callout callout-style-simple callout-tip no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Intuition.</strong> If one moment condition has a lot of sampling noise and another is very precise, you should trust the precise one more. The optimal weighting matrix does this automatically.</p>
+<p><strong>The Manski principle.</strong> Identification comes before estimation. If you cannot identify the parameter from the data structure, no estimator — OLS, MLE, neural network, or otherwise — will give you the right answer. Identification is about what the data <em>can tell you</em>, not how cleverly you analyze it.</p>
 </div>
 </div>
 </div>
 </section>
+<section id="in-context-learning-and-bayesian-updating" class="level2">
+<h2 class="anchored" data-anchor-id="in-context-learning-and-bayesian-updating">In-context learning and Bayesian updating</h2>
+<p>A suggestive connection: when you provide examples in a prompt, the model’s predictions shift toward the pattern in those examples. This resembles Bayesian updating — the pre-trained model is the “prior,” and the in-context examples are the “data” that update it.</p>
+<p>For simple settings — linear regression, basic classification — this analogy has formal support. Garg et al.&nbsp;(2022) and others have shown that transformers trained on linear regression tasks implement something close to Bayesian posterior computation in their forward pass.</p>
+<p>However, this equivalence does not generally hold for deep transformers on complex tasks. In-context learning may involve pattern matching, retrieval from training data, or other mechanisms that are not well-described as Bayesian updating. The analogy is useful as intuition but should not be treated as a general theoretical result.</p>
 </section>
-<section id="examples-that-build-on-the-course" class="level2">
-<h2 class="anchored" data-anchor-id="examples-that-build-on-the-course">Examples that build on the course</h2>
-<section id="ols-as-gmm" class="level3">
-<h3 class="anchored" data-anchor-id="ols-as-gmm">OLS as GMM</h3>
-<p>The population moment condition behind OLS is:</p>
-<p><span class="math display">\[
-E[X_i(Y_i - X_i'\beta)] = 0
-\]</span></p>
-<p>This says the regressors are uncorrelated with the error — exactly the identification assumption from <a href="cef.html">Regression &amp; the CEF</a>. The sample analog is:</p>
-<p><span class="math display">\[
-\bar{g}(\beta) = \frac{1}{n}\sum_{i=1}^n X_i(Y_i - X_i'\beta) = \frac{1}{n}X'(y - X\beta)
-\]</span></p>
-<p>Setting this to zero and solving gives <span class="math inline">\(X'X\hat{\beta} = X'y\)</span>, or <span class="math inline">\(\hat{\beta} = (X'X)^{-1}X'y\)</span> — the OLS formula from <a href="regression-algebra.html">The Algebra Behind OLS</a>. OLS is just-identified GMM: <span class="math inline">\(k\)</span> regressors, <span class="math inline">\(k\)</span> moment conditions, and <span class="math inline">\(W\)</span> drops out because you can solve exactly.</p>
-</section>
-<section id="iv2sls-as-gmm" class="level3">
-<h3 class="anchored" data-anchor-id="iv2sls-as-gmm">IV/2SLS as GMM</h3>
-<p>When regressors are endogenous, you need instruments <span class="math inline">\(Z_i\)</span> that are correlated with <span class="math inline">\(X_i\)</span> but uncorrelated with <span class="math inline">\(\varepsilon_i\)</span>. The moment condition becomes:</p>
-<p><span class="math display">\[
-E[Z_i(Y_i - X_i'\beta)] = 0
-\]</span></p>
-<p>If you have more instruments than endogenous regressors (<span class="math inline">\(m &gt; k\)</span>), this is over-identified — and GMM handles it naturally. Two-stage least squares (2SLS) is a specific GMM estimator with a particular choice of weighting matrix.</p>
-</section>
-</section>
-<section id="the-j-test-overidentification-test" class="level2">
-<h2 class="anchored" data-anchor-id="the-j-test-overidentification-test">The J-test (overidentification test)</h2>
-<p>When you’re over-identified (<span class="math inline">\(m &gt; k\)</span>), you have a built-in specification test. The logic: if the model is correct and all moment conditions are valid, the minimized GMM objective should be “small” (close to zero). If it’s “large,” at least some moment conditions are being violated, which suggests the model is misspecified.</p>
-<p>Formally, under the null that the model is correct:</p>
-<p><span class="math display">\[
-J = n \cdot \bar{g}(\hat{\theta})' \hat{W} \, \bar{g}(\hat{\theta}) \;\xrightarrow{d}\; \chi^2_{m-k}
-\]</span></p>
-<p>where <span class="math inline">\(m - k\)</span> is the number of “extra” moment conditions (the degree of over-identification). A large <span class="math inline">\(J\)</span> (relative to the <span class="math inline">\(\chi^2_{m-k}\)</span> distribution) rejects the model.</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>What the J-test can and can’t do.</strong> The J-test can detect when your moment conditions are mutually inconsistent — they can’t all be true at the same time. But it can’t tell you <em>which</em> condition is wrong. And if you’re just-identified (<span class="math inline">\(m = k\)</span>), <span class="math inline">\(J = 0\)</span> by construction — there’s no overidentification to test.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="when-to-use-gmm" class="level2">
-<h2 class="anchored" data-anchor-id="when-to-use-gmm">When to use GMM</h2>
-<p><strong>When economic theory gives you moment conditions but not a full likelihood.</strong> Many structural models in economics specify relationships between variables (Euler equations, equilibrium conditions) that translate directly into moment conditions. You don’t need to know the full distribution of the data — just these conditions. This is much less demanding than <a href="maximum-likelihood.html">MLE</a>.</p>
-<p><strong>When you want robustness to distributional assumptions.</strong> GMM only assumes the moment conditions hold; it’s agnostic about the rest of the distribution. If you use MLE with the wrong distributional assumption, your estimator converges to the wrong thing. GMM avoids this risk by not making that assumption in the first place.</p>
-<p><strong>When you have instruments or panel data.</strong> These settings naturally produce moment conditions (instrument exogeneity, sequential exogeneity), making GMM a natural framework.</p>
-<p><strong>The tradeoff.</strong> GMM is more robust than MLE but less efficient when MLE’s distributional assumptions actually hold. If you know the distribution and it’s correctly specified, MLE squeezes out every last bit of information. GMM leaves some information on the table by not using the full distribution.</p>
-</section>
-<section id="connecting-to-mle" class="level2">
-<h2 class="anchored" data-anchor-id="connecting-to-mle">Connecting to MLE</h2>
-<p>MLE is actually a special case of GMM. The MLE score equations — the first-order conditions from maximizing the log-likelihood — are moment conditions:</p>
-<p><span class="math display">\[
-E\!\left[\frac{\partial \log f(X_i \mid \theta_0)}{\partial \theta}\right] = 0
-\]</span></p>
-<p>These are the “moment conditions” that MLE implicitly uses. When you use these specific conditions with the optimal GMM weighting matrix, GMM produces exactly the MLE. So the hierarchy is:</p>
-<p><span class="math display">\[
-\text{MoM} \;\subset\; \text{GMM} \;\supset\; \text{MLE}
-\]</span></p>
-<p>MoM is GMM with a specific (often suboptimal) choice of moments and <span class="math inline">\(W = I\)</span>. MLE is GMM with the score as the moment condition and the optimal <span class="math inline">\(W\)</span>. GMM is the general framework that nests both.</p>
-<p>This is why GMM achieves MLE-level efficiency when the likelihood is correctly specified and the optimal weighting matrix is used — it’s <em>doing</em> MLE, just expressed in the language of moments.</p>
+<section id="implications-for-applied-work" class="level2">
+<h2 class="anchored" data-anchor-id="implications-for-applied-work">Implications for applied work</h2>
+<p><strong>Using LLMs for prediction:</strong> appropriate. If the goal is forecasting, classification, or text generation, the model is optimized for exactly this task. Evaluate on held-out data, check calibration, and be aware of distribution shift.</p>
+<p><strong>Using LLMs for causal claims:</strong> requires extreme caution. If the goal is to estimate a treatment effect, evaluate a policy, or make a causal argument, the model’s predictions reflect associations in the training data, not causal relationships. The standard tools of causal inference — <a href="../causal-inference/index.html">randomized experiments</a>, instrumental variables, difference-in-differences, regression discontinuity — remain necessary.</p>
+<p><strong>Using LLMs as research tools:</strong> promising but limited. LLMs can assist with literature review, code generation, data cleaning, and hypothesis generation. But the identification strategy — the argument for <em>why</em> your estimate is causal — must come from the researcher, not the model.</p>
+<p>Product experimentation in AI systems — “which prompt works better?”, “does this fine-tuning improve user satisfaction?” — is fundamentally a randomized controlled trial. The statistical tools are the ones already in this course: <a href="power.html">power analysis</a>, <a href="pvalues-ci.html">p-values</a>, <a href="multiple-testing.html">multiple testing corrections</a>. The fact that the treatment is an AI system doesn’t change the experimental design principles.</p>
 
 
 </section>

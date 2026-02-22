@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -368,6 +397,47 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Foundations of AI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./training-as-mle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Training as Maximum Likelihood</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regularization-priors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regularization as Bayesian Inference</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./prediction-vs-causation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prediction vs Causation in Foundation Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./experimental-design-ai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Experimental Design for AI Systems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calibration-uncertainty.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibration &amp; Uncertainty Quantification</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -389,6 +459,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#standard-errors-diagnostics" id="toc-standard-errors-diagnostics" class="nav-link" data-scroll-target="#standard-errors-diagnostics">Standard Errors &amp; Diagnostics</a></li>
   <li><a href="#causal-thinking" id="toc-causal-thinking" class="nav-link" data-scroll-target="#causal-thinking">Causal Thinking</a></li>
   <li><a href="#bayesian-thinking" id="toc-bayesian-thinking" class="nav-link" data-scroll-target="#bayesian-thinking">Bayesian Thinking</a></li>
+  <li><a href="#statistical-foundations-of-ai" id="toc-statistical-foundations-of-ai" class="nav-link" data-scroll-target="#statistical-foundations-of-ai">Statistical Foundations of AI</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -488,6 +559,16 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="bayesian-thinking">Bayesian Thinking</h3>
 <ul>
 <li><a href="bayesian-updating.html">Bayesian Updating</a> — One Gentle Introduction</li>
+</ul>
+</section>
+<section id="statistical-foundations-of-ai" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-foundations-of-ai">Statistical Foundations of AI</h3>
+<ul>
+<li><a href="training-as-mle.html">Training as Maximum Likelihood</a> — Cross-entropy, SGD, and what training optimizes</li>
+<li><a href="regularization-priors.html">Regularization as Bayesian Inference</a> — Weight decay, dropout, and the RLHF penalty as priors</li>
+<li><a href="prediction-vs-causation.html">Prediction vs Causation in Foundation Models</a> — <span class="math inline">\(P(Y \mid X)\)</span> vs <span class="math inline">\(P(Y \mid do(X))\)</span> and identification vs training</li>
+<li><a href="experimental-design-ai.html">Experimental Design for AI Systems</a> — A/B testing, power, and multiple testing for model evaluation</li>
+<li><a href="calibration-uncertainty.html">Calibration &amp; Uncertainty Quantification</a> — When to trust model confidence</li>
 </ul>
 
 

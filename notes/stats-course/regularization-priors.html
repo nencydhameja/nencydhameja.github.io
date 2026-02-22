@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Generalized Method of Moments – Foundations of Statistical Inference</title>
+<title>Regularization as Bayesian Inference – Foundations of Statistical Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -111,7 +111,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./method-of-moments.html">Estimation</a></li><li class="breadcrumb-item"><a href="./gmm.html">Generalized Method of Moments</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./training-as-mle.html">Statistical Foundations of AI</a></li><li class="breadcrumb-item"><a href="./regularization-priors.html">Regularization as Bayesian Inference</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -310,7 +310,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gmm.html" class="sidebar-item-text sidebar-link active">
+  <a href="./gmm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Generalized Method of Moments</span></a>
   </div>
 </li>
@@ -414,7 +414,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./regularization-priors.html" class="sidebar-item-text sidebar-link">
+  <a href="./regularization-priors.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Regularization as Bayesian Inference</span></a>
   </div>
 </li>
@@ -448,28 +448,21 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#from-mom-to-gmm" id="toc-from-mom-to-gmm" class="nav-link active" data-scroll-target="#from-mom-to-gmm">From MoM to GMM</a></li>
-  <li><a href="#the-gmm-estimator" id="toc-the-gmm-estimator" class="nav-link" data-scroll-target="#the-gmm-estimator">The GMM estimator</a>
-  <ul class="collapse">
-  <li><a href="#choosing-w" id="toc-choosing-w" class="nav-link" data-scroll-target="#choosing-w">Choosing <span class="math inline">\(W\)</span></a></li>
-  </ul></li>
-  <li><a href="#examples-that-build-on-the-course" id="toc-examples-that-build-on-the-course" class="nav-link" data-scroll-target="#examples-that-build-on-the-course">Examples that build on the course</a>
-  <ul class="collapse">
-  <li><a href="#ols-as-gmm" id="toc-ols-as-gmm" class="nav-link" data-scroll-target="#ols-as-gmm">OLS as GMM</a></li>
-  <li><a href="#iv2sls-as-gmm" id="toc-iv2sls-as-gmm" class="nav-link" data-scroll-target="#iv2sls-as-gmm">IV/2SLS as GMM</a></li>
-  </ul></li>
-  <li><a href="#the-j-test-overidentification-test" id="toc-the-j-test-overidentification-test" class="nav-link" data-scroll-target="#the-j-test-overidentification-test">The J-test (overidentification test)</a></li>
-  <li><a href="#when-to-use-gmm" id="toc-when-to-use-gmm" class="nav-link" data-scroll-target="#when-to-use-gmm">When to use GMM</a></li>
-  <li><a href="#connecting-to-mle" id="toc-connecting-to-mle" class="nav-link" data-scroll-target="#connecting-to-mle">Connecting to MLE</a></li>
+  <li><a href="#the-equivalence-restated" id="toc-the-equivalence-restated" class="nav-link active" data-scroll-target="#the-equivalence-restated">The equivalence, restated</a></li>
+  <li><a href="#weight-decay-in-neural-networks" id="toc-weight-decay-in-neural-networks" class="nav-link" data-scroll-target="#weight-decay-in-neural-networks">Weight decay in neural networks</a></li>
+  <li><a href="#dropout-as-approximate-bayesian-inference" id="toc-dropout-as-approximate-bayesian-inference" class="nav-link" data-scroll-target="#dropout-as-approximate-bayesian-inference">Dropout as approximate Bayesian inference</a></li>
+  <li><a href="#early-stopping-as-implicit-regularization" id="toc-early-stopping-as-implicit-regularization" class="nav-link" data-scroll-target="#early-stopping-as-implicit-regularization">Early stopping as implicit regularization</a></li>
+  <li><a href="#the-rlhf-penalty-as-a-prior" id="toc-the-rlhf-penalty-as-a-prior" class="nav-link" data-scroll-target="#the-rlhf-penalty-as-a-prior">The RLHF penalty as a prior</a></li>
+  <li><a href="#what-the-bayesian-lens-buys-you" id="toc-what-the-bayesian-lens-buys-you" class="nav-link" data-scroll-target="#what-the-bayesian-lens-buys-you">What the Bayesian lens buys you</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./method-of-moments.html">Estimation</a></li><li class="breadcrumb-item"><a href="./gmm.html">Generalized Method of Moments</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./training-as-mle.html">Statistical Foundations of AI</a></li><li class="breadcrumb-item"><a href="./regularization-priors.html">Regularization as Bayesian Inference</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Generalized Method of Moments</h1>
+<h1 class="title">Regularization as Bayesian Inference</h1>
 </div>
 
 
@@ -486,111 +479,100 @@ window.Quarto = {
 </header>
 
 
-<p><a href="method-of-moments.html">Method of Moments</a> is simple but leaves a key question unanswered: <em>which</em> moments should you match? And what if you have more moment conditions than parameters? GMM formalizes this. It takes a set of moment conditions — potentially more than you need — and finds the parameters that satisfy them as closely as possible in a precise, optimal sense.</p>
-<section id="from-mom-to-gmm" class="level2">
-<h2 class="anchored" data-anchor-id="from-mom-to-gmm">From MoM to GMM</h2>
-<p>Recall how MoM works: you have <span class="math inline">\(k\)</span> parameters and you pick <span class="math inline">\(k\)</span> moment conditions. Set the sample moments equal to zero and solve. When you have exactly as many conditions as parameters — the <strong>just-identified</strong> case — there’s a unique solution and everything is clean.</p>
-<p>But in practice, economic theory or statistical reasoning often gives you <em>more</em> moment conditions than parameters. Suppose you have <span class="math inline">\(m\)</span> conditions for <span class="math inline">\(k\)</span> parameters, with <span class="math inline">\(m &gt; k\)</span>. Now the system is <strong>over-identified</strong>: you can’t satisfy all <span class="math inline">\(m\)</span> conditions exactly, so you need a way to get as close as possible.</p>
-<p>That’s what GMM does. Instead of solving a system of equations, it minimizes a measure of how far the sample moments are from zero.</p>
+<p>The <a href="bayesian-estimation.html">Bayesian Estimation</a> page showed that MAP with a normal prior gives ridge regression, and MAP with a Laplace prior gives lasso. This page extends that idea to the regularization techniques used in modern machine learning. The central claim is precise: <strong>every standard regularizer corresponds to a prior, and every prior corresponds to a regularizer.</strong> This is not an analogy. It is an algebraic equivalence.</p>
+<section id="the-equivalence-restated" class="level2">
+<h2 class="anchored" data-anchor-id="the-equivalence-restated">The equivalence, restated</h2>
+<p>Recall from <a href="bayesian-estimation.html#map-as-regularization">Bayesian Estimation</a> that the MAP objective is:</p>
+<p><span class="math display">\[
+\hat{\theta}_{\text{MAP}} = \arg\max_\theta \left[\log p(\text{data} \mid \theta) + \log p(\theta)\right]
+\]</span></p>
+<p>The first term is the log-likelihood (the loss function). The second term is the log-prior (the regularization penalty). Minimizing a regularized loss is maximizing a penalized log-likelihood, which is computing a MAP estimate under some prior.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 54%">
+<col style="width: 15%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Regularization technique</th>
+<th style="text-align: left;">Prior</th>
+<th style="text-align: left;">Penalty term</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">L2 (weight decay / ridge)</td>
+<td style="text-align: left;"><span class="math inline">\(\theta_j \sim N(0, \tau^2)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\lambda \|\theta\|_2^2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">L1 (lasso)</td>
+<td style="text-align: left;"><span class="math inline">\(\theta_j \sim \text{Laplace}(0, b)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\lambda \|\theta\|_1\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Elastic net</td>
+<td style="text-align: left;">Mixture of normal and Laplace</td>
+<td style="text-align: left;"><span class="math inline">\(\lambda_1 \|\theta\|_1 + \lambda_2 \|\theta\|_2^2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No regularization</td>
+<td style="text-align: left;">Flat (uniform) prior</td>
+<td style="text-align: left;">None (pure MLE)</td>
+</tr>
+</tbody>
+</table>
+<p>The penalty strength <span class="math inline">\(\lambda\)</span> maps to the prior precision: a large <span class="math inline">\(\lambda\)</span> is a tight prior that strongly constrains the parameters toward zero. A small <span class="math inline">\(\lambda\)</span> is a vague prior that lets the data dominate.</p>
 </section>
-<section id="the-gmm-estimator" class="level2">
-<h2 class="anchored" data-anchor-id="the-gmm-estimator">The GMM estimator</h2>
-<p>Start with a vector of <strong>moment conditions</strong>. The theory says that at the true parameter <span class="math inline">\(\theta_0\)</span>:</p>
-<p><span class="math display">\[
-E[g(X_i, \theta_0)] = 0
-\]</span></p>
-<p>where <span class="math inline">\(g\)</span> is an <span class="math inline">\(m\)</span>-dimensional vector (one entry per moment condition). The sample analog is:</p>
-<p><span class="math display">\[
-\bar{g}(\theta) = \frac{1}{n}\sum_{i=1}^n g(X_i, \theta)
-\]</span></p>
-<p>If <span class="math inline">\(m = k\)</span> (just-identified), you can set <span class="math inline">\(\bar{g}(\theta) = 0\)</span> and solve — that’s MoM. If <span class="math inline">\(m &gt; k\)</span> (over-identified), you can’t make all entries of <span class="math inline">\(\bar{g}\)</span> exactly zero. GMM minimizes a weighted quadratic form:</p>
-<p><span class="math display">\[
-\hat{\theta}_{\text{GMM}} = \arg\min_\theta \; \bar{g}(\theta)' \, W \, \bar{g}(\theta)
-\]</span></p>
-<p>where <span class="math inline">\(W\)</span> is an <span class="math inline">\(m \times m\)</span> positive definite <strong>weighting matrix</strong>. This is like a weighted sum of squared moment violations — GMM finds the <span class="math inline">\(\theta\)</span> that makes the sample moments as close to zero as possible, with <span class="math inline">\(W\)</span> determining how much each moment condition matters.</p>
-<section id="choosing-w" class="level3">
-<h3 class="anchored" data-anchor-id="choosing-w">Choosing <span class="math inline">\(W\)</span></h3>
-<p>The choice of <span class="math inline">\(W\)</span> affects efficiency but not consistency — any positive definite <span class="math inline">\(W\)</span> gives a consistent estimator. But some choices are better than others.</p>
-<p><strong>Feasible two-step GMM.</strong> The most common approach:</p>
-<ol type="1">
-<li>Start with <span class="math inline">\(W = I\)</span> (or any reasonable <span class="math inline">\(W\)</span>) and get a preliminary estimate <span class="math inline">\(\hat{\theta}_1\)</span></li>
-<li>Use <span class="math inline">\(\hat{\theta}_1\)</span> to estimate the optimal weighting matrix: <span class="math inline">\(\hat{W} = \left[\frac{1}{n}\sum_i g(X_i, \hat{\theta}_1) \, g(X_i, \hat{\theta}_1)'\right]^{-1}\)</span></li>
-<li>Re-estimate with <span class="math inline">\(\hat{W}\)</span> to get <span class="math inline">\(\hat{\theta}_2\)</span></li>
-</ol>
-<p>The optimal <span class="math inline">\(W\)</span> is the inverse of the variance of the moment conditions. This weights precisely-estimated moments more heavily and noisy moments less — exactly the right thing to do.</p>
+<section id="weight-decay-in-neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="weight-decay-in-neural-networks">Weight decay in neural networks</h2>
+<p>The most common regularizer in deep learning is <strong>weight decay</strong>: add <span class="math inline">\(\lambda \|\theta\|_2^2\)</span> to the loss. In the Bayesian interpretation, this is MAP estimation under a Gaussian prior centered at zero.</p>
+<p>What does this prior say? “In the absence of data, I believe the weights should be small.” This is a reasonable default — large weights produce extreme predictions and amplify noise. The prior encodes a preference for smooth, conservative functions.</p>
+<p>The weight decay coefficient <span class="math inline">\(\lambda\)</span> controls the bias-variance tradeoff from <a href="bias-variance.html">Bias-Variance</a>: too small and the model overfits (high variance); too large and the model underfits (high bias). The Bayesian interpretation makes this tradeoff precise — <span class="math inline">\(\lambda\)</span> is the ratio of the noise variance to the prior variance, <span class="math inline">\(\sigma^2 / \tau^2\)</span>.</p>
+</section>
+<section id="dropout-as-approximate-bayesian-inference" class="level2">
+<h2 class="anchored" data-anchor-id="dropout-as-approximate-bayesian-inference">Dropout as approximate Bayesian inference</h2>
+<p><strong>Dropout</strong> randomly sets a fraction of neural network activations to zero during training. At test time, all units are active but scaled by the dropout probability. This was introduced as a heuristic to prevent overfitting.</p>
+<p>The Bayesian connection: Gal and Ghahramani (2016) showed that training with dropout is approximately equivalent to variational inference in a Bayesian neural network. Specifically, dropout training minimizes a divergence between an approximate posterior and the true posterior over the weights.</p>
+<p>This means:</p>
+<ul>
+<li>Running the network multiple times with dropout <em>at test time</em> (Monte Carlo dropout) produces samples from an approximate posterior predictive distribution</li>
+<li>The spread of these predictions approximates the model’s epistemic uncertainty</li>
+<li>This connects dropout to the uncertainty quantification discussed in <a href="calibration-uncertainty.html">Calibration and Uncertainty</a></li>
+</ul>
 <div class="callout callout-style-simple callout-tip no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Intuition.</strong> If one moment condition has a lot of sampling noise and another is very precise, you should trust the precise one more. The optimal weighting matrix does this automatically.</p>
+<p><strong>A caveat.</strong> The equivalence between dropout and variational inference is approximate and depends on modeling assumptions that may not hold in practice. The quality of the uncertainty estimates from Monte Carlo dropout is debated in the literature. The connection is theoretically grounded but should not be taken as exact.</p>
 </div>
 </div>
 </div>
 </section>
+<section id="early-stopping-as-implicit-regularization" class="level2">
+<h2 class="anchored" data-anchor-id="early-stopping-as-implicit-regularization">Early stopping as implicit regularization</h2>
+<p><strong>Early stopping</strong> — halting training before convergence — also has a Bayesian interpretation. In gradient descent with small learning rate, the trajectory of the parameters from initialization traces out a path from the prior (the initial weights) toward the MLE. Stopping early means the final estimate stays closer to the initialization, which functions as an implicit prior.</p>
+<p>For linear models, early stopping with gradient descent is exactly equivalent to L2 regularization: the number of gradient steps plays the role of <span class="math inline">\(1/\lambda\)</span>. Fewer steps = more regularization = tighter prior. For nonlinear models the equivalence is approximate, but the intuition holds.</p>
 </section>
-<section id="examples-that-build-on-the-course" class="level2">
-<h2 class="anchored" data-anchor-id="examples-that-build-on-the-course">Examples that build on the course</h2>
-<section id="ols-as-gmm" class="level3">
-<h3 class="anchored" data-anchor-id="ols-as-gmm">OLS as GMM</h3>
-<p>The population moment condition behind OLS is:</p>
+<section id="the-rlhf-penalty-as-a-prior" class="level2">
+<h2 class="anchored" data-anchor-id="the-rlhf-penalty-as-a-prior">The RLHF penalty as a prior</h2>
+<p>Reinforcement Learning from Human Feedback (RLHF) fine-tunes a language model to align with human preferences. The standard objective is:</p>
 <p><span class="math display">\[
-E[X_i(Y_i - X_i'\beta)] = 0
+\max_\theta \; E\left[R(y \mid x)\right] - \beta \, D_{KL}\!\left(\pi_\theta \| \pi_{\text{ref}}\right)
 \]</span></p>
-<p>This says the regressors are uncorrelated with the error — exactly the identification assumption from <a href="cef.html">Regression &amp; the CEF</a>. The sample analog is:</p>
-<p><span class="math display">\[
-\bar{g}(\beta) = \frac{1}{n}\sum_{i=1}^n X_i(Y_i - X_i'\beta) = \frac{1}{n}X'(y - X\beta)
-\]</span></p>
-<p>Setting this to zero and solving gives <span class="math inline">\(X'X\hat{\beta} = X'y\)</span>, or <span class="math inline">\(\hat{\beta} = (X'X)^{-1}X'y\)</span> — the OLS formula from <a href="regression-algebra.html">The Algebra Behind OLS</a>. OLS is just-identified GMM: <span class="math inline">\(k\)</span> regressors, <span class="math inline">\(k\)</span> moment conditions, and <span class="math inline">\(W\)</span> drops out because you can solve exactly.</p>
+<p>where <span class="math inline">\(R\)</span> is a reward model, <span class="math inline">\(\pi_\theta\)</span> is the policy being trained, and <span class="math inline">\(\pi_{\text{ref}}\)</span> is the reference (pre-trained) model. The KL divergence term penalizes deviation from the reference model.</p>
+<p>In the Bayesian frame, the reference model acts as a <strong>prior</strong>: it encodes what the model “knew” before seeing human preference data. The KL penalty pulls the fine-tuned model back toward this prior, preventing it from drifting too far in pursuit of reward. The coefficient <span class="math inline">\(\beta\)</span> controls how much the prior matters — analogous to <span class="math inline">\(\lambda\)</span> in weight decay or <span class="math inline">\(1/\tau^2\)</span> in the Bayesian MAP framework.</p>
+<p>This is the same tug-of-war described in <a href="bayesian-updating.html">Bayesian Updating</a>: data (human preferences) push the model in one direction; the prior (reference model) pulls it back. With more preference data, the reward signal dominates. With less, the model stays close to its pre-trained behavior.</p>
 </section>
-<section id="iv2sls-as-gmm" class="level3">
-<h3 class="anchored" data-anchor-id="iv2sls-as-gmm">IV/2SLS as GMM</h3>
-<p>When regressors are endogenous, you need instruments <span class="math inline">\(Z_i\)</span> that are correlated with <span class="math inline">\(X_i\)</span> but uncorrelated with <span class="math inline">\(\varepsilon_i\)</span>. The moment condition becomes:</p>
-<p><span class="math display">\[
-E[Z_i(Y_i - X_i'\beta)] = 0
-\]</span></p>
-<p>If you have more instruments than endogenous regressors (<span class="math inline">\(m &gt; k\)</span>), this is over-identified — and GMM handles it naturally. Two-stage least squares (2SLS) is a specific GMM estimator with a particular choice of weighting matrix.</p>
-</section>
-</section>
-<section id="the-j-test-overidentification-test" class="level2">
-<h2 class="anchored" data-anchor-id="the-j-test-overidentification-test">The J-test (overidentification test)</h2>
-<p>When you’re over-identified (<span class="math inline">\(m &gt; k\)</span>), you have a built-in specification test. The logic: if the model is correct and all moment conditions are valid, the minimized GMM objective should be “small” (close to zero). If it’s “large,” at least some moment conditions are being violated, which suggests the model is misspecified.</p>
-<p>Formally, under the null that the model is correct:</p>
-<p><span class="math display">\[
-J = n \cdot \bar{g}(\hat{\theta})' \hat{W} \, \bar{g}(\hat{\theta}) \;\xrightarrow{d}\; \chi^2_{m-k}
-\]</span></p>
-<p>where <span class="math inline">\(m - k\)</span> is the number of “extra” moment conditions (the degree of over-identification). A large <span class="math inline">\(J\)</span> (relative to the <span class="math inline">\(\chi^2_{m-k}\)</span> distribution) rejects the model.</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>What the J-test can and can’t do.</strong> The J-test can detect when your moment conditions are mutually inconsistent — they can’t all be true at the same time. But it can’t tell you <em>which</em> condition is wrong. And if you’re just-identified (<span class="math inline">\(m = k\)</span>), <span class="math inline">\(J = 0\)</span> by construction — there’s no overidentification to test.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="when-to-use-gmm" class="level2">
-<h2 class="anchored" data-anchor-id="when-to-use-gmm">When to use GMM</h2>
-<p><strong>When economic theory gives you moment conditions but not a full likelihood.</strong> Many structural models in economics specify relationships between variables (Euler equations, equilibrium conditions) that translate directly into moment conditions. You don’t need to know the full distribution of the data — just these conditions. This is much less demanding than <a href="maximum-likelihood.html">MLE</a>.</p>
-<p><strong>When you want robustness to distributional assumptions.</strong> GMM only assumes the moment conditions hold; it’s agnostic about the rest of the distribution. If you use MLE with the wrong distributional assumption, your estimator converges to the wrong thing. GMM avoids this risk by not making that assumption in the first place.</p>
-<p><strong>When you have instruments or panel data.</strong> These settings naturally produce moment conditions (instrument exogeneity, sequential exogeneity), making GMM a natural framework.</p>
-<p><strong>The tradeoff.</strong> GMM is more robust than MLE but less efficient when MLE’s distributional assumptions actually hold. If you know the distribution and it’s correctly specified, MLE squeezes out every last bit of information. GMM leaves some information on the table by not using the full distribution.</p>
-</section>
-<section id="connecting-to-mle" class="level2">
-<h2 class="anchored" data-anchor-id="connecting-to-mle">Connecting to MLE</h2>
-<p>MLE is actually a special case of GMM. The MLE score equations — the first-order conditions from maximizing the log-likelihood — are moment conditions:</p>
-<p><span class="math display">\[
-E\!\left[\frac{\partial \log f(X_i \mid \theta_0)}{\partial \theta}\right] = 0
-\]</span></p>
-<p>These are the “moment conditions” that MLE implicitly uses. When you use these specific conditions with the optimal GMM weighting matrix, GMM produces exactly the MLE. So the hierarchy is:</p>
-<p><span class="math display">\[
-\text{MoM} \;\subset\; \text{GMM} \;\supset\; \text{MLE}
-\]</span></p>
-<p>MoM is GMM with a specific (often suboptimal) choice of moments and <span class="math inline">\(W = I\)</span>. MLE is GMM with the score as the moment condition and the optimal <span class="math inline">\(W\)</span>. GMM is the general framework that nests both.</p>
-<p>This is why GMM achieves MLE-level efficiency when the likelihood is correctly specified and the optimal weighting matrix is used — it’s <em>doing</em> MLE, just expressed in the language of moments.</p>
+<section id="what-the-bayesian-lens-buys-you" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-bayesian-lens-buys-you">What the Bayesian lens buys you</h2>
+<p>Viewing regularization as Bayesian inference is not just a mathematical curiosity. It provides:</p>
+<p><strong>Principled choice of <span class="math inline">\(\lambda\)</span>.</strong> Instead of tuning the regularization strength by cross-validation alone, you can reason about what prior is appropriate for the problem. If you have domain knowledge that parameters should be small, a tight prior (large <span class="math inline">\(\lambda\)</span>) is justified. If you expect sparse effects, a Laplace prior (L1) is appropriate.</p>
+<p><strong>A path to uncertainty quantification.</strong> Pure MLE (unregularized training) gives point predictions with no uncertainty. The Bayesian interpretation opens the door to posterior distributions, credible intervals, and predictive uncertainty — tools explored in <a href="calibration-uncertainty.html">Calibration and Uncertainty</a>.</p>
+<p><strong>Unified understanding.</strong> Weight decay, dropout, early stopping, and the RLHF penalty all look different mechanically. But they are all doing the same thing: encoding a prior belief that constrains the model. Recognizing this prevents treating them as unrelated “tricks” and enables reasoning about their interactions.</p>
 
 
 </section>

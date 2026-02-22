@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Generalized Method of Moments – Foundations of Statistical Inference</title>
+<title>Training Neural Networks as Maximum Likelihood – Foundations of Statistical Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -111,7 +111,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./method-of-moments.html">Estimation</a></li><li class="breadcrumb-item"><a href="./gmm.html">Generalized Method of Moments</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./training-as-mle.html">Statistical Foundations of AI</a></li><li class="breadcrumb-item"><a href="./training-as-mle.html">Training as Maximum Likelihood</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -310,7 +310,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gmm.html" class="sidebar-item-text sidebar-link active">
+  <a href="./gmm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Generalized Method of Moments</span></a>
   </div>
 </li>
@@ -408,7 +408,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./training-as-mle.html" class="sidebar-item-text sidebar-link">
+  <a href="./training-as-mle.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Training as Maximum Likelihood</span></a>
   </div>
 </li>
@@ -448,28 +448,19 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#from-mom-to-gmm" id="toc-from-mom-to-gmm" class="nav-link active" data-scroll-target="#from-mom-to-gmm">From MoM to GMM</a></li>
-  <li><a href="#the-gmm-estimator" id="toc-the-gmm-estimator" class="nav-link" data-scroll-target="#the-gmm-estimator">The GMM estimator</a>
-  <ul class="collapse">
-  <li><a href="#choosing-w" id="toc-choosing-w" class="nav-link" data-scroll-target="#choosing-w">Choosing <span class="math inline">\(W\)</span></a></li>
-  </ul></li>
-  <li><a href="#examples-that-build-on-the-course" id="toc-examples-that-build-on-the-course" class="nav-link" data-scroll-target="#examples-that-build-on-the-course">Examples that build on the course</a>
-  <ul class="collapse">
-  <li><a href="#ols-as-gmm" id="toc-ols-as-gmm" class="nav-link" data-scroll-target="#ols-as-gmm">OLS as GMM</a></li>
-  <li><a href="#iv2sls-as-gmm" id="toc-iv2sls-as-gmm" class="nav-link" data-scroll-target="#iv2sls-as-gmm">IV/2SLS as GMM</a></li>
-  </ul></li>
-  <li><a href="#the-j-test-overidentification-test" id="toc-the-j-test-overidentification-test" class="nav-link" data-scroll-target="#the-j-test-overidentification-test">The J-test (overidentification test)</a></li>
-  <li><a href="#when-to-use-gmm" id="toc-when-to-use-gmm" class="nav-link" data-scroll-target="#when-to-use-gmm">When to use GMM</a></li>
-  <li><a href="#connecting-to-mle" id="toc-connecting-to-mle" class="nav-link" data-scroll-target="#connecting-to-mle">Connecting to MLE</a></li>
+  <li><a href="#cross-entropy-is-negative-log-likelihood" id="toc-cross-entropy-is-negative-log-likelihood" class="nav-link active" data-scroll-target="#cross-entropy-is-negative-log-likelihood">Cross-entropy is negative log-likelihood</a></li>
+  <li><a href="#sgd-as-approximate-mle" id="toc-sgd-as-approximate-mle" class="nav-link" data-scroll-target="#sgd-as-approximate-mle">SGD as approximate MLE</a></li>
+  <li><a href="#what-training-optimizes-and-what-it-does-not" id="toc-what-training-optimizes-and-what-it-does-not" class="nav-link" data-scroll-target="#what-training-optimizes-and-what-it-does-not">What training optimizes — and what it does not</a></li>
+  <li><a href="#connecting-to-the-course" id="toc-connecting-to-the-course" class="nav-link" data-scroll-target="#connecting-to-the-course">Connecting to the course</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./method-of-moments.html">Estimation</a></li><li class="breadcrumb-item"><a href="./gmm.html">Generalized Method of Moments</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./training-as-mle.html">Statistical Foundations of AI</a></li><li class="breadcrumb-item"><a href="./training-as-mle.html">Training as Maximum Likelihood</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Generalized Method of Moments</h1>
+<h1 class="title">Training Neural Networks as Maximum Likelihood</h1>
 </div>
 
 
@@ -486,111 +477,131 @@ window.Quarto = {
 </header>
 
 
-<p><a href="method-of-moments.html">Method of Moments</a> is simple but leaves a key question unanswered: <em>which</em> moments should you match? And what if you have more moment conditions than parameters? GMM formalizes this. It takes a set of moment conditions — potentially more than you need — and finds the parameters that satisfy them as closely as possible in a precise, optimal sense.</p>
-<section id="from-mom-to-gmm" class="level2">
-<h2 class="anchored" data-anchor-id="from-mom-to-gmm">From MoM to GMM</h2>
-<p>Recall how MoM works: you have <span class="math inline">\(k\)</span> parameters and you pick <span class="math inline">\(k\)</span> moment conditions. Set the sample moments equal to zero and solve. When you have exactly as many conditions as parameters — the <strong>just-identified</strong> case — there’s a unique solution and everything is clean.</p>
-<p>But in practice, economic theory or statistical reasoning often gives you <em>more</em> moment conditions than parameters. Suppose you have <span class="math inline">\(m\)</span> conditions for <span class="math inline">\(k\)</span> parameters, with <span class="math inline">\(m &gt; k\)</span>. Now the system is <strong>over-identified</strong>: you can’t satisfy all <span class="math inline">\(m\)</span> conditions exactly, so you need a way to get as close as possible.</p>
-<p>That’s what GMM does. Instead of solving a system of equations, it minimizes a measure of how far the sample moments are from zero.</p>
-</section>
-<section id="the-gmm-estimator" class="level2">
-<h2 class="anchored" data-anchor-id="the-gmm-estimator">The GMM estimator</h2>
-<p>Start with a vector of <strong>moment conditions</strong>. The theory says that at the true parameter <span class="math inline">\(\theta_0\)</span>:</p>
+<p>The loss functions used to train neural networks are not arbitrary design choices. Most of them are negative log-likelihoods in disguise. If you understand <a href="maximum-likelihood.html">MLE</a>, you already understand what neural network training is doing — and, critically, what it is <em>not</em> doing.</p>
+<section id="cross-entropy-is-negative-log-likelihood" class="level2">
+<h2 class="anchored" data-anchor-id="cross-entropy-is-negative-log-likelihood">Cross-entropy is negative log-likelihood</h2>
+<p>The standard loss for classification is <strong>cross-entropy</strong>. For a binary outcome <span class="math inline">\(Y_i \in \{0, 1\}\)</span> and a model that predicts <span class="math inline">\(\hat{p}_i = P(Y_i = 1 \mid X_i)\)</span>:</p>
 <p><span class="math display">\[
-E[g(X_i, \theta_0)] = 0
+\mathcal{L} = -\frac{1}{n}\sum_{i=1}^n \left[Y_i \log \hat{p}_i + (1 - Y_i)\log(1 - \hat{p}_i)\right]
 \]</span></p>
-<p>where <span class="math inline">\(g\)</span> is an <span class="math inline">\(m\)</span>-dimensional vector (one entry per moment condition). The sample analog is:</p>
+<p>Compare this to the log-likelihood of a Bernoulli model from the <a href="maximum-likelihood.html">MLE page</a>:</p>
 <p><span class="math display">\[
-\bar{g}(\theta) = \frac{1}{n}\sum_{i=1}^n g(X_i, \theta)
+\ell(p) = \sum_{i=1}^n \left[Y_i \log p_i + (1 - Y_i)\log(1 - p_i)\right]
 \]</span></p>
-<p>If <span class="math inline">\(m = k\)</span> (just-identified), you can set <span class="math inline">\(\bar{g}(\theta) = 0\)</span> and solve — that’s MoM. If <span class="math inline">\(m &gt; k\)</span> (over-identified), you can’t make all entries of <span class="math inline">\(\bar{g}\)</span> exactly zero. GMM minimizes a weighted quadratic form:</p>
+<p>They are the same expression, up to a sign and a scaling constant. Minimizing cross-entropy loss is maximizing the Bernoulli log-likelihood. The neural network’s output layer (sigmoid activation) parameterizes <span class="math inline">\(p_i\)</span> as a flexible function of <span class="math inline">\(X_i\)</span>, but the estimation principle is identical to logistic regression — which is itself MLE.</p>
+<p>For multi-class classification with <span class="math inline">\(K\)</span> categories, softmax cross-entropy is the negative log-likelihood of a multinomial model. For regression with squared-error loss:</p>
 <p><span class="math display">\[
-\hat{\theta}_{\text{GMM}} = \arg\min_\theta \; \bar{g}(\theta)' \, W \, \bar{g}(\theta)
+\mathcal{L} = \frac{1}{n}\sum_{i=1}^n (Y_i - \hat{Y}_i)^2
 \]</span></p>
-<p>where <span class="math inline">\(W\)</span> is an <span class="math inline">\(m \times m\)</span> positive definite <strong>weighting matrix</strong>. This is like a weighted sum of squared moment violations — GMM finds the <span class="math inline">\(\theta\)</span> that makes the sample moments as close to zero as possible, with <span class="math inline">\(W\)</span> determining how much each moment condition matters.</p>
-<section id="choosing-w" class="level3">
-<h3 class="anchored" data-anchor-id="choosing-w">Choosing <span class="math inline">\(W\)</span></h3>
-<p>The choice of <span class="math inline">\(W\)</span> affects efficiency but not consistency — any positive definite <span class="math inline">\(W\)</span> gives a consistent estimator. But some choices are better than others.</p>
-<p><strong>Feasible two-step GMM.</strong> The most common approach:</p>
-<ol type="1">
-<li>Start with <span class="math inline">\(W = I\)</span> (or any reasonable <span class="math inline">\(W\)</span>) and get a preliminary estimate <span class="math inline">\(\hat{\theta}_1\)</span></li>
-<li>Use <span class="math inline">\(\hat{\theta}_1\)</span> to estimate the optimal weighting matrix: <span class="math inline">\(\hat{W} = \left[\frac{1}{n}\sum_i g(X_i, \hat{\theta}_1) \, g(X_i, \hat{\theta}_1)'\right]^{-1}\)</span></li>
-<li>Re-estimate with <span class="math inline">\(\hat{W}\)</span> to get <span class="math inline">\(\hat{\theta}_2\)</span></li>
-</ol>
-<p>The optimal <span class="math inline">\(W\)</span> is the inverse of the variance of the moment conditions. This weights precisely-estimated moments more heavily and noisy moments less — exactly the right thing to do.</p>
+<p>this is the negative log-likelihood of a Gaussian model with constant variance — exactly the same equivalence shown on the MLE page between <a href="maximum-likelihood.html#ols-is-mle-under-normality">OLS and MLE under normality</a>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 55%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Loss function</th>
+<th style="text-align: left;">Equivalent to</th>
+<th style="text-align: left;">Implicit distributional assumption</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Squared error (MSE)</td>
+<td style="text-align: left;">Gaussian MLE</td>
+<td style="text-align: left;"><span class="math inline">\(Y \mid X \sim N(\hat{Y}, \sigma^2)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Binary cross-entropy</td>
+<td style="text-align: left;">Bernoulli MLE</td>
+<td style="text-align: left;"><span class="math inline">\(Y \mid X \sim \text{Bernoulli}(\hat{p})\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Categorical cross-entropy</td>
+<td style="text-align: left;">Multinomial MLE</td>
+<td style="text-align: left;"><span class="math inline">\(Y \mid X \sim \text{Multinomial}(\hat{p}_1, \ldots, \hat{p}_K)\)</span></td>
+</tr>
+</tbody>
+</table>
 <div class="callout callout-style-simple callout-tip no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Intuition.</strong> If one moment condition has a lot of sampling noise and another is very precise, you should trust the precise one more. The optimal weighting matrix does this automatically.</p>
+<p><strong>What this means.</strong> When a paper says “we trained a neural network with cross-entropy loss,” it is saying “we found the parameters that maximize the likelihood of the observed labels under a Bernoulli model.” The network architecture determines the function class; the loss function determines the estimation principle. The estimation principle, in most cases, is MLE.</p>
 </div>
 </div>
 </div>
 </section>
+<section id="sgd-as-approximate-mle" class="level2">
+<h2 class="anchored" data-anchor-id="sgd-as-approximate-mle">SGD as approximate MLE</h2>
+<p>Classical MLE computes the gradient of the full log-likelihood and solves the score equation exactly. Neural networks can’t do this — the models are nonconvex and the datasets are enormous. Instead, they use <strong>stochastic gradient descent (SGD)</strong>: at each step, sample a mini-batch of data, compute the gradient of the loss on that mini-batch, and take a step.</p>
+<p>This is approximate MLE. The mini-batch gradient is a noisy, unbiased estimate of the full gradient. Over many steps, SGD traces out a path that (under regularity conditions) converges to a local maximum of the likelihood — though not necessarily the global one.</p>
+<p>The analogy to classical statistics is instructive:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Classical MLE</th>
+<th style="text-align: left;">Neural network training</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Full-sample gradient, solve exactly</td>
+<td style="text-align: left;">Mini-batch gradient, iterate</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Convex log-likelihood (often)</td>
+<td style="text-align: left;">Nonconvex loss landscape</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Single global optimum (typically)</td>
+<td style="text-align: left;">Multiple local optima</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Closed-form or Newton-Raphson</td>
+<td style="text-align: left;">SGD, Adam, or variants</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fisher information → standard errors</td>
+<td style="text-align: left;">No standard errors by default</td>
+</tr>
+</tbody>
+</table>
+<p>The last row matters. Classical MLE gives you standard errors through the <a href="maximum-likelihood.html#fisher-information-and-standard-errors">Fisher information</a>. Neural network training typically does not. The model gives you a point prediction, but no measure of uncertainty — a limitation addressed in <a href="calibration-uncertainty.html">Calibration and Uncertainty</a>.</p>
 </section>
-<section id="examples-that-build-on-the-course" class="level2">
-<h2 class="anchored" data-anchor-id="examples-that-build-on-the-course">Examples that build on the course</h2>
-<section id="ols-as-gmm" class="level3">
-<h3 class="anchored" data-anchor-id="ols-as-gmm">OLS as GMM</h3>
-<p>The population moment condition behind OLS is:</p>
-<p><span class="math display">\[
-E[X_i(Y_i - X_i'\beta)] = 0
-\]</span></p>
-<p>This says the regressors are uncorrelated with the error — exactly the identification assumption from <a href="cef.html">Regression &amp; the CEF</a>. The sample analog is:</p>
-<p><span class="math display">\[
-\bar{g}(\beta) = \frac{1}{n}\sum_{i=1}^n X_i(Y_i - X_i'\beta) = \frac{1}{n}X'(y - X\beta)
-\]</span></p>
-<p>Setting this to zero and solving gives <span class="math inline">\(X'X\hat{\beta} = X'y\)</span>, or <span class="math inline">\(\hat{\beta} = (X'X)^{-1}X'y\)</span> — the OLS formula from <a href="regression-algebra.html">The Algebra Behind OLS</a>. OLS is just-identified GMM: <span class="math inline">\(k\)</span> regressors, <span class="math inline">\(k\)</span> moment conditions, and <span class="math inline">\(W\)</span> drops out because you can solve exactly.</p>
-</section>
-<section id="iv2sls-as-gmm" class="level3">
-<h3 class="anchored" data-anchor-id="iv2sls-as-gmm">IV/2SLS as GMM</h3>
-<p>When regressors are endogenous, you need instruments <span class="math inline">\(Z_i\)</span> that are correlated with <span class="math inline">\(X_i\)</span> but uncorrelated with <span class="math inline">\(\varepsilon_i\)</span>. The moment condition becomes:</p>
-<p><span class="math display">\[
-E[Z_i(Y_i - X_i'\beta)] = 0
-\]</span></p>
-<p>If you have more instruments than endogenous regressors (<span class="math inline">\(m &gt; k\)</span>), this is over-identified — and GMM handles it naturally. Two-stage least squares (2SLS) is a specific GMM estimator with a particular choice of weighting matrix.</p>
-</section>
-</section>
-<section id="the-j-test-overidentification-test" class="level2">
-<h2 class="anchored" data-anchor-id="the-j-test-overidentification-test">The J-test (overidentification test)</h2>
-<p>When you’re over-identified (<span class="math inline">\(m &gt; k\)</span>), you have a built-in specification test. The logic: if the model is correct and all moment conditions are valid, the minimized GMM objective should be “small” (close to zero). If it’s “large,” at least some moment conditions are being violated, which suggests the model is misspecified.</p>
-<p>Formally, under the null that the model is correct:</p>
-<p><span class="math display">\[
-J = n \cdot \bar{g}(\hat{\theta})' \hat{W} \, \bar{g}(\hat{\theta}) \;\xrightarrow{d}\; \chi^2_{m-k}
-\]</span></p>
-<p>where <span class="math inline">\(m - k\)</span> is the number of “extra” moment conditions (the degree of over-identification). A large <span class="math inline">\(J\)</span> (relative to the <span class="math inline">\(\chi^2_{m-k}\)</span> distribution) rejects the model.</p>
+<section id="what-training-optimizes-and-what-it-does-not" class="level2">
+<h2 class="anchored" data-anchor-id="what-training-optimizes-and-what-it-does-not">What training optimizes — and what it does not</h2>
+<p>Training a neural network finds parameters <span class="math inline">\(\hat{\theta}\)</span> that minimize prediction error on the training distribution. This is optimization of a statistical objective: <span class="math inline">\(\hat{\theta} = \arg\min_\theta \mathcal{L}(\theta)\)</span>.</p>
+<p>But prediction is not the only thing you might care about. The <a href="maximum-likelihood.html#limitations">MLE page</a> noted that if the model is misspecified, MLE converges to the distribution closest to the truth in Kullback-Leibler divergence — not necessarily the “right” answer.</p>
+<p>For neural networks, this matters acutely:</p>
+<ul>
+<li>The model learns <span class="math inline">\(P(Y \mid X)\)</span> — the conditional distribution. It does not learn <span class="math inline">\(P(Y \mid do(X))\)</span> — the interventional distribution. This distinction is explored in <a href="prediction-vs-causation.html">Prediction vs Causation in Foundation Models</a>.</li>
+<li>The model minimizes loss on the training distribution. If the deployment distribution differs (distribution shift), the guarantees vanish.</li>
+<li>The model has no notion of identification. It finds a good predictor, not a causally interpretable parameter.</li>
+</ul>
 <div class="callout callout-style-simple callout-tip no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>What the J-test can and can’t do.</strong> The J-test can detect when your moment conditions are mutually inconsistent — they can’t all be true at the same time. But it can’t tell you <em>which</em> condition is wrong. And if you’re just-identified (<span class="math inline">\(m = k\)</span>), <span class="math inline">\(J = 0\)</span> by construction — there’s no overidentification to test.</p>
+<p><strong>The key distinction.</strong> Training minimizes prediction error. <a href="../causal-inference/index.html">Causal inference</a> asks whether the parameter is identified — whether you can recover the quantity of interest from the data at all, regardless of sample size or model complexity. These are different questions, and a powerful model that answers the first does not automatically answer the second.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="when-to-use-gmm" class="level2">
-<h2 class="anchored" data-anchor-id="when-to-use-gmm">When to use GMM</h2>
-<p><strong>When economic theory gives you moment conditions but not a full likelihood.</strong> Many structural models in economics specify relationships between variables (Euler equations, equilibrium conditions) that translate directly into moment conditions. You don’t need to know the full distribution of the data — just these conditions. This is much less demanding than <a href="maximum-likelihood.html">MLE</a>.</p>
-<p><strong>When you want robustness to distributional assumptions.</strong> GMM only assumes the moment conditions hold; it’s agnostic about the rest of the distribution. If you use MLE with the wrong distributional assumption, your estimator converges to the wrong thing. GMM avoids this risk by not making that assumption in the first place.</p>
-<p><strong>When you have instruments or panel data.</strong> These settings naturally produce moment conditions (instrument exogeneity, sequential exogeneity), making GMM a natural framework.</p>
-<p><strong>The tradeoff.</strong> GMM is more robust than MLE but less efficient when MLE’s distributional assumptions actually hold. If you know the distribution and it’s correctly specified, MLE squeezes out every last bit of information. GMM leaves some information on the table by not using the full distribution.</p>
-</section>
-<section id="connecting-to-mle" class="level2">
-<h2 class="anchored" data-anchor-id="connecting-to-mle">Connecting to MLE</h2>
-<p>MLE is actually a special case of GMM. The MLE score equations — the first-order conditions from maximizing the log-likelihood — are moment conditions:</p>
-<p><span class="math display">\[
-E\!\left[\frac{\partial \log f(X_i \mid \theta_0)}{\partial \theta}\right] = 0
-\]</span></p>
-<p>These are the “moment conditions” that MLE implicitly uses. When you use these specific conditions with the optimal GMM weighting matrix, GMM produces exactly the MLE. So the hierarchy is:</p>
-<p><span class="math display">\[
-\text{MoM} \;\subset\; \text{GMM} \;\supset\; \text{MLE}
-\]</span></p>
-<p>MoM is GMM with a specific (often suboptimal) choice of moments and <span class="math inline">\(W = I\)</span>. MLE is GMM with the score as the moment condition and the optimal <span class="math inline">\(W\)</span>. GMM is the general framework that nests both.</p>
-<p>This is why GMM achieves MLE-level efficiency when the likelihood is correctly specified and the optimal weighting matrix is used — it’s <em>doing</em> MLE, just expressed in the language of moments.</p>
+<section id="connecting-to-the-course" class="level2">
+<h2 class="anchored" data-anchor-id="connecting-to-the-course">Connecting to the course</h2>
+<p>This page bridges two frameworks:</p>
+<ul>
+<li><strong><a href="maximum-likelihood.html">MLE</a></strong> provides the estimation principle. Neural network training <em>is</em> MLE (or regularized MLE) with a flexible function class.</li>
+<li><strong><a href="regularization-priors.html">Regularization as Bayesian inference</a></strong> shows that weight decay, dropout, and other regularization techniques have principled statistical interpretations — they are not ad hoc tricks.</li>
+<li><strong><a href="regression-algebra.html">The Algebra Behind OLS</a></strong> derived standard errors from <span class="math inline">\((X'X)^{-1}\)</span>. Neural networks lack this closed-form machinery, which is why uncertainty quantification requires separate tools.</li>
+</ul>
 
 
 </section>

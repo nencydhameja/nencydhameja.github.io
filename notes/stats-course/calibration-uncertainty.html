@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Generalized Method of Moments – Foundations of Statistical Inference</title>
+<title>Calibration and Uncertainty Quantification – Foundations of Statistical Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -111,7 +111,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./method-of-moments.html">Estimation</a></li><li class="breadcrumb-item"><a href="./gmm.html">Generalized Method of Moments</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./training-as-mle.html">Statistical Foundations of AI</a></li><li class="breadcrumb-item"><a href="./calibration-uncertainty.html">Calibration &amp; Uncertainty Quantification</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -310,7 +310,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gmm.html" class="sidebar-item-text sidebar-link active">
+  <a href="./gmm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Generalized Method of Moments</span></a>
   </div>
 </li>
@@ -432,7 +432,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./calibration-uncertainty.html" class="sidebar-item-text sidebar-link">
+  <a href="./calibration-uncertainty.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Calibration &amp; Uncertainty Quantification</span></a>
   </div>
 </li>
@@ -448,28 +448,25 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#from-mom-to-gmm" id="toc-from-mom-to-gmm" class="nav-link active" data-scroll-target="#from-mom-to-gmm">From MoM to GMM</a></li>
-  <li><a href="#the-gmm-estimator" id="toc-the-gmm-estimator" class="nav-link" data-scroll-target="#the-gmm-estimator">The GMM estimator</a>
+  <li><a href="#what-calibration-means" id="toc-what-calibration-means" class="nav-link active" data-scroll-target="#what-calibration-means">What calibration means</a>
   <ul class="collapse">
-  <li><a href="#choosing-w" id="toc-choosing-w" class="nav-link" data-scroll-target="#choosing-w">Choosing <span class="math inline">\(W\)</span></a></li>
+  <li><a href="#why-calibration-matters" id="toc-why-calibration-matters" class="nav-link" data-scroll-target="#why-calibration-matters">Why calibration matters</a></li>
   </ul></li>
-  <li><a href="#examples-that-build-on-the-course" id="toc-examples-that-build-on-the-course" class="nav-link" data-scroll-target="#examples-that-build-on-the-course">Examples that build on the course</a>
-  <ul class="collapse">
-  <li><a href="#ols-as-gmm" id="toc-ols-as-gmm" class="nav-link" data-scroll-target="#ols-as-gmm">OLS as GMM</a></li>
-  <li><a href="#iv2sls-as-gmm" id="toc-iv2sls-as-gmm" class="nav-link" data-scroll-target="#iv2sls-as-gmm">IV/2SLS as GMM</a></li>
-  </ul></li>
-  <li><a href="#the-j-test-overidentification-test" id="toc-the-j-test-overidentification-test" class="nav-link" data-scroll-target="#the-j-test-overidentification-test">The J-test (overidentification test)</a></li>
-  <li><a href="#when-to-use-gmm" id="toc-when-to-use-gmm" class="nav-link" data-scroll-target="#when-to-use-gmm">When to use GMM</a></li>
-  <li><a href="#connecting-to-mle" id="toc-connecting-to-mle" class="nav-link" data-scroll-target="#connecting-to-mle">Connecting to MLE</a></li>
+  <li><a href="#neural-networks-are-typically-miscalibrated" id="toc-neural-networks-are-typically-miscalibrated" class="nav-link" data-scroll-target="#neural-networks-are-typically-miscalibrated">Neural networks are typically miscalibrated</a></li>
+  <li><a href="#post-hoc-calibration" id="toc-post-hoc-calibration" class="nav-link" data-scroll-target="#post-hoc-calibration">Post-hoc calibration</a></li>
+  <li><a href="#bayesian-approaches-to-uncertainty" id="toc-bayesian-approaches-to-uncertainty" class="nav-link" data-scroll-target="#bayesian-approaches-to-uncertainty">Bayesian approaches to uncertainty</a></li>
+  <li><a href="#two-kinds-of-uncertainty" id="toc-two-kinds-of-uncertainty" class="nav-link" data-scroll-target="#two-kinds-of-uncertainty">Two kinds of uncertainty</a></li>
+  <li><a href="#conformal-prediction" id="toc-conformal-prediction" class="nav-link" data-scroll-target="#conformal-prediction">Conformal prediction</a></li>
+  <li><a href="#connecting-to-the-course" id="toc-connecting-to-the-course" class="nav-link" data-scroll-target="#connecting-to-the-course">Connecting to the course</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./method-of-moments.html">Estimation</a></li><li class="breadcrumb-item"><a href="./gmm.html">Generalized Method of Moments</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./training-as-mle.html">Statistical Foundations of AI</a></li><li class="breadcrumb-item"><a href="./calibration-uncertainty.html">Calibration &amp; Uncertainty Quantification</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Generalized Method of Moments</h1>
+<h1 class="title">Calibration and Uncertainty Quantification</h1>
 </div>
 
 
@@ -486,111 +483,142 @@ window.Quarto = {
 </header>
 
 
-<p><a href="method-of-moments.html">Method of Moments</a> is simple but leaves a key question unanswered: <em>which</em> moments should you match? And what if you have more moment conditions than parameters? GMM formalizes this. It takes a set of moment conditions — potentially more than you need — and finds the parameters that satisfy them as closely as possible in a precise, optimal sense.</p>
-<section id="from-mom-to-gmm" class="level2">
-<h2 class="anchored" data-anchor-id="from-mom-to-gmm">From MoM to GMM</h2>
-<p>Recall how MoM works: you have <span class="math inline">\(k\)</span> parameters and you pick <span class="math inline">\(k\)</span> moment conditions. Set the sample moments equal to zero and solve. When you have exactly as many conditions as parameters — the <strong>just-identified</strong> case — there’s a unique solution and everything is clean.</p>
-<p>But in practice, economic theory or statistical reasoning often gives you <em>more</em> moment conditions than parameters. Suppose you have <span class="math inline">\(m\)</span> conditions for <span class="math inline">\(k\)</span> parameters, with <span class="math inline">\(m &gt; k\)</span>. Now the system is <strong>over-identified</strong>: you can’t satisfy all <span class="math inline">\(m\)</span> conditions exactly, so you need a way to get as close as possible.</p>
-<p>That’s what GMM does. Instead of solving a system of equations, it minimizes a measure of how far the sample moments are from zero.</p>
+<p>Classical statistical estimators come with standard errors. OLS gives you <span class="math inline">\(\sigma^2(X'X)^{-1}\)</span> (<a href="regression-algebra.html">Algebra of Regression</a>). MLE gives you the inverse Fisher information (<a href="maximum-likelihood.html#fisher-information-and-standard-errors">MLE</a>). Bayesian inference gives you the full posterior distribution (<a href="bayesian-updating.html">Bayesian Updating</a>). Modern machine learning models typically give you none of these. This page asks: <strong>when a model says it’s 90% confident, is it right 90% of the time?</strong> And if not, what can you do about it?</p>
+<section id="what-calibration-means" class="level2">
+<h2 class="anchored" data-anchor-id="what-calibration-means">What calibration means</h2>
+<p>A model is <strong>calibrated</strong> if its predicted probabilities match empirical frequencies:</p>
+<p><span class="math display">\[
+P(Y = 1 \mid \hat{p}(X) = q) = q \qquad \text{for all } q \in [0, 1]
+\]</span></p>
+<p>If the model says “there’s a 70% chance of rain” for 1,000 days, it should rain on approximately 700 of them. If it rains on 850, the model is <strong>overconfident</strong> at the 70% level. If it rains on 550, the model is <strong>underconfident</strong>.</p>
+<p>Calibration is a property of the predicted <em>probabilities</em>, not the predicted <em>classes</em>. A model can have high accuracy (correctly classifying most examples) while being poorly calibrated (systematically overconfident or underconfident in its probability estimates).</p>
+<section id="why-calibration-matters" class="level3">
+<h3 class="anchored" data-anchor-id="why-calibration-matters">Why calibration matters</h3>
+<p>Calibration matters whenever you use predicted probabilities as inputs to decisions:</p>
+<ul>
+<li><strong>Risk assessment:</strong> if a medical model says “30% chance of disease,” a doctor’s decision depends on that number being trustworthy</li>
+<li><strong>Ranking and prioritization:</strong> if a fraud detection model scores transactions, the ordering depends on calibrated probabilities</li>
+<li><strong>Bayesian updating:</strong> if you use a model’s output as a likelihood in <a href="bayesian-updating.html">Bayesian Updating</a>, miscalibration corrupts the posterior</li>
+</ul>
+<p>An uncalibrated model’s predictions are <em>relative orderings</em> at best — “this example is more likely than that one” — but the actual probability values are unreliable.</p>
 </section>
-<section id="the-gmm-estimator" class="level2">
-<h2 class="anchored" data-anchor-id="the-gmm-estimator">The GMM estimator</h2>
-<p>Start with a vector of <strong>moment conditions</strong>. The theory says that at the true parameter <span class="math inline">\(\theta_0\)</span>:</p>
+</section>
+<section id="neural-networks-are-typically-miscalibrated" class="level2">
+<h2 class="anchored" data-anchor-id="neural-networks-are-typically-miscalibrated">Neural networks are typically miscalibrated</h2>
+<p>Modern deep neural networks tend to be <strong>overconfident</strong>: they assign high probabilities to their predictions even when they are wrong. This is a well-documented empirical finding (Guo et al., 2017).</p>
+<p>The cause is related to <a href="training-as-mle.html">training as MLE</a>. The cross-entropy loss encourages the model to push predicted probabilities toward 0 or 1 — the loss is minimized when the model is maximally confident on every training example. With enough capacity, the model memorizes the training set and becomes overconfident on the test set.</p>
+<p>This is the <a href="bias-variance.html">bias-variance tradeoff</a> manifesting in probability space: an overparameterized model fits the training data perfectly (low bias) but produces overconfident predictions on new data (high variance in the probability estimates).</p>
+</section>
+<section id="post-hoc-calibration" class="level2">
+<h2 class="anchored" data-anchor-id="post-hoc-calibration">Post-hoc calibration</h2>
+<p>The most common fix is <strong>temperature scaling</strong>: divide the logits (pre-softmax outputs) by a scalar <span class="math inline">\(T &gt; 0\)</span> before applying the softmax:</p>
 <p><span class="math display">\[
-E[g(X_i, \theta_0)] = 0
+\hat{p}_i = \text{softmax}(z_i / T)
 \]</span></p>
-<p>where <span class="math inline">\(g\)</span> is an <span class="math inline">\(m\)</span>-dimensional vector (one entry per moment condition). The sample analog is:</p>
+<ul>
+<li><span class="math inline">\(T = 1\)</span>: original model</li>
+<li><span class="math inline">\(T &gt; 1\)</span>: softer probabilities (less confident)</li>
+<li><span class="math inline">\(T &lt; 1\)</span>: sharper probabilities (more confident)</li>
+</ul>
+<p>The temperature <span class="math inline">\(T\)</span> is tuned on a held-out validation set to minimize the negative log-likelihood — which is, once again, <a href="maximum-likelihood.html">MLE</a>. Temperature scaling does not change the model’s rankings (which example is “most likely”) — it only adjusts the <em>magnitudes</em> of the probabilities.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Why “temperature”?</strong> The name comes from statistical mechanics. In the Boltzmann distribution, temperature controls how peaked or flat the distribution is over energy states. High temperature → uniform (maximum entropy). Low temperature → concentrated on the lowest-energy state. The analogy to softmax is exact.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="bayesian-approaches-to-uncertainty" class="level2">
+<h2 class="anchored" data-anchor-id="bayesian-approaches-to-uncertainty">Bayesian approaches to uncertainty</h2>
+<p>The <a href="bayesian-estimation.html">Bayesian Estimation</a> page showed that Bayesian inference naturally produces uncertainty estimates — the posterior is a full distribution, not a point. Applying this to neural networks:</p>
+<p><strong>Bayesian neural networks</strong> place priors on the weights and compute (or approximate) the posterior <span class="math inline">\(p(\theta \mid \text{data})\)</span>. Predictions integrate over weight uncertainty:</p>
 <p><span class="math display">\[
-\bar{g}(\theta) = \frac{1}{n}\sum_{i=1}^n g(X_i, \theta)
+p(Y \mid X, \text{data}) = \int p(Y \mid X, \theta) \, p(\theta \mid \text{data}) \, d\theta
 \]</span></p>
-<p>If <span class="math inline">\(m = k\)</span> (just-identified), you can set <span class="math inline">\(\bar{g}(\theta) = 0\)</span> and solve — that’s MoM. If <span class="math inline">\(m &gt; k\)</span> (over-identified), you can’t make all entries of <span class="math inline">\(\bar{g}\)</span> exactly zero. GMM minimizes a weighted quadratic form:</p>
-<p><span class="math display">\[
-\hat{\theta}_{\text{GMM}} = \arg\min_\theta \; \bar{g}(\theta)' \, W \, \bar{g}(\theta)
-\]</span></p>
-<p>where <span class="math inline">\(W\)</span> is an <span class="math inline">\(m \times m\)</span> positive definite <strong>weighting matrix</strong>. This is like a weighted sum of squared moment violations — GMM finds the <span class="math inline">\(\theta\)</span> that makes the sample moments as close to zero as possible, with <span class="math inline">\(W\)</span> determining how much each moment condition matters.</p>
-<section id="choosing-w" class="level3">
-<h3 class="anchored" data-anchor-id="choosing-w">Choosing <span class="math inline">\(W\)</span></h3>
-<p>The choice of <span class="math inline">\(W\)</span> affects efficiency but not consistency — any positive definite <span class="math inline">\(W\)</span> gives a consistent estimator. But some choices are better than others.</p>
-<p><strong>Feasible two-step GMM.</strong> The most common approach:</p>
+<p>This integral is typically intractable, motivating approximations:</p>
+<ul>
+<li><strong>Monte Carlo dropout:</strong> as discussed in <a href="regularization-priors.html">Regularization as Bayesian Inference</a>, running the network with dropout at test time approximates sampling from the posterior. The spread of predictions estimates epistemic uncertainty.</li>
+<li><strong>Deep ensembles:</strong> train multiple networks with different initializations. The disagreement between them estimates uncertainty. This is not formally Bayesian but captures a similar intuition — uncertainty is where the models disagree.</li>
+</ul>
+</section>
+<section id="two-kinds-of-uncertainty" class="level2">
+<h2 class="anchored" data-anchor-id="two-kinds-of-uncertainty">Two kinds of uncertainty</h2>
+<p>A useful decomposition:</p>
+<p><strong>Aleatoric uncertainty</strong> is inherent randomness in the data — the noise <span class="math inline">\(\varepsilon\)</span> in <span class="math inline">\(Y = f(X) + \varepsilon\)</span>. This cannot be reduced by collecting more data. It is the <span class="math inline">\(\sigma^2\)</span> in <span class="math inline">\(\text{Var}(\hat{\beta}) = \sigma^2(X'X)^{-1}\)</span> from <a href="regression-algebra.html">The Algebra Behind OLS</a>.</p>
+<p><strong>Epistemic uncertainty</strong> is uncertainty about the model or parameters — what you don’t know because you have finite data. This <em>can</em> be reduced with more data. It is what <a href="bayesian-updating.html">Bayesian Updating</a> reduces as the posterior concentrates.</p>
+<p>Classical statistics separates these naturally: <span class="math inline">\(\sigma^2\)</span> is aleatoric; <span class="math inline">\(\text{Var}(\hat{\beta})\)</span> is epistemic. Neural networks typically conflate them, reporting a single predicted probability that mixes both sources.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Why the distinction matters.</strong> If uncertainty is aleatoric, the model should say “I don’t know because <em>no one</em> can know — the outcome is inherently random.” If it is epistemic, the model should say “I don’t know because <em>I</em> haven’t seen enough data — more training data or a better model might help.” These have different implications for decision-making: aleatoric uncertainty calls for risk management; epistemic uncertainty calls for more data.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="conformal-prediction" class="level2">
+<h2 class="anchored" data-anchor-id="conformal-prediction">Conformal prediction</h2>
+<p>A recent and increasingly popular approach that provides <strong>distribution-free</strong> prediction intervals. The idea:</p>
 <ol type="1">
-<li>Start with <span class="math inline">\(W = I\)</span> (or any reasonable <span class="math inline">\(W\)</span>) and get a preliminary estimate <span class="math inline">\(\hat{\theta}_1\)</span></li>
-<li>Use <span class="math inline">\(\hat{\theta}_1\)</span> to estimate the optimal weighting matrix: <span class="math inline">\(\hat{W} = \left[\frac{1}{n}\sum_i g(X_i, \hat{\theta}_1) \, g(X_i, \hat{\theta}_1)'\right]^{-1}\)</span></li>
-<li>Re-estimate with <span class="math inline">\(\hat{W}\)</span> to get <span class="math inline">\(\hat{\theta}_2\)</span></li>
+<li>Fit any model (neural network, random forest, anything)</li>
+<li>On a calibration set, compute the residuals (or nonconformity scores)</li>
+<li>Use the quantiles of these residuals to construct prediction intervals</li>
 </ol>
-<p>The optimal <span class="math inline">\(W\)</span> is the inverse of the variance of the moment conditions. This weights precisely-estimated moments more heavily and noisy moments less — exactly the right thing to do.</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>Intuition.</strong> If one moment condition has a lot of sampling noise and another is very precise, you should trust the precise one more. The optimal weighting matrix does this automatically.</p>
-</div>
-</div>
-</div>
+<p>The guarantee: with probability <span class="math inline">\(1 - \alpha\)</span>, the true outcome falls within the prediction interval — regardless of the model or the distribution of the data. This requires only the assumption that calibration and test data are exchangeable (essentially, drawn from the same distribution).</p>
+<p>Conformal prediction is attractive because:</p>
+<ul>
+<li>It works with <em>any</em> underlying model — no Bayesian assumptions needed</li>
+<li>It provides finite-sample coverage guarantees (not just asymptotic)</li>
+<li>It is computationally simple — just sort residuals and take quantiles</li>
+</ul>
+<p>The connection to the course: conformal prediction produces objects that resemble <a href="pvalues-ci.html">confidence intervals</a> (they have a coverage guarantee) but are computed without assuming normality or using <a href="maximum-likelihood.html#fisher-information-and-standard-errors">Fisher information</a>. They are closer in spirit to the <a href="bootstrap.html">bootstrap</a> — using the empirical distribution of residuals rather than parametric assumptions.</p>
 </section>
-</section>
-<section id="examples-that-build-on-the-course" class="level2">
-<h2 class="anchored" data-anchor-id="examples-that-build-on-the-course">Examples that build on the course</h2>
-<section id="ols-as-gmm" class="level3">
-<h3 class="anchored" data-anchor-id="ols-as-gmm">OLS as GMM</h3>
-<p>The population moment condition behind OLS is:</p>
-<p><span class="math display">\[
-E[X_i(Y_i - X_i'\beta)] = 0
-\]</span></p>
-<p>This says the regressors are uncorrelated with the error — exactly the identification assumption from <a href="cef.html">Regression &amp; the CEF</a>. The sample analog is:</p>
-<p><span class="math display">\[
-\bar{g}(\beta) = \frac{1}{n}\sum_{i=1}^n X_i(Y_i - X_i'\beta) = \frac{1}{n}X'(y - X\beta)
-\]</span></p>
-<p>Setting this to zero and solving gives <span class="math inline">\(X'X\hat{\beta} = X'y\)</span>, or <span class="math inline">\(\hat{\beta} = (X'X)^{-1}X'y\)</span> — the OLS formula from <a href="regression-algebra.html">The Algebra Behind OLS</a>. OLS is just-identified GMM: <span class="math inline">\(k\)</span> regressors, <span class="math inline">\(k\)</span> moment conditions, and <span class="math inline">\(W\)</span> drops out because you can solve exactly.</p>
-</section>
-<section id="iv2sls-as-gmm" class="level3">
-<h3 class="anchored" data-anchor-id="iv2sls-as-gmm">IV/2SLS as GMM</h3>
-<p>When regressors are endogenous, you need instruments <span class="math inline">\(Z_i\)</span> that are correlated with <span class="math inline">\(X_i\)</span> but uncorrelated with <span class="math inline">\(\varepsilon_i\)</span>. The moment condition becomes:</p>
-<p><span class="math display">\[
-E[Z_i(Y_i - X_i'\beta)] = 0
-\]</span></p>
-<p>If you have more instruments than endogenous regressors (<span class="math inline">\(m &gt; k\)</span>), this is over-identified — and GMM handles it naturally. Two-stage least squares (2SLS) is a specific GMM estimator with a particular choice of weighting matrix.</p>
-</section>
-</section>
-<section id="the-j-test-overidentification-test" class="level2">
-<h2 class="anchored" data-anchor-id="the-j-test-overidentification-test">The J-test (overidentification test)</h2>
-<p>When you’re over-identified (<span class="math inline">\(m &gt; k\)</span>), you have a built-in specification test. The logic: if the model is correct and all moment conditions are valid, the minimized GMM objective should be “small” (close to zero). If it’s “large,” at least some moment conditions are being violated, which suggests the model is misspecified.</p>
-<p>Formally, under the null that the model is correct:</p>
-<p><span class="math display">\[
-J = n \cdot \bar{g}(\hat{\theta})' \hat{W} \, \bar{g}(\hat{\theta}) \;\xrightarrow{d}\; \chi^2_{m-k}
-\]</span></p>
-<p>where <span class="math inline">\(m - k\)</span> is the number of “extra” moment conditions (the degree of over-identification). A large <span class="math inline">\(J\)</span> (relative to the <span class="math inline">\(\chi^2_{m-k}\)</span> distribution) rejects the model.</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>What the J-test can and can’t do.</strong> The J-test can detect when your moment conditions are mutually inconsistent — they can’t all be true at the same time. But it can’t tell you <em>which</em> condition is wrong. And if you’re just-identified (<span class="math inline">\(m = k\)</span>), <span class="math inline">\(J = 0\)</span> by construction — there’s no overidentification to test.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="when-to-use-gmm" class="level2">
-<h2 class="anchored" data-anchor-id="when-to-use-gmm">When to use GMM</h2>
-<p><strong>When economic theory gives you moment conditions but not a full likelihood.</strong> Many structural models in economics specify relationships between variables (Euler equations, equilibrium conditions) that translate directly into moment conditions. You don’t need to know the full distribution of the data — just these conditions. This is much less demanding than <a href="maximum-likelihood.html">MLE</a>.</p>
-<p><strong>When you want robustness to distributional assumptions.</strong> GMM only assumes the moment conditions hold; it’s agnostic about the rest of the distribution. If you use MLE with the wrong distributional assumption, your estimator converges to the wrong thing. GMM avoids this risk by not making that assumption in the first place.</p>
-<p><strong>When you have instruments or panel data.</strong> These settings naturally produce moment conditions (instrument exogeneity, sequential exogeneity), making GMM a natural framework.</p>
-<p><strong>The tradeoff.</strong> GMM is more robust than MLE but less efficient when MLE’s distributional assumptions actually hold. If you know the distribution and it’s correctly specified, MLE squeezes out every last bit of information. GMM leaves some information on the table by not using the full distribution.</p>
-</section>
-<section id="connecting-to-mle" class="level2">
-<h2 class="anchored" data-anchor-id="connecting-to-mle">Connecting to MLE</h2>
-<p>MLE is actually a special case of GMM. The MLE score equations — the first-order conditions from maximizing the log-likelihood — are moment conditions:</p>
-<p><span class="math display">\[
-E\!\left[\frac{\partial \log f(X_i \mid \theta_0)}{\partial \theta}\right] = 0
-\]</span></p>
-<p>These are the “moment conditions” that MLE implicitly uses. When you use these specific conditions with the optimal GMM weighting matrix, GMM produces exactly the MLE. So the hierarchy is:</p>
-<p><span class="math display">\[
-\text{MoM} \;\subset\; \text{GMM} \;\supset\; \text{MLE}
-\]</span></p>
-<p>MoM is GMM with a specific (often suboptimal) choice of moments and <span class="math inline">\(W = I\)</span>. MLE is GMM with the score as the moment condition and the optimal <span class="math inline">\(W\)</span>. GMM is the general framework that nests both.</p>
-<p>This is why GMM achieves MLE-level efficiency when the likelihood is correctly specified and the optimal weighting matrix is used — it’s <em>doing</em> MLE, just expressed in the language of moments.</p>
+<section id="connecting-to-the-course" class="level2">
+<h2 class="anchored" data-anchor-id="connecting-to-the-course">Connecting to the course</h2>
+<p>This page ties together uncertainty quantification across frameworks:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Framework</th>
+<th style="text-align: left;">Source of uncertainty</th>
+<th style="text-align: left;">Tool</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><a href="regression-algebra.html">OLS</a></td>
+<td style="text-align: left;"><span class="math inline">\(\sigma^2(X'X)^{-1}\)</span></td>
+<td style="text-align: left;">Standard errors</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="maximum-likelihood.html">MLE</a></td>
+<td style="text-align: left;">Fisher information</td>
+<td style="text-align: left;">Asymptotic SEs</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="bayesian-estimation.html">Bayesian</a></td>
+<td style="text-align: left;">Full posterior</td>
+<td style="text-align: left;">Credible intervals</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="bootstrap.html">Bootstrap</a></td>
+<td style="text-align: left;">Resampled distribution</td>
+<td style="text-align: left;">Bootstrap CIs</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Neural networks</td>
+<td style="text-align: left;">(typically missing)</td>
+<td style="text-align: left;">Calibration, ensembles, conformal</td>
+</tr>
+</tbody>
+</table>
+<p>The fundamental question is always the same: <strong>how much should you trust the estimate?</strong> Classical statistics answers this with standard errors and confidence intervals. Bayesian inference answers it with posteriors and credible intervals. For machine learning models, the answer requires additional machinery — calibration, ensembles, or conformal prediction — because the training procedure does not provide uncertainty estimates by default.</p>
 
 
 </section>
