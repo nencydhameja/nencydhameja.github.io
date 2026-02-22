@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Bayes’ Theorem – Introduction to Bayesian Thinking</title>
+<title>Bayesian Thinking in ML &amp; AI – Introduction to Bayesian Thinking</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -41,11 +41,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -116,7 +111,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bayes-theorem.html">Foundations</a></li><li class="breadcrumb-item"><a href="./bayes-theorem.html">Bayes’ Theorem</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bayesian-ml.html">Bigger Picture</a></li><li class="breadcrumb-item"><a href="./bayesian-ml.html">Bayesian Thinking in ML &amp; AI</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -158,7 +153,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bayes-theorem.html" class="sidebar-item-text sidebar-link active">
+  <a href="./bayes-theorem.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Bayes’ Theorem</span></a>
   </div>
 </li>
@@ -273,7 +268,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bayesian-ml.html" class="sidebar-item-text sidebar-link">
+  <a href="./bayesian-ml.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Bayesian Thinking in ML &amp; AI</span></a>
   </div>
 </li>
@@ -289,27 +284,22 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-formula" id="toc-the-formula" class="nav-link active" data-scroll-target="#the-formula">The formula</a></li>
-  <li><a href="#why-each-piece-exists" id="toc-why-each-piece-exists" class="nav-link" data-scroll-target="#why-each-piece-exists">Why each piece exists</a></li>
-  <li><a href="#the-medical-test-example" id="toc-the-medical-test-example" class="nav-link" data-scroll-target="#the-medical-test-example">The medical test example</a>
-  <ul class="collapse">
-  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
-  <li><a href="#the-lesson" id="toc-the-lesson" class="nav-link" data-scroll-target="#the-lesson">The lesson</a></li>
-  </ul></li>
-  <li><a href="#the-coin-flip-your-first-conjugate-model" id="toc-the-coin-flip-your-first-conjugate-model" class="nav-link" data-scroll-target="#the-coin-flip-your-first-conjugate-model">The coin-flip: your first conjugate model</a>
-  <ul class="collapse">
-  <li><a href="#things-to-try-1" id="toc-things-to-try-1" class="nav-link" data-scroll-target="#things-to-try-1">Things to try</a></li>
-  </ul></li>
-  <li><a href="#why-this-matters" id="toc-why-this-matters" class="nav-link" data-scroll-target="#why-this-matters">Why this matters</a></li>
+  <li><a href="#the-connection" id="toc-the-connection" class="nav-link active" data-scroll-target="#the-connection">The connection</a></li>
+  <li><a href="#bayesian-ideas-under-a-different-name" id="toc-bayesian-ideas-under-a-different-name" class="nav-link" data-scroll-target="#bayesian-ideas-under-a-different-name">Bayesian ideas under a different name</a></li>
+  <li><a href="#directly-bayesian" id="toc-directly-bayesian" class="nav-link" data-scroll-target="#directly-bayesian">Directly Bayesian</a></li>
+  <li><a href="#how-mcmc-scales-to-neural-nets" id="toc-how-mcmc-scales-to-neural-nets" class="nav-link" data-scroll-target="#how-mcmc-scales-to-neural-nets">How MCMC scales to neural nets</a></li>
+  <li><a href="#where-it-matters-most-in-ai-right-now" id="toc-where-it-matters-most-in-ai-right-now" class="nav-link" data-scroll-target="#where-it-matters-most-in-ai-right-now">Where it matters most in AI right now</a></li>
+  <li><a href="#the-big-picture" id="toc-the-big-picture" class="nav-link" data-scroll-target="#the-big-picture">The big picture</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bayes-theorem.html">Foundations</a></li><li class="breadcrumb-item"><a href="./bayes-theorem.html">Bayes’ Theorem</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bayesian-ml.html">Bigger Picture</a></li><li class="breadcrumb-item"><a href="./bayesian-ml.html">Bayesian Thinking in ML &amp; AI</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Bayes’ Theorem</h1>
+<h1 class="title">Bayesian Thinking in ML &amp; AI</h1>
+<p class="subtitle lead">Same ideas, different names</p>
 </div>
 
 
@@ -326,411 +316,168 @@ window.Quarto = {
 </header>
 
 
-<section id="the-formula" class="level2">
-<h2 class="anchored" data-anchor-id="the-formula">The formula</h2>
-<p><span class="math display">\[P(H \mid D) = \frac{P(D \mid H) \cdot P(H)}{P(D)}\]</span></p>
-<p>In words:</p>
-<p><span class="math display">\[\text{Posterior} = \frac{\text{Likelihood} \times \text{Prior}}{\text{Evidence}}\]</span></p>
+<section id="the-connection" class="level2">
+<h2 class="anchored" data-anchor-id="the-connection">The connection</h2>
+<p>The Bayesian concepts on this site — <a href="priors-posteriors.html">priors</a>, <a href="bayes-theorem.html">posteriors</a>, <a href="mcmc.html">MCMC</a>, <a href="shrinkage.html">shrinkage</a> — are the same ideas that power modern machine learning and AI. They just go by different names.</p>
+<p>If you understand why a prior pulls estimates toward zero, you already understand regularization. If you understand MCMC, you understand how Bayesian neural networks are trained. This page maps what you’ve learned to their ML/AI counterparts.</p>
 </section>
-<section id="why-each-piece-exists" class="level2">
-<h2 class="anchored" data-anchor-id="why-each-piece-exists">Why each piece exists</h2>
-<p>Every term in Bayes’ theorem does a specific job. Drop any one and the reasoning breaks:</p>
-<p><strong>Prior — <span class="math inline">\(P(H)\)</span>:</strong> What you believe before seeing data. Without it, you’re implicitly assuming all hypotheses are equally likely, which is often absurd. The medical test below makes this vivid: the disease has a 0.1% base rate. Ignoring that makes you think a positive test means a 99% chance of being sick. The prior encodes that the disease is rare — which is why the real answer is 9%.</p>
-<p><strong>Likelihood — <span class="math inline">\(P(D \mid H)\)</span>:</strong> How well the hypothesis explains the data you actually observed. This is the same ingredient frequentists use — the data model. Without it, your beliefs never contact reality. The likelihood is what makes Bayesian inference empirical rather than just opinion.</p>
-<p><strong>Evidence — <span class="math inline">\(P(D)\)</span>:</strong> The total probability of seeing this data under <em>all</em> hypotheses. It’s a normalizing constant — it ensures the posterior is a valid probability distribution (sums/integrates to 1). You often don’t need to compute it directly (conjugate models and MCMC both avoid it), but conceptually it makes the comparison fair across hypotheses.</p>
-<p><strong>Posterior — <span class="math inline">\(P(H \mid D)\)</span>:</strong> The answer. Your updated belief after seeing data. Neither the prior nor the likelihood alone gives you this. The prior ignores data; the likelihood ignores context. The posterior combines both.</p>
+<section id="bayesian-ideas-under-a-different-name" class="level2">
+<h2 class="anchored" data-anchor-id="bayesian-ideas-under-a-different-name">Bayesian ideas under a different name</h2>
+<p>Many standard ML techniques are Bayesian ideas in disguise:</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 40%">
-<col style="width: 59%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Drop this</th>
-<th>What goes wrong</th>
+<th>ML technique</th>
+<th>Bayesian equivalent</th>
+<th>What’s happening</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Prior</td>
-<td>You get MLE — no regularization, overfits with small samples, can’t express “this is rare”</td>
+<td><strong>L2 regularization</strong> (weight decay)</td>
+<td>Normal prior on weights</td>
+<td>Penalizing large weights = assuming weights come from a <span class="math inline">\(N(0, \sigma^2)\)</span> prior. The penalty strength <span class="math inline">\(\lambda\)</span> controls how tight the prior is. The result is the <a href="bayesian-regression.html">MAP estimate</a>.</td>
 </tr>
 <tr class="even">
-<td>Likelihood</td>
-<td>Pure opinion — beliefs never update with evidence</td>
+<td><strong>L1 regularization</strong> (lasso)</td>
+<td>Laplace prior on weights</td>
+<td>The Laplace prior has a sharp peak at zero, which is why L1 produces sparse solutions — it believes most weights should be exactly zero.</td>
 </tr>
 <tr class="odd">
-<td>Evidence</td>
-<td>Posterior isn’t a proper distribution — can’t compare hypotheses on equal footing</td>
+<td><strong>Dropout</strong></td>
+<td>Approximate Bayesian inference</td>
+<td>Randomly dropping neurons during training approximates averaging over an ensemble of networks — which is approximate posterior inference over network architectures (Gal &amp; Ghahramani, 2016).</td>
 </tr>
 <tr class="even">
-<td>Posterior</td>
-<td>You have ingredients but no answer — flour and eggs but no cake</td>
+<td><strong>Ensemble methods</strong> (random forests, boosting)</td>
+<td>Bayesian model averaging</td>
+<td>Training multiple models and averaging predictions approximates integrating over model uncertainty — the Bayesian approach to the “which model?” question. See <a href="model-comparison.html">Model Comparison</a>.</td>
+</tr>
+<tr class="odd">
+<td><strong>Early stopping</strong></td>
+<td>Implicit prior / regularization</td>
+<td>Stopping training before convergence prevents weights from growing too large — similar to a prior that favors simpler models.</td>
+</tr>
+<tr class="even">
+<td><strong>Batch normalization</strong></td>
+<td>Approximate posterior regularization</td>
+<td>Adds noise during training that has a regularizing effect, similar to how priors prevent overfitting.</td>
 </tr>
 </tbody>
 </table>
-<p>The two simulations below let you feel this. In the medical test, the prior (base rate) is the piece most people forget. In the coin-flip, try a flat prior (<span class="math inline">\(\alpha = \beta = 1\)</span>) and the posterior equals the likelihood — the prior contributes nothing. Set a strong prior and few flips — the posterior barely moves from the prior. You need both pieces pulling on each other.</p>
-<p>That looks abstract. Let’s make it concrete.</p>
+<p>The connection to <a href="shrinkage.html">shrinkage</a> is direct: regularization <em>is</em> shrinkage. L2 pulls coefficients toward zero just like a hierarchical model pulls group estimates toward the grand mean.</p>
 </section>
-<section id="the-medical-test-example" class="level2">
-<h2 class="anchored" data-anchor-id="the-medical-test-example">The medical test example</h2>
-<p>Imagine a disease that affects 1 in 1,000 people. A test for it is 99% accurate — if you have the disease it says positive 99% of the time, and if you don’t have it, it says negative 99% of the time.</p>
-<p>You test positive. <strong>What’s the probability you actually have the disease?</strong></p>
-<p>Most people say 99%. The real answer is about <strong>9%</strong>. This is not a trick — it’s Bayes’ theorem. The disease is so rare that even a good test produces more false positives than true positives.</p>
-<p>The simulator below lets you adjust the base rate and test accuracy and watch how the posterior probability changes.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 580
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .result-box {
-      background: #f0f4f8; border-radius: 6px; padding: 16px;
-      margin-top: 14px; font-size: 15px; line-height: 2;
-      text-align: center;
-    }
-    .result-box .big {
-      font-size: 32px; color: #e74c3c; font-weight: bold;
-    }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      sliderInput("prev", "Base rate (prevalence):",
-                  min = 0.001, max = 0.20, value = 0.001, step = 0.001),
-
-      sliderInput("sens", "Sensitivity (true positive rate):",
-                  min = 0.50, max = 1.00, value = 0.99, step = 0.01),
-
-      sliderInput("spec", "Specificity (true negative rate):",
-                  min = 0.50, max = 1.00, value = 0.99, step = 0.01),
-
-      uiOutput("result_box")
-    ),
-
-    mainPanel(
-      width = 9,
-      fluidRow(
-        column(6, plotOutput("tree_plot", height = "420px")),
-        column(6, plotOutput("icon_plot", height = "420px"))
-      )
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  vals &lt;- reactive({
-    prev &lt;- input$prev
-    sens &lt;- input$sens
-    spec &lt;- input$spec
-
-    # Out of 10,000 people
-    N &lt;- 10000
-    sick &lt;- round(N * prev)
-    healthy &lt;- N - sick
-
-    true_pos  &lt;- round(sick * sens)
-    false_neg &lt;- sick - true_pos
-    false_pos &lt;- round(healthy * (1 - spec))
-    true_neg  &lt;- healthy - false_pos
-
-    total_pos &lt;- true_pos + false_pos
-    ppv &lt;- if (total_pos &gt; 0) true_pos / total_pos else 0
-
-    list(N = N, sick = sick, healthy = healthy,
-         true_pos = true_pos, false_neg = false_neg,
-         false_pos = false_pos, true_neg = true_neg,
-         total_pos = total_pos, ppv = ppv)
-  })
-
-  output$tree_plot &lt;- renderPlot({
-    v &lt;- vals()
-    par(mar = c(1, 1, 3, 1))
-
-    plot(NULL, xlim = c(0, 10), ylim = c(0, 10), axes = FALSE,
-         xlab = "", ylab = "", main = "What happens to 10,000 people?")
-
-    # Population
-    text(5, 9.5, paste0("Population: ", v$N), cex = 1.2, font = 2)
-
-    # Sick vs Healthy
-    text(2.5, 7.5, paste0("Sick: ", v$sick), cex = 1.1, col = "#e74c3c")
-    text(7.5, 7.5, paste0("Healthy: ", v$healthy), cex = 1.1, col = "#3498db")
-    segments(5, 9, 2.5, 8, lwd = 2)
-    segments(5, 9, 7.5, 8, lwd = 2)
-
-    # Test results for sick
-    text(1.2, 5.2, paste0("Test +\n", v$true_pos), cex = 1, col = "#27ae60", font = 2)
-    text(3.8, 5.2, paste0("Test -\n", v$false_neg), cex = 1, col = "#7f8c8d")
-    segments(2.5, 7, 1.2, 5.8, lwd = 1.5)
-    segments(2.5, 7, 3.8, 5.8, lwd = 1.5)
-
-    # Test results for healthy
-    text(6.2, 5.2, paste0("Test +\n", v$false_pos), cex = 1, col = "#e74c3c", font = 2)
-    text(8.8, 5.2, paste0("Test -\n", v$true_neg), cex = 1, col = "#7f8c8d")
-    segments(7.5, 7, 6.2, 5.8, lwd = 1.5)
-    segments(7.5, 7, 8.8, 5.8, lwd = 1.5)
-
-    # Total positives
-    text(3.7, 3, paste0("Total positive tests: ", v$total_pos), cex = 1.1, font = 2)
-    text(3.7, 2, paste0("Of these, truly sick: ", v$true_pos), cex = 1.1,
-         col = "#27ae60", font = 2)
-    text(3.7, 1, paste0("P(sick | test+) = ",
-         v$true_pos, "/", v$total_pos, " = ",
-         round(v$ppv * 100, 1), "%"), cex = 1.2, font = 2, col = "#e74c3c")
-  })
-
-  output$icon_plot &lt;- renderPlot({
-    v &lt;- vals()
-    par(mar = c(1, 1, 3, 1))
-
-    # Show total positive tests as dots
-    n_show &lt;- min(v$total_pos, 200)
-    n_true &lt;- round(n_show * v$ppv)
-    n_false &lt;- n_show - n_true
-
-    cols &lt;- c(rep("#27ae60", n_true), rep("#e74c3c", n_false))
-    cols &lt;- sample(cols)
-
-    ncol &lt;- ceiling(sqrt(n_show))
-    nrow &lt;- ceiling(n_show / ncol)
-
-    plot(NULL, xlim = c(0, ncol + 1), ylim = c(0, nrow + 1),
-         axes = FALSE, xlab = "", ylab = "",
-         main = paste0("All ", v$total_pos, " positive tests"))
-
-    if (n_show &gt; 0) {
-      x &lt;- rep(seq_len(ncol), times = nrow)[seq_len(n_show)]
-      y &lt;- rep(seq(nrow, 1), each = ncol)[seq_len(n_show)]
-      points(x, y, pch = 15, cex = max(0.5, 3 - n_show / 50), col = cols)
-    }
-
-    legend("bottom", bty = "n", horiz = TRUE, cex = 0.95,
-           legend = c(paste0("Truly sick (", n_true, ")"),
-                      paste0("False alarm (", n_false, ")")),
-           col = c("#27ae60", "#e74c3c"), pch = 15, pt.cex = 1.5)
-  })
-
-  output$result_box &lt;- renderUI({
-    v &lt;- vals()
-    tags$div(class = "result-box",
-      HTML(paste0(
-        "If you test positive,&lt;br&gt;",
-        "the probability you're sick is:&lt;br&gt;",
-        "&lt;span class='big'&gt;", round(v$ppv * 100, 1), "%&lt;/span&gt;&lt;br&gt;",
-        "&lt;small&gt;not ", round(input$sens * 100), "%!&lt;/small&gt;"
-      ))
-    )
-  })
-}
-
-shinyApp(ui, server)</code></pre>
-<section id="things-to-try" class="level3">
-<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<section id="directly-bayesian" class="level2">
+<h2 class="anchored" data-anchor-id="directly-bayesian">Directly Bayesian</h2>
+<p>Some ML methods don’t just resemble Bayesian thinking — they <em>are</em> Bayesian:</p>
+<p><strong>Gaussian processes</strong> — A prior over <em>functions</em>, not parameters. Instead of assuming a linear model with normal errors, a GP says “I believe the true function is smooth” and lets the data reveal the shape. The posterior is a distribution over functions, giving you predictions <em>with uncertainty bands</em>.</p>
+<p><strong>Bayesian optimization</strong> — Puts a posterior over the objective function (usually via a GP), then uses that uncertainty to decide where to evaluate next. This is how OpenAI and Google tune hyperparameters — it’s far more efficient than grid search because it reasons about <em>where the optimum probably is</em>.</p>
+<p><strong>Bayesian neural networks</strong> — Standard neural networks give point estimates for weights. BNNs put priors on every weight and compute (or approximate) the full posterior. The result: predictions that know when they’re uncertain.</p>
+<p><strong>Probabilistic programming</strong> — Languages like Stan, PyMC, and NumPyro let you write down any Bayesian model and automatically handle the posterior computation. The <a href="mcmc.html">MCMC</a> samplers you’ve already seen are what these tools use under the hood.</p>
+</section>
+<section id="how-mcmc-scales-to-neural-nets" class="level2">
+<h2 class="anchored" data-anchor-id="how-mcmc-scales-to-neural-nets">How MCMC scales to neural nets</h2>
+<p>Standard neural network training (SGD) finds a single best set of weights — that’s maximum likelihood estimation (MLE), a point estimate. A Bayesian neural network needs the full posterior over weights, which requires something like MCMC.</p>
+<p>The challenge: MCMC methods like <a href="mcmc.html">Metropolis-Hastings</a> don’t scale to millions of parameters. The field has developed a progression from exact-but-slow to approximate-but-fast:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Idea</th>
+<th>Scales to</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Metropolis-Hastings</strong></td>
+<td>Random walk through parameter space</td>
+<td>~100s of parameters</td>
+</tr>
+<tr class="even">
+<td><strong>Hamiltonian Monte Carlo (HMC)</strong></td>
+<td>Uses gradients to propose better moves</td>
+<td>~10,000s of parameters</td>
+</tr>
+<tr class="odd">
+<td><strong>Stochastic Gradient Langevin Dynamics (SGLD)</strong></td>
+<td>SGD + calibrated noise = MCMC</td>
+<td>Millions of parameters</td>
+</tr>
+<tr class="even">
+<td><strong>Variational Inference (VI)</strong></td>
+<td>Approximate the posterior with a simpler distribution</td>
+<td>Billions of parameters</td>
+</tr>
+</tbody>
+</table>
+<p>The SGLD insight is striking: if you take standard SGD and add noise of the right magnitude, you’re doing MCMC (Welling &amp; Teh, 2011). Gradient descent <em>with noise</em> explores the posterior rather than collapsing to a point estimate. Every deep learning practitioner is one noise injection away from being Bayesian.</p>
+<p>Variational inference gives up on exact samples and instead finds the closest simple distribution (usually a Gaussian) to the true posterior. It’s fast enough for production but the approximation can miss important structure.</p>
+</section>
+<section id="where-it-matters-most-in-ai-right-now" class="level2">
+<h2 class="anchored" data-anchor-id="where-it-matters-most-in-ai-right-now">Where it matters most in AI right now</h2>
+<p><strong>Uncertainty quantification</strong> — A standard neural network says “99% cat” for an image it’s never seen before. A Bayesian neural network says “72% cat, but I’m uncertain” — it knows what it doesn’t know. This matters for medical diagnosis, autonomous driving, and any setting where confident wrong answers are dangerous.</p>
+<p><strong>Large language models</strong> — Every time an LLM generates text, it computes <span class="math inline">\(P(\text{next token} | \text{context})\)</span> — that’s posterior inference. Training is MLE (find the weights that maximize the likelihood of the training data), but <em>usage</em> is Bayesian updating: each token of context updates the model’s beliefs about what comes next.</p>
+<p><strong>Active learning</strong> — When labeling data is expensive, which examples should you label next? The Bayesian answer: the ones the model is most uncertain about. This is Bayesian decision theory — choose actions that maximize expected information gain.</p>
+<p><strong>Safety and alignment</strong> — Knowing when a model is uncertain is critical for AI safety. If a model can say “I don’t know,” it can defer to humans instead of confidently hallucinating.</p>
+</section>
+<section id="the-big-picture" class="level2">
+<h2 class="anchored" data-anchor-id="the-big-picture">The big picture</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Frequentist ML</th>
+<th>Bayesian ML</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>What you get</strong></td>
+<td>Point estimates</td>
+<td>Distributions</td>
+</tr>
+<tr class="even">
+<td><strong>Uncertainty</strong></td>
+<td>Requires extra work (bootstrapping, etc.)</td>
+<td>Built in — it’s the posterior</td>
+</tr>
+<tr class="odd">
+<td><strong>Overfitting</strong></td>
+<td>Regularization as ad-hoc fix</td>
+<td>Prior as principled regularization</td>
+</tr>
+<tr class="even">
+<td><strong>Model selection</strong></td>
+<td>Cross-validation</td>
+<td>Marginal likelihood (automatic Occam’s razor)</td>
+</tr>
+<tr class="odd">
+<td><strong>Computation</strong></td>
+<td>Fast (SGD)</td>
+<td>Slower (MCMC/VI)</td>
+</tr>
+</tbody>
+</table>
+<p>Production ML is mostly frequentist — it’s faster, and when you have billions of data points, the prior doesn’t matter much anyway. But the frontier — safety, calibration, small-data problems, uncertainty-aware systems — is increasingly Bayesian.</p>
+<p>And the two are converging. Regularization <em>is</em> a prior. Dropout <em>is</em> approximate inference. SGD + noise <em>is</em> MCMC.</p>
+<p><strong>The bridge back to this site:</strong></p>
 <ul>
-<li><strong>Default settings</strong> (prevalence 0.1%, test 99% accurate): only ~9% of positive tests are truly sick. The base rate dominates.</li>
-<li><strong>Slide prevalence up to 5%:</strong> now ~84% of positives are real. The prior matters!</li>
-<li><strong>Slide prevalence to 50%:</strong> the posterior is ~99%. When the disease is common, a positive test is very informative.</li>
-<li><strong>Lower specificity to 90%:</strong> false positives explode. Watch the right plot fill with red dots.</li>
+<li>The <a href="priors-posteriors.html">coin-flip posterior</a> you simulated? That’s a baby Gaussian process — updating beliefs about a parameter with data.</li>
+<li><a href="shrinkage.html">Shrinkage</a> pulling group estimates toward the mean? That’s regularization pulling weights toward zero.</li>
+<li><a href="mcmc.html">MCMC</a> sampling from a posterior? That’s how Bayesian neural networks are trained.</li>
+<li><a href="bayesian-regression.html">MAP estimation</a> choosing the posterior mode? That’s L2-regularized regression.</li>
 </ul>
-</section>
-<section id="the-lesson" class="level3">
-<h3 class="anchored" data-anchor-id="the-lesson">The lesson</h3>
-<p>Bayes’ theorem tells you: <strong>don’t just look at the test accuracy — look at how common the thing is.</strong> A 99% accurate test is nearly useless for a 1-in-1,000 disease because most positives are false alarms. This is the <strong>base rate fallacy</strong>, and Bayes’ theorem is the cure.</p>
-</section>
-</section>
-<section id="the-coin-flip-your-first-conjugate-model" class="level2">
-<h2 class="anchored" data-anchor-id="the-coin-flip-your-first-conjugate-model">The coin-flip: your first conjugate model</h2>
-<p>The medical test was a discrete example — disease or no disease. Now let’s do the same logic with a <strong>continuous parameter</strong>.</p>
-<p>You have a coin and want to estimate <span class="math inline">\(\theta = P(\text{heads})\)</span>. Before flipping, you express your belief about <span class="math inline">\(\theta\)</span> as a <strong>Beta distribution</strong>:</p>
-<p><span class="math display">\[\theta \sim \text{Beta}(\alpha, \beta)\]</span></p>
-<p>The Beta distribution lives on <span class="math inline">\([0, 1]\)</span> — perfect for a probability. The parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> control the shape:</p>
-<ul>
-<li><span class="math inline">\(\alpha = \beta = 1\)</span>: flat (uniform) — “I have no idea”</li>
-<li><span class="math inline">\(\alpha = \beta = 5\)</span>: peaked at 0.5 — “I think it’s fair”</li>
-<li><span class="math inline">\(\alpha = 2, \beta = 8\)</span>: peaked near 0.2 — “I think it’s biased toward tails”</li>
-</ul>
-<p>Now flip the coin <span class="math inline">\(n\)</span> times and observe <span class="math inline">\(k\)</span> heads. The likelihood is binomial:</p>
-<p><span class="math display">\[k \sim \text{Binomial}(n, \theta)\]</span></p>
-<p>Bayes’ theorem gives the posterior — and because the Beta prior is <strong>conjugate</strong> to the binomial likelihood, the posterior is also a Beta:</p>
-<p><span class="math display">\[\theta \mid k \sim \text{Beta}(\alpha + k, \;\; \beta + n - k)\]</span></p>
-<p>That’s it. The prior “counts” (<span class="math inline">\(\alpha, \beta\)</span>) get updated by the data counts (<span class="math inline">\(k\)</span> heads, <span class="math inline">\(n - k\)</span> tails). No MCMC needed — the answer is a formula.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 620
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
-    }
-    .stats-box b { color: #2c3e50; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      sliderInput("alpha", HTML("Prior &amp;alpha;:"),
-                  min = 1, max = 10, value = 1, step = 1),
-
-      sliderInput("beta_param", HTML("Prior &amp;beta;:"),
-                  min = 1, max = 10, value = 1, step = 1),
-
-      sliderInput("n_flips", "Number of flips (n):",
-                  min = 1, max = 100, value = 20, step = 1),
-
-      sliderInput("true_theta", HTML("True &amp;theta;:"),
-                  min = 0.01, max = 0.99, value = 0.6, step = 0.01),
-
-      actionButton("flip", "Flip coins", class = "btn-primary", width = "100%"),
-
-      uiOutput("stats_box")
-    ),
-
-    mainPanel(
-      width = 9,
-      fluidRow(
-        column(6, plotOutput("density_plot", height = "420px")),
-        column(6, plotOutput("sequential_plot", height = "420px"))
-      )
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  sim &lt;- reactive({
-    input$flip
-    a &lt;- input$alpha
-    b &lt;- input$beta_param
-    n &lt;- input$n_flips
-    theta &lt;- input$true_theta
-
-    # Simulate coin flips
-    flips &lt;- rbinom(n, 1, theta)
-    k &lt;- sum(flips)
-
-    # Posterior parameters
-    a_post &lt;- a + k
-    b_post &lt;- b + (n - k)
-
-    # Sequential updating: posterior mean after each flip
-    seq_means &lt;- numeric(n)
-    cum_heads &lt;- cumsum(flips)
-    for (i in seq_len(n)) {
-      seq_means[i] &lt;- (a + cum_heads[i]) / (a + b + i)
-    }
-
-    list(a = a, b = b, n = n, k = k, theta = theta,
-         a_post = a_post, b_post = b_post,
-         flips = flips, seq_means = seq_means)
-  })
-
-  output$density_plot &lt;- renderPlot({
-    d &lt;- sim()
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    x &lt;- seq(0, 1, length.out = 300)
-    prior_y &lt;- dbeta(x, d$a, d$b)
-    post_y  &lt;- dbeta(x, d$a_post, d$b_post)
-
-    ylim &lt;- c(0, max(c(prior_y, post_y)) * 1.15)
-
-    plot(NULL, xlim = c(0, 1), ylim = ylim,
-         xlab = expression(theta), ylab = "Density",
-         main = expression("Prior &amp; Posterior for " * theta))
-
-    # Prior
-    lines(x, prior_y, col = "#e74c3c", lwd = 2, lty = 2)
-
-    # Posterior (shaded)
-    polygon(c(x, rev(x)), c(post_y, rep(0, length(x))),
-            col = "#3498db30", border = NA)
-    lines(x, post_y, col = "#3498db", lwd = 2.5)
-
-    # True theta
-    abline(v = d$theta, lty = 2, col = "#27ae60", lwd = 2)
-
-    legend("topright", bty = "n", cex = 0.85,
-           legend = c(
-             paste0("Prior: Beta(", d$a, ", ", d$b, ")"),
-             paste0("Posterior: Beta(", d$a_post, ", ", d$b_post, ")"),
-             expression("True " * theta)
-           ),
-           col = c("#e74c3c", "#3498db", "#27ae60"),
-           lwd = c(2, 2.5, 2), lty = c(2, 1, 2))
-  })
-
-  output$sequential_plot &lt;- renderPlot({
-    d &lt;- sim()
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    prior_mean &lt;- d$a / (d$a + d$b)
-
-    plot(seq_len(d$n), d$seq_means, type = "l", lwd = 2, col = "#3498db",
-         xlab = "Flip number", ylab = expression("Posterior mean of " * theta),
-         main = "Sequential Updating",
-         ylim = c(0, 1))
-
-    # True theta
-    abline(h = d$theta, lty = 2, col = "#27ae60", lwd = 1.5)
-
-    # Prior mean
-    abline(h = prior_mean, lty = 3, col = "#e74c3c", lwd = 1.5)
-
-    # MLE line (cumulative k/n)
-    cum_heads &lt;- cumsum(d$flips)
-    mle_seq &lt;- cum_heads / seq_len(d$n)
-    lines(seq_len(d$n), mle_seq, col = "gray50", lwd = 1.5, lty = 3)
-
-    legend("topright", bty = "n", cex = 0.8,
-           legend = c("Posterior mean", "MLE (k/n)",
-                      expression("True " * theta), "Prior mean"),
-           col = c("#3498db", "gray50", "#27ae60", "#e74c3c"),
-           lwd = c(2, 1.5, 1.5, 1.5), lty = c(1, 3, 2, 3))
-  })
-
-  output$stats_box &lt;- renderUI({
-    d &lt;- sim()
-    prior_mean &lt;- d$a / (d$a + d$b)
-    post_mean  &lt;- d$a_post / (d$a_post + d$b_post)
-    mle        &lt;- if (d$n &gt; 0) d$k / d$n else NA
-
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;Heads:&lt;/b&gt; ", d$k, " / ", d$n, "&lt;br&gt;",
-        "&lt;b&gt;MLE (k/n):&lt;/b&gt; ", round(mle, 3), "&lt;br&gt;",
-        "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;Prior mean:&lt;/b&gt; ", round(prior_mean, 3), "&lt;br&gt;",
-        "&lt;b&gt;Posterior mean:&lt;/b&gt; ", round(post_mean, 3), "&lt;br&gt;",
-        "&lt;b&gt;True &amp;theta;:&lt;/b&gt; ", d$theta
-      ))
-    )
-  })
-}
-
-shinyApp(ui, server)</code></pre>
-<section id="things-to-try-1" class="level3">
-<h3 class="anchored" data-anchor-id="things-to-try-1">Things to try</h3>
-<ul>
-<li><strong>Flat prior (<span class="math inline">\(\alpha = \beta = 1\)</span>):</strong> the posterior is driven entirely by the data. The posterior mean equals the MLE. With no prior information, the Bayesian <em>is</em> the frequentist.</li>
-<li><strong>Strong prior (<span class="math inline">\(\alpha = \beta = 10\)</span>):</strong> the prior is concentrated near 0.5. With few flips, the posterior barely moves. Increase <span class="math inline">\(n\)</span> and watch the data overwhelm the prior.</li>
-<li><strong>Large <span class="math inline">\(n\)</span> (100 flips):</strong> the prior becomes irrelevant. Prior and posterior mean converge to the MLE. This is the “prior washes out” property.</li>
-<li><strong>Sequential plot:</strong> watch how the posterior mean (blue) starts at the prior mean and drifts toward the true <span class="math inline">\(\theta\)</span> as data accumulates. Early flips matter more; later flips change the estimate less.</li>
-</ul>
-</section>
-</section>
-<section id="why-this-matters" class="level2">
-<h2 class="anchored" data-anchor-id="why-this-matters">Why this matters</h2>
-<p>The coin-flip model is Bayesian inference in its simplest form: prior <span class="math inline">\(\times\)</span> likelihood <span class="math inline">\(=\)</span> posterior, all in closed form. The same logic — start with a belief, update with data — drives everything else on this site.</p>
-<p>The coin-flip uses a <strong>Beta</strong> prior on a probability. The <a href="priors-posteriors.html">next page</a> shows the same updating with different distributions. <a href="bayesian-regression.html">Bayesian Regression</a> uses a <strong>Normal</strong> prior on a slope. The math changes; the logic doesn’t.</p>
+<p>You already understand the ideas. ML just runs them at scale.</p>
 
 
 </section>
