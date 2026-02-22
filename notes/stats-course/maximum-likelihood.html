@@ -502,6 +502,24 @@ Y_i = X_i'\beta + \varepsilon_i, \qquad \varepsilon_i \sim N(0, \sigma^2)
 \]</span></p>
 <p>OLS <em>is</em> maximum likelihood, under the assumption that errors are normal. This is why the OLS formula feels so natural — it’s doing exactly what MLE would do in the Gaussian model. But notice: if errors aren’t normal, OLS is still the best linear unbiased estimator (by Gauss-Markov), but it’s no longer MLE.</p>
 <p>For the full matrix algebra behind this, see <a href="regression-algebra.html">The Algebra Behind OLS</a>.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Why is OLS so famous?</strong> If MoM, MLE, GMM, and Bayesian estimation are all valid approaches, why does OLS dominate introductory courses and applied work?</p>
+<ol type="1">
+<li><strong>Closed-form solution</strong> — <span class="math inline">\((X'X)^{-1}X'y\)</span> is a formula, not an iterative algorithm. Before computers, this mattered enormously.</li>
+<li><strong>Minimal assumptions</strong> — Gauss-Markov says OLS is the best <em>linear</em> unbiased estimator without even needing normality. You don’t need to specify the full distribution.</li>
+<li><strong>It’s MLE when errors are normal</strong> — so in the most common case, OLS <em>is</em> the most efficient estimator. You get MLE for free.</li>
+<li><strong>Interpretability</strong> — coefficients are partial derivatives of the conditional mean. Everyone can understand “a one-unit change in <span class="math inline">\(X\)</span> is associated with a <span class="math inline">\(\hat{\beta}\)</span> change in <span class="math inline">\(Y\)</span>.”</li>
+<li><strong>Historical momentum</strong> — Gauss and Legendre published it around 1800. By the time MLE (Fisher, 1920s) and GMM (Hansen, 1982) arrived, OLS had a 120+ year head start in textbooks.</li>
+</ol>
+<p>OLS hit a sweet spot: minimal assumptions, maximum interpretability, and a formula you can compute by hand. The other methods are more general and more powerful — but OLS solved 80% of problems with 20% of the effort.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="properties-of-mle" class="level2">
 <h2 class="anchored" data-anchor-id="properties-of-mle">Properties of MLE</h2>
