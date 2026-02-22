@@ -424,11 +424,11 @@
     ]
   },
   {
-    "objectID": "index.html#beyond-average-effects",
-    "href": "index.html#beyond-average-effects",
+    "objectID": "index.html#beyond-averages",
+    "href": "index.html#beyond-averages",
     "title": "Applied Causal Inference",
-    "section": "Beyond Average Effects",
-    "text": "Beyond Average Effects\nSo far we have focused on average causal effects. But policies often affect individuals differently. This section moves from estimating a single number to estimating a function.\n\nHeterogeneous Treatment Effects — From \\(\\tau\\) to \\(\\tau(x)\\): why averages can mislead and what CATE is\nEstimating Heterogeneous Effects — Causal forests, meta-learners, and practical cautions",
+    "section": "Beyond Averages",
+    "text": "Beyond Averages\nSo far we have focused on average causal effects. But policies often affect individuals differently. This section moves from estimating a single number to estimating a function.\n\nHeterogeneous Treatment Effects — From \\(\\tau\\) to \\(\\tau(x)\\): why averages can mislead and what CATE is\nEstimating Heterogeneous Effects — Causal forests, meta-learners, and practical cautions",
     "crumbs": [
       "Home"
     ]
@@ -572,7 +572,7 @@
     "section": "",
     "text": "Everything so far has focused on average treatment effects — the ATE or ATT from Potential Outcomes. But averages can hide enormous variation. A drug that helps most patients and harms a few has a positive ATE, but the few who are harmed would like to know that. A policy that benefits one demographic and hurts another looks mediocre on average.\nThis page introduces a new estimand: the treatment effect as a function of covariates. The next page covers the estimation machinery — causal forests, meta-learners — for recovering it from data.",
     "crumbs": [
-      "Beyond Average Effects",
+      "Beyond Averages",
       "Heterogeneous Treatment Effects"
     ]
   },
@@ -583,7 +583,7 @@
     "section": "From \\(\\tau\\) to \\(\\tau(x)\\)",
     "text": "From \\(\\tau\\) to \\(\\tau(x)\\)\nThe ATE is a single number:\n\\[\n\\tau = E[Y(1) - Y(0)]\n\\]\nThe Conditional Average Treatment Effect (CATE) is a function:\n\\[\n\\tau(x) = E[Y(1) - Y(0) \\mid X = x]\n\\]\nThis answers: “What is the treatment effect for individuals with characteristics \\(X = x\\)?” The ATE is the average of the CATE across the population:\n\\[\n\\tau = E[\\tau(X)]\n\\]\nThe CATE sits alongside the other estimands in the course:\n\n\n\n\n\n\n\n\nEstimand\nDefinition\nQuestion it answers\n\n\n\n\nATE\n\\(E[Y(1) - Y(0)]\\)\nWhat is the average effect?\n\n\nATT\n\\(E[Y(1) - Y(0) \\mid D = 1]\\)\nWhat is the effect on the treated?\n\n\nLATE\nEffect for compliers (IV)\nWhat is the effect for those moved by the instrument?\n\n\nCATE\n\\(E[Y(1) - Y(0) \\mid X = x]\\)\nHow does the effect vary with \\(x\\)?\n\n\n\nThe first three are numbers. The CATE is a function — and that changes the estimation problem fundamentally.",
     "crumbs": [
-      "Beyond Average Effects",
+      "Beyond Averages",
       "Heterogeneous Treatment Effects"
     ]
   },
@@ -594,7 +594,7 @@
     "section": "Why average effects can mislead",
     "text": "Why average effects can mislead\n\nSign reversal\nThe ATE can be positive even if the treatment harms a substantial subgroup. Suppose a job training program increases earnings by $5,000 for workers without a college degree but decreases earnings by $1,000 for workers with a degree (perhaps by diverting them from better opportunities). If 80% of participants lack a degree:\n\\[\n\\tau = 0.8 \\times 5000 + 0.2 \\times (-1000) = 3800\n\\]\nThe ATE is $3,800 — positive and “significant.” But the policy is actively harmful for 20% of participants. Without estimating \\(\\tau(x)\\), you would never know.\n\n\nOptimal targeting\nIf a treatment has heterogeneous effects and resources are limited, you want to treat the people who benefit most. This requires knowing \\(\\tau(x)\\), not just \\(\\tau\\). The optimal treatment rule is:\n\\[\nD^*(x) = \\mathbf{1}\\{\\tau(x) &gt; 0\\}\n\\]\nTreat if and only if the expected effect is positive. This is policy targeting — and it requires the CATE.\n\n\nExternal validity\nAn RCT in one population gives you \\(\\tau\\) for that population. If you want to know what would happen in a different population with different \\(X\\) distributions, you need \\(\\tau(x)\\). The CATE is transportable across populations in a way that the ATE is not (provided the effect heterogeneity is stable).",
     "crumbs": [
-      "Beyond Average Effects",
+      "Beyond Averages",
       "Heterogeneous Treatment Effects"
     ]
   },
@@ -605,7 +605,7 @@
     "section": "Identification of the CATE",
     "text": "Identification of the CATE\nThe CATE requires the same identification assumptions as the ATE, but applied conditionally:\n\\[\nY(0), Y(1) \\perp D \\mid X = x \\qquad \\text{(conditional unconfoundedness)}\n\\]\n\\[\n0 &lt; P(D = 1 \\mid X = x) &lt; 1 \\qquad \\text{(overlap)}\n\\]\nThese are the selection on observables conditions, now required at every value of \\(x\\). This is a stronger requirement than for the ATE: the ATE can be identified even if overlap fails in some regions (the failures cancel out in expectation), but the CATE at \\(x\\) requires overlap at that specific \\(x\\).\n\n\n\n\n\n\nThe identification warning. If the ATE is not identified (unobserved confounders), the CATE is not identified either — and the problem is worse, not better. A biased ATE is one wrong number. A biased CATE is a wrong function — it tells you confidently that subgroup A benefits and subgroup B doesn’t, when in reality the entire comparison is confounded. Identification comes before estimation, and this is even more true for the CATE than for the ATE.",
     "crumbs": [
-      "Beyond Average Effects",
+      "Beyond Averages",
       "Heterogeneous Treatment Effects"
     ]
   },
@@ -616,7 +616,7 @@
     "section": "Subgroup analysis: the traditional approach",
     "text": "Subgroup analysis: the traditional approach\nThe simplest way to look for heterogeneity: split the sample by a covariate and estimate the ATE within each subgroup. Run the regression separately for men and women, for young and old, for high-income and low-income.\nThis works when:\n\nYou have a small number of pre-specified subgroups\nYou have large samples within each subgroup\nThe heterogeneity is along a single, known dimension\n\nIt breaks down when:\n\nYou have many covariates and don’t know which ones drive heterogeneity\nInteractions matter (the effect differs for young women vs old men, not just by age or gender separately)\nYou test many subgroups without correction — a multiple testing problem\n\n\n\n\n\n\n\nThe garden of forking paths. If you test 20 subgroups at the 5% level, you expect one “significant” interaction by chance. Subgroup analysis that is not pre-specified is exploratory, not confirmatory. This is the lesson from Multiple Testing, applied to heterogeneity.\n\n\n\nThe limitations of subgroup analysis motivate data-driven methods — causal forests and meta-learners — covered in the next page. These methods search over many covariates simultaneously while controlling for overfitting, providing a principled way to discover heterogeneity that traditional subgroup analysis cannot.",
     "crumbs": [
-      "Beyond Average Effects",
+      "Beyond Averages",
       "Heterogeneous Treatment Effects"
     ]
   },
@@ -627,7 +627,7 @@
     "section": "Connecting to the course",
     "text": "Connecting to the course\n\nPotential Outcomes: the CATE is defined within the potential outcomes framework — \\(\\tau(x) = E[Y(1) - Y(0) \\mid X = x]\\)\nSelection on Observables: conditional unconfoundedness is the identification assumption for the CATE\nIdentification vs Estimation: the CATE is a new estimand, not a new identification strategy — the research design must still justify the causal interpretation\nCausal Forests: the estimation machinery for recovering \\(\\tau(x)\\) from data",
     "crumbs": [
-      "Beyond Average Effects",
+      "Beyond Averages",
       "Heterogeneous Treatment Effects"
     ]
   },
@@ -748,7 +748,7 @@
     "section": "",
     "text": "The previous page defined the estimand: \\(\\tau(x) = E[Y(1) - Y(0) \\mid X = x]\\). This page covers the estimation machinery — how to recover \\(\\tau(x)\\) from data when you don’t know in advance which covariates drive heterogeneity or what functional form it takes.",
     "crumbs": [
-      "Beyond Average Effects",
+      "Beyond Averages",
       "Estimating Heterogeneous Effects"
     ]
   },
@@ -759,7 +759,7 @@
     "section": "Causal forests",
     "text": "Causal forests\nCausal forests (Wager and Athey, 2018) adapt random forests to estimate \\(\\tau(x)\\) directly. The key idea: instead of splitting to predict the outcome \\(Y\\), split to maximize the heterogeneity in treatment effects across the resulting subgroups.\n\nHow it works\n\nFor each tree, draw a subsample (honesty splitting — see below)\nAt each node, find the covariate split that maximizes the difference in treatment effects between the two child nodes\nWithin each terminal leaf, estimate the treatment effect by comparing treated and control outcomes (a local difference in means)\nAverage predictions across all trees in the forest\n\nThe forest produces an estimate \\(\\hat{\\tau}(x)\\) for any covariate vector \\(x\\) — a personalized treatment effect prediction.\n\n\nEffect-splitting\nIn a standard random forest, the splitting criterion is variance reduction in \\(Y\\): find the split that makes \\(Y\\) most predictable within each child node. In a causal forest, the splitting criterion is treatment effect heterogeneity: find the split such that the treatment effect in the left child differs maximally from the treatment effect in the right child.\nThis is what makes it a causal forest rather than a predictive one. The algorithm is optimized for finding the covariates that best explain variation in \\(\\tau(x)\\), not variation in \\(Y\\).\n\n\nHonesty\nA critical innovation. Each tree uses one subsample to determine the splits (the tree structure) and a separate subsample to estimate the treatment effects within leaves. This prevents overfitting: the splits are chosen to find heterogeneity, but the effect estimates are uncontaminated by this search.\nThis is the same logic as cross-fitting in DML — separate the model selection step from the estimation step. If you use the same data for both, the effect estimates are biased toward finding heterogeneity even when none exists.\n\n\nInference\nCausal forests come with valid, asymptotic confidence intervals for \\(\\hat{\\tau}(x)\\). The variance is estimated via the jackknife (related to the bootstrap):\n\\[\n\\hat{\\tau}(x) \\pm z_{\\alpha/2} \\cdot \\hat{\\sigma}(x)\n\\]\nThis is remarkable for a machine learning method: valid frequentist inference on a nonparametric estimand. The key is that the forest targets a local parameter (the CATE at a point), and the honesty + subsampling structure ensures regularity conditions hold.\n\n\n\n\n\n\nWhat causal forests assume. The same identification assumptions as any selection-on-observables estimator: unconfoundedness and overlap. The forest does not weaken these requirements — it only provides a flexible estimator for \\(\\tau(x)\\) given that identification holds. A causal forest applied to a confounded comparison produces a detailed, confident, wrong function.",
     "crumbs": [
-      "Beyond Average Effects",
+      "Beyond Averages",
       "Estimating Heterogeneous Effects"
     ]
   },
@@ -770,7 +770,7 @@
     "section": "Meta-learners",
     "text": "Meta-learners\nCausal forests are one approach to CATE estimation. A broader framework organizes methods by how they decompose the problem into standard supervised learning tasks:\n\nT-learner\nEstimate two separate outcome models — one for treated, one for control — and take the difference:\n\\[\n\\hat{\\tau}(x) = \\hat{\\mu}_1(x) - \\hat{\\mu}_0(x)\n\\]\nwhere \\(\\hat{\\mu}_1(x) = \\hat{E}[Y \\mid X = x, D = 1]\\) and \\(\\hat{\\mu}_0(x) = \\hat{E}[Y \\mid X = x, D = 0]\\).\nSimple and works with any ML method. But the two models are fit independently — each optimizes prediction of \\(Y\\), not estimation of the difference. Small treatment effects can be lost in the noise of predicting outcomes.\n\n\nS-learner\nEstimate a single model with treatment as a feature:\n\\[\n\\hat{\\mu}(x, d) = \\hat{E}[Y \\mid X = x, D = d]\n\\]\nThen \\(\\hat{\\tau}(x) = \\hat{\\mu}(x, 1) - \\hat{\\mu}(x, 0)\\). The model can capture treatment effect heterogeneity through interactions between \\(D\\) and \\(X\\).\nRisk: the model may not prioritize learning the treatment effect if the main effects of \\(X\\) dominate. With many strong predictors and a small treatment effect, the model may effectively ignore \\(D\\).\n\n\nR-learner (Robinson, 1988; Nie and Wager, 2021)\nResidualize both the outcome and treatment on \\(X\\) (as in the partially linear model from DML):\n\\[\n\\tilde{Y}_i = Y_i - \\hat{m}(X_i), \\qquad \\tilde{D}_i = D_i - \\hat{e}(X_i)\n\\]\nThen estimate \\(\\tau(x)\\) by minimizing:\n\\[\n\\hat{\\tau}(\\cdot) = \\arg\\min_\\tau \\sum_{i=1}^n \\left(\\tilde{Y}_i - \\tau(X_i)\\tilde{D}_i\\right)^2\n\\]\nThis is Frisch-Waugh-Lovell generalized to heterogeneous effects. By partialling out the main effects of \\(X\\) on both \\(Y\\) and \\(D\\), the R-learner isolates the treatment effect signal. It directly targets \\(\\tau(x)\\) rather than backing it out from outcome predictions.\n\n\nComparison\n\n\n\n\n\n\n\n\n\nMethod\nModels to fit\nStrengths\nWeaknesses\n\n\n\n\nT-learner\nTwo outcome models\nSimple, any ML method\nDoesn’t optimize for \\(\\tau\\)\n\n\nS-learner\nOne outcome model\nUses all data jointly\nMay underweight treatment heterogeneity\n\n\nR-learner\nTwo nuisance + CATE model\nDirectly targets \\(\\tau(x)\\)\nMore complex to implement\n\n\nCausal forest\nForest with effect-splitting\nValid inference, adaptive\nRequires unconfoundedness\n\n\n\n\n\n\n\n\n\nChoosing a method. If you need confidence intervals for \\(\\hat{\\tau}(x)\\), use causal forests — they’re the only method above with built-in inference. If you want flexibility in the ML method (boosting, neural nets), use the R-learner. If you want simplicity and a quick baseline, start with the T-learner.",
     "crumbs": [
-      "Beyond Average Effects",
+      "Beyond Averages",
       "Estimating Heterogeneous Effects"
     ]
   },
@@ -781,7 +781,7 @@
     "section": "Practical cautions",
     "text": "Practical cautions\nDiscovery vs confirmation. These methods are powerful for discovering heterogeneity — finding subgroups where effects differ. But discovery is not confirmation. Best practice: use causal forests or meta-learners to identify potential heterogeneity in one sample, then confirm it in a held-out sample or a pre-registered replication. Discovery and confirmation should use different data.\nMultiple testing. Reporting that “the effect is significant for subgroup A but not subgroup B” is a comparison, not a test. To claim the effects differ, you need to test the interaction — and if you searched over many subgroups to find A, you have a multiple testing problem.\nSample size. Estimating \\(\\tau(x)\\) requires more data than estimating \\(\\tau\\). You’re estimating a function, not a number, and you need enough treated and control units at each value of \\(x\\). With small samples, the CATE estimates will be noisy and shrunk toward the ATE.\nOverlap. The CATE at \\(x\\) requires both treated and control units near \\(x\\). If overlap fails in some region — few treated units with \\(X\\) near \\(x\\) — the CATE estimate there is unreliable. Causal forests handle this gracefully (they simply don’t split in sparse regions), but the conceptual limitation remains.",
     "crumbs": [
-      "Beyond Average Effects",
+      "Beyond Averages",
       "Estimating Heterogeneous Effects"
     ]
   },
@@ -792,7 +792,7 @@
     "section": "Connecting to the course",
     "text": "Connecting to the course\n\nHeterogeneous Treatment Effects: defines the estimand \\(\\tau(x)\\) — the conceptual foundation this page builds on\nDML: the R-learner uses DML-style residualization; causal forests use similar honesty/cross-fitting logic\nDoubly Robust: the AIPW score can be extended to target CATE instead of ATE — doubly robust CATE estimation\nFWL: the R-learner is FWL generalized to heterogeneous effects\nMultiple Testing: subgroup analysis without correction is a multiple testing problem\nBootstrap: the jackknife variance estimator in causal forests is related to bootstrap inference",
     "crumbs": [
-      "Beyond Average Effects",
+      "Beyond Averages",
       "Estimating Heterogeneous Effects"
     ]
   },
