@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Monte Carlo Experiments: How We Understand Estimators – Foundations of Statistical Inference</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./monte-carlo.html">Monte Carlo Experiments</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Foundations of Statistical Inference</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Probability &amp; Uncertainty</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Foundations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./variance-sd-se.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variance, SD &amp; Standard Error</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sampling-distribution.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Sampling Distribution</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Central Limit Theorem</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./simulations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CLT Simulator</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lln.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LLN vs CLT</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pvalues-ci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">p-values &amp; Confidence Intervals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./test-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Test Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Bootstrap</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./power.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power, Alpha, Beta &amp; MDE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./monte-carlo.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Monte Carlo Experiments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multiple-testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multiple Testing</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cef.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regression &amp; the CEF</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./residuals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Residuals &amp; Controls</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fwl.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Frisch-Waugh-Lovell</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./omitted-variable-bias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Omitted Variable Bias</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Algebra of Regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regression-algebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Algebra Behind OLS</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Estimation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./method-of-moments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Method of Moments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./maximum-likelihood.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Maximum Likelihood</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./limited-dependent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Limited Dependent Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gmm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generalized Method of Moments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayesian-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian Estimation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Standard Errors &amp; Diagnostics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./heteroskedasticity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Heteroskedasticity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./clustered-se.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Clustered SEs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./delta-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Delta Method</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./measurement-error.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Measurement Error</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bias-variance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bias-Variance Tradeoff</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./model-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Selection</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./degeneracy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">When Inference Breaks Down</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Causal Thinking</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./correlation-causation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">From Correlation to Causation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">Bayesian Thinking</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayesian-updating.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian Updating</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Foundations of AI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./training-as-mle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Training as Maximum Likelihood</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regularization-priors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regularization as Bayesian Inference</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./prediction-vs-causation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prediction vs Causation in Foundation Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./experimental-design-ai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Experimental Design for AI Systems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calibration-uncertainty.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibration &amp; Uncertainty Quantification</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-a-monte-carlo-experiment" id="toc-what-is-a-monte-carlo-experiment" class="nav-link active" data-scroll-target="#what-is-a-monte-carlo-experiment">What is a Monte Carlo experiment?</a></li>
+  <li><a href="#simulation-1-compare-estimators" id="toc-simulation-1-compare-estimators" class="nav-link" data-scroll-target="#simulation-1-compare-estimators">Simulation 1: Compare estimators</a></li>
+  <li><a href="#simulation-2-consistency-estimates-tighten-with-n" id="toc-simulation-2-consistency-estimates-tighten-with-n" class="nav-link" data-scroll-target="#simulation-2-consistency-estimates-tighten-with-n">Simulation 2: Consistency — estimates tighten with n</a>
+  <ul class="collapse">
+  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
+  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./monte-carlo.html">Monte Carlo Experiments</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Monte Carlo Experiments: How We Understand Estimators</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="what-is-a-monte-carlo-experiment" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-monte-carlo-experiment">What is a Monte Carlo experiment?</h2>
+<p>Every claim in this course — unbiasedness, coverage, power — was verified the same way: by <strong>simulation</strong>. A Monte Carlo experiment is simple:</p>
+<ol type="1">
+<li><strong>Specify a data-generating process (DGP):</strong> decide the true parameter, the distribution, and the sample size.</li>
+<li><strong>Draw a sample</strong> from the DGP and compute your estimator.</li>
+<li><strong>Repeat many times</strong> (1,000–10,000 simulations).</li>
+<li><strong>Summarize:</strong> look at the distribution of your estimates. Is the estimator centered on the truth (unbiased)? How spread out is it (variance)? How often does the CI cover the truth?</li>
+</ol>
+<p>This is how statisticians <strong>check their own work</strong>. Theory says OLS is unbiased? Prove it — simulate 5,000 datasets and see if the average estimate equals the true value. Theory says the CI has 95% coverage? Simulate it.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>The Oracle View.</strong> Monte Carlo is <em>pure</em> Oracle territory. We specify the entire data-generating process — true parameter, distribution, sample size — then generate thousands of datasets to study how estimators behave. In practice, you get one dataset from an unknown DGP. Monte Carlo is how statisticians verify their tools work <em>before</em> you use them on real data.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="simulation-1-compare-estimators" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-1-compare-estimators">Simulation 1: Compare estimators</h2>
+<p>Pick an estimator, pick a DGP, run <span class="math inline">\(N\)</span> simulations. Compare bias, variance, and MSE (mean squared error = bias² + variance) across estimators.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 1050
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 4,
+
+      selectInput("dgp", "DGP:",
+                  choices = c("Normal(5, 2)",
+                              "Exponential(0.5)",
+                              "Contaminated normal",
+                              "Uniform(0, 10)")),
+
+      sliderInput("n", "Sample size:",
+                  min = 5, max = 200, value = 20, step = 5),
+
+      sliderInput("sims", "Simulations:",
+                  min = 500, max = 5000, value = 2000, step = 500),
+
+      checkboxGroupInput("estimators", "Estimators:",
+                         choices = c("Mean", "Median",
+                                     "Trimmed mean",
+                                     "Midrange"),
+                         selected = c("Mean", "Median",
+                                      "Trimmed mean")),
+
+      actionButton("go", "Run Monte Carlo",
+                   class = "btn-primary", width = "100%"),
+
+      uiOutput("results")
+    ),
+
+    mainPanel(
+      width = 8,
+      plotOutput("dgp_plot", height = "250px"),
+      plotOutput("hist_plot", height = "400px"),
+      plotOutput("mse_plot", height = "300px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  draw_dgp &lt;- function(n, dgp) {
+    switch(dgp,
+      "Normal(5, 2)"          = rnorm(n, mean = 5, sd = 2),
+      "Exponential(0.5)" = rexp(n, rate = 0.5),
+      "Contaminated normal"   = {
+        k &lt;- rbinom(n, 1, 0.1)
+        (1 - k) * rnorm(n, 5, 1) + k * rnorm(n, 5, 10)
+      },
+      "Uniform(0, 10)"        = runif(n, 0, 10)
+    )
+  }
+
+  true_mu &lt;- function(dgp) {
+    switch(dgp,
+      "Normal(5, 2)"          = 5,
+      "Exponential(0.5)" = 2,
+      "Contaminated normal"   = 5,
+      "Uniform(0, 10)"        = 5
+    )
+  }
+
+  compute_est &lt;- function(x, est) {
+    switch(est,
+      "Mean"              = mean(x),
+      "Median"            = median(x),
+      "Trimmed mean" = mean(x, trim = 0.1),
+      "Midrange"          = (min(x) + max(x)) / 2
+    )
+  }
+
+  dat &lt;- reactive({
+    input$go
+    n    &lt;- input$n
+    sims &lt;- input$sims
+    dgp  &lt;- input$dgp
+    ests &lt;- input$estimators
+    mu   &lt;- true_mu(dgp)
+
+    if (length(ests) == 0) ests &lt;- "Mean"
+
+    results &lt;- list()
+    for (est in ests) {
+      vals &lt;- replicate(sims, compute_est(draw_dgp(n, dgp), est))
+      bias &lt;- mean(vals) - mu
+      variance &lt;- var(vals)
+      mse &lt;- bias^2 + variance
+      results[[est]] &lt;- list(vals = vals, bias = bias,
+                             variance = variance, mse = mse)
+    }
+
+    list(results = results, mu = mu, n = n, sims = sims,
+         dgp = dgp, ests = ests)
+  })
+
+  output$dgp_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4, 5, 3, 2))
+
+    big &lt;- draw_dgp(10000, d$dgp)
+    hist(big, breaks = 60, probability = TRUE,
+         col = "#e0e0e0", border = "#b0b0b0",
+         main = paste("DGP:", d$dgp),
+         xlab = "", ylab = "Density")
+    abline(v = d$mu, lty = 2, lwd = 2, col = "#e74c3c")
+  })
+
+  output$hist_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(5, 5, 4, 2))
+
+    cols &lt;- c("#3498db", "#e74c3c", "#27ae60", "#9b59b6")
+    all_vals &lt;- unlist(lapply(d$results, function(r) r$vals))
+    xlim &lt;- quantile(all_vals, c(0.005, 0.995))
+
+    first &lt;- TRUE
+    for (i in seq_along(d$ests)) {
+      vals &lt;- d$results[[d$ests[i]]]$vals
+      if (first) {
+        hist(vals, breaks = 50, probability = TRUE,
+             col = adjustcolor(cols[i], 0.3),
+             border = adjustcolor(cols[i], 0.6),
+             main = paste0("Sampling distributions (",
+                          d$sims, " simulations, n = ", d$n, ")"),
+             xlab = "Estimate", ylab = "Density",
+             xlim = xlim)
+        first &lt;- FALSE
+      } else {
+        hist(vals, breaks = 50, probability = TRUE,
+             col = adjustcolor(cols[i], 0.2),
+             border = adjustcolor(cols[i], 0.5),
+             add = TRUE)
+      }
+    }
+
+    abline(v = d$mu, lty = 2, lwd = 2.5, col = "#2c3e50")
+
+    legend("topright", bty = "n", cex = 0.8,
+           legend = c(d$ests, paste0("True \u03bc = ", d$mu)),
+           col = c(cols[seq_along(d$ests)], "#2c3e50"),
+           lwd = c(rep(8, length(d$ests)), 2.5),
+           lty = c(rep(1, length(d$ests)), 2))
+  })
+
+  output$mse_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(5, 10, 4, 2))
+
+    mses &lt;- sapply(d$results, function(r) r$mse)
+    biases2 &lt;- sapply(d$results, function(r) r$bias^2)
+    vars &lt;- sapply(d$results, function(r) r$variance)
+
+    cols &lt;- c("#3498db", "#e74c3c", "#27ae60", "#9b59b6")
+    n_est &lt;- length(d$ests)
+
+    # Stacked bar: bias^2 + variance = MSE
+    mat &lt;- rbind(biases2, vars)
+
+    bp &lt;- barplot(mat, names.arg = d$ests, col = c("#e74c3c80", "#3498db80"),
+                  horiz = TRUE, las = 1,
+                  main = "MSE decomposition",
+                  xlab = "MSE = Bias\u00b2 + Variance",
+                  border = NA, cex.names = 0.75)
+
+    legend("bottomright", bty = "n", cex = 0.8,
+           legend = c("Bias\u00b2", "Variance"),
+           fill = c("#e74c3c80", "#3498db80"), border = NA)
+  })
+
+  output$results &lt;- renderUI({
+    d &lt;- dat()
+    lines &lt;- paste0(sapply(d$ests, function(est) {
+      r &lt;- d$results[[est]]
+      paste0(
+        "&lt;b&gt;", est, ":&lt;/b&gt;&lt;br&gt;",
+        "&amp;nbsp; Bias: ", round(r$bias, 4), "&lt;br&gt;",
+        "&amp;nbsp; Var: ", round(r$variance, 4), "&lt;br&gt;",
+        "&amp;nbsp; MSE: ", round(r$mse, 4), "&lt;br&gt;"
+      )
+    }), collapse = "&lt;hr style='margin:6px 0'&gt;")
+
+    tags$div(class = "stats-box", HTML(lines))
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</section>
+<section id="simulation-2-consistency-estimates-tighten-with-n" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-2-consistency-estimates-tighten-with-n">Simulation 2: Consistency — estimates tighten with n</h2>
+<p>A <strong>consistent</strong> estimator converges to the true parameter as <span class="math inline">\(n \to \infty\)</span>. Watch how the sampling distribution of each estimator gets narrower and more centered as you increase the sample size.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 650
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 4,
+
+      selectInput("dgp2", "DGP:",
+                  choices = c("Normal(5, 2)",
+                              "Exponential(0.5)",
+                              "Contaminated normal")),
+
+      selectInput("est2", "Estimator:",
+                  choices = c("Mean", "Median", "Trimmed mean")),
+
+      sliderInput("sims2", "Simulations per n:",
+                  min = 500, max = 3000, value = 1000, step = 250),
+
+      actionButton("go2", "Run",
+                   class = "btn-primary", width = "100%"),
+
+      uiOutput("results2")
+    ),
+
+    mainPanel(
+      width = 8,
+      plotOutput("consistency_plot", height = "530px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  draw_dgp &lt;- function(n, dgp) {
+    switch(dgp,
+      "Normal(5, 2)"          = rnorm(n, mean = 5, sd = 2),
+      "Exponential(0.5)" = rexp(n, rate = 0.5),
+      "Contaminated normal"   = {
+        k &lt;- rbinom(n, 1, 0.1)
+        (1 - k) * rnorm(n, 5, 1) + k * rnorm(n, 5, 10)
+      }
+    )
+  }
+
+  true_mu &lt;- function(dgp) {
+    switch(dgp,
+      "Normal(5, 2)"          = 5,
+      "Exponential(0.5)" = 2,
+      "Contaminated normal"   = 5
+    )
+  }
+
+  compute_est &lt;- function(x, est) {
+    switch(est,
+      "Mean"             = mean(x),
+      "Median"           = median(x),
+      "Trimmed mean" = mean(x, trim = 0.1)
+    )
+  }
+
+  dat &lt;- reactive({
+    input$go2
+    dgp  &lt;- input$dgp2
+    est  &lt;- input$est2
+    sims &lt;- input$sims2
+    mu   &lt;- true_mu(dgp)
+
+    ns &lt;- c(5, 10, 25, 50, 100, 200)
+    all_results &lt;- list()
+    for (n in ns) {
+      all_results[[as.character(n)]] &lt;- replicate(
+        sims, compute_est(draw_dgp(n, dgp), est)
+      )
+    }
+
+    list(all_results = all_results, ns = ns, mu = mu,
+         dgp = dgp, est = est, sims = sims)
+  })
+
+  output$consistency_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(5, 6, 4, 2))
+
+    colors &lt;- colorRampPalette(c("#e74c3c", "#3498db"))(length(d$ns))
+
+    all_vals &lt;- unlist(d$all_results)
+    xlim &lt;- quantile(all_vals, c(0.01, 0.99))
+
+    plot(NULL, xlim = xlim,
+         ylim = c(0.5, length(d$ns) * 1.5 + 0.5),
+         yaxt = "n", ylab = "",
+         xlab = paste0("Estimate (", d$est, ")"),
+         main = paste0("Consistency: ", d$est,
+                       " under ", d$dgp))
+    positions &lt;- seq_along(d$ns) * 1.5
+    axis(2, at = positions, labels = paste0("n=", d$ns),
+         las = 1, cex.axis = 0.9)
+
+    for (i in seq_along(d$ns)) {
+      vals &lt;- d$all_results[[i]]
+      dens &lt;- density(vals)
+      dens$y &lt;- dens$y / max(dens$y) * 0.65
+      polygon(dens$x, dens$y + positions[i],
+              col = adjustcolor(colors[i], 0.4),
+              border = colors[i], lwd = 1.5)
+    }
+
+    abline(v = d$mu, lty = 2, lwd = 2.5, col = "#2c3e50")
+    text(d$mu, max(positions) + 0.8,
+         paste0("True \u03bc = ", d$mu), cex = 0.9)
+  })
+
+  output$results2 &lt;- renderUI({
+    d &lt;- dat()
+    lines &lt;- sapply(seq_along(d$ns), function(i) {
+      vals &lt;- d$all_results[[i]]
+      paste0("n=", d$ns[i], ": SD = ", round(sd(vals), 4))
+    })
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;Spread shrinks with n:&lt;/b&gt;&lt;br&gt;",
+        paste(lines, collapse = "&lt;br&gt;")
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<section id="things-to-try" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<ul>
+<li><strong>Normal DGP, Mean vs Median:</strong> the mean has smaller variance (it’s the efficient estimator for normal data). The median is less efficient but still unbiased.</li>
+<li><strong>Contaminated normal, Mean vs Median:</strong> now the median wins. The outliers from the contamination inflate the variance of the mean, but barely affect the median. This is why <strong>robust estimators</strong> exist.</li>
+<li><strong>10% trimmed mean:</strong> a compromise — it trims the most extreme 10% of observations. It handles outliers better than the mean, with less variance than the median. Often the best of both worlds.</li>
+<li><strong>Midrange:</strong> the average of the min and max. Under normal data it’s surprisingly efficient for small <span class="math inline">\(n\)</span>, but terrible for heavy-tailed or skewed data. The MSE plot shows exactly why.</li>
+<li><strong>Consistency (Sim 2):</strong> all three estimators converge to <span class="math inline">\(\mu\)</span> as <span class="math inline">\(n\)</span> grows. The ridgeline plot gets tighter and more centered with each step.</li>
+</ul>
+</section>
+<section id="the-bottom-line" class="level3">
+<h3 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h3>
+<ul>
+<li>Monte Carlo is the <strong>universal verification tool</strong> in statistics. If you claim an estimator has some property (unbiased, consistent, 95% coverage), you can check it by simulation.</li>
+<li><strong>Bias</strong> = does the estimator aim at the right target? <strong>Variance</strong> = how spread out are the estimates? <strong>MSE</strong> = bias² + variance = overall accuracy.</li>
+<li>Sometimes a biased estimator beats an unbiased one if it has much lower variance. This is the <strong>bias-variance tradeoff</strong> in miniature.</li>
+</ul>
+<hr>
+</section>
+<section id="did-you-know" class="level3">
+<h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
+<ul>
+<li>The Monte Carlo method was invented by <strong>Stanislaw Ulam</strong> and <strong>John von Neumann</strong> during the <strong>Manhattan Project</strong> in the late 1940s. Ulam was recovering from brain surgery and playing solitaire when he realized that it was easier to estimate the probability of winning by playing many random games than by computing it analytically. He and von Neumann applied this idea to nuclear physics simulations.</li>
+<li>The name “Monte Carlo” was suggested by <strong>Nicholas Metropolis</strong>, a colleague, as a reference to the <strong>Monte Carlo Casino</strong> in Monaco — a nod to the role of randomness. The method was classified as part of the hydrogen bomb program until the 1950s.</li>
+<li>Today, Monte Carlo methods are everywhere: pricing financial derivatives, training AI models, simulating protein folding, predicting elections, and rendering 3D graphics in movies. The basic idea — replace hard math with random simulation — is one of the most powerful tricks in computational science.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com">Nency Dhameja</a> | <a href="../index.html">All Notes</a> | Developed with AI assistance | <a href="mailto:nencydhameja@gmail.com">Feedback?</a></span></p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

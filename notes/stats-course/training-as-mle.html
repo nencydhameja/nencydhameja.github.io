@@ -41,6 +41,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -449,7 +454,10 @@ window.Quarto = {
    
   <ul>
   <li><a href="#cross-entropy-is-negative-log-likelihood" id="toc-cross-entropy-is-negative-log-likelihood" class="nav-link active" data-scroll-target="#cross-entropy-is-negative-log-likelihood">Cross-entropy is negative log-likelihood</a></li>
-  <li><a href="#sgd-as-approximate-mle" id="toc-sgd-as-approximate-mle" class="nav-link" data-scroll-target="#sgd-as-approximate-mle">SGD as approximate MLE</a></li>
+  <li><a href="#sgd-as-approximate-mle" id="toc-sgd-as-approximate-mle" class="nav-link" data-scroll-target="#sgd-as-approximate-mle">SGD as approximate MLE</a>
+  <ul class="collapse">
+  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  </ul></li>
   <li><a href="#what-training-optimizes-and-what-it-does-not" id="toc-what-training-optimizes-and-what-it-does-not" class="nav-link" data-scroll-target="#what-training-optimizes-and-what-it-does-not">What training optimizes — and what it does not</a></li>
   <li><a href="#connecting-to-the-course" id="toc-connecting-to-the-course" class="nav-link" data-scroll-target="#connecting-to-the-course">Connecting to the course</a></li>
   </ul>
@@ -572,6 +580,212 @@ window.Quarto = {
 </tbody>
 </table>
 <p>The last row matters. Classical MLE gives you standard errors through the <a href="maximum-likelihood.html#fisher-information-and-standard-errors">Fisher information</a>. Neural network training typically does not. The model gives you a point prediction, but no measure of uncertainty — a limitation addressed in <a href="calibration-uncertainty.html">Calibration and Uncertainty</a>.</p>
+<p>The simulation below runs gradient descent on a logistic regression — first with the full sample (full-batch, blue), then with random mini-batches (red). Both converge to the same MLE, but the mini-batch path is noisier — exactly the tradeoff described above.</p>
+<section id="things-to-try" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<ul>
+<li><strong>Full batch (batch size = n):</strong> the loss curve descends smoothly to the MLE minimum. No noise.</li>
+<li><strong>Small batch size:</strong> the loss curve is noisy — each step uses a different random subset, so the gradient estimate is noisy. But it still converges to the right neighborhood.</li>
+<li><strong>Very small batch + high learning rate:</strong> the path oscillates wildly. This is why learning rate schedules (reducing the step size over time) are important in practice.</li>
+<li><strong>Large n:</strong> the mini-batch noise is smaller relative to the signal, so even small batches converge smoothly.</li>
+</ul>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 680
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("n", "Sample size (n):",
+                  min = 200, max = 2000, value = 500, step = 200),
+
+      sliderInput("batch", "Batch size:",
+                  min = 10, max = 500, value = 50, step = 10),
+
+      sliderInput("lr", "Learning rate:",
+                  min = 0.1, max = 5, value = 1, step = 0.1),
+
+      sliderInput("n_iter", "Iterations:",
+                  min = 50, max = 500, value = 200, step = 50),
+
+      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
+
+      uiOutput("results")
+    ),
+
+    mainPanel(
+      width = 9,
+      fluidRow(
+        column(6, plotOutput("loss_plot", height = "470px")),
+        column(6, plotOutput("beta_plot", height = "470px"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  dat &lt;- reactive({
+    input$go
+    n      &lt;- input$n
+    bs     &lt;- min(input$batch, n)
+    lr     &lt;- input$lr
+    n_iter &lt;- input$n_iter
+
+    # Generate logistic regression data
+    X      &lt;- rnorm(n)
+    p_true &lt;- 1 / (1 + exp(-(0.5 + 1.5 * X)))
+    Y      &lt;- rbinom(n, 1, p_true)
+
+    # Exact MLE via Newton-Raphson (manual, to avoid glm overhead)
+    beta_mle &lt;- c(0, 0)
+    for (nr in 1:50) {
+      eta   &lt;- beta_mle[1] + beta_mle[2] * X
+      p_hat &lt;- 1 / (1 + exp(-eta))
+      W_nr  &lt;- p_hat * (1 - p_hat)
+      Xmat  &lt;- cbind(1, X)
+      grad  &lt;- t(Xmat) %*% (Y - p_hat)
+      H     &lt;- -t(Xmat) %*% (Xmat * W_nr)
+      beta_mle &lt;- beta_mle - solve(H) %*% grad
+    }
+    beta_mle &lt;- as.numeric(beta_mle)
+
+    # MLE loss
+    eta_mle  &lt;- beta_mle[1] + beta_mle[2] * X
+    p_mle    &lt;- 1 / (1 + exp(-eta_mle))
+    p_mle    &lt;- pmax(pmin(p_mle, 1 - 1e-10), 1e-10)
+    loss_mle &lt;- -mean(Y * log(p_mle) + (1 - Y) * log(1 - p_mle))
+
+    # --- Full-batch gradient descent ---
+    beta_fb    &lt;- c(0, 0)
+    loss_fb    &lt;- numeric(n_iter)
+    beta1_fb   &lt;- numeric(n_iter)
+
+    for (t in 1:n_iter) {
+      eta   &lt;- beta_fb[1] + beta_fb[2] * X
+      p_hat &lt;- 1 / (1 + exp(-eta))
+      grad  &lt;- c(-mean(Y - p_hat), -mean((Y - p_hat) * X))
+      beta_fb &lt;- beta_fb - lr * grad
+
+      eta2  &lt;- beta_fb[1] + beta_fb[2] * X
+      p2    &lt;- 1 / (1 + exp(-eta2))
+      p2    &lt;- pmax(pmin(p2, 1 - 1e-10), 1e-10)
+      loss_fb[t]  &lt;- -mean(Y * log(p2) + (1 - Y) * log(1 - p2))
+      beta1_fb[t] &lt;- beta_fb[2]
+    }
+
+    # --- Mini-batch SGD ---
+    beta_mb    &lt;- c(0, 0)
+    loss_mb    &lt;- numeric(n_iter)
+    beta1_mb   &lt;- numeric(n_iter)
+
+    for (t in 1:n_iter) {
+      idx   &lt;- sample(1:n, bs, replace = TRUE)
+      x_b   &lt;- X[idx]
+      y_b   &lt;- Y[idx]
+      eta   &lt;- beta_mb[1] + beta_mb[2] * x_b
+      p_hat &lt;- 1 / (1 + exp(-eta))
+      grad  &lt;- c(-mean(y_b - p_hat), -mean((y_b - p_hat) * x_b))
+      beta_mb &lt;- beta_mb - lr * grad
+
+      # Full-sample loss for tracking
+      eta2  &lt;- beta_mb[1] + beta_mb[2] * X
+      p2    &lt;- 1 / (1 + exp(-eta2))
+      p2    &lt;- pmax(pmin(p2, 1 - 1e-10), 1e-10)
+      loss_mb[t]  &lt;- -mean(Y * log(p2) + (1 - Y) * log(1 - p2))
+      beta1_mb[t] &lt;- beta_mb[2]
+    }
+
+    list(loss_fb = loss_fb, loss_mb = loss_mb,
+         beta1_fb = beta1_fb, beta1_mb = beta1_mb,
+         loss_mle = loss_mle, beta_mle = beta_mle,
+         n_iter = n_iter, bs = bs, n = n)
+  })
+
+  output$loss_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    ylims &lt;- range(c(d$loss_fb, d$loss_mb, d$loss_mle), na.rm = TRUE)
+    ylims[2] &lt;- min(ylims[2], ylims[1] + (ylims[2] - ylims[1]) * 2)
+
+    plot(1:d$n_iter, d$loss_fb, type = "l", col = "#3498db", lwd = 2,
+         main = "Loss vs Iteration",
+         xlab = "Iteration", ylab = "Negative log-likelihood",
+         ylim = ylims)
+
+    lines(1:d$n_iter, d$loss_mb, col = "#e74c3c", lwd = 1.5)
+
+    abline(h = d$loss_mle, lty = 2, lwd = 2, col = "#2c3e50")
+
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c("Full-batch GD", paste0("Mini-batch SGD (bs=", d$bs, ")"),
+                      "MLE optimum"),
+           col = c("#3498db", "#e74c3c", "#2c3e50"),
+           lwd = c(2, 1.5, 2), lty = c(1, 1, 2))
+  })
+
+  output$beta_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    ylims &lt;- range(c(d$beta1_fb, d$beta1_mb, d$beta_mle[2]), na.rm = TRUE)
+
+    plot(1:d$n_iter, d$beta1_fb, type = "l", col = "#3498db", lwd = 2,
+         main = expression("Parameter " * hat(beta)[1] * " vs Iteration"),
+         xlab = "Iteration", ylab = expression(hat(beta)[1]),
+         ylim = ylims)
+
+    lines(1:d$n_iter, d$beta1_mb, col = "#e74c3c", lwd = 1.5)
+
+    abline(h = d$beta_mle[2], lty = 2, lwd = 2, col = "#2c3e50")
+
+    legend("bottomright", bty = "n", cex = 0.85,
+           legend = c("Full-batch GD", paste0("Mini-batch SGD (bs=", d$bs, ")"),
+                      expression("MLE " * hat(beta)[1])),
+           col = c("#3498db", "#e74c3c", "#2c3e50"),
+           lwd = c(2, 1.5, 2), lty = c(1, 1, 2))
+  })
+
+  output$results &lt;- renderUI({
+    d &lt;- dat()
+
+    fb_final  &lt;- d$beta1_fb[d$n_iter]
+    mb_final  &lt;- d$beta1_mb[d$n_iter]
+    mle_val   &lt;- d$beta_mle[2]
+    fb_err    &lt;- abs(fb_final - mle_val)
+    mb_err    &lt;- abs(mb_final - mle_val)
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;MLE solution:&lt;/b&gt;&lt;br&gt;",
+        "&amp;nbsp; \u03b2\u0302\u2080 = ", round(d$beta_mle[1], 3),
+        ", \u03b2\u0302\u2081 = ", round(mle_val, 3), "&lt;br&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        "&lt;b&gt;Full-batch final:&lt;/b&gt;&lt;br&gt;",
+        "&amp;nbsp; \u03b2\u0302\u2081 = ", round(fb_final, 3),
+        " (|error| = ", round(fb_err, 4), ")&lt;br&gt;",
+        "&lt;b&gt;Mini-batch final:&lt;/b&gt;&lt;br&gt;",
+        "&amp;nbsp; \u03b2\u0302\u2081 = ", round(mb_final, 3),
+        " (|error| = ", round(mb_err, 4), ")"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</section>
 </section>
 <section id="what-training-optimizes-and-what-it-does-not" class="level2">
 <h2 class="anchored" data-anchor-id="what-training-optimizes-and-what-it-does-not">What training optimizes — and what it does not</h2>

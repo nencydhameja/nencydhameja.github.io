@@ -41,6 +41,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -449,7 +454,10 @@ window.Quarto = {
    
   <ul>
   <li><a href="#the-equivalence-restated" id="toc-the-equivalence-restated" class="nav-link active" data-scroll-target="#the-equivalence-restated">The equivalence, restated</a></li>
-  <li><a href="#weight-decay-in-neural-networks" id="toc-weight-decay-in-neural-networks" class="nav-link" data-scroll-target="#weight-decay-in-neural-networks">Weight decay in neural networks</a></li>
+  <li><a href="#weight-decay-in-neural-networks" id="toc-weight-decay-in-neural-networks" class="nav-link" data-scroll-target="#weight-decay-in-neural-networks">Weight decay in neural networks</a>
+  <ul class="collapse">
+  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  </ul></li>
   <li><a href="#dropout-as-approximate-bayesian-inference" id="toc-dropout-as-approximate-bayesian-inference" class="nav-link" data-scroll-target="#dropout-as-approximate-bayesian-inference">Dropout as approximate Bayesian inference</a></li>
   <li><a href="#early-stopping-as-implicit-regularization" id="toc-early-stopping-as-implicit-regularization" class="nav-link" data-scroll-target="#early-stopping-as-implicit-regularization">Early stopping as implicit regularization</a></li>
   <li><a href="#the-rlhf-penalty-as-a-prior" id="toc-the-rlhf-penalty-as-a-prior" class="nav-link" data-scroll-target="#the-rlhf-penalty-as-a-prior">The RLHF penalty as a prior</a></li>
@@ -530,6 +538,242 @@ window.Quarto = {
 <p>The most common regularizer in deep learning is <strong>weight decay</strong>: add <span class="math inline">\(\lambda \|\theta\|_2^2\)</span> to the loss. In the Bayesian interpretation, this is MAP estimation under a Gaussian prior centered at zero.</p>
 <p>What does this prior say? “In the absence of data, I believe the weights should be small.” This is a reasonable default — large weights produce extreme predictions and amplify noise. The prior encodes a preference for smooth, conservative functions.</p>
 <p>The weight decay coefficient <span class="math inline">\(\lambda\)</span> controls the bias-variance tradeoff from <a href="bias-variance.html">Bias-Variance</a>: too small and the model overfits (high variance); too large and the model underfits (high bias). The Bayesian interpretation makes this tradeoff precise — <span class="math inline">\(\lambda\)</span> is the ratio of the noise variance to the prior variance, <span class="math inline">\(\sigma^2 / \tau^2\)</span>.</p>
+<p>The simulation below generates regression data with 8 predictors — the first 5 have true nonzero coefficients, the last 3 are pure noise — and shows how ridge (L2) and lasso (L1) shrink the coefficient estimates as <span class="math inline">\(\lambda\)</span> increases. The key visual: ridge shrinks all coefficients toward zero proportionally, while lasso drives small coefficients to <strong>exactly zero</strong>.</p>
+<section id="things-to-try" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<ul>
+<li><strong>Small λ (≈ 0):</strong> both ridge and lasso estimates are close to OLS — minimal shrinkage. The noise coefficients (6–8) are nonzero due to overfitting.</li>
+<li><strong>Increase λ:</strong> ridge shrinks all coefficients proportionally toward zero. Lasso shrinks small coefficients to exactly zero first (variable selection).</li>
+<li><strong>Large λ:</strong> all coefficients shrink toward zero. Lasso may zero out even the true signal predictors.</li>
+<li><strong>High noise (σ):</strong> OLS estimates are noisier, and the benefits of regularization become more apparent.</li>
+</ul>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 680
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("n", "Sample size (n):",
+                  min = 50, max = 500, value = 100, step = 50),
+
+      sliderInput("sigma", "Noise level (σ):",
+                  min = 0.5, max = 5, value = 2, step = 0.5),
+
+      sliderInput("log_lambda", "log(λ):",
+                  min = -4, max = 4, value = 0, step = 0.2),
+
+      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
+
+      uiOutput("results")
+    ),
+
+    mainPanel(
+      width = 9,
+      fluidRow(
+        column(6, plotOutput("ridge_plot", height = "470px")),
+        column(6, plotOutput("lasso_plot", height = "470px"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  # Soft-thresholding operator for lasso
+  soft_thresh &lt;- function(x, t) sign(x) * pmax(abs(x) - t, 0)
+
+  # Coordinate descent for lasso
+  lasso_fit &lt;- function(X, y, lambda, beta_init = NULL, max_iter = 200) {
+    n &lt;- nrow(X)
+    p &lt;- ncol(X)
+    beta &lt;- if (!is.null(beta_init)) beta_init else rep(0, p)
+    # Precompute column norms
+    col_norm2 &lt;- colSums(X^2) / n
+
+    for (iter in 1:max_iter) {
+      for (j in 1:p) {
+        r_j &lt;- y - X[, -j, drop = FALSE] %*% beta[-j]
+        beta[j] &lt;- soft_thresh(sum(X[, j] * r_j) / n, lambda) / col_norm2[j]
+      }
+    }
+    beta
+  }
+
+  dat &lt;- reactive({
+    input$go
+    n     &lt;- input$n
+    sigma &lt;- input$sigma
+    p     &lt;- 8
+
+    # True coefficients: 5 nonzero, 3 zero
+    beta_true &lt;- c(3, -2, 1.5, -1, 0.5, 0, 0, 0)
+
+    # Generate data (standardized X)
+    X &lt;- matrix(rnorm(n * p), n, p)
+    Y &lt;- X %*% beta_true + rnorm(n) * sigma
+
+    # Center Y for penalized regression
+    y_c &lt;- Y - mean(Y)
+
+    # Precompute
+    XtX &lt;- t(X) %*% X
+    Xty &lt;- t(X) %*% y_c
+
+    # OLS
+    beta_ols &lt;- as.numeric(solve(XtX) %*% Xty)
+
+    # Compute paths over a grid of lambda values
+    lambda_grid &lt;- exp(seq(-4, 4, length.out = 60))
+
+    ridge_path &lt;- matrix(NA, 60, p)
+    lasso_path &lt;- matrix(NA, 60, p)
+
+    # Ridge path (closed form)
+    for (l in 1:60) {
+      ridge_path[l, ] &lt;- as.numeric(
+        solve(XtX + lambda_grid[l] * n * diag(p)) %*% Xty
+      )
+    }
+
+    # Lasso path (coordinate descent with warm starts)
+    # Process from largest to smallest lambda
+    beta_warm &lt;- rep(0, p)
+    ord &lt;- order(lambda_grid, decreasing = TRUE)
+    for (l in ord) {
+      beta_warm &lt;- lasso_fit(X, y_c, lambda_grid[l], beta_warm, max_iter = 100)
+      lasso_path[l, ] &lt;- beta_warm
+    }
+
+    list(beta_true = beta_true, beta_ols = beta_ols,
+         ridge_path = ridge_path, lasso_path = lasso_path,
+         lambda_grid = lambda_grid, p = p, n = n, sigma = sigma)
+  })
+
+  output$ridge_plot &lt;- renderPlot({
+    d &lt;- dat()
+    lam &lt;- exp(input$log_lambda)
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    # Color palette for 8 coefficients
+    cols &lt;- c("#e74c3c", "#3498db", "#2ecc71", "#f39c12",
+              "#9b59b6", "#95a5a6", "#95a5a6", "#95a5a6")
+
+    log_grid &lt;- log(d$lambda_grid)
+
+    ylims &lt;- range(d$ridge_path) * 1.1
+
+    plot(NULL, xlim = range(log_grid), ylim = ylims,
+         main = "Ridge (L2) Coefficient Path",
+         xlab = expression(log(lambda)),
+         ylab = "Coefficient estimate")
+
+    for (j in 1:d$p) {
+      lty_j &lt;- if (j &lt;= 5) 1 else 2
+      lines(log_grid, d$ridge_path[, j],
+            col = cols[j], lwd = 2, lty = lty_j)
+    }
+
+    abline(v = log(lam), col = "#2c3e50", lwd = 2, lty = 3)
+    abline(h = 0, col = "#7f8c8d", lty = 2)
+
+    # True values as points on right margin
+    for (j in 1:d$p) {
+      points(max(log_grid) + 0.3, d$beta_true[j],
+             pch = 4, col = cols[j], cex = 1.2, lwd = 2)
+    }
+
+    legend("topright", bty = "n", cex = 0.7,
+           legend = c(paste0("β", 1:5, " (true ≠ 0)"), "β6–β8 (true = 0)"),
+           col = c(cols[1:5], "#95a5a6"),
+           lwd = 2, lty = c(rep(1, 5), 2))
+  })
+
+  output$lasso_plot &lt;- renderPlot({
+    d &lt;- dat()
+    lam &lt;- exp(input$log_lambda)
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    cols &lt;- c("#e74c3c", "#3498db", "#2ecc71", "#f39c12",
+              "#9b59b6", "#95a5a6", "#95a5a6", "#95a5a6")
+
+    log_grid &lt;- log(d$lambda_grid)
+
+    ylims &lt;- range(d$lasso_path) * 1.1
+
+    plot(NULL, xlim = range(log_grid), ylim = ylims,
+         main = "Lasso (L1) Coefficient Path",
+         xlab = expression(log(lambda)),
+         ylab = "Coefficient estimate")
+
+    for (j in 1:d$p) {
+      lty_j &lt;- if (j &lt;= 5) 1 else 2
+      lines(log_grid, d$lasso_path[, j],
+            col = cols[j], lwd = 2, lty = lty_j)
+    }
+
+    abline(v = log(lam), col = "#2c3e50", lwd = 2, lty = 3)
+    abline(h = 0, col = "#7f8c8d", lty = 2)
+
+    for (j in 1:d$p) {
+      points(max(log_grid) + 0.3, d$beta_true[j],
+             pch = 4, col = cols[j], cex = 1.2, lwd = 2)
+    }
+
+    legend("topright", bty = "n", cex = 0.7,
+           legend = c(paste0("β", 1:5, " (true ≠ 0)"), "β6–β8 (true = 0)"),
+           col = c(cols[1:5], "#95a5a6"),
+           lwd = 2, lty = c(rep(1, 5), 2))
+  })
+
+  output$results &lt;- renderUI({
+    d &lt;- dat()
+    lam &lt;- exp(input$log_lambda)
+
+    # Find closest lambda in grid
+    idx &lt;- which.min(abs(d$lambda_grid - lam))
+
+    ridge_at &lt;- d$ridge_path[idx, ]
+    lasso_at &lt;- d$lasso_path[idx, ]
+
+    n_zero_lasso &lt;- sum(abs(lasso_at) &lt; 1e-6)
+    n_zero_ridge &lt;- sum(abs(ridge_at) &lt; 1e-6)
+
+    # MSE of estimates vs true
+    mse_ols   &lt;- mean((d$beta_ols - d$beta_true)^2)
+    mse_ridge &lt;- mean((ridge_at - d$beta_true)^2)
+    mse_lasso &lt;- mean((lasso_at - d$beta_true)^2)
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;λ = ", round(lam, 3), "&lt;/b&gt;&lt;br&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        "&lt;b&gt;Coefficients set to zero:&lt;/b&gt;&lt;br&gt;",
+        "&amp;nbsp; Ridge: ", n_zero_ridge,
+        " | Lasso: ", n_zero_lasso, "&lt;br&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        "&lt;b&gt;MSE vs true β:&lt;/b&gt;&lt;br&gt;",
+        "&amp;nbsp; OLS: ", round(mse_ols, 3), "&lt;br&gt;",
+        "&amp;nbsp; Ridge: ", round(mse_ridge, 3), "&lt;br&gt;",
+        "&amp;nbsp; Lasso: ", round(mse_lasso, 3)
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</section>
 </section>
 <section id="dropout-as-approximate-bayesian-inference" class="level2">
 <h2 class="anchored" data-anchor-id="dropout-as-approximate-bayesian-inference">Dropout as approximate Bayesian inference</h2>

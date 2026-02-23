@@ -556,6 +556,8 @@ ui &lt;- fluidPage(
       sliderInput("sigma_eta", "Measurement error (\u03c3\u03b7):",
                   min = 0, max = 5, value = 0, step = 0.25),
 
+      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
+
       uiOutput("results")
     ),
 
@@ -568,41 +570,44 @@ ui &lt;- fluidPage(
 
 server &lt;- function(input, output, session) {
 
-  # True data — only regenerates when beta, n, sigma_x, sigma_u change
-  base &lt;- reactive({
-    n   &lt;- input$n
-    b   &lt;- input$beta
-    sx  &lt;- input$sigma_x
-    su  &lt;- input$sigma_u
+  # Store base data in reactiveValues so it only changes on button/param change
+  rv &lt;- reactiveValues(x_star = NULL, y = NULL, eta_base = NULL,
+                       beta = 1.5, sx = 2)
 
-    x_star &lt;- rnorm(n, 0, sx)
-    u      &lt;- rnorm(n, su)
-    y      &lt;- 2 + b * x_star + u
+  observe({
+    input$go
+    n  &lt;- input$n
+    b  &lt;- input$beta
+    sx &lt;- input$sigma_x
+    su &lt;- input$sigma_u
 
-    list(x_star = x_star, y = y, beta = b, sx = sx)
+    rv$x_star   &lt;- rnorm(n, 0, sx)
+    rv$y        &lt;- 2 + b * rv$x_star + rnorm(n, 0, su)
+    rv$eta_base &lt;- rnorm(n)
+    rv$beta     &lt;- b
+    rv$sx       &lt;- sx
   })
 
-  # Measurement error applied on top — changes when eta slider moves
+  # Measurement error slider scales the fixed eta pattern — no data regeneration
   sim &lt;- reactive({
-    d   &lt;- base()
-    se  &lt;- input$sigma_eta
+    req(rv$x_star)
+    se      &lt;- input$sigma_eta
+    x_star  &lt;- rv$x_star
+    y       &lt;- rv$y
+    x_obs   &lt;- x_star + rv$eta_base * se
 
-    eta   &lt;- rnorm(length(d$x_star), 0, se)
-    x_obs &lt;- d$x_star + eta
+    fit_true &lt;- lm(y ~ x_star)
+    fit_obs  &lt;- lm(y ~ x_obs)
+    lambda   &lt;- rv$sx^2 / (rv$sx^2 + se^2)
 
-    fit_true &lt;- lm(d$y ~ d$x_star)
-    fit_obs  &lt;- lm(d$y ~ x_obs)
-
-    lambda &lt;- d$sx^2 / (d$sx^2 + se^2)
-
-    list(x_star = d$x_star, x_obs = x_obs, y = d$y,
+    list(x_star = x_star, x_obs = x_obs, y = y,
          b_true = coef(fit_true)[2], b_obs = coef(fit_obs)[2],
-         beta = d$beta, lambda = lambda, sigma_eta = se)
+         int_true = coef(fit_true)[1], int_obs = coef(fit_obs)[1],
+         beta = rv$beta, lambda = lambda, sigma_eta = se)
   })
 
   output$scatter &lt;- renderPlot({
     d &lt;- sim()
-
     par(mfrow = c(1, 2), mar = c(4.5, 4.5, 3.5, 1))
 
     # Left: true X*
@@ -610,7 +615,7 @@ server &lt;- function(input, output, session) {
          col = adjustcolor("#3498db", 0.5),
          xlab = "True X*", ylab = "Y",
          main = "Regression on true X*")
-    abline(lm(d$y ~ d$x_star), col = "#27ae60", lwd = 3)
+    abline(a = d$int_true, b = d$b_true, col = "#27ae60", lwd = 3)
     mtext(paste0("Slope = ", round(d$b_true, 3)),
           side = 3, line = 0, cex = 1.1, font = 2, col = "#27ae60")
 
@@ -618,10 +623,9 @@ server &lt;- function(input, output, session) {
     plot(d$x_obs, d$y, pch = 16, cex = 0.6,
          col = adjustcolor("#e74c3c", 0.4),
          xlab = "Observed X (with error)", ylab = "Y",
-         main = paste0("Regression on mismeasured X"))
-    abline(lm(d$y ~ d$x_obs), col = "#e74c3c", lwd = 3)
-    abline(a = coef(lm(d$y ~ d$x_star))[1],
-           b = d$beta, col = "#27ae60", lwd = 2, lty = 2)
+         main = "Regression on mismeasured X")
+    abline(a = d$int_obs, b = d$b_obs, col = "#e74c3c", lwd = 3)
+    abline(a = d$int_true, b = d$beta, col = "#27ae60", lwd = 2, lty = 2)
     mtext(paste0("Slope = ", round(d$b_obs, 3),
                  "  (true = ", d$beta, ")"),
           side = 3, line = 0, cex = 1.1, font = 2, col = "#e74c3c")

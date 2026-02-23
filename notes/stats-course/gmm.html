@@ -41,6 +41,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -452,6 +457,7 @@ window.Quarto = {
   <li><a href="#the-gmm-estimator" id="toc-the-gmm-estimator" class="nav-link" data-scroll-target="#the-gmm-estimator">The GMM estimator</a>
   <ul class="collapse">
   <li><a href="#choosing-w" id="toc-choosing-w" class="nav-link" data-scroll-target="#choosing-w">Choosing <span class="math inline">\(W\)</span></a></li>
+  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
   <li><a href="#examples-that-build-on-the-course" id="toc-examples-that-build-on-the-course" class="nav-link" data-scroll-target="#examples-that-build-on-the-course">Examples that build on the course</a>
   <ul class="collapse">
@@ -510,7 +516,17 @@ E[g(X_i, \theta_0)] = 0
 <p>where <span class="math inline">\(W\)</span> is an <span class="math inline">\(m \times m\)</span> positive definite <strong>weighting matrix</strong>. This is like a weighted sum of squared moment violations — GMM finds the <span class="math inline">\(\theta\)</span> that makes the sample moments as close to zero as possible, with <span class="math inline">\(W\)</span> determining how much each moment condition matters.</p>
 <section id="choosing-w" class="level3">
 <h3 class="anchored" data-anchor-id="choosing-w">Choosing <span class="math inline">\(W\)</span></h3>
-<p>The choice of <span class="math inline">\(W\)</span> affects efficiency but not consistency — any positive definite <span class="math inline">\(W\)</span> gives a consistent estimator. But some choices are better than others.</p>
+<p>The choice of <span class="math inline">\(W\)</span> affects <strong>efficiency</strong> but not consistency — any positive definite <span class="math inline">\(W\)</span> gives a consistent estimator. But some choices are better than others.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>What is efficiency?</strong> An estimator is more <strong>efficient</strong> if it has smaller variance (tighter sampling distribution) for the same sample size. Two estimators can both be consistent — converging to the truth as <span class="math inline">\(n \to \infty\)</span> — but one can get there with less noise along the way. That’s efficiency: how much information the estimator squeezes out of each observation. <a href="maximum-likelihood.html">MLE</a> is asymptotically efficient — no consistent estimator can have smaller variance in large samples. MoM and GMM are consistent but may be less efficient, depending on which moments you use and how you weight them.</p>
+</div>
+</div>
+</div>
 <p><strong>Feasible two-step GMM.</strong> The most common approach:</p>
 <ol type="1">
 <li>Start with <span class="math inline">\(W = I\)</span> (or any reasonable <span class="math inline">\(W\)</span>) and get a preliminary estimate <span class="math inline">\(\hat{\theta}_1\)</span></li>
@@ -528,6 +544,220 @@ E[g(X_i, \theta_0)] = 0
 </div>
 </div>
 </div>
+<p>Try the simulation below — compare the sampling distribution of the IV estimator with 1 instrument (just-identified) versus more instruments (over-identified), and watch the standard deviation shrink as you add instruments.</p>
+</section>
+<section id="things-to-try" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<ul>
+<li><strong>1 instrument:</strong> just-identified IV. The sampling distribution can be wide, especially with weak instruments.</li>
+<li><strong>Increase instruments:</strong> the distribution tightens — more valid moment conditions means more information. The efficiency gain shows in the lower SD.</li>
+<li><strong>Weak instruments (low strength):</strong> the distribution becomes wide and potentially biased. Even with many instruments, weak instruments give poor estimates.</li>
+<li><strong>J-test (right panel):</strong> with valid instruments, the J-statistics follow the <span class="math inline">\(\chi^2\)</span> reference closely and the rejection rate is near 5%. If you modified the DGP to include an invalid instrument, the J-test would reject more often.</li>
+</ul>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 680
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("n", "Sample size (n):",
+                  min = 200, max = 2000, value = 500, step = 200),
+
+      sliderInput("m", "Number of instruments:",
+                  min = 1, max = 6, value = 3, step = 1),
+
+      sliderInput("strength", "Instrument strength:",
+                  min = 0.1, max = 0.9, value = 0.5, step = 0.1),
+
+      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
+
+      uiOutput("results")
+    ),
+
+    mainPanel(
+      width = 9,
+      fluidRow(
+        column(7, plotOutput("hist_plot", height = "470px")),
+        column(5, plotOutput("jtest_plot", height = "470px"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  sim &lt;- reactive({
+    input$go
+    n      &lt;- input$n
+    m      &lt;- input$m
+    pi_str &lt;- input$strength
+    reps   &lt;- 500
+    beta_true &lt;- 2
+
+    est_1 &lt;- numeric(reps)
+    est_m &lt;- numeric(reps)
+    j_stats &lt;- if (m &gt; 1) numeric(reps) else NULL
+
+    for (r in 1:reps) {
+      # Generate instruments
+      Z_all &lt;- matrix(rnorm(n * m), n, m)
+
+      # Endogenous regressor: X correlated with error
+      v   &lt;- rnorm(n)
+      eps &lt;- 0.6 * v + rnorm(n) * 0.8
+      X   &lt;- Z_all %*% rep(pi_str / sqrt(m), m) + v
+      Y   &lt;- 1 + beta_true * X + eps
+
+      Xmat &lt;- cbind(1, X)
+
+      # --- Just-identified: 1 instrument ---
+      Z1   &lt;- cbind(1, Z_all[, 1])
+      Pz1  &lt;- Z1 %*% solve(t(Z1) %*% Z1) %*% t(Z1)
+      Xh1  &lt;- Pz1 %*% Xmat
+      b1   &lt;- solve(t(Xh1) %*% Xmat) %*% (t(Xh1) %*% Y)
+      est_1[r] &lt;- b1[2]
+
+      # --- Over-identified: m instruments ---
+      Zm   &lt;- cbind(1, Z_all[, 1:m, drop = FALSE])
+      Pzm  &lt;- Zm %*% solve(t(Zm) %*% Zm) %*% t(Zm)
+      Xhm  &lt;- Pzm %*% Xmat
+      bm   &lt;- solve(t(Xhm) %*% Xmat) %*% (t(Xhm) %*% Y)
+      est_m[r] &lt;- bm[2]
+
+      # J-test (Sargan) when over-identified
+      if (m &gt; 1) {
+        e_hat  &lt;- as.numeric(Y - Xmat %*% bm)
+        sigma2 &lt;- sum(e_hat^2) / (n - 2)
+        Z_exc  &lt;- Z_all[, 1:m, drop = FALSE]
+        PZ_exc &lt;- Z_exc %*% solve(t(Z_exc) %*% Z_exc) %*% t(Z_exc)
+        j_stats[r] &lt;- as.numeric(t(e_hat) %*% PZ_exc %*% e_hat) / sigma2
+      }
+    }
+
+    list(est_1 = est_1, est_m = est_m, j_stats = j_stats,
+         beta_true = beta_true, m = m, n = n,
+         sd_1 = sd(est_1), sd_m = sd(est_m),
+         mean_1 = mean(est_1), mean_m = mean(est_m))
+  })
+
+  output$hist_plot &lt;- renderPlot({
+    d &lt;- sim()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    all_est &lt;- c(d$est_1, d$est_m)
+    spread  &lt;- max(abs(all_est - d$beta_true), na.rm = TRUE) * 1.2
+    xlims   &lt;- d$beta_true + c(-1, 1) * spread
+    breaks_seq &lt;- seq(xlims[1], xlims[2], length.out = 50)
+
+    hist(d$est_1, breaks = breaks_seq,
+         col = adjustcolor("#3498db", 0.4),
+         border = adjustcolor("#3498db", 0.6),
+         probability = TRUE,
+         main = expression("Sampling Distribution of " * hat(beta)[1]),
+         xlab = expression(hat(beta)[1]),
+         xlim = xlims)
+
+    if (d$m &gt; 1) {
+      hist(d$est_m, breaks = breaks_seq,
+           col = adjustcolor("#e74c3c", 0.4),
+           border = adjustcolor("#e74c3c", 0.6),
+           probability = TRUE, add = TRUE)
+    }
+
+    abline(v = d$beta_true, lwd = 2.5, col = "#2c3e50", lty = 2)
+
+    leg_labels &lt;- c("1 instrument (just-identified)",
+                     paste0(d$m, " instruments (over-identified)"),
+                     expression("True " * beta))
+    leg_cols &lt;- c(adjustcolor("#3498db", 0.6),
+                  adjustcolor("#e74c3c", 0.6),
+                  "#2c3e50")
+
+    legend("topright", bty = "n", cex = 0.8,
+           legend = leg_labels[if (d$m &gt; 1) 1:3 else c(1, 3)],
+           fill   = c(adjustcolor("#3498db", 0.4),
+                      if (d$m &gt; 1) adjustcolor("#e74c3c", 0.4) else NULL,
+                      NA),
+           border = c(adjustcolor("#3498db", 0.6),
+                      if (d$m &gt; 1) adjustcolor("#e74c3c", 0.6) else NULL,
+                      NA),
+           lwd    = c(NA, if (d$m &gt; 1) NA else NULL, 2.5),
+           lty    = c(NA, if (d$m &gt; 1) NA else NULL, 2))
+  })
+
+  output$jtest_plot &lt;- renderPlot({
+    d &lt;- sim()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    if (d$m &lt;= 1) {
+      plot.new()
+      text(0.5, 0.5, "J-test not available\n(just-identified: m = k)",
+           cex = 1.2, col = "#7f8c8d")
+    } else {
+      df &lt;- d$m - 1
+
+      hist(d$j_stats, breaks = 30,
+           col = adjustcolor("#9b59b6", 0.4),
+           border = "#9b59b6", probability = TRUE,
+           main = paste0("J-test Statistics (df = ", df, ")"),
+           xlab = "J-statistic",
+           xlim = c(0, max(d$j_stats, qchisq(0.99, df)) * 1.1))
+
+      x_seq &lt;- seq(0, max(d$j_stats, qchisq(0.99, df)) * 1.1,
+                    length.out = 200)
+      lines(x_seq, dchisq(x_seq, df), col = "#2c3e50", lwd = 2, lty = 2)
+
+      cv &lt;- qchisq(0.95, df)
+      abline(v = cv, col = "#e74c3c", lwd = 1.5, lty = 3)
+
+      rej_rate &lt;- mean(d$j_stats &gt; cv)
+
+      legend("topright", bty = "n", cex = 0.8,
+             legend = c(
+               as.expression(bquote(chi^2 * "(" * .(df) * ") reference")),
+               "5% critical value",
+               paste0("Rejection rate: ", round(rej_rate * 100, 1), "%")),
+             col = c("#2c3e50", "#e74c3c", NA),
+             lwd = c(2, 1.5, NA), lty = c(2, 3, NA))
+    }
+  })
+
+  output$results &lt;- renderUI({
+    d &lt;- sim()
+    eff_gain &lt;- if (d$m &gt; 1) round((1 - d$sd_m / d$sd_1) * 100, 1) else NA
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;1 instrument:&lt;/b&gt;&lt;br&gt;",
+        "&amp;nbsp; Mean = ", round(d$mean_1, 3),
+        ", SD = ", round(d$sd_1, 3), "&lt;br&gt;",
+        "&lt;b&gt;", d$m, " instruments:&lt;/b&gt;&lt;br&gt;",
+        "&amp;nbsp; Mean = ", round(d$mean_m, 3),
+        ", SD = ", round(d$sd_m, 3),
+        if (!is.na(eff_gain)) paste0(
+          "&lt;hr style='margin:6px 0'&gt;",
+          "&lt;b&gt;Efficiency gain:&lt;/b&gt; ", eff_gain, "%&lt;br&gt;",
+          "&lt;span style='font-size:12px;color:#7f8c8d'&gt;",
+          "(reduction in SD from 1→", d$m, " instruments)&lt;/span&gt;"
+        ) else ""
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
 </section>
 </section>
 <section id="examples-that-build-on-the-course" class="level2">
