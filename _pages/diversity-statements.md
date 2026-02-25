@@ -34,11 +34,11 @@ in economics and political science (2014–2024).
 }
 </style>
 
-<div class="chart-wrapper" style="max-width: 800px;">
+<div class="chart-wrapper" style="max-width: 1100px; margin: 0 auto;">
   <iframe
     src="/assets/projects/diversity/treatment_trend.html"
     title="Treatment Trend"
-    height="520"
+    height="560"
     loading="lazy"
     scrolling="no"
     style="pointer-events: auto;"
@@ -46,7 +46,7 @@ in economics and political science (2014–2024).
   </iframe>
 </div>
 
-<div class="chart-wrapper" style="max-width: 1100px; margin-top: 24px;">
+<div class="chart-wrapper" style="max-width: 1100px; margin: 24px auto 0;">
   <iframe
     src="/assets/projects/diversity/div_state_map.html"
     title="Interactive Map"
