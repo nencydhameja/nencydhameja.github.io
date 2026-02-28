@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The Delta Method – Foundations of Statistical Inference</title>
+<title>Bag of Little Bootstraps – Foundations of Statistical Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./heteroskedasticity.html">Standard Errors &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./delta-method.html">The Delta Method</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./blb.html">Bag of Little Bootstraps</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -228,7 +228,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./blb.html" class="sidebar-item-text sidebar-link">
+  <a href="./blb.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Bag of Little Bootstraps</span></a>
   </div>
 </li>
@@ -368,7 +368,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./delta-method.html" class="sidebar-item-text sidebar-link active">
+  <a href="./delta-method.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Delta Method</span></a>
   </div>
 </li>
@@ -483,19 +483,19 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem">The problem</a></li>
-  <li><a href="#the-formula" id="toc-the-formula" class="nav-link" data-scroll-target="#the-formula">The formula</a></li>
-  <li><a href="#worked-examples" id="toc-worked-examples" class="nav-link" data-scroll-target="#worked-examples">Worked examples</a>
+  <li><a href="#the-problem-with-the-bootstrap-at-scale" id="toc-the-problem-with-the-bootstrap-at-scale" class="nav-link active" data-scroll-target="#the-problem-with-the-bootstrap-at-scale">The problem with the bootstrap at scale</a></li>
+  <li><a href="#the-blb-idea" id="toc-the-blb-idea" class="nav-link" data-scroll-target="#the-blb-idea">The BLB idea</a>
   <ul class="collapse">
-  <li><a href="#example-1-odds-ratio-ehatbeta" id="toc-example-1-odds-ratio-ehatbeta" class="nav-link" data-scroll-target="#example-1-odds-ratio-ehatbeta">Example 1: Odds ratio <span class="math inline">\(e^{\hat{\beta}}\)</span></a></li>
-  <li><a href="#example-2-ratio-hatbeta_1-hatbeta_2" id="toc-example-2-ratio-hatbeta_1-hatbeta_2" class="nav-link" data-scroll-target="#example-2-ratio-hatbeta_1-hatbeta_2">Example 2: Ratio <span class="math inline">\(\hat{\beta}_1 / \hat{\beta}_2\)</span></a></li>
-  <li><a href="#example-3-logit-marginal-effects" id="toc-example-3-logit-marginal-effects" class="nav-link" data-scroll-target="#example-3-logit-marginal-effects">Example 3: Logit marginal effects</a></li>
+  <li><a href="#the-three-steps" id="toc-the-three-steps" class="nav-link" data-scroll-target="#the-three-steps">The three steps</a></li>
+  <li><a href="#why-the-reweighting-works" id="toc-why-the-reweighting-works" class="nav-link" data-scroll-target="#why-the-reweighting-works">Why the reweighting works</a></li>
+  <li><a href="#cost-comparison" id="toc-cost-comparison" class="nav-link" data-scroll-target="#cost-comparison">Cost comparison</a></li>
   </ul></li>
   <li><a href="#simulation" id="toc-simulation" class="nav-link" data-scroll-target="#simulation">Simulation</a>
   <ul class="collapse">
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
-  <li><a href="#when-the-delta-method-fails" id="toc-when-the-delta-method-fails" class="nav-link" data-scroll-target="#when-the-delta-method-fails">When the delta method fails</a>
+  <li><a href="#when-to-use-blb" id="toc-when-to-use-blb" class="nav-link" data-scroll-target="#when-to-use-blb">When to use BLB</a></li>
+  <li><a href="#blb-for-clustered-data" id="toc-blb-for-clustered-data" class="nav-link" data-scroll-target="#blb-for-clustered-data">BLB for clustered data</a>
   <ul class="collapse">
   <li><a href="#connections" id="toc-connections" class="nav-link" data-scroll-target="#connections">Connections</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
@@ -506,9 +506,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./heteroskedasticity.html">Standard Errors &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./delta-method.html">The Delta Method</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./blb.html">Bag of Little Bootstraps</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">The Delta Method</h1>
+<h1 class="title">Bag of Little Bootstraps</h1>
 </div>
 
 
@@ -525,47 +525,65 @@ window.Quarto = {
 </header>
 
 
-<section id="the-problem" class="level2">
-<h2 class="anchored" data-anchor-id="the-problem">The problem</h2>
-<p>You have an estimator <span class="math inline">\(\hat{\theta}\)</span> with known (or estimated) variance, and you want the variance of some nonlinear transformation <span class="math inline">\(g(\hat{\theta})\)</span>. Examples:</p>
-<ul>
-<li>You estimated <span class="math inline">\(\hat{\beta}\)</span> from a logistic regression, but you want the SE of the <strong>odds ratio</strong> <span class="math inline">\(e^{\hat{\beta}}\)</span>.</li>
-<li>You have two coefficients <span class="math inline">\(\hat{\beta}_1, \hat{\beta}_2\)</span> and want the SE of their <strong>ratio</strong> <span class="math inline">\(\hat{\beta}_1 / \hat{\beta}_2\)</span>.</li>
-<li>You want marginal effects from a probit model — nonlinear functions of <span class="math inline">\(\hat{\beta}\)</span>.</li>
-</ul>
+<section id="the-problem-with-the-bootstrap-at-scale" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem-with-the-bootstrap-at-scale">The problem with the bootstrap at scale</h2>
+<p>The <a href="bootstrap.html">standard bootstrap</a> is beautifully simple: resample <span class="math inline">\(n\)</span> observations with replacement, re-estimate, repeat <span class="math inline">\(B\)</span> times. But each bootstrap replicate processes all <span class="math inline">\(n\)</span> observations. When <span class="math inline">\(n\)</span> is large and estimation is expensive — panel regressions, kernel estimators, ML models — the bootstrap becomes prohibitively slow:</p>
+<p><span class="math display">\[\text{Cost}_{\text{bootstrap}} = O(B \cdot n)\]</span></p>
+<p>With <span class="math inline">\(n = 500{,}000\)</span> and <span class="math inline">\(B = 1{,}000\)</span>, you’re fitting your model 1,000 times on half a million observations each. That can take days.</p>
 </section>
-<section id="the-formula" class="level2">
-<h2 class="anchored" data-anchor-id="the-formula">The formula</h2>
-<p>If <span class="math inline">\(\hat{\theta} \xrightarrow{d} N(\theta, \sigma^2/n)\)</span>, then a first-order Taylor expansion gives:</p>
-<p><span class="math display">\[g(\hat{\theta}) \approx g(\theta) + g'(\theta)(\hat{\theta} - \theta)\]</span></p>
-<p>so:</p>
-<p><span class="math display">\[\text{Var}(g(\hat{\theta})) \approx [g'(\theta)]^2 \cdot \text{Var}(\hat{\theta})\]</span></p>
-<p><strong>Multivariate version:</strong> if <span class="math inline">\(\hat{\boldsymbol{\theta}}\)</span> is a vector with covariance matrix <span class="math inline">\(\Sigma\)</span>, then:</p>
-<p><span class="math display">\[\text{Var}(g(\hat{\boldsymbol{\theta}})) \approx \nabla g(\boldsymbol{\theta})' \, \Sigma \, \nabla g(\boldsymbol{\theta})\]</span></p>
-<p>where <span class="math inline">\(\nabla g\)</span> is the gradient of <span class="math inline">\(g\)</span> evaluated at <span class="math inline">\(\hat{\boldsymbol{\theta}}\)</span>.</p>
+<section id="the-blb-idea" class="level2">
+<h2 class="anchored" data-anchor-id="the-blb-idea">The BLB idea</h2>
+<p>The <strong>Bag of Little Bootstraps</strong> (Kleiner, Talwalkar, Sarkar &amp; Jordan, 2014) gets the same answer at a fraction of the cost. The key insight: instead of bootstrapping the full dataset, <strong>subsample small chunks and reweight them to mimic full-sample uncertainty</strong>.</p>
+<section id="the-three-steps" class="level3">
+<h3 class="anchored" data-anchor-id="the-three-steps">The three steps</h3>
+<p><strong>Step 1 — Subsample.</strong> Draw <span class="math inline">\(S\)</span> small subsamples of size <span class="math inline">\(b \ll n\)</span> from the data <strong>without</strong> replacement. A common choice is <span class="math inline">\(b = n^\gamma\)</span> with <span class="math inline">\(\gamma \approx 0.6\text{–}0.9\)</span>:</p>
+<p><span class="math display">\[b = n^\gamma, \quad \gamma \in [0.6, 0.9]\]</span></p>
+<p>For <span class="math inline">\(n = 500{,}000\)</span> and <span class="math inline">\(\gamma = 0.7\)</span>, you get <span class="math inline">\(b \approx 10{,}000\)</span> — a 50x reduction.</p>
+<p><strong>Step 2 — Reweight, don’t resample.</strong> Within each subsample, generate <span class="math inline">\(R\)</span> sets of <strong>multinomial weights</strong> that sum to <span class="math inline">\(n\)</span> (not <span class="math inline">\(b\)</span>). Each weight vector simulates a bootstrap resample from the full population, but you only need to work with <span class="math inline">\(b\)</span> distinct observations:</p>
+<p><span class="math display">\[\mathbf{w} \sim \text{Multinomial}(n, \; 1/b, \ldots, 1/b)\]</span></p>
+<p>Estimate the parameter using weighted estimation for each weight draw. This gives <span class="math inline">\(R\)</span> estimates per subsample.</p>
+<p><strong>Step 3 — Combine.</strong> For each subsample <span class="math inline">\(s\)</span>, compute the bootstrap variance from its <span class="math inline">\(R\)</span> reweighted estimates. Average the variances across the <span class="math inline">\(S\)</span> subsamples:</p>
+<p><span class="math display">\[\widehat{\text{Var}}_{\text{BLB}} = \frac{1}{S} \sum_{s=1}^{S} \widehat{\text{Var}}_s\]</span></p>
+<p>The resulting SE is asymptotically equivalent to the full bootstrap SE.</p>
 </section>
-<section id="worked-examples" class="level2">
-<h2 class="anchored" data-anchor-id="worked-examples">Worked examples</h2>
-<section id="example-1-odds-ratio-ehatbeta" class="level3">
-<h3 class="anchored" data-anchor-id="example-1-odds-ratio-ehatbeta">Example 1: Odds ratio <span class="math inline">\(e^{\hat{\beta}}\)</span></h3>
-<p><span class="math inline">\(g(\beta) = e^\beta\)</span>, so <span class="math inline">\(g'(\beta) = e^\beta\)</span>. Therefore:</p>
-<p><span class="math display">\[\text{SE}(e^{\hat{\beta}}) \approx e^{\hat{\beta}} \cdot \text{SE}(\hat{\beta})\]</span></p>
+<section id="why-the-reweighting-works" class="level3">
+<h3 class="anchored" data-anchor-id="why-the-reweighting-works">Why the reweighting works</h3>
+<p>The multinomial weights summing to <span class="math inline">\(n\)</span> are crucial. If you just bootstrapped the subsample of size <span class="math inline">\(b\)</span>, you’d estimate uncertainty for a sample of size <span class="math inline">\(b\)</span> — too much variance. By inflating the weights to sum to <span class="math inline">\(n\)</span>, each reweighted estimate behaves as if it came from a full-size bootstrap resample. The subsample provides the right <em>support</em> (which data points can appear); the weights provide the right <em>scale</em> (how much uncertainty a sample of size <span class="math inline">\(n\)</span> should have).</p>
 </section>
-<section id="example-2-ratio-hatbeta_1-hatbeta_2" class="level3">
-<h3 class="anchored" data-anchor-id="example-2-ratio-hatbeta_1-hatbeta_2">Example 2: Ratio <span class="math inline">\(\hat{\beta}_1 / \hat{\beta}_2\)</span></h3>
-<p><span class="math inline">\(g(\beta_1, \beta_2) = \beta_1 / \beta_2\)</span>. The gradient is <span class="math inline">\(\nabla g = (1/\beta_2, \; -\beta_1/\beta_2^2)\)</span>, so:</p>
-<p><span class="math display">\[\text{Var}\!\left(\frac{\hat{\beta}_1}{\hat{\beta}_2}\right) \approx \frac{1}{\beta_2^2}\text{Var}(\hat{\beta}_1) + \frac{\beta_1^2}{\beta_2^4}\text{Var}(\hat{\beta}_2) - \frac{2\beta_1}{\beta_2^3}\text{Cov}(\hat{\beta}_1, \hat{\beta}_2)\]</span></p>
-</section>
-<section id="example-3-logit-marginal-effects" class="level3">
-<h3 class="anchored" data-anchor-id="example-3-logit-marginal-effects">Example 3: Logit marginal effects</h3>
-<p>For logit with <span class="math inline">\(P(Y=1|X) = \Lambda(X'\beta)\)</span>, the marginal effect of <span class="math inline">\(X_j\)</span> is <span class="math inline">\(\Lambda'(X'\beta) \cdot \beta_j\)</span>. The delta method gives its SE using the gradient with respect to <span class="math inline">\(\beta\)</span> — see <a href="limited-dependent.html">limited dependent variables</a>.</p>
+<section id="cost-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="cost-comparison">Cost comparison</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Replications</th>
+<th>Obs per replication</th>
+<th>Total cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Bootstrap</strong></td>
+<td><span class="math inline">\(B\)</span></td>
+<td><span class="math inline">\(n\)</span></td>
+<td><span class="math inline">\(O(B \cdot n)\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>BLB</strong></td>
+<td><span class="math inline">\(S \cdot R\)</span></td>
+<td><span class="math inline">\(b\)</span></td>
+<td><span class="math inline">\(O(S \cdot R \cdot b)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Since <span class="math inline">\(b \ll n\)</span>, BLB is dramatically faster. With <span class="math inline">\(n = 500{,}000\)</span>, <span class="math inline">\(b = 10{,}000\)</span>, <span class="math inline">\(S = 10\)</span>, <span class="math inline">\(R = 100\)</span>: bootstrap does <span class="math inline">\(1{,}000 \times 500{,}000 = 5 \times 10^8\)</span> observation-fits; BLB does <span class="math inline">\(10 \times 100 \times 10{,}000 = 10^7\)</span> — a <strong>50x speedup</strong>.</p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>The Oracle View.</strong> In the simulation below, we know the true <span class="math inline">\(\beta\)</span> and can compute the exact sampling distribution of <span class="math inline">\(e^{\hat{\beta}}\)</span> by Monte Carlo. We compare three approaches: the delta method SE, the bootstrap SE, and the true SD from simulation. In practice, you’d rely on the delta method or bootstrap since you can’t simulate from the truth.</p>
+<p><strong>The Oracle View.</strong> In this simulation, we know the true parameter and can compute exact bootstrap SEs by brute force. We compare BLB’s SE estimate against the full bootstrap SE and the true sampling distribution. In practice, you’d use BLB <em>because</em> the full bootstrap is too expensive — you trust the theory that they converge.</p>
 </div>
 </div>
 </div>
@@ -573,7 +591,7 @@ window.Quarto = {
 </section>
 <section id="simulation" class="level2">
 <h2 class="anchored" data-anchor-id="simulation">Simulation</h2>
-<p>Estimate <span class="math inline">\(\hat{\beta}\)</span> from a simple regression, then compute <span class="math inline">\(e^{\hat{\beta}}\)</span> (the odds ratio). Compare the delta method SE vs bootstrap SE vs the true sampling distribution.</p>
+<p>Compare standard bootstrap vs BLB. Left: both SE estimates as <span class="math inline">\(n\)</span> grows (they converge). Right: computation cost — bootstrap scales with <span class="math inline">\(n\)</span>, BLB stays manageable.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 750
 
@@ -594,16 +612,23 @@ ui &lt;- fluidPage(
     sidebarPanel(
       width = 4,
 
-      sliderInput("beta", HTML("True &amp;beta;:"),
-                  min = 0.1, max = 2, value = 0.5, step = 0.1),
-
       sliderInput("n", "Sample size (n):",
-                  min = 30, max = 500, value = 100, step = 10),
+                  min = 500, max = 10000, value = 2000, step = 500),
 
-      sliderInput("sigma", HTML("Error SD (&amp;sigma;):"),
-                  min = 0.5, max = 5, value = 2, step = 0.5),
+      sliderInput("gamma", HTML("Subsample exponent (&amp;gamma;):"),
+                  min = 0.5, max = 0.9, value = 0.7, step = 0.05),
 
-      actionButton("resim", "Run simulations", class = "btn-primary", width = "100%"),
+      sliderInput("S", "Number of subsamples (S):",
+                  min = 5, max = 30, value = 10, step = 5),
+
+      sliderInput("R", "Reweights per subsample (R):",
+                  min = 50, max = 300, value = 100, step = 50),
+
+      sliderInput("B", "Bootstrap replicates (B):",
+                  min = 200, max = 1000, value = 500, step = 100),
+
+      actionButton("resim", "Run comparison",
+                   class = "btn-primary", width = "100%"),
 
       uiOutput("results_box")
     ),
@@ -611,10 +636,10 @@ ui &lt;- fluidPage(
     mainPanel(
       width = 8,
       fluidRow(
-        column(6, plotOutput("plot_beta", height = "400px")),
-        column(6, plotOutput("plot_exp", height = "400px"))
+        column(6, plotOutput("plot_dist", height = "450px")),
+        column(6, plotOutput("plot_cost", height = "450px"))
       ),
-      uiOutput("compare_box")
+      uiOutput("explain_box")
     )
   )
 )
@@ -623,114 +648,177 @@ server &lt;- function(input, output, session) {
 
   sim_results &lt;- reactive({
     input$resim
-    beta  &lt;- input$beta
     n     &lt;- input$n
-    sigma &lt;- input$sigma
-    n_sims &lt;- 1000
-    n_boot &lt;- 200
+    gamma &lt;- input$gamma
+    S     &lt;- input$S
+    R     &lt;- input$R
+    B     &lt;- input$B
 
-    beta_hats &lt;- numeric(n_sims)
-    exp_betas &lt;- numeric(n_sims)
-    delta_ses &lt;- numeric(n_sims)
-    boot_ses  &lt;- numeric(n_sims)
+    b &lt;- max(10, round(n^gamma))
 
-    for (i in seq_len(n_sims)) {
-      x &lt;- rnorm(n)
-      y &lt;- beta * x + rnorm(n, sd = sigma)
-      fit &lt;- lm(y ~ x)
+    # Generate data: Y = 2 + 0.5*X + eps
+    x   &lt;- rnorm(n)
+    eps &lt;- rnorm(n, sd = 2)
+    y   &lt;- 2 + 0.5 * x + eps
 
-      b_hat &lt;- coef(fit)["x"]
-      se_b  &lt;- summary(fit)$coefficients["x", "Std. Error"]
-
-      beta_hats[i] &lt;- b_hat
-      exp_betas[i] &lt;- exp(b_hat)
-
-      # Delta method SE for exp(beta)
-      delta_ses[i] &lt;- exp(b_hat) * se_b
-
-      # Bootstrap SE
-      boot_exp &lt;- numeric(n_boot)
-      for (j in seq_len(n_boot)) {
-        idx &lt;- sample(n, n, replace = TRUE)
-        boot_fit &lt;- lm(y[idx] ~ x[idx])
-        boot_exp[j] &lt;- exp(coef(boot_fit)["x[idx]"])
-      }
-      boot_ses[i] &lt;- sd(boot_exp)
+    # --- Standard bootstrap ---
+    boot_coefs &lt;- numeric(B)
+    for (i in seq_len(B)) {
+      idx &lt;- sample(n, n, replace = TRUE)
+      fit &lt;- lm(y[idx] ~ x[idx])
+      boot_coefs[i] &lt;- coef(fit)[2]
     }
+    boot_se &lt;- sd(boot_coefs)
 
-    list(beta_hats = beta_hats, exp_betas = exp_betas,
-         delta_ses = delta_ses, boot_ses = boot_ses,
-         true_beta = beta, true_exp = exp(beta))
+    # --- BLB ---
+    blb_vars &lt;- numeric(S)
+    for (s in seq_len(S)) {
+      # Step 1: subsample without replacement
+      sub_idx &lt;- sample(n, b, replace = FALSE)
+      x_sub &lt;- x[sub_idx]
+      y_sub &lt;- y[sub_idx]
+
+      # Step 2: R multinomial reweights
+      blb_coefs &lt;- numeric(R)
+      for (r in seq_len(R)) {
+        # Multinomial weights summing to n
+        w &lt;- as.numeric(rmultinom(1, n, rep(1/b, b)))
+        # Weighted least squares
+        fit_w &lt;- lm(y_sub ~ x_sub, weights = w)
+        blb_coefs[r] &lt;- coef(fit_w)[2]
+      }
+      blb_vars[s] &lt;- var(blb_coefs)
+    }
+    blb_se &lt;- sqrt(mean(blb_vars))
+
+    # OLS analytic SE for reference
+    fit_full &lt;- lm(y ~ x)
+    ols_se &lt;- summary(fit_full)$coefficients[2, 2]
+
+    # Cost metrics (observation-fits)
+    boot_cost &lt;- B * n
+    blb_cost  &lt;- S * R * b
+
+    list(boot_se = boot_se, blb_se = blb_se, ols_se = ols_se,
+         boot_coefs = boot_coefs,
+         b = b, n = n, S = S, R = R, B = B,
+         boot_cost = boot_cost, blb_cost = blb_cost)
   })
 
-  output$plot_beta &lt;- renderPlot({
+  output$plot_dist &lt;- renderPlot({
     d &lt;- sim_results()
     par(mar = c(5, 5, 4, 2))
 
-    hist(d$beta_hats, breaks = 40,
-         col = adjustcolor("#3498db", 0.5), border = "white",
-         main = expression("Sampling dist. of " * hat(beta)),
-         xlab = expression(hat(beta)), freq = FALSE)
-    abline(v = d$true_beta, col = "#e74c3c", lwd = 2.5)
-    legend("topright", bty = "n",
-           legend = paste("True =", d$true_beta),
-           col = "#e74c3c", lwd = 2.5)
-  })
+    hist(d$boot_coefs, breaks = 40,
+         col = adjustcolor("#3498db", 0.4), border = "white",
+         main = expression("Bootstrap distribution of " * hat(beta)),
+         xlab = expression(hat(beta)),
+         freq = FALSE)
 
-  output$plot_exp &lt;- renderPlot({
-    d &lt;- sim_results()
-    par(mar = c(5, 5, 4, 2))
+    # Overlay BLB normal approximation
+    x_seq &lt;- seq(min(d$boot_coefs), max(d$boot_coefs),
+                 length.out = 200)
+    lines(x_seq,
+          dnorm(x_seq, mean = 0.5, sd = d$blb_se),
+          col = "#27ae60", lwd = 2.5)
+    lines(x_seq,
+          dnorm(x_seq, mean = 0.5, sd = d$boot_se),
+          col = "#3498db", lwd = 2, lty = 2)
 
-    hist(d$exp_betas, breaks = 40,
-         col = adjustcolor("#27ae60", 0.5), border = "white",
-         main = expression("Sampling dist. of " * e^{hat(beta)}),
-         xlab = expression(e^{hat(beta)}), freq = FALSE)
-    abline(v = d$true_exp, col = "#e74c3c", lwd = 2.5)
-
-    # Overlay delta method normal approximation
-    x_seq &lt;- seq(min(d$exp_betas), max(d$exp_betas), length.out = 200)
-    avg_delta_se &lt;- mean(d$delta_ses)
-    lines(x_seq, dnorm(x_seq, mean = d$true_exp, sd = avg_delta_se),
-          col = "#9b59b6", lwd = 2, lty = 2)
+    abline(v = 0.5, col = "#e74c3c", lwd = 2)
 
     legend("topright", bty = "n", cex = 0.85,
-           legend = c(paste("True =", round(d$true_exp, 3)),
-                      "Delta method approx"),
-           col = c("#e74c3c", "#9b59b6"),
-           lwd = c(2.5, 2), lty = c(1, 2))
+           legend = c(
+             "Bootstrap histogram",
+             paste0("Bootstrap SE = ", round(d$boot_se, 4)),
+             paste0("BLB SE = ", round(d$blb_se, 4)),
+             expression("True " * beta * " = 0.5")),
+           col = c(adjustcolor("#3498db", 0.6),
+                   "#3498db", "#27ae60", "#e74c3c"),
+           pch = c(15, NA, NA, NA),
+           lwd = c(NA, 2, 2.5, 2),
+           lty = c(NA, 2, 1, 1),
+           pt.cex = 2)
+  })
+
+  output$plot_cost &lt;- renderPlot({
+    d &lt;- sim_results()
+    par(mar = c(5, 5, 4, 2))
+
+    # Show cost comparison across a range of n
+    n_range &lt;- seq(500, 10000, by = 500)
+    boot_costs &lt;- d$B * n_range
+    blb_costs  &lt;- d$S * d$R * round(n_range^(log(d$b) / log(d$n)))
+
+    # Recalculate with same gamma
+    gamma &lt;- log(d$b) / log(d$n)
+    blb_costs &lt;- d$S * d$R * round(n_range^gamma)
+
+    ylim &lt;- c(0, max(boot_costs) * 1.1)
+
+    plot(n_range, boot_costs, type = "l", lwd = 2.5,
+         col = "#3498db",
+         xlab = "Sample size (n)",
+         ylab = "Observation-fits",
+         main = "Computational cost",
+         ylim = ylim)
+    lines(n_range, blb_costs, lwd = 2.5, col = "#27ae60")
+
+    # Mark current n
+    points(d$n, d$boot_cost, pch = 19, cex = 2, col = "#3498db")
+    points(d$n, d$blb_cost, pch = 19, cex = 2, col = "#27ae60")
+
+    # Speedup annotation
+    speedup &lt;- round(d$boot_cost / d$blb_cost)
+    text(d$n, (d$boot_cost + d$blb_cost) / 2,
+         paste0(speedup, "x speedup"),
+         cex = 1.1, font = 2, col = "#e74c3c")
+
+    legend("topleft", bty = "n", cex = 0.9,
+           legend = c(
+             paste0("Bootstrap (B\u00d7n)"),
+             paste0("BLB (S\u00d7R\u00d7b)")),
+           col = c("#3498db", "#27ae60"),
+           lwd = 2.5)
   })
 
   output$results_box &lt;- renderUI({
     d &lt;- sim_results()
 
-    true_sd &lt;- sd(d$exp_betas)
-    avg_delta &lt;- mean(d$delta_ses)
-    avg_boot  &lt;- mean(d$boot_ses)
-
     tags$div(class = "eq-box", style = "margin-top: 16px;",
       HTML(paste0(
-        "&lt;b&gt;SE comparison for e&lt;sup&gt;&amp;beta;&lt;/sup&gt;:&lt;/b&gt;&lt;br&gt;",
-        "True SD (simulation): &lt;span class='coef'&gt;",
-        round(true_sd, 4), "&lt;/span&gt;&lt;br&gt;",
-        "Delta method (avg): &lt;span class='match'&gt;",
-        round(avg_delta, 4), "&lt;/span&gt;&lt;br&gt;",
-        "Bootstrap (avg): &lt;span class='match'&gt;",
-        round(avg_boot, 4), "&lt;/span&gt;&lt;br&gt;",
+        "&lt;b&gt;SE comparison:&lt;/b&gt;&lt;br&gt;",
+        "OLS analytic: ", round(d$ols_se, 4), "&lt;br&gt;",
+        "Bootstrap (B=", d$B, "): &lt;span class='coef'&gt;",
+        round(d$boot_se, 4), "&lt;/span&gt;&lt;br&gt;",
+        "BLB (S=", d$S, ", R=", d$R, "): &lt;span class='match'&gt;",
+        round(d$blb_se, 4), "&lt;/span&gt;&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;small&gt;All three should agree when n is large ",
-        "and &amp;beta; is moderate.&lt;/small&gt;"
+        "&lt;b&gt;Subsample size:&lt;/b&gt; b = n&lt;sup&gt;",
+        round(log(d$b)/log(d$n), 2),
+        "&lt;/sup&gt; = ", d$b, "&lt;br&gt;",
+        "&lt;b&gt;Speedup:&lt;/b&gt; ",
+        round(d$boot_cost / d$blb_cost), "x&lt;br&gt;",
+        "&lt;small&gt;Bootstrap: ",
+        format(d$boot_cost, big.mark = ","),
+        " obs-fits&lt;br&gt;",
+        "BLB: ",
+        format(d$blb_cost, big.mark = ","),
+        " obs-fits&lt;/small&gt;"
       ))
     )
   })
 
-  output$compare_box &lt;- renderUI({
+  output$explain_box &lt;- renderUI({
+    d &lt;- sim_results()
     tags$div(class = "eq-box", style = "margin-top: 8px;",
       HTML(paste0(
-        "&lt;b&gt;Formula check:&lt;/b&gt; SE(e&lt;sup&gt;&amp;beta;&lt;/sup&gt;) &amp;asymp; ",
-        "e&lt;sup&gt;&amp;beta;&lt;/sup&gt; &amp;times; SE(&amp;beta;). ",
-        "The delta method uses a linear approximation at the estimate — ",
-        "it works well when the sampling distribution of &amp;beta; is ",
-        "approximately normal and g is smooth."
+        "&lt;b&gt;Left:&lt;/b&gt; Bootstrap sampling distribution (histogram) with ",
+        "bootstrap SE (blue dashed) and BLB SE (green solid) overlaid as ",
+        "normal densities. They should nearly coincide. ",
+        "&lt;b&gt;Right:&lt;/b&gt; Computational cost as n grows. Bootstrap scales ",
+        "linearly; BLB scales as n&lt;sup&gt;&amp;gamma;&lt;/sup&gt; — the gap widens with ",
+        "larger data."
       ))
     )
   })
@@ -740,39 +828,87 @@ shinyApp(ui, server)</code></pre>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Small <span class="math inline">\(\beta\)</span> (0.1–0.3):</strong> <span class="math inline">\(e^\beta \approx 1 + \beta\)</span>, nearly linear. Delta method is excellent.</li>
-<li><strong>Large <span class="math inline">\(\beta\)</span> (1.5–2.0):</strong> the exponential is more curved. The sampling distribution of <span class="math inline">\(e^{\hat{\beta}}\)</span> becomes right-skewed. Delta method SE is still close but the normal approximation is less accurate.</li>
-<li><strong>Small <span class="math inline">\(n\)</span> (30–50):</strong> bootstrap and delta method may diverge because <span class="math inline">\(\hat{\beta}\)</span> isn’t yet well-approximated by a normal.</li>
-<li><strong>Large <span class="math inline">\(n\)</span> (300+):</strong> all three agree closely.</li>
+<li><strong>Small <span class="math inline">\(n\)</span> (500):</strong> bootstrap and BLB give similar SEs, and the speedup is modest (~5–10x). BLB isn’t worth the complexity here.</li>
+<li><strong>Large <span class="math inline">\(n\)</span> (8,000+):</strong> BLB SE still matches bootstrap, but the cost gap explodes. This is where BLB shines.</li>
+<li><strong><span class="math inline">\(\gamma = 0.5\)</span> (aggressive subsampling):</strong> subsample is very small. BLB SE may be noisier — you’re working with less data per subsample.</li>
+<li><strong><span class="math inline">\(\gamma = 0.9\)</span> (conservative subsampling):</strong> subsample is nearly the full dataset. BLB SE is very stable but the speedup shrinks.</li>
+<li><strong>Increase <span class="math inline">\(S\)</span> (more subsamples):</strong> stabilizes the BLB variance estimate across subsamples. Diminishing returns past ~15–20.</li>
+<li><strong>Increase <span class="math inline">\(R\)</span> (more reweights):</strong> stabilizes within-subsample variance. Cheap since each reweight is on only <span class="math inline">\(b\)</span> observations.</li>
 </ul>
 </section>
 </section>
-<section id="when-the-delta-method-fails" class="level2">
-<h2 class="anchored" data-anchor-id="when-the-delta-method-fails">When the delta method fails</h2>
-<p>The approximation relies on <span class="math inline">\(g'(\theta_0) \neq 0\)</span> and on <span class="math inline">\(\hat{\theta}\)</span> being approximately normal. It breaks down when:</p>
+<section id="when-to-use-blb" class="level2">
+<h2 class="anchored" data-anchor-id="when-to-use-blb">When to use BLB</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Setting</th>
+<th>Bootstrap</th>
+<th>BLB</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(n &lt; 10{,}000\)</span>, fast estimator</td>
+<td>Fine</td>
+<td>Overkill</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(n &gt; 100{,}000\)</span>, any estimator</td>
+<td>Slow</td>
+<td>Use BLB</td>
+</tr>
+<tr class="odd">
+<td>Expensive estimator (kernel, ML, ABM)</td>
+<td>Very slow</td>
+<td>Use BLB</td>
+</tr>
+<tr class="even">
+<td>Distributed computing (data on multiple machines)</td>
+<td>Awkward</td>
+<td>Natural fit — each subsample on one machine</td>
+</tr>
+<tr class="odd">
+<td>Clustered data</td>
+<td>Cluster bootstrap</td>
+<td>BLB with clustered subsampling</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rules of thumb:</strong></p>
 <ul>
-<li><strong><span class="math inline">\(g'(\theta_0) = 0\)</span>:</strong> the linear term vanishes and you need a second-order expansion. Example: <span class="math inline">\(g(\theta) = \theta^2\)</span> at <span class="math inline">\(\theta_0 = 0\)</span>.</li>
-<li><strong>Small samples:</strong> <span class="math inline">\(\hat{\theta}\)</span> isn’t close enough to normal for the Taylor expansion to be accurate.</li>
-<li><strong>Highly nonlinear <span class="math inline">\(g\)</span>:</strong> the curvature of <span class="math inline">\(g\)</span> matters over the range where <span class="math inline">\(\hat{\theta}\)</span> varies. The sampling distribution of <span class="math inline">\(g(\hat{\theta})\)</span> may be skewed even though <span class="math inline">\(\hat{\theta}\)</span> is symmetric.</li>
+<li>Set <span class="math inline">\(\gamma \in [0.6, 0.8]\)</span>. Lower <span class="math inline">\(\gamma\)</span> = more speedup, more noise.</li>
+<li><span class="math inline">\(S = 10\text{–}20\)</span> subsamples is usually enough.</li>
+<li><span class="math inline">\(R = 100\text{–}200\)</span> reweights per subsample.</li>
+<li>The total cost is <span class="math inline">\(S \times R\)</span> fits on <span class="math inline">\(b\)</span> observations — plan accordingly.</li>
 </ul>
-<p>In these cases, use the <a href="bootstrap.html">bootstrap</a> instead.</p>
+</section>
+<section id="blb-for-clustered-data" class="level2">
+<h2 class="anchored" data-anchor-id="blb-for-clustered-data">BLB for clustered data</h2>
+<p>When data has a cluster structure (panels, spatial data), you should <strong>subsample clusters, not observations</strong>. Draw <span class="math inline">\(s\)</span> clusters from the <span class="math inline">\(G\)</span> total clusters, then reweight within them. This preserves the within-cluster correlation structure that <a href="clustered-se.html">clustered SEs</a> are designed to handle.</p>
+<p>This is especially relevant for panel econometrics with large <span class="math inline">\(n\)</span> and expensive estimators — exactly the setting where both clustering and computational constraints bind simultaneously.</p>
 <hr>
 <section id="connections" class="level3">
 <h3 class="anchored" data-anchor-id="connections">Connections</h3>
 <ul>
-<li><a href="maximum-likelihood.html#fisher-information-and-standard-errors">Fisher Information</a> — The delta method starts from the asymptotic normality that Fisher information provides</li>
-<li><a href="bootstrap.html">The Bootstrap</a> — The nonparametric alternative when the delta method’s assumptions fail</li>
-<li><a href="limited-dependent.html">Limited Dependent Variables</a> — Marginal effect SEs in logit/probit require the delta method</li>
+<li><a href="bootstrap.html">The Bootstrap</a> — BLB produces the same answer as the standard bootstrap, just faster</li>
+<li><a href="clustered-se.html">Clustered SEs</a> — BLB can be adapted to preserve cluster structure via clustered subsampling</li>
+<li><a href="monte-carlo.html">Monte Carlo Experiments</a> — BLB is a way to make Monte Carlo-style inference feasible at scale</li>
 </ul>
 <hr>
 </section>
 <section id="did-you-know" class="level3">
 <h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
 <ul>
-<li>The delta method is one of the oldest tools in statistics, going back to <strong>R.A. Fisher</strong> in the 1920s and even earlier to <strong>Friedrich Bessel</strong>. The idea is simple — linearize and propagate — but it appears everywhere.</li>
-<li>In physics, the same technique is called <strong>error propagation</strong> or <strong>propagation of uncertainty</strong>. Every lab course teaches it: if you measure the radius <span class="math inline">\(r\)</span> with uncertainty <span class="math inline">\(\sigma_r\)</span>, the area <span class="math inline">\(\pi r^2\)</span> has uncertainty approximately <span class="math inline">\(2\pi r \cdot \sigma_r\)</span>.</li>
-<li>The “delta” in the name refers to the small perturbation <span class="math inline">\(\delta\theta =
-\hat{\theta} - \theta\)</span> in the Taylor expansion, not to any particular Greek letter in the formula.</li>
+<li><strong>BLB</strong> was introduced by <strong>Kleiner, Talwalkar, Sarkar, and Michael I. Jordan</strong> in 2014 at UC Berkeley. Jordan is one of the most influential figures in both statistics and machine learning — he supervised Andrew Ng and helped develop variational inference, among many other contributions.</li>
+<li>The name “Bag of Little Bootstraps” is a deliberate riff on <strong>bagging</strong> (Bootstrap AGGregatING), Leo Breiman’s 1996 method for reducing variance in prediction. Both use resampling on subsets, but for different purposes: bagging reduces prediction variance, BLB estimates parameter uncertainty.</li>
+<li>BLB is particularly natural for <strong>MapReduce/Spark</strong> distributed computing: each subsample lives on one worker node, reweighting is embarrassingly parallel, and only the variance estimates need to be communicated back. This made it popular at tech companies dealing with massive datasets.</li>
+<li>The subsample size <span class="math inline">\(b = n^\gamma\)</span> is not arbitrary — the theory requires <span class="math inline">\(b \to \infty\)</span> and <span class="math inline">\(b/n \to 0\)</span> for consistency. The power law <span class="math inline">\(n^\gamma\)</span> with <span class="math inline">\(\gamma &lt; 1\)</span> satisfies both conditions and gives a clean cost-accuracy tradeoff.</li>
 </ul>
 
 
