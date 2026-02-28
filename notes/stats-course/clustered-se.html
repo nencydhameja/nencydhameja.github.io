@@ -228,6 +228,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./blb.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bag of Little Bootstraps</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./power.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Power, Alpha, Beta &amp; MDE</span></a>
   </div>
@@ -273,6 +279,12 @@ window.Quarto = {
  <span class="menu-text">Frisch-Waugh-Lovell</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./omitted-variable-bias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Omitted Variable Bias</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -315,6 +327,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./limited-dependent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Limited Dependent Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./gmm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Generalized Method of Moments</span></a>
   </div>
@@ -350,6 +368,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./delta-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Delta Method</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./measurement-error.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Measurement Error</span></a>
   </div>
@@ -358,6 +382,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./bias-variance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Bias-Variance Tradeoff</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./model-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Selection</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -461,6 +491,11 @@ window.Quarto = {
   <li><a href="#simulation-2-rejection-rates" id="toc-simulation-2-rejection-rates" class="nav-link" data-scroll-target="#simulation-2-rejection-rates">Simulation 2: Rejection rates</a>
   <ul class="collapse">
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  </ul></li>
+  <li><a href="#simulation-3-choosing-the-cluster-level" id="toc-simulation-3-choosing-the-cluster-level" class="nav-link" data-scroll-target="#simulation-3-choosing-the-cluster-level">Simulation 3: Choosing the cluster level</a>
+  <ul class="collapse">
+  <li><a href="#things-to-try-1" id="toc-things-to-try-1" class="nav-link" data-scroll-target="#things-to-try-1">Things to try</a></li>
+  <li><a href="#choosing-the-level-in-practice" id="toc-choosing-the-level-in-practice" class="nav-link" data-scroll-target="#choosing-the-level-in-practice">Choosing the level in practice</a></li>
   <li><a href="#code-reference" id="toc-code-reference" class="nav-link" data-scroll-target="#code-reference">Code reference</a></li>
   <li><a href="#the-practical-rule" id="toc-the-practical-rule" class="nav-link" data-scroll-target="#the-practical-rule">The practical rule</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
@@ -875,6 +910,291 @@ shinyApp(ui, server)</code></pre>
 <li><strong>Increase cluster size, hold clusters fixed:</strong> the problem gets <em>worse</em> with more observations per cluster. More correlated data doesn’t help — it just gives you a false sense of precision.</li>
 <li><strong>Increase number of clusters:</strong> this <em>does</em> help. The effective sample size for clustered data is closer to the number of <em>clusters</em> than the number of <em>observations</em>.</li>
 </ul>
+</section>
+</section>
+<section id="simulation-3-choosing-the-cluster-level" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-3-choosing-the-cluster-level">Simulation 3: Choosing the cluster level</h2>
+<p>In hierarchical data — students in classrooms in schools in districts — you have to decide <em>which level</em> to cluster at. The same <span class="math inline">\(\hat{\beta}\)</span> gets different standard errors depending on your choice:</p>
+<ul>
+<li><strong>Too fine</strong> (e.g., classroom when correlation exists at the school level): SEs are too small, you over-reject.</li>
+<li><strong>Too coarse</strong> (e.g., state when you only have 6 states): too few clusters for the asymptotic approximation, SEs may be unreliable.</li>
+<li><strong>The right level:</strong> cluster where treatment is assigned, or at the coarsest level where errors are correlated.</li>
+</ul>
+<p>This simulation generates a four-level hierarchy with variance at each level you control. Watch the <strong>SE staircase</strong>: SEs weakly increase as you cluster coarser, and the jumps tell you where the correlation lives. If SEs barely change going from school to district, there’s little district-level correlation — clustering at school is fine.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 650
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("n_dist3", "Number of districts:",
+                  min = 4, max = 12, value = 8, step = 1),
+
+      helpText("4 schools/district, 4 classrooms/school,
+               8 students/classroom"),
+
+      tags$hr(),
+
+      sliderInput("var_dist", "District variance share:",
+                  min = 0, max = 0.5, value = 0.2, step = 0.05),
+
+      sliderInput("var_school", "School variance share:",
+                  min = 0, max = 0.5, value = 0.15, step = 0.05),
+
+      sliderInput("var_class", "Classroom variance share:",
+                  min = 0, max = 0.5, value = 0.1, step = 0.05),
+
+      uiOutput("var_indiv_text"),
+
+      actionButton("go3", "New draw",
+                   class = "btn-primary", width = "100%"),
+
+      uiOutput("results3")
+    ),
+
+    mainPanel(
+      width = 9,
+      fluidRow(
+        column(6, plotOutput("se_staircase", height = "450px")),
+        column(6, plotOutput("ci_levels", height = "450px"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  # Helper: clustered SE for coefficient on x (index 2)
+  calc_cluster_se &lt;- function(Xmat, r, cluster_id) {
+    n &lt;- nrow(Xmat)
+    k &lt;- ncol(Xmat)
+    bread &lt;- solve(crossprod(Xmat))
+    clusters &lt;- unique(cluster_id)
+    G &lt;- length(clusters)
+    meat &lt;- matrix(0, k, k)
+    for (g in clusters) {
+      idx &lt;- which(cluster_id == g)
+      Xg &lt;- Xmat[idx, , drop = FALSE]
+      rg &lt;- r[idx]
+      score_g &lt;- crossprod(Xg, rg)
+      meat &lt;- meat + tcrossprod(score_g)
+    }
+    adj &lt;- G / (G - 1) * (n - 1) / (n - k)
+    vcov &lt;- adj * bread %*% meat %*% bread
+    sqrt(vcov[2, 2])
+  }
+
+  dat3 &lt;- reactive({
+    input$go3
+    n_dist &lt;- input$n_dist3
+    v_d    &lt;- input$var_dist
+    v_s    &lt;- input$var_school
+    v_c    &lt;- input$var_class
+    v_i    &lt;- max(0.01, 1 - v_d - v_s - v_c)
+
+    # Fixed hierarchy
+    sch_per_dist &lt;- 4
+    cls_per_sch  &lt;- 4
+    stu_per_cls  &lt;- 8
+
+    n_sch &lt;- n_dist * sch_per_dist
+    n_cls &lt;- n_sch * cls_per_sch
+    n_stu &lt;- n_cls * stu_per_cls
+
+    # IDs
+    dist_id  &lt;- rep(1:n_dist,
+                    each = sch_per_dist * cls_per_sch * stu_per_cls)
+    school_id &lt;- rep(1:n_sch,
+                     each = cls_per_sch * stu_per_cls)
+    class_id  &lt;- rep(1:n_cls,
+                     each = stu_per_cls)
+
+    # Random effects
+    d_eff &lt;- rep(rnorm(n_dist, sd = sqrt(v_d)),
+                 each = sch_per_dist * cls_per_sch * stu_per_cls)
+    s_eff &lt;- rep(rnorm(n_sch, sd = sqrt(v_s)),
+                 each = cls_per_sch * stu_per_cls)
+    c_eff &lt;- rep(rnorm(n_cls, sd = sqrt(v_c)),
+                 each = stu_per_cls)
+    i_err &lt;- rnorm(n_stu, sd = sqrt(v_i))
+
+    x &lt;- rnorm(n_stu)
+    y &lt;- 0 * x + d_eff + s_eff + c_eff + i_err
+
+    fit &lt;- lm(y ~ x)
+    b_hat &lt;- coef(fit)[2]
+    r &lt;- resid(fit)
+    Xmat &lt;- cbind(1, x)
+
+    # Robust SE (HC1) — efficient version
+    e2 &lt;- r^2 * n_stu / (n_stu - 2)
+    bread &lt;- solve(crossprod(Xmat))
+    meat_hc &lt;- crossprod(Xmat * sqrt(e2))
+    robust_se &lt;- sqrt((bread %*% meat_hc %*% bread)[2, 2])
+
+    # Clustered SEs at each level
+    class_se  &lt;- calc_cluster_se(Xmat, r, class_id)
+    school_se &lt;- calc_cluster_se(Xmat, r, school_id)
+    dist_se   &lt;- calc_cluster_se(Xmat, r, dist_id)
+
+    ses &lt;- c(robust_se, class_se, school_se, dist_se)
+    n_clusters &lt;- c(n_stu, n_cls, n_sch, n_dist)
+    labels &lt;- c("Robust\n(individual)",
+                paste0("Classroom\n(G=", n_cls, ")"),
+                paste0("School\n(G=", n_sch, ")"),
+                paste0("District\n(G=", n_dist, ")"))
+
+    list(b_hat = b_hat, ses = ses,
+         n_clusters = n_clusters, labels = labels)
+  })
+
+  output$var_indiv_text &lt;- renderUI({
+    v_i &lt;- max(0, 1 - input$var_dist -
+               input$var_school - input$var_class)
+    col &lt;- if (v_i &lt; 0.05) "color: #e74c3c;" else ""
+    tags$p(style = paste0("font-size: 13px; ", col),
+      HTML(paste0("&lt;b&gt;Individual share:&lt;/b&gt; ",
+                  round(v_i, 2))))
+  })
+
+  output$se_staircase &lt;- renderPlot({
+    d &lt;- dat3()
+    par(mar = c(5, 9, 3, 2))
+
+    cols &lt;- c("#e74c3c", "#e67e22", "#3498db", "#27ae60")
+    ses &lt;- d$ses
+
+    bp &lt;- barplot(ses, names.arg = d$labels,
+                  horiz = TRUE, col = cols, border = NA,
+                  las = 1, cex.names = 0.8,
+                  xlab = expression("SE(" * hat(beta) * ")"),
+                  main = "SE at each clustering level",
+                  xlim = c(0, max(ses) * 1.5))
+
+    # Label: value and ratio vs robust
+    text(ses + max(ses) * 0.03, bp,
+         paste0(format(round(ses, 4), nsmall = 4),
+                "  (", round(ses / ses[1], 1), "x)"),
+         adj = 0, cex = 0.85)
+  })
+
+  output$ci_levels &lt;- renderPlot({
+    d &lt;- dat3()
+    par(mar = c(5, 9, 3, 2))
+
+    ses &lt;- d$ses
+    b   &lt;- d$b_hat
+    lo  &lt;- b - 1.96 * ses
+    hi  &lt;- b + 1.96 * ses
+    cols &lt;- c("#e74c3c", "#e67e22", "#3498db", "#27ae60")
+
+    xlim &lt;- c(min(lo, 0) - abs(min(lo, 0)) * 0.3,
+              max(hi, 0) + abs(max(hi, 0)) * 0.3)
+
+    plot(NULL, xlim = xlim, ylim = c(0.5, 4.5),
+         yaxt = "n", ylab = "",
+         xlab = expression(hat(beta)),
+         main = expression(
+           "95% CI at each level (true " * beta * " = 0)"))
+    axis(2, at = 1:4, labels = d$labels,
+         las = 1, cex.axis = 0.8)
+
+    for (i in 1:4) {
+      segments(lo[i], i, hi[i], i,
+               lwd = 5, col = cols[i])
+      points(b, i, pch = 19, cex = 1.5, col = cols[i])
+    }
+
+    abline(v = 0, lty = 2, lwd = 2, col = "#2c3e50")
+  })
+
+  output$results3 &lt;- renderUI({
+    d &lt;- dat3()
+    ses &lt;- d$ses
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;SE staircase:&lt;/b&gt;&lt;br&gt;",
+        "Robust: ", round(ses[1], 4), "&lt;br&gt;",
+        "Classroom: ", round(ses[2], 4),
+        " (&lt;b&gt;", round(ses[2]/ses[1], 1), "x&lt;/b&gt;)&lt;br&gt;",
+        "School: ", round(ses[3], 4),
+        " (&lt;b&gt;", round(ses[3]/ses[1], 1), "x&lt;/b&gt;)&lt;br&gt;",
+        "District: ", round(ses[4], 4),
+        " (&lt;b&gt;", round(ses[4]/ses[1], 1), "x&lt;/b&gt;)&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;small&gt;Ratios are vs robust SE.&lt;br&gt;",
+        "Big jump = correlation at that level.&lt;/small&gt;"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<section id="things-to-try-1" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try-1">Things to try</h3>
+<ul>
+<li><strong>All variance at district level (0.5, 0, 0):</strong> huge jump from robust to district. Clustering at classroom or school barely helps — the correlation lives at the top.</li>
+<li><strong>All variance at classroom level (0, 0, 0.5):</strong> the jump happens from robust to classroom. School and district clustering add almost nothing beyond classroom, because there’s no correlation <em>between</em> classrooms.</li>
+<li><strong>Equal shares (0.15, 0.15, 0.15):</strong> a gradual staircase — each level adds some.</li>
+<li><strong>Zero variance at all levels (0, 0, 0):</strong> no hierarchy at all. All four SEs are essentially the same. Robust is fine.</li>
+<li><strong>Few districts (4):</strong> even with the “right” SE, only 4 clusters is dangerously few for asymptotic clustered SEs. Consider the wild cluster bootstrap.</li>
+</ul>
+</section>
+<section id="choosing-the-level-in-practice" class="level3">
+<h3 class="anchored" data-anchor-id="choosing-the-level-in-practice">Choosing the level in practice</h3>
+<p>The staircase gives you a diagnostic: <strong>where the SE jumps is where the correlation lives.</strong> Apply this to your research design:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>If your design looks like…</th>
+<th>Cluster at…</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Students randomized within schools</td>
+<td>School</td>
+<td>Treatment assigned at school level</td>
+</tr>
+<tr class="even">
+<td>Policy varies by state, data is individual</td>
+<td>State</td>
+<td>Treatment assigned at state level</td>
+</tr>
+<tr class="odd">
+<td>Tracts in counties, treatment is tract-level exposure</td>
+<td>County</td>
+<td>Spatial correlation in outcomes across tracts in same county</td>
+</tr>
+<tr class="even">
+<td>Panel data, units observed over time</td>
+<td>Unit</td>
+<td>Serial correlation within unit</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The key rule:</strong> you can never go wrong clustering <em>coarser</em> (SEs only get bigger), but you can go wrong clustering too <em>fine</em>. The risk of coarse clustering is having too few clusters — below ~30, use the wild cluster bootstrap.</p>
 </section>
 <section id="code-reference" class="level3">
 <h3 class="anchored" data-anchor-id="code-reference">Code reference</h3>

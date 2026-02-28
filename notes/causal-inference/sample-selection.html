@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>About – Foundations of Statistical Inference</title>
+<title>Sample Selection &amp; Heckman Correction – Applied Causal Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -41,6 +41,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -69,6 +74,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -82,9 +116,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
-      Foundations of Statistical Inference
-      </li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Methods</a></li><li class="breadcrumb-item"><a href="./sample-selection.html">Sample Selection &amp; Heckman</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -99,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Foundations of Statistical Inference</a> 
+      <a href="./">Applied Causal Inference</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -118,7 +150,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Probability &amp; Uncertainty</span></a>
+ <span class="menu-text">Framework</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -126,20 +158,20 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./foundations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Foundations</span></a>
+  <a href="./potential-outcomes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Potential Outcomes &amp; ATE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./variance-sd-se.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Variance, SD &amp; Standard Error</span></a>
+  <a href="./identification-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Identification vs Estimation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sampling-distribution.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Sampling Distribution</span></a>
+  <a href="./when-ml-helps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">When ML Helps and When It Doesn’t</span></a>
   </div>
 </li>
       </ul>
@@ -147,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">The Central Limit Theorem</span></a>
+ <span class="menu-text">Methods</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -155,14 +187,38 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./simulations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CLT Simulator</span></a>
+  <a href="./selection-observables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Selection on Observables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lln.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">LLN vs CLT</span></a>
+  <a href="./did.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Difference-in-Differences</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./iv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Instrumental Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rdd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regression Discontinuity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./synth.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Synthetic Control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sample-selection.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Sample Selection &amp; Heckman</span></a>
   </div>
 </li>
       </ul>
@@ -170,7 +226,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Inference</span></a>
+ <span class="menu-text">Panel Data</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -178,44 +234,8 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pvalues-ci.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">p-values &amp; Confidence Intervals</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./test-statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Test Statistics</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Bootstrap</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./blb.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bag of Little Bootstraps</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./power.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Power, Alpha, Beta &amp; MDE</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./monte-carlo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Monte Carlo Experiments</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./multiple-testing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Multiple Testing</span></a>
+  <a href="./panel-fe-re.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fixed vs Random Effects</span></a>
   </div>
 </li>
       </ul>
@@ -223,7 +243,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Regression</span></a>
+ <span class="menu-text">Estimation Tools</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -231,26 +251,38 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cef.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Regression &amp; the CEF</span></a>
+  <a href="./regression-adjustment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regression Adjustment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./residuals.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Residuals &amp; Controls</span></a>
+  <a href="./ipw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">IPW</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fwl.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Frisch-Waugh-Lovell</span></a>
+  <a href="./matching.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Matching</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./omitted-variable-bias.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Omitted Variable Bias</span></a>
+  <a href="./entropy-balancing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entropy Balancing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./doubly-robust.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Doubly Robust</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./double-debiased-ml.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Double/Debiased ML</span></a>
   </div>
 </li>
       </ul>
@@ -258,7 +290,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Algebra of Regression</span></a>
+ <span class="menu-text">Beyond Averages</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -266,177 +298,14 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./regression-algebra.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Algebra Behind OLS</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Estimation</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./method-of-moments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Method of Moments</span></a>
+  <a href="./heterogeneous-effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Heterogeneous Treatment Effects</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./maximum-likelihood.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Maximum Likelihood</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./limited-dependent.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Limited Dependent Variables</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./gmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Generalized Method of Moments</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./bayesian-estimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bayesian Estimation</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">Standard Errors &amp; Diagnostics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./heteroskedasticity.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Heteroskedasticity</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./clustered-se.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Clustered SEs</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./delta-method.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Delta Method</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./measurement-error.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Measurement Error</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./bias-variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bias-Variance Tradeoff</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./model-selection.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Model Selection</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./degeneracy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">When Inference Breaks Down</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text">Causal Thinking</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./correlation-causation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">From Correlation to Causation</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
- <span class="menu-text">Bayesian Thinking</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./bayesian-updating.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bayesian Updating</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">Statistical Foundations of AI</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./training-as-mle.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Training as Maximum Likelihood</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./regularization-priors.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Regularization as Bayesian Inference</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./prediction-vs-causation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Prediction vs Causation in Foundation Models</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./experimental-design-ai.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Experimental Design for AI Systems</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./calibration-uncertainty.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Calibration &amp; Uncertainty Quantification</span></a>
+  <a href="./causal-forests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estimating Heterogeneous Effects</span></a>
   </div>
 </li>
       </ul>
@@ -446,20 +315,36 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem">The problem</a></li>
+  <li><a href="#the-heckman-model" id="toc-the-heckman-model" class="nav-link" data-scroll-target="#the-heckman-model">The Heckman model</a></li>
+  <li><a href="#two-step-correction" id="toc-two-step-correction" class="nav-link" data-scroll-target="#two-step-correction">Two-step correction</a></li>
+  <li><a href="#the-exclusion-restriction" id="toc-the-exclusion-restriction" class="nav-link" data-scroll-target="#the-exclusion-restriction">The exclusion restriction</a></li>
+  <li><a href="#simulation" id="toc-simulation" class="nav-link" data-scroll-target="#simulation">Simulation</a>
+  <ul class="collapse">
+  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
+  <li><a href="#connections" id="toc-connections" class="nav-link" data-scroll-target="#connections">Connections</a></li>
+  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page-right" id="quarto-document-content">
+<main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./selection-observables.html">Methods</a></li><li class="breadcrumb-item"><a href="./sample-selection.html">Sample Selection &amp; Heckman</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">About</h1>
+<h1 class="title">Sample Selection &amp; Heckman Correction</h1>
 </div>
 
 
 
-<div class="quarto-title-meta column-page-right">
+<div class="quarto-title-meta column-body">
 
     
   
@@ -471,9 +356,283 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>About this site</p>
+<section id="the-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem">The problem</h2>
+<p>Sometimes the outcome you want to study is <strong>only observed for a non-random subset</strong> of the population:</p>
+<ul>
+<li><strong>Wages</strong> are only observed for people who work. If people with low potential wages choose not to work, OLS on workers overestimates the average wage.</li>
+<li><strong>Test scores</strong> are only observed for students who stay enrolled. If struggling students drop out, average scores look artificially high.</li>
+<li><strong>Stock returns</strong> are only observed for companies that survive (survivorship bias).</li>
+</ul>
+<p>When <strong>selection into the sample correlates with the outcome</strong>, estimates on the selected subsample are biased. This isn’t a standard omitted variable — the problem is that your sample itself is non-random.</p>
+</section>
+<section id="the-heckman-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-heckman-model">The Heckman model</h2>
+<p><strong>James Heckman</strong> (Nobel 2000) formalized this as a two-equation system:</p>
+<p><strong>Selection equation</strong> (who is observed): <span class="math display">\[S_i^* = Z_i'\gamma + u_i, \qquad S_i = \mathbf{1}(S_i^* &gt; 0)\]</span></p>
+<p><strong>Outcome equation</strong> (what we want to estimate): <span class="math display">\[Y_i = X_i'\beta + \varepsilon_i, \qquad \text{observed only if } S_i = 1\]</span></p>
+<p>If the errors <span class="math inline">\((u_i, \varepsilon_i)\)</span> are correlated — i.e., the unobservables that drive selection also affect the outcome — then <span class="math inline">\(E[\varepsilon_i \mid S_i = 1] \neq 0\)</span>, and OLS on the selected sample is biased.</p>
+</section>
+<section id="two-step-correction" class="level2">
+<h2 class="anchored" data-anchor-id="two-step-correction">Two-step correction</h2>
+<p><strong>Step 1: Probit.</strong> Estimate the selection equation by probit to get <span class="math inline">\(\hat{\gamma}\)</span>. Compute the <strong>inverse Mills ratio</strong> for each observation:</p>
+<p><span class="math display">\[\hat{\lambda}_i = \frac{\phi(Z_i'\hat{\gamma})}{\Phi(Z_i'\hat{\gamma})}\]</span></p>
+<p>where <span class="math inline">\(\phi\)</span> is the normal density and <span class="math inline">\(\Phi\)</span> is the normal CDF. The Mills ratio captures the expected value of the truncated error — how “surprising” it is that observation <span class="math inline">\(i\)</span> was selected.</p>
+<p><strong>Step 2: OLS with correction.</strong> Include <span class="math inline">\(\hat{\lambda}_i\)</span> in the outcome regression:</p>
+<p><span class="math display">\[Y_i = X_i'\beta + \rho\sigma_\varepsilon \hat{\lambda}_i + \eta_i\]</span></p>
+<p>The coefficient on the Mills ratio estimates the selection bias <span class="math inline">\(\rho\sigma_\varepsilon\)</span>. If it’s significantly different from zero, selection bias is present.</p>
+</section>
+<section id="the-exclusion-restriction" class="level2">
+<h2 class="anchored" data-anchor-id="the-exclusion-restriction">The exclusion restriction</h2>
+<p>For the model to be well-identified, you need at least one variable in <span class="math inline">\(Z\)</span> (selection equation) that is <strong>not in <span class="math inline">\(X\)</span></strong> (outcome equation) — a variable that affects whether you’re observed but not the outcome itself.</p>
+<p>This is conceptually identical to the <a href="iv.html">exclusion restriction in IV</a>. Without it, identification relies solely on the nonlinearity of the probit — which is fragile.</p>
+<p><strong>Good examples:</strong> distance to a job center (affects employment but not wages directly), having young children (affects labor force participation), draft lottery number.</p>
+<p><strong>Bad examples:</strong> variables that directly affect both selection and the outcome.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>The Oracle View.</strong> In the simulation below, we observe the full population — including those who are “selected out.” This lets us compare: (1) OLS on everyone (the truth we can’t normally see), (2) OLS on the selected sample (biased), and (3) Heckman-corrected estimates. In practice, you only see the selected sample.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="simulation" class="level2">
+<h2 class="anchored" data-anchor-id="simulation">Simulation</h2>
+<p>Wages are observed only for workers. Selection into work correlates with unobserved ability (which also affects wages). Compare OLS on selected sample (biased) vs Heckman correction vs the population truth.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 750
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .eq-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-bottom: 14px; font-size: 14px; line-height: 1.9;
+    }
+    .eq-box b { color: #2c3e50; }
+    .match  { color: #27ae60; font-weight: bold; }
+    .coef   { color: #e74c3c; font-weight: bold; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 4,
+
+      sliderInput("n", "Population size:",
+                  min = 500, max = 3000, value = 1000, step = 250),
+
+      sliderInput("rho", HTML("Error correlation (&amp;rho;):"),
+                  min = -0.9, max = 0.9, value = 0.6, step = 0.1),
+
+      sliderInput("gamma_z", "Selection instrument strength:",
+                  min = 0.5, max = 3, value = 1.5, step = 0.25),
+
+      sliderInput("beta", HTML("True return to education (&amp;beta;):"),
+                  min = 0.5, max = 3, value = 1, step = 0.25),
+
+      actionButton("resim", "New draw", class = "btn-primary", width = "100%"),
+
+      uiOutput("results_box")
+    ),
+
+    mainPanel(
+      width = 8,
+      plotOutput("main_plot", height = "450px"),
+      uiOutput("explain_box")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  dat &lt;- reactive({
+    input$resim
+    n       &lt;- input$n
+    rho     &lt;- input$rho
+    gamma_z &lt;- input$gamma_z
+    beta    &lt;- input$beta
+
+    # Education (observed)
+    educ &lt;- rnorm(n, mean = 12, sd = 3)
+
+    # Exclusion restriction: distance to job center
+    # Affects selection but not wages
+    distance &lt;- rnorm(n)
+
+    # Correlated errors
+    e1 &lt;- rnorm(n)
+    e2 &lt;- rnorm(n)
+    u   &lt;- e1  # selection error
+    eps &lt;- rho * e1 + sqrt(1 - rho^2) * e2  # outcome error
+
+    # Latent selection
+    s_star &lt;- 0.5 + 0.3 * educ - gamma_z * distance + u
+    selected &lt;- s_star &gt; 0
+
+    # Wages (latent for everyone)
+    wage &lt;- 5 + beta * educ + 2 * eps
+
+    # Observed wages
+    wage_obs &lt;- ifelse(selected, wage, NA)
+
+    # OLS on full population (oracle)
+    ols_full &lt;- lm(wage ~ educ)
+
+    # OLS on selected sample (biased)
+    ols_sel &lt;- lm(wage[selected] ~ educ[selected])
+
+    # Heckman two-step
+    # Step 1: probit for selection
+    probit_fit &lt;- glm(selected ~ educ + distance,
+                      family = binomial(link = "probit"))
+    # Inverse Mills ratio for selected observations
+    xg &lt;- predict(probit_fit, type = "link")
+    mills &lt;- dnorm(xg) / pnorm(xg)
+    mills_sel &lt;- mills[selected]
+
+    # Step 2: OLS with Mills ratio
+    heckman_fit &lt;- lm(wage[selected] ~ educ[selected] + mills_sel)
+
+    # Prediction grids
+    educ_grid &lt;- seq(min(educ), max(educ), length.out = 100)
+
+    pred_full &lt;- coef(ols_full)[1] + coef(ols_full)[2] * educ_grid
+    pred_sel  &lt;- coef(ols_sel)[1] + coef(ols_sel)[2] * educ_grid
+    pred_heck &lt;- coef(heckman_fit)[1] + coef(heckman_fit)[2] * educ_grid
+
+    list(educ = educ, wage = wage, selected = selected,
+         educ_grid = educ_grid,
+         pred_full = pred_full, pred_sel = pred_sel,
+         pred_heck = pred_heck,
+         coef_full = coef(ols_full),
+         coef_sel = coef(ols_sel),
+         coef_heck = coef(heckman_fit),
+         pct_selected = round(100 * mean(selected), 1),
+         beta = beta, rho = rho)
+  })
+
+  output$main_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(5, 5, 4, 2))
+
+    # Plot unselected (faded)
+    plot(d$educ[!d$selected], d$wage[!d$selected],
+         pch = 16, col = adjustcolor("#e74c3c", 0.15), cex = 0.5,
+         xlab = "Education (years)", ylab = "Wage",
+         main = "Sample Selection Bias",
+         xlim = range(d$educ),
+         ylim = quantile(d$wage, c(0.01, 0.99)))
+
+    # Plot selected
+    points(d$educ[d$selected], d$wage[d$selected],
+           pch = 16, col = adjustcolor("#3498db", 0.25), cex = 0.5)
+
+    # Regression lines
+    lines(d$educ_grid, d$pred_full, col = "#2c3e50", lwd = 2.5, lty = 2)
+    lines(d$educ_grid, d$pred_sel, col = "#e74c3c", lwd = 2.5)
+    lines(d$educ_grid, d$pred_heck, col = "#27ae60", lwd = 2.5)
+
+    legend("topleft", bty = "n", cex = 0.85,
+           legend = c(
+             "Not selected (unobserved)",
+             "Selected (observed)",
+             paste0("OLS on all (true, slope=",
+                    round(d$coef_full[2], 2), ")"),
+             paste0("OLS on selected (biased, slope=",
+                    round(d$coef_sel[2], 2), ")"),
+             paste0("Heckman corrected (slope=",
+                    round(d$coef_heck[2], 2), ")")
+           ),
+           col = c(adjustcolor("#e74c3c", 0.3),
+                   adjustcolor("#3498db", 0.5),
+                   "#2c3e50", "#e74c3c", "#27ae60"),
+           pch = c(16, 16, NA, NA, NA),
+           lwd = c(NA, NA, 2.5, 2.5, 2.5),
+           lty = c(NA, NA, 2, 1, 1))
+  })
+
+  output$results_box &lt;- renderUI({
+    d &lt;- dat()
+
+    mills_coef &lt;- round(d$coef_heck[3], 3)
+    bias_sign &lt;- if (d$rho &gt; 0) "upward" else if (d$rho &lt; 0) "downward" else "none"
+
+    tags$div(class = "eq-box", style = "margin-top: 16px;",
+      HTML(paste0(
+        "&lt;b&gt;True &amp;beta;:&lt;/b&gt; ", d$beta, "&lt;br&gt;",
+        "&lt;b&gt;OLS (full population):&lt;/b&gt; ", round(d$coef_full[2], 3), "&lt;br&gt;",
+        "&lt;b&gt;OLS (selected only):&lt;/b&gt; &lt;span class='coef'&gt;",
+        round(d$coef_sel[2], 3), "&lt;/span&gt;&lt;br&gt;",
+        "&lt;b&gt;Heckman corrected:&lt;/b&gt; &lt;span class='match'&gt;",
+        round(d$coef_heck[2], 3), "&lt;/span&gt;&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;Mills ratio coef:&lt;/b&gt; ", mills_coef, "&lt;br&gt;",
+        "&lt;b&gt;Selected:&lt;/b&gt; ", d$pct_selected, "% of population&lt;br&gt;",
+        "&lt;small&gt;Selection bias direction: ", bias_sign, "&lt;/small&gt;"
+      ))
+    )
+  })
+
+  output$explain_box &lt;- renderUI({
+    d &lt;- dat()
+    tags$div(class = "eq-box", style = "margin-top: 8px;",
+      HTML(paste0(
+        "&lt;b&gt;Faded red dots&lt;/b&gt; = people not in the sample (would be invisible in practice). ",
+        "&lt;b&gt;Blue dots&lt;/b&gt; = observed sample. ",
+        "When &amp;rho; &gt; 0, people who select in tend to have positive unobservable shocks ",
+        "(higher ability), biasing the wage regression &lt;b&gt;upward&lt;/b&gt;. ",
+        "The Heckman correction (green) recovers the population slope."
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<section id="things-to-try" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<ul>
+<li><strong><span class="math inline">\(\rho = 0\)</span>:</strong> no correlation between selection and outcome errors. OLS on the selected sample is unbiased — no correction needed.</li>
+<li><strong><span class="math inline">\(\rho = 0.6\)</span>:</strong> strong positive selection. Workers have higher unobserved ability than non-workers. The naive slope is biased upward. Heckman pulls it back.</li>
+<li><strong><span class="math inline">\(\rho = -0.5\)</span>:</strong> negative selection (e.g., people with high outside options don’t work). The naive slope is biased downward.</li>
+<li><strong>Weak instrument (<span class="math inline">\(\gamma_z = 0.5\)</span>):</strong> the exclusion restriction is weak. Heckman correction becomes unstable.</li>
+<li><strong>Large <span class="math inline">\(n\)</span> (2000+):</strong> the Heckman-corrected estimate tightens around the true value.</li>
+</ul>
+</section>
+<section id="the-bottom-line" class="level3">
+<h3 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h3>
+<ul>
+<li>Sample selection bias arises when <strong>who you observe</strong> is correlated with <strong>what you’re measuring</strong>. It’s a form of endogeneity.</li>
+<li>The Heckman correction models selection explicitly using a probit and corrects the outcome equation with the inverse Mills ratio.</li>
+<li>Like IV, the method requires an <strong>exclusion restriction</strong> — a variable that shifts selection without directly affecting the outcome. Without it, identification is fragile.</li>
+<li>The coefficient on the Mills ratio tells you whether (and how much) selection bias exists.</li>
+</ul>
+<hr>
+</section>
+<section id="connections" class="level3">
+<h3 class="anchored" data-anchor-id="connections">Connections</h3>
+<ul>
+<li><a href="selection-observables.html">Selection on Observables</a> — When selection depends on <em>observables</em>, you can condition on them directly. Heckman is for when selection depends on <em>unobservables</em>.</li>
+<li><a href="iv.html">Instrumental Variables</a> — The exclusion restriction in Heckman is conceptually identical to the IV exclusion restriction.</li>
+<li><a href="../stats-course/limited-dependent.html">Limited Dependent Variables</a> — The selection equation is a probit; the Tobit model is a special case where selection is mechanical.</li>
+</ul>
+<hr>
+</section>
+<section id="did-you-know" class="level3">
+<h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
+<ul>
+<li><strong>James Heckman</strong> shared the 2000 Nobel Prize in Economics for developing methods to deal with sample selection bias. His 1979 paper “Sample Selection Bias as a Specification Error” is one of the most cited papers in economics.</li>
+<li>The <strong>inverse Mills ratio</strong> is named after <strong>John P. Mills</strong>, who tabulated the ratio of the normal density to the survival function in the 1920s. It shows up in any problem involving truncated normal distributions.</li>
+<li>Heckman’s original application was to <strong>female labor supply</strong>. He asked: what is the wage offer for women who choose not to work? Since we never observe their wages, naive estimation on working women overstates the average wage offer.</li>
+<li>The two-step estimator is consistent but inefficient. Full maximum likelihood estimation of both equations jointly is more efficient but computationally harder. In practice, the two-step version dominates because it’s simpler and robust enough.</li>
+</ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
