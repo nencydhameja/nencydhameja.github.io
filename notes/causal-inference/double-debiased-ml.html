@@ -331,6 +331,12 @@ window.Quarto = {
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
   <li><a href="#what-dml-assumes" id="toc-what-dml-assumes" class="nav-link" data-scroll-target="#what-dml-assumes">What DML assumes</a></li>
+  <li><a href="#continuous-treatment-and-heterogeneous-effects" id="toc-continuous-treatment-and-heterogeneous-effects" class="nav-link" data-scroll-target="#continuous-treatment-and-heterogeneous-effects">Continuous treatment and heterogeneous effects</a>
+  <ul class="collapse">
+  <li><a href="#continuous-treatment" id="toc-continuous-treatment" class="nav-link" data-scroll-target="#continuous-treatment">Continuous treatment</a></li>
+  <li><a href="#conditional-average-treatment-effects-cate" id="toc-conditional-average-treatment-effects-cate" class="nav-link" data-scroll-target="#conditional-average-treatment-effects-cate">Conditional average treatment effects (CATE)</a></li>
+  <li><a href="#when-to-use-this" id="toc-when-to-use-this" class="nav-link" data-scroll-target="#when-to-use-this">When to use this</a></li>
+  </ul></li>
   <li><a href="#connecting-to-the-course" id="toc-connecting-to-the-course" class="nav-link" data-scroll-target="#connecting-to-the-course">Connecting to the course</a></li>
   </ul>
 </nav>
@@ -628,6 +634,67 @@ shinyApp(ui, server)</code></pre>
 </div>
 </div>
 </div>
+</section>
+<section id="continuous-treatment-and-heterogeneous-effects" class="level2">
+<h2 class="anchored" data-anchor-id="continuous-treatment-and-heterogeneous-effects">Continuous treatment and heterogeneous effects</h2>
+<p>Everything above assumes a <strong>binary</strong> treatment <span class="math inline">\(D \in \{0,1\}\)</span> and estimates a single <strong>average</strong> effect <span class="math inline">\(\tau\)</span>. But DML extends naturally to two important generalizations.</p>
+<section id="continuous-treatment" class="level3">
+<h3 class="anchored" data-anchor-id="continuous-treatment">Continuous treatment</h3>
+<p>When treatment is a <strong>dose</strong> rather than a switch — dollar store exposure within a radius, pollution concentration, hours of tutoring — the partially linear model already handles it:</p>
+<p><span class="math display">\[Y_i = \tau D_i + g(X_i) + \varepsilon_i\]</span></p>
+<p>Here <span class="math inline">\(D_i\)</span> is continuous and <span class="math inline">\(\tau\)</span> is the marginal effect of a one-unit increase in <span class="math inline">\(D\)</span>. The DML recipe is identical: residualize <span class="math inline">\(Y\)</span> and <span class="math inline">\(D\)</span> on <span class="math inline">\(X\)</span> via cross-fitting, then regress <span class="math inline">\(\tilde{Y}\)</span> on <span class="math inline">\(\tilde{D}\)</span>. No propensity score is needed — you estimate <span class="math inline">\(E[D \mid X]\)</span> (the conditional mean of treatment) and <span class="math inline">\(E[Y \mid X]\)</span> as the two nuisance functions.</p>
+<p>The orthogonalization ensures <span class="math inline">\(\sqrt{n}\)</span>-consistency of <span class="math inline">\(\hat{\tau}\)</span> even when the nuisance models converge at slower nonparametric rates — this is the same guarantee as in the binary case.</p>
+</section>
+<section id="conditional-average-treatment-effects-cate" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-average-treatment-effects-cate">Conditional average treatment effects (CATE)</h3>
+<p>To go from a single <span class="math inline">\(\tau\)</span> to a <strong>function</strong> <span class="math inline">\(\tau(x)\)</span> — how the effect varies across individuals — DML combines with <a href="causal-forests.html">causal forests</a> or other CATE estimators. The idea:</p>
+<ol type="1">
+<li><strong>Residualize</strong> <span class="math inline">\(Y\)</span> and <span class="math inline">\(D\)</span> on <span class="math inline">\(X\)</span> via cross-fitting (the DML step)</li>
+<li><strong>Estimate heterogeneity</strong> in <span class="math inline">\(\tilde{Y} = \tau(X)\tilde{D} + \eta\)</span> using a causal forest or kernel method on the residualized data</li>
+</ol>
+<p>This is called the <strong>R-learner</strong> (Nie &amp; Wager, 2021). It solves the loss:</p>
+<p><span class="math display">\[\hat{\tau}(x) = \arg\min_{\tau} \sum_{i=1}^{n} \left(\tilde{Y}_i - \tau(X_i)\tilde{D}_i\right)^2\]</span></p>
+<p>The residualization removes confounding; the second stage finds heterogeneity. This works for both binary and continuous treatments — with continuous <span class="math inline">\(D\)</span>, <span class="math inline">\(\tau(x)\)</span> is the heterogeneous marginal effect, not a binary treatment/control comparison.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Why orthogonalize first?</strong> Without residualization, a CATE estimator conflates two sources of variation: (1) differences in treatment effects across <span class="math inline">\(X\)</span> and (2) differences in confounding across <span class="math inline">\(X\)</span>. By partialling out the nuisance via DML, the second stage <em>only</em> sees treatment effect heterogeneity. The <span class="math inline">\(\sqrt{n}\)</span>-consistency of the average effect carries over, and the CATE estimates inherit the robustness to nuisance estimation errors.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="when-to-use-this" class="level3">
+<h3 class="anchored" data-anchor-id="when-to-use-this">When to use this</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Setting</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Binary <span class="math inline">\(D\)</span>, want ATE</td>
+<td>Standard DML (this page)</td>
+</tr>
+<tr class="even">
+<td>Binary <span class="math inline">\(D\)</span>, want <span class="math inline">\(\tau(x)\)</span></td>
+<td>DML + <a href="causal-forests.html">causal forest</a> (R-learner)</td>
+</tr>
+<tr class="odd">
+<td>Continuous <span class="math inline">\(D\)</span>, want average marginal effect</td>
+<td>Partially linear model with DML</td>
+</tr>
+<tr class="even">
+<td>Continuous <span class="math inline">\(D\)</span>, want <span class="math inline">\(\tau(x)\)</span></td>
+<td>R-learner with continuous <span class="math inline">\(D\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="connecting-to-the-course" class="level2">
 <h2 class="anchored" data-anchor-id="connecting-to-the-course">Connecting to the course</h2>

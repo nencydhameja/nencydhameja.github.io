@@ -1017,6 +1017,17 @@
     ]
   },
   {
+    "objectID": "double-debiased-ml.html#continuous-treatment-and-heterogeneous-effects",
+    "href": "double-debiased-ml.html#continuous-treatment-and-heterogeneous-effects",
+    "title": "Double/Debiased Machine Learning",
+    "section": "Continuous treatment and heterogeneous effects",
+    "text": "Continuous treatment and heterogeneous effects\nEverything above assumes a binary treatment \\(D \\in \\{0,1\\}\\) and estimates a single average effect \\(\\tau\\). But DML extends naturally to two important generalizations.\n\nContinuous treatment\nWhen treatment is a dose rather than a switch — dollar store exposure within a radius, pollution concentration, hours of tutoring — the partially linear model already handles it:\n\\[Y_i = \\tau D_i + g(X_i) + \\varepsilon_i\\]\nHere \\(D_i\\) is continuous and \\(\\tau\\) is the marginal effect of a one-unit increase in \\(D\\). The DML recipe is identical: residualize \\(Y\\) and \\(D\\) on \\(X\\) via cross-fitting, then regress \\(\\tilde{Y}\\) on \\(\\tilde{D}\\). No propensity score is needed — you estimate \\(E[D \\mid X]\\) (the conditional mean of treatment) and \\(E[Y \\mid X]\\) as the two nuisance functions.\nThe orthogonalization ensures \\(\\sqrt{n}\\)-consistency of \\(\\hat{\\tau}\\) even when the nuisance models converge at slower nonparametric rates — this is the same guarantee as in the binary case.\n\n\nConditional average treatment effects (CATE)\nTo go from a single \\(\\tau\\) to a function \\(\\tau(x)\\) — how the effect varies across individuals — DML combines with causal forests or other CATE estimators. The idea:\n\nResidualize \\(Y\\) and \\(D\\) on \\(X\\) via cross-fitting (the DML step)\nEstimate heterogeneity in \\(\\tilde{Y} = \\tau(X)\\tilde{D} + \\eta\\) using a causal forest or kernel method on the residualized data\n\nThis is called the R-learner (Nie & Wager, 2021). It solves the loss:\n\\[\\hat{\\tau}(x) = \\arg\\min_{\\tau} \\sum_{i=1}^{n} \\left(\\tilde{Y}_i - \\tau(X_i)\\tilde{D}_i\\right)^2\\]\nThe residualization removes confounding; the second stage finds heterogeneity. This works for both binary and continuous treatments — with continuous \\(D\\), \\(\\tau(x)\\) is the heterogeneous marginal effect, not a binary treatment/control comparison.\n\n\n\n\n\n\nWhy orthogonalize first? Without residualization, a CATE estimator conflates two sources of variation: (1) differences in treatment effects across \\(X\\) and (2) differences in confounding across \\(X\\). By partialling out the nuisance via DML, the second stage only sees treatment effect heterogeneity. The \\(\\sqrt{n}\\)-consistency of the average effect carries over, and the CATE estimates inherit the robustness to nuisance estimation errors.\n\n\n\n\n\nWhen to use this\n\n\n\nSetting\nMethod\n\n\n\n\nBinary \\(D\\), want ATE\nStandard DML (this page)\n\n\nBinary \\(D\\), want \\(\\tau(x)\\)\nDML + causal forest (R-learner)\n\n\nContinuous \\(D\\), want average marginal effect\nPartially linear model with DML\n\n\nContinuous \\(D\\), want \\(\\tau(x)\\)\nR-learner with continuous \\(D\\)",
+    "crumbs": [
+      "Estimation Tools",
+      "Double/Debiased ML"
+    ]
+  },
+  {
     "objectID": "double-debiased-ml.html#connecting-to-the-course",
     "href": "double-debiased-ml.html#connecting-to-the-course",
     "title": "Double/Debiased Machine Learning",
