@@ -328,6 +328,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#the-partially-linear-model" id="toc-the-partially-linear-model" class="nav-link" data-scroll-target="#the-partially-linear-model">The partially linear model</a>
   <ul class="collapse">
+  <li><a href="#why-double-debiased" id="toc-why-double-debiased" class="nav-link" data-scroll-target="#why-double-debiased">Why “double-debiased”?</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
   <li><a href="#what-dml-assumes" id="toc-what-dml-assumes" class="nav-link" data-scroll-target="#what-dml-assumes">What DML assumes</a></li>
@@ -433,6 +434,20 @@ Y_i = \tau D_i + g(X_i) + \varepsilon_i
 <li>Regress <span class="math inline">\(\tilde{Y}\)</span> on <span class="math inline">\(\tilde{D}\)</span> to get <span class="math inline">\(\hat{\tau}\)</span></li>
 </ol>
 <p>This is <a href="../stats-course/fwl.html">Frisch-Waugh-Lovell</a> with ML residualization. Instead of controlling for <span class="math inline">\(X\)</span> linearly, you partial it out flexibly. The treatment effect <span class="math inline">\(\tau\)</span> remains a simple, interpretable parameter — only the nuisance part uses ML.</p>
+<section id="why-double-debiased" class="level3">
+<h3 class="anchored" data-anchor-id="why-double-debiased">Why “double-debiased”?</h3>
+<p>The name means you remove bias from <strong>two</strong> things — the outcome and the treatment.</p>
+<p><strong>Debias Y.</strong> You predict <span class="math inline">\(Y\)</span> from confounders <span class="math inline">\(X\)</span> using ML (random forest, lasso, whatever), then subtract the prediction. If someone’s obesity rate is 35% and their demographics predict 32%, the residual <span class="math inline">\(\tilde{Y}_i = 35 - 32 = 3\)</span> is the part of the outcome that confounders <em>cannot explain</em>. That’s what’s left for treatment to potentially explain.</p>
+<p><strong>Debias D.</strong> Same idea for treatment. If a tract has 4 dollar stores and its demographics predict 3.2, the residual <span class="math inline">\(\tilde{D}_i = 4 - 3.2 = 0.8\)</span> is the “surprising” part of treatment — the variation not driven by confounders.</p>
+<p><strong>Why do you need both?</strong> If you only debiased <span class="math inline">\(Y\)</span> but used raw <span class="math inline">\(D\)</span>, the ML estimation error in <span class="math inline">\(\hat{g}\)</span> leaks into your causal estimate:</p>
+<p><span class="math display">\[
+\text{Single-debiased (broken):} \quad \hat{\tau} - \tau \;\approx\; \frac{1}{n}\sum \underbrace{D_i}_{\text{correlated with } X} \cdot \underbrace{\big(g(X_i) - \hat{g}(X_i)\big)}_{\text{ML error}}
+\]</span></p>
+<p>This does <strong>not</strong> vanish — <span class="math inline">\(D_i\)</span> is correlated with <span class="math inline">\(X_i\)</span>, so ML errors accumulate. But after double-debiasing:</p>
+<p><span class="math display">\[
+\text{Double-debiased (works):} \quad \hat{\tau} - \tau \;\approx\; \frac{1}{n}\sum \underbrace{\tilde{D}_i}_{\perp\, X} \cdot \underbrace{\big(g(X_i) - \hat{g}(X_i)\big)}_{\text{ML error}}
+\]</span></p>
+<p>Now <span class="math inline">\(\tilde{D}_i \perp X_i\)</span>, so the ML errors <strong>cancel out</strong>. This is the Neyman orthogonality property — the “double” residualization makes the causal estimate immune to first-order ML mistakes.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 680
 
@@ -601,6 +616,7 @@ server &lt;- function(input, output, session) {
 }
 
 shinyApp(ui, server)</code></pre>
+</section>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
