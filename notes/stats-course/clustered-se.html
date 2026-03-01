@@ -500,6 +500,14 @@ window.Quarto = {
   <li><a href="#the-practical-rule" id="toc-the-practical-rule" class="nav-link" data-scroll-target="#the-practical-rule">The practical rule</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul></li>
+  <li><a href="#application-crime-housing" id="toc-application-crime-housing" class="nav-link" data-scroll-target="#application-crime-housing">Application: Crime &amp; Housing</a>
+  <ul class="collapse">
+  <li><a href="#intuition" id="toc-intuition" class="nav-link" data-scroll-target="#intuition">Intuition</a></li>
+  <li><a href="#what-happens-when-you-change-cluster-level" id="toc-what-happens-when-you-change-cluster-level" class="nav-link" data-scroll-target="#what-happens-when-you-change-cluster-level">What Happens When You Change Cluster Level?</a></li>
+  <li><a href="#why-larger-clusters-often-increase-se" id="toc-why-larger-clusters-often-increase-se" class="nav-link" data-scroll-target="#why-larger-clusters-often-increase-se">Why Larger Clusters Often Increase SE</a></li>
+  <li><a href="#key-principle" id="toc-key-principle" class="nav-link" data-scroll-target="#key-principle">Key Principle</a></li>
+  <li><a href="#in-the-crimehousing-context" id="toc-in-the-crimehousing-context" class="nav-link" data-scroll-target="#in-the-crimehousing-context">In the Crime–Housing Context</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -1244,6 +1252,148 @@ shinyApp(ui, server)</code></pre>
 </ul>
 
 
+</section>
+</section>
+
+<section id="application-crime-housing" class="level2">
+<h2 class="anchored" data-anchor-id="application-crime-housing">Application: Crime &amp; Housing</h2>
+
+<p><strong>Why Standard Errors Change</strong></p>
+
+<p>OLS assumes:</p>
+<p class="math display">\[E[u_i \, u_j] = 0 \quad \text{for } i \neq j\]</p>
+
+<p>But in panel or spatial data, <strong>that is false.</strong></p>
+<p>Observations are correlated within:</p>
+<ul>
+<li>The same property</li>
+<li>The same census tract</li>
+<li>The same county</li>
+<li>The same time period</li>
+<li>The same firm</li>
+<li>The same school</li>
+</ul>
+<p>If you ignore that, your SEs are <strong>too small</strong> → false significance.</p>
+<p><strong>Clustering corrects this.</strong></p>
+
+<section id="intuition" class="level3">
+<h3 class="anchored" data-anchor-id="intuition">Intuition</h3>
+<p>If shocks are correlated within group <span class="math inline">\(g\)</span>:</p>
+<p class="math display">\[u_{ig} = \underbrace{\text{common component}}_{\text{shared within cluster}} + \underbrace{\text{idiosyncratic}}_{\text{independent across obs.}}\]</p>
+<p>Then treating observations as independent <strong>overcounts information.</strong></p>
+<p>Clustering says: <em>treat each cluster as the unit of independent variation.</em></p>
+</section>
+
+<section id="what-happens-when-you-change-cluster-level" class="level3">
+<h3 class="anchored" data-anchor-id="what-happens-when-you-change-cluster-level">What Happens When You Change Cluster Level?</h3>
+<p>Suppose you estimate:</p>
+<p class="math display">\[\ln P_{it} = \beta \, \text{Shock}_{it} + \text{FE} + u_{it}\]</p>
+<p>Now consider clustering at:</p>
+
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-body-container">
+<p><strong>1. Property (PIN)</strong><br>
+Allows arbitrary serial correlation within property over time.<br>
+SE usually ↑ relative to naive.</p>
+</div>
+</div>
+</div>
+
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-body-container">
+<p><strong>2. Census Tract</strong><br>
+Allows correlation across different properties in same tract.<br>
+If crime shocks spill over spatially, this matters.<br>
+SE likely ↑ further.</p>
+</div>
+</div>
+</div>
+
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-body-container">
+<p><strong>3. County</strong><br>
+Allows even broader spatial correlation.<br>
+SE ↑ more.</p>
+</div>
+</div>
+</div>
+
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-body-container">
+<p><strong>4. No Clustering</strong><br>
+Assumes independence.<br>
+SE smallest. <strong>Usually wrong.</strong></p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="why-larger-clusters-often-increase-se" class="level3">
+<h3 class="anchored" data-anchor-id="why-larger-clusters-often-increase-se">Why Larger Clusters Often Increase SE</h3>
+<p>Because:</p>
+<p class="math display">\[\text{Var}(\hat{\beta}) \;\propto\; \frac{1}{G}\]</p>
+<p>where <span class="math inline">\(G\)</span> = number of independent clusters (not <span class="math inline">\(N\)</span>).</p>
+
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Cluster Level</th>
+<th># Clusters</th>
+<th>SE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Property</td>
+<td>Many</td>
+<td>Smaller</td>
+</tr>
+<tr class="even">
+<td>Tract</td>
+<td>Fewer</td>
+<td>Larger</td>
+</tr>
+<tr class="odd">
+<td>County</td>
+<td>Few</td>
+<td>Largest</td>
+</tr>
+</tbody>
+</table>
+
+<p>The effective sample size becomes <span class="math inline">\(G\)</span>, not <span class="math inline">\(N\)</span>.</p>
+</section>
+
+<section id="key-principle" class="level3">
+<h3 class="anchored" data-anchor-id="key-principle">Key Principle</h3>
+<div class="callout callout-style-simple callout-important">
+<div class="callout-body d-flex">
+<div class="callout-body-container">
+<p>You should cluster at the level where the <strong>identifying variation is correlated.</strong></p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="in-the-crimehousing-context" class="level3">
+<h3 class="anchored" data-anchor-id="in-the-crimehousing-context">In the Crime–Housing Context</h3>
+<p>The setting uses:</p>
+<ul>
+<li>Spatial kernel exposure</li>
+<li>Properties within tracts</li>
+<li>Crime shocks at neighborhood level</li>
+</ul>
+<p>Errors are likely correlated within:</p>
+<ul>
+<li><strong>Census tract</strong></li>
+<li>Possibly community area</li>
+<li>Possibly time × area</li>
+</ul>
+<p>So <strong>clustering at tract</strong> is reasonable.</p>
 </section>
 </section>
 
