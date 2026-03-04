@@ -495,7 +495,7 @@ window.Quarto = {
   <li><a href="#why-coefficients-shrink-toward-zero" id="toc-why-coefficients-shrink-toward-zero" class="nav-link" data-scroll-target="#why-coefficients-shrink-toward-zero">Why Coefficients Shrink Toward Zero</a>
   <ul class="collapse">
   <li><a href="#ovb-covariance-formulation" id="toc-ovb-covariance-formulation" class="nav-link" data-scroll-target="#ovb-covariance-formulation">The Covariance Formulation</a></li>
-  <li><a href="#opposite-sign-bias-toward-zero" id="toc-opposite-sign-bias-toward-zero" class="nav-link" data-scroll-target="#opposite-sign-bias-toward-zero">Opposite-Sign Case: Bias Toward Zero</a></li>
+  <li><a href="#opposite-sign-bias-toward-zero" id="toc-opposite-sign-bias-toward-zero" class="nav-link" data-scroll-target="#opposite-sign-bias-toward-zero">Opposite-Sign Case</a></li>
   <li><a href="#numerical-example" id="toc-numerical-example" class="nav-link" data-scroll-target="#numerical-example">Numerical Example</a></li>
   <li><a href="#why-controls-can-increase-significance" id="toc-why-controls-can-increase-significance" class="nav-link" data-scroll-target="#why-controls-can-increase-significance">Why Controls Can Increase Significance</a></li>
   <li><a href="#application-dollar-stores-obesity" id="toc-application-dollar-stores-obesity" class="nav-link" data-scroll-target="#application-dollar-stores-obesity">Application: Dollar Stores &amp; Obesity</a></li>
@@ -805,6 +805,14 @@ shinyApp(ui, server)</code></pre>
 <p>The bias term is:</p>
 <p><span class="math display">\[\text{Bias}(\tilde{\beta}) = \gamma \, \frac{\text{Cov}(X, Z)}{\text{Var}(X)}\]</span></p>
 <p>This is identical to <span class="math inline">\(\beta_2 \times \delta\)</span> from earlier, since <span class="math inline">\(\delta = \text{Cov}(X, Z) / \text{Var}(X)\)</span> is the OLS coefficient from regressing <span class="math inline">\(Z\)</span> on <span class="math inline">\(X\)</span>.</p>
+
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-body-container">
+<p><strong>Derivation.</strong> Where does this formula come from? Starting from the OLS definition <span class="math inline">\(\tilde{\beta} = \text{Cov}(X,Y)/\text{Var}(X)\)</span>, substitute the true DGP, apply covariance linearity, and impose exogeneity. <a href="./ovb-derivation.html"><strong>See the full step-by-step derivation &rarr;</strong></a></p>
+</div>
+</div>
+</div>
 </section>
 
 <section id="opposite-sign-bias-toward-zero" class="level3">
