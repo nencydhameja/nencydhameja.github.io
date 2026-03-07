@@ -27,7 +27,7 @@ My research studies how local environments and institutional policies shape econ
 
 ## Empirical Research (Applied Microeconomics)
 
-### <span class="paper-title">Salience, Attention, and Memory: Crime Capitalization in Housing Prices</span> <em>(Work in Progress)</em>
+### <span class="paper-title">Crime, Salience, and the Housing Market</span> <em>(Work in Progress)</em>
 _How do housing markets respond over space and time to localized crime shocks?_
 
 **Fields:** Urban Economics, Behavioral Economics, Housing Markets  
