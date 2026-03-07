@@ -492,14 +492,6 @@ window.Quarto = {
   <li><a href="#connections" id="toc-connections" class="nav-link" data-scroll-target="#connections">Connections</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul></li>
-  <li><a href="#why-coefficients-shrink-toward-zero" id="toc-why-coefficients-shrink-toward-zero" class="nav-link" data-scroll-target="#why-coefficients-shrink-toward-zero">Why Coefficients Shrink Toward Zero</a>
-  <ul class="collapse">
-  <li><a href="#ovb-covariance-formulation" id="toc-ovb-covariance-formulation" class="nav-link" data-scroll-target="#ovb-covariance-formulation">The Covariance Formulation</a></li>
-  <li><a href="#opposite-sign-bias-toward-zero" id="toc-opposite-sign-bias-toward-zero" class="nav-link" data-scroll-target="#opposite-sign-bias-toward-zero">Opposite-Sign Case</a></li>
-  <li><a href="#numerical-example" id="toc-numerical-example" class="nav-link" data-scroll-target="#numerical-example">Numerical Example</a></li>
-  <li><a href="#why-controls-can-increase-significance" id="toc-why-controls-can-increase-significance" class="nav-link" data-scroll-target="#why-controls-can-increase-significance">Why Controls Can Increase Significance</a></li>
-  <li><a href="#application-dollar-stores-obesity" id="toc-application-dollar-stores-obesity" class="nav-link" data-scroll-target="#application-dollar-stores-obesity">Application: Dollar Stores &amp; Obesity</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -782,128 +774,6 @@ shinyApp(ui, server)</code></pre>
 </ul>
 
 
-</section>
-</section>
-
-<section id="why-coefficients-shrink-toward-zero" class="level2">
-<h2 class="anchored" data-anchor-id="why-coefficients-shrink-toward-zero">Why Coefficients Shrink Toward Zero</h2>
-
-<p>Three common mechanisms push estimated coefficients toward zero:</p>
-<ol>
-<li><strong>Measurement error</strong> (classical attenuation bias) &mdash; if <span class="math inline">\(X\)</span> is measured with error, <span class="math inline">\(X_{\text{observed}} = X_{\text{true}} + \text{error}\)</span>, then OLS tends to estimate <span class="math inline">\(|\hat{\beta}| < |\beta|\)</span>.</li>
-<li><strong>Omitted variable bias with opposite-sign correlation</strong> &mdash; a confounding variable pulls the coefficient toward zero (detailed below).</li>
-<li><strong>Too much noise in the outcome</strong> &mdash; if unexplained variation in <span class="math inline">\(Y\)</span> is large, standard errors grow and estimates appear closer to zero.</li>
-</ol>
-
-<section id="ovb-covariance-formulation" class="level3">
-<h3 class="anchored" data-anchor-id="ovb-covariance-formulation">The Covariance Formulation</h3>
-
-<p>The OVB formula above uses the auxiliary regression coefficient <span class="math inline">\(\delta\)</span>. An equivalent formulation uses covariances directly. Let the true model be:</p>
-<p><span class="math display">\[Y = \beta X + \gamma Z + u\]</span></p>
-<p>If you omit <span class="math inline">\(Z\)</span> and estimate <span class="math inline">\(Y = \tilde{\beta} X + \varepsilon\)</span>, OLS gives:</p>
-<p><span class="math display">\[\tilde{\beta} = \beta + \gamma \, \frac{\text{Cov}(X, Z)}{\text{Var}(X)}\]</span></p>
-<p>The bias term is:</p>
-<p><span class="math display">\[\text{Bias}(\tilde{\beta}) = \gamma \, \frac{\text{Cov}(X, Z)}{\text{Var}(X)}\]</span></p>
-<p>This is identical to <span class="math inline">\(\beta_2 \times \delta\)</span> from earlier, since <span class="math inline">\(\delta = \text{Cov}(X, Z) / \text{Var}(X)\)</span> is the OLS coefficient from regressing <span class="math inline">\(Z\)</span> on <span class="math inline">\(X\)</span>.</p>
-
-<div class="callout callout-style-simple callout-tip">
-<div class="callout-body d-flex">
-<div class="callout-body-container">
-<p><strong>Derivation.</strong> Where does this formula come from? Starting from the OLS definition <span class="math inline">\(\tilde{\beta} = \text{Cov}(X,Y)/\text{Var}(X)\)</span>, substitute the true DGP, apply covariance linearity, and impose exogeneity. <a href="./ovb-derivation.html"><strong>See the full step-by-step derivation &rarr;</strong></a></p>
-</div>
-</div>
-</div>
-</section>
-
-<section id="opposite-sign-bias-toward-zero" class="level3">
-<h3 class="anchored" data-anchor-id="opposite-sign-bias-toward-zero">Opposite-Sign Case: Bias Toward Zero</h3>
-
-<p>Assume <span class="math inline">\(\beta > 0\)</span> (the true effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> is positive). Now suppose:</p>
-<ul>
-<li><span class="math inline">\(\gamma > 0\)</span> &mdash; <span class="math inline">\(Z\)</span> increases <span class="math inline">\(Y\)</span></li>
-<li><span class="math inline">\(\text{Cov}(X, Z) < 0\)</span> &mdash; <span class="math inline">\(X\)</span> and <span class="math inline">\(Z\)</span> are negatively correlated</li>
-</ul>
-
-<p>Then:</p>
-<p><span class="math display">\[\gamma \, \frac{\text{Cov}(X, Z)}{\text{Var}(X)} < 0\]</span></p>
-
-<p>So:</p>
-<p><span class="math display">\[\tilde{\beta} = \beta + \underbrace{\text{negative number}}_{\text{bias}} < \beta\]</span></p>
-
-<p>The estimate is <strong>attenuated toward zero.</strong></p>
-
-<div class="callout callout-style-simple callout-important">
-<div class="callout-body d-flex">
-<div class="callout-body-container">
-<p><strong>Key takeaway.</strong> Whenever <span class="math inline">\(\gamma \cdot \text{Cov}(X, Z) < 0\)</span>, the bias is negative and <span class="math inline">\(|\tilde{\beta}| < |\beta|\)</span>. The coefficient is attenuated toward zero.</p>
-</div>
-</div>
-</div>
-</section>
-
-<section id="numerical-example" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-example">Numerical Example</h3>
-
-<p>True model:</p>
-<p><span class="math display">\[Y = 1.0 \, X + 0.8 \, Z + u\]</span></p>
-
-<p>Suppose <span class="math inline">\(\text{Cov}(X, Z) = -0.5\)</span> and <span class="math inline">\(\text{Var}(X) = 1\)</span>. Then:</p>
-
-<p><span class="math display">\[\text{Bias} = 0.8 \times \frac{-0.5}{1} = -0.4\]</span></p>
-
-<p>Estimated coefficient:</p>
-<p><span class="math display">\[\tilde{\beta} = 1.0 - 0.4 = 0.6\]</span></p>
-
-<p>The estimate moves from 1.0 (the truth) to 0.6 &mdash; <strong>closer to zero.</strong></p>
-
-<p><strong>Intuition:</strong> <span class="math inline">\(Z\)</span> increases <span class="math inline">\(Y\)</span> but is negatively correlated with <span class="math inline">\(X\)</span>. When <span class="math inline">\(Z\)</span> is omitted, part of its effect is incorrectly attributed to <span class="math inline">\(X\)</span> &mdash; but because the correlation is negative, it pulls the <span class="math inline">\(X\)</span> coefficient <em>down</em>.</p>
-</section>
-
-<section id="why-controls-can-increase-significance" class="level3">
-<h3 class="anchored" data-anchor-id="why-controls-can-increase-significance">Why Controls Can Increase Significance</h3>
-
-<p>This explains a common pattern in applied work. Without controls, the coefficient is biased toward zero:</p>
-<p><span class="math display">\[\tilde{\beta}_X \approx 0 \quad (\text{p} = 0.40)\]</span></p>
-
-<p>After adding controls that remove the opposite-sign confounding:</p>
-<p><span class="math display">\[\hat{\beta}_X \approx \text{true effect} \quad (\text{p} = 0.03)\]</span></p>
-
-<p>The coefficient moves <em>away</em> from zero and becomes significant. The uncontrolled regression was biased toward zero.</p>
-
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>You will often see in papers: <em>"The baseline specification suffers from attenuation bias, biasing the estimate toward zero."</em> This means the true effect is likely <strong>larger</strong> than what the simple regression shows.</p>
-</div>
-</div>
-</div>
-</section>
-
-<section id="application-dollar-stores-obesity" class="level3">
-<h3 class="anchored" data-anchor-id="application-dollar-stores-obesity">Application: Dollar Stores &amp; Obesity</h3>
-
-<p>Consider:</p>
-<ul>
-<li><span class="math inline">\(X\)</span>: dollar store exposure</li>
-<li><span class="math inline">\(Z\)</span>: income</li>
-<li><span class="math inline">\(Y\)</span>: obesity rate</li>
-</ul>
-
-<p>Suppose:</p>
-<ul>
-<li>Income reduces obesity (<span class="math inline">\(\gamma < 0\)</span>)</li>
-<li>Dollar stores locate in lower-income areas (<span class="math inline">\(\text{Cov}(X, Z) < 0\)</span>)</li>
-</ul>
-
-<p>Then:</p>
-<p><span class="math display">\[\text{Bias} = \underbrace{\gamma}_{< 0} \times \underbrace{\frac{\text{Cov}(X, Z)}{\text{Var}(X)}}_{< 0} > 0\]</span></p>
-
-<p>Negative times negative = <strong>positive bias</strong>, which can inflate the estimate. But if the signs are arranged differently (e.g., income <em>increases</em> caloric consumption in some contexts), the bias can go the other way and <strong>shrink the estimate toward zero.</strong></p>
-
-<p>The direction depends on the specific sign combination of <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\text{Cov}(X, Z)\)</span>. The formula tells you exactly which way the bias goes &mdash; use the <a href="#sign-of-bias-table">sign-of-bias table</a> above.</p>
 </section>
 </section>
 
@@ -1315,7 +1185,7 @@ shinyApp(ui, server)</code></pre>
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com">Nency Dhameja</a> | <a href="../index.html">All Notes</a> | Developed with AI assistance | <a href="mailto:nencydhameja@gmail.com">Feedback?</a></span></p>
+<p>Inspired by my advisor, <a href="https://sites.google.com/site/slichterdavid/home">David Slichter</a><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com">Nency Dhameja</a> | <a href="../index.html">All Notes</a> | Developed with AI assistance | <a href="mailto:nencydhameja@gmail.com">Feedback?</a></span></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

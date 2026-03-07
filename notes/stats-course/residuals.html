@@ -488,9 +488,15 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#reading-the-three-panels" id="toc-reading-the-three-panels" class="nav-link" data-scroll-target="#reading-the-three-panels">Reading the three panels</a></li>
   </ul></li>
+  <li><a href="#residuals-vs-fitted-vs-residuals-vs-x" id="toc-residuals-vs-fitted-vs-residuals-vs-x" class="nav-link" data-scroll-target="#residuals-vs-fitted-vs-residuals-vs-x">Residuals vs Fitted vs Residuals vs X</a>
+  <ul class="collapse">
+  <li><a href="#what-the-patterns-mean" id="toc-what-the-patterns-mean" class="nav-link" data-scroll-target="#what-the-patterns-mean">What the patterns mean</a></li>
+  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  <li><a href="#in-practice" id="toc-in-practice" class="nav-link" data-scroll-target="#in-practice">In practice</a></li>
+  </ul></li>
   <li><a href="#controls-and-residuals" id="toc-controls-and-residuals" class="nav-link" data-scroll-target="#controls-and-residuals">Controls and residuals</a>
   <ul class="collapse">
-  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  <li><a href="#things-to-try-1" id="toc-things-to-try-1" class="nav-link" data-scroll-target="#things-to-try-1">Things to try</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul></li>
   </ul>
@@ -681,6 +687,216 @@ shinyApp(ui, server)</code></pre>
 <hr>
 </section>
 </section>
+<section id="residuals-vs-fitted-vs-residuals-vs-x" class="level2">
+<h2 class="anchored" data-anchor-id="residuals-vs-fitted-vs-residuals-vs-x">Residuals vs Fitted vs Residuals vs X</h2>
+<p>The app above plots residuals against <span class="math inline">\(\hat{Y}\)</span> (fitted values). But you should also plot residuals against each explanatory variable <span class="math inline">\(X_k\)</span>. These two plots answer <strong>different questions</strong>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 24%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Plot</th>
+<th>X-axis</th>
+<th>What it diagnoses</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Residuals vs <span class="math inline">\(\hat{Y}\)</span></td>
+<td>Predicted value</td>
+<td>Overall model misspecification</td>
+</tr>
+<tr class="even">
+<td>Residuals vs <span class="math inline">\(X_k\)</span></td>
+<td>Explanatory variable</td>
+<td>Whether the <span class="math inline">\(X_k\)</span> relationship is correctly specified</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why the distinction matters.</strong> With one regressor, fitted values are just a linear rescaling of <span class="math inline">\(X\)</span>, so the two plots look identical. With multiple regressors, <span class="math inline">\(\hat{Y}\)</span> blends all the <span class="math inline">\(X\)</span>’s together. A problem with <em>one</em> variable’s functional form may be hard to spot in the residuals-vs-fitted plot but jumps out when you plot residuals against that specific <span class="math inline">\(X\)</span>.</p>
+<p>The residuals-vs-<span class="math inline">\(X\)</span> plot directly tests the key OLS assumption:</p>
+<p><span class="math display">\[E[\varepsilon \mid X] = 0\]</span></p>
+<p>If residuals trend or curve against <span class="math inline">\(X_k\)</span>, this assumption is violated for that variable.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 600
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .info-box2 {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.8;
+    }
+    .info-box2 b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      selectInput("scenario", "Scenario:",
+                  choices = c("Both linear (correct)",
+                              "X2 quadratic (misspecified)",
+                              "Heteroskedastic in X1",
+                              "Omitted variable (corr with X1)")),
+
+      sliderInput("n2", "Sample size:",
+                  min = 100, max = 500, value = 300, step = 50),
+
+      actionButton("go2", "New draw", class = "btn-primary", width = "100%"),
+
+      uiOutput("info2")
+    ),
+
+    mainPanel(
+      width = 9,
+      fluidRow(
+        column(4, plotOutput("resid_fitted2", height = "380px")),
+        column(4, plotOutput("resid_x1", height = "380px")),
+        column(4, plotOutput("resid_x2", height = "380px"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  dat2 &lt;- reactive({
+    input$go2
+    n &lt;- input$n2
+    scenario &lt;- input$scenario
+
+    x1 &lt;- rnorm(n, 0, 2)
+    x2 &lt;- rnorm(n, 0, 2)
+
+    if (scenario == "Both linear (correct)") {
+      y &lt;- 1 + 0.8 * x1 + 1.2 * x2 + rnorm(n, sd = 1.5)
+    } else if (scenario == "X2 quadratic (misspecified)") {
+      y &lt;- 1 + 0.8 * x1 + 0.5 * x2 + 0.4 * x2^2 + rnorm(n, sd = 1.5)
+    } else if (scenario == "Heteroskedastic in X1") {
+      y &lt;- 1 + 0.8 * x1 + 1.2 * x2 + rnorm(n, sd = 0.5 + 0.5 * abs(x1))
+    } else {
+      z &lt;- 0.7 * x1 + rnorm(n, sd = 1)
+      y &lt;- 1 + 0.3 * x1 + 1.2 * x2 + 2 * z + rnorm(n, sd = 1.5)
+    }
+
+    fit &lt;- lm(y ~ x1 + x2)
+    list(x1 = x1, x2 = x2, y = y, fit = fit, scenario = scenario)
+  })
+
+  make_resid_plot &lt;- function(xvar, r, xlab, title, col) {
+    plot(xvar, r, pch = 16, col = col, cex = 0.6,
+         xlab = xlab, ylab = "Residuals", main = title)
+    abline(h = 0, lty = 2, col = "gray40", lwd = 1.5)
+    lo &lt;- loess(r ~ xvar)
+    ox &lt;- order(xvar)
+    lines(xvar[ox], predict(lo)[ox], col = "#e74c3c", lwd = 2)
+  }
+
+  output$resid_fitted2 &lt;- renderPlot({
+    d &lt;- dat2()
+    par(mar = c(4.5, 4.5, 3, 1))
+    r &lt;- resid(d$fit); fv &lt;- fitted(d$fit)
+    make_resid_plot(fv, r, "Fitted values",
+                    expression("Residuals vs " * hat(Y)), "#9b59b680")
+  })
+
+  output$resid_x1 &lt;- renderPlot({
+    d &lt;- dat2()
+    par(mar = c(4.5, 4.5, 3, 1))
+    make_resid_plot(d$x1, resid(d$fit), expression(X[1]),
+                    expression("Residuals vs " * X[1]), "#3498db80")
+  })
+
+  output$resid_x2 &lt;- renderPlot({
+    d &lt;- dat2()
+    par(mar = c(4.5, 4.5, 3, 1))
+    make_resid_plot(d$x2, resid(d$fit), expression(X[2]),
+                    expression("Residuals vs " * X[2]), "#e67e2280")
+  })
+
+  output$info2 &lt;- renderUI({
+    d &lt;- dat2()
+
+    msg &lt;- switch(d$scenario,
+      "Both linear (correct)" =
+        "All three plots: &lt;span class='good'&gt;random scatter&lt;/span&gt;. The LOESS curves stay near zero. Model is correctly specified.",
+      "X2 quadratic (misspecified)" =
+        "Residuals vs X&lt;sub&gt;2&lt;/sub&gt;: &lt;span class='bad'&gt;clear U-shape&lt;/span&gt; — the missing X&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt; term. Residuals vs X&lt;sub&gt;1&lt;/sub&gt;: clean. Residuals vs fitted: pattern present but harder to attribute to a specific variable.",
+      "Heteroskedastic in X1" =
+        "Residuals vs X&lt;sub&gt;1&lt;/sub&gt;: &lt;span class='bad'&gt;fan shape&lt;/span&gt; — variance grows with |X&lt;sub&gt;1&lt;/sub&gt;|. Residuals vs X&lt;sub&gt;2&lt;/sub&gt;: no fan. The fitted-values plot shows spreading too, but doesn't tell you &lt;em&gt;which&lt;/em&gt; variable causes it.",
+      "Omitted variable (corr with X1)" =
+        "Residuals vs X&lt;sub&gt;1&lt;/sub&gt;: &lt;span class='bad'&gt;upward trend&lt;/span&gt; — the omitted Z is correlated with X&lt;sub&gt;1&lt;/sub&gt;, so E[&amp;epsilon;|X&lt;sub&gt;1&lt;/sub&gt;] &amp;ne; 0. Residuals vs X&lt;sub&gt;2&lt;/sub&gt;: clean (Z is uncorrelated with X&lt;sub&gt;2&lt;/sub&gt;)."
+    )
+
+    tags$div(class = "info-box2", HTML(msg))
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<section id="what-the-patterns-mean" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-patterns-mean">What the patterns mean</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 51%">
+<col style="width: 26%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pattern in residuals</th>
+<th>Diagnosis</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Random scatter around zero</td>
+<td>Correctly specified</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>U-shape / curve</td>
+<td>Missing nonlinear term</td>
+<td>True model has <span class="math inline">\(X^2\)</span> but you fit only <span class="math inline">\(X\)</span></td>
+</tr>
+<tr class="odd">
+<td>Fan / funnel</td>
+<td>Heteroskedasticity</td>
+<td>Variance of <span class="math inline">\(\varepsilon\)</span> depends on <span class="math inline">\(X\)</span></td>
+</tr>
+<tr class="even">
+<td>Linear trend</td>
+<td>Omitted variable correlated with <span class="math inline">\(X\)</span></td>
+<td><span class="math inline">\(E[\varepsilon \mid X] \neq 0\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="things-to-try" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<ul>
+<li><strong>“X2 quadratic”:</strong> the U-shape shows up clearly in Residuals vs <span class="math inline">\(X_2\)</span> but is muddled in Residuals vs <span class="math inline">\(\hat{Y}\)</span>. Residuals vs <span class="math inline">\(X_1\)</span> stays clean — the problem is with <span class="math inline">\(X_2\)</span>’s functional form, not <span class="math inline">\(X_1\)</span>’s.</li>
+<li><strong>“Heteroskedastic in X1”:</strong> the fan opens up against <span class="math inline">\(X_1\)</span> but not <span class="math inline">\(X_2\)</span>. The fitted-values plot shows a fan too but can’t pinpoint the source.</li>
+<li><strong>“Omitted variable”:</strong> residuals trend upward against <span class="math inline">\(X_1\)</span> because the omitted <span class="math inline">\(Z\)</span> is correlated with <span class="math inline">\(X_1\)</span>. <span class="math inline">\(X_2\)</span> is unaffected.</li>
+</ul>
+</section>
+<section id="in-practice" class="level3">
+<h3 class="anchored" data-anchor-id="in-practice">In practice</h3>
+<p>Most applied researchers follow this workflow:</p>
+<ol type="1">
+<li><strong>Residuals vs fitted</strong> — general health check for the overall model</li>
+<li><strong>Residuals vs each <span class="math inline">\(X\)</span></strong> — pinpoint which variable’s relationship is wrong</li>
+</ol>
+<hr>
+</section>
+</section>
 <section id="controls-and-residuals" class="level2">
 <h2 class="anchored" data-anchor-id="controls-and-residuals">Controls and residuals</h2>
 <p>When you “control for” a variable in a regression, what you’re really doing is <strong>removing its influence via residuals</strong>. This is the Frisch-Waugh-Lovell theorem in action (see the <a href="fwl.html">FWL page</a>).</p>
@@ -826,8 +1042,8 @@ server &lt;- function(input, output, session) {
 }
 
 shinyApp(ui, server)</code></pre>
-<section id="things-to-try" class="level3">
-<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<section id="things-to-try-1" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try-1">Things to try</h3>
 <ul>
 <li><strong>True <span class="math inline">\(\beta_1\)</span> = 0.5, Corr = 0.7, <span class="math inline">\(\beta_2\)</span> = 2:</strong> the naive slope (left panel) is way off because <span class="math inline">\(X_2\)</span> confounds the relationship. The controlled slope (right panel) recovers the truth.</li>
 <li><strong>Set Corr = 0:</strong> no confounding. Both estimates are the same — controls don’t help when there’s nothing to control for.</li>
@@ -1256,7 +1472,7 @@ shinyApp(ui, server)</code></pre>
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com">Nency Dhameja</a> | <a href="../index.html">All Notes</a> | Developed with AI assistance | <a href="mailto:nencydhameja@gmail.com">Feedback?</a></span></p>
+<p>Inspired by my advisor, <a href="https://sites.google.com/site/slichterdavid/home">David Slichter</a><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com">Nency Dhameja</a> | <a href="../index.html">All Notes</a> | Developed with AI assistance | <a href="mailto:nencydhameja@gmail.com">Feedback?</a></span></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;
