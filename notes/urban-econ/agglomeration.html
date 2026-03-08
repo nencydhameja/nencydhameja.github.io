@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Agglomeration Economies – Urban Economics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./agglomeration.html">Agglomeration &amp; Sorting</a></li><li class="breadcrumb-item"><a href="./agglomeration.html">Agglomeration Economies</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Urban Economics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Land &amp; Location</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./monocentric-city.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Monocentric City</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./spatial-equilibrium.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Spatial Equilibrium</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Housing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hedonic-pricing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hedonic Pricing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./zoning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zoning &amp; Housing Supply</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Agglomeration &amp; Sorting</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./agglomeration.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Agglomeration Economies</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tiebout.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tiebout Sorting</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Neighborhoods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gentrification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gentrification &amp; Displacement</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#why-do-firms-cluster" id="toc-why-do-firms-cluster" class="nav-link active" data-scroll-target="#why-do-firms-cluster">Why do firms cluster?</a>
+  <ul class="collapse">
+  <li><a href="#the-three-marshallian-channels" id="toc-the-three-marshallian-channels" class="nav-link" data-scroll-target="#the-three-marshallian-channels">The three Marshallian channels</a></li>
+  <li><a href="#the-urban-wage-premium" id="toc-the-urban-wage-premium" class="nav-link" data-scroll-target="#the-urban-wage-premium">The urban wage premium</a></li>
+  <li><a href="#the-tradeoff" id="toc-the-tradeoff" class="nav-link" data-scroll-target="#the-tradeoff">The tradeoff</a></li>
+  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  </ul></li>
+  <li><a href="#connections" id="toc-connections" class="nav-link" data-scroll-target="#connections">Connections</a></li>
+  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./agglomeration.html">Agglomeration &amp; Sorting</a></li><li class="breadcrumb-item"><a href="./agglomeration.html">Agglomeration Economies</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Agglomeration Economies</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="why-do-firms-cluster" class="level2">
+<h2 class="anchored" data-anchor-id="why-do-firms-cluster">Why do firms cluster?</h2>
+<p>Cities exist because proximity is productive. When firms and workers are close together, everyone becomes more productive. These <strong>agglomeration economies</strong> are the fundamental reason cities exist despite their costs (congestion, high rents, pollution).</p>
+<section id="the-three-marshallian-channels" class="level3">
+<h3 class="anchored" data-anchor-id="the-three-marshallian-channels">The three Marshallian channels</h3>
+<p><strong>Alfred Marshall (1890)</strong> identified three mechanisms through which density raises productivity:</p>
+<ol type="1">
+<li><p><strong>Labor market pooling.</strong> Dense labor markets reduce mismatch. Firms are more likely to find workers with the right skills; workers are more likely to find jobs that match their talents. If one firm lays off workers, another nearby firm can hire them. The thick market reduces risk for both sides.</p></li>
+<li><p><strong>Input sharing.</strong> Clusters attract specialized suppliers. A single firm might not generate enough demand for a niche input supplier, but a cluster of firms can. Silicon Valley has specialized law firms, venture capitalists, and chip fabricators — none of which could survive serving a single firm.</p></li>
+<li><p><strong>Knowledge spillovers.</strong> Ideas spread faster face-to-face. Casual conversations, job-hopping, and observation transmit tacit knowledge that can’t be easily codified. This is why R&amp;D-intensive industries cluster intensely — biotech in Boston, tech in Silicon Valley, finance in London.</p></li>
+</ol>
+</section>
+<section id="the-urban-wage-premium" class="level3">
+<h3 class="anchored" data-anchor-id="the-urban-wage-premium">The urban wage premium</h3>
+<p>Productivity increases with city size. <strong>Combes, Duranton, and Gobillon (2012)</strong> estimate that doubling city employment raises individual wages by <strong>3–8%</strong>, even after controlling for worker sorting (the possibility that more productive workers simply choose bigger cities).</p>
+<p>The relationship is approximately:</p>
+<p><span class="math display">\[\ln w = \alpha + \gamma \ln N + \varepsilon\]</span></p>
+<p>where <span class="math inline">\(w\)</span> is the wage, <span class="math inline">\(N\)</span> is city population, and <span class="math inline">\(\gamma\)</span> is the <strong>agglomeration elasticity</strong> — typically estimated at 0.03 to 0.08.</p>
+</section>
+<section id="the-tradeoff" class="level3">
+<h3 class="anchored" data-anchor-id="the-tradeoff">The tradeoff</h3>
+<p>If bigger is always better, why aren’t all cities infinitely large? Because agglomeration benefits are offset by <strong>congestion costs</strong>: longer commutes, higher rents, pollution, crime. The optimal city size balances the marginal agglomeration benefit against the marginal congestion cost.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>The Model View.</strong> The simulation below lets you adjust the agglomeration elasticity and congestion costs. Firms choose locations on a spatial grid. With agglomeration turned on, they cluster. The right panel shows the productivity-congestion tradeoff and the implied optimal city size.</p>
+</div>
+</div>
+</div>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 700
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
+    .info-box {
+      background: #eaf2f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 13px; line-height: 1.8;
+    }
+    .info-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("agglom", "Agglomeration elasticity:",
+                  min = 0.02, max = 0.10, value = 0.05, step = 0.01),
+
+      sliderInput("congestion", "Congestion cost parameter:",
+                  min = 0.01, max = 0.08, value = 0.03, step = 0.005),
+
+      sliderInput("n_firms", "Number of firms:",
+                  min = 20, max = 200, value = 80, step = 10),
+
+      checkboxInput("spillovers", "Knowledge spillovers active", value = TRUE),
+
+      actionButton("go", "Run simulation", class = "btn-primary", width = "100%"),
+
+      uiOutput("info")
+    ),
+
+    mainPanel(
+      width = 9,
+      fluidRow(
+        column(5, plotOutput("spatial_plot", height = "450px")),
+        column(7, plotOutput("tradeoff_plot", height = "450px"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  sim &lt;- reactive({
+    input$go
+    gamma &lt;- input$agglom
+    cong &lt;- input$congestion
+    n_firms &lt;- input$n_firms
+    spill &lt;- input$spillovers
+
+    # If no spillovers, reduce effective agglomeration
+    eff_gamma &lt;- if (spill) gamma else gamma * 0.4
+
+    # Simulate firm locations: start random, then iterate toward cluster
+    set.seed(NULL)
+    x &lt;- runif(n_firms, 0, 10)
+    y &lt;- runif(n_firms, 0, 10)
+
+    # Simple agglomeration: firms move toward denser areas
+    for (iter in 1:30) {
+      for (i in 1:n_firms) {
+        # Count nearby firms (within radius 2)
+        dists &lt;- sqrt((x[-i] - x[i])^2 + (y[-i] - y[i])^2)
+        nearby &lt;- sum(dists &lt; 3)
+
+        if (nearby &gt; 0 &amp;&amp; eff_gamma &gt; 0.02) {
+          # Move slightly toward center of nearby firms
+          close_idx &lt;- which(dists &lt; 3)
+          cx &lt;- mean(x[-i][close_idx])
+          cy &lt;- mean(y[-i][close_idx])
+
+          pull &lt;- eff_gamma * 3  # attraction strength
+          push &lt;- cong * 0.5     # repulsion from congestion
+
+          x[i] &lt;- x[i] + (cx - x[i]) * pull - (cx - x[i]) * push * (nearby / n_firms)
+          y[i] &lt;- y[i] + (cy - y[i]) * pull - (cy - y[i]) * push * (nearby / n_firms)
+
+          # Add noise
+          x[i] &lt;- x[i] + rnorm(1, 0, 0.1)
+          y[i] &lt;- y[i] + rnorm(1, 0, 0.1)
+        }
+      }
+      # Keep in bounds
+      x &lt;- pmax(pmin(x, 10), 0)
+      y &lt;- pmax(pmin(y, 10), 0)
+    }
+
+    # Calculate productivity for each firm based on local density
+    productivity &lt;- numeric(n_firms)
+    for (i in 1:n_firms) {
+      dists &lt;- sqrt((x[-i] - x[i])^2 + (y[-i] - y[i])^2)
+      local_density &lt;- sum(dists &lt; 2) + 1
+      productivity[i] &lt;- 100 * local_density^eff_gamma
+    }
+
+    # Identify clusters using a grid
+    grid_size &lt;- 2
+    grid_x &lt;- floor(x / grid_size)
+    grid_y &lt;- floor(y / grid_size)
+    grid_id &lt;- paste(grid_x, grid_y)
+    cluster_counts &lt;- table(grid_id)
+    n_clusters &lt;- sum(cluster_counts &gt;= 3)
+
+    # Tradeoff curve: productivity and congestion vs city size
+    city_sizes &lt;- seq(10, 500, by = 5)
+    base_prod &lt;- 100
+    agglom_benefit &lt;- base_prod * city_sizes^eff_gamma - base_prod
+    congestion_cost &lt;- cong * city_sizes^1.2
+    net_benefit &lt;- agglom_benefit - congestion_cost
+
+    optimal_size &lt;- city_sizes[which.max(net_benefit)]
+
+    list(x = x, y = y, productivity = productivity,
+         n_clusters = n_clusters, avg_prod = mean(productivity),
+         city_sizes = city_sizes, agglom_benefit = agglom_benefit,
+         congestion_cost = congestion_cost, net_benefit = net_benefit,
+         optimal_size = optimal_size, eff_gamma = eff_gamma)
+  })
+
+  output$spatial_plot &lt;- renderPlot({
+    s &lt;- sim()
+    par(mar = c(4, 4, 3, 1))
+
+    # Color by productivity
+    prod_scaled &lt;- (s$productivity - min(s$productivity)) /
+                   (max(s$productivity) - min(s$productivity) + 0.01)
+    cols &lt;- rgb(0.2, 0.4 + 0.5 * prod_scaled, 0.8 - 0.3 * prod_scaled, 0.7)
+
+    plot(s$x, s$y, pch = 19, cex = 1.5 + prod_scaled * 1.5,
+         col = cols, xlim = c(-0.5, 10.5), ylim = c(-0.5, 10.5),
+         xlab = "Location (x)", ylab = "Location (y)",
+         main = "Firm Locations",
+         asp = 1)
+
+    # Grid lines
+    abline(h = seq(0, 10, 2), v = seq(0, 10, 2),
+           col = adjustcolor("gray80", 0.5), lty = 3)
+
+    legend("bottomright", bty = "n", cex = 0.8,
+           legend = c("Low productivity", "High productivity"),
+           pch = 19, col = c(rgb(0.2, 0.4, 0.8, 0.7),
+                              rgb(0.2, 0.9, 0.5, 0.7)),
+           pt.cex = c(1.5, 3))
+  })
+
+  output$tradeoff_plot &lt;- renderPlot({
+    s &lt;- sim()
+    par(mar = c(5, 5, 4, 5))
+
+    ylim &lt;- range(c(s$agglom_benefit, -s$congestion_cost, s$net_benefit)) * 1.1
+
+    plot(s$city_sizes, s$agglom_benefit, type = "l", lwd = 3, col = "#27ae60",
+         xlab = "City size (thousands of workers)",
+         ylab = "Benefit / Cost",
+         main = "Agglomeration vs Congestion",
+         ylim = ylim)
+
+    lines(s$city_sizes, -s$congestion_cost, lwd = 3, col = "#e74c3c")
+    lines(s$city_sizes, s$net_benefit, lwd = 3, col = "#2c3e50", lty = 2)
+
+    abline(h = 0, col = "gray70", lty = 3)
+    abline(v = s$optimal_size, col = "#f39c12", lwd = 2, lty = 2)
+    text(s$optimal_size, max(s$net_benefit) * 0.8,
+         paste0("Optimal\nN* = ", s$optimal_size, "k"),
+         pos = 4, cex = 0.9, col = "#f39c12", font = 2)
+
+    # Mark the max of net benefit
+    max_idx &lt;- which.max(s$net_benefit)
+    points(s$city_sizes[max_idx], s$net_benefit[max_idx],
+           pch = 19, cex = 2, col = "#f39c12")
+
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c("Agglomeration benefit",
+                      "Congestion cost",
+                      "Net benefit",
+                      "Optimal size"),
+           col = c("#27ae60", "#e74c3c", "#2c3e50", "#f39c12"),
+           lwd = c(3, 3, 3, 2), lty = c(1, 1, 2, 2))
+  })
+
+  output$info &lt;- renderUI({
+    s &lt;- sim()
+    tags$div(class = "info-box",
+      HTML(paste0(
+        "&lt;b&gt;Agglom. elasticity:&lt;/b&gt; ", round(s$eff_gamma, 3), "&lt;br&gt;",
+        "&lt;b&gt;Avg productivity:&lt;/b&gt; ", round(s$avg_prod, 1), "&lt;br&gt;",
+        "&lt;b&gt;Clusters (3+ firms):&lt;/b&gt; ", s$n_clusters, "&lt;br&gt;",
+        "&lt;b&gt;Optimal city size:&lt;/b&gt; ", s$optimal_size, "k workers"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</section>
+<section id="things-to-try" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<ul>
+<li><strong>High agglomeration, low congestion:</strong> firms cluster tightly, optimal city size is large. This is the Silicon Valley scenario — huge benefits from proximity, moderate congestion costs.</li>
+<li><strong>Low agglomeration, high congestion:</strong> firms spread out, optimal city size is small. Proximity doesn’t add much, and crowding is costly.</li>
+<li><strong>Turn off knowledge spillovers:</strong> the effective agglomeration elasticity drops by 60%. Firms cluster less, and optimal city size shrinks. This shows how important the spillover channel is relative to labor pooling and input sharing.</li>
+<li><strong>Add more firms:</strong> watch clusters form and grow. With 200 firms and high agglomeration, you’ll see 2–3 large clusters emerge from initially random locations.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="connections" class="level2">
+<h2 class="anchored" data-anchor-id="connections">Connections</h2>
+<ul>
+<li><a href="spatial-equilibrium.html">Spatial Equilibrium</a> — agglomeration economies are what make big cities productive (high wages), which are then offset by high rents in the Rosen-Roback framework.</li>
+<li><a href="monocentric-city.html">The Monocentric City</a> — the CBD in the monocentric model is essentially an agglomeration: all firms cluster at one point because proximity to other firms and workers is valuable.</li>
+<li><a href="zoning.html">Zoning &amp; Housing Supply</a> — if agglomeration makes big cities productive, then zoning that prevents growth in these cities destroys aggregate productivity (the Hsieh-Moretti argument).</li>
+</ul>
+<hr>
+</section>
+<section id="did-you-know" class="level2">
+<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
+<ul>
+<li><strong>Alfred Marshall</strong> identified the three agglomeration channels in his 1890 <em>Principles of Economics</em>, making it one of the oldest ideas in urban economics that is still central today. He wrote that in industrial districts, “the mysteries of the trade become no mysteries; but are as it were in the air.”</li>
+<li><strong>Silicon Valley</strong> is the canonical agglomeration story. The cluster started with Stanford University and a few electronics firms in the 1950s. Knowledge spillovers and labor market pooling created a self-reinforcing cycle: more firms attracted more talent, which attracted more firms. Today, Santa Clara County has more patent activity per capita than anywhere else in the world.</li>
+<li><strong>Duranton and Puga (2001)</strong> introduced the “nursery cities” concept: young firms experiment in large, diverse cities (where they can try different production processes) and then relocate to smaller, specialized cities once they’ve found their niche. This explains why startups cluster in New York and San Francisco but mature manufacturing plants locate in smaller metros.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com">Nency Dhameja</a> | <a href="../index.html">All Notes</a> | Developed with AI assistance | <a href="mailto:nencydhameja@gmail.com">Feedback?</a></span></p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

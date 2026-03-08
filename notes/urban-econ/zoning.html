@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Zoning &amp; Housing Supply – Urban Economics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hedonic-pricing.html">Housing</a></li><li class="breadcrumb-item"><a href="./zoning.html">Zoning &amp; Housing Supply</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Urban Economics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Land &amp; Location</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./monocentric-city.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Monocentric City</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./spatial-equilibrium.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Spatial Equilibrium</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Housing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hedonic-pricing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hedonic Pricing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./zoning.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Zoning &amp; Housing Supply</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Agglomeration &amp; Sorting</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./agglomeration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Agglomeration Economies</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tiebout.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tiebout Sorting</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Neighborhoods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gentrification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gentrification &amp; Displacement</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#supply-elasticity-and-housing-prices" id="toc-supply-elasticity-and-housing-prices" class="nav-link active" data-scroll-target="#supply-elasticity-and-housing-prices">Supply elasticity and housing prices</a>
+  <ul class="collapse">
+  <li><a href="#the-regulatory-tax" id="toc-the-regulatory-tax" class="nav-link" data-scroll-target="#the-regulatory-tax">The regulatory tax</a></li>
+  <li><a href="#saiz-2010" id="toc-saiz-2010" class="nav-link" data-scroll-target="#saiz-2010">Saiz (2010)</a></li>
+  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  </ul></li>
+  <li><a href="#the-housing-affordability-crisis" id="toc-the-housing-affordability-crisis" class="nav-link" data-scroll-target="#the-housing-affordability-crisis">The housing affordability crisis</a></li>
+  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hedonic-pricing.html">Housing</a></li><li class="breadcrumb-item"><a href="./zoning.html">Zoning &amp; Housing Supply</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Zoning &amp; Housing Supply</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="supply-elasticity-and-housing-prices" class="level2">
+<h2 class="anchored" data-anchor-id="supply-elasticity-and-housing-prices">Supply elasticity and housing prices</h2>
+<p>Housing supply elasticity determines how prices respond to demand shocks. When demand increases (population growth, rising incomes, low interest rates), the outcome depends entirely on how easily builders can add new housing:</p>
+<ul>
+<li><strong>Elastic supply</strong> (few regulations, available land): builders respond to higher demand by constructing more units. Prices stay relatively stable. Think Houston, Dallas, Atlanta.</li>
+<li><strong>Inelastic supply</strong> (strict zoning, geographic constraints): builders can’t respond. Demand increases → prices spike. Think San Francisco, New York, Boston.</li>
+</ul>
+<p>The supply curve is simple:</p>
+<p><span class="math display">\[Q^s = \alpha + \eta \cdot P\]</span></p>
+<p>where <span class="math inline">\(\eta\)</span> is the supply elasticity. When <span class="math inline">\(\eta\)</span> is large, quantity responds easily to price signals. When <span class="math inline">\(\eta\)</span> is small, prices bear the full burden of demand shifts.</p>
+<section id="the-regulatory-tax" class="level3">
+<h3 class="anchored" data-anchor-id="the-regulatory-tax">The regulatory tax</h3>
+<p><strong>Glaeser, Gyourko &amp; Saks (2005)</strong> showed that in highly regulated cities, housing prices far exceed physical construction costs. The gap — what they call the <strong>regulatory tax</strong> — is the implicit cost of zoning, permitting delays, building height restrictions, and neighborhood opposition (NIMBYism).</p>
+<p>In Manhattan, the regulatory tax can exceed $100,000 per apartment. In Houston, it’s close to zero. The difference is not construction technology — it’s regulation.</p>
+</section>
+<section id="saiz-2010" class="level3">
+<h3 class="anchored" data-anchor-id="saiz-2010">Saiz (2010)</h3>
+<p><strong>Saiz (2010)</strong> estimated housing supply elasticity for US metro areas, finding enormous variation:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>City</th>
+<th>Supply Elasticity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Houston</td>
+<td>~3.0 (very elastic)</td>
+</tr>
+<tr class="even">
+<td>Atlanta</td>
+<td>~2.5</td>
+</tr>
+<tr class="odd">
+<td>Chicago</td>
+<td>~1.5</td>
+</tr>
+<tr class="even">
+<td>Boston</td>
+<td>~0.8</td>
+</tr>
+<tr class="odd">
+<td>San Francisco</td>
+<td>~0.6 (very inelastic)</td>
+</tr>
+<tr class="even">
+<td>Miami</td>
+<td>~0.6</td>
+</tr>
+</tbody>
+</table>
+<p>Geographic constraints (water, mountains) and regulatory constraints both contribute. San Francisco has both — water on three sides and strict zoning.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>The Model View.</strong> The simulation below uses linear supply and demand curves. In reality, supply curves are kinked — elastic at low prices (easy to build) but becoming inelastic as land runs out or regulations bind. The key intuition holds: inelastic supply amplifies price volatility.</p>
+</div>
+</div>
+</div>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 680
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
+    .info-box {
+      background: #eaf2f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 13px; line-height: 1.8;
+    }
+    .info-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("elasticity", "Supply elasticity:",
+                  min = 0.3, max = 5, value = 1.5, step = 0.1),
+
+      sliderInput("demand0", "Initial demand (population index):",
+                  min = 50, max = 200, value = 100, step = 10),
+
+      sliderInput("shock", "Demand shock (% increase):",
+                  min = 0, max = 50, value = 20, step = 5),
+
+      sliderInput("cost", "Construction cost ($1000s):",
+                  min = 50, max = 300, value = 150, step = 10),
+
+      checkboxInput("rent_control", "Impose rent control", value = FALSE),
+
+      actionButton("go", "Update market", class = "btn-primary", width = "100%"),
+
+      uiOutput("info")
+    ),
+
+    mainPanel(
+      width = 9,
+      plotOutput("sd_plot", height = "500px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  market &lt;- reactive({
+    input$go
+    eta &lt;- input$elasticity
+    d0 &lt;- input$demand0
+    shock_pct &lt;- input$shock / 100
+    c_cost &lt;- input$cost
+    rent_ctrl &lt;- input$rent_control
+
+    # Demand curve: P = a - b*Q
+    # Higher d0 shifts demand right
+    a_init &lt;- d0 * 4
+    b_dem &lt;- 1.5
+
+    # Supply curve: P = c_cost + (1/eta)*Q
+    # Higher eta = flatter supply
+
+    # Initial equilibrium: a_init - b_dem*Q = c_cost + Q/eta
+    # Q* = (a_init - c_cost) / (b_dem + 1/eta)
+    q_init &lt;- (a_init - c_cost) / (b_dem + 1 / eta)
+    q_init &lt;- max(q_init, 1)
+    p_init &lt;- c_cost + q_init / eta
+
+    # After demand shock: demand shifts right
+    a_new &lt;- a_init * (1 + shock_pct)
+    q_new &lt;- (a_new - c_cost) / (b_dem + 1 / eta)
+    q_new &lt;- max(q_new, 1)
+    p_new &lt;- c_cost + q_new / eta
+
+    # With rent control: price stays at p_init, shortage develops
+    if (rent_ctrl &amp;&amp; shock_pct &gt; 0) {
+      p_ctrl &lt;- p_init
+      q_supplied_ctrl &lt;- (p_ctrl - c_cost) * eta  # supply at controlled price
+      q_demanded_ctrl &lt;- (a_new - p_ctrl) / b_dem  # demand at controlled price
+      shortage &lt;- q_demanded_ctrl - q_supplied_ctrl
+    } else {
+      p_ctrl &lt;- p_new
+      q_supplied_ctrl &lt;- q_new
+      q_demanded_ctrl &lt;- q_new
+      shortage &lt;- 0
+    }
+
+    # Regulatory tax
+    reg_tax &lt;- p_new - c_cost
+
+    # Price change
+    price_change_pct &lt;- (p_new - p_init) / p_init * 100
+    quantity_change_pct &lt;- (q_new - q_init) / q_init * 100
+
+    # Affordability (price / income proxy)
+    income &lt;- d0 * 0.8  # rough income proxy
+    afford_init &lt;- p_init / income
+    afford_new &lt;- p_new / income
+
+    list(q_init = q_init, p_init = p_init,
+         q_new = q_new, p_new = p_new,
+         a_init = a_init, a_new = a_new,
+         b_dem = b_dem, eta = eta, c_cost = c_cost,
+         reg_tax = reg_tax,
+         price_change = price_change_pct,
+         quantity_change = quantity_change_pct,
+         afford_init = afford_init, afford_new = afford_new,
+         rent_ctrl = rent_ctrl, shortage = shortage,
+         p_ctrl = p_ctrl, q_supplied_ctrl = q_supplied_ctrl,
+         q_demanded_ctrl = q_demanded_ctrl,
+         shock_pct = shock_pct)
+  })
+
+  output$sd_plot &lt;- renderPlot({
+    m &lt;- market()
+    par(mar = c(5, 5, 4, 2))
+
+    q_max &lt;- max(m$q_new, m$q_init, m$q_demanded_ctrl, na.rm = TRUE) * 1.4
+    p_max &lt;- max(m$p_new, m$p_init, m$a_new) * 1.1
+
+    q_range &lt;- seq(0, q_max, length.out = 200)
+
+    # Supply curve
+    p_supply &lt;- m$c_cost + q_range / m$eta
+
+    # Demand curves
+    p_demand_init &lt;- m$a_init - m$b_dem * q_range
+    p_demand_new &lt;- m$a_new - m$b_dem * q_range
+
+    plot(NULL, xlim = c(0, q_max), ylim = c(0, p_max),
+         xlab = "Quantity (housing units)",
+         ylab = "Price ($1000s)",
+         main = "Housing Supply and Demand")
+
+    # Supply
+    lines(q_range, p_supply, lwd = 3, col = "#e74c3c")
+
+    # Initial demand
+    lines(q_range[p_demand_init &gt; 0], p_demand_init[p_demand_init &gt; 0],
+          lwd = 2, col = "#3498db", lty = 2)
+
+    # New demand (if shock &gt; 0)
+    if (m$shock_pct &gt; 0) {
+      lines(q_range[p_demand_new &gt; 0], p_demand_new[p_demand_new &gt; 0],
+            lwd = 3, col = "#3498db")
+    }
+
+    # Construction cost line
+    abline(h = m$c_cost, lty = 3, col = "#95a5a6", lwd = 1.5)
+    text(q_max * 0.02, m$c_cost, "Construction cost", pos = 3, cex = 0.75, col = "#95a5a6")
+
+    # Initial equilibrium
+    points(m$q_init, m$p_init, pch = 19, cex = 2, col = "#7f8c8d")
+
+    # New equilibrium
+    if (m$shock_pct &gt; 0) {
+      if (m$rent_ctrl) {
+        # Show rent control price and shortage
+        abline(h = m$p_ctrl, lty = 2, col = "#f39c12", lwd = 2)
+        text(q_max * 0.5, m$p_ctrl, "Rent control ceiling", pos = 3,
+             cex = 0.85, col = "#f39c12", font = 2)
+
+        # Shortage bracket
+        arrows(m$q_supplied_ctrl, m$p_ctrl * 0.92,
+               m$q_demanded_ctrl, m$p_ctrl * 0.92,
+               code = 3, lwd = 2, col = "#e74c3c", length = 0.1)
+        text((m$q_supplied_ctrl + m$q_demanded_ctrl) / 2, m$p_ctrl * 0.85,
+             paste0("Shortage = ", round(m$shortage, 0)),
+             cex = 0.85, col = "#e74c3c", font = 2)
+      }
+
+      points(m$q_new, m$p_new, pch = 19, cex = 2, col = "#2c3e50")
+
+      # Regulatory tax bracket
+      if (m$reg_tax &gt; 5) {
+        arrows(m$q_new * 1.05, m$c_cost,
+               m$q_new * 1.05, m$p_new,
+               code = 3, lwd = 2, col = "#8e44ad", length = 0.08)
+        text(m$q_new * 1.08, (m$c_cost + m$p_new) / 2,
+             paste0("Reg. tax\n$", round(m$reg_tax, 0), "k"),
+             cex = 0.8, col = "#8e44ad", font = 2)
+      }
+    }
+
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c("Supply", "Initial demand", "New demand",
+                      "Initial eq.", "New eq."),
+           col = c("#e74c3c", "#3498db", "#3498db", "#7f8c8d", "#2c3e50"),
+           lwd = c(3, 2, 3, NA, NA), lty = c(1, 2, 1, NA, NA),
+           pch = c(NA, NA, NA, 19, 19), pt.cex = 2)
+  })
+
+  output$info &lt;- renderUI({
+    m &lt;- market()
+
+    tags$div(class = "info-box",
+      HTML(paste0(
+        "&lt;b&gt;Price change:&lt;/b&gt; ",
+        ifelse(abs(m$price_change) &lt; 1,
+               "&lt;span class='good'&gt;+", "&lt;span class='bad'&gt;+"),
+        round(m$price_change, 1), "%&lt;/span&gt;&lt;br&gt;",
+        "&lt;b&gt;Quantity change:&lt;/b&gt; +", round(m$quantity_change, 1), "%&lt;br&gt;",
+        "&lt;b&gt;Affordability ratio:&lt;/b&gt; ",
+        round(m$afford_init, 1), " -&gt; ", round(m$afford_new, 1), "&lt;br&gt;",
+        "&lt;b&gt;Regulatory tax:&lt;/b&gt; $", round(m$reg_tax, 0), "k&lt;br&gt;",
+        if (m$rent_ctrl &amp;&amp; m$shock_pct &gt; 0)
+          paste0("&lt;b&gt;Shortage:&lt;/b&gt; &lt;span class='bad'&gt;", round(m$shortage, 0), " units&lt;/span&gt;")
+        else ""
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</section>
+<section id="things-to-try" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<ul>
+<li><strong>Set elasticity to 0.5 (San Francisco):</strong> a 20% demand shock causes a large price increase and a small quantity increase. Most of the adjustment is in prices.</li>
+<li><strong>Set elasticity to 4 (Houston):</strong> the same demand shock causes a large quantity increase and a small price increase. Builders absorb the demand.</li>
+<li><strong>Compare the regulatory tax at different elasticities:</strong> with low elasticity, the gap between market price and construction cost is enormous. That gap is the cost of regulation.</li>
+<li><strong>Turn on rent control:</strong> the price is capped, but a shortage develops. Quantity supplied is less than quantity demanded at the controlled price.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="the-housing-affordability-crisis" class="level2">
+<h2 class="anchored" data-anchor-id="the-housing-affordability-crisis">The housing affordability crisis</h2>
+<p>The divergence in housing supply elasticity across US cities has enormous consequences. Since the 1970s, coastal cities with inelastic supply (San Francisco, New York, Boston, LA) have seen housing prices dramatically outpace incomes. Interior cities with elastic supply (Houston, Dallas, Phoenix, Atlanta) have not.</p>
+<p>This isn’t about demand differences — all these cities experienced income growth and population growth. The difference is supply response. When demand rises and supply can’t respond, prices absorb everything.</p>
+<p><strong>Hsieh and Moretti (2019)</strong> estimated that housing constraints in high-productivity cities like New York and San Francisco caused a massive <strong>spatial misallocation</strong> of labor. Workers who would be more productive in these cities can’t afford to live there, so they stay in lower-productivity locations. The aggregate cost: roughly <strong>36% of US GDP growth</strong> between 1964 and 2009 was lost to this misallocation. Relaxing housing constraints in just New York, San Francisco, and San Jose to the median US level would have raised GDP growth substantially.</p>
+<p>The policy implication is stark: local zoning decisions have national macroeconomic consequences.</p>
+<hr>
+</section>
+<section id="did-you-know" class="level2">
+<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
+<ul>
+<li><strong>Houston</strong> is the largest US city with no formal zoning ordinance. Instead, it uses deed restrictions and minimum lot-size requirements. The result: Houston has some of the most affordable housing among large US metros, with median home prices roughly one-third those of San Francisco.</li>
+<li><strong>Japan</strong> takes a radically different approach: zoning is set nationally, not locally. The national government defines 12 zone types, and local municipalities cannot restrict land use beyond these categories. This means NIMBYs can’t block new housing at the neighborhood level. Tokyo, a metro of 37 million people, has housing costs roughly comparable to Houston.</li>
+<li><strong>Hsieh and Moretti’s (2019)</strong> estimate of 36% lost GDP growth is one of the most cited numbers in recent urban economics. The mechanism is simple: productive cities can’t grow because they can’t build housing, so workers are stuck in less productive locations. The aggregate output loss is the difference between actual GDP and what GDP would have been with mobile workers and elastic housing supply.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com">Nency Dhameja</a> | <a href="../index.html">All Notes</a> | Developed with AI assistance | <a href="mailto:nencydhameja@gmail.com">Feedback?</a></span></p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
