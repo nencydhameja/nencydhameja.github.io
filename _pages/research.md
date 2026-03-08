@@ -72,7 +72,7 @@ _Do dollar-store rollouts causally affect metabolic health risks?_
 
 ---
 
-## Computational & Simulation-Based Economics
+## Computational Methods & Simulation
 
 ### <span class="paper-title">Monte Carlo Diagnostics for Agent-Based Models</span> <i>with Christopher Zosh, Yixin Ren, Andreas Pape (Working Paper)</i>
 
