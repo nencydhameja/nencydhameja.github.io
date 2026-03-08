@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Fixed vs Random Effects – Applied Causal Inference</title>
+<title>Bayesian Causal Inference – Applied Causal Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -151,7 +116,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./panel-fe-re.html">Panel Data</a></li><li class="breadcrumb-item"><a href="./panel-fe-re.html">Fixed vs Random Effects</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bayesian-causal.html">Bayesian Causal Inference</a></li><li class="breadcrumb-item"><a href="./bayesian-causal.html">Bayesian Causal Inference</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -269,7 +234,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./panel-fe-re.html" class="sidebar-item-text sidebar-link active">
+  <a href="./panel-fe-re.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Fixed vs Random Effects</span></a>
   </div>
 </li>
@@ -333,7 +298,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bayesian-causal.html" class="sidebar-item-text sidebar-link">
+  <a href="./bayesian-causal.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Bayesian Causal Inference</span></a>
   </div>
 </li>
@@ -372,37 +337,35 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#panel-data-the-same-units-over-time-or-nested-units" id="toc-panel-data-the-same-units-over-time-or-nested-units" class="nav-link active" data-scroll-target="#panel-data-the-same-units-over-time-or-nested-units">Panel data: the same units over time (or nested units)</a></li>
-  <li><a href="#fixed-effects-fe" id="toc-fixed-effects-fe" class="nav-link" data-scroll-target="#fixed-effects-fe">Fixed effects (FE)</a>
+  <li><a href="#why-go-bayesian-for-causal-effects" id="toc-why-go-bayesian-for-causal-effects" class="nav-link active" data-scroll-target="#why-go-bayesian-for-causal-effects">Why go Bayesian for causal effects?</a></li>
+  <li><a href="#setup-a-job-training-program" id="toc-setup-a-job-training-program" class="nav-link" data-scroll-target="#setup-a-job-training-program">Setup: a job training program</a>
   <ul class="collapse">
-  <li><a href="#what-fe-eliminates" id="toc-what-fe-eliminates" class="nav-link" data-scroll-target="#what-fe-eliminates">What FE eliminates</a></li>
-  <li><a href="#what-fe-cant-do" id="toc-what-fe-cant-do" class="nav-link" data-scroll-target="#what-fe-cant-do">What FE can’t do</a></li>
-  </ul></li>
-  <li><a href="#random-effects-re" id="toc-random-effects-re" class="nav-link" data-scroll-target="#random-effects-re">Random effects (RE)</a>
-  <ul class="collapse">
-  <li><a href="#the-critical-assumption" id="toc-the-critical-assumption" class="nav-link" data-scroll-target="#the-critical-assumption">The critical assumption</a></li>
-  </ul></li>
-  <li><a href="#the-tradeoff" id="toc-the-tradeoff" class="nav-link" data-scroll-target="#the-tradeoff">The tradeoff</a>
-  <ul class="collapse">
+  <li><a href="#how-the-bayesian-update-works" id="toc-how-the-bayesian-update-works" class="nav-link" data-scroll-target="#how-the-bayesian-update-works">How the Bayesian update works</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
-  <li><a href="#the-hausman-test" id="toc-the-hausman-test" class="nav-link" data-scroll-target="#the-hausman-test">The Hausman test</a>
+  <li><a href="#prior-sensitivity" id="toc-prior-sensitivity" class="nav-link" data-scroll-target="#prior-sensitivity">Prior sensitivity</a>
   <ul class="collapse">
-  <li><a href="#the-logic" id="toc-the-logic" class="nav-link" data-scroll-target="#the-logic">The logic</a></li>
-  <li><a href="#hausman-test-in-practice" id="toc-hausman-test-in-practice" class="nav-link" data-scroll-target="#hausman-test-in-practice">Hausman test in practice</a></li>
+  <li><a href="#reading-the-sensitivity-plot" id="toc-reading-the-sensitivity-plot" class="nav-link" data-scroll-target="#reading-the-sensitivity-plot">Reading the sensitivity plot</a></li>
+  <li><a href="#things-to-try-1" id="toc-things-to-try-1" class="nav-link" data-scroll-target="#things-to-try-1">Things to try</a></li>
   </ul></li>
-  <li><a href="#connection-to-other-methods" id="toc-connection-to-other-methods" class="nav-link" data-scroll-target="#connection-to-other-methods">Connection to other methods</a></li>
-  <li><a href="#in-stata" id="toc-in-stata" class="nav-link" data-scroll-target="#in-stata">In Stata</a></li>
+  <li><a href="#when-does-bayesian-help-most" id="toc-when-does-bayesian-help-most" class="nav-link" data-scroll-target="#when-does-bayesian-help-most">When does Bayesian help most?</a>
+  <ul class="collapse">
+  <li><a href="#what-the-monte-carlo-shows" id="toc-what-the-monte-carlo-shows" class="nav-link" data-scroll-target="#what-the-monte-carlo-shows">What the Monte Carlo shows</a></li>
+  <li><a href="#things-to-try-2" id="toc-things-to-try-2" class="nav-link" data-scroll-target="#things-to-try-2">Things to try</a></li>
+  </ul></li>
+  <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a>
+  <ul class="collapse">
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./panel-fe-re.html">Panel Data</a></li><li class="breadcrumb-item"><a href="./panel-fe-re.html">Fixed vs Random Effects</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bayesian-causal.html">Bayesian Causal Inference</a></li><li class="breadcrumb-item"><a href="./bayesian-causal.html">Bayesian Causal Inference</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Fixed vs Random Effects</h1>
+<h1 class="title">Bayesian Causal Inference</h1>
 </div>
 
 
@@ -419,151 +382,86 @@ window.Quarto = {
 </header>
 
 
-<section id="panel-data-the-same-units-over-time-or-nested-units" class="level2">
-<h2 class="anchored" data-anchor-id="panel-data-the-same-units-over-time-or-nested-units">Panel data: the same units over time (or nested units)</h2>
-<p>Most of the methods in this course use <strong>cross-sectional</strong> data — you see each unit once. But often you observe units <strong>repeatedly</strong>:</p>
+<section id="why-go-bayesian-for-causal-effects" class="level2">
+<h2 class="anchored" data-anchor-id="why-go-bayesian-for-causal-effects">Why go Bayesian for causal effects?</h2>
+<p>Frequentist causal inference gives you a point estimate and a confidence interval. But sometimes you want more:</p>
 <ul>
-<li>The same people surveyed each year (panel)</li>
-<li>Students nested within schools (clusters)</li>
-<li>Census tracts nested within counties (hierarchical)</li>
+<li><strong>“What’s the probability the program actually works?”</strong> A frequentist CI doesn’t answer this. A posterior does: <span class="math inline">\(P(\tau &gt; 0 \mid \text{data})\)</span>.</li>
+<li><strong>“A previous study found an effect of $1,500. Can I use that?”</strong> Bayesian priors let you formally incorporate prior evidence.</li>
+<li><strong>“My sample is tiny. Can I still say anything?”</strong> With a reasonable prior, Bayesian estimates are more stable in small samples.</li>
 </ul>
-<p>Panel/grouped data has a superpower: you can separate <strong>within-group variation</strong> (what changes over time for the same person) from <strong>between-group variation</strong> (how different people differ from each other). This distinction is the key to fixed vs random effects.</p>
-<div class="callout callout-style-simple callout-tip no-icon">
+<p>The cost: you need to specify a prior, and your results depend on it. The payoff: richer inference and better small-sample behavior.</p>
+<div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Example: dollar stores and obesity.</strong> You have census tracts nested within counties, observed over multiple years. Some tracts get a new dollar store, others don’t. The question: does dollar store presence <em>cause</em> higher obesity? The problem: counties that attract dollar stores may already be different — poorer, more rural, less access to grocery stores. That’s a group-level confounder. Fixed effects can absorb it.</p>
+<p><strong>Connection to the courses.</strong> This page bridges the <a href="../bayesian-inference/index.html">Bayesian inference</a> and causal inference courses. We assume you know the basics of <a href="../bayesian-inference/priors-posteriors.html">priors and posteriors</a> and <a href="doubly-robust.html">doubly robust estimation</a>. If not, start there.</p>
 </div>
 </div>
 </div>
+<hr>
 </section>
-<section id="fixed-effects-fe" class="level2">
-<h2 class="anchored" data-anchor-id="fixed-effects-fe">Fixed effects (FE)</h2>
-<p><strong>The idea:</strong> include a separate intercept <span class="math inline">\(\alpha_j\)</span> for each group. This absorbs <em>everything</em> that is constant within the group — observed or unobserved.</p>
-<p><span class="math display">\[Y_{it} = \alpha_i + \tau D_{it} + \beta X_{it} + \varepsilon_{it}\]</span></p>
-<p>In practice, you <strong>demean</strong> each variable by its group average:</p>
-<p><span class="math display">\[\tilde{Y}_{it} = Y_{it} - \bar{Y}_i, \quad \tilde{D}_{it} = D_{it} - \bar{D}_i, \quad \tilde{X}_{it} = X_{it} - \bar{X}_i\]</span></p>
-<p>Then regress <span class="math inline">\(\tilde{Y}\)</span> on <span class="math inline">\(\tilde{D}\)</span> and <span class="math inline">\(\tilde{X}\)</span>. The demeaning eliminates <span class="math inline">\(\alpha_i\)</span> entirely — you only use <strong>within-group variation</strong>.</p>
-<section id="what-fe-eliminates" class="level3">
-<h3 class="anchored" data-anchor-id="what-fe-eliminates">What FE eliminates</h3>
-<p>Any variable that is constant within a group gets differenced out:</p>
-<ul>
-<li>County-level: food culture, geography, baseline poverty level</li>
-<li>Person-level (in a panel): ability, motivation, family background</li>
-<li>Firm-level: management quality, industry</li>
-</ul>
-<p><strong>This is the power of FE:</strong> you don’t need to measure or even name the confounders. If they’re constant within groups, they’re gone.</p>
-</section>
-<section id="what-fe-cant-do" class="level3">
-<h3 class="anchored" data-anchor-id="what-fe-cant-do">What FE can’t do</h3>
-<ul>
-<li><strong>Can’t estimate effects of group-level variables.</strong> If you want to know the effect of being rural vs urban, FE absorbs that — it’s constant within county.</li>
-<li><strong>Can’t handle time-varying unobservables.</strong> If something changes within the group <em>and</em> is correlated with treatment, FE doesn’t help.</li>
-<li><strong>Uses only within-group variation.</strong> If treatment barely varies within groups, FE has little to work with and estimates are imprecise.</li>
-</ul>
-</section>
-</section>
-<section id="random-effects-re" class="level2">
-<h2 class="anchored" data-anchor-id="random-effects-re">Random effects (RE)</h2>
-<p><strong>The idea:</strong> instead of treating each <span class="math inline">\(\alpha_j\)</span> as a fixed parameter, assume the group effects are <strong>random draws from a population:</strong></p>
-<p><span class="math display">\[\alpha_j \sim N(\mu, \tau^2)\]</span></p>
-<p>This is the same structure as the <a href="../bayesian-inference/hierarchical.html">hierarchical model</a> on the Bayesian course — RE is its frequentist counterpart. It produces <strong>partial pooling</strong>: small groups are shrunk toward the grand mean.</p>
-<section id="the-critical-assumption" class="level3">
-<h3 class="anchored" data-anchor-id="the-critical-assumption">The critical assumption</h3>
-<p>RE assumes group effects are <strong>uncorrelated with the covariates:</strong></p>
-<p><span class="math display">\[E[\alpha_j \mid X_{it}, D_{it}] = \mu \quad \text{(no correlation)}\]</span></p>
-<p>If this holds, RE is more <strong>efficient</strong> than FE — it uses both within-group <em>and</em> between-group variation, so estimates are more precise.</p>
-<p>If this fails — if groups with higher <span class="math inline">\(\alpha_j\)</span> systematically differ in their <span class="math inline">\(X\)</span> or <span class="math inline">\(D\)</span> values — <strong>RE is biased.</strong> This is the same selection bias problem from the <a href="potential-outcomes.html">potential outcomes</a> page, but at the group level.</p>
-</section>
-</section>
-<section id="the-tradeoff" class="level2">
-<h2 class="anchored" data-anchor-id="the-tradeoff">The tradeoff</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th>Fixed effects</th>
-<th>Random effects</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Eliminates group-level confounders</strong></td>
-<td>Yes</td>
-<td>Only if uncorrelated with X</td>
-</tr>
-<tr class="even">
-<td><strong>Uses between-group variation</strong></td>
-<td>No (only within)</td>
-<td>Yes (within + between)</td>
-</tr>
-<tr class="odd">
-<td><strong>Efficiency</strong></td>
-<td>Lower (discards information)</td>
-<td>Higher (if assumption holds)</td>
-</tr>
-<tr class="even">
-<td><strong>Can estimate group-level predictors</strong></td>
-<td>No</td>
-<td>Yes</td>
-</tr>
-<tr class="odd">
-<td><strong>Bias when <span class="math inline">\(\alpha_j\)</span> correlated with X</strong></td>
-<td>None</td>
-<td><strong>Biased</strong></td>
-</tr>
-</tbody>
-</table>
-<p><strong>The rule:</strong> if you’re after a causal effect and you’re worried about group-level confounders, use FE. If you believe the RE assumption (no correlation) or you need group-level predictors, use RE. When in doubt, FE is the safer choice.</p>
+<section id="setup-a-job-training-program" class="level2">
+<h2 class="anchored" data-anchor-id="setup-a-job-training-program">Setup: a job training program</h2>
+<p>A nonprofit runs a job training program for unemployed workers. We observe earnings for participants (treated) and non-participants (control). The question: <strong>does the program increase earnings?</strong></p>
+<p>We’ll use selection on observables — controlling for baseline covariates like age and prior earnings — and compare three approaches:</p>
+<ol type="1">
+<li><strong>Difference in means</strong> (naive)</li>
+<li><strong>Regression adjustment</strong> (frequentist, with controls)</li>
+<li><strong>Bayesian regression</strong> (with an informative prior from a previous study)</li>
+</ol>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 650
+#| viewerHeight: 700
 
 library(shiny)
 
 ui &lt;- fluidPage(
   tags$head(tags$style(HTML("
-    .stats-box {
+    .info-box {
       background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
+      margin-top: 12px; font-size: 14px; line-height: 1.8;
     }
-    .stats-box b { color: #2c3e50; }
-    .good { color: #27ae60; font-weight: bold; }
-    .bad  { color: #e74c3c; font-weight: bold; }
+    .info-box b { color: #2c3e50; }
+    .good  { color: #27ae60; font-weight: bold; }
+    .bad   { color: #e74c3c; font-weight: bold; }
+    .muted { color: #7f8c8d; }
   "))),
 
   sidebarLayout(
     sidebarPanel(
       width = 3,
 
-      sliderInput("n_groups", "Number of groups:",
-                  min = 10, max = 50, value = 20, step = 5),
+      tags$h5("True DGP"),
+      sliderInput("true_ate", "True treatment effect ($):",
+                  min = -500, max = 3000, value = 1200, step = 100),
 
-      sliderInput("n_per", "Observations per group:",
-                  min = 5, max = 50, value = 10, step = 5),
+      sliderInput("n_obs", "Sample size:",
+                  min = 30, max = 500, value = 80, step = 10),
 
-      sliderInput("ate", "True ATE:",
-                  min = 0, max = 5, value = 2, step = 0.5),
+      sliderInput("confounding", "Selection bias strength:",
+                  min = 0, max = 1, value = 0.5, step = 0.1),
 
-      sliderInput("corr_alpha", "Correlation (\u03B1 with D):",
-                  min = 0, max = 3, value = 0, step = 0.25),
+      tags$hr(),
+      tags$h5("Bayesian prior"),
+      sliderInput("prior_mean", "Prior mean ($):",
+                  min = -1000, max = 3000, value = 1500, step = 100),
 
+      sliderInput("prior_sd", "Prior SD ($):",
+                  min = 100, max = 3000, value = 800, step = 100),
+
+      tags$hr(),
       actionButton("go", "New draw", class = "btn-primary", width = "100%"),
 
-      uiOutput("results")
+      uiOutput("info")
     ),
 
     mainPanel(
       width = 9,
       fluidRow(
-        column(6, plotOutput("scatter_plot", height = "420px")),
-        column(6, plotOutput("compare_plot", height = "420px"))
+        column(6, plotOutput("estimates_plot", height = "420px")),
+        column(6, plotOutput("posterior_plot", height = "420px"))
       )
     )
   )
@@ -573,216 +471,586 @@ server &lt;- function(input, output, session) {
 
   dat &lt;- reactive({
     input$go
-    J     &lt;- input$n_groups
-    n_per &lt;- input$n_per
-    ate   &lt;- input$ate
-    rho   &lt;- input$corr_alpha
+    n    &lt;- input$n_obs
+    ate  &lt;- input$true_ate
+    conf &lt;- input$confounding
 
-    # Group effects
-    alpha &lt;- rnorm(J, mean = 0, sd = 3)
+    # Covariates
+    age &lt;- rnorm(n, 35, 8)
+    prior_earn &lt;- rnorm(n, 20000, 5000)
 
-    # Expand to individual level
-    group &lt;- rep(1:J, each = n_per)
-    alpha_i &lt;- rep(alpha, each = n_per)
-    N &lt;- J * n_per
+    # Selection into treatment depends on covariates
+    # Higher prior earnings -&gt; more likely to be treated (positive selection)
+    latent &lt;- conf * (prior_earn - 20000) / 5000 + rnorm(n)
+    treat  &lt;- as.integer(latent &gt; 0)
 
-    # Treatment: correlated with group effect (the confounding)
-    x &lt;- rnorm(N)
-    p_treat &lt;- pnorm(0.5 * x + rho * alpha_i / 3)
-    treat &lt;- rbinom(N, 1, p_treat)
+    # Outcome: earnings
+    noise &lt;- rnorm(n, sd = 3000)
+    earnings &lt;- 15000 + 200 * (age - 35) + 0.3 * (prior_earn - 20000) +
+                ate * treat + noise
 
-    # Outcome
-    y &lt;- alpha_i + ate * treat + 1.5 * x + rnorm(N)
+    df &lt;- data.frame(earnings = earnings, treat = treat,
+                     age = age, prior_earn = prior_earn)
 
-    # Naive (pooled OLS, no group effects)
-    naive &lt;- coef(lm(y ~ treat + x))["treat"]
+    # 1. Naive difference in means
+    naive_est &lt;- mean(earnings[treat == 1]) - mean(earnings[treat == 0])
+    n1 &lt;- sum(treat); n0 &lt;- n - n1
+    se_naive &lt;- sqrt(var(earnings[treat == 1]) / max(n1, 1) +
+                     var(earnings[treat == 0]) / max(n0, 1))
 
-    # Fixed effects (demean within group)
-    y_dm &lt;- y - ave(y, group)
-    d_dm &lt;- treat - ave(treat, group)
-    x_dm &lt;- x - ave(x, group)
-    fe_est &lt;- coef(lm(y_dm ~ d_dm + x_dm - 1))["d_dm"]
+    # 2. Regression adjustment (frequentist)
+    fit_freq &lt;- lm(earnings ~ treat + age + prior_earn, data = df)
+    freq_est &lt;- coef(fit_freq)["treat"]
+    freq_se  &lt;- summary(fit_freq)$coefficients["treat", "Std. Error"]
 
-    # Random effects (partial pooling via weighted average)
-    # Simple RE: GLS with estimated variance components
-    # Use between and within estimators
-    y_bar_j &lt;- ave(y, group)
-    d_bar_j &lt;- ave(treat, group)
-    x_bar_j &lt;- ave(x, group)
+    # 3. Bayesian (conjugate normal update)
+    # Likelihood: treat coefficient ~ N(freq_est, freq_se^2)
+    # Prior: tau ~ N(prior_mean, prior_sd^2)
+    prior_mean &lt;- input$prior_mean
+    prior_sd   &lt;- input$prior_sd
+    prior_prec &lt;- 1 / prior_sd^2
+    data_prec  &lt;- 1 / freq_se^2
 
-    # Within estimator = FE
-    # Between estimator
-    uj &lt;- tapply(y, group, mean)
-    dj &lt;- tapply(treat, group, mean)
-    xj &lt;- tapply(x, group, mean)
-    if (sd(dj) &gt; 0.01) {
-      be_est &lt;- coef(lm(uj ~ dj + xj))["dj"]
-    } else {
-      be_est &lt;- naive
-    }
+    post_prec &lt;- prior_prec + data_prec
+    post_var  &lt;- 1 / post_prec
+    post_mean &lt;- post_var * (prior_prec * prior_mean + data_prec * freq_est)
+    post_sd   &lt;- sqrt(post_var)
 
-    # RE is a weighted combo of within and between
-    sigma2_e &lt;- var(y_dm - fe_est * d_dm - coef(lm(y_dm ~ d_dm + x_dm - 1))["x_dm"] * x_dm)
-    sigma2_a &lt;- max(var(uj - fe_est * dj) - sigma2_e / n_per, 0.01)
-    theta &lt;- 1 - sqrt(sigma2_e / (sigma2_e + n_per * sigma2_a))
+    # P(tau &gt; 0 | data)
+    p_positive &lt;- 1 - pnorm(0, post_mean, post_sd)
 
-    y_re &lt;- y - theta * y_bar_j
-    d_re &lt;- treat - theta * d_bar_j
-    x_re &lt;- x - theta * x_bar_j
-    re_est &lt;- coef(lm(y_re ~ d_re + x_re))["d_re"]
-
-    list(y = y, treat = treat, x = x, group = group, alpha_i = alpha_i,
-         naive = naive, fe_est = fe_est, re_est = re_est, be_est = be_est,
-         ate = ate, rho = rho, J = J, n_per = n_per,
-         alpha = alpha)
+    list(df = df, ate = ate,
+         naive_est = naive_est, se_naive = se_naive,
+         freq_est = freq_est, freq_se = freq_se,
+         prior_mean = prior_mean, prior_sd = prior_sd,
+         post_mean = post_mean, post_sd = post_sd,
+         p_positive = p_positive,
+         n = n, n1 = n1, n0 = n0)
   })
 
-  output$scatter_plot &lt;- renderPlot({
+  output$estimates_plot &lt;- renderPlot({
     d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
+    par(mar = c(5, 10, 3, 2))
 
-    # Color by group (cycle through colors)
-    palette &lt;- rep(c("#3498db", "#e74c3c", "#27ae60", "#f39c12",
-                     "#9b59b6", "#1abc9c", "#e67e22", "#2c3e50"),
-                   length.out = d$J)
-    cols &lt;- paste0(palette[d$group], "50")
+    ests &lt;- c(d$naive_est, d$freq_est, d$post_mean)
+    ses  &lt;- c(d$se_naive, d$freq_se, d$post_sd)
+    labs &lt;- c("Naive\n(diff in means)", "Regression\nadjustment", "Bayesian\nposterior")
+    cols &lt;- c("#e74c3c", "#3498db", "#27ae60")
 
-    plot(d$x, d$y, pch = 16, cex = 0.4, col = cols,
-         xlab = "X (covariate)", ylab = "Y (outcome)",
-         main = "Data by Group (colors = groups)")
+    xlim &lt;- range(c(ests - 2.5 * ses, ests + 2.5 * ses, d$ate))
 
-    # Show a few group means
-    show_groups &lt;- 1:min(5, d$J)
-    for (j in show_groups) {
-      idx &lt;- d$group == j
-      points(mean(d$x[idx]), mean(d$y[idx]),
-             pch = 17, cex = 1.5, col = palette[j])
+    plot(NULL, xlim = xlim, ylim = c(0.5, 3.5),
+         xlab = "Treatment effect ($)", ylab = "", yaxt = "n",
+         main = "Three estimates of the training effect")
+    axis(2, at = 1:3, labels = labs, las = 1, cex.axis = 0.9)
+
+    abline(v = d$ate, col = "gray40", lty = 2, lwd = 2)
+    text(d$ate, 3.45, paste0("Truth: $", d$ate), cex = 0.85, col = "gray40")
+
+    for (i in 1:3) {
+      ci_lo &lt;- ests[i] - 1.96 * ses[i]
+      ci_hi &lt;- ests[i] + 1.96 * ses[i]
+      segments(ci_lo, i, ci_hi, i, col = cols[i], lwd = 3)
+      points(ests[i], i, pch = 16, col = cols[i], cex = 1.8)
     }
 
-    if (d$rho &gt; 0) {
-      mtext(expression(alpha[j] * " correlated with D — RE is biased"),
-            side = 3, line = 0, cex = 0.8, col = "#e74c3c", font = 2)
-    } else {
-      mtext(expression(alpha[j] * " independent of D — RE is valid"),
-            side = 3, line = 0, cex = 0.8, col = "#27ae60", font = 2)
-    }
+    abline(v = 0, col = "gray80", lty = 3)
+    legend("topright", bty = "n", cex = 0.8,
+           legend = c("Point estimate", "95% interval", "True effect"),
+           pch = c(16, NA, NA), lty = c(NA, 1, 2),
+           lwd = c(NA, 3, 2), col = c("gray40", "gray40", "gray40"))
   })
 
-  output$compare_plot &lt;- renderPlot({
+  output$posterior_plot &lt;- renderPlot({
     d &lt;- dat()
-    par(mar = c(4.5, 9, 3, 2))
+    par(mar = c(5, 4.5, 3, 1))
 
-    ests &lt;- c(d$fe_est, d$re_est, d$naive)
-    labels &lt;- c("Fixed effects", "Random effects", "Pooled OLS")
-    cols &lt;- c("#27ae60", "#3498db", "#e74c3c")
+    # Plot range
+    all_means &lt;- c(d$prior_mean, d$freq_est, d$post_mean)
+    all_sds   &lt;- c(d$prior_sd, d$freq_se, d$post_sd)
+    xlo &lt;- min(all_means - 3 * all_sds)
+    xhi &lt;- max(all_means + 3 * all_sds)
+    x   &lt;- seq(xlo, xhi, length.out = 500)
 
-    xlim &lt;- range(c(ests, d$ate))
-    pad  &lt;- max(diff(xlim) * 0.4, 0.5)
-    xlim &lt;- xlim + c(-pad, pad)
+    # Densities
+    d_prior &lt;- dnorm(x, d$prior_mean, d$prior_sd)
+    d_like  &lt;- dnorm(x, d$freq_est, d$freq_se)
+    d_post  &lt;- dnorm(x, d$post_mean, d$post_sd)
 
-    plot(ests, 1:3, pch = 19, cex = 2, col = cols,
-         xlim = xlim, ylim = c(0.5, 3.5),
-         yaxt = "n", xlab = "Estimated treatment effect",
-         ylab = "", main = "Estimator Comparison")
-    axis(2, at = 1:3, labels = labels, las = 1, cex.axis = 0.9)
+    ymax &lt;- max(c(d_prior, d_like, d_post)) * 1.15
 
-    abline(v = d$ate, lty = 2, col = "#2c3e50", lwd = 2)
-    text(d$ate, 3.45, paste0("True ATE = ", d$ate),
-         cex = 0.85, font = 2, col = "#2c3e50")
+    plot(x, d_like, type = "l", col = "#3498db", lwd = 2.5,
+         xlab = "Treatment effect ($)", ylab = "Density",
+         main = "Prior, likelihood &amp; posterior",
+         ylim = c(0, ymax))
+    lines(x, d_prior, col = "#e67e22", lwd = 2.5, lty = 2)
+    lines(x, d_post, col = "#27ae60", lwd = 3)
 
-    segments(d$ate, 1:3, ests, 1:3, col = cols, lwd = 2, lty = 2)
+    # Shade posterior
+    poly_x &lt;- c(x, rev(x))
+    poly_y &lt;- c(d_post, rep(0, length(x)))
+    polygon(poly_x, poly_y, col = "#27ae6025", border = NA)
+
+    abline(v = d$ate, col = "gray40", lty = 2, lwd = 1.5)
+    abline(v = 0, col = "gray80", lty = 3)
+
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c(paste0("Prior: N(", d$prior_mean, ", ", d$prior_sd, "\u00b2)"),
+                      paste0("Likelihood (data): N(",
+                             round(d$freq_est), ", ", round(d$freq_se), "\u00b2)"),
+                      paste0("Posterior: N(",
+                             round(d$post_mean), ", ", round(d$post_sd), "\u00b2)")),
+           col = c("#e67e22", "#3498db", "#27ae60"),
+           lwd = c(2.5, 2.5, 3), lty = c(2, 1, 1))
   })
 
-  output$results &lt;- renderUI({
+  output$info &lt;- renderUI({
     d &lt;- dat()
-    b_naive &lt;- d$naive - d$ate
-    b_fe    &lt;- d$fe_est - d$ate
-    b_re    &lt;- d$re_est - d$ate
 
-    fe_class &lt;- if (abs(b_fe) &lt; abs(b_naive) * 0.5) "good" else "bad"
-    re_class &lt;- if (abs(b_re) &lt; abs(b_naive) * 0.5) "good" else "bad"
+    # Coverage
+    freq_covers &lt;- (d$freq_est - 1.96 * d$freq_se &lt;= d$ate) &amp;
+                   (d$freq_est + 1.96 * d$freq_se &gt;= d$ate)
+    bayes_covers &lt;- (d$post_mean - 1.96 * d$post_sd &lt;= d$ate) &amp;
+                    (d$post_mean + 1.96 * d$post_sd &gt;= d$ate)
 
-    hausman &lt;- abs(d$fe_est - d$re_est)
-    h_class &lt;- if (hausman &lt; 0.3) "good" else "bad"
-    h_label &lt;- if (hausman &lt; 0.3) "FE \u2248 RE (RE likely OK)" else "FE \u2260 RE (use FE)"
+    freq_tag &lt;- if (freq_covers) "&lt;span class='good'&gt;Yes&lt;/span&gt;" else "&lt;span class='bad'&gt;No&lt;/span&gt;"
+    bayes_tag &lt;- if (bayes_covers) "&lt;span class='good'&gt;Yes&lt;/span&gt;" else "&lt;span class='bad'&gt;No&lt;/span&gt;"
 
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;True ATE:&lt;/b&gt; ", d$ate, "&lt;br&gt;",
-        "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;b&gt;Pooled OLS:&lt;/b&gt; &lt;span class='bad'&gt;", round(d$naive, 3), "&lt;/span&gt;",
-        " (bias: ", round(b_naive, 3), ")&lt;br&gt;",
-        "&lt;b&gt;Fixed effects:&lt;/b&gt; &lt;span class='", fe_class, "'&gt;",
-        round(d$fe_est, 3), "&lt;/span&gt;",
-        " (bias: ", round(b_fe, 3), ")&lt;br&gt;",
-        "&lt;b&gt;Random effects:&lt;/b&gt; &lt;span class='", re_class, "'&gt;",
-        round(d$re_est, 3), "&lt;/span&gt;",
-        " (bias: ", round(b_re, 3), ")&lt;br&gt;",
-        "&lt;hr style='margin:6px 0'&gt;",
-        "&lt;b&gt;|FE \u2212 RE|:&lt;/b&gt; &lt;span class='", h_class, "'&gt;",
-        round(hausman, 3), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;span class='", h_class, "'&gt;", h_label, "&lt;/span&gt;"
-      ))
-    )
+    tags$div(class = "info-box", HTML(paste0(
+      "&lt;b&gt;Naive:&lt;/b&gt; $", round(d$naive_est), "&lt;br&gt;",
+      "&lt;b&gt;Regression:&lt;/b&gt; $", round(d$freq_est),
+      " &amp;plusmn; ", round(1.96 * d$freq_se), "&lt;br&gt;",
+      "&lt;b&gt;Bayesian:&lt;/b&gt; $", round(d$post_mean),
+      " &amp;plusmn; ", round(1.96 * d$post_sd), "&lt;br&gt;",
+      "&lt;b&gt;P(effect &gt; 0 | data):&lt;/b&gt; ", round(d$p_positive, 3), "&lt;br&gt;",
+      "&lt;hr style='margin:8px 0'&gt;",
+      "&lt;small&gt;Covers truth? Freq: ", freq_tag,
+      " | Bayes: ", bayes_tag, "&lt;/small&gt;"
+    )))
   })
 }
 
 shinyApp(ui, server)</code></pre>
+<section id="how-the-bayesian-update-works" class="level3">
+<h3 class="anchored" data-anchor-id="how-the-bayesian-update-works">How the Bayesian update works</h3>
+<p>The mechanics are simple. The regression gives us a likelihood for the treatment effect:</p>
+<p><span class="math display">\[\hat{\tau}_{\text{data}} \sim N(\hat{\tau}_{\text{freq}}, \; \text{SE}^2)\]</span></p>
+<p>We combine this with a prior from a previous study:</p>
+<p><span class="math display">\[\tau \sim N(\mu_0, \; \sigma_0^2)\]</span></p>
+<p>The posterior is another normal (conjugate updating):</p>
+<p><span class="math display">\[\tau \mid \text{data} \sim N\!\left(\frac{\sigma_0^{-2} \mu_0 + \text{SE}^{-2} \hat{\tau}_{\text{freq}}}{\sigma_0^{-2} + \text{SE}^{-2}}, \;\; \frac{1}{\sigma_0^{-2} + \text{SE}^{-2}}\right)\]</span></p>
+<p>The posterior mean is a <strong>precision-weighted average</strong> of the prior mean and the data estimate. Whichever has smaller variance (higher precision) gets more weight.</p>
+</section>
 <section id="things-to-try" class="level3">
 <h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
 <ul>
-<li><strong>Correlation = 0:</strong> group effects are independent of treatment. All three estimators work, but RE and FE are close to the truth while pooled OLS may show some bias. The |FE − RE| gap is small — Hausman says RE is fine.</li>
-<li><strong>Correlation = 1.5:</strong> now groups with higher <span class="math inline">\(\alpha_j\)</span> are more likely to get treated. Pooled OLS is badly biased. <strong>FE still works</strong> (it eliminates <span class="math inline">\(\alpha_j\)</span>). <strong>RE is biased</strong> — it uses between-group variation that’s contaminated by the correlation. The |FE − RE| gap is large — Hausman says use FE.</li>
-<li><strong>Correlation = 3:</strong> extreme confounding. RE is nearly as biased as pooled OLS. FE remains unbiased. This is why FE is the default in applied economics.</li>
-<li><strong>Small groups (5 obs per group):</strong> FE is noisier because it uses less data. RE is more precise <em>when valid</em> — that’s the efficiency gain. But precision doesn’t help if the estimate is biased.</li>
+<li><strong>Small sample (n=30), high confounding:</strong> the naive estimate is way off. Regression adjustment helps but is noisy. The Bayesian estimate, anchored by the prior, is more stable.</li>
+<li><strong>Large sample (n=500):</strong> the prior barely matters — the data dominates. All three estimates converge. This is the Bayesian guarantee: with enough data, the prior washes out.</li>
+<li><strong>Wrong prior (set prior mean = -500, true effect = 1200):</strong> watch how the posterior gets pulled toward the wrong prior at small <span class="math inline">\(n\)</span> but corrects at large <span class="math inline">\(n\)</span>. This is the risk of informative priors.</li>
+<li><strong>Set confounding = 0:</strong> naive and regression estimates agree (no selection bias). The Bayesian estimate is a compromise between data and prior.</li>
 </ul>
 <hr>
 </section>
 </section>
-<section id="the-hausman-test" class="level2">
-<h2 class="anchored" data-anchor-id="the-hausman-test">The Hausman test</h2>
-<p>You’ve seen it informally in the simulation: when |FE − RE| is large, RE is suspect. The <strong>Hausman test</strong> formalizes this.</p>
-<section id="the-logic" class="level3">
-<h3 class="anchored" data-anchor-id="the-logic">The logic</h3>
-<p>Under the RE assumption (<span class="math inline">\(\alpha_j\)</span> uncorrelated with <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span>):</p>
+<section id="prior-sensitivity" class="level2">
+<h2 class="anchored" data-anchor-id="prior-sensitivity">Prior sensitivity</h2>
+<p>The most common objection to Bayesian causal inference: <strong>“your results depend on the prior.”</strong> This is true — and it’s a feature, not a bug, when used honestly. The key question is: how <em>much</em> do the results depend on the prior?</p>
+<p>A <strong>robust</strong> result is one where the conclusion holds across a range of reasonable priors. If flipping the prior from optimistic to skeptical changes your policy recommendation, that’s important to know.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 600
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .info-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.8;
+    }
+    .info-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("n_sens", "Sample size:",
+                  min = 30, max = 500, value = 80, step = 10),
+
+      tags$hr(),
+      tags$h5("Data (fixed once drawn)"),
+      sliderInput("true_effect", "True effect ($):",
+                  min = 0, max = 3000, value = 1200, step = 100),
+
+      actionButton("draw", "Draw new data", class = "btn-primary", width = "100%"),
+
+      tags$hr(),
+      tags$h5("Vary the prior"),
+      sliderInput("pm", "Prior mean ($):",
+                  min = -2000, max = 5000, value = 1500, step = 100),
+
+      sliderInput("ps", "Prior SD ($):",
+                  min = 100, max = 5000, value = 800, step = 100),
+
+      uiOutput("sens_info")
+    ),
+
+    mainPanel(
+      width = 9,
+      fluidRow(
+        column(6, plotOutput("sens_posterior", height = "420px")),
+        column(6, plotOutput("sens_ppos", height = "420px"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  # Fix the data on button press
+  fixed_data &lt;- reactiveVal(NULL)
+
+  observeEvent(input$draw, {
+    n   &lt;- input$n_sens
+    ate &lt;- input$true_effect
+
+    age &lt;- rnorm(n, 35, 8)
+    pe  &lt;- rnorm(n, 20000, 5000)
+    lat &lt;- 0.5 * (pe - 20000) / 5000 + rnorm(n)
+    treat &lt;- as.integer(lat &gt; 0)
+    earnings &lt;- 15000 + 200 * (age - 35) + 0.3 * (pe - 20000) +
+                ate * treat + rnorm(n, sd = 3000)
+
+    fit &lt;- lm(earnings ~ treat + age + pe)
+    freq_est &lt;- coef(fit)["treat"]
+    freq_se  &lt;- summary(fit)$coefficients["treat", "Std. Error"]
+
+    fixed_data(list(freq_est = freq_est, freq_se = freq_se, ate = ate, n = n))
+  }, ignoreNULL = FALSE)
+
+  # Recompute posterior whenever prior sliders change
+  post &lt;- reactive({
+    fd &lt;- fixed_data()
+    req(fd)
+
+    pm &lt;- input$pm
+    ps &lt;- input$ps
+
+    prior_prec &lt;- 1 / ps^2
+    data_prec  &lt;- 1 / fd$freq_se^2
+    post_prec  &lt;- prior_prec + data_prec
+    post_var   &lt;- 1 / post_prec
+    post_mean  &lt;- post_var * (prior_prec * pm + data_prec * fd$freq_est)
+    post_sd    &lt;- sqrt(post_var)
+
+    p_pos &lt;- 1 - pnorm(0, post_mean, post_sd)
+
+    list(post_mean = post_mean, post_sd = post_sd, p_pos = p_pos,
+         pm = pm, ps = ps,
+         freq_est = fd$freq_est, freq_se = fd$freq_se, ate = fd$ate)
+  })
+
+  output$sens_posterior &lt;- renderPlot({
+    d &lt;- post()
+    par(mar = c(5, 4.5, 3, 1))
+
+    all_means &lt;- c(d$pm, d$freq_est, d$post_mean)
+    all_sds   &lt;- c(d$ps, d$freq_se, d$post_sd)
+    xlo &lt;- min(all_means - 3.5 * all_sds, -500)
+    xhi &lt;- max(all_means + 3.5 * all_sds, 3000)
+    x   &lt;- seq(xlo, xhi, length.out = 500)
+
+    d_prior &lt;- dnorm(x, d$pm, d$ps)
+    d_like  &lt;- dnorm(x, d$freq_est, d$freq_se)
+    d_post  &lt;- dnorm(x, d$post_mean, d$post_sd)
+
+    ymax &lt;- max(c(d_prior, d_like, d_post)) * 1.15
+
+    plot(x, d_like, type = "l", col = "#3498db", lwd = 2.5,
+         xlab = "Treatment effect ($)", ylab = "Density",
+         main = "Drag the prior, watch the posterior",
+         ylim = c(0, ymax))
+    lines(x, d_prior, col = "#e67e22", lwd = 2.5, lty = 2)
+    lines(x, d_post, col = "#27ae60", lwd = 3)
+
+    polygon(c(x, rev(x)), c(d_post, rep(0, length(x))),
+            col = "#27ae6025", border = NA)
+
+    abline(v = d$ate, col = "gray40", lty = 2, lwd = 1.5)
+    abline(v = 0, col = "gray80", lty = 3)
+
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c("Prior", "Likelihood (data)", "Posterior", "Truth"),
+           col = c("#e67e22", "#3498db", "#27ae60", "gray40"),
+           lwd = c(2.5, 2.5, 3, 1.5), lty = c(2, 1, 1, 2))
+  })
+
+  output$sens_ppos &lt;- renderPlot({
+    fd &lt;- fixed_data()
+    req(fd)
+    par(mar = c(5, 4.5, 3, 1))
+
+    # Compute P(tau &gt; 0) for a grid of prior means
+    prior_means &lt;- seq(-2000, 5000, by = 100)
+    ps &lt;- input$ps
+    prior_prec &lt;- 1 / ps^2
+    data_prec  &lt;- 1 / fd$freq_se^2
+
+    p_pos_grid &lt;- sapply(prior_means, function(pm) {
+      post_prec &lt;- prior_prec + data_prec
+      post_var  &lt;- 1 / post_prec
+      post_mean &lt;- post_var * (prior_prec * pm + data_prec * fd$freq_est)
+      post_sd   &lt;- sqrt(post_var)
+      1 - pnorm(0, post_mean, post_sd)
+    })
+
+    plot(prior_means, p_pos_grid, type = "l", col = "#9b59b6", lwd = 2.5,
+         xlab = "Prior mean ($)", ylab = "P(effect &gt; 0 | data)",
+         main = "Sensitivity: how prior changes the conclusion",
+         ylim = c(0, 1))
+    abline(h = 0.5, col = "gray70", lty = 3)
+    abline(h = 0.95, col = "#27ae60", lty = 3)
+    abline(v = input$pm, col = "#e67e22", lty = 2, lwd = 2)
+
+    points(input$pm, post()$p_pos, pch = 16, col = "#e67e22", cex = 2)
+
+    text(max(prior_means) * 0.7, 0.97, "95% threshold", col = "#27ae60", cex = 0.8)
+    text(max(prior_means) * 0.7, 0.52, "50% threshold", col = "gray50", cex = 0.8)
+  })
+
+  output$sens_info &lt;- renderUI({
+    d &lt;- post()
+
+    robust_msg &lt;- if (d$p_pos &gt; 0.95) {
+      "&lt;span style='color:#27ae60'&gt;Robust: P &gt; 95% regardless of prior&lt;/span&gt;"
+    } else if (d$p_pos &gt; 0.5) {
+      "&lt;span style='color:#e67e22'&gt;Likely positive, but sensitive to prior&lt;/span&gt;"
+    } else {
+      "&lt;span style='color:#e74c3c'&gt;Inconclusive or negative&lt;/span&gt;"
+    }
+
+    prior_wt &lt;- round(100 * (1/d$ps^2) / (1/d$ps^2 + 1/d$freq_se^2), 1)
+
+    tags$div(class = "info-box", HTML(paste0(
+      "&lt;b&gt;Posterior mean:&lt;/b&gt; $", round(d$post_mean), "&lt;br&gt;",
+      "&lt;b&gt;P(effect &gt; 0):&lt;/b&gt; ", round(d$p_pos, 3), "&lt;br&gt;",
+      "&lt;b&gt;Prior weight:&lt;/b&gt; ", prior_wt, "%&lt;br&gt;",
+      "&lt;b&gt;Data weight:&lt;/b&gt; ", round(100 - prior_wt, 1), "%&lt;br&gt;",
+      "&lt;hr style='margin:8px 0'&gt;",
+      robust_msg
+    )))
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<section id="reading-the-sensitivity-plot" class="level3">
+<h3 class="anchored" data-anchor-id="reading-the-sensitivity-plot">Reading the sensitivity plot</h3>
+<p>The <strong>right panel</strong> shows <span class="math inline">\(P(\tau &gt; 0 \mid \text{data})\)</span> as a function of the prior mean, holding prior SD fixed. This is a sensitivity analysis:</p>
 <ul>
-<li>FE is <strong>consistent</strong> (unbiased) but <strong>inefficient</strong> (throws away between-group info)</li>
-<li>RE is <strong>consistent</strong> <em>and</em> <strong>efficient</strong> (uses all the data)</li>
-<li>So FE and RE should give <strong>approximately the same answer</strong></li>
+<li>If the curve stays above 0.95 across all reasonable prior means, your conclusion is <strong>robust</strong> — even a skeptic would agree.</li>
+<li>If the curve crosses 0.5, a skeptical prior would flip your conclusion. That’s important to report.</li>
+<li><strong>Tight priors</strong> (small SD) make the curve steeper — the prior matters more. <strong>Vague priors</strong> (large SD) flatten the curve — the data dominates.</li>
 </ul>
-<p>If the RE assumption fails:</p>
-<ul>
-<li>FE is still <strong>consistent</strong> (within-group variation is clean)</li>
-<li>RE is <strong>inconsistent</strong> (between-group variation is contaminated)</li>
-<li>FE and RE will <strong>diverge</strong></li>
-</ul>
-<p>The Hausman test exploits this:</p>
-<p><span class="math display">\[H = (\hat{\tau}_{FE} - \hat{\tau}_{RE})' \, [\text{Var}(\hat{\tau}_{FE}) - \text{Var}(\hat{\tau}_{RE})]^{-1} \, (\hat{\tau}_{FE} - \hat{\tau}_{RE})\]</span></p>
-<p>Under <span class="math inline">\(H_0\)</span> (RE is valid), <span class="math inline">\(H \sim \chi^2_k\)</span> where <span class="math inline">\(k\)</span> is the number of coefficients being compared.</p>
-<ul>
-<li><strong>Large <span class="math inline">\(H\)</span> (small p-value):</strong> reject <span class="math inline">\(H_0\)</span>. FE and RE disagree → the RE assumption fails → use FE.</li>
-<li><strong>Small <span class="math inline">\(H\)</span> (large p-value):</strong> fail to reject. FE and RE agree → RE assumption is plausible → RE is OK (and more efficient).</li>
-</ul>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>Example: returns to education.</strong> You have panel data on workers observed over multiple years. You want the causal effect of an extra year of education on wages.</p>
-<ul>
-<li><strong>RE assumes:</strong> workers who get more education don’t have systematically higher unobserved ability. Ability is random across education levels.</li>
-<li><strong>FE says:</strong> doesn’t matter — I’ll control for each worker’s fixed ability by only using within-person wage changes when they get more education.</li>
-</ul>
-<p>You run both. FE gives <span class="math inline">\(\hat{\tau} = 0.06\)</span> (6% wage increase per year of education). RE gives <span class="math inline">\(\hat{\tau} = 0.10\)</span> (10%). The gap is large.</p>
-<p><strong>Hausman test:</strong> <span class="math inline">\(H = 15.3\)</span>, <span class="math inline">\(p &lt; 0.001\)</span>. Reject <span class="math inline">\(H_0\)</span>. The RE estimate is inflated because high-ability workers get more education <em>and</em> earn more — classic selection bias at the group level. <strong>Use FE.</strong></p>
-<p>The FE estimate (6%) is the return to education <em>holding ability constant</em>. The RE estimate (10%) is contaminated by ability differences.</p>
-</div>
-</div>
-</div>
 </section>
-<section id="hausman-test-in-practice" class="level3">
-<h3 class="anchored" data-anchor-id="hausman-test-in-practice">Hausman test in practice</h3>
+<section id="things-to-try-1" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try-1">Things to try</h3>
+<ul>
+<li><strong>Draw data, then drag prior mean from -2000 to +5000:</strong> watch the posterior (green) slide between prior and data. With large <span class="math inline">\(n\)</span>, it barely moves.</li>
+<li><strong>Set prior SD = 100 (very confident prior):</strong> the posterior sticks near the prior mean regardless of data. This is dogmatic — bad practice.</li>
+<li><strong>Set prior SD = 5000 (very vague):</strong> the posterior collapses onto the data. The prior contributes nothing — you’ve recovered the frequentist estimate.</li>
+<li><strong>Small n (30) vs large n (500):</strong> at <span class="math inline">\(n = 30\)</span> the prior matters a lot. At <span class="math inline">\(n = 500\)</span> even a strong prior gets overwhelmed.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="when-does-bayesian-help-most" class="level2">
+<h2 class="anchored" data-anchor-id="when-does-bayesian-help-most">When does Bayesian help most?</h2>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 600
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .info-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.8;
+    }
+    .info-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("true_eff3", "True effect ($):",
+                  min = 0, max = 3000, value = 1200, step = 100),
+
+      sliderInput("prior_mean3", "Prior mean ($):",
+                  min = 0, max = 3000, value = 1500, step = 100),
+
+      sliderInput("prior_sd3", "Prior SD ($):",
+                  min = 200, max = 2000, value = 800, step = 100),
+
+      sliderInput("n_sims", "Simulations:",
+                  min = 100, max = 1000, value = 500, step = 100),
+
+      actionButton("run", "Run simulation", class = "btn-primary", width = "100%"),
+
+      uiOutput("mc_info")
+    ),
+
+    mainPanel(
+      width = 9,
+      fluidRow(
+        column(6, plotOutput("mse_plot", height = "420px")),
+        column(6, plotOutput("coverage_plot", height = "420px"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  results &lt;- reactiveVal(NULL)
+
+  observeEvent(input$run, {
+    ate &lt;- input$true_eff3
+    pm  &lt;- input$prior_mean3
+    ps  &lt;- input$prior_sd3
+    B   &lt;- input$n_sims
+
+    sample_sizes &lt;- c(30, 50, 80, 120, 200, 350, 500)
+
+    out &lt;- data.frame()
+
+    for (n in sample_sizes) {
+      freq_ests &lt;- numeric(B)
+      bayes_ests &lt;- numeric(B)
+      freq_covers &lt;- logical(B)
+      bayes_covers &lt;- logical(B)
+
+      for (b in 1:B) {
+        age &lt;- rnorm(n, 35, 8)
+        pe  &lt;- rnorm(n, 20000, 5000)
+        lat &lt;- 0.5 * (pe - 20000) / 5000 + rnorm(n)
+        treat &lt;- as.integer(lat &gt; 0)
+        earnings &lt;- 15000 + 200 * (age - 35) + 0.3 * (pe - 20000) +
+                    ate * treat + rnorm(n, sd = 3000)
+
+        fit &lt;- lm(earnings ~ treat + age + pe)
+        fe  &lt;- coef(fit)["treat"]
+        fse &lt;- summary(fit)$coefficients["treat", "Std. Error"]
+
+        prior_prec &lt;- 1 / ps^2
+        data_prec  &lt;- 1 / fse^2
+        post_prec  &lt;- prior_prec + data_prec
+        post_var   &lt;- 1 / post_prec
+        post_mean  &lt;- post_var * (prior_prec * pm + data_prec * fe)
+        post_sd    &lt;- sqrt(post_var)
+
+        freq_ests[b]  &lt;- fe
+        bayes_ests[b] &lt;- post_mean
+
+        freq_covers[b]  &lt;- (fe - 1.96 * fse &lt;= ate) &amp; (fe + 1.96 * fse &gt;= ate)
+        bayes_covers[b] &lt;- (post_mean - 1.96 * post_sd &lt;= ate) &amp;
+                           (post_mean + 1.96 * post_sd &gt;= ate)
+      }
+
+      out &lt;- rbind(out, data.frame(
+        n = n,
+        mse_freq  = mean((freq_ests - ate)^2),
+        mse_bayes = mean((bayes_ests - ate)^2),
+        cov_freq  = mean(freq_covers),
+        cov_bayes = mean(bayes_covers)
+      ))
+    }
+
+    results(out)
+  })
+
+  output$mse_plot &lt;- renderPlot({
+    res &lt;- results()
+    req(res)
+    par(mar = c(5, 5, 3, 1))
+
+    ylim &lt;- range(c(res$mse_freq, res$mse_bayes))
+
+    plot(res$n, res$mse_freq / 1e6, type = "b", pch = 16, col = "#3498db",
+         lwd = 2.5, cex = 1.3,
+         xlab = "Sample size", ylab = "MSE (millions $\u00b2)",
+         main = "Mean squared error",
+         ylim = ylim / 1e6)
+    lines(res$n, res$mse_bayes / 1e6, type = "b", pch = 17, col = "#27ae60",
+          lwd = 2.5, cex = 1.3)
+
+    legend("topright", bty = "n", cex = 0.95,
+           legend = c("Frequentist", "Bayesian"),
+           col = c("#3498db", "#27ae60"), pch = c(16, 17), lwd = 2.5)
+  })
+
+  output$coverage_plot &lt;- renderPlot({
+    res &lt;- results()
+    req(res)
+    par(mar = c(5, 5, 3, 1))
+
+    plot(res$n, res$cov_freq, type = "b", pch = 16, col = "#3498db",
+         lwd = 2.5, cex = 1.3,
+         xlab = "Sample size", ylab = "Coverage (95% interval)",
+         main = "Coverage probability",
+         ylim = c(0.7, 1))
+    lines(res$n, res$cov_bayes, type = "b", pch = 17, col = "#27ae60",
+          lwd = 2.5, cex = 1.3)
+    abline(h = 0.95, col = "gray50", lty = 2, lwd = 1.5)
+
+    legend("bottomright", bty = "n", cex = 0.95,
+           legend = c("Frequentist", "Bayesian", "Nominal 95%"),
+           col = c("#3498db", "#27ae60", "gray50"),
+           pch = c(16, 17, NA), lty = c(1, 1, 2), lwd = 2.5)
+  })
+
+  output$mc_info &lt;- renderUI({
+    res &lt;- results()
+    req(res)
+
+    small &lt;- res[res$n == min(res$n), ]
+    big   &lt;- res[res$n == max(res$n), ]
+
+    tags$div(class = "info-box", HTML(paste0(
+      "&lt;b&gt;At n=", small$n, ":&lt;/b&gt;&lt;br&gt;",
+      "Freq MSE: ", round(small$mse_freq / 1e6, 2), "M&lt;br&gt;",
+      "Bayes MSE: ", round(small$mse_bayes / 1e6, 2), "M&lt;br&gt;",
+      "&lt;hr style='margin:6px 0'&gt;",
+      "&lt;b&gt;At n=", big$n, ":&lt;/b&gt;&lt;br&gt;",
+      "Freq MSE: ", round(big$mse_freq / 1e6, 2), "M&lt;br&gt;",
+      "Bayes MSE: ", round(big$mse_bayes / 1e6, 2), "M&lt;br&gt;",
+      "&lt;hr style='margin:6px 0'&gt;",
+      "&lt;small&gt;Bayesian advantage is largest at small n, ",
+      "vanishes at large n.&lt;/small&gt;"
+    )))
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<section id="what-the-monte-carlo-shows" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-monte-carlo-shows">What the Monte Carlo shows</h3>
+<ul>
+<li><strong>Left panel (MSE):</strong> at small <span class="math inline">\(n\)</span>, the Bayesian estimator has lower MSE because the prior shrinks noisy estimates toward a reasonable value. At large <span class="math inline">\(n\)</span>, both converge — the data overwhelms the prior.</li>
+<li><strong>Right panel (coverage):</strong> both methods achieve roughly 95% coverage at large <span class="math inline">\(n\)</span>. At small <span class="math inline">\(n\)</span>, the Bayesian interval can have <em>better</em> coverage if the prior is reasonable, because it’s wider and better centered.</li>
+</ul>
+</section>
+<section id="things-to-try-2" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try-2">Things to try</h3>
+<ul>
+<li><strong>Good prior (prior mean near truth):</strong> Bayesian MSE is much lower at small <span class="math inline">\(n\)</span>. Free lunch from prior knowledge.</li>
+<li><strong>Bad prior (prior mean = 0, truth = 2000):</strong> Bayesian MSE is <em>higher</em> at small <span class="math inline">\(n\)</span> — the prior pulls you away from truth. But at large <span class="math inline">\(n\)</span>, the data corrects it.</li>
+<li><strong>Very tight prior (SD = 200):</strong> amplifies both the benefit (when right) and the cost (when wrong). Very vague prior (SD = 2000): negligible difference from frequentist.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="the-bottom-line" class="level2">
+<h2 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -791,106 +1059,63 @@ shinyApp(ui, server)</code></pre>
 </colgroup>
 <thead>
 <tr class="header">
-<th>Result</th>
-<th>Interpretation</th>
-<th>Action</th>
+<th></th>
+<th>Frequentist</th>
+<th>Bayesian</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(p &lt; 0.05\)</span></td>
-<td>FE and RE significantly differ</td>
-<td>Use FE (RE assumption violated)</td>
+<td><strong>What you get</strong></td>
+<td>Point estimate + CI</td>
+<td>Full posterior distribution</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(p &gt; 0.05\)</span></td>
-<td>No significant difference</td>
-<td>RE is OK — more efficient</td>
+<td><strong>Prior knowledge</strong></td>
+<td>Not formally used</td>
+<td>Incorporated via prior</td>
+</tr>
+<tr class="odd">
+<td><strong>“Does the program work?”</strong></td>
+<td>“We reject <span class="math inline">\(H_0: \tau = 0\)</span> at 5%”</td>
+<td>“<span class="math inline">\(P(\tau &gt; 0 \mid \text{data}) = 0.97\)</span>”</td>
+</tr>
+<tr class="even">
+<td><strong>Small samples</strong></td>
+<td>Noisy, wide CIs</td>
+<td>Stabilized by prior</td>
+</tr>
+<tr class="odd">
+<td><strong>Large samples</strong></td>
+<td>Gold standard</td>
+<td>Converges to frequentist</td>
+</tr>
+<tr class="even">
+<td><strong>Risk</strong></td>
+<td>None from prior</td>
+<td>Bad prior = bad estimate (at small <span class="math inline">\(n\)</span>)</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Caveats:</strong></p>
+<p>In practice, the Bayesian approach is most valuable when:</p>
+<ol type="1">
+<li><strong>You have prior evidence</strong> — meta-analyses, pilot studies, or domain expertise that you want to formally incorporate</li>
+<li><strong>Your sample is small</strong> — the prior provides regularization, reducing MSE</li>
+<li><strong>You need probabilistic statements</strong> — “90% probability the effect exceeds $500” is more useful for policy than “we fail to reject at 5%”</li>
+<li><strong>Sensitivity analysis matters</strong> — showing results are robust across priors is more convincing than a single p-value</li>
+</ol>
+<p>When your sample is large and you have no strong prior information, the Bayesian and frequentist answers will be nearly identical. Use whichever your audience expects.</p>
+<hr>
+<section id="did-you-know" class="level3">
+<h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
 <ul>
-<li>The Hausman test has low power with small samples — it may fail to reject even when RE is biased.</li>
-<li>A non-rejection doesn’t <em>prove</em> RE is valid. It means you can’t <em>detect</em> the violation with your data.</li>
-<li>In practice, most applied economists default to FE for causal questions and use the Hausman test as a check, not as the primary decision tool.</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="connection-to-other-methods" class="level2">
-<h2 class="anchored" data-anchor-id="connection-to-other-methods">Connection to other methods</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Method</th>
-<th>What it controls for</th>
-<th>Assumption</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Fixed effects</strong></td>
-<td>All time-invariant group confounders</td>
-<td>No time-varying confounders</td>
-</tr>
-<tr class="even">
-<td><strong>Random effects</strong></td>
-<td>Group-level variation (partial pooling)</td>
-<td>Group effects uncorrelated with X</td>
-</tr>
-<tr class="odd">
-<td><strong><a href="did.html">DID</a></strong></td>
-<td>Group FE + time FE</td>
-<td>Parallel trends</td>
-</tr>
-<tr class="even">
-<td><strong><a href="../bayesian-inference/hierarchical.html">Hierarchical models</a></strong></td>
-<td>Bayesian version of RE</td>
-<td>Same as RE, with priors</td>
-</tr>
-<tr class="odd">
-<td><strong><a href="../stats-course/clustered-se.html">Clustered SEs</a></strong></td>
-<td>Not a model — fixes standard errors</td>
-<td>Doesn’t change point estimates</td>
-</tr>
-</tbody>
-</table>
-<p><strong>FE is an identification strategy.</strong> It tells you <em>why</em> your comparison is valid (within-group variation eliminates group-level confounders). RE is a modeling assumption that may or may not hold. When in doubt, FE is the conservative choice for causal inference.</p>
-<hr>
-</section>
-<section id="in-stata" class="level2">
-<h2 class="anchored" data-anchor-id="in-stata">In Stata</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>* Declare panel structure</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>xtset unit_id <span class="fu">year</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>* Fixed <span class="kw">effects</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">xtreg</span> outcome treatment x1, <span class="kw">fe</span> <span class="kw">cluster</span>(unit_id)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>* Random <span class="kw">effects</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">xtreg</span> outcome treatment x1, re</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>* Hausman <span class="kw">test</span> (FE vs RE)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">xtreg</span> outcome treatment x1, <span class="kw">fe</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> fe_model</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="kw">quietly</span> <span class="kw">xtreg</span> outcome treatment x1, re</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="kw">estimates</span> <span class="kw">store</span> re_model</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="kw">hausman</span> fe_model re_model</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>* First-difference (alternative to FE)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> D.outcome D.treatment D.x1, <span class="kw">cluster</span>(unit_id)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If the Hausman test rejects, use FE — the RE assumption that group effects are uncorrelated with regressors doesn’t hold. For causal inference, FE is almost always the safer choice.</p>
-<hr>
-</section>
-<section id="did-you-know" class="level2">
-<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
-<ul>
-<li><p>The Hausman test was introduced by <strong>Jerry Hausman (1978)</strong> in one of the most cited papers in econometrics. The general principle extends beyond FE/RE: any time you have a consistent-but-inefficient estimator and an efficient-but-possibly-inconsistent estimator, you can compare them. If they agree, the efficient one is probably fine.</p></li>
-<li><p><strong>Mundlak (1978)</strong> showed a clever alternative: add the group means <span class="math inline">\(\bar{X}_j\)</span> as regressors in the RE model. If the coefficient on <span class="math inline">\(\bar{X}_j\)</span> is significant, the RE assumption is violated (same information as the Hausman test, but easier to implement and interpret). This is called the <strong>correlated random effects</strong> approach.</p></li>
-<li><p>In the machine learning world, random effects are closely related to <strong>mixed-effects models</strong> (e.g., <code>lme4</code> in R). The terminology differs across fields: what economists call “fixed effects” (unit dummies), statisticians sometimes call “fixed effects” too, but the random effects tradition is much more developed in biostatistics and multilevel modeling (Raudenbush &amp; Bryk, 2002).</p></li>
+<li><strong>The LaLonde (1986) critique</strong> showed that non-experimental estimates of job training effects could differ wildly from experimental benchmarks. This launched the credibility revolution in economics — and is why we care so much about identification. A Bayesian prior doesn’t fix bad identification; it just stabilizes the estimate conditional on your assumptions being right.</li>
+<li><strong>The Bayesian approach to clinical trials</strong> is gaining ground at the FDA. Berry (2006) argued that Bayesian adaptive designs let you stop trials earlier (saving money and lives) by continuously updating the probability that a drug works. The same logic applies to program evaluation.</li>
+<li><strong>Rubin (1978)</strong> — the father of the potential outcomes framework — was himself a Bayesian. His framework for causal inference was motivated by Bayesian thinking about missing data: the untreated potential outcome for a treated unit is “missing,” and we can reason about it using posterior predictive distributions.</li>
 </ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
