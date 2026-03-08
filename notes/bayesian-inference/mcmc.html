@@ -296,6 +296,7 @@ window.Quarto = {
   <li><a href="#why-do-we-need-it" id="toc-why-do-we-need-it" class="nav-link" data-scroll-target="#why-do-we-need-it">Why do we need it?</a></li>
   <li><a href="#the-metropolis-hastings-algorithm" id="toc-the-metropolis-hastings-algorithm" class="nav-link" data-scroll-target="#the-metropolis-hastings-algorithm">The Metropolis-Hastings algorithm</a>
   <ul class="collapse">
+  <li><a href="#the-formal-version" id="toc-the-formal-version" class="nav-link" data-scroll-target="#the-formal-version">The formal version</a></li>
   <li><a href="#simulation-1-metropolis-hastings-in-action" id="toc-simulation-1-metropolis-hastings-in-action" class="nav-link" data-scroll-target="#simulation-1-metropolis-hastings-in-action">Simulation 1: Metropolis-Hastings in action</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   </ul></li>
@@ -515,7 +516,22 @@ shinyApp(ui, server)</code></pre>
 </section>
 <section id="the-metropolis-hastings-algorithm" class="level2">
 <h2 class="anchored" data-anchor-id="the-metropolis-hastings-algorithm">The Metropolis-Hastings algorithm</h2>
-<p>The most foundational MCMC algorithm. The core idea is beautifully simple:</p>
+<p>The most foundational MCMC algorithm. In plain language, it works like this:</p>
+<ol type="1">
+<li><strong>You’re standing at some value</strong> (say the treatment effect is $1,000).</li>
+<li><strong>Propose a random step</strong> — pick a nearby value (say $1,200).</li>
+<li><strong>Ask: is the new spot “better”?</strong> (higher posterior density?)
+<ul>
+<li><strong>Yes</strong> → move there. Always.</li>
+<li><strong>No</strong> → move there <em>sometimes</em>, with probability = (new density / old density).</li>
+</ul></li>
+<li><strong>Repeat thousands of times.</strong></li>
+</ol>
+<p>That’s it. The “sometimes accept worse spots” is the key — if you only moved uphill, you’d find the peak and stop (that’s just optimization). By occasionally going downhill, the chain explores the <em>full shape</em> of the posterior. You spend more time in high-probability regions and less in low-probability regions — which is exactly what sampling from a distribution means.</p>
+<p><strong>The result:</strong> after 10,000 steps, your trail of visited values <em>is</em> a sample from the posterior. Make a histogram of where you’ve been — that’s your posterior distribution.</p>
+<section id="the-formal-version" class="level3">
+<h3 class="anchored" data-anchor-id="the-formal-version">The formal version</h3>
+<p>More precisely:</p>
 <ol type="1">
 <li>Start at some value <span class="math inline">\(\theta_0\)</span>.</li>
 <li><strong>Propose</strong> a new value <span class="math inline">\(\theta^*\)</span> from a proposal distribution <span class="math inline">\(q(\theta^* \mid \theta_t)\)</span> — typically <span class="math inline">\(\theta^* \sim N(\theta_t, \sigma_{prop}^2)\)</span>.</li>
@@ -526,6 +542,7 @@ shinyApp(ui, server)</code></pre>
 <p>When the proposal is symmetric — e.g.&nbsp;<span class="math inline">\(q(\theta^* \mid \theta_t) = N(\theta_t, \sigma_{prop}^2)\)</span> — the proposal ratio <span class="math inline">\(q(\theta_t \mid \theta^*) / q(\theta^* \mid \theta_t) = 1\)</span> and the acceptance ratio simplifies to <span class="math inline">\(\alpha = \min\!\left(1,\; p(\theta^* \mid y) \,/\, p(\theta_t \mid y)\right)\)</span>. This is the original <strong>Metropolis</strong> algorithm. The Hastings (1970) generalization adds the proposal ratio so that asymmetric proposals can be used.</p>
 <p><strong>Key insight:</strong> you never need to compute the normalizing constant <span class="math inline">\(p(y) = \int p(y \mid \theta) \, p(\theta) \, d\theta\)</span>. The ratio <span class="math inline">\(p(\theta^* \mid y) / p(\theta_t \mid y)\)</span> cancels it out. You only need to evaluate the <strong>unnormalized posterior</strong> — the numerator of Bayes’ theorem.</p>
 <p>After enough iterations, the chain converges to the posterior distribution. The samples <span class="math inline">\(\theta_1, \theta_2, \ldots\)</span> are (correlated) draws from <span class="math inline">\(p(\theta \mid y)\)</span>.</p>
+</section>
 <section id="simulation-1-metropolis-hastings-in-action" class="level3">
 <h3 class="anchored" data-anchor-id="simulation-1-metropolis-hastings-in-action">Simulation 1: Metropolis-Hastings in action</h3>
 <p>Estimate the mean <span class="math inline">\(\mu\)</span> of normally distributed data with unknown true value. The proposal width controls exploration: too narrow and the chain moves slowly; too wide and most proposals get rejected.</p>
