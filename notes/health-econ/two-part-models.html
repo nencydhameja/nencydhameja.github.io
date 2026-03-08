@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Two-Part Models – Health Economics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./provider-behavior.html">Provider &amp; Market</a></li><li class="breadcrumb-item"><a href="./two-part-models.html">Two-Part Models</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Health Economics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Demand for Healthcare</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./moral-hazard.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Moral Hazard &amp; Insurance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./adverse-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adverse Selection</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Health Production</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./grossman.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Grossman Model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./qalys.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">QALYs &amp; Cost-Effectiveness</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Provider &amp; Market</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./provider-behavior.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Provider Behavior</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./two-part-models.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Two-Part Models</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Policy Evaluation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./oregon-experiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Oregon Experiment</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-problem-with-healthcare-spending-data" id="toc-the-problem-with-healthcare-spending-data" class="nav-link active" data-scroll-target="#the-problem-with-healthcare-spending-data">The problem with healthcare spending data</a></li>
+  <li><a href="#three-approaches" id="toc-three-approaches" class="nav-link" data-scroll-target="#three-approaches">Three approaches</a>
+  <ul class="collapse">
+  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  </ul></li>
+  <li><a href="#the-duan-smearing-estimator" id="toc-the-duan-smearing-estimator" class="nav-link" data-scroll-target="#the-duan-smearing-estimator">The Duan smearing estimator</a></li>
+  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./provider-behavior.html">Provider &amp; Market</a></li><li class="breadcrumb-item"><a href="./two-part-models.html">Two-Part Models</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Two-Part Models</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-problem-with-healthcare-spending-data" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem-with-healthcare-spending-data">The problem with healthcare spending data</h2>
+<p>Healthcare spending data has two features that make standard OLS a poor choice:</p>
+<ol type="1">
+<li><p><strong>Mass at zero.</strong> Many people have zero medical spending in a given period. In a typical month, roughly half the US population incurs no healthcare costs. In a year, about 15–20% have zero spending.</p></li>
+<li><p><strong>Right skew.</strong> Among those who do spend, the distribution is heavily right-skewed. A few patients with serious conditions account for an enormous share of total spending — the top 5% of spenders account for roughly 50% of all healthcare costs.</p></li>
+</ol>
+<p>OLS on raw spending is badly misspecified. It can predict <strong>negative spending</strong> (impossible), it treats the zeros and the positive values as arising from the same process (implausible), and it is heavily influenced by the right tail.</p>
+</section>
+<section id="three-approaches" class="level2">
+<h2 class="anchored" data-anchor-id="three-approaches">Three approaches</h2>
+<p><strong>OLS (linear probability model for spending).</strong> Just regress spending on covariates. Simple but can predict negatives and is misspecified for both the zeros and the skew.</p>
+<p><strong>Tobit.</strong> Assumes a single latent variable drives both the decision to spend and the amount spent. Spending is censored at zero: <span class="math inline">\(Y^* = X\beta + \varepsilon\)</span>, and we observe <span class="math inline">\(Y = \max(0, Y^*)\)</span>. The Tobit assumes the same <span class="math inline">\(\beta\)</span> governs both the probability of any spending and the amount conditional on spending. This is often unrealistic — the factors that determine whether you go to the doctor at all may differ from the factors that determine how much you spend once you go.</p>
+<p><strong>Two-part model.</strong> Separates the process into two parts:</p>
+<ul>
+<li><strong>Part 1</strong> (extensive margin): Model <span class="math inline">\(P(Y &gt; 0 | X)\)</span> using logit or probit</li>
+<li><strong>Part 2</strong> (intensive margin): Model <span class="math inline">\(E[Y | Y &gt; 0, X]\)</span> using OLS on log spending, GLM with gamma family, or similar</li>
+</ul>
+<p>The predicted spending is: <span class="math inline">\(\hat{E}[Y|X] = \hat{P}(Y &gt; 0 | X) \times \hat{E}[Y | Y &gt; 0, X]\)</span></p>
+<p>The two-part model allows different covariates to have different effects on the two margins. A treatment might increase the probability of using care (Part 1) without changing how much is spent conditional on use (Part 2), or vice versa. See <a href="../stats-course/limited-dependent.html">Limited Dependent Variables</a> for the mechanics of logit/probit.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 700
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("frac_zero", "Fraction with zero spending:",
+                  min = 0.1, max = 0.8, value = 0.5, step = 0.05),
+
+      sliderInput("mean_pos", "Mean spending among users ($):",
+                  min = 500, max = 20000, value = 3000, step = 500),
+
+      sliderInput("skewness", "Skewness (shape parameter):",
+                  min = 0.5, max = 5, value = 2, step = 0.25),
+
+      sliderInput("n_samp", "Sample size:",
+                  min = 200, max = 2000, value = 500, step = 100),
+
+      sliderInput("effect_x", "True effect of X on E[spending] ($):",
+                  min = -2000, max = 5000, value = 500, step = 100),
+
+      actionButton("resim", "New draw", class = "btn-primary", width = "100%"),
+
+      tags$hr(),
+      uiOutput("info_box")
+    ),
+
+    mainPanel(
+      width = 9,
+      plotOutput("hist_plot", height = "280px"),
+      plotOutput("est_plot", height = "300px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  dat &lt;- reactive({
+    input$resim
+    n     &lt;- input$n_samp
+    fz    &lt;- input$frac_zero
+    mu    &lt;- input$mean_pos
+    shape &lt;- input$skewness
+    bx    &lt;- input$effect_x
+
+    set.seed(sample(1:10000, 1))
+
+    # Generate X (binary treatment)
+    X &lt;- rbinom(n, 1, 0.5)
+
+    # True DGP: two-part
+    # Part 1: P(Y &gt; 0) depends on X
+    # True effect on extensive margin
+    p_base   &lt;- 1 - fz
+    # X increases probability of any spending
+    b_ext    &lt;- 0.1 * sign(bx) * min(1, abs(bx) / 2000)
+    p_use    &lt;- pmin(0.99, pmax(0.01, p_base + b_ext * X))
+    any_use  &lt;- rbinom(n, 1, p_use)
+
+    # Part 2: E[Y | Y &gt; 0] depends on X
+    # Gamma distribution for positive values
+    rate     &lt;- shape / mu
+    # Effect on intensive margin
+    b_int    &lt;- bx - b_ext * mu  # remaining effect goes to intensive margin
+    mu_cond  &lt;- mu + (bx - b_ext * mu) * X
+    mu_cond  &lt;- pmax(100, mu_cond)
+
+    Y_pos    &lt;- rgamma(n, shape = shape, rate = shape / mu_cond)
+    Y        &lt;- any_use * Y_pos
+
+    # True effect on E[Y]:
+    # E[Y|X=1] - E[Y|X=0] = (p_base + b_ext) * (mu + b_int) - p_base * mu
+    true_ey1 &lt;- (p_base + b_ext) * (mu + bx - b_ext * mu)
+    true_ey0 &lt;- p_base * mu
+    true_effect &lt;- true_ey1 - true_ey0
+
+    # Estimate 1: OLS
+    ols_fit  &lt;- lm(Y ~ X)
+    ols_est  &lt;- coef(ols_fit)[2]
+
+    # Estimate 2: Tobit (approximate -- just use censored normal MLE approximation)
+    # Since we can't use censReg, approximate Tobit via Heckman-style
+    # Use a simple approximation: OLS on positive values * P(Y&gt;0) adjustment
+    # Actually, do manual Tobit via optim
+    tobit_ll &lt;- function(par) {
+      mu_t &lt;- par[1] + par[2] * X
+      sig  &lt;- exp(par[3])
+      ll &lt;- ifelse(Y == 0,
+                   log(pmax(1e-10, pnorm(-mu_t / sig))),
+                   dnorm(Y, mu_t, sig, log = TRUE))
+      -sum(ll)
+    }
+    tobit_start &lt;- c(mean(Y), ols_est, log(sd(Y[Y &gt; 0])))
+    tobit_fit   &lt;- tryCatch(
+      optim(tobit_start, tobit_ll, method = "Nelder-Mead"),
+      error = function(e) list(par = c(0, ols_est, log(sd(Y[Y&gt;0]))))
+    )
+    # Tobit marginal effect on E[Y]: beta * Phi(Xb/sigma)
+    tobit_b   &lt;- tobit_fit$par[2]
+    tobit_sig &lt;- exp(tobit_fit$par[3])
+    tobit_xb  &lt;- mean(tobit_fit$par[1] + tobit_fit$par[2] * X)
+    tobit_est &lt;- tobit_b * pnorm(tobit_xb / tobit_sig)
+
+    # Estimate 3: Two-part model
+    # Part 1: logit for P(Y &gt; 0)
+    use_indicator &lt;- as.numeric(Y &gt; 0)
+    p1_fit &lt;- glm(use_indicator ~ X, family = binomial(link = "logit"))
+    p1_pred0 &lt;- predict(p1_fit, newdata = data.frame(X = 0), type = "response")
+    p1_pred1 &lt;- predict(p1_fit, newdata = data.frame(X = 1), type = "response")
+
+    # Part 2: OLS on log(Y) for Y &gt; 0, then smearing
+    pos &lt;- Y &gt; 0
+    if (sum(pos &amp; X == 1) &gt; 5 &amp;&amp; sum(pos &amp; X == 0) &gt; 5) {
+      p2_fit &lt;- lm(log(Y[pos]) ~ X[pos])
+      # Duan smearing
+      resids &lt;- residuals(p2_fit)
+      smear  &lt;- mean(exp(resids))
+      e_y_given_pos_0 &lt;- exp(coef(p2_fit)[1]) * smear
+      e_y_given_pos_1 &lt;- exp(coef(p2_fit)[1] + coef(p2_fit)[2]) * smear
+      tp_est &lt;- p1_pred1 * e_y_given_pos_1 - p1_pred0 * e_y_given_pos_0
+    } else {
+      tp_est &lt;- ols_est
+    }
+
+    list(Y = Y, X = X, n = n,
+         true_effect = bx, ols_est = ols_est,
+         tobit_est = tobit_est, tp_est = tp_est,
+         fz = fz, mu = mu)
+  })
+
+  output$hist_plot &lt;- renderPlot({
+    d &lt;- dat()
+
+    par(mar = c(5, 5, 3, 1))
+
+    # Histogram with spike at zero
+    breaks_pos &lt;- seq(0, max(d$Y) * 1.1, length.out = 40)
+    h &lt;- hist(d$Y[d$Y &gt; 0], breaks = breaks_pos, plot = FALSE)
+
+    # Count zeros
+    n_zero &lt;- sum(d$Y == 0)
+    n_pos  &lt;- sum(d$Y &gt; 0)
+
+    y_max &lt;- max(h$counts, n_zero) * 1.2
+
+    plot(NULL, xlim = c(-max(d$Y) * 0.05, max(d$Y) * 1.05),
+         ylim = c(0, y_max),
+         xlab = "Healthcare spending ($)", ylab = "Count",
+         main = paste0("Distribution of Spending (n=", d$n, ")"),
+         cex.lab = 1.1)
+
+    # Zero bar
+    rect(-max(d$Y) * 0.02, 0, max(d$Y) * 0.02, n_zero,
+         col = adjustcolor("#e74c3c", 0.6), border = "#e74c3c")
+    text(0, n_zero + y_max * 0.05,
+         paste0(n_zero, " zeros\n(", round(n_zero / d$n * 100), "%)"),
+         col = "#e74c3c", cex = 0.8, font = 2)
+
+    # Positive values
+    rect(h$breaks[-length(h$breaks)], 0, h$breaks[-1], h$counts,
+         col = adjustcolor("#3498db", 0.5), border = "#3498db")
+
+    # Mark mean of positives
+    mean_pos &lt;- mean(d$Y[d$Y &gt; 0])
+    abline(v = mean_pos, lty = 2, col = "#2c3e50", lwd = 1.5)
+    text(mean_pos, y_max * 0.9,
+         paste0("Mean|Y&gt;0: $", format(round(mean_pos), big.mark = ",")),
+         col = "#2c3e50", cex = 0.8, adj = -0.1)
+  })
+
+  output$est_plot &lt;- renderPlot({
+    d &lt;- dat()
+
+    par(mar = c(5, 8, 3, 2))
+
+    estimates &lt;- c(d$ols_est, d$tobit_est, d$tp_est)
+    names_est &lt;- c("OLS", "Tobit", "Two-Part")
+    cols      &lt;- c("#3498db", "#9b59b6", "#27ae60")
+
+    x_range &lt;- max(abs(c(estimates, d$true_effect))) * 1.5
+    if (x_range &lt; 100) x_range &lt;- 500
+
+    bp &lt;- barplot(estimates, names.arg = names_est,
+            horiz = TRUE, col = cols,
+            main = "Estimated Effect of X on E[Spending]",
+            xlab = "Estimated effect ($)",
+            xlim = c(min(0, -x_range * 0.3), x_range),
+            las = 1, cex.lab = 1.1, cex.names = 1)
+
+    # True effect line
+    abline(v = d$true_effect, lwd = 3, lty = 2, col = "#e74c3c")
+    text(d$true_effect, max(bp) + 0.5,
+         paste0("True: $", round(d$true_effect)),
+         col = "#e74c3c", cex = 0.9, font = 2, xpd = TRUE)
+
+    # Add estimate values on bars
+    text(pmax(estimates, 0) + x_range * 0.03, bp,
+         paste0("$", round(estimates)),
+         cex = 0.9, adj = 0, col = cols, font = 2)
+
+    # Add bias labels
+    bias &lt;- estimates - d$true_effect
+    bias_txt &lt;- paste0("bias: ", ifelse(bias &gt;= 0, "+", ""),
+                       round(bias))
+    text(x_range * 0.85, bp, bias_txt, cex = 0.8,
+         col = ifelse(abs(bias) &lt; abs(d$true_effect) * 0.15, "#27ae60", "#e74c3c"))
+  })
+
+  output$info_box &lt;- renderUI({
+    d &lt;- dat()
+    bias_ols &lt;- d$ols_est - d$true_effect
+    bias_tob &lt;- d$tobit_est - d$true_effect
+    bias_tp  &lt;- d$tp_est - d$true_effect
+
+    best &lt;- which.min(abs(c(bias_ols, bias_tob, bias_tp)))
+    best_name &lt;- c("OLS", "Tobit", "Two-Part")[best]
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;True effect:&lt;/b&gt; $", round(d$true_effect), "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;OLS:&lt;/b&gt; $", round(d$ols_est),
+        " (bias: &lt;span class='", ifelse(abs(bias_ols) &lt; abs(d$true_effect)*0.15, "good", "bad"),
+        "'&gt;", round(bias_ols), "&lt;/span&gt;)&lt;br&gt;",
+        "&lt;b&gt;Tobit:&lt;/b&gt; $", round(d$tobit_est),
+        " (bias: &lt;span class='", ifelse(abs(bias_tob) &lt; abs(d$true_effect)*0.15, "good", "bad"),
+        "'&gt;", round(bias_tob), "&lt;/span&gt;)&lt;br&gt;",
+        "&lt;b&gt;Two-Part:&lt;/b&gt; $", round(d$tp_est),
+        " (bias: &lt;span class='", ifelse(abs(bias_tp) &lt; abs(d$true_effect)*0.15, "good", "bad"),
+        "'&gt;", round(bias_tp), "&lt;/span&gt;)&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;Best:&lt;/b&gt; &lt;span class='good'&gt;", best_name, "&lt;/span&gt;"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<section id="things-to-try" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<ul>
+<li>Set fraction zero to 0.7 (lots of non-users): OLS is pulled heavily toward zero. The two-part model handles this well by modeling the zeros separately.</li>
+<li>Set skewness very high (4-5): the positive distribution has a long right tail. OLS is influenced by extreme values; the two-part model with log-link is more robust.</li>
+<li>Set the effect to 0 and click “New draw” several times: watch how each estimator performs under the null. OLS should be unbiased on average but noisy.</li>
+<li>Compare with fraction zero = 0.1 (few zeros): the three methods converge because the zero problem is less severe.</li>
+<li>Large sample (n = 2000) vs small (n = 200): all estimators improve, but the two-part model’s advantage in handling zeros persists.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="the-duan-smearing-estimator" class="level2">
+<h2 class="anchored" data-anchor-id="the-duan-smearing-estimator">The Duan smearing estimator</h2>
+<p>When Part 2 of the two-part model uses log-transformed spending, you need to retransform predictions back to the dollar scale. A naive approach is to exponentiate: <span class="math inline">\(\hat{E}[Y|Y&gt;0, X] = \exp(\hat{\beta}_0 + \hat{\beta}_1 X)\)</span>. But this is biased because <span class="math inline">\(E[\exp(\log Y)] \neq \exp(E[\log Y])\)</span> — Jensen’s inequality.</p>
+<p><strong>Duan’s smearing estimator</strong> (1983) corrects for this. Instead of exponentiating the predicted log value, multiply by the <strong>smearing factor</strong>: the sample average of exponentiated residuals from the log regression.</p>
+<p><span class="math display">\[\hat{E}[Y | Y &gt; 0, X] = \exp(\hat{X}\hat{\beta}) \times \underbrace{\frac{1}{n} \sum_{i=1}^n \exp(\hat{\varepsilon}_i)}_{\text{smearing factor}}\]</span></p>
+<p>This is what the two-part model in the app above does. The smearing factor is typically between 1.1 and 2.0 for health spending data.</p>
+<p>Manning et al.&nbsp;(1987) showed that the retransformation problem can introduce substantial bias if the error distribution on the log scale is not normal or is heteroskedastic. Modern practice often uses <strong>GLM with a gamma family and log link</strong> instead of OLS on logs — this avoids the retransformation problem entirely because the model is specified on the original scale.</p>
+<hr>
+</section>
+<section id="did-you-know" class="level2">
+<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
+<ul>
+<li><p><strong>Duan’s smearing estimator</strong> (1983) was developed specifically for the RAND HIE data analysis. Naihua Duan was a statistician at RAND who realized that the standard retransformation of log-linear models was biased. His nonparametric correction became standard practice in health economics.</p></li>
+<li><p>Manning, Newhouse, Duan, Keeler, and Leibowitz (1987) — the definitive RAND HIE spending analysis — showed that the choice of model for healthcare spending matters enormously. Their comparison of OLS, log-OLS with smearing, and two-part models remains one of the most cited methods papers in health economics.</p></li>
+<li><p>In a typical month, about <strong>50% of Americans</strong> have zero medical spending. In a year, about 15–20% have zero spending. The top 1% of spenders account for about 23% of total spending, and the top 5% account for about 50%. This extreme concentration makes healthcare spending one of the most challenging outcome variables in applied economics.</p></li>
+<li><p>The two-part model is closely related to the <strong>hurdle model</strong> in statistics. The key difference from a Tobit is philosophical: the Tobit assumes a single latent process generates both the zeros and the positive values (you <em>want</em> care but are “censored” at zero), while the two-part model allows two separate processes (the decision to seek care is different from how much you spend once you do).</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com">Nency Dhameja</a> | <a href="../index.html">All Notes</a> | Developed with AI assistance | <a href="mailto:nencydhameja@gmail.com">Feedback?</a></span></p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>The Oregon Experiment – Health Economics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./oregon-experiment.html">Policy Evaluation</a></li><li class="breadcrumb-item"><a href="./oregon-experiment.html">The Oregon Experiment</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Health Economics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Demand for Healthcare</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./moral-hazard.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Moral Hazard &amp; Insurance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./adverse-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Adverse Selection</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Health Production</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./grossman.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Grossman Model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./qalys.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">QALYs &amp; Cost-Effectiveness</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Provider &amp; Market</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./provider-behavior.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Provider Behavior</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./two-part-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Two-Part Models</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Policy Evaluation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./oregon-experiment.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">The Oregon Experiment</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#a-natural-randomized-experiment" id="toc-a-natural-randomized-experiment" class="nav-link active" data-scroll-target="#a-natural-randomized-experiment">A natural randomized experiment</a>
+  <ul class="collapse">
+  <li><a href="#key-findings" id="toc-key-findings" class="nav-link" data-scroll-target="#key-findings">Key findings</a></li>
+  </ul></li>
+  <li><a href="#methodology-itt-vs-late" id="toc-methodology-itt-vs-late" class="nav-link" data-scroll-target="#methodology-itt-vs-late">Methodology: ITT vs LATE</a>
+  <ul class="collapse">
+  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  </ul></li>
+  <li><a href="#the-debate-over-null-health-results" id="toc-the-debate-over-null-health-results" class="nav-link" data-scroll-target="#the-debate-over-null-health-results">The debate over null health results</a></li>
+  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./oregon-experiment.html">Policy Evaluation</a></li><li class="breadcrumb-item"><a href="./oregon-experiment.html">The Oregon Experiment</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">The Oregon Experiment</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="a-natural-randomized-experiment" class="level2">
+<h2 class="anchored" data-anchor-id="a-natural-randomized-experiment">A natural randomized experiment</h2>
+<p>In 2008, Oregon wanted to expand its Medicaid program but had limited funds. The state opened a waiting list and received about 90,000 names for roughly 10,000 slots. Oregon used a <strong>lottery</strong> to determine who got the chance to enroll. This created a natural randomized experiment: lottery winners had the opportunity to gain Medicaid coverage, lottery losers did not.</p>
+<p>Finkelstein et al.&nbsp;(2012) and a series of follow-up papers used this lottery to estimate the causal effect of Medicaid on a range of outcomes.</p>
+<section id="key-findings" class="level3">
+<h3 class="anchored" data-anchor-id="key-findings">Key findings</h3>
+<p><strong>Healthcare utilization.</strong> Medicaid increased overall utilization — more doctor visits, more prescriptions, more preventive care. Notably, it <strong>increased emergency room visits</strong> by about 40%, contrary to the expectation that insurance would reduce ER use by shifting care to primary care settings. This finding (Taubman et al., 2014) was politically inconvenient and widely debated.</p>
+<p><strong>Financial strain.</strong> Medicaid substantially reduced financial hardship. Catastrophic out-of-pocket spending fell, medical debt declined, and the probability of having a medical bill sent to collections dropped sharply.</p>
+<p><strong>Self-reported health.</strong> Medicaid improved self-reported health and reduced depression (a clinically significant effect).</p>
+<p><strong>Measured physical health.</strong> The most controversial finding: Medicaid had <strong>no statistically significant effect</strong> on measured physical health markers — blood pressure, cholesterol, or glycated hemoglobin (diabetes control) — after about two years. This null result was widely debated: does it mean Medicaid does not improve health, or was the study underpowered to detect clinically meaningful effects?</p>
+</section>
+</section>
+<section id="methodology-itt-vs-late" class="level2">
+<h2 class="anchored" data-anchor-id="methodology-itt-vs-late">Methodology: ITT vs LATE</h2>
+<p>The lottery was not a simple randomization of Medicaid coverage. Winning the lottery gave you the <strong>opportunity</strong> to apply for Medicaid — but not everyone who won actually enrolled (some did not complete the application, some turned out to be ineligible). This is <strong>noncompliance</strong>.</p>
+<p>The relevant estimands are:</p>
+<ul>
+<li><strong>Intent-to-Treat (ITT):</strong> the effect of <em>winning the lottery</em> on the outcome. This is straightforward to estimate and valid regardless of noncompliance.</li>
+<li><strong>First stage:</strong> the effect of winning the lottery on Medicaid enrollment. This is the compliance rate.</li>
+<li><strong>Local Average Treatment Effect (LATE):</strong> the effect of <em>actually enrolling in Medicaid</em> on the outcome, estimated via <a href="../causal-inference/iv.html">instrumental variables</a>. LATE = ITT / First Stage.</li>
+</ul>
+<p>LATE gives us the effect for <strong>compliers</strong> — people who enrolled when they won but would not have enrolled otherwise. It does not tell us about always-takers (who would have found insurance anyway) or never-takers (who would not enroll even if selected).</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 700
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
+    .info-box {
+      background: #ebf5fb; border-radius: 6px; padding: 12px;
+      margin-top: 10px; font-size: 13px;
+    }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("comply", "Compliance rate (%):",
+                  min = 10, max = 100, value = 30, step = 5),
+
+      sliderInput("true_late", "True LATE of Medicaid ($):",
+                  min = -500, max = 2000, value = 500, step = 50),
+
+      sliderInput("n_exp", "Sample size:",
+                  min = 500, max = 20000, value = 5000, step = 500),
+
+      actionButton("resim_exp", "New draw", class = "btn-primary", width = "100%"),
+
+      tags$hr(),
+      uiOutput("info_box")
+    ),
+
+    mainPanel(
+      width = 9,
+      plotOutput("iv_plot", height = "280px"),
+      plotOutput("power_plot", height = "300px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  sim &lt;- reactive({
+    input$resim_exp
+    comp   &lt;- input$comply / 100
+    late   &lt;- input$true_late
+    n      &lt;- input$n_exp
+
+    set.seed(sample(1:10000, 1))
+
+    # Generate data
+    # Z = lottery win (randomized)
+    Z &lt;- rbinom(n, 1, 0.5)
+
+    # D = Medicaid enrollment
+    # Compliers: D = Z; Always-takers: D = 1; Never-takers: D = 0
+    # For simplicity: P(D=1|Z=1) = comp, P(D=1|Z=0) = 0.05 (some always-takers)
+    at_rate &lt;- 0.05  # always-taker rate
+    D &lt;- rep(0, n)
+    D[Z == 1] &lt;- rbinom(sum(Z == 1), 1, comp)
+    D[Z == 0] &lt;- rbinom(sum(Z == 0), 1, at_rate)
+
+    # Y = outcome (e.g., healthcare spending)
+    # Y = baseline + LATE * D + noise
+    baseline &lt;- 3000
+    noise_sd &lt;- 5000
+    Y &lt;- baseline + late * D + rnorm(n, 0, noise_sd)
+
+    # ITT: effect of Z on Y
+    itt_est &lt;- mean(Y[Z == 1]) - mean(Y[Z == 0])
+    itt_se  &lt;- sqrt(var(Y[Z == 1]) / sum(Z == 1) + var(Y[Z == 0]) / sum(Z == 0))
+    itt_t   &lt;- itt_est / itt_se
+    itt_p   &lt;- 2 * (1 - pnorm(abs(itt_t)))
+
+    # First stage: effect of Z on D
+    fs_est &lt;- mean(D[Z == 1]) - mean(D[Z == 0])
+    fs_se  &lt;- sqrt(var(D[Z == 1]) / sum(Z == 1) + var(D[Z == 0]) / sum(Z == 0))
+    fs_t   &lt;- fs_est / fs_se
+    fs_f   &lt;- fs_t^2  # F-stat
+
+    # LATE = ITT / first stage
+    late_est &lt;- itt_est / fs_est
+    # Approximate SE via delta method
+    late_se  &lt;- abs(itt_se / fs_est)  # simplified
+    late_t   &lt;- late_est / late_se
+    late_p   &lt;- 2 * (1 - pnorm(abs(late_t)))
+
+    # CI
+    itt_ci  &lt;- itt_est + c(-1, 1) * 1.96 * itt_se
+    late_ci &lt;- late_est + c(-1, 1) * 1.96 * late_se
+
+    list(itt_est = itt_est, itt_se = itt_se, itt_p = itt_p, itt_ci = itt_ci,
+         fs_est = fs_est, fs_se = fs_se, fs_f = fs_f,
+         late_est = late_est, late_se = late_se, late_p = late_p, late_ci = late_ci,
+         true_late = late, true_itt = late * (comp - at_rate),
+         comp = comp, n = n, Z = Z, D = D, Y = Y)
+  })
+
+  output$iv_plot &lt;- renderPlot({
+    s &lt;- sim()
+
+    par(mfrow = c(1, 3), mar = c(4, 4.5, 3, 1))
+
+    # Panel 1: ITT
+    cols_itt &lt;- c("#3498db", "#e74c3c")
+    means_itt &lt;- c(mean(s$Y[s$Z == 0]), mean(s$Y[s$Z == 1]))
+    bp1 &lt;- barplot(means_itt / 1000, names.arg = c("Lost", "Won"),
+            col = cols_itt, main = "ITT: Lottery -&gt; Outcome",
+            ylab = "Mean outcome ($1000s)",
+            ylim = c(0, max(means_itt) / 1000 * 1.3),
+            cex.lab = 1)
+    text(bp1, means_itt / 1000 + max(means_itt) / 1000 * 0.05,
+         paste0("$", round(means_itt)), cex = 0.8, font = 2)
+
+    # Bracket with ITT
+    mid_x &lt;- mean(bp1)
+    top_y &lt;- max(means_itt) / 1000 * 1.15
+    segments(bp1[1], top_y, bp1[2], top_y, lwd = 2, col = "#2c3e50")
+    text(mid_x, top_y + max(means_itt) / 1000 * 0.05,
+         paste0("ITT = $", round(s$itt_est)),
+         col = "#2c3e50", font = 2, cex = 0.85)
+
+    # Panel 2: First stage
+    enroll_rates &lt;- c(mean(s$D[s$Z == 0]), mean(s$D[s$Z == 1]))
+    bp2 &lt;- barplot(enroll_rates * 100, names.arg = c("Lost", "Won"),
+            col = cols_itt, main = "First Stage: Lottery -&gt; Enrollment",
+            ylab = "Enrollment rate (%)",
+            ylim = c(0, 100),
+            cex.lab = 1)
+    text(bp2, enroll_rates * 100 + 5,
+         paste0(round(enroll_rates * 100, 1), "%"), cex = 0.8, font = 2)
+
+    # F-stat
+    f_col &lt;- ifelse(s$fs_f &gt; 10, "#27ae60", "#e74c3c")
+    text(mean(bp2), 90,
+         paste0("F = ", round(s$fs_f, 1)),
+         col = f_col, font = 2, cex = 1)
+
+    # Panel 3: LATE
+    est_vals &lt;- c(s$true_late, s$late_est)
+    est_cols &lt;- c("#7f8c8d", "#2c3e50")
+    bp3 &lt;- barplot(est_vals, names.arg = c("True LATE", "Estimated\nLATE"),
+            col = est_cols, main = "LATE = ITT / First Stage",
+            ylab = "Effect on outcome ($)",
+            ylim = c(min(0, min(est_vals) * 1.3),
+                     max(est_vals) * 1.3),
+            cex.lab = 1)
+    text(bp3, est_vals + max(abs(est_vals)) * 0.08,
+         paste0("$", round(est_vals)), cex = 0.8, font = 2)
+
+    # Error bars on LATE estimate
+    arrows(bp3[2], s$late_ci[1], bp3[2], s$late_ci[2],
+           code = 3, angle = 90, length = 0.1, lwd = 2, col = "#2c3e50")
+  })
+
+  output$power_plot &lt;- renderPlot({
+    s &lt;- sim()
+
+    # Show how LATE precision depends on compliance rate
+    comp_seq &lt;- seq(0.1, 1, by = 0.05)
+    true_itt &lt;- s$true_late * (comp_seq - 0.05)
+    noise_sd &lt;- 5000
+
+    # SE of ITT is roughly constant
+    itt_se_approx &lt;- noise_sd * sqrt(4 / s$n)
+    late_se_approx &lt;- itt_se_approx / (comp_seq - 0.05)
+    late_se_approx[late_se_approx &lt; 0 | late_se_approx &gt; 50000] &lt;- NA
+
+    par(mfrow = c(1, 2), mar = c(5, 5, 3, 2))
+
+    # Panel 1: LATE SE vs compliance
+    plot(comp_seq * 100, late_se_approx, type = "l", lwd = 3, col = "#e74c3c",
+         xlab = "Compliance rate (%)",
+         ylab = "SE of LATE estimate ($)",
+         main = "LATE Precision vs Compliance",
+         ylim = c(0, min(5000, max(late_se_approx, na.rm = TRUE))),
+         cex.lab = 1.1)
+
+    # Mark current compliance
+    curr_se &lt;- itt_se_approx / max(0.01, s$comp - 0.05)
+    if (curr_se &lt; 5000) {
+      points(s$comp * 100, curr_se, pch = 19, cex = 2, col = "#2c3e50")
+      text(s$comp * 100 + 3, curr_se,
+           paste0("SE = $", round(curr_se)),
+           col = "#2c3e50", cex = 0.85, adj = 0)
+    }
+
+    abline(h = abs(s$true_late), lty = 2, col = "#27ae60", lwd = 1.5)
+    text(80, abs(s$true_late) + 100, "|True LATE|", col = "#27ae60", cex = 0.8)
+
+    # Panel 2: CI width vs compliance
+    ci_width &lt;- 2 * 1.96 * late_se_approx
+    plot(comp_seq * 100, ci_width, type = "l", lwd = 3, col = "#3498db",
+         xlab = "Compliance rate (%)",
+         ylab = "95% CI width ($)",
+         main = "Confidence Interval Width",
+         ylim = c(0, min(15000, max(ci_width, na.rm = TRUE))),
+         cex.lab = 1.1)
+
+    curr_ci_w &lt;- 2 * 1.96 * curr_se
+    if (curr_ci_w &lt; 15000) {
+      points(s$comp * 100, curr_ci_w, pch = 19, cex = 2, col = "#2c3e50")
+      text(s$comp * 100 + 3, curr_ci_w,
+           paste0("Width = $", round(curr_ci_w)),
+           col = "#2c3e50", cex = 0.85, adj = 0)
+    }
+
+    # Show that CI must be narrower than 2*|LATE| to be "significant"
+    abline(h = 2 * abs(s$true_late), lty = 2, col = "#e74c3c", lwd = 1.5)
+    text(80, 2 * abs(s$true_late) + 200,
+         "Need CI &lt; this for significance", col = "#e74c3c", cex = 0.75)
+  })
+
+  output$info_box &lt;- renderUI({
+    s &lt;- sim()
+
+    sig_itt  &lt;- ifelse(s$itt_p &lt; 0.05, "&lt;span class='good'&gt;Yes&lt;/span&gt;",
+                       "&lt;span class='bad'&gt;No&lt;/span&gt;")
+    sig_late &lt;- ifelse(s$late_p &lt; 0.05, "&lt;span class='good'&gt;Yes&lt;/span&gt;",
+                       "&lt;span class='bad'&gt;No&lt;/span&gt;")
+    strong_iv &lt;- ifelse(s$fs_f &gt; 10, "&lt;span class='good'&gt;Yes (F &gt; 10)&lt;/span&gt;",
+                        "&lt;span class='bad'&gt;No (F &lt; 10)&lt;/span&gt;")
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;ITT:&lt;/b&gt; $", round(s$itt_est),
+        " (SE ", round(s$itt_se), ")&lt;br&gt;",
+        "Significant? ", sig_itt, "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;First stage:&lt;/b&gt; ", round(s$fs_est, 3), "&lt;br&gt;",
+        "Strong instrument? ", strong_iv, "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;LATE:&lt;/b&gt; $", round(s$late_est),
+        " (SE ", round(s$late_se), ")&lt;br&gt;",
+        "Significant? ", sig_late, "&lt;br&gt;",
+        "True LATE: $", s$true_late, "&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "95% CI: [$", round(s$late_ci[1]),
+        ", $", round(s$late_ci[2]), "]"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<section id="things-to-try" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<ul>
+<li>Set compliance to 30% (close to Oregon’s actual rate): the LATE is about 3x the ITT, and the confidence interval is wide. This is why the Oregon study struggled with power for some outcomes.</li>
+<li>Set compliance to 100%: LATE = ITT. No amplification needed, tight CI.</li>
+<li>Set compliance to 10%: the LATE blows up — dividing by a tiny first stage makes the estimate extremely noisy. This is the <strong>weak instrument</strong> problem applied to noncompliance.</li>
+<li>Set true LATE to 0 and draw multiple samples: sometimes the LATE looks “significant” by chance, but on average it should be zero.</li>
+<li>Increase sample size to 20,000: even with low compliance, precision improves. Oregon had ~75,000 people, which is why it could detect some effects despite low compliance.</li>
+<li>Notice the bottom panels: they show that LATE precision deteriorates rapidly as compliance falls. This is the fundamental challenge of experiments with noncompliance.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="the-debate-over-null-health-results" class="level2">
+<h2 class="anchored" data-anchor-id="the-debate-over-null-health-results">The debate over null health results</h2>
+<p>The Oregon experiment’s null finding on physical health measures sparked intense debate:</p>
+<p><strong>“Medicaid doesn’t work” interpretation.</strong> Some argued that if Medicaid does not improve blood pressure, cholesterol, or diabetes control, it is not worth expanding. This interpretation was used by ACA opponents.</p>
+<p><strong>Power critique.</strong> Baicker et al.&nbsp;(2013) noted that the study could not rule out clinically meaningful improvements. The confidence intervals for blood pressure included reductions of 2–3 mm Hg — effects that would be important at the population level. The study was <strong>underpowered</strong> for physical health outcomes, partly because of low compliance (~30%) and partly because the sample was relatively young and healthy.</p>
+<p><strong>Timeframe critique.</strong> Two years may not be long enough. Chronic disease management requires sustained access to care. The benefits of blood pressure control accumulate over decades, not months.</p>
+<p><strong>The right outcomes.</strong> Mental health improved significantly. Financial strain fell dramatically. If the goal of insurance is to provide financial protection and peace of mind — not just to change clinical biomarkers — then the Oregon results are consistent with insurance “working.”</p>
+<p>This debate mirrors the broader question of what insurance is <em>for</em>. Is it a health intervention (measured by clinical outcomes) or a financial product (measured by risk protection)? The answer has major implications for Medicaid expansion policy. See <a href="moral-hazard.html">Moral Hazard</a> for the welfare theory behind this distinction.</p>
+<hr>
+</section>
+<section id="did-you-know" class="level2">
+<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
+<ul>
+<li><p>About <strong>90,000 people</strong> signed up for Oregon’s Medicaid lottery in one week — for roughly 10,000 slots. This massive oversubscription is what made the experiment possible: it created a large randomized control group.</p></li>
+<li><p>Taubman et al.&nbsp;(2014) found that Medicaid <strong>increased ER visits</strong> by about 40%. This contradicted the common policy argument that expanding insurance would reduce ER use by giving people a “medical home” in primary care. The result suggests that insurance reduces the cost barrier to <em>all</em> types of care, including the ER — consistent with standard price theory and the moral hazard predictions discussed on the <a href="moral-hazard.html">Moral Hazard</a> page.</p></li>
+<li><p>The debate about whether the null physical health results mean Medicaid “doesn’t work” is partly a <strong>statistical power</strong> issue. The study had a compliance rate of only about 25–30% (many lottery winners did not enroll). Using the <a href="../causal-inference/iv.html">IV/LATE framework</a>, this means dividing a small ITT by a small first stage, producing wide confidence intervals. A larger sample or higher compliance could have detected smaller effects.</p></li>
+<li><p>Amy Finkelstein, the lead researcher, has emphasized that the Oregon results should not be interpreted as “insurance doesn’t matter.” The financial protection and mental health benefits were large and statistically significant. The null results were specific to a handful of measured physical health biomarkers over a short follow-up period.</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com">Nency Dhameja</a> | <a href="../index.html">All Notes</a> | Developed with AI assistance | <a href="mailto:nencydhameja@gmail.com">Feedback?</a></span></p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
