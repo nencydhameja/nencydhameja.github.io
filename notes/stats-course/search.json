@@ -788,6 +788,17 @@
     ]
   },
   {
+    "objectID": "clustered-se.html#where-does-the-independence-assumption-live",
+    "href": "clustered-se.html#where-does-the-independence-assumption-live",
+    "title": "Robust vs Clustered SEs: When Observations Aren’t Independent",
+    "section": "Where does the independence assumption live?",
+    "text": "Where does the independence assumption live?\nThe standard OLS SE formula assumes independent observations. Here is exactly where that assumption appears.\nThe OLS estimator for \\(Y = X\\beta + \\varepsilon\\) is\n\\[\\hat{\\beta} = (X'X)^{-1}X'Y = \\beta + (X'X)^{-1}X'\\varepsilon\\]\nso the variance of the estimator depends on the variance of the errors:\n\\[\\text{Var}(\\hat{\\beta}) = (X'X)^{-1} \\; X' \\, \\text{Var}(\\varepsilon) \\, X \\; (X'X)^{-1}\\]\nThis formula is always true. The key question is: what is \\(\\text{Var}(\\varepsilon)\\)?\nUnder independence, classical OLS assumes \\(\\text{Var}(\\varepsilon) = \\sigma^2 I\\), where the identity matrix \\(I\\) has zeros on the off-diagonal — meaning \\(\\text{Cov}(\\varepsilon_i, \\varepsilon_j) = 0\\) for all \\(i \\neq j\\). Plugging this in:\n\\[\\text{Var}(\\hat{\\beta}) = \\sigma^2 (X'X)^{-1}\\]\nThis is the default SE printed in regression output: \\(\\text{SE}(\\hat{\\beta}_j) = \\sqrt{\\hat{\\sigma}^2 [(X'X)^{-1}]_{jj}}\\).\nWhen observations are correlated, the true error variance is \\(\\text{Var}(\\varepsilon) = \\Omega\\), where \\(\\Omega\\) is not diagonal. For example, with three students in the same school and one in a different school:\n\\[\\Omega = \\begin{bmatrix} \\sigma^2 & \\rho & \\rho & 0 \\\\ \\rho & \\sigma^2 & \\rho & 0 \\\\ \\rho & \\rho & \\sigma^2 & 0 \\\\ 0 & 0 & 0 & \\sigma^2 \\end{bmatrix}\\]\nThe correct variance is \\((X'X)^{-1} X' \\Omega X (X'X)^{-1}\\), but the OLS formula pretends \\(\\Omega = \\sigma^2 I\\) and ignores those off-diagonal terms — so the estimated SE is too small.\nCluster-robust SEs fix this by replacing \\(\\sigma^2 I\\) with an estimate of \\(\\Omega\\):\n\\[\\text{Var}(\\hat{\\beta}) = (X'X)^{-1} \\left( \\sum_g X_g' \\hat{\\varepsilon}_g \\hat{\\varepsilon}_g' X_g \\right) (X'X)^{-1}\\]\nwhere \\(g\\) indexes clusters. This allows \\(\\text{Cov}(\\varepsilon_{it}, \\varepsilon_{is}) \\neq 0\\) within the same cluster — exactly the sandwich formula implemented in Stata’s , cluster() and R’s vcovCL().",
+    "crumbs": [
+      "Standard Errors & Diagnostics",
+      "Clustered SEs"
+    ]
+  },
+  {
     "objectID": "clustered-se.html#simulation-1-clustered-data-and-wrong-ses",
     "href": "clustered-se.html#simulation-1-clustered-data-and-wrong-ses",
     "title": "Robust vs Clustered SEs: When Observations Aren’t Independent",
