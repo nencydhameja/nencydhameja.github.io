@@ -493,6 +493,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#three-types-of-standard-errors" id="toc-three-types-of-standard-errors" class="nav-link" data-scroll-target="#three-types-of-standard-errors">Three types of standard errors</a></li>
   </ul></li>
+  <li><a href="#where-does-the-independence-assumption-live" id="toc-where-does-the-independence-assumption-live" class="nav-link" data-scroll-target="#where-does-the-independence-assumption-live">Where does the independence assumption live?</a></li>
   <li><a href="#simulation-1-clustered-data-and-wrong-ses" id="toc-simulation-1-clustered-data-and-wrong-ses" class="nav-link" data-scroll-target="#simulation-1-clustered-data-and-wrong-ses">Simulation 1: Clustered data and wrong SEs</a></li>
   <li><a href="#simulation-2-rejection-rates" id="toc-simulation-2-rejection-rates" class="nav-link" data-scroll-target="#simulation-2-rejection-rates">Simulation 2: Rejection rates</a>
   <ul class="collapse">
@@ -586,6 +587,25 @@ window.Quarto = {
 </div>
 </div>
 </section>
+</section>
+<section id="where-does-the-independence-assumption-live" class="level2">
+<h2 class="anchored" data-anchor-id="where-does-the-independence-assumption-live">Where does the independence assumption live?</h2>
+<p>The standard OLS SE formula assumes independent observations. Here is exactly where that assumption appears.</p>
+<p><strong>The OLS estimator</strong> for <span class="math inline">\(Y = X\beta + \varepsilon\)</span> is</p>
+<p><span class="math display">\[\hat{\beta} = (X'X)^{-1}X'Y = \beta + (X'X)^{-1}X'\varepsilon\]</span></p>
+<p>so the variance of the estimator depends on the variance of the errors:</p>
+<p><span class="math display">\[\text{Var}(\hat{\beta}) = (X'X)^{-1} \; X' \, \text{Var}(\varepsilon) \, X \; (X'X)^{-1}\]</span></p>
+<p>This formula is always true. The key question is: <strong>what is <span class="math inline">\(\text{Var}(\varepsilon)\)</span>?</strong></p>
+<p><strong>Under independence</strong>, classical OLS assumes <span class="math inline">\(\text{Var}(\varepsilon) = \sigma^2 I\)</span>, where the identity matrix <span class="math inline">\(I\)</span> has zeros on the off-diagonal — meaning <span class="math inline">\(\text{Cov}(\varepsilon_i, \varepsilon_j) = 0\)</span> for all <span class="math inline">\(i \neq j\)</span>. Plugging this in:</p>
+<p><span class="math display">\[\text{Var}(\hat{\beta}) = \sigma^2 (X'X)^{-1}\]</span></p>
+<p>This is the default SE printed in regression output: <span class="math inline">\(\text{SE}(\hat{\beta}_j) = \sqrt{\hat{\sigma}^2 [(X'X)^{-1}]_{jj}}\)</span>.</p>
+<p><strong>When observations are correlated</strong>, the true error variance is <span class="math inline">\(\text{Var}(\varepsilon) = \Omega\)</span>, where <span class="math inline">\(\Omega\)</span> is not diagonal. For example, with three students in the same school and one in a different school:</p>
+<p><span class="math display">\[\Omega = \begin{bmatrix} \sigma^2 &amp; \rho &amp; \rho &amp; 0 \\ \rho &amp; \sigma^2 &amp; \rho &amp; 0 \\ \rho &amp; \rho &amp; \sigma^2 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; \sigma^2 \end{bmatrix}\]</span></p>
+<p>The correct variance is <span class="math inline">\((X'X)^{-1} X' \Omega X (X'X)^{-1}\)</span>, but the OLS formula pretends <span class="math inline">\(\Omega = \sigma^2 I\)</span> and ignores those off-diagonal terms — so the estimated SE is <strong>too small</strong>.</p>
+<p><strong>Cluster-robust SEs</strong> fix this by replacing <span class="math inline">\(\sigma^2 I\)</span> with an estimate of <span class="math inline">\(\Omega\)</span>:</p>
+<p><span class="math display">\[\text{Var}(\hat{\beta}) = (X'X)^{-1} \left( \sum_g X_g' \hat{\varepsilon}_g \hat{\varepsilon}_g' X_g \right) (X'X)^{-1}\]</span></p>
+<p>where <span class="math inline">\(g\)</span> indexes clusters. This allows <span class="math inline">\(\text{Cov}(\varepsilon_{it}, \varepsilon_{is}) \neq 0\)</span> within the same cluster — exactly the sandwich formula implemented in Stata’s <code>, cluster()</code> and R’s <code>vcovCL()</code>.</p>
+<hr>
 </section>
 <section id="simulation-1-clustered-data-and-wrong-ses" class="level2">
 <h2 class="anchored" data-anchor-id="simulation-1-clustered-data-and-wrong-ses">Simulation 1: Clustered data and wrong SEs</h2>
