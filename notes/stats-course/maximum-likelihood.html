@@ -498,6 +498,11 @@ window.Quarto = {
   <li><a href="#cross-entropy-is-mle-for-classification" id="toc-cross-entropy-is-mle-for-classification" class="nav-link" data-scroll-target="#cross-entropy-is-mle-for-classification">Cross-entropy is MLE for classification</a></li>
   <li><a href="#properties-of-mle" id="toc-properties-of-mle" class="nav-link" data-scroll-target="#properties-of-mle">Properties of MLE</a></li>
   <li><a href="#fisher-information-and-standard-errors" id="toc-fisher-information-and-standard-errors" class="nav-link" data-scroll-target="#fisher-information-and-standard-errors">Fisher information and standard errors</a></li>
+  <li><a href="#how-mle-actually-finds-the-maximum" id="toc-how-mle-actually-finds-the-maximum" class="nav-link" data-scroll-target="#how-mle-actually-finds-the-maximum">How MLE actually finds the maximum</a>
+  <ul class="collapse">
+  <li><a href="#the-main-algorithms" id="toc-the-main-algorithms" class="nav-link" data-scroll-target="#the-main-algorithms">The main algorithms</a></li>
+  <li><a href="#why-this-matters-in-practice" id="toc-why-this-matters-in-practice" class="nav-link" data-scroll-target="#why-this-matters-in-practice">Why this matters in practice</a></li>
+  </ul></li>
   <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
   </ul>
 </nav>
@@ -843,12 +848,75 @@ L = \prod_{i=1}^n \hat{p}_i^{Y_i}(1 - \hat{p}_i)^{1-Y_i}
 \]</span></p>
 <p>This is derived in <a href="regression-algebra.html">The Algebra Behind OLS</a>. The <span class="math inline">\((X'X)^{-1}\)</span> piece <em>is</em> the inverse of the Fisher information matrix for the regression setting. The two frameworks — “OLS algebra” and “MLE theory” — are telling you the same thing.</p>
 </section>
+<section id="how-mle-actually-finds-the-maximum" class="level2">
+<h2 class="anchored" data-anchor-id="how-mle-actually-finds-the-maximum">How MLE actually finds the maximum</h2>
+<p>MLE says “maximize the likelihood.” But for most models there’s no closed-form solution — you can’t just take a derivative, set it to zero, and solve. Instead, software uses <strong>iterative optimization algorithms</strong> that start at a guess and walk uphill until they reach the peak.</p>
+<section id="the-main-algorithms" class="level3">
+<h3 class="anchored" data-anchor-id="the-main-algorithms">The main algorithms</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 41%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Algorithm</th>
+<th style="text-align: left;">How it works</th>
+<th style="text-align: left;">Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Newton-Raphson</strong></td>
+<td style="text-align: left;">Uses the gradient (slope) <em>and</em> the Hessian (curvature) to jump directly toward the peak. Quadratic convergence — very fast near the optimum.</td>
+<td style="text-align: left;"><code>glm()</code> in R, Stata’s <code>ml</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>BFGS / L-BFGS-B</strong></td>
+<td style="text-align: left;">Approximates the Hessian instead of computing it exactly. L-BFGS-B adds box constraints (parameter bounds). Cheaper per step than Newton.</td>
+<td style="text-align: left;">R’s <code>optim()</code>, Python’s <code>scipy.optimize</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Gradient descent / SGD</strong></td>
+<td style="text-align: left;">Uses only the gradient — takes small steps in the steepest direction. Slow but scales to millions of parameters. SGD uses random subsets of data per step.</td>
+<td style="text-align: left;">Neural network training (PyTorch, TensorFlow)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>EM (Expectation-Maximization)</strong></td>
+<td style="text-align: left;">For models with latent variables. Alternates between imputing the missing data (E-step) and maximizing (M-step). Each step is easy; convergence can be slow.</td>
+<td style="text-align: left;">Mixture models, HMMs</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Intuition.</strong> Think of the log-likelihood as a landscape and you’re trying to find the highest point. Newton-Raphson is like having a detailed topographic map — you can jump straight to the peak. L-BFGS-B has a rougher map but it’s cheaper to read. Gradient descent has no map at all — it just looks at the slope under its feet and walks uphill. All three get to the top eventually; they differ in speed and cost per step.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="why-this-matters-in-practice" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-matters-in-practice">Why this matters in practice</h3>
+<p>Most of the time, the optimizer works silently and you never think about it. But sometimes:</p>
+<ul>
+<li><strong>Convergence failures.</strong> The algorithm doesn’t find the maximum. Common with small samples, perfect separation in logit, or too many parameters. If you see “algorithm did not converge,” try different starting values or a different algorithm.</li>
+<li><strong>Local optima.</strong> Non-convex likelihoods (mixture models, neural nets) can have multiple peaks. The algorithm finds <em>a</em> maximum, not necessarily <em>the</em> maximum.</li>
+<li><strong>Flat regions.</strong> Near-collinear regressors create a nearly flat likelihood surface. The optimizer wanders without making progress. This is the numerical symptom of weak identification.</li>
+</ul>
+<p>When you call <code>glm(y ~ x, family = binomial)</code> in R, it runs iteratively reweighted least squares (IRLS) — a variant of Newton-Raphson. When you call <code>optim(par, fn, method = "L-BFGS-B")</code>, you’re using the bounded quasi-Newton method. When PyTorch minimizes cross-entropy, it’s running SGD (or Adam, a fancier variant). All of them are doing the same thing: finding the parameters that maximize the likelihood.</p>
+</section>
+</section>
 <section id="limitations" class="level2">
 <h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
 <p><strong>Requires specifying the full distribution.</strong> MLE needs the entire density <span class="math inline">\(f(x \mid \theta)\)</span>, not just a few moments. If you specify the wrong distribution, the estimator will still converge — but to the parameter value that makes the assumed distribution closest to the truth in Kullback-Leibler divergence. That’s not necessarily what you want.</p>
 <p><strong>Can be biased in small samples.</strong> Asymptotic efficiency is a large-sample result. In small samples, MLE can be biased. A classic example: the MLE of <span class="math inline">\(\sigma^2\)</span> in the normal distribution is <span class="math inline">\(\frac{1}{n}\sum_i (X_i - \bar{X})^2\)</span>, which divides by <span class="math inline">\(n\)</span> rather than <span class="math inline">\(n-1\)</span> and is biased downward.</p>
 <p><strong>Sensitive to model misspecification.</strong> If the true data-generating process doesn’t belong to your parametric family, MLE converges to the “pseudo-true” value — the member of your family closest to the truth in KL divergence. This can be far from the parameter you intended to estimate.</p>
-<p><strong>Numerical optimization.</strong> For many models, there’s no closed-form MLE. You need iterative algorithms (Newton-Raphson, EM, gradient descent), which can get stuck at local optima or fail to converge.</p>
+<p><strong>Numerical optimization.</strong> For many models, there’s no closed-form MLE. The iterative algorithms described above can get stuck at local optima or fail to converge.</p>
 <p>These limitations motivate approaches that require less structure: <a href="gmm.html">GMM</a> only needs moment conditions (not the full distribution), and <a href="bayesian-estimation.html">Bayesian Estimation</a> lets you incorporate prior information to stabilize estimates.</p>
 
 
