@@ -557,7 +557,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p>Both are estimated by <a href="maximum-likelihood.html">maximum likelihood</a>. In practice, logit and probit give nearly identical results — the logistic and normal CDFs are almost the same shape when properly scaled.</p>
+<p>Both are estimated by <a href="maximum-likelihood.html">maximum likelihood</a>. In fact, <strong>logistic regression IS MLE</strong> — it maximizes the Bernoulli likelihood <span class="math inline">\(\prod \hat{p}_i^{Y_i}(1-\hat{p}_i)^{1-Y_i}\)</span>. There is no separate “logistic regression method.” You write down a Bernoulli model, apply MLE, and out comes logit. Probit is the same idea with a normal CDF instead of a logistic CDF. In practice, logit and probit give nearly identical results — the two CDFs are almost the same shape when properly scaled.</p>
 </section>
 <section id="simulation" class="level2">
 <h2 class="anchored" data-anchor-id="simulation">Simulation</h2>
