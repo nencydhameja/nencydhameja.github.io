@@ -501,6 +501,7 @@ window.Quarto = {
   <li><a href="#how-mle-actually-finds-the-maximum" id="toc-how-mle-actually-finds-the-maximum" class="nav-link" data-scroll-target="#how-mle-actually-finds-the-maximum">How MLE actually finds the maximum</a>
   <ul class="collapse">
   <li><a href="#the-main-algorithms" id="toc-the-main-algorithms" class="nav-link" data-scroll-target="#the-main-algorithms">The main algorithms</a></li>
+  <li><a href="#watch-the-algorithms-climb" id="toc-watch-the-algorithms-climb" class="nav-link" data-scroll-target="#watch-the-algorithms-climb">Watch the algorithms climb</a></li>
   <li><a href="#why-this-matters-in-practice" id="toc-why-this-matters-in-practice" class="nav-link" data-scroll-target="#why-this-matters-in-practice">Why this matters in practice</a></li>
   </ul></li>
   <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
@@ -899,6 +900,299 @@ L = \prod_{i=1}^n \hat{p}_i^{Y_i}(1 - \hat{p}_i)^{1-Y_i}
 </div>
 </div>
 </div>
+</section>
+<section id="watch-the-algorithms-climb" class="level3">
+<h3 class="anchored" data-anchor-id="watch-the-algorithms-climb">Watch the algorithms climb</h3>
+<p>Generate data from a logistic regression, then watch Newton-Raphson, BFGS, and gradient descent find the MLE. The left panel shows the log-likelihood surface with each algorithm’s path. The right panel tracks the log-likelihood value at each iteration.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 680
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("n_obs", "Sample size:",
+                  min = 50, max = 500, value = 200, step = 50),
+
+      sliderInput("start_b0", "Starting guess for intercept:",
+                  min = -4, max = 4, value = -3, step = 0.5),
+
+      sliderInput("start_b1", "Starting guess for slope:",
+                  min = -4, max = 4, value = 3, step = 0.5),
+
+      sliderInput("lr", "Gradient descent step size:",
+                  min = 0.01, max = 0.5, value = 0.1, step = 0.01),
+
+      sliderInput("max_iter", "Max iterations:",
+                  min = 5, max = 100, value = 30, step = 5),
+
+      actionButton("go", "New data + run",
+                   class = "btn-primary", width = "100%"),
+
+      uiOutput("results")
+    ),
+
+    mainPanel(
+      width = 9,
+      fluidRow(
+        column(6, plotOutput("contour_plot", height = "480px")),
+        column(6, plotOutput("convergence_plot", height = "480px"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  # Logistic log-likelihood
+  loglik &lt;- function(beta, x, y) {
+    eta &lt;- beta[1] + beta[2] * x
+    eta &lt;- pmax(pmin(eta, 20), -20)  # prevent overflow
+    sum(y * eta - log(1 + exp(eta)))
+  }
+
+  # Gradient
+  grad_loglik &lt;- function(beta, x, y) {
+    eta &lt;- beta[1] + beta[2] * x
+    eta &lt;- pmax(pmin(eta, 20), -20)
+    p &lt;- 1 / (1 + exp(-eta))
+    r &lt;- y - p
+    c(sum(r), sum(r * x))
+  }
+
+  # Hessian
+  hess_loglik &lt;- function(beta, x, y) {
+    eta &lt;- beta[1] + beta[2] * x
+    eta &lt;- pmax(pmin(eta, 20), -20)
+    p &lt;- 1 / (1 + exp(-eta))
+    w &lt;- p * (1 - p)
+    H &lt;- matrix(0, 2, 2)
+    H[1,1] &lt;- -sum(w)
+    H[1,2] &lt;- H[2,1] &lt;- -sum(w * x)
+    H[2,2] &lt;- -sum(w * x^2)
+    H
+  }
+
+  dat &lt;- reactive({
+    input$go
+
+    n &lt;- input$n_obs
+    start &lt;- c(input$start_b0, input$start_b1)
+    lr &lt;- input$lr
+    max_iter &lt;- input$max_iter
+
+    # True parameters
+    true_b &lt;- c(0.5, 1.5)
+    x &lt;- rnorm(n)
+    p &lt;- 1 / (1 + exp(-(true_b[1] + true_b[2] * x)))
+    y &lt;- rbinom(n, 1, p)
+
+    # --- Newton-Raphson ---
+    nr_path &lt;- matrix(start, nrow = 1)
+    nr_ll &lt;- loglik(start, x, y)
+    beta &lt;- start
+    for (i in seq_len(max_iter)) {
+      g &lt;- grad_loglik(beta, x, y)
+      H &lt;- hess_loglik(beta, x, y)
+      det_H &lt;- H[1,1]*H[2,2] - H[1,2]*H[2,1]
+      if (abs(det_H) &lt; 1e-10) break
+      H_inv &lt;- matrix(c(H[2,2], -H[1,2], -H[2,1], H[1,1]), 2, 2) / det_H
+      beta &lt;- beta - H_inv %*% g
+      beta &lt;- pmax(pmin(as.numeric(beta), 10), -10)
+      nr_path &lt;- rbind(nr_path, beta)
+      nr_ll &lt;- c(nr_ll, loglik(beta, x, y))
+      if (max(abs(g)) &lt; 1e-8) break
+    }
+
+    # --- BFGS (approximate Hessian) ---
+    bfgs_path &lt;- matrix(start, nrow = 1)
+    bfgs_ll &lt;- loglik(start, x, y)
+    beta &lt;- start
+    B_inv &lt;- diag(2)  # start with identity as inverse Hessian approx
+    g_old &lt;- grad_loglik(beta, x, y)
+    for (i in seq_len(max_iter)) {
+      direction &lt;- as.numeric(B_inv %*% g_old)
+      beta_new &lt;- beta + direction * 0.5  # damped step
+      beta_new &lt;- pmax(pmin(beta_new, 10), -10)
+      g_new &lt;- grad_loglik(beta_new, x, y)
+      s &lt;- beta_new - beta
+      yy &lt;- g_new - g_old
+      sy &lt;- sum(s * yy)
+      if (abs(sy) &gt; 1e-10) {
+        rho &lt;- 1 / sy
+        I2 &lt;- diag(2)
+        B_inv &lt;- (I2 - rho * s %*% t(yy)) %*% B_inv %*%
+                 (I2 - rho * yy %*% t(s)) + rho * s %*% t(s)
+      }
+      beta &lt;- beta_new
+      g_old &lt;- g_new
+      bfgs_path &lt;- rbind(bfgs_path, beta)
+      bfgs_ll &lt;- c(bfgs_ll, loglik(beta, x, y))
+      if (max(abs(g_new)) &lt; 1e-8) break
+    }
+
+    # --- Gradient descent ---
+    gd_path &lt;- matrix(start, nrow = 1)
+    gd_ll &lt;- loglik(start, x, y)
+    beta &lt;- start
+    for (i in seq_len(max_iter)) {
+      g &lt;- grad_loglik(beta, x, y)
+      beta &lt;- beta + lr * g / n  # normalize by n for stability
+      beta &lt;- pmax(pmin(beta, 10), -10)
+      gd_path &lt;- rbind(gd_path, beta)
+      gd_ll &lt;- c(gd_ll, loglik(beta, x, y))
+      if (max(abs(g)) &lt; 1e-8) break
+    }
+
+    # MLE (from glm)
+    fit &lt;- glm(y ~ x, family = binomial)
+    mle &lt;- coef(fit)
+
+    list(x = x, y = y, true_b = true_b, mle = mle,
+         nr_path = nr_path, nr_ll = nr_ll,
+         bfgs_path = bfgs_path, bfgs_ll = bfgs_ll,
+         gd_path = gd_path, gd_ll = gd_ll)
+  })
+
+  output$contour_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    # Grid for log-likelihood contours
+    b0_seq &lt;- seq(-4, 5, length.out = 80)
+    b1_seq &lt;- seq(-3, 5, length.out = 80)
+    ll_grid &lt;- matrix(NA, 80, 80)
+    for (i in seq_along(b0_seq)) {
+      for (j in seq_along(b1_seq)) {
+        ll_grid[i, j] &lt;- loglik(c(b0_seq[i], b1_seq[j]), d$x, d$y)
+      }
+    }
+
+    # Contour plot
+    contour(b0_seq, b1_seq, ll_grid, nlevels = 25,
+            xlab = expression(beta[0] ~ "(intercept)"),
+            ylab = expression(beta[1] ~ "(slope)"),
+            main = "Optimizer paths on log-likelihood",
+            col = "gray70", labcex = 0.6)
+
+    # Newton-Raphson path
+    lines(d$nr_path[,1], d$nr_path[,2], col = "#e74c3c", lwd = 2.5)
+    points(d$nr_path[,1], d$nr_path[,2], col = "#e74c3c",
+           pch = 16, cex = 1.2)
+
+    # BFGS path
+    lines(d$bfgs_path[,1], d$bfgs_path[,2], col = "#3498db", lwd = 2.5)
+    points(d$bfgs_path[,1], d$bfgs_path[,2], col = "#3498db",
+           pch = 17, cex = 1.2)
+
+    # GD path
+    lines(d$gd_path[,1], d$gd_path[,2], col = "#27ae60", lwd = 2.5)
+    points(d$gd_path[,1], d$gd_path[,2], col = "#27ae60",
+           pch = 15, cex = 0.9)
+
+    # MLE
+    points(d$mle[1], d$mle[2], pch = 4, cex = 2.5, lwd = 3, col = "#2c3e50")
+
+    # Start
+    points(d$nr_path[1,1], d$nr_path[1,2], pch = 1, cex = 2.5,
+           lwd = 2, col = "black")
+
+    legend("topright",
+           legend = c("Newton-Raphson", "BFGS", "Gradient descent",
+                      "MLE (glm)", "Start"),
+           col = c("#e74c3c", "#3498db", "#27ae60", "#2c3e50", "black"),
+           pch = c(16, 17, 15, 4, 1), lwd = c(2, 2, 2, NA, NA),
+           pt.cex = c(1, 1, 0.9, 1.5, 1.5),
+           bg = "white", cex = 0.8)
+  })
+
+  output$convergence_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    max_ll &lt;- max(c(d$nr_ll, d$bfgs_ll, d$gd_ll))
+    all_iter &lt;- max(length(d$nr_ll), length(d$bfgs_ll), length(d$gd_ll))
+
+    plot(NULL,
+         xlim = c(0, all_iter - 1),
+         ylim = c(min(c(d$nr_ll, d$bfgs_ll, d$gd_ll)), max_ll * 1.02),
+         xlab = "Iteration", ylab = "Log-likelihood",
+         main = "Convergence speed")
+
+    # Newton
+    lines(seq_along(d$nr_ll) - 1, d$nr_ll, col = "#e74c3c",
+          lwd = 2.5, type = "b", pch = 16, cex = 1)
+    # BFGS
+    lines(seq_along(d$bfgs_ll) - 1, d$bfgs_ll, col = "#3498db",
+          lwd = 2.5, type = "b", pch = 17, cex = 1)
+    # GD
+    lines(seq_along(d$gd_ll) - 1, d$gd_ll, col = "#27ae60",
+          lwd = 2.5, type = "b", pch = 15, cex = 0.8)
+
+    abline(h = max_ll, lty = 2, col = "#2c3e50", lwd = 1.5)
+    text(all_iter * 0.7, max_ll, "Maximum", pos = 3, cex = 0.85)
+
+    legend("bottomright",
+           legend = c("Newton-Raphson", "BFGS", "Gradient descent"),
+           col = c("#e74c3c", "#3498db", "#27ae60"),
+           pch = c(16, 17, 15), lwd = 2,
+           bg = "white", cex = 0.85)
+  })
+
+  output$results &lt;- renderUI({
+    d &lt;- dat()
+
+    nr_steps &lt;- nrow(d$nr_path) - 1
+    bfgs_steps &lt;- nrow(d$bfgs_path) - 1
+    gd_steps &lt;- nrow(d$gd_path) - 1
+
+    nr_final &lt;- d$nr_path[nrow(d$nr_path),]
+    bfgs_final &lt;- d$bfgs_path[nrow(d$bfgs_path),]
+    gd_final &lt;- d$gd_path[nrow(d$gd_path),]
+
+    nr_dist &lt;- round(sqrt(sum((nr_final - d$mle)^2)), 4)
+    bfgs_dist &lt;- round(sqrt(sum((bfgs_final - d$mle)^2)), 4)
+    gd_dist &lt;- round(sqrt(sum((gd_final - d$mle)^2)), 4)
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;Steps to converge:&lt;/b&gt;&lt;br&gt;",
+        "&lt;span style='color:#e74c3c'&gt;Newton: ", nr_steps, "&lt;/span&gt;&lt;br&gt;",
+        "&lt;span style='color:#3498db'&gt;BFGS: ", bfgs_steps, "&lt;/span&gt;&lt;br&gt;",
+        "&lt;span style='color:#27ae60'&gt;GD: ", gd_steps, "&lt;/span&gt;&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;Distance from MLE:&lt;/b&gt;&lt;br&gt;",
+        "Newton: ", nr_dist, "&lt;br&gt;",
+        "BFGS: ", bfgs_dist, "&lt;br&gt;",
+        "GD: ", gd_dist
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<section id="things-to-try" class="level4">
+<h4 class="anchored" data-anchor-id="things-to-try">Things to try</h4>
+<ul>
+<li><strong>Move the starting guess far away</strong> (e.g., intercept = -4, slope = 3): Newton-Raphson still converges in 3-5 steps. Gradient descent may need all 30+.</li>
+<li><strong>Tiny step size</strong> (0.01): gradient descent barely moves. It will get there eventually, but takes many more iterations.</li>
+<li><strong>Large step size</strong> (0.5): gradient descent may overshoot and oscillate around the peak.</li>
+<li><strong>Small sample</strong> (n = 50): the contours are wider (more uncertainty), but all algorithms still find the peak. The MLE itself is noisier.</li>
+</ul>
+</section>
 </section>
 <section id="why-this-matters-in-practice" class="level3">
 <h3 class="anchored" data-anchor-id="why-this-matters-in-practice">Why this matters in practice</h3>
