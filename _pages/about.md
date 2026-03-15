@@ -21,11 +21,11 @@ My research is centered on causal inference and policy evaluation in applied mic
 <p>
 Prior to my Ph.D., I pursued an Executive MBA in Singapore and earned a Bachelor of Technology in India. This technical background informs my research through an emphasis on reproducible workflows, large-scale administrative data, and computational modeling, including LLM-based agent simulations, for studying economic behavior and policy interventions.
 </p>
-<p><strong>Fields</strong>: Applied Microeconomics, Urban & Spatial Economics, Labor Economics, Computational Economics</p>
+<p><strong>Fields</strong>: Applied Microeconomics, Labor Economics, Urban & Spatial Economics, Computational Economics</p>
 <div class="notice--info">
-  <strong>Research Toolkit</strong>
+  <strong>Research Methods</strong>
   <ul style="margin-top:0.5rem; margin-left:0; padding-left:1.2rem;">
-    <li><strong>Causal Inference:</strong> Staggered Difference-in-Differences, Event Studies, Synthetic Control Methods</li>
+    <li><strong>Causal Inference:</strong> Staggered Difference-in-Differences, Event Studies, Synthetic Controls</li>
     <li><strong>Confounding Adjustment:</strong> Inverse Probability Weighting (IPW), Entropy Balancing, Double Machine Learning</li>
     <li><strong>Spatial Analysis:</strong> Neighborhood Exposure Designs, Salience and Attention Kernels</li>
     <li><strong>Computational Economics:</strong> Agent-Based Models, LLM-Based Economic Agents</li>
