@@ -291,6 +291,12 @@ window.Quarto = {
  <span class="menu-text">Omitted Variable Bias</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Five OLS Assumptions</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -500,11 +506,6 @@ window.Quarto = {
   <li><a href="#chi-squared-chi2" id="toc-chi-squared-chi2" class="nav-link" data-scroll-target="#chi-squared-chi2">Chi-squared (<span class="math inline">\(\chi^2\)</span>)</a></li>
   <li><a href="#f-statistic" id="toc-f-statistic" class="nav-link" data-scroll-target="#f-statistic">F-statistic</a></li>
   <li><a href="#simulation-watch-t-converge-to-z-and-f-converge-to-chi-squared-as-n-grows" id="toc-simulation-watch-t-converge-to-z-and-f-converge-to-chi-squared-as-n-grows" class="nav-link" data-scroll-target="#simulation-watch-t-converge-to-z-and-f-converge-to-chi-squared-as-n-grows">Simulation: Watch t converge to Z and F converge to chi-squared as n grows</a></li>
-  </ul></li>
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">The five classical assumptions</a>
-  <ul class="collapse">
-  <li><a href="#what-breaks-when-each-assumption-fails" id="toc-what-breaks-when-each-assumption-fails" class="nav-link" data-scroll-target="#what-breaks-when-each-assumption-fails">What breaks when each assumption fails</a></li>
-  <li><a href="#simulation-break-each-assumption-and-watch-the-t-test-fail" id="toc-simulation-break-each-assumption-and-watch-the-t-test-fail" class="nav-link" data-scroll-target="#simulation-break-each-assumption-and-watch-the-t-test-fail">Simulation: break each assumption and watch the t-test fail</a></li>
   </ul></li>
   <li><a href="#iii.-the-likelihood-based-trinity" id="toc-iii.-the-likelihood-based-trinity" class="nav-link" data-scroll-target="#iii.-the-likelihood-based-trinity">III. The likelihood-based trinity</a>
   <ul class="collapse">
@@ -718,269 +719,13 @@ server &lt;- function(input, output, session) {
 }
 
 shinyApp(ui, server)</code></pre>
-</section>
-</section>
-<section id="assumptions" class="level2">
-<h2 class="anchored" data-anchor-id="assumptions">The five classical assumptions</h2>
-<p>The t and F distributions above are <em>exact</em> — but only under five assumptions about the data-generating process. When these hold, you get the Gauss-Markov theorem and valid finite-sample inference. When they break, the tests may still work approximately — or they may fail completely.</p>
-<p>For the linear model <span class="math inline">\(y = X\beta + \varepsilon\)</span>:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 8%">
-<col style="width: 35%">
-<col style="width: 55%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">#</th>
-<th style="text-align: left;">Assumption</th>
-<th style="text-align: left;">What it gives you</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">1</td>
-<td style="text-align: left;"><strong>Linearity:</strong> <span class="math inline">\(y = X\beta + \varepsilon\)</span></td>
-<td style="text-align: left;">Model is correctly specified</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2</td>
-<td style="text-align: left;"><strong>Strict exogeneity:</strong> <span class="math inline">\(E[\varepsilon \mid X] = 0\)</span></td>
-<td style="text-align: left;">OLS is unbiased</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">3</td>
-<td style="text-align: left;"><strong>No perfect multicollinearity:</strong> <span class="math inline">\(\text{rank}(X) = k\)</span></td>
-<td style="text-align: left;"><span class="math inline">\((X'X)^{-1}\)</span> exists, estimates are unique</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">4</td>
-<td style="text-align: left;"><strong>Spherical errors:</strong> <span class="math inline">\(\text{Var}(\varepsilon \mid X) = \sigma^2 I\)</span></td>
-<td style="text-align: left;">OLS is BLUE, standard errors are correct</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">5</td>
-<td style="text-align: left;"><strong>Normality:</strong> <span class="math inline">\(\varepsilon \mid X \sim N(0, \sigma^2 I)\)</span></td>
-<td style="text-align: left;">t and F are exact in finite samples</td>
-</tr>
-</tbody>
-</table>
-<p>Assumptions 1–4 are the <strong>Gauss-Markov conditions</strong>: OLS is the Best Linear Unbiased Estimator. Adding assumption 5 upgrades you to the <strong>classical normal linear model</strong> — t-statistics follow <span class="math inline">\(t_{n-k}\)</span> <em>exactly</em> and F-statistics follow <span class="math inline">\(F_{q,\,n-k}\)</span> <em>exactly</em>, even with <span class="math inline">\(n = 20\)</span>.</p>
-<p>Without normality but with 1–4, the CLT still delivers: <span class="math inline">\(t \xrightarrow{d} N(0,1)\)</span> as <span class="math inline">\(n \to \infty\)</span>. Large samples rescue you from non-normality. But violations of exogeneity or homoskedasticity are more dangerous — they corrupt your standard errors or your point estimates regardless of sample size.</p>
-<section id="what-breaks-when-each-assumption-fails" class="level3">
-<h3 class="anchored" data-anchor-id="what-breaks-when-each-assumption-fails">What breaks when each assumption fails</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Violated</th>
-<th style="text-align: left;">Consequence</th>
-<th style="text-align: left;">Fix</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Linearity</td>
-<td style="text-align: left;">Bias, meaningless coefficients</td>
-<td style="text-align: left;">Correct specification, nonparametric methods</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Exogeneity</td>
-<td style="text-align: left;"><span class="math inline">\(\hat{\beta}\)</span> is biased — you’re testing the wrong value</td>
-<td style="text-align: left;">IV, experiments, panel methods</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Multicollinearity</td>
-<td style="text-align: left;"><span class="math inline">\((X'X)^{-1}\)</span> explodes — huge SEs, unstable estimates</td>
-<td style="text-align: left;">Drop variables, regularize</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Homoskedasticity</td>
-<td style="text-align: left;">OLS SEs are wrong <span class="math inline">\(\Rightarrow\)</span> wrong p-values</td>
-<td style="text-align: left;"><a href="heteroskedasticity.html">Robust / clustered SEs</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Normality</td>
-<td style="text-align: left;">t and F are approximate, not exact</td>
-<td style="text-align: left;">Large <span class="math inline">\(n\)</span> (CLT), <a href="bootstrap.html">bootstrap</a></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="simulation-break-each-assumption-and-watch-the-t-test-fail" class="level3">
-<h3 class="anchored" data-anchor-id="simulation-break-each-assumption-and-watch-the-t-test-fail">Simulation: break each assumption and watch the t-test fail</h3>
-<p>This generates data under <span class="math inline">\(H_0\!: \beta_1 = 0\)</span> (the null is true) and computes the OLS t-statistic 2,000 times. If the test works correctly, the histogram should match the theoretical <span class="math inline">\(t(n-2)\)</span> curve and the rejection rate should be 5%.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 620
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
-    }
-    .stats-box b { color: #2c3e50; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      selectInput("violation", "Scenario:",
-        choices = c(
-          "All assumptions hold" = "none",
-          "Non-normal errors" = "nonnormal",
-          "Heteroskedastic errors" = "hetero",
-          "Endogenous regressor" = "endogenous"
-        )
-      ),
-
-      sliderInput("n", "Sample size (n):",
-                  min = 20, max = 500, value = 30, step = 10),
-
-      actionButton("run", "Run 2,000 replications",
-                   style = "width:100%; margin-top:10px;
-                            background:#3498db; color:white;
-                            border:none; padding:10px; font-weight:bold;"),
-
-      uiOutput("stats")
-    ),
-
-    mainPanel(
-      width = 9,
-      plotOutput("hist_plot", height = "500px")
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  sim_data &lt;- reactiveVal(NULL)
-
-  observeEvent(input$run, {
-    n    &lt;- input$n
-    B    &lt;- 2000
-    viol &lt;- input$violation
-
-    # --- Generate data (vectorised: n × B matrices) ---
-    X &lt;- matrix(rnorm(n * B), nrow = n, ncol = B)
-
-    if (viol == "none") {
-      EPS &lt;- matrix(rnorm(n * B), nrow = n, ncol = B)
-    } else if (viol == "nonnormal") {
-      # Skewed chi-squared errors, mean-centred
-      EPS &lt;- (matrix(rchisq(n * B, df = 2), n, B) - 2) / 2
-    } else if (viol == "hetero") {
-      # Variance grows with |x|
-      EPS &lt;- matrix(rnorm(n * B), n, B) * (1 + 2 * abs(X))
-    } else {
-      # Endogeneity: x and eps share a common component
-      U   &lt;- matrix(rnorm(n * B), n, B)
-      X   &lt;- X + U
-      EPS &lt;- U + matrix(rnorm(n * B, sd = 0.5), n, B)
-    }
-
-    Y &lt;- EPS                       # true beta_1 = 0
-
-    # --- Vectorised OLS t-statistics ---
-    Xc  &lt;- X - matrix(colMeans(X), n, B, byrow = TRUE)
-    b1  &lt;- colSums(Xc * Y) / colSums(Xc^2)
-    Res &lt;- Y - matrix(colMeans(Y), n, B, byrow = TRUE) -
-           Xc * matrix(b1, n, B, byrow = TRUE)
-    s2  &lt;- colSums(Res^2) / (n - 2)
-    se  &lt;- sqrt(s2 / colSums(Xc^2))
-    tst &lt;- b1 / se
-
-    sim_data(list(t = tst, n = n, viol = viol))
-  })
-
-  output$hist_plot &lt;- renderPlot({
-    d &lt;- sim_data()
-    if (is.null(d)) {
-      plot.new()
-      text(0.5, 0.5, "Press the button to run the simulation",
-           cex = 1.4, col = "#7f8c8d")
-      return()
-    }
-
-    df_val &lt;- d$n - 2
-    par(mar = c(5, 5, 4, 2))
-
-    lbl &lt;- switch(d$viol,
-      none       = "All assumptions hold",
-      nonnormal  = "Non-normal errors (\u03c7\u00b2 - skewed)",
-      hetero     = "Heteroskedastic errors",
-      endogenous = "Endogenous regressor")
-
-    # Allow wider x-range for endogeneity (t-stats shift)
-    xlim_lo &lt;- min(-5, quantile(d$t, 0.005))
-    xlim_hi &lt;- max( 5, quantile(d$t, 0.995))
-
-    hist(d$t, breaks = 60, freq = FALSE, col = "#dfe6e9",
-         border = "#b2bec3", xlim = c(xlim_lo, xlim_hi),
-         main = paste0(lbl, "   (n = ", d$n, ")"),
-         xlab = "t-statistic", ylab = "Density",
-         cex.main = 1.4, cex.lab = 1.2)
-
-    xseq &lt;- seq(xlim_lo, xlim_hi, length.out = 500)
-    lines(xseq, dt(xseq, df = df_val), lwd = 3, col = "#e74c3c", lty = 2)
-
-    rej &lt;- mean(abs(d$t) &gt; qt(0.975, df = df_val))
-
-    legend("topright", bty = "n", cex = 1.0,
-      legend = c("Simulated t-stats",
-                 paste0("t(", df_val, ") theory"),
-                 paste0("Rejection rate: ", sprintf("%.1f%%", rej * 100),
-                        "  (nominal 5%)")),
-      col  = c("#b2bec3", "#e74c3c", NA),
-      lwd  = c(NA, 3, NA),
-      lty  = c(NA, 2, NA),
-      pch  = c(15, NA, NA),
-      pt.cex = 2)
-  })
-
-  output$stats &lt;- renderUI({
-    d &lt;- sim_data()
-    if (is.null(d)) return(NULL)
-
-    df_val &lt;- d$n - 2
-    rej    &lt;- mean(abs(d$t) &gt; qt(0.975, df = df_val))
-    col    &lt;- if (abs(rej - 0.05) &lt; 0.02) "#27ae60" else "#e74c3c"
-
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;Replications:&lt;/b&gt; 2,000&lt;br&gt;",
-        "&lt;b&gt;df:&lt;/b&gt; ", df_val, "&lt;br&gt;",
-        "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;Nominal size:&lt;/b&gt; 5.0%&lt;br&gt;",
-        "&lt;b&gt;Actual rejection:&lt;/b&gt; ",
-        "&lt;span style='color:", col, "; font-weight:bold'&gt;",
-        sprintf("%.1f%%", rej * 100), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;Mean(t):&lt;/b&gt; ", round(mean(d$t), 3), "&lt;br&gt;",
-        "&lt;b&gt;SD(t):&lt;/b&gt; ", round(sd(d$t), 3), "&lt;br&gt;",
-        "&lt;small&gt;Should be &amp;asymp; 0 and &amp;asymp; 1&lt;br&gt;",
-        "if assumptions hold.&lt;/small&gt;"
-      ))
-    )
-  })
-}
-
-shinyApp(ui, server)</code></pre>
-<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>What to try:</strong></p>
-<ul>
-<li><strong>All assumptions hold:</strong> histogram matches the red <span class="math inline">\(t\)</span>-curve, rejection <span class="math inline">\(\approx\)</span> 5%.</li>
-<li><strong>Non-normal errors</strong> (skewed <span class="math inline">\(\chi^2\)</span>): at <span class="math inline">\(n = 20\)</span>, the histogram is visibly off-centre. Crank <span class="math inline">\(n\)</span> up to 200 — the CLT kicks in and the histogram snaps back onto the <span class="math inline">\(t\)</span>-curve.</li>
-<li><strong>Heteroskedastic errors:</strong> rejection rate drifts above 5% regardless of <span class="math inline">\(n\)</span>. The OLS standard errors are systematically wrong. This is why you need <a href="heteroskedasticity.html">robust SEs</a>.</li>
-<li><strong>Endogenous regressor:</strong> t-statistics shift away from zero — the estimator is biased, so the “null is true” test rejects almost every time. No amount of <span class="math inline">\(n\)</span> fixes this; you need a different estimator (IV, etc.).</li>
-</ul>
+<p><strong>Important.</strong> The t and F distributions above are <em>exact</em> — but only under the <a href="assumptions.html">five classical OLS assumptions</a>. When those assumptions break, these test statistics can give you the wrong answer. See the <a href="assumptions.html">OLS assumptions page</a> for details and an interactive simulation of what goes wrong.</p>
 </div>
 </div>
 </div>

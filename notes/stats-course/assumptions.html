@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The Delta Method – Foundations of Statistical Inference</title>
+<title>The Five OLS Assumptions – Foundations of Statistical Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./heteroskedasticity.html">Standard Errors &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./delta-method.html">The Delta Method</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cef.html">Regression</a></li><li class="breadcrumb-item"><a href="./assumptions.html">The Five OLS Assumptions</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -293,7 +293,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./assumptions.html" class="sidebar-item-text sidebar-link">
+  <a href="./assumptions.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">The Five OLS Assumptions</span></a>
   </div>
 </li>
@@ -380,7 +380,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./delta-method.html" class="sidebar-item-text sidebar-link active">
+  <a href="./delta-method.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Delta Method</span></a>
   </div>
 </li>
@@ -495,32 +495,25 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem">The problem</a></li>
-  <li><a href="#the-formula" id="toc-the-formula" class="nav-link" data-scroll-target="#the-formula">The formula</a></li>
-  <li><a href="#worked-examples" id="toc-worked-examples" class="nav-link" data-scroll-target="#worked-examples">Worked examples</a>
+  <li><a href="#the-assumptions" id="toc-the-assumptions" class="nav-link active" data-scroll-target="#the-assumptions">The assumptions</a>
   <ul class="collapse">
-  <li><a href="#example-1-odds-ratio-ehatbeta" id="toc-example-1-odds-ratio-ehatbeta" class="nav-link" data-scroll-target="#example-1-odds-ratio-ehatbeta">Example 1: Odds ratio <span class="math inline">\(e^{\hat{\beta}}\)</span></a></li>
-  <li><a href="#example-2-ratio-hatbeta_1-hatbeta_2" id="toc-example-2-ratio-hatbeta_1-hatbeta_2" class="nav-link" data-scroll-target="#example-2-ratio-hatbeta_1-hatbeta_2">Example 2: Ratio <span class="math inline">\(\hat{\beta}_1 / \hat{\beta}_2\)</span></a></li>
-  <li><a href="#example-3-logit-marginal-effects" id="toc-example-3-logit-marginal-effects" class="nav-link" data-scroll-target="#example-3-logit-marginal-effects">Example 3: Logit marginal effects</a></li>
+  <li><a href="#two-tiers" id="toc-two-tiers" class="nav-link" data-scroll-target="#two-tiers">Two tiers</a></li>
+  <li><a href="#connection-to-mle" id="toc-connection-to-mle" class="nav-link" data-scroll-target="#connection-to-mle">Connection to MLE</a></li>
   </ul></li>
-  <li><a href="#simulation" id="toc-simulation" class="nav-link" data-scroll-target="#simulation">Simulation</a>
+  <li><a href="#what-breaks-when-each-assumption-fails" id="toc-what-breaks-when-each-assumption-fails" class="nav-link" data-scroll-target="#what-breaks-when-each-assumption-fails">What breaks when each assumption fails</a>
   <ul class="collapse">
-  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  <li><a href="#the-hierarchy-of-damage" id="toc-the-hierarchy-of-damage" class="nav-link" data-scroll-target="#the-hierarchy-of-damage">The hierarchy of damage</a></li>
   </ul></li>
-  <li><a href="#when-the-delta-method-fails" id="toc-when-the-delta-method-fails" class="nav-link" data-scroll-target="#when-the-delta-method-fails">When the delta method fails</a>
-  <ul class="collapse">
-  <li><a href="#connections" id="toc-connections" class="nav-link" data-scroll-target="#connections">Connections</a></li>
-  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
-  </ul></li>
+  <li><a href="#simulation-break-each-assumption-and-watch-the-t-test-fail" id="toc-simulation-break-each-assumption-and-watch-the-t-test-fail" class="nav-link" data-scroll-target="#simulation-break-each-assumption-and-watch-the-t-test-fail">Simulation: break each assumption and watch the t-test fail</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./heteroskedasticity.html">Standard Errors &amp; Diagnostics</a></li><li class="breadcrumb-item"><a href="./delta-method.html">The Delta Method</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cef.html">Regression</a></li><li class="breadcrumb-item"><a href="./assumptions.html">The Five OLS Assumptions</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">The Delta Method</h1>
+<h1 class="title">The Five OLS Assumptions</h1>
 </div>
 
 
@@ -537,258 +530,314 @@ window.Quarto = {
 </header>
 
 
-<section id="the-problem" class="level2">
-<h2 class="anchored" data-anchor-id="the-problem">The problem</h2>
-<p>You have an estimator <span class="math inline">\(\hat{\theta}\)</span> with known (or estimated) variance, and you want the variance of some nonlinear transformation <span class="math inline">\(g(\hat{\theta})\)</span>. Examples:</p>
-<ul>
-<li>You estimated <span class="math inline">\(\hat{\beta}\)</span> from a logistic regression, but you want the SE of the <strong>odds ratio</strong> <span class="math inline">\(e^{\hat{\beta}}\)</span>.</li>
-<li>You have two coefficients <span class="math inline">\(\hat{\beta}_1, \hat{\beta}_2\)</span> and want the SE of their <strong>ratio</strong> <span class="math inline">\(\hat{\beta}_1 / \hat{\beta}_2\)</span>.</li>
-<li>You want marginal effects from a probit model — nonlinear functions of <span class="math inline">\(\hat{\beta}\)</span>.</li>
-</ul>
-</section>
-<section id="the-formula" class="level2">
-<h2 class="anchored" data-anchor-id="the-formula">The formula</h2>
-<p>If <span class="math inline">\(\hat{\theta} \xrightarrow{d} N(\theta, \sigma^2/n)\)</span>, then a first-order Taylor expansion gives:</p>
-<p><span class="math display">\[g(\hat{\theta}) \approx g(\theta) + g'(\theta)(\hat{\theta} - \theta)\]</span></p>
-<p>so:</p>
-<p><span class="math display">\[\text{Var}(g(\hat{\theta})) \approx [g'(\theta)]^2 \cdot \text{Var}(\hat{\theta})\]</span></p>
-<p><strong>Multivariate version:</strong> if <span class="math inline">\(\hat{\boldsymbol{\theta}}\)</span> is a vector with covariance matrix <span class="math inline">\(\Sigma\)</span>, then:</p>
-<p><span class="math display">\[\text{Var}(g(\hat{\boldsymbol{\theta}})) \approx \nabla g(\boldsymbol{\theta})' \, \Sigma \, \nabla g(\boldsymbol{\theta})\]</span></p>
-<p>where <span class="math inline">\(\nabla g\)</span> is the gradient of <span class="math inline">\(g\)</span> evaluated at <span class="math inline">\(\hat{\boldsymbol{\theta}}\)</span>.</p>
-</section>
-<section id="worked-examples" class="level2">
-<h2 class="anchored" data-anchor-id="worked-examples">Worked examples</h2>
-<section id="example-1-odds-ratio-ehatbeta" class="level3">
-<h3 class="anchored" data-anchor-id="example-1-odds-ratio-ehatbeta">Example 1: Odds ratio <span class="math inline">\(e^{\hat{\beta}}\)</span></h3>
-<p><span class="math inline">\(g(\beta) = e^\beta\)</span>, so <span class="math inline">\(g'(\beta) = e^\beta\)</span>. Therefore:</p>
-<p><span class="math display">\[\text{SE}(e^{\hat{\beta}}) \approx e^{\hat{\beta}} \cdot \text{SE}(\hat{\beta})\]</span></p>
-</section>
-<section id="example-2-ratio-hatbeta_1-hatbeta_2" class="level3">
-<h3 class="anchored" data-anchor-id="example-2-ratio-hatbeta_1-hatbeta_2">Example 2: Ratio <span class="math inline">\(\hat{\beta}_1 / \hat{\beta}_2\)</span></h3>
-<p><span class="math inline">\(g(\beta_1, \beta_2) = \beta_1 / \beta_2\)</span>. The gradient is <span class="math inline">\(\nabla g = (1/\beta_2, \; -\beta_1/\beta_2^2)\)</span>, so:</p>
-<p><span class="math display">\[\text{Var}\!\left(\frac{\hat{\beta}_1}{\hat{\beta}_2}\right) \approx \frac{1}{\beta_2^2}\text{Var}(\hat{\beta}_1) + \frac{\beta_1^2}{\beta_2^4}\text{Var}(\hat{\beta}_2) - \frac{2\beta_1}{\beta_2^3}\text{Cov}(\hat{\beta}_1, \hat{\beta}_2)\]</span></p>
-</section>
-<section id="example-3-logit-marginal-effects" class="level3">
-<h3 class="anchored" data-anchor-id="example-3-logit-marginal-effects">Example 3: Logit marginal effects</h3>
-<p>For logit with <span class="math inline">\(P(Y=1|X) = \Lambda(X'\beta)\)</span>, the marginal effect of <span class="math inline">\(X_j\)</span> is <span class="math inline">\(\Lambda'(X'\beta) \cdot \beta_j\)</span>. The delta method gives its SE using the gradient with respect to <span class="math inline">\(\beta\)</span> — see <a href="limited-dependent.html">limited dependent variables</a>.</p>
+<p>Every result in classical regression — unbiasedness, efficiency, exact t and F tests — rests on five assumptions about the data-generating process. These are assumptions about <strong>OLS specifically</strong>. Other estimators (MLE, MoM, GMM) have their own regularity conditions. But since OLS is the workhorse of applied economics, these five assumptions are where inference begins.</p>
+<section id="the-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="the-assumptions">The assumptions</h2>
+<p>For the linear model <span class="math inline">\(y = X\beta + \varepsilon\)</span>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 23%">
+<col style="width: 34%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">Assumption</th>
+<th style="text-align: left;">Formal statement</th>
+<th style="text-align: left;">What it gives you</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><strong>Linearity</strong></td>
+<td style="text-align: left;"><span class="math inline">\(y = X\beta + \varepsilon\)</span></td>
+<td style="text-align: left;">Model is correctly specified</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"><strong>Strict exogeneity</strong></td>
+<td style="text-align: left;"><span class="math inline">\(E[\varepsilon \mid X] = 0\)</span></td>
+<td style="text-align: left;">OLS is unbiased</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;"><strong>No perfect multicollinearity</strong></td>
+<td style="text-align: left;"><span class="math inline">\(\text{rank}(X) = k\)</span></td>
+<td style="text-align: left;"><span class="math inline">\((X'X)^{-1}\)</span> exists, estimates are unique</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;"><strong>Spherical errors</strong></td>
+<td style="text-align: left;"><span class="math inline">\(\text{Var}(\varepsilon \mid X) = \sigma^2 I\)</span></td>
+<td style="text-align: left;">OLS is BLUE, standard errors are correct</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;"><strong>Normality</strong></td>
+<td style="text-align: left;"><span class="math inline">\(\varepsilon \mid X \sim N(0, \sigma^2 I)\)</span></td>
+<td style="text-align: left;">t and F are exact in finite samples</td>
+</tr>
+</tbody>
+</table>
+<section id="two-tiers" class="level3">
+<h3 class="anchored" data-anchor-id="two-tiers">Two tiers</h3>
+<p><strong>Assumptions 1–4</strong> are the <strong>Gauss-Markov conditions.</strong> Under these, OLS is the Best Linear Unbiased Estimator (BLUE) — no other linear unbiased estimator has smaller variance. But you don’t yet know the exact distribution of <span class="math inline">\(\hat{\beta}\)</span>, so you can’t do exact finite-sample inference.</p>
+<p><strong>Adding assumption 5</strong> upgrades you to the <strong>classical normal linear model.</strong> Now t-statistics follow <span class="math inline">\(t_{n-k}\)</span> <em>exactly</em> and F-statistics follow <span class="math inline">\(F_{q,\,n-k}\)</span> <em>exactly</em>, even with <span class="math inline">\(n = 20\)</span>. This is the world where all the textbook formulas — confidence intervals, p-values, prediction intervals — are exact, not approximate.</p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>The Oracle View.</strong> In the simulation below, we know the true <span class="math inline">\(\beta\)</span> and can compute the exact sampling distribution of <span class="math inline">\(e^{\hat{\beta}}\)</span> by Monte Carlo. We compare three approaches: the delta method SE, the bootstrap SE, and the true SD from simulation. In practice, you’d rely on the delta method or bootstrap since you can’t simulate from the truth.</p>
+<p><strong>What about large samples?</strong> Without normality but with assumptions 1–4, the CLT still delivers: <span class="math inline">\(t \xrightarrow{d} N(0,1)\)</span> as <span class="math inline">\(n \to \infty\)</span>. So in large samples, you can drop assumption 5 and still do valid inference. This is why applied econometrics rarely tests for normality — with <span class="math inline">\(n\)</span> in the thousands, it doesn’t matter. The assumptions that <em>do</em> matter regardless of sample size are exogeneity (2) and homoskedasticity (4).</p>
 </div>
 </div>
 </div>
 </section>
+<section id="connection-to-mle" class="level3">
+<h3 class="anchored" data-anchor-id="connection-to-mle">Connection to MLE</h3>
+<p>Under all five assumptions, OLS and MLE give the <strong>same</strong> <span class="math inline">\(\hat{\beta}\)</span>. The normal log-likelihood is proportional to <span class="math inline">\(-\sum(y_i - x_i'\beta)^2\)</span>, so maximising it is identical to minimising the sum of squared residuals. That’s assumption 5 doing double duty — it makes OLS = MLE, which is why t and F tests are exact under the full classical model. See <a href="maximum-likelihood.html#ols-is-mle-under-normality">Maximum Likelihood</a> for the derivation.</p>
+<p>But this equivalence is specific to normality. MLE with non-normal likelihoods (logit, probit, Poisson) has its own asymptotic theory — different assumptions, different regularity conditions.</p>
 </section>
-<section id="simulation" class="level2">
-<h2 class="anchored" data-anchor-id="simulation">Simulation</h2>
-<p>Estimate <span class="math inline">\(\hat{\beta}\)</span> from a simple regression, then compute <span class="math inline">\(e^{\hat{\beta}}\)</span> (the odds ratio). Compare the delta method SE vs bootstrap SE vs the true sampling distribution.</p>
+</section>
+<section id="what-breaks-when-each-assumption-fails" class="level2">
+<h2 class="anchored" data-anchor-id="what-breaks-when-each-assumption-fails">What breaks when each assumption fails</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Violated</th>
+<th style="text-align: left;">Consequence</th>
+<th style="text-align: left;">Fix</th>
+<th style="text-align: left;">Page</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Linearity</td>
+<td style="text-align: left;">Bias, meaningless coefficients</td>
+<td style="text-align: left;">Correct specification, nonparametric methods</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exogeneity</td>
+<td style="text-align: left;"><span class="math inline">\(\hat{\beta}\)</span> is biased — you’re testing the wrong value</td>
+<td style="text-align: left;">IV, experiments, panel methods</td>
+<td style="text-align: left;"><a href="omitted-variable-bias.html">OVB</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Multicollinearity</td>
+<td style="text-align: left;"><span class="math inline">\((X'X)^{-1}\)</span> explodes — huge SEs, unstable estimates</td>
+<td style="text-align: left;">Drop variables, regularize</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Homoskedasticity</td>
+<td style="text-align: left;">OLS SEs are wrong <span class="math inline">\(\Rightarrow\)</span> wrong p-values</td>
+<td style="text-align: left;">Robust / clustered SEs</td>
+<td style="text-align: left;"><a href="heteroskedasticity.html">Heteroskedasticity</a>, <a href="clustered-se.html">Clustered SEs</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Normality</td>
+<td style="text-align: left;">t and F are approximate, not exact</td>
+<td style="text-align: left;">Large <span class="math inline">\(n\)</span> (CLT), bootstrap</td>
+<td style="text-align: left;"><a href="bootstrap.html">Bootstrap</a></td>
+</tr>
+</tbody>
+</table>
+<section id="the-hierarchy-of-damage" class="level3">
+<h3 class="anchored" data-anchor-id="the-hierarchy-of-damage">The hierarchy of damage</h3>
+<p>Not all violations are equally serious:</p>
+<ol type="1">
+<li><p><strong>Exogeneity failure is fatal.</strong> If <span class="math inline">\(E[\varepsilon \mid X] \neq 0\)</span>, OLS is biased and inconsistent — more data doesn’t help. Your estimates converge to the wrong number. This is the violation that keeps econometricians up at night.</p></li>
+<li><p><strong>Heteroskedasticity is fixable.</strong> OLS is still unbiased and consistent, but the standard errors are wrong. The fix is simple: use robust or clustered SEs. The coefficient estimates themselves don’t change.</p></li>
+<li><p><strong>Non-normality is usually harmless.</strong> With large <span class="math inline">\(n\)</span>, the CLT makes inference approximately valid. Only matters in small samples or when you need exact finite-sample results.</p></li>
+<li><p><strong>Multicollinearity is a data problem, not a model problem.</strong> OLS is still BLUE — it’s doing the best it can. The SEs are large because the data don’t contain enough information to separate the effects.</p></li>
+</ol>
+</section>
+</section>
+<section id="simulation-break-each-assumption-and-watch-the-t-test-fail" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-break-each-assumption-and-watch-the-t-test-fail">Simulation: break each assumption and watch the t-test fail</h2>
+<p>This generates data under <span class="math inline">\(H_0\!: \beta_1 = 0\)</span> (the null is true) and computes the OLS t-statistic 2,000 times. If the test works correctly, the histogram should match the theoretical <span class="math inline">\(t(n-2)\)</span> curve and the rejection rate should be 5%.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 750
+#| viewerHeight: 620
 
 library(shiny)
 
 ui &lt;- fluidPage(
   tags$head(tags$style(HTML("
-    .eq-box {
+    .stats-box {
       background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-bottom: 14px; font-size: 14px; line-height: 1.9;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
     }
-    .eq-box b { color: #2c3e50; }
-    .match  { color: #27ae60; font-weight: bold; }
-    .coef   { color: #e74c3c; font-weight: bold; }
+    .stats-box b { color: #2c3e50; }
   "))),
 
   sidebarLayout(
     sidebarPanel(
-      width = 4,
+      width = 3,
 
-      sliderInput("beta", HTML("True &amp;beta;:"),
-                  min = 0.1, max = 2, value = 0.5, step = 0.1),
+      selectInput("violation", "Scenario:",
+        choices = c(
+          "All assumptions hold" = "none",
+          "Non-normal errors" = "nonnormal",
+          "Heteroskedastic errors" = "hetero",
+          "Endogenous regressor" = "endogenous"
+        )
+      ),
 
       sliderInput("n", "Sample size (n):",
-                  min = 30, max = 500, value = 100, step = 10),
+                  min = 20, max = 500, value = 30, step = 10),
 
-      sliderInput("sigma", HTML("Error SD (&amp;sigma;):"),
-                  min = 0.5, max = 5, value = 2, step = 0.5),
+      actionButton("run", "Run 2,000 replications",
+                   style = "width:100%; margin-top:10px;
+                            background:#3498db; color:white;
+                            border:none; padding:10px; font-weight:bold;"),
 
-      actionButton("resim", "Run simulations", class = "btn-primary", width = "100%"),
-
-      uiOutput("results_box")
+      uiOutput("stats")
     ),
 
     mainPanel(
-      width = 8,
-      fluidRow(
-        column(6, plotOutput("plot_beta", height = "400px")),
-        column(6, plotOutput("plot_exp", height = "400px"))
-      ),
-      uiOutput("compare_box")
+      width = 9,
+      plotOutput("hist_plot", height = "500px")
     )
   )
 )
 
 server &lt;- function(input, output, session) {
 
-  sim_results &lt;- reactive({
-    input$resim
-    beta  &lt;- input$beta
-    n     &lt;- input$n
-    sigma &lt;- input$sigma
-    n_sims &lt;- 1000
-    n_boot &lt;- 200
+  sim_data &lt;- reactiveVal(NULL)
 
-    beta_hats &lt;- numeric(n_sims)
-    exp_betas &lt;- numeric(n_sims)
-    delta_ses &lt;- numeric(n_sims)
-    boot_ses  &lt;- numeric(n_sims)
+  observeEvent(input$run, {
+    n    &lt;- input$n
+    B    &lt;- 2000
+    viol &lt;- input$violation
 
-    for (i in seq_len(n_sims)) {
-      x &lt;- rnorm(n)
-      y &lt;- beta * x + rnorm(n, sd = sigma)
-      fit &lt;- lm(y ~ x)
+    # --- Generate data (vectorised: n x B matrices) ---
+    X &lt;- matrix(rnorm(n * B), nrow = n, ncol = B)
 
-      b_hat &lt;- coef(fit)["x"]
-      se_b  &lt;- summary(fit)$coefficients["x", "Std. Error"]
-
-      beta_hats[i] &lt;- b_hat
-      exp_betas[i] &lt;- exp(b_hat)
-
-      # Delta method SE for exp(beta)
-      delta_ses[i] &lt;- exp(b_hat) * se_b
-
-      # Bootstrap SE
-      boot_exp &lt;- numeric(n_boot)
-      for (j in seq_len(n_boot)) {
-        idx &lt;- sample(n, n, replace = TRUE)
-        boot_fit &lt;- lm(y[idx] ~ x[idx])
-        boot_exp[j] &lt;- exp(coef(boot_fit)["x[idx]"])
-      }
-      boot_ses[i] &lt;- sd(boot_exp)
+    if (viol == "none") {
+      EPS &lt;- matrix(rnorm(n * B), nrow = n, ncol = B)
+    } else if (viol == "nonnormal") {
+      # Skewed chi-squared errors, mean-centred
+      EPS &lt;- (matrix(rchisq(n * B, df = 2), n, B) - 2) / 2
+    } else if (viol == "hetero") {
+      # Variance grows with |x|
+      EPS &lt;- matrix(rnorm(n * B), n, B) * (1 + 2 * abs(X))
+    } else {
+      # Endogeneity: x and eps share a common component
+      U   &lt;- matrix(rnorm(n * B), n, B)
+      X   &lt;- X + U
+      EPS &lt;- U + matrix(rnorm(n * B, sd = 0.5), n, B)
     }
 
-    list(beta_hats = beta_hats, exp_betas = exp_betas,
-         delta_ses = delta_ses, boot_ses = boot_ses,
-         true_beta = beta, true_exp = exp(beta))
+    Y &lt;- EPS                       # true beta_1 = 0
+
+    # --- Vectorised OLS t-statistics ---
+    Xc  &lt;- X - matrix(colMeans(X), n, B, byrow = TRUE)
+    b1  &lt;- colSums(Xc * Y) / colSums(Xc^2)
+    Res &lt;- Y - matrix(colMeans(Y), n, B, byrow = TRUE) -
+           Xc * matrix(b1, n, B, byrow = TRUE)
+    s2  &lt;- colSums(Res^2) / (n - 2)
+    se  &lt;- sqrt(s2 / colSums(Xc^2))
+    tst &lt;- b1 / se
+
+    sim_data(list(t = tst, n = n, viol = viol))
   })
 
-  output$plot_beta &lt;- renderPlot({
-    d &lt;- sim_results()
+  output$hist_plot &lt;- renderPlot({
+    d &lt;- sim_data()
+    if (is.null(d)) {
+      plot.new()
+      text(0.5, 0.5, "Press the button to run the simulation",
+           cex = 1.4, col = "#7f8c8d")
+      return()
+    }
+
+    df_val &lt;- d$n - 2
     par(mar = c(5, 5, 4, 2))
 
-    hist(d$beta_hats, breaks = 40,
-         col = adjustcolor("#3498db", 0.5), border = "white",
-         main = expression("Sampling dist. of " * hat(beta)),
-         xlab = expression(hat(beta)), freq = FALSE)
-    abline(v = d$true_beta, col = "#e74c3c", lwd = 2.5)
-    legend("topright", bty = "n",
-           legend = paste("True =", d$true_beta),
-           col = "#e74c3c", lwd = 2.5)
+    lbl &lt;- switch(d$viol,
+      none       = "All assumptions hold",
+      nonnormal  = "Non-normal errors (\u03c7\u00b2 - skewed)",
+      hetero     = "Heteroskedastic errors",
+      endogenous = "Endogenous regressor")
+
+    # Allow wider x-range for endogeneity (t-stats shift)
+    xlim_lo &lt;- min(-5, quantile(d$t, 0.005))
+    xlim_hi &lt;- max( 5, quantile(d$t, 0.995))
+
+    hist(d$t, breaks = 60, freq = FALSE, col = "#dfe6e9",
+         border = "#b2bec3", xlim = c(xlim_lo, xlim_hi),
+         main = paste0(lbl, "   (n = ", d$n, ")"),
+         xlab = "t-statistic", ylab = "Density",
+         cex.main = 1.4, cex.lab = 1.2)
+
+    xseq &lt;- seq(xlim_lo, xlim_hi, length.out = 500)
+    lines(xseq, dt(xseq, df = df_val), lwd = 3, col = "#e74c3c", lty = 2)
+
+    rej &lt;- mean(abs(d$t) &gt; qt(0.975, df = df_val))
+
+    legend("topright", bty = "n", cex = 1.0,
+      legend = c("Simulated t-stats",
+                 paste0("t(", df_val, ") theory"),
+                 paste0("Rejection rate: ", sprintf("%.1f%%", rej * 100),
+                        "  (nominal 5%)")),
+      col  = c("#b2bec3", "#e74c3c", NA),
+      lwd  = c(NA, 3, NA),
+      lty  = c(NA, 2, NA),
+      pch  = c(15, NA, NA),
+      pt.cex = 2)
   })
 
-  output$plot_exp &lt;- renderPlot({
-    d &lt;- sim_results()
-    par(mar = c(5, 5, 4, 2))
+  output$stats &lt;- renderUI({
+    d &lt;- sim_data()
+    if (is.null(d)) return(NULL)
 
-    hist(d$exp_betas, breaks = 40,
-         col = adjustcolor("#27ae60", 0.5), border = "white",
-         main = expression("Sampling dist. of " * e^{hat(beta)}),
-         xlab = expression(e^{hat(beta)}), freq = FALSE)
-    abline(v = d$true_exp, col = "#e74c3c", lwd = 2.5)
+    df_val &lt;- d$n - 2
+    rej    &lt;- mean(abs(d$t) &gt; qt(0.975, df = df_val))
+    col    &lt;- if (abs(rej - 0.05) &lt; 0.02) "#27ae60" else "#e74c3c"
 
-    # Overlay delta method normal approximation
-    x_seq &lt;- seq(min(d$exp_betas), max(d$exp_betas), length.out = 200)
-    avg_delta_se &lt;- mean(d$delta_ses)
-    lines(x_seq, dnorm(x_seq, mean = d$true_exp, sd = avg_delta_se),
-          col = "#9b59b6", lwd = 2, lty = 2)
-
-    legend("topright", bty = "n", cex = 0.85,
-           legend = c(paste("True =", round(d$true_exp, 3)),
-                      "Delta method approx"),
-           col = c("#e74c3c", "#9b59b6"),
-           lwd = c(2.5, 2), lty = c(1, 2))
-  })
-
-  output$results_box &lt;- renderUI({
-    d &lt;- sim_results()
-
-    true_sd &lt;- sd(d$exp_betas)
-    avg_delta &lt;- mean(d$delta_ses)
-    avg_boot  &lt;- mean(d$boot_ses)
-
-    tags$div(class = "eq-box", style = "margin-top: 16px;",
+    tags$div(class = "stats-box",
       HTML(paste0(
-        "&lt;b&gt;SE comparison for e&lt;sup&gt;&amp;beta;&lt;/sup&gt;:&lt;/b&gt;&lt;br&gt;",
-        "True SD (simulation): &lt;span class='coef'&gt;",
-        round(true_sd, 4), "&lt;/span&gt;&lt;br&gt;",
-        "Delta method (avg): &lt;span class='match'&gt;",
-        round(avg_delta, 4), "&lt;/span&gt;&lt;br&gt;",
-        "Bootstrap (avg): &lt;span class='match'&gt;",
-        round(avg_boot, 4), "&lt;/span&gt;&lt;br&gt;",
+        "&lt;b&gt;Replications:&lt;/b&gt; 2,000&lt;br&gt;",
+        "&lt;b&gt;df:&lt;/b&gt; ", df_val, "&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;small&gt;All three should agree when n is large ",
-        "and &amp;beta; is moderate.&lt;/small&gt;"
-      ))
-    )
-  })
-
-  output$compare_box &lt;- renderUI({
-    tags$div(class = "eq-box", style = "margin-top: 8px;",
-      HTML(paste0(
-        "&lt;b&gt;Formula check:&lt;/b&gt; SE(e&lt;sup&gt;&amp;beta;&lt;/sup&gt;) &amp;asymp; ",
-        "e&lt;sup&gt;&amp;beta;&lt;/sup&gt; &amp;times; SE(&amp;beta;). ",
-        "The delta method uses a linear approximation at the estimate — ",
-        "it works well when the sampling distribution of &amp;beta; is ",
-        "approximately normal and g is smooth."
+        "&lt;b&gt;Nominal size:&lt;/b&gt; 5.0%&lt;br&gt;",
+        "&lt;b&gt;Actual rejection:&lt;/b&gt; ",
+        "&lt;span style='color:", col, "; font-weight:bold'&gt;",
+        sprintf("%.1f%%", rej * 100), "&lt;/span&gt;&lt;br&gt;",
+        "&lt;hr style='margin:8px 0'&gt;",
+        "&lt;b&gt;Mean(t):&lt;/b&gt; ", round(mean(d$t), 3), "&lt;br&gt;",
+        "&lt;b&gt;SD(t):&lt;/b&gt; ", round(sd(d$t), 3), "&lt;br&gt;",
+        "&lt;small&gt;Should be &amp;asymp; 0 and &amp;asymp; 1&lt;br&gt;",
+        "if assumptions hold.&lt;/small&gt;"
       ))
     )
   })
 }
 
 shinyApp(ui, server)</code></pre>
-<section id="things-to-try" class="level3">
-<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>What to try:</strong></p>
 <ul>
-<li><strong>Small <span class="math inline">\(\beta\)</span> (0.1–0.3):</strong> <span class="math inline">\(e^\beta \approx 1 + \beta\)</span>, nearly linear. Delta method is excellent.</li>
-<li><strong>Large <span class="math inline">\(\beta\)</span> (1.5–2.0):</strong> the exponential is more curved. The sampling distribution of <span class="math inline">\(e^{\hat{\beta}}\)</span> becomes right-skewed. Delta method SE is still close but the normal approximation is less accurate.</li>
-<li><strong>Small <span class="math inline">\(n\)</span> (30–50):</strong> bootstrap and delta method may diverge because <span class="math inline">\(\hat{\beta}\)</span> isn’t yet well-approximated by a normal.</li>
-<li><strong>Large <span class="math inline">\(n\)</span> (300+):</strong> all three agree closely.</li>
+<li><strong>All assumptions hold:</strong> histogram matches the red <span class="math inline">\(t\)</span>-curve, rejection <span class="math inline">\(\approx\)</span> 5%.</li>
+<li><strong>Non-normal errors</strong> (skewed <span class="math inline">\(\chi^2\)</span>): at <span class="math inline">\(n = 20\)</span>, the histogram is visibly off-centre. Crank <span class="math inline">\(n\)</span> up to 200 — the CLT kicks in and the histogram snaps back onto the <span class="math inline">\(t\)</span>-curve.</li>
+<li><strong>Heteroskedastic errors:</strong> rejection rate drifts above 5% regardless of <span class="math inline">\(n\)</span>. The OLS standard errors are systematically wrong. This is why you need <a href="heteroskedasticity.html">robust SEs</a>.</li>
+<li><strong>Endogenous regressor:</strong> t-statistics shift away from zero — the estimator is biased, so the “null is true” test rejects almost every time. No amount of <span class="math inline">\(n\)</span> fixes this; you need a different estimator (IV, etc.).</li>
 </ul>
-</section>
-</section>
-<section id="when-the-delta-method-fails" class="level2">
-<h2 class="anchored" data-anchor-id="when-the-delta-method-fails">When the delta method fails</h2>
-<p>The approximation relies on <span class="math inline">\(g'(\theta_0) \neq 0\)</span> and on <span class="math inline">\(\hat{\theta}\)</span> being approximately normal. It breaks down when:</p>
-<ul>
-<li><strong><span class="math inline">\(g'(\theta_0) = 0\)</span>:</strong> the linear term vanishes and you need a second-order expansion. Example: <span class="math inline">\(g(\theta) = \theta^2\)</span> at <span class="math inline">\(\theta_0 = 0\)</span>.</li>
-<li><strong>Small samples:</strong> <span class="math inline">\(\hat{\theta}\)</span> isn’t close enough to normal for the Taylor expansion to be accurate.</li>
-<li><strong>Highly nonlinear <span class="math inline">\(g\)</span>:</strong> the curvature of <span class="math inline">\(g\)</span> matters over the range where <span class="math inline">\(\hat{\theta}\)</span> varies. The sampling distribution of <span class="math inline">\(g(\hat{\theta})\)</span> may be skewed even though <span class="math inline">\(\hat{\theta}\)</span> is symmetric.</li>
-</ul>
-<p>In these cases, use the <a href="bootstrap.html">bootstrap</a> instead.</p>
-<hr>
-<section id="connections" class="level3">
-<h3 class="anchored" data-anchor-id="connections">Connections</h3>
-<ul>
-<li><a href="maximum-likelihood.html#fisher-information-and-standard-errors">Fisher Information</a> — The delta method starts from the asymptotic normality that Fisher information provides</li>
-<li><a href="bootstrap.html">The Bootstrap</a> — The nonparametric alternative when the delta method’s assumptions fail</li>
-<li><a href="limited-dependent.html">Limited Dependent Variables</a> — Marginal effect SEs in logit/probit require the delta method</li>
-</ul>
-<hr>
-</section>
-<section id="did-you-know" class="level3">
-<h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
-<ul>
-<li>The delta method is one of the oldest tools in statistics, going back to <strong>R.A. Fisher</strong> in the 1920s and even earlier to <strong>Friedrich Bessel</strong>. The idea is simple — linearize and propagate — but it appears everywhere.</li>
-<li>In physics, the same technique is called <strong>error propagation</strong> or <strong>propagation of uncertainty</strong>. Every lab course teaches it: if you measure the radius <span class="math inline">\(r\)</span> with uncertainty <span class="math inline">\(\sigma_r\)</span>, the area <span class="math inline">\(\pi r^2\)</span> has uncertainty approximately <span class="math inline">\(2\pi r \cdot \sigma_r\)</span>.</li>
-<li>The “delta” in the name refers to the small perturbation <span class="math inline">\(\delta\theta =
-\hat{\theta} - \theta\)</span> in the Taylor expansion, not to any particular Greek letter in the formula.</li>
-</ul>
+</div>
+</div>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
