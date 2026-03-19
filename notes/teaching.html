@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Teaching Modules — Nency Dhameja</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #f8f9fa;
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    header h1 { font-size: 2em; margin-bottom: 8px; }
+    header p { font-size: 1.1em; opacity: 0.85; }
+    header a { color: #85c1e9; }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .course-card {
+      background: white;
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-left: 5px solid #3498db;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .course-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    .course-card h2 {
+      margin-bottom: 8px;
+      font-size: 1.3em;
+    }
+    .course-card h2 a {
+      color: #2c3e50;
+      text-decoration: none;
+    }
+    .course-card h2 a:hover { color: #3498db; }
+    .course-card .desc {
+      color: #555;
+      margin-bottom: 12px;
+    }
+    .course-card .topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .course-card .topics a {
+      background: #eaf2f8;
+      color: #2c3e50;
+      font-size: 0.82em;
+      padding: 3px 10px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .course-card .topics a:hover {
+      background: #d4e6f1;
+    }
+    .card-health { border-left-color: #e74c3c; }
+    .card-urban  { border-left-color: #16a085; }
+    .card-education { border-left-color: #f39c12; }
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      font-size: 1.05em;
+    }
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #999;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Interactive Teaching Modules</h1>
+  <p>Field courses in applied microeconomics with browser-based simulations.</p>
+  <div class="nav-links">
+    <a href="https://nencydhameja.com">&larr; Main site</a>
+    <a href="index.html">Methods Lab &rarr;</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <p style="color: #555; font-size: 0.95em; max-width: 680px; margin: 0 auto 28px; text-align: center; line-height: 1.7;">
+    Simulation-driven modules for field courses in applied microeconomics.
+    Built from my teaching and research experience; every simulation runs
+    in your browser.
+  </p>
+
+  <div class="course-card card-health">
+    <h2><a href="health-econ/index.html">Health Economics</a></h2>
+    <p class="desc">
+      Insurance, moral hazard, health production, and policy evaluation —
+      from the Grossman model to the Oregon experiment.
+    </p>
+    <div class="topics">
+      <a href="health-econ/moral-hazard.html">Moral Hazard</a>
+      <a href="health-econ/adverse-selection.html">Adverse Selection</a>
+      <a href="health-econ/grossman.html">Grossman Model</a>
+      <a href="health-econ/qalys.html">QALYs</a>
+      <a href="health-econ/provider-behavior.html">Provider Behavior</a>
+      <a href="health-econ/two-part-models.html">Two-Part Models</a>
+      <a href="health-econ/oregon-experiment.html">Oregon Experiment</a>
+    </div>
+  </div>
+
+  <div class="course-card card-urban">
+    <h2><a href="urban-econ/index.html">Urban Economics</a></h2>
+    <p class="desc">
+      Cities, land markets, and neighborhoods — from the monocentric model
+      to gentrification and Tiebout sorting.
+    </p>
+    <div class="topics">
+      <a href="urban-econ/monocentric-city.html">Monocentric City</a>
+      <a href="urban-econ/spatial-equilibrium.html">Spatial Equilibrium</a>
+      <a href="urban-econ/hedonic-pricing.html">Hedonic Pricing</a>
+      <a href="urban-econ/zoning.html">Zoning</a>
+      <a href="urban-econ/agglomeration.html">Agglomeration</a>
+      <a href="urban-econ/tiebout.html">Tiebout Sorting</a>
+      <a href="urban-econ/gentrification.html">Gentrification</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Nency Dhameja &middot; Simulations powered by
+  <a href="https://posit-dev.github.io/r-shinylive/">Shinylive</a>
+</footer>
+
+</body>
+</html>
