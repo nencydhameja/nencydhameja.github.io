@@ -495,6 +495,11 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
+  </ul></li>
+  <li><a href="#when-does-each-theorem-kick-in" id="toc-when-does-each-theorem-kick-in" class="nav-link" data-scroll-target="#when-does-each-theorem-kick-in">When does each theorem kick in?</a>
+  <ul class="collapse">
+  <li><a href="#why-does-skewness-slow-things-down" id="toc-why-does-skewness-slow-things-down" class="nav-link" data-scroll-target="#why-does-skewness-slow-things-down">Why does skewness slow things down?</a></li>
+  <li><a href="#simulation-3-watch-clt-kick-in-at-different-speeds" id="toc-simulation-3-watch-clt-kick-in-at-different-speeds" class="nav-link" data-scroll-target="#simulation-3-watch-clt-kick-in-at-different-speeds">Simulation 3: watch CLT kick in at different speeds</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul></li>
   </ul>
@@ -541,18 +546,28 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td><strong>What it says</strong></td>
-<td>The sample mean converges to <span class="math inline">\(\mu\)</span></td>
-<td>The distribution of sample means is approximately normal</td>
+<td>Sample mean converges to the true mean</td>
+<td>Distribution of the (scaled) sample mean is approximately normal</td>
 </tr>
 <tr class="even">
-<td><strong>About</strong></td>
-<td>One running average</td>
-<td>Many sample averages</td>
+<td><strong>Object</strong></td>
+<td><span class="math inline">\(\bar{X}_1, \bar{X}_2, \bar{X}_3, \dots\)</span> — one sequence, growing <span class="math inline">\(n\)</span></td>
+<td><span class="math inline">\(\bar{X}^{(1)}, \bar{X}^{(2)}, \bar{X}^{(3)}, \dots\)</span> — many samples, fixed <span class="math inline">\(n\)</span></td>
+</tr>
+<tr class="odd">
+<td><strong>Key result</strong></td>
+<td><span class="math inline">\(\bar{X}_n \xrightarrow{p} \mu\)</span></td>
+<td><span class="math inline">\(\sqrt{n}(\bar{X}_n - \mu) \xrightarrow{d} N(0, \sigma^2)\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>Interpretation</strong></td>
+<td>Consistency</td>
+<td>Asymptotic normality</td>
 </tr>
 <tr class="odd">
 <td><strong>Promise</strong></td>
-<td>Your estimate gets <em>close</em> to the truth</td>
-<td>You know the <em>shape</em> of the uncertainty</td>
+<td>You get the right answer</td>
+<td>You know how uncertain your estimate is</td>
 </tr>
 <tr class="even">
 <td><strong>Requires</strong></td>
@@ -886,6 +901,225 @@ shinyApp(ui, server)</code></pre>
 <li><strong>CLT</strong> = the shape of the sampling distribution is approximately normal. It’s about the <em>distribution</em> of the estimator across repeated experiments.</li>
 <li>You need LLN <em>before</em> CLT matters. If the mean hasn’t stabilized, knowing its distribution is normal doesn’t help much.</li>
 </ul>
+</section>
+</section>
+<section id="when-does-each-theorem-kick-in" class="level2">
+<h2 class="anchored" data-anchor-id="when-does-each-theorem-kick-in">When does each theorem kick in?</h2>
+<p>LLN and CLT are both asymptotic results — they describe what happens as <span class="math inline">\(n \to \infty\)</span>. But in practice, they kick in at different speeds, and the speed depends on the population you’re sampling from.</p>
+<p><strong>LLN kicks in early.</strong> As soon as you have a few dozen observations, the sample mean is usually close to <span class="math inline">\(\mu\)</span>. The only requirement is a finite first moment (<span class="math inline">\(E[|X|] &lt; \infty\)</span>). Even heavily skewed distributions settle down quickly — the running average doesn’t care about the <em>shape</em> of the population, only that the mean exists.</p>
+<p><strong>CLT kicks in later, and the speed depends on the population shape.</strong> The CLT is about the <em>distribution</em> of <span class="math inline">\(\bar{X}_n\)</span> converging to a bell curve — a stronger claim that requires more data. How much more depends on how non-normal the population is:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 61%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Population</th>
+<th style="text-align: left;">CLT kicks in at roughly…</th>
+<th style="text-align: left;">Why</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Symmetric (Normal, Uniform)</td>
+<td style="text-align: left;"><span class="math inline">\(n \approx 5\text{--}10\)</span></td>
+<td style="text-align: left;">Already close to normal; little work for CLT to do</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Moderately skewed (Exponential, <span class="math inline">\(\chi^2\)</span>)</td>
+<td style="text-align: left;"><span class="math inline">\(n \approx 30\text{--}50\)</span></td>
+<td style="text-align: left;">Skewness needs to be averaged away</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Heavily skewed (Bernoulli(0.05), Log-normal)</td>
+<td style="text-align: left;"><span class="math inline">\(n \approx 100\text{--}500\)</span></td>
+<td style="text-align: left;">Extreme skewness or heavy tails slow convergence</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No finite variance (Cauchy)</td>
+<td style="text-align: left;"><strong>Never</strong></td>
+<td style="text-align: left;">CLT requires <span class="math inline">\(\text{Var}(X) &lt; \infty\)</span>; without it, the theorem doesn’t apply</td>
+</tr>
+</tbody>
+</table>
+<p>The folklore rule “<span class="math inline">\(n \geq 30\)</span> is enough” comes from CLT, not LLN. It’s roughly when the normal approximation becomes decent for moderately skewed populations. But it’s a rule of thumb, not a theorem — symmetric populations need far less, and heavily skewed populations need far more.</p>
+<section id="why-does-skewness-slow-things-down" class="level3">
+<h3 class="anchored" data-anchor-id="why-does-skewness-slow-things-down">Why does skewness slow things down?</h3>
+<p>The CLT convergence rate is governed by the <strong>Berry-Esseen bound</strong>:</p>
+<p><span class="math display">\[
+\sup_z \left| P\!\left(\frac{\bar{X}_n - \mu}{\sigma / \sqrt{n}} \leq z\right) - \Phi(z) \right| \;\leq\; \frac{C \cdot \rho}{\sigma^3 \sqrt{n}}
+\]</span></p>
+<p>where <span class="math inline">\(\rho = E[|X - \mu|^3]\)</span> is the third absolute moment. The ratio <span class="math inline">\(\rho / \sigma^3\)</span> measures how “non-normal” the population is — distributions with heavy tails or strong skewness have a large <span class="math inline">\(\rho / \sigma^3\)</span>, which means the bound shrinks more slowly with <span class="math inline">\(n\)</span>. That’s the mathematical reason skewed distributions need more data before CLT kicks in.</p>
+</section>
+<section id="simulation-3-watch-clt-kick-in-at-different-speeds" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-3-watch-clt-kick-in-at-different-speeds">Simulation 3: watch CLT kick in at different speeds</h3>
+<p>Pick a population and see how the sampling distribution of <span class="math inline">\(\bar{X}_n\)</span> (standardised) compares to the <span class="math inline">\(N(0, 1)\)</span> curve at four sample sizes. The KS distance measures how far the sampling distribution is from normal — smaller = closer.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 620
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      selectInput("pop3", "Population:",
+        choices = c(
+          "Normal(0, 1)"   = "normal",
+          "Uniform(0, 1)"  = "uniform",
+          "Exponential(1)"  = "exp",
+          "Chi-squared(3)"  = "chisq",
+          "Bernoulli(0.1)"  = "bern",
+          "Log-normal(0,1)" = "lognorm"
+        ),
+        selected = "exp"
+      ),
+
+      actionButton("run3", "Run 2,000 experiments",
+                   style = "width:100%; margin-top:10px;
+                            background:#3498db; color:white;
+                            border:none; padding:10px; font-weight:bold;"),
+
+      uiOutput("stats3")
+    ),
+
+    mainPanel(
+      width = 9,
+      plotOutput("grid_plot", height = "520px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  sim_data &lt;- reactiveVal(NULL)
+
+  observeEvent(input$run3, {
+    pop &lt;- input$pop3
+    B   &lt;- 2000
+    ns  &lt;- c(5, 30, 100, 500)
+
+    draw &lt;- function(n) {
+      switch(pop,
+        normal  = rnorm(n),
+        uniform = runif(n),
+        exp     = rexp(n, 1),
+        chisq   = rchisq(n, df = 3),
+        bern    = rbinom(n, 1, 0.1),
+        lognorm = rlnorm(n, 0, 1))
+    }
+
+    mu &lt;- switch(pop,
+      normal = 0, uniform = 0.5, exp = 1,
+      chisq = 3, bern = 0.1, lognorm = exp(0.5))
+
+    sig &lt;- switch(pop,
+      normal = 1, uniform = sqrt(1/12), exp = 1,
+      chisq = sqrt(6), bern = sqrt(0.1 * 0.9),
+      lognorm = sqrt((exp(1) - 1) * exp(1)))
+
+    results &lt;- lapply(ns, function(n) {
+      means &lt;- replicate(B, mean(draw(n)))
+      list(means = means, n = n)
+    })
+
+    sim_data(list(results = results, mu = mu, sig = sig,
+                  pop = pop, ns = ns))
+  })
+
+  output$grid_plot &lt;- renderPlot({
+    d &lt;- sim_data()
+    if (is.null(d)) {
+      plot.new()
+      text(0.5, 0.5, "Press the button to run",
+           cex = 1.4, col = "#7f8c8d")
+      return()
+    }
+
+    par(mfrow = c(2, 2), mar = c(4, 4, 3.5, 1), oma = c(0, 0, 2, 0))
+
+    pop_label &lt;- switch(d$pop,
+      normal = "Normal(0, 1)", uniform = "Uniform(0, 1)",
+      exp = "Exponential(1)", chisq = "\u03c7\u00b2(3)",
+      bern = "Bernoulli(0.1)", lognorm = "Log-normal(0, 1)")
+
+    for (i in seq_along(d$results)) {
+      r  &lt;- d$results[[i]]
+      se &lt;- d$sig / sqrt(r$n)
+      z  &lt;- (r$means - d$mu) / se
+
+      hist(z, breaks = 40, freq = FALSE, col = "#dfe6e9",
+           border = "#b2bec3", xlim = c(-4, 4),
+           main = paste0("n = ", r$n),
+           xlab = "Standardised mean", ylab = "Density",
+           cex.main = 1.3)
+
+      xseq &lt;- seq(-4, 4, length.out = 300)
+      lines(xseq, dnorm(xseq), lwd = 2.5, col = "#e74c3c", lty = 2)
+
+      ks &lt;- suppressWarnings(ks.test(z, "pnorm")$statistic)
+      legend("topright", bty = "n", cex = 0.85,
+             legend = paste0("KS = ", sprintf("%.3f", ks)),
+             text.col = if (ks &lt; 0.03) "#27ae60" else "#e74c3c")
+    }
+
+    mtext(paste0("CLT convergence: ", pop_label),
+          side = 3, outer = TRUE, cex = 1.2, font = 2)
+  })
+
+  output$stats3 &lt;- renderUI({
+    d &lt;- sim_data()
+    if (is.null(d)) return(NULL)
+
+    ks_vals &lt;- sapply(d$results, function(r) {
+      se &lt;- d$sig / sqrt(r$n)
+      z  &lt;- (r$means - d$mu) / se
+      suppressWarnings(ks.test(z, "pnorm")$statistic)
+    })
+
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;KS distance from N(0,1):&lt;/b&gt;&lt;br&gt;",
+        paste(paste0("n = ", d$ns, ": &lt;b&gt;",
+              sprintf("%.3f", ks_vals), "&lt;/b&gt;"),
+              collapse = "&lt;br&gt;"),
+        "&lt;br&gt;&lt;hr style='margin:8px 0'&gt;",
+        "&lt;small&gt;KS &amp;rarr; 0 means the&lt;br&gt;",
+        "sampling distribution is&lt;br&gt;",
+        "converging to normal.&lt;/small&gt;"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>What to try:</strong></p>
+<ul>
+<li><strong>Normal:</strong> CLT is perfect even at <span class="math inline">\(n = 5\)</span> (KS <span class="math inline">\(\approx 0\)</span>) — the population is already normal, so averages are <em>exactly</em> normal at every <span class="math inline">\(n\)</span>.</li>
+<li><strong>Exponential:</strong> at <span class="math inline">\(n = 5\)</span> the histogram is visibly right-skewed. By <span class="math inline">\(n = 30\)</span> it’s close. By <span class="math inline">\(n = 100\)</span> it’s indistinguishable from the bell curve.</li>
+<li><strong>Bernoulli(0.1):</strong> at <span class="math inline">\(n = 5\)</span> the sample mean can only be 0, 0.2, 0.4, … — you can <em>see</em> the discreteness. The CLT needs <span class="math inline">\(n = 100\)</span>+ to smooth this out.</li>
+<li><strong>Log-normal:</strong> the slowest convergence of the bunch. Heavy right tail means the CLT needs <span class="math inline">\(n = 300\)</span>+ before the KS distance gets small. This is why the “<span class="math inline">\(n \geq 30\)</span> rule” can be dangerously optimistic.</li>
+</ul>
+</div>
+</div>
+</div>
 <hr>
 </section>
 <section id="did-you-know" class="level3">
@@ -1308,7 +1542,7 @@ shinyApp(ui, server)</code></pre>
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><span style="white-space:nowrap">Inspired by my advisor, <a href="https://sites.google.com/site/slichterdavid/home">David Slichter</a>; built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com">Nency Dhameja</a> | <a href="../index.html">All Notes</a> | <a href="mailto:nencydhameja@gmail.com">Feedback?</a></span></p>
+<p><span style="white-space:nowrap">Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com">Nency Dhameja</a> | <a href="../index.html">All Notes</a> | <a href="mailto:nencydhameja@gmail.com">Feedback?</a></span></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;
