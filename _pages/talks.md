@@ -8,7 +8,8 @@ author_profile: true
   - APPAM: Public Policy Analysis & Management — *Seattle, Nov 2025*
   - Southern Economic Association — *Florida, Nov 2025*
   - ASSA Annual Meeting — *Philadelphia, Jan 2026*
-  - Midwest Economics Association (Scheduled) — *Chicago, March 2026*
+  - NERCCS Northeast Regional Conference on Complex Systems - *Online, Mar 2026*
+  - Midwest Economics Association — *Chicago, Mar 2026*
 
 - **2024–2025**
   - Eastern Economic Association — *NYC, Feb 2025*
