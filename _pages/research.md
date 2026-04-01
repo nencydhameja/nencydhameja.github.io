@@ -97,4 +97,4 @@ _Do diversity statement requirements causally change faculty hiring composition 
 ### <span class="paper-title">Comparing Human-Only, AI-Assisted, and AI-Led Teams on Assessing Research Reproducibility in Quantitative Social Science</span> <i>Brodeur et al. (in press at <a href="https://www.pnas.org" target="_blank">Proceedings of the National Academy of Sciences</a>)</i>
 
 **Fields:** Computational Social Science, Research Methodology, AI  
-**Methods:** Human-AI Collaboration, Reproducibility Assessment <\br>  **Paper Link:** <a href="https://www.econstor.eu/handle/10419/308508" target="_blank">PDF</a>
+**Methods:** Human-AI Collaboration, Reproducibility Assessment <p>  **Paper Link:** <a href="https://www.econstor.eu/handle/10419/308508" target="_blank">PDF</a>
