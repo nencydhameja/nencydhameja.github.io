@@ -92,7 +92,6 @@ _Do diversity statement requirements causally change faculty hiring composition 
 **Paper Link:** [PDF](https://chriszosh1.github.io/files/Social_Context_and_LLM_Segregation.pdf)
 
 ---
-## Collaborative Publications
 
 ### <span class="paper-title">Comparing Human-Only, AI-Assisted, and AI-Led Teams on Assessing Research Reproducibility in Quantitative Social Science</span> <i>Brodeur et al. (in press at <a href="https://www.pnas.org" target="_blank">Proceedings of the National Academy of Sciences</a>)</i>
 
