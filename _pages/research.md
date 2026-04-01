@@ -41,22 +41,6 @@ _How do housing markets respond over space and time to localized crime shocks?_
 </details>
 
 ---
-
-### <span class="paper-title">The Effect of Diversity Statements in Faculty Hiring</span> <i>with David Slichter (Working Paper)</i>
-_Do diversity statement requirements causally change faculty hiring composition and ideology?_
-
-**Fields:** Labor & Personnel Economics, Higher Education, Applied Microeconomics  
-**Methods:** Difference-in-Differences (csdid), Entropy Balancing, Text Classification  
-
-<details>
-  <summary><strong>Abstract</strong></summary>
-
-  This project examines how mandatory diversity statements in faculty job applications influence hiring and student outcomes. Using comprehensive text from JOE and APSA postings linked to institution–year–discipline hiring records, we classify DEI-related requirements and estimate their effects using staggered-adoption DiD estimators with entropy-balancing weights.
-
-</details>
-
----
-
 ### <span class="paper-title">Food Swamps, Obesity, and Metabolic Risks</span> <em>(Work in Progress)</em>
 _Do dollar-store rollouts causally affect metabolic health risks?_
 
@@ -69,7 +53,17 @@ _Do dollar-store rollouts causally affect metabolic health risks?_
   This project examines how the expansion of dollar stores and low-nutrition retail environments contributes to obesity and metabolic health risks. Using store rollouts and quasi-experimental variation in food environments, I study how changes in access to calorie-dense, nutrient-poor options affect chronic disease outcomes.
 
 </details>
+---
+### <span class="paper-title">The Effect of Diversity Statements in Faculty Hiring</span> <i>with David Slichter (Working Paper)</i>
+_Do diversity statement requirements causally change faculty hiring composition and ideology?_
 
+**Fields:** Labor & Personnel Economics, Higher Education, Applied Microeconomics  
+**Methods:** Difference-in-Differences (csdid), Entropy Balancing, Text Classification  
+
+<details>
+  <summary><strong>Abstract</strong></summary>
+  This project examines how mandatory diversity statements in faculty job applications influence hiring and student outcomes. Using comprehensive text from JOE and APSA postings linked to institution–year–discipline hiring records, we classify DEI-related requirements and estimate their effects using staggered-adoption DiD estimators with entropy-balancing weights.
+</details>
 ---
 
 ## Computational Methods & Simulation
