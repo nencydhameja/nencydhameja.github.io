@@ -97,4 +97,4 @@ _Do diversity statement requirements causally change faculty hiring composition 
 
 **Fields:** Computational Social Science, Research Methodology, AI  
 **Methods:** Human-AI Collaboration, Reproducibility Assessment
-<p>**Paper Link:** <a href="https://www.econstor.eu/handle/10419/308508" target="_blank">PDF</a>
+ **Paper Link:** <a href="https://www.econstor.eu/handle/10419/308508" target="_blank">PDF</a>
