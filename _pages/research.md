@@ -89,7 +89,6 @@ _Do diversity statement requirements causally change faculty hiring composition 
   <summary><strong>Abstract</strong></summary>
   This paper introduces large language models as agents in the classic Schelling segregation model to study how communication, narrative framing, and social context shape emergent spatial patterns.
 </details>
-
 **Paper Link:** [PDF](https://chriszosh1.github.io/files/Social_Context_and_LLM_Segregation.pdf)
 
 ---
@@ -99,4 +98,5 @@ _Do diversity statement requirements causally change faculty hiring composition 
 
 **Fields:** Computational Social Science, Research Methodology, AI  
 **Methods:** Human-AI Collaboration, Reproducibility Assessment
+
 **Paper Link:** <a href="https://www.econstor.eu/handle/10419/308508" target="_blank">PDF</a>
