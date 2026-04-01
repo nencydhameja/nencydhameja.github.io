@@ -32,7 +32,6 @@ _How do housing markets respond over space and time to localized crime shocks?_
 
 **Fields:** Urban Economics, Behavioral Economics, Housing Markets  
 **Methods:** Spatial–Temporal Kernel Estimation, Repeat-Sales Models  
-
 <details>
   <summary><strong>Abstract</strong></summary>
 
@@ -46,7 +45,6 @@ _Do dollar-store rollouts causally affect metabolic health risks?_
 
 **Fields:** Health Economics, Urban Economics, Public Economics  
 **Methods:** Event Studies / DiD  
-
 <details>
   <summary><strong>Abstract</strong></summary>
 
@@ -59,7 +57,6 @@ _Do diversity statement requirements causally change faculty hiring composition 
 
 **Fields:** Labor & Personnel Economics, Higher Education, Applied Microeconomics  
 **Methods:** Difference-in-Differences (csdid), Entropy Balancing, Text Classification  
-
 <details>
   <summary><strong>Abstract</strong></summary>
   This project examines how mandatory diversity statements in faculty job applications influence hiring and student outcomes. Using comprehensive text from JOE and APSA postings linked to institution–year–discipline hiring records, we classify DEI-related requirements and estimate their effects using staggered-adoption DiD estimators with entropy-balancing weights.
