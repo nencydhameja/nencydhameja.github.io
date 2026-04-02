@@ -27,7 +27,8 @@ My research studies how local environments and institutional policies shape econ
 
 ## Empirical Research (Applied Microeconomics)
 <span class="paper-title">Crime, Salience, and the Housing Market</span> <i>(Work in Progress)</i>
-_How do housing markets respond over space and time to localized crime shocks?_
+
+<i>How do housing markets respond over space and time to localized crime shocks?</i>
 
 **Fields:** Urban Economics, Behavioral Economics, Housing Markets  
 **Methods:** Spatial–Temporal Kernel Estimation, Repeat-Sales Models  
