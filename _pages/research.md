@@ -53,7 +53,7 @@ _Do dollar-store rollouts affect metabolic health outcomes?_
 </details>
 ---
 ### <span class="paper-title">The Effect of Diversity Statements in Faculty Hiring</span> <i>with David Slichter (Working Paper)</i>
-_Do diversity statement requirements causally change faculty hiring composition and ideology?_
+_Do diversity statement requirements affect who gets hired?_
 
 **Fields:** Labor & Personnel Economics, Higher Education, Applied Microeconomics  
 **Methods:** Difference-in-Differences (csdid), Entropy Balancing, Text Classification  
