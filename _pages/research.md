@@ -8,7 +8,7 @@ toc: false
 <style>
 .paper-title {
   color: #52adc8 !important;
-  font-weight: 600;
+  font-weight: 300;
 }
 .page__content p {
   text-align: justify !important;
