@@ -21,6 +21,9 @@ toc: false
   font-size: 1.25em !important;
   margin-top: 0.2em !important;
 }
+.page__content h3 {
+  margin-top: 0em !important;
+}
 
 </style>
 My research studies how local environments and institutional policies shape economic and social outcomes, using modern causal inference and computational methods.
