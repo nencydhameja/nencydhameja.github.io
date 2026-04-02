@@ -41,7 +41,7 @@ _How do housing markets respond over space and time to localized crime shocks?_
 </details>
 ---
 ### <span class="paper-title">Food Swamps, Obesity, and Metabolic Risks</span> <i>(Work in Progress)</i>
-_Do dollar-store rollouts affect metabolic health risks?_
+_Do dollar-store rollouts affect metabolic health outcomes?_
 
 **Fields:** Health Economics, Urban Economics, Public Economics  
 **Methods:** Event Studies / DiD  
