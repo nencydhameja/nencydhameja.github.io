@@ -75,9 +75,14 @@ _Do diversity statement requirements causally change faculty hiring composition 
 </details>
 **Paper Link:** [PDF](https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf)
 
+---
+### <span class="paper-title">Comparing Human-Only, AI-Assisted, and AI-Led Teams on Assessing Research Reproducibility in Quantitative Social Science</span> <i>Brodeur et al. (in press at <a href="https://www.pnas.org" target="_blank">Proceedings of the National Academy of Sciences</a>)</i>
+
+**Fields:** Computational Social Science, Research Methodology, AI  
+**Methods:** Human-AI Collaboration, Reproducibility Assessment        
+**Paper Link:** <a href="https://www.econstor.eu/handle/10419/308508" target="_blank">PDF</a>
 
 ---
-
 ### <span class="paper-title">Social Context in the Schelling Model Using LLMs</span> <i>with Andreas Pape, Srikanth Iyer, Carl Lipo, Yixin Ren, Christopher Zosh (Work in progress)</i>
 
 **Fields:** Computational Economics, Behavioral Economics, Social Dynamics  
@@ -88,10 +93,3 @@ _Do diversity statement requirements causally change faculty hiring composition 
 </details>
 **Paper Link:** [PDF](https://chriszosh1.github.io/files/Social_Context_and_LLM_Segregation.pdf)
 
----
-
-### <span class="paper-title">Comparing Human-Only, AI-Assisted, and AI-Led Teams on Assessing Research Reproducibility in Quantitative Social Science</span> <i>Brodeur et al. (in press at <a href="https://www.pnas.org" target="_blank">Proceedings of the National Academy of Sciences</a>)</i>
-
-**Fields:** Computational Social Science, Research Methodology, AI  
-**Methods:** Human-AI Collaboration, Reproducibility Assessment        
-**Paper Link:** <a href="https://www.econstor.eu/handle/10419/308508" target="_blank">PDF</a>
