@@ -37,9 +37,8 @@ _How do housing markets respond over space and time to localized crime shocks?_
   Homebuyers observe crime infrequently, recall it imperfectly, and often overweight unusually salient incidents. This paper studies how these behavioral frictions shape the spatial and temporal pattern of crime capitalization in housing prices. Using detailed incident-level crime data linked to repeat-sales transactions, I develop a flexible space–time kernel estimator that recovers the distance-decay and time-decay of crime’s price impact.
 </details>
 ---
-<span class="paper-title">Food Swamps, Obesity, and Metabolic Risks</span> <em>(Work in Progress)</em>
-
-<i>Do dollar-store rollouts affect metabolic health risks?</i>
+### <span class="paper-title">Food Swamps, Obesity, and Metabolic Risks</span> <i>(Work in Progress)</i>
+_Do dollar-store rollouts affect metabolic health risks?_
 
 **Fields:** Health Economics, Urban Economics, Public Economics  
 **Methods:** Event Studies / DiD  
