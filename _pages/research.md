@@ -48,7 +48,7 @@ _Do dollar-store rollouts causally affect metabolic health risks?_
 <details>
   <summary><strong>Abstract</strong></summary>
 
-  This project examines how the expansion of dollar stores and low-nutrition retail environments contributes to obesity and metabolic health risks. Using store rollouts and quasi-experimental variation in food environments, I study how changes in access to calorie-dense, nutrient-poor options affect chronic disease outcomes.
+  This project examines how the expansion of dollar stores and low-nutrition retail environments contribute to obesity and metabolic health risks. Using store rollouts and quasi-experimental variation in food environments, I study how changes in access to calorie-dense, nutrient-poor options affect chronic disease outcomes.
 
 </details>
 ---
