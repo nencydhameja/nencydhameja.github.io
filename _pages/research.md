@@ -31,7 +31,7 @@ My research studies how local environments and institutional policies shape econ
 <i>How do housing markets respond over space and time to localized crime shocks?</i>
 
 **Fields:** Urban Economics, Behavioral Economics, Housing Markets  
-**Methods:** Spatial–Temporal Kernel Estimation, Repeat-Sales Models  
+**Methods:** Spatial–Temporal Kernel Estimation, Repeat-Sales Model  
 <details>
   <summary><strong>Abstract</strong></summary>
 
