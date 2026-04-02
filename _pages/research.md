@@ -60,7 +60,6 @@ _Do diversity statement requirements causally change faculty hiring composition 
   This project examines how mandatory diversity statements in faculty job applications influence hiring and student outcomes. Using comprehensive text from JOE and APSA postings linked to institution–year–discipline hiring records, we classify DEI-related requirements and estimate their effects using staggered-adoption DiD estimators with entropy-balancing weights.
 </details>
 ---
-
 ## Computational Methods & Simulation
 
 <span class="paper-title">Monte Carlo Diagnostics for Agent-Based Models</span> <i>with Christopher Zosh, Yixin Ren, Andreas Pape (Revise & Resubmit at the <a href="https://www.jasss.org/JASSS.html" target="_blank"> Journal of Artificial Societies and Social Simulation</a>)</i>
@@ -72,14 +71,12 @@ _Do diversity statement requirements causally change faculty hiring composition 
   We develop a statistical framework for diagnosing parameter identifiability and uncertainty in stochastic agent-based models (ABMs). The approach combines Monte Carlo experiments with simulation-based confidence intervals, providing generalizable tools for calibration, validation, and sensitivity analysis in complex ABMs.
 </details>
 **Paper Link:** [PDF](https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf)
-
 ---
 <span class="paper-title">Comparing Human-Only, AI-Assisted, and AI-Led Teams on Assessing Research Reproducibility in Quantitative Social Science</span> <i>Brodeur et al. (in press at <a href="https://www.pnas.org" target="_blank">Proceedings of the National Academy of Sciences</a>)</i>
 
 **Fields:** Computational Social Science, Research Methodology, AI  
 **Methods:** Human-AI Collaboration, Reproducibility Assessment        
 **Paper Link:** <a href="https://www.econstor.eu/handle/10419/308508" target="_blank">PDF</a>
-
 ---
 <span class="paper-title">Social Context in the Schelling Model Using LLMs</span> <i>with Andreas Pape, Srikanth Iyer, Carl Lipo, Yixin Ren, Christopher Zosh (Work in progress)</i>
 
