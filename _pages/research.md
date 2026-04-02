@@ -39,7 +39,7 @@ My research studies how local environments and institutional policies shape econ
 </details>
 ---
 <span class="paper-title">Food Swamps, Obesity, and Metabolic Risks</span> <em>(Work in Progress)</em>
-_Do dollar-store rollouts causally affect metabolic health risks?_
+_Do dollar-store rollouts affect metabolic health risks?_
 
 **Fields:** Health Economics, Urban Economics, Public Economics  
 **Methods:** Event Studies / DiD  
