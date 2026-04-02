@@ -39,13 +39,14 @@ My research studies how local environments and institutional policies shape econ
 </details>
 ---
 <span class="paper-title">Food Swamps, Obesity, and Metabolic Risks</span> <em>(Work in Progress)</em>
-_Do dollar-store rollouts affect metabolic health risks?_
+
+<i>Do dollar-store rollouts affect metabolic health risks?</i>
 
 **Fields:** Health Economics, Urban Economics, Public Economics  
 **Methods:** Event Studies / DiD  
 <details>
   <summary><strong>Abstract</strong></summary>
-
+  
   This project examines how the expansion of dollar stores and low-nutrition retail environments contribute to obesity and metabolic health risks. Using store rollouts and quasi-experimental variation in food environments, I study how changes in access to calorie-dense, nutrient-poor options affect chronic disease outcomes.
 
 </details>
@@ -71,12 +72,14 @@ _Do diversity statement requirements causally change faculty hiring composition 
   We develop a statistical framework for diagnosing parameter identifiability and uncertainty in stochastic agent-based models (ABMs). The approach combines Monte Carlo experiments with simulation-based confidence intervals, providing generalizable tools for calibration, validation, and sensitivity analysis in complex ABMs.
 </details>
 **Paper Link:** [PDF](https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf)
+
 ---
 <span class="paper-title">Comparing Human-Only, AI-Assisted, and AI-Led Teams on Assessing Research Reproducibility in Quantitative Social Science</span> <i>Brodeur et al. (in press at <a href="https://www.pnas.org" target="_blank">Proceedings of the National Academy of Sciences</a>)</i>
 
 **Fields:** Computational Social Science, Research Methodology, AI  
 **Methods:** Human-AI Collaboration, Reproducibility Assessment        
 **Paper Link:** <a href="https://www.econstor.eu/handle/10419/308508" target="_blank">PDF</a>
+
 ---
 <span class="paper-title">Social Context in the Schelling Model Using LLMs</span> <i>with Andreas Pape, Srikanth Iyer, Carl Lipo, Yixin Ren, Christopher Zosh (Work in progress)</i>
 
