@@ -63,7 +63,7 @@ _Do diversity statement requirements causally change faculty hiring composition 
 
 ## Computational Methods & Simulation
 
-### <span class="paper-title">Monte Carlo Diagnostics for Agent-Based Models</span> <i>with Christopher Zosh, Yixin Ren, Andreas Pape (Revise & Resubmit at the <a href="https://www.jasss.org/JASSS.html" target="_blank"> Journal of Artificial Societies and Social Simulation</a>)</i>
+<span class="paper-title">Monte Carlo Diagnostics for Agent-Based Models</span> <i>with Christopher Zosh, Yixin Ren, Andreas Pape (Revise & Resubmit at the <a href="https://www.jasss.org/JASSS.html" target="_blank"> Journal of Artificial Societies and Social Simulation</a>)</i>
 
 **Fields:** Computational Economics, Econometrics, Simulation  
 **Methods:** Agent-Based Models, Monte Carlo Simulation, Simulation-Based Inference  
