@@ -63,7 +63,7 @@ _Do dollar-store rollouts affect metabolic health outcomes?_
 </details>
 ---
 ## Computational Methods & Simulation
-<span class="paper-title">Monte Carlo Diagnostics for Agent-Based Models</span> <i>with Christopher Zosh, Yixin Ren, Andreas Pape
+<span class="paper-title">Monte Carlo Diagnostics for Agent-Based Models</span> <i>with Christopher Zosh, Yixin Ren, Andreas Pape<br>
 <i>(Revise & Resubmit at the <a href="https://www.jasss.org/JASSS.html" target="_blank"> Journal of Artificial Societies and Social Simulation</a>)</i>
 
 **Fields:** Computational Economics, Econometrics, Simulation  
