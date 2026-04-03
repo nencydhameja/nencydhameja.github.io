@@ -56,6 +56,7 @@ _Do dollar-store rollouts affect metabolic health outcomes?_
 <i>with David Slichter (Working Paper)</i><br>
 <em>Do diversity statement requirements affect who gets hired?</em>
 
+
 **Fields:** Labor & Personnel Economics, Higher Education, Applied Microeconomics  
 **Methods:** Difference-in-Differences (csdid), Entropy Balancing, Text Classification  
 <details>
