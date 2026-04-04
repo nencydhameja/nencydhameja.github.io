@@ -2,7 +2,7 @@
 layout: archive
 title: "CV"
 permalink: /cv-html/
-author_profile: false
+author_profile: true
 ---
 
 <style>
