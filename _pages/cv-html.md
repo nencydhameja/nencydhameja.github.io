@@ -177,7 +177,9 @@ author_profile: true
 <section class="cv-section">
   <h2>Conference Presentations</h2>
   <div class="cv-entry"><strong>2026</strong><br>
-  ASSA Annual Meeting, Jan 2026; Northeast Regional Conference on Complex Systems (NERCCS), Online, Mar 2026; Midwest Economics Association (MEA), Mar 2026; American Society of Health Economists (ASHEcon), Jun 2026; Society for the Advancement of Behavioral Economics (SABE), Jun 2026; Western Economic Association International (WEAI), Jun 2026.</div>
+  ASSA Annual Meeting, Jan 2026; Northeast Regional Conference on Complex Systems (NERCCS), Online, Mar 2026; Midwest Economics Association (MEA), Mar 2026; 
+    <!-- American Society of Health Economists (ASHEcon), Jun 2026; Society for the Advancement of Behavioral Economics (SABE), Jun 2026; Western Economic Association International (WEAI), Jun 2026.-->
+  </div>
   <div class="cv-entry"><strong>2025</strong><br>
   Eastern Economic Association (EEA), Feb 2025; American Political Science Association (APSA), Online, Feb 2025; FLX Economics of Education Conference, Jun 2025; Western Economic Association International (WEAI), Jun 2025; Southern Economic Association (SEA), Nov 2025.</div>
   <div class="cv-entry"><strong>2024</strong><br>
@@ -197,11 +199,11 @@ author_profile: true
   <div>Session Discussant, Eastern Economic Association Annual Conference (2024)</div>
 </section>
 
-<section class="cv-section">
+<!--<section class="cv-section">
   <h2>Professional Development</h2>
   <div>Northwestern University, Causal Inference Workshop (Main &amp; Advanced), 2025</div>
   <div>Harvard University, CausalLab Workshop, Scheduled, Summer 2026</div>
-</section>
+</section>-->
 
 <section class="cv-section">
   <h2>Research Methods and Technical Skills</h2>
