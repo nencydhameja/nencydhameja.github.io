@@ -242,7 +242,7 @@ author_profile: true
 </section>
 
 <div class="cv-download">
-  <a href="/files/cv.pdf" class="btn btn--primary">Download CV as PDF</a>
+ <a href="/files/Nency_Dhameja_CV_2026.pdf" class="btn btn--primary" target="_blank">Download CV as PDF</a>
 </div>
 
 </div>
