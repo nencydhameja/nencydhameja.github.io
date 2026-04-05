@@ -9,7 +9,7 @@ author_profile: true
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Research</title>
+  <title>Research — Nency Dhameja</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
   <style>
@@ -22,10 +22,28 @@ author_profile: true
       line-height: 1.6;
     }
 
-    .page {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem 5rem;
+    .research-content {
+      width: 100%;
+    }
+
+    .page-heading {
+      font-size: 28px;
+      font-weight: 500;
+      font-family: 'Lora', Georgia, serif;
+      color: #1a1a18;
+      margin-bottom: 0.6rem;
+      margin-top: 0;
+    }
+
+    .page-bio {
+      font-size: 14.5px;
+      font-family: 'Inter', system-ui, sans-serif;
+      color: #5f5e5a;
+      line-height: 1.75;
+      max-width: 680px;
+      margin-bottom: 2.75rem;
+      border-left: 2px solid #d3d1c7;
+      padding-left: 1rem;
     }
 
     .section-header {
@@ -50,9 +68,7 @@ author_profile: true
       background: #d3d1c7;
     }
 
-    .section-block {
-      margin-bottom: 3.5rem;
-    }
+    .section-block { margin-bottom: 3.5rem; }
 
     .paper-card {
       background: #fff;
@@ -63,9 +79,7 @@ author_profile: true
       transition: border-color 0.15s;
     }
 
-    .paper-card:hover {
-      border-color: #b4b2a9;
-    }
+    .paper-card:hover { border-color: #b4b2a9; }
 
     .paper-top {
       display: flex;
@@ -93,23 +107,20 @@ author_profile: true
       margin-top: 2px;
     }
 
-    .pill-wip  { background: #FAEEDA; color: #854F0B; }
-    .pill-wp   { background: #E6F1FB; color: #185FA5; }
-    .pill-rr   { background: #EAF3DE; color: #3B6D11; }
-    .pill-press{ background: #E1F5EE; color: #0F6E56; }
+    .pill-wip   { background: #FAEEDA; color: #854F0B; }
+    .pill-wp    { background: #E6F1FB; color: #185FA5; }
+    .pill-rr    { background: #EAF3DE; color: #3B6D11; }
+    .pill-press { background: #E1F5EE; color: #0F6E56; }
 
     .research-q {
       font-size: 13px;
       color: #5f5e5a;
       margin-bottom: 0.75rem;
       font-style: italic;
-      font-family: 'Lora', Georgia, serif;
+      font-family: 'Inter', system-ui, sans-serif;
     }
 
-    .coauthors {
-      font-size: 12px;
-      color: #888780;
-    }
+    .coauthors { font-size: 12px; color: #888780; }
 
     .journal {
       font-size: 13px;
@@ -192,7 +203,10 @@ author_profile: true
   </style>
 </head>
 <body>
-<div class="page">
+<div class="research-content">
+
+  <h1 class="page-heading">Research</h1>
+  <p class="page-bio">My research studies how local environments and institutional policies shape economic and social outcomes, using modern causal inference and computational methods.</p>
 
   <!-- Section 1: Applied Micro -->
   <div class="section-block">
@@ -288,12 +302,7 @@ author_profile: true
       </div>
       <div class="paper-footer">
         <a class="pdf-link" href="https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf" target="_blank">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="1" y="1" width="9" height="12" rx="1.5" stroke="currentColor" stroke-width="1"/>
-            <path d="M9 1l3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
-            <path d="M9 1v3h3" stroke="currentColor" stroke-width="1"/>
-            <path d="M3.5 7.5h5M3.5 9.5h3.5" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/>
-          </svg>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="9" height="12" rx="1.5" stroke="currentColor" stroke-width="1"/><path d="M9 1l3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M9 1v3h3" stroke="currentColor" stroke-width="1"/><path d="M3.5 7.5h5M3.5 9.5h3.5" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/></svg>
           PDF
         </a>
       </div>
@@ -312,6 +321,12 @@ author_profile: true
         <span class="meta-tag">AI</span>
         <span class="meta-tag method">Human-AI Collaboration</span>
         <span class="meta-tag method">Reproducibility Assessment</span>
+      </div>
+      <div class="paper-footer">
+        <a class="pdf-link" href="https://www.econstor.eu/handle/10419/308508" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="9" height="12" rx="1.5" stroke="currentColor" stroke-width="1"/><path d="M9 1l3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M9 1v3h3" stroke="currentColor" stroke-width="1"/><path d="M3.5 7.5h5M3.5 9.5h3.5" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/></svg>
+          PDF
+        </a>
       </div>
     </div>
 
@@ -335,12 +350,7 @@ author_profile: true
       </div>
       <div class="paper-footer">
         <a class="pdf-link" href="https://chriszosh1.github.io/files/Social_Context_and_LLM_Segregation.pdf" target="_blank">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="1" y="1" width="9" height="12" rx="1.5" stroke="currentColor" stroke-width="1"/>
-            <path d="M9 1l3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
-            <path d="M9 1v3h3" stroke="currentColor" stroke-width="1"/>
-            <path d="M3.5 7.5h5M3.5 9.5h3.5" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/>
-          </svg>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="9" height="12" rx="1.5" stroke="currentColor" stroke-width="1"/><path d="M9 1l3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M9 1v3h3" stroke="currentColor" stroke-width="1"/><path d="M3.5 7.5h5M3.5 9.5h3.5" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/></svg>
           PDF
         </a>
       </div>
@@ -359,3 +369,4 @@ author_profile: true
 </script>
 </body>
 </html>
+
