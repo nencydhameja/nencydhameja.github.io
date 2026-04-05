@@ -2,211 +2,130 @@
 layout: single
 title: "Talks"
 permalink: /talks-html/
-author_profile: true
 ---
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Talks — Nency Dhameja</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #fafaf9;
-      color: #1a1a18;
-      line-height: 1.6;
-    }
+<style>
+  .talk-section { margin-bottom: 1.25rem; }
 
-    .page {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem 5rem;
-    }
+  .year-card {
+    background: #fff;
+    border: 0.5px solid #d3d1c7;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+  }
 
-    .page-heading {
-      font-size: 28px;
-      font-weight: 500;
-      font-family: 'Lora', Georgia, serif;
-      color: #1a1a18;
-      margin-bottom: 2.75rem;
-    }
+  .year-card-header {
+    padding: 0.6rem 1.5rem;
+    background: #f7f6f3;
+    border-bottom: 0.5px solid #d3d1c7;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #888780;
+  }
 
-    .year-block { margin-bottom: 1.25rem; }
+  .talk-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.35rem 1.5rem;
+    border-bottom: 0.5px solid #f1efe8;
+  }
 
-    .year-card {
-      background: #fff;
-      border: 0.5px solid #d3d1c7;
-      border-radius: 12px;
-      overflow: hidden;
-      transition: border-color 0.15s;
-    }
+  .talk-row:last-child { border-bottom: none; }
 
-    .year-card-header {
-      padding: 0.85rem 1.5rem;
-      background: #f7f6f3;
-      border-bottom: 0.5px solid #d3d1c7;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #888780;
-    }
+  .talk-name {
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #1a1a18;
+    text-decoration: none;
+  }
 
-    .talk-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.35rem 1.5rem;
-      border-bottom: 0.5px solid #f1efe8;
-    }
+  .talk-name:hover { color: #185FA5; }
 
-    .talk-row:last-child { border-bottom: none; }
+  .talk-abbr {
+    font-size: 14.5px;
+    font-weight: 400;
+    color: #888780;
+  }
 
-    .talk-name {
-      font-size: 14.5px;
-      font-weight: 500;
-      font-family: 'Lora', Georgia, serif;
-      color: #1a1a18;
-      text-decoration: none;
-    }
+  .talk-meta {
+    display: flex;
+    gap: 1.25rem;
+    flex-shrink: 0;
+    align-items: baseline;
+  }
 
-    .talk-name:hover { color: #185FA5; }
+  .talk-location { font-size: 13px; color: #5f5e5a; }
 
-    .talk-abbr {
-      font-size: 14.5px;
-      font-weight: 400;
-      font-family: 'Lora', Georgia, serif;
-      color: #888780;
-    }
+  .talk-date {
+    font-size: 12px;
+    color: #b4b2a9;
+    min-width: 54px;
+    text-align: right;
+  }
+</style>
 
-    .talk-meta {
-      display: flex;
-      gap: 1.25rem;
-      flex-shrink: 0;
-      align-items: baseline;
-    }
-
-    .talk-location {
-      font-size: 13px;
-      color: #5f5e5a;
-    }
-
-    .talk-date {
-      font-size: 12px;
-      color: #b4b2a9;
-      min-width: 54px;
-      text-align: right;
-    }
-
-    @media (max-width: 600px) {
-      .talk-row { flex-direction: column; gap: 4px; }
-      .talk-meta { gap: 0.75rem; }
-      .page { padding: 2rem 1rem 4rem; }
-    }
-  </style>
-</head>
-<body>
-<div class="page">
-
-  <!-- <h1 class="page-heading">Talks</h1> -->
-
-  <!-- 2026 -->
-  <div class="year-block">
-    <div class="year-card">
-      <div class="year-card-header">2026</div>
-      <div class="talk-row">
-        <div><a class="talk-name" href="https://mea.sites.grinnell.edu/" target="_blank">Midwest Economics Association <span class="talk-abbr">(MEA)</span></a></div>
-        <div class="talk-meta">
-          <span class="talk-location">Chicago, IL</span>
-          <span class="talk-date">Mar 2026</span>
-        </div>
-      </div>
-      <div class="talk-row">
-        <div><a class="talk-name" href="https://nerccs2026.github.io/" target="_blank">Northeast Regional Conference on Complex Systems <span class="talk-abbr">(NERCCS)</span></a></div>
-        <div class="talk-meta">
-          <span class="talk-location">Online</span>
-          <span class="talk-date">Mar 2026</span>
-        </div>
-      </div>
-      <div class="talk-row">
-        <div><a class="talk-name" href="https://www.aeaweb.org/conference/2026" target="_blank">Allied Social Science Associations Annual Meeting <span class="talk-abbr">(ASSA)</span></a></div>
-        <div class="talk-meta">
-          <span class="talk-location">Philadelphia, PA</span>
-          <span class="talk-date">Jan 2026</span>
-        </div>
-      </div>
+<!-- 2026 -->
+<div class="talk-section">
+  <div class="year-card">
+    <div class="year-card-header">2026</div>
+    <div class="talk-row">
+      <div><a class="talk-name" href="https://mea.sites.grinnell.edu/" target="_blank">Midwest Economics Association <span class="talk-abbr">(MEA)</span></a></div>
+      <div class="talk-meta"><span class="talk-location">Chicago, IL</span><span class="talk-date">Mar 2026</span></div>
+    </div>
+    <div class="talk-row">
+      <div><a class="talk-name" href="https://nerccs2026.github.io/" target="_blank">Northeast Regional Conference on Complex Systems <span class="talk-abbr">(NERCCS)</span></a></div>
+      <div class="talk-meta"><span class="talk-location">Online</span><span class="talk-date">Mar 2026</span></div>
+    </div>
+    <div class="talk-row">
+      <div><a class="talk-name" href="https://www.aeaweb.org/conference/2026" target="_blank">Allied Social Science Associations Annual Meeting <span class="talk-abbr">(ASSA)</span></a></div>
+      <div class="talk-meta"><span class="talk-location">Philadelphia, PA</span><span class="talk-date">Jan 2026</span></div>
     </div>
   </div>
-
-  <!-- 2025 -->
-  <div class="year-block">
-    <div class="year-card">
-      <div class="year-card-header">2025</div>
-      <div class="talk-row">
-        <div><a class="talk-name" href="https://southerneconomic.org/" target="_blank">Southern Economic Association <span class="talk-abbr">(SEA)</span></a></div>
-        <div class="talk-meta">
-          <span class="talk-location">Florida</span>
-          <span class="talk-date">Nov 2025</span>
-        </div>
-      </div>
-      <div class="talk-row">
-        <div><a class="talk-name" href="https://www.appam.org/" target="_blank">Association for Public Policy Analysis & Management <span class="talk-abbr">(APPAM)</span></a></div>
-        <div class="talk-meta">
-          <span class="talk-location">Seattle, WA</span>
-          <span class="talk-date">Nov 2025</span>
-        </div>
-      </div>
-      <div class="talk-row">
-        <div><a class="talk-name" href="https://www.weai.org/" target="_blank">Western Economic Association International <span class="talk-abbr">(WEAI)</span></a></div>
-        <div class="talk-meta">
-          <span class="talk-location">San Francisco, CA</span>
-          <span class="talk-date">Jun 2025</span>
-        </div>
-      </div>
-      <div class="talk-row">
-        <div><span class="talk-name">Finger Lakes Economics of Education Conference <span class="talk-abbr">(FLX)</span></span></div>
-        <div class="talk-meta">
-          <span class="talk-location">Ithaca, NY</span>
-          <span class="talk-date">Jun 2025</span>
-        </div>
-      </div>
-      <div class="talk-row">
-        <div><a class="talk-name" href="https://apsanet.org/" target="_blank">American Political Science Association <span class="talk-abbr">(APSA)</span></a></div>
-        <div class="talk-meta">
-          <span class="talk-location">Online</span>
-          <span class="talk-date">Feb 2025</span>
-        </div>
-      </div>
-      <div class="talk-row">
-        <div><a class="talk-name" href="https://www.ramapo.edu/eea/" target="_blank">Eastern Economic Association <span class="talk-abbr">(EEA)</span></a></div>
-        <div class="talk-meta">
-          <span class="talk-location">New York City, NY</span>
-          <span class="talk-date">Feb 2025</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2024 -->
-  <div class="year-block">
-    <div class="year-card">
-      <div class="year-card-header">2024</div>
-      <div class="talk-row">
-        <div><a class="talk-name" href="https://www.ramapo.edu/eea/" target="_blank">Eastern Economic Association <span class="talk-abbr">(EEA)</span></a></div>
-        <div class="talk-meta">
-          <span class="talk-location">Boston, MA</span>
-          <span class="talk-date">Feb 2024</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </div>
-</body>
-</html>
+
+<!-- 2025 -->
+<div class="talk-section">
+  <div class="year-card">
+    <div class="year-card-header">2025</div>
+    <div class="talk-row">
+      <div><a class="talk-name" href="https://southerneconomic.org/" target="_blank">Southern Economic Association <span class="talk-abbr">(SEA)</span></a></div>
+      <div class="talk-meta"><span class="talk-location">Florida</span><span class="talk-date">Nov 2025</span></div>
+    </div>
+    <div class="talk-row">
+      <div><a class="talk-name" href="https://www.appam.org/" target="_blank">Association for Public Policy Analysis & Management <span class="talk-abbr">(APPAM)</span></a></div>
+      <div class="talk-meta"><span class="talk-location">Seattle, WA</span><span class="talk-date">Nov 2025</span></div>
+    </div>
+    <div class="talk-row">
+      <div><a class="talk-name" href="https://www.weai.org/" target="_blank">Western Economic Association International <span class="talk-abbr">(WEAI)</span></a></div>
+      <div class="talk-meta"><span class="talk-location">San Francisco, CA</span><span class="talk-date">Jun 2025</span></div>
+    </div>
+    <div class="talk-row">
+      <div><span class="talk-name">Finger Lakes Economics of Education Conference <span class="talk-abbr">(FLX)</span></span></div>
+      <div class="talk-meta"><span class="talk-location">Ithaca, NY</span><span class="talk-date">Jun 2025</span></div>
+    </div>
+    <div class="talk-row">
+      <div><a class="talk-name" href="https://apsanet.org/" target="_blank">American Political Science Association <span class="talk-abbr">(APSA)</span></a></div>
+      <div class="talk-meta"><span class="talk-location">Online</span><span class="talk-date">Feb 2025</span></div>
+    </div>
+    <div class="talk-row">
+      <div><a class="talk-name" href="https://www.ramapo.edu/eea/" target="_blank">Eastern Economic Association <span class="talk-abbr">(EEA)</span></a></div>
+      <div class="talk-meta"><span class="talk-location">New York City, NY</span><span class="talk-date">Feb 2025</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 2024 -->
+<div class="talk-section">
+  <div class="year-card">
+    <div class="year-card-header">2024</div>
+    <div class="talk-row">
+      <div><a class="talk-name" href="https://www.ramapo.edu/eea/" target="_blank">Eastern Economic Association <span class="talk-abbr">(EEA)</span></a></div>
+      <div class="talk-meta"><span class="talk-location">Boston, MA</span><span class="talk-date">Feb 2024</span></div>
+    </div>
+  </div>
+</div>
