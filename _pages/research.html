@@ -37,7 +37,6 @@ author_profile: true
 
     .page-bio {
       font-size: 14.5px;
-      font-family: 'Inter', system-ui, sans-serif;
       color: #5f5e5a;
       line-height: 1.75;
       max-width: 680px;
@@ -117,7 +116,7 @@ author_profile: true
       color: #5f5e5a;
       margin-bottom: 0.75rem;
       font-style: italic;
-      font-family: 'Inter', system-ui, sans-serif;
+      font-family: 'Lora', Georgia, serif;
     }
 
     .coauthors { font-size: 12px; color: #888780; }
@@ -132,9 +131,20 @@ author_profile: true
 
     .meta-row {
       display: flex;
+      align-items: center;
       flex-wrap: wrap;
       gap: 7px;
-      margin: 0.6rem 0 0.9rem;
+      margin: 0.4rem 0;
+    }
+
+    .meta-label {
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #b4b2a9;
+      margin-right: 2px;
+      white-space: nowrap;
     }
 
     .meta-tag {
@@ -147,8 +157,8 @@ author_profile: true
     }
 
     .meta-tag.method {
-      font-family: 'DM Mono', monospace;
-      font-size: 10.5px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 11.5px;
       background: transparent;
     }
 
@@ -217,14 +227,43 @@ author_profile: true
 
     <div class="paper-card">
       <div class="paper-top">
+        <div class="paper-title">The Effect of Diversity Statements in Faculty Hiring</div>
+        <span class="status-pill pill-wp">Working Paper</span>
+      </div>
+      <div class="research-q">Do diversity statement requirements affect who gets hired?</div>
+      <div class="coauthors" style="margin-bottom: 0.5rem;">with David Slichter</div>
+      <div class="meta-row">
+        <span class="meta-label">Fields</span>
+        <span class="meta-tag">Labor &amp; Personnel Economics</span>
+        <span class="meta-tag">Higher Education</span>
+        <span class="meta-tag">Applied Microeconomics</span>
+      </div>
+      <div class="meta-row" style="margin-bottom: 0.9rem;">
+        <span class="meta-label">Methods</span>
+        <span class="meta-tag method">Difference-in-Differences</span>
+        <span class="meta-tag method">Entropy Balancing</span>
+        <span class="meta-tag method">Text Classification</span>
+      </div>
+      <button class="abstract-toggle" onclick="toggle(this)">Show abstract</button>
+      <div class="abstract-text">
+        This project examines how mandatory diversity statements in faculty job applications influence hiring and student outcomes. Using comprehensive text from JOE and APSA postings linked to institution–year–discipline hiring records, we classify DEI-related requirements and estimate their effects using staggered-adoption DiD estimators with entropy-balancing weights.
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-top">
         <div class="paper-title">Crime, Salience, and the Housing Market</div>
         <span class="status-pill pill-wip">Work in Progress</span>
       </div>
       <div class="research-q">How do housing markets respond over space and time to localized crime shocks?</div>
       <div class="meta-row">
+        <span class="meta-label">Fields</span>
         <span class="meta-tag">Urban Economics</span>
         <span class="meta-tag">Behavioral Economics</span>
         <span class="meta-tag">Housing Markets</span>
+      </div>
+      <div class="meta-row" style="margin-bottom: 0.9rem;">
+        <span class="meta-label">Methods</span>
         <span class="meta-tag method">Spatial–Temporal Kernel Estimation</span>
         <span class="meta-tag method">Repeat-Sales Model</span>
       </div>
@@ -241,35 +280,18 @@ author_profile: true
       </div>
       <div class="research-q">Do dollar-store rollouts affect metabolic health outcomes?</div>
       <div class="meta-row">
+        <span class="meta-label">Fields</span>
         <span class="meta-tag">Health Economics</span>
         <span class="meta-tag">Urban Economics</span>
         <span class="meta-tag">Public Economics</span>
+      </div>
+      <div class="meta-row" style="margin-bottom: 0.9rem;">
+        <span class="meta-label">Methods</span>
         <span class="meta-tag method">Event Studies / DiD</span>
       </div>
       <button class="abstract-toggle" onclick="toggle(this)">Show abstract</button>
       <div class="abstract-text">
         This project examines how the expansion of dollar stores and low-nutrition retail environments contribute to obesity and metabolic health risks. Using store rollouts and quasi-experimental variation in food environments, I study how changes in access to calorie-dense, nutrient-poor options affect chronic disease outcomes.
-      </div>
-    </div>
-
-    <div class="paper-card">
-      <div class="paper-top">
-        <div class="paper-title">The Effect of Diversity Statements in Faculty Hiring</div>
-        <span class="status-pill pill-wp">Working Paper</span>
-      </div>
-      <div class="research-q">Do diversity statement requirements affect who gets hired?</div>
-      <div class="coauthors" style="margin-bottom: 0.5rem;">with David Slichter</div>
-      <div class="meta-row">
-        <span class="meta-tag">Labor &amp; Personnel Economics</span>
-        <span class="meta-tag">Higher Education</span>
-        <span class="meta-tag">Applied Microeconomics</span>
-        <span class="meta-tag method">Difference-in-Differences (csdid)</span>
-        <span class="meta-tag method">Entropy Balancing</span>
-        <span class="meta-tag method">Text Classification</span>
-      </div>
-      <button class="abstract-toggle" onclick="toggle(this)">Show abstract</button>
-      <div class="abstract-text">
-        This project examines how mandatory diversity statements in faculty job applications influence hiring and student outcomes. Using comprehensive text from JOE and APSA postings linked to institution–year–discipline hiring records, we classify DEI-related requirements and estimate their effects using staggered-adoption DiD estimators with entropy-balancing weights.
       </div>
     </div>
   </div>
@@ -283,42 +305,19 @@ author_profile: true
 
     <div class="paper-card">
       <div class="paper-top">
-        <div class="paper-title">Monte Carlo Diagnostics for Agent-Based Models</div>
-        <span class="status-pill pill-rr">Revise &amp; Resubmit</span>
-      </div>
-      <div class="coauthors" style="margin-bottom: 0.4rem;">with Christopher Zosh, Yixin Ren, Andreas Pape</div>
-      <div class="journal">Journal of Artificial Societies and Social Simulation</div>
-      <div class="meta-row">
-        <span class="meta-tag">Computational Economics</span>
-        <span class="meta-tag">Econometrics</span>
-        <span class="meta-tag">Simulation</span>
-        <span class="meta-tag method">Agent-Based Models</span>
-        <span class="meta-tag method">Monte Carlo Simulation</span>
-        <span class="meta-tag method">Simulation-Based Inference</span>
-      </div>
-      <button class="abstract-toggle" onclick="toggle(this)">Show abstract</button>
-      <div class="abstract-text">
-        We develop a statistical framework for diagnosing parameter identifiability and uncertainty in stochastic agent-based models (ABMs). The approach combines Monte Carlo experiments with simulation-based confidence intervals, providing generalizable tools for calibration, validation, and sensitivity analysis in complex ABMs.
-      </div>
-      <div class="paper-footer">
-        <a class="pdf-link" href="https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf" target="_blank">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="9" height="12" rx="1.5" stroke="currentColor" stroke-width="1"/><path d="M9 1l3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><path d="M9 1v3h3" stroke="currentColor" stroke-width="1"/><path d="M3.5 7.5h5M3.5 9.5h3.5" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/></svg>
-          PDF
-        </a>
-      </div>
-    </div>
-
-    <div class="paper-card">
-      <div class="paper-top">
         <div class="paper-title">Comparing Human-Only, AI-Assisted, and AI-Led Teams on Assessing Research Reproducibility</div>
         <span class="status-pill pill-press">In Press</span>
       </div>
       <div class="coauthors" style="margin-bottom: 0.4rem;">Brodeur et al.</div>
       <div class="journal">Proceedings of the National Academy of Sciences</div>
       <div class="meta-row">
+        <span class="meta-label">Fields</span>
         <span class="meta-tag">Computational Social Science</span>
         <span class="meta-tag">Research Methodology</span>
         <span class="meta-tag">AI</span>
+      </div>
+      <div class="meta-row" style="margin-bottom: 0.9rem;">
+        <span class="meta-label">Methods</span>
         <span class="meta-tag method">Human-AI Collaboration</span>
         <span class="meta-tag method">Reproducibility Assessment</span>
       </div>
@@ -332,14 +331,48 @@ author_profile: true
 
     <div class="paper-card">
       <div class="paper-top">
+        <div class="paper-title">Monte Carlo Diagnostics for Agent-Based Models</div>
+        <span class="status-pill pill-rr">Revise &amp; Resubmit</span>
+      </div>
+      <div class="coauthors" style="margin-bottom: 0.4rem;">with Christopher Zosh, Yixin Ren, Andreas Pape</div>
+      <div class="journal">Journal of Artificial Societies and Social Simulation</div>
+      <div class="meta-row">
+        <span class="meta-label">Fields</span>
+        <span class="meta-tag">Computational Economics</span>
+        <span class="meta-tag">Econometrics</span>
+      </div>
+      <div class="meta-row" style="margin-bottom: 0.9rem;">
+        <span class="meta-label">Methods</span>
+        <span class="meta-tag method">Agent-Based Models</span>
+        <span class="meta-tag method">Monte Carlo Simulation</span>
+        <span class="meta-tag method">Simulation-Based Inference</span>
+      </div>
+      <button class="abstract-toggle" onclick="toggle(this)">Show abstract</button>
+      <div class="abstract-text">
+        We develop a statistical framework for diagnosing parameter identifiability and uncertainty in stochastic agent-based models (ABMs). The approach combines Monte Carlo experiments with simulation-based confidence intervals, providing generalizable tools for calibration, validation, and sensitivity analysis in complex ABMs.
+      </div>
+      <div class="paper-footer">
+        <a class="pdf-link" href="https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="9" height="12" rx="1.5" stroke="currentColor" stroke-width="1"/><path d="M9 1l3 3" mesh-linecap="round"/><path d="M9 1v3h3" stroke="currentColor" stroke-width="1"/><path d="M3.5 7.5h5M3.5 9.5h3.5" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/></svg>
+          PDF
+        </a>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-top">
         <div class="paper-title">Social Context in the Schelling Model Using LLMs</div>
         <span class="status-pill pill-wip">Work in Progress</span>
       </div>
       <div class="coauthors" style="margin-bottom: 0.5rem;">with Andreas Pape, Srikanth Iyer, Carl Lipo, Yixin Ren, Christopher Zosh</div>
       <div class="meta-row">
+        <span class="meta-label">Fields</span>
         <span class="meta-tag">Computational Economics</span>
         <span class="meta-tag">Behavioral Economics</span>
         <span class="meta-tag">Social Dynamics</span>
+      </div>
+      <div class="meta-row" style="margin-bottom: 0.9rem;">
+        <span class="meta-label">Methods</span>
         <span class="meta-tag method">Agent-Based Models</span>
         <span class="meta-tag method">Large Language Models</span>
         <span class="meta-tag method">Experimental Simulation</span>
@@ -369,4 +402,5 @@ author_profile: true
 </script>
 </body>
 </html>
+
 
