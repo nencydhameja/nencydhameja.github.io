@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #fafaf9;
+      color: #1a1a18;
+      line-height: 1.6;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 2rem;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888780;
+      white-space: nowrap;
+    }
+
+    .section-line {
+      height: 0.5px;
+      flex: 1;
+      background: #d3d1c7;
+    }
+
+    .section-block {
+      margin-bottom: 3.5rem;
+    }
+
+    .paper-card {
+      background: #fff;
+      border: 0.5px solid #d3d1c7;
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.25rem;
+      transition: border-color 0.15s;
+    }
+
+    .paper-card:hover {
+      border-color: #b4b2a9;
+    }
+
+    .paper-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .paper-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #1a1a18;
+      line-height: 1.4;
+      font-family: 'Lora', Georgia, serif;
+    }
+
+    .status-pill {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .pill-wip  { background: #FAEEDA; color: #854F0B; }
+    .pill-wp   { background: #E6F1FB; color: #185FA5; }
+    .pill-rr   { background: #EAF3DE; color: #3B6D11; }
+    .pill-press{ background: #E1F5EE; color: #0F6E56; }
+
+    .research-q {
+      font-size: 13px;
+      color: #5f5e5a;
+      margin-bottom: 0.75rem;
+      font-style: italic;
+      font-family: 'Lora', Georgia, serif;
+    }
+
+    .coauthors {
+      font-size: 12px;
+      color: #888780;
+    }
+
+    .journal {
+      font-size: 13px;
+      color: #5f5e5a;
+      font-style: italic;
+      font-family: 'Lora', Georgia, serif;
+      margin-bottom: 0.75rem;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 0.6rem 0 0.9rem;
+    }
+
+    .meta-tag {
+      font-size: 11.5px;
+      padding: 3px 9px;
+      border-radius: 4px;
+      background: #f1efe8;
+      color: #5f5e5a;
+      border: 0.5px solid #d3d1c7;
+    }
+
+    .meta-tag.method {
+      font-family: 'DM Mono', monospace;
+      font-size: 10.5px;
+      background: transparent;
+    }
+
+    .abstract-toggle {
+      font-size: 12.5px;
+      color: #888780;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 3px;
+    }
+
+    .abstract-toggle:hover { color: #5f5e5a; }
+
+    .abstract-text {
+      font-size: 13.5px;
+      color: #5f5e5a;
+      line-height: 1.75;
+      margin-top: 0.75rem;
+      border-left: 2px solid #d3d1c7;
+      padding-left: 1rem;
+      display: none;
+    }
+
+    .abstract-text.open { display: block; }
+
+    .paper-footer {
+      display: flex;
+      align-items: center;
+      margin-top: 0.9rem;
+    }
+
+    .pdf-link {
+      font-size: 12px;
+      font-weight: 500;
+      color: #185FA5;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .pdf-link:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .paper-top { flex-direction: column; gap: 0.4rem; }
+      .page { padding: 2rem 1rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Section 1: Applied Micro -->
+  <div class="section-block">
+    <div class="section-header">
+      <span class="section-label">Empirical Research &mdash; Applied Microeconomics</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-top">
+        <div class="paper-title">Crime, Salience, and the Housing Market</div>
+        <span class="status-pill pill-wip">Work in Progress</span>
+      </div>
+      <div class="research-q">How do housing markets respond over space and time to localized crime shocks?</div>
+      <div class="meta-row">
+        <span class="meta-tag">Urban Economics</span>
+        <span class="meta-tag">Behavioral Economics</span>
+        <span class="meta-tag">Housing Markets</span>
+        <span class="meta-tag method">Spatial–Temporal Kernel Estimation</span>
+        <span class="meta-tag method">Repeat-Sales Model</span>
+      </div>
+      <button class="abstract-toggle" onclick="toggle(this)">Show abstract</button>
+      <div class="abstract-text">
+        Homebuyers observe crime infrequently, recall it imperfectly, and often overweight unusually salient incidents. This paper studies how these behavioral frictions shape the spatial and temporal pattern of crime capitalization in housing prices. Using detailed incident-level crime data linked to repeat-sales transactions, I develop a flexible space–time kernel estimator that recovers the distance-decay and time-decay of crime's price impact.
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-top">
+        <div class="paper-title">Food Swamps, Obesity, and Metabolic Risks</div>
+        <span class="status-pill pill-wip">Work in Progress</span>
+      </div>
+      <div class="research-q">Do dollar-store rollouts affect metabolic health outcomes?</div>
+      <div class="meta-row">
+        <span class="meta-tag">Health Economics</span>
+        <span class="meta-tag">Urban Economics</span>
+        <span class="meta-tag">Public Economics</span>
+        <span class="meta-tag method">Event Studies / DiD</span>
+      </div>
+      <button class="abstract-toggle" onclick="toggle(this)">Show abstract</button>
+      <div class="abstract-text">
+        This project examines how the expansion of dollar stores and low-nutrition retail environments contribute to obesity and metabolic health risks. Using store rollouts and quasi-experimental variation in food environments, I study how changes in access to calorie-dense, nutrient-poor options affect chronic disease outcomes.
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-top">
+        <div class="paper-title">The Effect of Diversity Statements in Faculty Hiring</div>
+        <span class="status-pill pill-wp">Working Paper</span>
+      </div>
+      <div class="research-q">Do diversity statement requirements affect who gets hired?</div>
+      <div class="coauthors" style="margin-bottom: 0.5rem;">with David Slichter</div>
+      <div class="meta-row">
+        <span class="meta-tag">Labor &amp; Personnel Economics</span>
+        <span class="meta-tag">Higher Education</span>
+        <span class="meta-tag">Applied Microeconomics</span>
+        <span class="meta-tag method">Difference-in-Differences (csdid)</span>
+        <span class="meta-tag method">Entropy Balancing</span>
+        <span class="meta-tag method">Text Classification</span>
+      </div>
+      <button class="abstract-toggle" onclick="toggle(this)">Show abstract</button>
+      <div class="abstract-text">
+        This project examines how mandatory diversity statements in faculty job applications influence hiring and student outcomes. Using comprehensive text from JOE and APSA postings linked to institution–year–discipline hiring records, we classify DEI-related requirements and estimate their effects using staggered-adoption DiD estimators with entropy-balancing weights.
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Computational -->
+  <div class="section-block">
+    <div class="section-header">
+      <span class="section-label">Computational Methods &amp; Simulation</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-top">
+        <div class="paper-title">Monte Carlo Diagnostics for Agent-Based Models</div>
+        <span class="status-pill pill-rr">Revise &amp; Resubmit</span>
+      </div>
+      <div class="coauthors" style="margin-bottom: 0.4rem;">with Christopher Zosh, Yixin Ren, Andreas Pape</div>
+      <div class="journal">Journal of Artificial Societies and Social Simulation</div>
+      <div class="meta-row">
+        <span class="meta-tag">Computational Economics</span>
+        <span class="meta-tag">Econometrics</span>
+        <span class="meta-tag">Simulation</span>
+        <span class="meta-tag method">Agent-Based Models</span>
+        <span class="meta-tag method">Monte Carlo Simulation</span>
+        <span class="meta-tag method">Simulation-Based Inference</span>
+      </div>
+      <button class="abstract-toggle" onclick="toggle(this)">Show abstract</button>
+      <div class="abstract-text">
+        We develop a statistical framework for diagnosing parameter identifiability and uncertainty in stochastic agent-based models (ABMs). The approach combines Monte Carlo experiments with simulation-based confidence intervals, providing generalizable tools for calibration, validation, and sensitivity analysis in complex ABMs.
+      </div>
+      <div class="paper-footer">
+        <a class="pdf-link" href="https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="9" height="12" rx="1.5" stroke="currentColor" stroke-width="1"/>
+            <path d="M9 1l3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M9 1v3h3" stroke="currentColor" stroke-width="1"/>
+            <path d="M3.5 7.5h5M3.5 9.5h3.5" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/>
+          </svg>
+          PDF
+        </a>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-top">
+        <div class="paper-title">Comparing Human-Only, AI-Assisted, and AI-Led Teams on Assessing Research Reproducibility</div>
+        <span class="status-pill pill-press">In Press</span>
+      </div>
+      <div class="coauthors" style="margin-bottom: 0.4rem;">Brodeur et al.</div>
+      <div class="journal">Proceedings of the National Academy of Sciences</div>
+      <div class="meta-row">
+        <span class="meta-tag">Computational Social Science</span>
+        <span class="meta-tag">Research Methodology</span>
+        <span class="meta-tag">AI</span>
+        <span class="meta-tag method">Human-AI Collaboration</span>
+        <span class="meta-tag method">Reproducibility Assessment</span>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-top">
+        <div class="paper-title">Social Context in the Schelling Model Using LLMs</div>
+        <span class="status-pill pill-wip">Work in Progress</span>
+      </div>
+      <div class="coauthors" style="margin-bottom: 0.5rem;">with Andreas Pape, Srikanth Iyer, Carl Lipo, Yixin Ren, Christopher Zosh</div>
+      <div class="meta-row">
+        <span class="meta-tag">Computational Economics</span>
+        <span class="meta-tag">Behavioral Economics</span>
+        <span class="meta-tag">Social Dynamics</span>
+        <span class="meta-tag method">Agent-Based Models</span>
+        <span class="meta-tag method">Large Language Models</span>
+        <span class="meta-tag method">Experimental Simulation</span>
+      </div>
+      <button class="abstract-toggle" onclick="toggle(this)">Show abstract</button>
+      <div class="abstract-text">
+        This paper introduces large language models as agents in the classic Schelling segregation model to study how communication, narrative framing, and social context shape emergent spatial patterns.
+      </div>
+      <div class="paper-footer">
+        <a class="pdf-link" href="https://chriszosh1.github.io/files/Social_Context_and_LLM_Segregation.pdf" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="9" height="12" rx="1.5" stroke="currentColor" stroke-width="1"/>
+            <path d="M9 1l3 3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M9 1v3h3" stroke="currentColor" stroke-width="1"/>
+            <path d="M3.5 7.5h5M3.5 9.5h3.5" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/>
+          </svg>
+          PDF
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function toggle(btn) {
+    const abstract = btn.nextElementSibling;
+    const isOpen = abstract.classList.contains('open');
+    abstract.classList.toggle('open', !isOpen);
+    btn.textContent = isOpen ? 'Show abstract' : 'Hide abstract';
+  }
+</script>
+</body>
+</html>
