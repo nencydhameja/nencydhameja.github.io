@@ -1,5 +1,6 @@
 ---
 permalink: /
+layout: archive
 title: "Nency Dhameja"
 author_profile: true
 header: false
