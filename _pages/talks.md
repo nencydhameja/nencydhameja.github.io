@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: archive
 title: "Presentations"
 permalink: /talks-md/
 author_profile: true
