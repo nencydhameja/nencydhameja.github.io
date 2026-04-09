@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: archive
 permalink: /teaching/
 author_profile: true
 title: Teaching & TA Experience
