@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Presentations"
-permalink: /talks/
+permalink: /talks-md/
 author_profile: true
 ---
 - **2025–2026**
