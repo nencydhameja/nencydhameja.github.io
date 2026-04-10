@@ -2,7 +2,7 @@
 layout: archive
 permalink: /teaching/
 author_profile: true
-title: ""
+title: "Teaching"
 classes: [wide, teaching]
 ---
 
