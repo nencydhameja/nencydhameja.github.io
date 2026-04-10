@@ -43,12 +43,21 @@ html[data-theme="dark"] {
     --global-code-background-color      : #fafafa;
     --global-code-text-color            : #{$darker-gray};
     --global-fig-caption-color          : #{$light-gray};
-    --global-link-color                 : #{$link};
-    --global-link-color-hover           : #{$link-dark};
-    --global-link-color-visited         : #{$link-light};
-    --global-masthead-link-color        : #{$text};
-    --global-masthead-link-color-hover  : #{$background-light};
+    // --global-link-color                 : #{$link};
+    // --global-link-color-hover           : #{$link-dark};
+    // --global-link-color-visited         : #{$link-light};
+    // --global-masthead-link-color        : #{$text};
+    // --global-masthead-link-color-hover  : #{$background-light};
+   // Change these:
+// To these:
+--global-link-color                 : #c4724a;
+--global-accent                     : #c4724a;
+--global-link-color-hover           : #d98a62;
+--global-link-color-visited         : #a85a38;
+--global-masthead-link-color        : #c4724a;
+--global-masthead-link-color-hover  : #d98a62;
     --global-text-color                 : #{$text};
     --global-text-color-light           : #{$light-gray};
     --global-thead-color                : #{$background-lighter};
+   
 }
