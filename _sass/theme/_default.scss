@@ -30,7 +30,8 @@ $sidebar-screen-min-width   : 1024px;
 :root {
     --global-base-color                 : #{$gray};
     // --global-bg-color                   : #fff;
-    --global-bg-color : #f7f6f3;
+   
+    --global-bg-color : #672414;
     --global-footer-bg-color            : #f2f3f3;
     --global-border-color               : #{$lighter-gray};
     --global-dark-border-color          : #bdc1c4;
@@ -51,6 +52,7 @@ $sidebar-screen-min-width   : 1024px;
 --global-link-color-visited         : #8a3a1e;
 --global-masthead-link-color        : #f5f0dc;
 --global-masthead-link-color-hover  : #fffdf5;  /* just slightly lighter beige on hover */
+ /* nav text hover — slightly lighter */
     // --global-link-color-hover           : mix(#000, #2f7f93, 25%);
     // --global-link-color-visited         : mix(#fff, #2f7f93, 25%);  
     // --global-masthead-link-color        : #{$dark-gray};
