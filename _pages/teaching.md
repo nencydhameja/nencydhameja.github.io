@@ -2,7 +2,7 @@
 layout: archive
 permalink: /teaching/
 author_profile: true
-title: Teaching & TA Experience
+title: ""
 classes: [wide, teaching]
 ---
 
