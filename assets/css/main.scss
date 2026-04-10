@@ -163,3 +163,13 @@ h2 {
   border-bottom: 3px solid var(--global-accent) !important;
   padding-bottom: 0.25rem !important;        /* a little room above the line */
 }
+.masthead {
+  background: #672414 !important;
+  &::after {
+    background: #4a1a0e !important; /* darker border line under nav */
+  }
+}
+
+.masthead__menu-item {
+  background-color: #672414 !important;
+}
