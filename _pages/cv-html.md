@@ -24,6 +24,7 @@ author_profile: true
     border: 0.5px solid rgba(26, 13, 171, 0.25);
     padding: 1.5rem 2rem;
     border-radius: 2px;
+    background:#fff
   }
   .cv-wrap a { color: #1a0dab; text-decoration: none; }
   .cv-wrap a:hover { text-decoration: underline; }
