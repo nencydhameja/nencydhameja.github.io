@@ -90,44 +90,54 @@ author_profile: true
 </div>
 
 <!-- Teaching Assistant -->
+<!-- Teaching Assistant -->
 <div class="section-title">Teaching Assistant — Binghamton University, NY, USA</div>
 <div class="talk-section">
   <div class="year-card">
+    <div class="year-card-header">2026</div>
     <div class="talk-row">
       <span class="talk-name">Economics of Education <span class="talk-abbr">ECON 448</span></span>
-      <div class="talk-meta"><span class="talk-location">Spring 2026</span></div>
+      <div class="talk-meta"><span class="talk-location">Spring</span></div>
     </div>
+
+    <div class="year-card-header">2025</div>
     <div class="talk-row">
       <span class="talk-name">Behavioral Economics <span class="talk-abbr">ECON 483C</span></span>
-      <div class="talk-meta"><span class="talk-location">Fall 2025</span></div>
+      <div class="talk-meta"><span class="talk-location">Fall</span></div>
     </div>
     <div class="talk-row">
       <span class="talk-name">Agent-Based Modeling (Python) <span class="talk-abbr">ECON 570/670</span></span>
-      <div class="talk-meta"><span class="talk-location">Spring 2025</span></div>
+      <div class="talk-meta"><span class="talk-location">Spring</span></div>
     </div>
+
+    <div class="year-card-header">2024</div>
     <div class="talk-row">
       <span class="talk-name">Forecasting <span class="talk-abbr">ECON 476</span></span>
-      <div class="talk-meta"><span class="talk-location">Fall 2024</span></div>
+      <div class="talk-meta"><span class="talk-location">Fall</span></div>
     </div>
     <div class="talk-row">
       <span class="talk-name">Introduction to Econometrics <span class="talk-abbr">ECON 466</span></span>
-      <div class="talk-meta"><span class="talk-location">Fall 2024</span></div>
+      <div class="talk-meta"><span class="talk-location">Fall</span></div>
     </div>
     <div class="talk-row">
       <span class="talk-name">Econometrics <span class="talk-abbr">ECON 616</span></span>
-      <div class="talk-meta"><span class="talk-location">Spring 2024</span></div>
+      <div class="talk-meta"><span class="talk-location">Spring</span></div>
     </div>
+
+    <div class="year-card-header">2023</div>
     <div class="talk-row">
       <span class="talk-name">Economic Development of Latin America <span class="talk-abbr">ECON 483</span></span>
-      <div class="talk-meta"><span class="talk-location">Fall 2023</span></div>
+      <div class="talk-meta"><span class="talk-location">Fall</span></div>
     </div>
     <div class="talk-row">
       <span class="talk-name">U.S. Financial Systems: Markets &amp; Institutions <span class="talk-abbr">ECON 350</span></span>
-      <div class="talk-meta"><span class="talk-location">Spring 2023</span></div>
+      <div class="talk-meta"><span class="talk-location">Spring</span></div>
     </div>
+
+    <div class="year-card-header">2022</div>
     <div class="talk-row">
       <span class="talk-name">Economics of Corporations <span class="talk-abbr">ECON 454</span></span>
-      <div class="talk-meta"><span class="talk-location">Fall 2022</span></div>
+      <div class="talk-meta"><span class="talk-location">Fall</span></div>
     </div>
   </div>
 </div>
