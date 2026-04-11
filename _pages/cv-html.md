@@ -103,7 +103,9 @@ author_profile: true
 </style>
 
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-
+<div class="cv-download" style="margin-bottom: 0.75rem; text-align: right;">
+  <a href="/files/Nency_Dhameja_CV_2026.pdf" class="btn btn--primary" target="_blank">Download CV as PDF</a>
+</div>
 <div class="cv-wrap">
 <div class="cv-name">Nency Dhameja</div>
 
@@ -259,8 +261,11 @@ author_profile: true
   </div>
 </section>
 
-<div class="cv-download">
+<!-- <div class="cv-download">
  <a href="/files/Nency_Dhameja_CV_2026.pdf" class="btn btn--primary" target="_blank">Download CV as PDF</a>
-</div>
+</div> -->
 
+</div>
+<div class="cv-download" style="margin-top: 0.75rem; text-align: right;">
+  <a href="/files/Nency_Dhameja_CV_2026.pdf" class="btn btn--primary" target="_blank">Download CV as PDF</a>
 </div>
