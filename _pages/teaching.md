@@ -19,7 +19,8 @@ author_profile: true
 
   .year-card-header {
     padding: 0.35rem 1.5rem;
-    background: #ede9e0;
+    /* background: #ede9e0; */
+    background: #f7f6f3;
     border-bottom: 0.5px solid #d3d1c7;
     font-size: 11px;
     font-weight: 500;
