@@ -86,7 +86,15 @@ author_profile: true
   .cv-ref .cv-ref-email a { font-weight: normal; }
 
   .cv-download { margin-top: 1.5rem; }
-
+  .cv-name {
+  text-align: center;
+  font-size: 18pt;
+  font-weight: 600;
+  font-variant: small-caps;
+  letter-spacing: 0.08em;
+  color: #111;
+  margin-bottom: 0.5rem;
+}
   @media (max-width: 600px) {
     .cv-header-info { flex-direction: column; }
     .cv-address-right { text-align: left; }
@@ -97,6 +105,7 @@ author_profile: true
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
 <div class="cv-wrap">
+<div class="cv-name">Nency Dhameja</div>
 
 <div class="cv-updated">Last Updated: <script>document.write(new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}))</script></div>
 
