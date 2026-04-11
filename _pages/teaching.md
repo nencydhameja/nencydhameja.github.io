@@ -9,7 +9,8 @@ author_profile: true
   .talk-section { margin-bottom: 0.6rem; }
 
   .year-card {
-    background: #f7f6f3;
+    /* background: #f7f6f3; */
+    background: #fff;
     border: 0.5px solid #d3d1c7;
     border-radius: 12px;
     overflow: hidden;
