@@ -84,7 +84,9 @@ author_profile: true
     <div class="year-card-header">2026</div>
     <div class="talk-row">
       <span class="talk-name">Economic Poverty &amp; Discrimination <span class="talk-abbr">ECON 144</span></span>
-      <div class="talk-meta"><span class="talk-location">Winter</span><span class="talk-date">2026</span></div>
+      <div class="talk-meta"><span class="talk-location">Winter</span>
+        <!-- <span class="talk-date">2026</span> -->
+      </div>
     </div>
   </div>
 </div>
