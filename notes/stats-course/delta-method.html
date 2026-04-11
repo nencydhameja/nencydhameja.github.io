@@ -638,40 +638,47 @@ server &lt;- function(input, output, session) {
     beta  &lt;- input$beta
     n     &lt;- input$n
     sigma &lt;- input$sigma
-    n_sims &lt;- 1000
+    n_sims &lt;- 400
     n_boot &lt;- 200
 
     beta_hats &lt;- numeric(n_sims)
     exp_betas &lt;- numeric(n_sims)
     delta_ses &lt;- numeric(n_sims)
-    boot_ses  &lt;- numeric(n_sims)
 
+    # Fast OLS via closed form — avoids lm() overhead in WebR
     for (i in seq_len(n_sims)) {
       x &lt;- rnorm(n)
       y &lt;- beta * x + rnorm(n, sd = sigma)
-      fit &lt;- lm(y ~ x)
 
-      b_hat &lt;- coef(fit)["x"]
-      se_b  &lt;- summary(fit)$coefficients["x", "Std. Error"]
+      xbar &lt;- mean(x); ybar &lt;- mean(y)
+      xc &lt;- x - xbar;  yc &lt;- y - ybar
+      sxx &lt;- sum(xc * xc)
+      b_hat &lt;- sum(xc * yc) / sxx
+      resid &lt;- yc - b_hat * xc
+      s2    &lt;- sum(resid * resid) / (n - 2)
+      se_b  &lt;- sqrt(s2 / sxx)
 
       beta_hats[i] &lt;- b_hat
       exp_betas[i] &lt;- exp(b_hat)
-
-      # Delta method SE for exp(beta)
       delta_ses[i] &lt;- exp(b_hat) * se_b
-
-      # Bootstrap SE
-      boot_exp &lt;- numeric(n_boot)
-      for (j in seq_len(n_boot)) {
-        idx &lt;- sample(n, n, replace = TRUE)
-        boot_fit &lt;- lm(y[idx] ~ x[idx])
-        boot_exp[j] &lt;- exp(coef(boot_fit)["x[idx]"])
-      }
-      boot_ses[i] &lt;- sd(boot_exp)
     }
 
+    # Bootstrap SE on ONE representative sample (standard practice)
+    x &lt;- rnorm(n)
+    y &lt;- beta * x + rnorm(n, sd = sigma)
+    boot_exp &lt;- numeric(n_boot)
+    for (j in seq_len(n_boot)) {
+      idx &lt;- sample.int(n, n, replace = TRUE)
+      xb &lt;- x[idx]; yb &lt;- y[idx]
+      xbar &lt;- mean(xb); ybar &lt;- mean(yb)
+      xc &lt;- xb - xbar; yc &lt;- yb - ybar
+      b_boot &lt;- sum(xc * yc) / sum(xc * xc)
+      boot_exp[j] &lt;- exp(b_boot)
+    }
+    boot_se &lt;- sd(boot_exp)
+
     list(beta_hats = beta_hats, exp_betas = exp_betas,
-         delta_ses = delta_ses, boot_ses = boot_ses,
+         delta_ses = delta_ses, boot_se = boot_se,
          true_beta = beta, true_exp = exp(beta))
   })
 
@@ -717,7 +724,7 @@ server &lt;- function(input, output, session) {
 
     true_sd &lt;- sd(d$exp_betas)
     avg_delta &lt;- mean(d$delta_ses)
-    avg_boot  &lt;- mean(d$boot_ses)
+    boot_se   &lt;- d$boot_se
 
     tags$div(class = "eq-box", style = "margin-top: 16px;",
       HTML(paste0(
@@ -726,8 +733,8 @@ server &lt;- function(input, output, session) {
         round(true_sd, 4), "&lt;/span&gt;&lt;br&gt;",
         "Delta method (avg): &lt;span class='match'&gt;",
         round(avg_delta, 4), "&lt;/span&gt;&lt;br&gt;",
-        "Bootstrap (avg): &lt;span class='match'&gt;",
-        round(avg_boot, 4), "&lt;/span&gt;&lt;br&gt;",
+        "Bootstrap (1 sample): &lt;span class='match'&gt;",
+        round(boot_se, 4), "&lt;/span&gt;&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
         "&lt;small&gt;All three should agree when n is large ",
         "and &amp;beta; is moderate.&lt;/small&gt;"

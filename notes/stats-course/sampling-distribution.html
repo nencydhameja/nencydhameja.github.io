@@ -613,6 +613,7 @@ ui &lt;- fluidPage(
                               "Skewed (exponential)",
                               "Heavily skewed (chi-sq 2)",
                               "Bimodal",
+                              "Bernoulli(0.3)",
                               "Heavy-tailed (t, df=3)")),
 
       selectInput("stat", "Statistic:",
@@ -656,6 +657,7 @@ server &lt;- function(input, output, session) {
         k &lt;- rbinom(n, 1, 0.5)
         k * rnorm(n, 2, 0.7) + (1 - k) * rnorm(n, 8, 0.7)
       },
+      "Bernoulli(0.3)" = rbinom(n, 1, 0.3),
       "Heavy-tailed (t, df=3)" = rt(n, df = 3) * 2 + 5
     )
   }
@@ -859,6 +861,7 @@ shinyApp(ui, server)</code></pre>
 <li><strong>Exponential, Mean, n = 5:</strong> the sampling distribution is visibly skewed. Normal approximation is poor. Shapiro test says “No.”</li>
 <li><strong>Same but n = 50:</strong> now it’s nearly bell-shaped. CLT has kicked in.</li>
 <li><strong>Any population, Max, n = 100:</strong> the sampling distribution of the maximum is <em>not</em> normal even with large n.&nbsp;It has its own distribution (extreme value theory). Normal approximation fails.</li>
+<li><strong>Bernoulli(0.3), Mean, n = 5:</strong> the population is just 0s and 1s — about as non-normal as you can get. The sampling distribution is discrete and lumpy. Crank to n = 50 and it’s bell-shaped — the CLT turns coin flips into a Gaussian.</li>
 <li><strong>Bimodal, Mean, n = 2:</strong> the sampling distribution itself is bimodal! With only 2 observations, averaging doesn’t smooth enough.</li>
 <li><strong>Bottom panel (ridgeline):</strong> watch the sampling distribution narrow and become more normal as n increases, all on one plot.</li>
 </ul>
