@@ -25,6 +25,16 @@ My research is centered on causal inference and policy evaluation in applied mic
 Prior to my Ph.D., I pursued an Executive MBA in Singapore and earned a Bachelor of Technology in India. This technical background informs my research through an emphasis on reproducible workflows, large-scale administrative data, and computational modeling, including LLM-based agent simulations, for studying economic behavior and policy interventions.
 </p>
  <p><strong>Fields</strong>: Applied Microeconomics, Labor Economics, Urban & Spatial Economics, Computational Economics</p>
+  <!-- <div style="width:260px; flex-shrink:0; margin-top:4rem;">
+    <div style="background:linear-gradient(135deg,#fff 0%,#f5ede9 100%);border:0.5px solid #d3c4be;border-top:3px solid #672414;border-radius:12px;padding:1.25rem 1.5rem;">
+      <div style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#888780;margin-bottom:0.6rem;">Job Market Paper</div>
+      <div style="font-size:15px;font-weight:500;color:#1a1a18;font-family:Georgia,serif;line-height:1.4;margin-bottom:0.75rem;">Salience, Attention, and Memory: Crime Capitalization in Housing Prices</div>
+      <div style="font-size:13px;color:#5f5e5a;font-style:italic;margin-bottom:0.9rem;">How do behavioral frictions shape the way crime shocks get capitalized into housing prices?</div>
+      <a href="/files/Nency_Dhameja_CV_2026.pdf" style="font-size:12px;font-weight:500;color:#672414;text-decoration:none;">↓ PDF</a>
+    </div>
+  </div> -->
+
+ 
 <!--<div class="notice--info">
   <strong>Research Methods</strong>
   <ul style="margin-top:0.5rem; margin-left:0; padding-left:1.2rem;">
