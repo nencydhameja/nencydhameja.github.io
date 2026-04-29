@@ -24,7 +24,7 @@ My research is centered on causal inference and policy evaluation in applied mic
 <p>
 Prior to my Ph.D., I pursued an Executive MBA in Singapore and earned a Bachelor of Technology in India. This technical background informs my research through an emphasis on reproducible workflows, large-scale administrative data, and computational modeling, including LLM-based agent simulations, for studying economic behavior and policy interventions.
 </p>
- <p><strong>Fields</strong>: Applied Microeconomics, Labor Economics, Urban & Spatial Economics, Computational Economics</p>
+ <p><strong>Fields</strong>: Applied Microeconomics: Urban Economics, Behavioral Economics, Labor Economics </p>
   <!-- <div style="width:260px; flex-shrink:0; margin-top:4rem;">
     <div style="background:linear-gradient(135deg,#fff 0%,#f5ede9 100%);border:0.5px solid #d3c4be;border-top:3px solid #672414;border-radius:12px;padding:1.25rem 1.5rem;">
       <div style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#888780;margin-bottom:0.6rem;">Job Market Paper</div>
