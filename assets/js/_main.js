@@ -3,10 +3,8 @@
    ========================================================================== */
 
 $(document).ready(function () {
-  // detect OS/browser preference
-  const browserPref = window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light';
+  // Force light theme (dark mode toggle is disabled)
+  const browserPref = 'light';
 
   // Set the theme on page load or when explicitly called
   var setTheme = function (theme) {
