@@ -42,6 +42,23 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Dark mode overrides */
+html[data-theme="dark"] {
+  --global-bg-start: #1a1a1a;
+  --global-bg-end:   #2a2a2a;
+  --global-text: #e8e6e1;
+  --global-muted: #a0a0a0;
+  --global-accent: #c4724a;
+}
+
+html[data-theme="dark"] .page__content,
+html[data-theme="dark"] .page__inner-wrap,
+html[data-theme="dark"] .sidebar,
+html[data-theme="dark"] .author__profile,
+html[data-theme="dark"] .archive__item {
+  background: rgba(40, 40, 40, 0.85) !important;
+}
+
 /* Footer */
 .site-footer {
   background: transparent !important;

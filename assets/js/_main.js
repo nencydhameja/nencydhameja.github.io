@@ -3,7 +3,10 @@
    ========================================================================== */
 
 $(document).ready(function () {
-  // Force light theme (dark mode toggle is disabled)
+  // Force light theme while toggle is hidden; uncomment below to restore OS detection
+  // const browserPref = window.matchMedia('(prefers-color-scheme: dark)').matches
+  //   ? 'dark'
+  //   : 'light';
   const browserPref = 'light';
 
   // Set the theme on page load or when explicitly called
