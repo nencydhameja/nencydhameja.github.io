@@ -27,7 +27,7 @@ Prior to my Ph.D., I pursued an Executive MBA in Singapore and earned a Bachelor
 <p>I study how local environments and institutional policies shape economic and social outcomes. My current research examines how housing markets respond to crime — buyers price the crime they directly observe and ignore predictive signals from nearby blocks, evidence of salience-driven capitalization. Related work examines retail food environments and health outcomes, and how diversity statement requirements affect faculty hiring.</p>
 <p>Prior to my Ph.D., I completed an Executive MBA in Singapore and a Bachelor of Technology in India.</p>
 <!-- Fields: Applied Microeconomics — Urban Economics, Behavioral Economics, Labor Economics -->
-<p><strong>Fields</strong>: Applied Microeconomics - Urban Economics, Behavioral Economics, Labor Economics </p>
+<p><strong>Fields</strong>: Applied Microeconomics - Urban Economics, Economics of Education, Behavioral Economics, Health Economics </p>
   <!-- <div style="width:260px; flex-shrink:0; margin-top:4rem;">
     <div style="background:linear-gradient(135deg,#fff 0%,#f5ede9 100%);border:0.5px solid #d3c4be;border-top:3px solid #672414;border-radius:12px;padding:1.25rem 1.5rem;">
       <div style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#888780;margin-bottom:0.6rem;">Job Market Paper</div>
