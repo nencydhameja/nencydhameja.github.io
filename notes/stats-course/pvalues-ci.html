@@ -520,7 +520,7 @@ window.Quarto = {
 <li>What range of values is plausible for the true parameter? → <strong>confidence interval</strong></li>
 <li>Both are built from the same two ingredients: the estimate and its SE.</li>
 </ul>
-<p><span class="math display">\[\text{test statistic} = \frac{\text{estimate}}{\text{SE}} \qquad \qquad \text{CI} = \text{estimate} \pm 1.96 \times \text{SE}\]</span></p>
+<p><span class="math display">\[\text{test statistic} = \frac{\text{estimate}}{\text{SE}} \qquad \qquad \text{CI} = \text{estimate} \pm t^* \times \text{SE}\]</span></p>
 <p>Everything on this page is Step 2. If the estimation step is wrong (biased estimate, wrong SE), then the inference is wrong too — no matter how sophisticated the test. <strong>Good inference starts with good estimation.</strong></p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
@@ -563,11 +563,12 @@ window.Quarto = {
 <p>Say you’re testing whether a drug lowers blood pressure. You run a regression and get <span class="math inline">\(\hat{\beta} = -5\)</span> (blood pressure drops 5 points).</p>
 <p><strong>H₀: <span class="math inline">\(\beta = 0\)</span></strong> — the drug does nothing.</p>
 <p>The p-value asks: if the drug truly does nothing (<span class="math inline">\(\beta = 0\)</span>), what’s the probability of observing <span class="math inline">\(\hat{\beta}\)</span> as extreme as <span class="math inline">\(-5\)</span> or more?</p>
-<p>p = 0.03 means: there’s only a 3% chance of seeing an estimate this large purely from random noise. So either:</p>
+<p>p = 0.03 means: there’s only a 3% chance of seeing an estimate this extreme or more extreme, purely from random noise. So either:</p>
 <ol type="1">
 <li>H₀ is true and you got unlucky (3% chance), or</li>
 <li>H₀ is false — the drug actually works</li>
 </ol>
+<p>(This assumes the model — independence, distributional assumptions — is correct.)</p>
 <p>You reject H₀ because 3% feels too unlikely to be just noise.</p>
 <p><strong>But the p-value never tells you <span class="math inline">\(\beta\)</span>’s actual value.</strong> It only tells you the data would be surprising <em>if <span class="math inline">\(\beta\)</span> were exactly zero</em>. This matters:</p>
 <ul>
@@ -637,19 +638,20 @@ server &lt;- function(input, output, session) {
 
     # Draw one sample for display
     one_sample &lt;- rnorm(n, mean = mu, sd = 1)
-    one_z &lt;- mean(one_sample) / (1 / sqrt(n))
-    one_p &lt;- 2 * pnorm(-abs(one_z))
+    one_se &lt;- sd(one_sample) / sqrt(n)
+    one_t &lt;- mean(one_sample) / one_se
+    one_p &lt;- 2 * pt(-abs(one_t), df = n - 1)
 
     # Draw many samples
-    z_stats &lt;- replicate(reps, {
+    t_stats &lt;- replicate(reps, {
       x &lt;- rnorm(n, mean = mu, sd = 1)
-      mean(x) / (1 / sqrt(n))
+      mean(x) / (sd(x) / sqrt(n))
     })
-    p_vals &lt;- 2 * pnorm(-abs(z_stats))
+    p_vals &lt;- 2 * pt(-abs(t_stats), df = n - 1)
 
     reject_rate &lt;- mean(p_vals &lt; 0.05)
 
-    list(one_z = one_z, one_p = one_p, z_stats = z_stats, p_vals = p_vals,
+    list(one_t = one_t, one_p = one_p, t_stats = t_stats, p_vals = p_vals,
          n = n, mu = mu, reps = reps, reject_rate = reject_rate)
   })
 
@@ -657,29 +659,31 @@ server &lt;- function(input, output, session) {
     d &lt;- dat()
     par(mar = c(4.5, 4.5, 3, 1))
 
+    df &lt;- d$n - 1
     x &lt;- seq(-4, 4, length.out = 300)
-    y &lt;- dnorm(x)
+    y &lt;- dt(x, df = df)
 
     plot(x, y, type = "l", lwd = 2.5, col = "#2c3e50",
-         xlab = "Test statistic (z)", ylab = "Density",
-         main = "Null distribution &amp; your test statistic")
+         xlab = "Test statistic (t)", ylab = "Density",
+         main = paste0("Null distribution (t, df = ", df,
+                       ") &amp; your test statistic"))
 
     # Shade p-value area (two-tailed)
-    z_abs &lt;- abs(d$one_z)
-    if (z_abs &lt; 4) {
-      x_right &lt;- seq(z_abs, 4, length.out = 100)
-      polygon(c(z_abs, x_right, 4), c(0, dnorm(x_right), 0),
+    t_abs &lt;- abs(d$one_t)
+    if (t_abs &lt; 4) {
+      x_right &lt;- seq(t_abs, 4, length.out = 100)
+      polygon(c(t_abs, x_right, 4), c(0, dt(x_right, df = df), 0),
               col = adjustcolor("#e74c3c", 0.4), border = NA)
-      x_left &lt;- seq(-4, -z_abs, length.out = 100)
-      polygon(c(-4, x_left, -z_abs), c(0, dnorm(x_left), 0),
+      x_left &lt;- seq(-4, -t_abs, length.out = 100)
+      polygon(c(-4, x_left, -t_abs), c(0, dt(x_left, df = df), 0),
               col = adjustcolor("#e74c3c", 0.4), border = NA)
     }
 
-    abline(v = d$one_z, lwd = 2.5, col = "#3498db", lty = 1)
+    abline(v = d$one_t, lwd = 2.5, col = "#3498db", lty = 1)
 
     legend("topright", bty = "n", cex = 0.85,
-           legend = c("Null distribution (H\u2080)",
-                      paste0("Your z = ", round(d$one_z, 3)),
+           legend = c(paste0("Null t(", df, ") distribution"),
+                      paste0("Your t = ", round(d$one_t, 3)),
                       paste0("p-value = ", round(d$one_p, 4))),
            col = c("#2c3e50", "#3498db", adjustcolor("#e74c3c", 0.6)),
            lwd = c(2.5, 2.5, 8), lty = c(1, 1, 1))
@@ -716,7 +720,7 @@ server &lt;- function(input, output, session) {
     tags$div(class = "stats-box",
       HTML(paste0(
         "&lt;b&gt;This sample:&lt;/b&gt;&lt;br&gt;",
-        "z = ", round(d$one_z, 3), "&lt;br&gt;",
+        "t = ", round(d$one_t, 3), "&lt;br&gt;",
         "p = ", round(d$one_p, 4), " ",
         ifelse(d$one_p &lt; 0.05,
                "&lt;span class='bad'&gt;(&amp;lt; 0.05)&lt;/span&gt;",
@@ -738,7 +742,7 @@ shinyApp(ui, server)</code></pre>
 <section id="things-to-try" class="level4">
 <h4 class="anchored" data-anchor-id="things-to-try">Things to try</h4>
 <ul>
-<li><strong>True <span class="math inline">\(\mu\)</span> = 0:</strong> p-values are uniform — flat histogram. This is the defining property of a valid test. About 5% of p-values fall below 0.05 purely by chance.</li>
+<li><strong>True <span class="math inline">\(\mu\)</span> = 0:</strong> p-values are uniform — flat histogram. This is the defining property of a valid test. About 5% of p-values fall below 0.05 purely by chance — this is exactly the false-positive rate the test is designed to have, not a flaw.</li>
 <li><strong>True <span class="math inline">\(\mu\)</span> = 0.5:</strong> p-values pile up near 0. The further <span class="math inline">\(\mu\)</span> is from 0, the more powerful the test, and the smaller the p-values tend to be.</li>
 </ul>
 <hr>
@@ -769,36 +773,40 @@ shinyApp(ui, server)</code></pre>
 <li><strong>A critical value</strong> — how many SEs to go out for your desired confidence level</li>
 </ol>
 <p>The formula for a 95% CI for a mean:</p>
-<p><span class="math display">\[\text{CI} = \bar{x} \pm z_{0.975} \times \text{SE} = \bar{x} \pm 1.96 \times \frac{s}{\sqrt{n}}\]</span></p>
-<p>That’s it: <strong>estimate ± margin of error</strong>. The margin of error is just a scaled-up standard error.</p>
+<p><span class="math display">\[\text{CI} = \bar{x} \pm t_{n-1,\,0.975} \times \frac{s}{\sqrt{n}}\]</span></p>
+<p>That’s it: <strong>estimate ± margin of error</strong>. The margin of error is just a scaled-up standard error, where <span class="math inline">\(t_{n-1,\,0.975}\)</span> is the critical value from the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n - 1\)</span> degrees of freedom.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th style="text-align: center;">Confidence level</th>
-<th style="text-align: center;">Critical value (<span class="math inline">\(z\)</span>)</th>
-<th style="text-align: center;">Margin of error</th>
+<th style="text-align: center;"><span class="math inline">\(n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(t\)</span> critical value (95%)</th>
+<th style="text-align: left;">Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">90%</td>
-<td style="text-align: center;">1.645</td>
-<td style="text-align: center;">Narrower CI</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">2.776</td>
+<td style="text-align: left;">Much wider than 1.96</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">95%</td>
-<td style="text-align: center;">1.960</td>
-<td style="text-align: center;">Standard</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">2.262</td>
+<td style="text-align: left;">Still noticeably wider</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">99%</td>
-<td style="text-align: center;">2.576</td>
-<td style="text-align: center;">Wider CI</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">2.045</td>
+<td style="text-align: left;">Close to <span class="math inline">\(z\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\infty\)</span></td>
+<td style="text-align: center;">1.960</td>
+<td style="text-align: left;">Equals the normal <span class="math inline">\(z\)</span></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Where does the 1.96 come from?</strong> The middle 95% of a standard normal distribution falls between <span class="math inline">\(-1.96\)</span> and <span class="math inline">\(+1.96\)</span>. So if the sampling distribution of <span class="math inline">\(\bar{x}\)</span> is approximately normal (CLT), going out 1.96 SEs in each direction captures the true mean 95% of the time.</p>
-<p><strong>For small samples</strong> (roughly <span class="math inline">\(n &lt; 30\)</span>), replace the <span class="math inline">\(z\)</span> critical value with a <span class="math inline">\(t\)</span> critical value from the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n - 1\)</span> degrees of freedom. The <span class="math inline">\(t\)</span>-distribution has heavier tails, making the CI wider to account for the extra uncertainty in estimating the SE from small samples. As <span class="math inline">\(n\)</span> grows, the <span class="math inline">\(t\)</span> and <span class="math inline">\(z\)</span> values converge.</p>
+<p><strong>Why <span class="math inline">\(t\)</span> instead of <span class="math inline">\(z\)</span>?</strong> When <span class="math inline">\(\sigma\)</span> is estimated from the sample (which is almost always), the extra uncertainty in the SE estimate matters — especially for small <span class="math inline">\(n\)</span>. The <span class="math inline">\(t\)</span>-distribution has heavier tails than the normal, making the CI wider to account for this. As <span class="math inline">\(n\)</span> grows, the <span class="math inline">\(t\)</span> and <span class="math inline">\(z\)</span> values converge, which is why the “1.96” shorthand works well for large samples.</p>
 <p><strong>The key insight:</strong> a CI is wide when (a) the data is noisy (large <span class="math inline">\(s\)</span>), (b) the sample is small (small <span class="math inline">\(n\)</span>), or (c) you demand more confidence (larger critical value). You can’t have precision, small samples, and high confidence all at once — pick two.</p>
 </section>
 <section id="simulation-ci-coverage" class="level3">
@@ -856,14 +864,14 @@ server &lt;- function(input, output, session) {
     mu    &lt;- 5  # true mean
     sigma &lt;- 2
 
-    z &lt;- qnorm(1 - (1 - conf) / 2)
+    crit &lt;- qt(1 - (1 - conf) / 2, df = n - 1)
 
     results &lt;- t(replicate(n_ci, {
       x &lt;- rnorm(n, mean = mu, sd = sigma)
       xbar &lt;- mean(x)
       se &lt;- sd(x) / sqrt(n)
-      lo &lt;- xbar - z * se
-      hi &lt;- xbar + z * se
+      lo &lt;- xbar - crit * se
+      hi &lt;- xbar + crit * se
       c(xbar = xbar, lo = lo, hi = hi, covers = (lo &lt;= mu &amp; mu &lt;= hi))
     }))
 
@@ -912,7 +920,7 @@ server &lt;- function(input, output, session) {
     tags$div(class = "stats-box",
       HTML(paste0(
         "&lt;b&gt;Coverage rate:&lt;/b&gt; &lt;span class='",
-        ifelse(abs(cover_rate - d$conf) &lt; 0.05, "good", "bad"), "'&gt;",
+        ifelse(abs(cover_rate - d$conf) &lt; 0.03, "good", "bad"), "'&gt;",
         round(cover_rate * 100, 1), "%&lt;/span&gt;&lt;br&gt;",
         "&lt;b&gt;Target:&lt;/b&gt; ", d$conf * 100, "%&lt;br&gt;",
         "&lt;b&gt;Missed:&lt;/b&gt; ", sum(!covers), " of ", d$n_ci, "&lt;br&gt;",
@@ -951,7 +959,7 @@ shinyApp(ui, server)</code></pre>
 <ul>
 <li>The p-value was popularized by <strong>R.A. Fisher</strong> in the 1920s as an informal measure of evidence against the null. But the rigid “reject if p &lt; 0.05” framework came from <strong>Jerzy Neyman</strong> and <strong>Egon Pearson</strong> in the 1930s. Fisher and Neyman-Pearson fundamentally disagreed about what statistical testing means, and the debate was never resolved — we use an awkward hybrid of both frameworks to this day.</li>
 <li>In 2016, the <strong>American Statistical Association</strong> issued its first-ever formal statement on p-values, warning against common misinterpretations. Statement #2: “P-values do not measure the probability that the studied hypothesis is true.”</li>
-<li><strong>Confidence intervals</strong> were invented by Neyman in 1937. He was explicit that the 95% refers to the procedure, not to any single interval. He wrote: “It is not possible to say that the probability of the true value falling in any particular interval is 95%.”</li>
+<li><strong>Confidence intervals</strong> were invented by Neyman in 1937. He was explicit that the 95% refers to the procedure, not to any single interval — once computed, the truth either is or isn’t inside it.</li>
 </ul>
 
 
