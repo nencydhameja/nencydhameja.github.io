@@ -4,9 +4,10 @@ layout: archive
 title: "Nency Dhameja"
 author_profile: true
 header: false
-redirect_from: 
+redirect_from:
   - /about/
   - /about.html
+redirect_to: /research/
 ---
 <style>
   body {
