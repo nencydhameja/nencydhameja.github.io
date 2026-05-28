@@ -7,7 +7,6 @@ header: false
 redirect_from:
   - /about/
   - /about.html
-redirect_to: /research/
 ---
 <style>
   body {
