@@ -1,0 +1,23 @@
+Simonsohn et al. (2020) Specification Curve Inference
+=====================================================
+All near × far × FE × window combinations (excluding 0.50–1.00 far). No benchmark ring restriction.
+
+Main Effect — all 4 models reject the null decisively:
+
+┌────────────┬────────────┬────────┬─────────────┬────────┬──────────────┬──────────────────┬─────────────┐
+│   Model    │ % Negative │ Sign p │ % Sig at 5% │ Sig p  │ Median δ×100 │      95% CI      │ Bootstrap p │
+├────────────┼────────────┼────────┼─────────────┼────────┼──────────────┼──────────────────┼─────────────┤
+│ OLS        │ 75.2%      │ <0.001 │ 19.8%       │ <0.001 │ −0.015%      │ [−0.016, −0.014] │ <0.001      │
+├────────────┼────────────┼────────┼─────────────┼────────┼──────────────┼──────────────────┼─────────────┤
+│ OLS+PC     │ 73.3%      │ <0.001 │ 21.9%       │ <0.001 │ −0.014%      │ [−0.015, −0.013] │ <0.001      │
+├────────────┼────────────┼────────┼─────────────┼────────┼──────────────┼──────────────────┼─────────────┤
+│ Heckman    │ 88.8%      │ <0.001 │ 37.5%       │ <0.001 │ −0.039%      │ [−0.041, −0.037] │ <0.001      │
+├────────────┼────────────┼────────┼─────────────┼────────┼──────────────┼──────────────────┼─────────────┤
+│ Heckman+PC │ 75.9%      │ <0.001 │ 9.8%        │ <0.001 │ −0.022%      │ [−0.023, −0.020] │ <0.001      │
+└────────────┴────────────┴────────┴─────────────┴────────┴──────────────┴──────────────────┴─────────────┘
+
+Placebo — OLS is the cleanest null:
+- OLS placebo: only 3.3% sig at 5% (below the 5% nominal rate, p=1.00) — exactly what you want
+- Heckman placebo: 24–38% sig — the selection correction introduces bias into the post-sale window
+
+This is across all bands — all near × far × FE × window combinations (excluding 0.50–1.00 far). No benchmark ring restriction. The full spec curve distribution.

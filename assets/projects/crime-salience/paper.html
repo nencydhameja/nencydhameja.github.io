@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crime, Salience, and the Housing Market</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:'Inter',system-ui,sans-serif;color:#1a1a18;background:#faf9f7;line-height:1.7;}
+
+
+/* ── Top nav ── */
+.topnav{
+  position:fixed;top:0;left:0;right:0;z-index:15;
+  height:44px;background:#fff;border-bottom:1px solid #d3d1c7;
+  display:flex;align-items:center;padding:0 32px;gap:0;
+}
+.topnav-title{
+  font-size:13px;font-weight:600;color:#672414;font-family:'Lora',Georgia,serif;
+  margin-right:auto;white-space:nowrap;
+}
+
+/* ── Main content ── */
+.main{
+  padding-top:44px;
+  max-width:1200px;
+  margin:0 auto;
+  background:#fff;
+  border-left:1px solid #e8e6df;
+  border-right:1px solid #e8e6df;
+  min-height:100vh;
+  box-shadow:0 0 40px rgba(0,0,0,0.04);
+}
+.topnav-item{
+  font-size:12px;font-weight:500;color:#888780;cursor:pointer;
+  padding:12px 16px;border:none;background:none;font-family:inherit;
+  position:relative;letter-spacing:.02em;
+}
+.topnav-item:hover{color:#672414}
+.topnav-item.active{color:#672414}
+.topnav-item.active::after{
+  content:'';position:absolute;bottom:0;left:16px;right:16px;
+  height:2px;background:#672414;border-radius:1px;
+}
+.topnav-sep{width:1px;height:16px;background:#e8e6df;}
+
+
+/* ── Sections ── */
+.section{
+  padding:36px 32px 44px;
+  border-bottom:1px solid #e8e6df;
+}
+.section:last-child{border-bottom:none;}
+
+.section-title{
+  font-size:18px;font-weight:500;color:#672414;
+  font-family:'Lora',Georgia,serif;margin:0 0 16px;
+}
+
+/* ── Research question + stat cards (first section) ── */
+.rq-block{margin-bottom:24px;}
+.rq-label{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#888780;margin:0 0 4px;}
+.rq-text{font-size:16px;color:#1a1a18;line-height:1.5;margin:0 0 16px;font-family:'Lora',Georgia,serif;}
+.stat-cards{display:flex;gap:12px;margin-bottom:0;}
+.stat-card{
+  flex:1;background:#fff;border-left:3px solid #8B2F1A;
+  border-top:.5px solid #d3d1c7;border-right:.5px solid #d3d1c7;border-bottom:.5px solid #d3d1c7;
+  border-radius:0 8px 8px 0;padding:10px 14px;
+}
+.stat-label{font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#b4b2a9;margin-bottom:1px;}
+.stat-number{font-size:20px;font-weight:500;color:#672414;font-family:'Lora',Georgia,serif;line-height:1.2;}
+.stat-desc{font-size:10px;color:#5f5e5a;margin-top:1px;line-height:1.3;}
+
+/* ── Prose ── */
+.prose{font-size:13px;color:#4a4a46;}
+.prose p{margin:0 0 12px;}
+.prose strong{color:#1a1a18;}
+.prose ul{margin:8px 0 16px 20px;padding:0;}
+.prose li{margin-bottom:10px;}
+.prose li strong{color:#1a1a18;}
+.prose h3{font-size:15px;font-weight:500;color:#672414;font-family:'Lora',Georgia,serif;margin:24px 0 10px;}
+
+/* ── Data tiles ── */
+.tiles{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
+.tile{
+  flex:1;min-width:120px;background:#fff;border-left:3px solid #672414;
+  border-top:.5px solid #d3d1c7;border-right:.5px solid #d3d1c7;border-bottom:.5px solid #d3d1c7;
+  border-radius:0 8px 8px 0;padding:10px 14px;
+}
+.tile-label{font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#b4b2a9;margin-bottom:1px;}
+.tile-number{font-size:20px;font-weight:500;color:#672414;font-family:'Lora',Georgia,serif;line-height:1.2;}
+.tile-desc{font-size:11px;color:#5f5e5a;margin-top:1px;line-height:1.3;}
+
+/* ── Robustness grid ── */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;}
+.check-card{background:#fff;border:1px solid #d3d1c7;border-radius:10px;padding:14px 18px;}
+.check-card h4{font-size:12px;font-weight:600;color:#1a1a18;margin:0 0 4px;font-family:'Inter',sans-serif;}
+.check-card p{margin:0;font-size:11px;color:#5f5e5a;line-height:1.5;}
+.check-card .status{font-size:9px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-top:6px;}
+.status-active{color:#27ae60;}
+.status-pending{color:#b4b2a9;}
+
+/* ── Embedded iframes (no internal scroll) ── */
+.embed-frame{
+  width:100%;border:1px solid #d3d1c7;border-radius:10px;
+  overflow:hidden;background:#fff;margin-top:16px;
+}
+.embed-frame iframe{width:100%;border:none;display:block;}
+
+/* ── Results section ── */
+.section-results{
+  padding:36px 32px 0;
+  border-bottom:1px solid #e8e6df;
+}
+.results-wrap{
+  margin-top:16px;
+  border:1px solid #d3d1c7;border-radius:10px;
+  overflow:hidden;background:#fff;
+}
+.results-wrap iframe{width:100%;border:none;display:block;}
+
+@media(max-width:700px){
+  .topnav{padding:0 16px;}
+  .section{padding:24px 16px 32px;}
+  .grid{grid-template-columns:1fr;}
+  .stat-cards{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════ TOP NAV ════════ -->
+<div class="topnav">
+  <div class="topnav-title">Crime, Salience &amp; the Housing Market</div>
+  <button class="topnav-item active" onclick="scrollTo_('sec-top')">Overview</button>
+  <div class="topnav-sep"></div>
+  <button class="topnav-item" onclick="scrollTo_('sec-geo')">Geography</button>
+  <div class="topnav-sep"></div>
+  <button class="topnav-item" onclick="scrollTo_('sec-model')">Model</button>
+  <div class="topnav-sep"></div>
+  <button class="topnav-item" onclick="scrollTo_('sec-data')">Data</button>
+  <div class="topnav-sep"></div>
+  <button class="topnav-item" onclick="scrollTo_('sec-results')">Results</button>
+  <div class="topnav-sep"></div>
+  <button class="topnav-item" onclick="scrollTo_('sec-robust')">Robustness</button>
+</div>
+
+<!-- ════════ MAIN CONTENT ════════ -->
+<div class="main">
+
+<!-- ──── OVERVIEW ──── -->
+<div class="section" id="sec-top">
+  <div class="rq-block">
+    <div class="rq-label">Research Question</div>
+    <div class="rq-text">How does the salience of crime drive its capitalization into residential property values?</div>
+    <div class="stat-cards">
+      <div class="stat-card">
+        <div class="stat-label">All Properties</div>
+        <div class="stat-number">&minus;0.11%</div>
+        <div class="stat-desc">per additional crime within 80 m (t&nbsp;=&nbsp;&minus;4.03)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Single-Family</div>
+        <div class="stat-number">&minus;0.25%</div>
+        <div class="stat-desc">SF buyers 2&times; more sensitive (t&nbsp;=&nbsp;&minus;2.10)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Placebo</div>
+        <div class="stat-number">0%</div>
+        <div class="stat-desc">Post-sale crime: null (p&nbsp;=&nbsp;0.80)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ──── GEOGRAPHY ──── -->
+<div class="section" id="sec-geo" style="padding:0;">
+  <iframe src="geography.html" scrolling="no" style="width:100%;height:550px;border:none;display:block;"></iframe>
+</div>
+
+<!-- ──── MODEL ──── -->
+<div class="section" id="sec-model">
+  <div class="section-title">Model &amp; Identification</div>
+  <div class="prose">
+    <p><strong>Repeat-sales framework:</strong> Prices are differenced within property (parcel PIN), eliminating time-invariant housing characteristics. The dependent variable is &Delta;&nbsp;ln&nbsp;<i>P<sub>i</sub></i>, the change in log sale price between consecutive sales of the same property.</p>
+    <p><strong>Crime exposure:</strong> For each sale, crime is counted within spatial rings (near vs. far) and temporal windows (1&ndash;12 months before sale). The coefficient &beta; measures the price effect of an additional crime in the near ring relative to the far ring.</p>
+    <p><strong>Fixed effects:</strong> Three specifications absorb different levels of unobserved confounds: PIN + CA&times;Month, PIN + CA&times;Year + YearMonth, and PIN + Tract&times;Month. Finer FE absorb more neighborhood-level trends but reduce identifying variation.</p>
+    <p><strong>Identifying variation:</strong> Within-property, within-neighborhood variation in crime exposure across sales. Two sales of the same property in the same neighborhood may face different nearby crime depending on timing and the spatial realization of incidents.</p>
+    <p><strong>Near vs. far:</strong> The near&ndash;far difference (&delta; = &beta;<sub>near</sub> &minus; &beta;<sub>far</sub>) nets out neighborhood-wide shocks that affect both rings equally, isolating the hyperlocal effect of crime proximity.</p>
+    <p><strong>Temporal placebo:</strong> Crime occurring after the sale date cannot have caused the price. A null post-sale coefficient supports the causal interpretation.</p>
+    <p><strong>Spatial placebo:</strong> Distance-permutation tests reassign near and far rings to check that the effect is specific to proximity, not an artifact of the ring structure.</p>
+    <p><strong>Estimators:</strong> OLS treats all repeat-sales pairs equally. Case-Shiller GLS downweights pairs with long holding periods, whose error variance is larger. Persistence-controlled variants add historical crime counts to separate persistent from transitory capitalization.</p>
+    <p><strong>Threats:</strong> Correlated neighborhood trends (gentrification, disinvestment) that move both crime and prices. Addressed by progressively finer FE and by the persistence control.</p>
+
+    <h3>Specification</h3>
+    <div style="display:flex;gap:20px;font-size:12px;color:#4a4a46;line-height:1.9;margin-bottom:16px;font-family:'Cambria Math','Latin Modern Math',serif">
+      <div style="border-left:2px solid #e8e6df;padding-left:12px">
+        <div><b style="color:#1f4e79">OLS:</b>&ensp; ln <i>P<sub>it</sub></i> = &beta;<sub>near</sub> &middot; Crime<sup>near</sup><sub>it</sub> + &beta;<sub>far</sub> &middot; Crime<sup>far</sup><sub>it</sub> + &alpha;<sub>i</sub> + &delta;<sub>t</sub> + &epsilon;<sub>it</sub></div>
+        <div><b style="color:#2e7d6e">GLS:</b>&ensp; Same, weighted by &Omega;<sup>&minus;1</sup></div>
+      </div>
+      <div style="border-left:2px solid #e8e6df;padding-left:12px">
+        <div><b style="color:#5b9bd5">+ Persistence:</b>&ensp; adds <i>P<sub>i</sub></i></div>
+        <div style="opacity:0.45"><b>+ Heckman:</b>&ensp; adds &lambda;&#770;<sub>i</sub></div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#5f5e5a;margin-top:-8px;">The estimand is &delta; = &beta;<sub>near</sub> &minus; &beta;<sub>far</sub>. Since the outcome is ln(price), &delta;&times;100 gives the percentage change in sale price per additional nearby crime relative to far crime.</p>
+
+    <h3>Research Design</h3>
+    <ul>
+      <li><strong>Treatment heterogeneity:</strong> Separate spec curves by crime type and visibility to test whether salience drives capitalization.</li>
+      <li><strong>Outcome heterogeneity:</strong> Spec curves by property type to test whether different buyers respond differently.</li>
+      <li><strong>Placebo treatments:</strong> Domestic crime and non-spatial crime as falsification tests.</li>
+      <li><strong>Citywide attention shock:</strong> DiD using the November 2015 Laquan McDonald video.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ──── DATA ──── -->
+<div class="section" id="sec-data" style="padding:0;">
+  <iframe src="data_descriptives.html" scrolling="no" style="width:100%;height:850px;border:none;display:block;"></iframe>
+</div>
+
+<!-- ──── RESULTS ──── -->
+<div class="section" id="sec-results">
+  <div class="section-title">Results</div>
+  <div class="prose">
+    <h3>Main Specification</h3>
+    <p><strong>Estimator:</strong> Case-Shiller GLS with persistence control &ensp;|&ensp; <strong>FE:</strong> PIN + CA&times;Month &ensp;|&ensp; <strong>Window:</strong> 5&ndash;6 months &ensp;|&ensp; <strong>Near:</strong> 0&ndash;0.05 mi &ensp;|&ensp; <strong>Far:</strong> 0.35&ndash;0.40 mi</p>
+
+    <h3>Headline Effect</h3>
+    <p>Each additional crime within 0.05 miles (80 meters) reduces sale prices by <strong>0.11%</strong> relative to crime at 0.35&ndash;0.40 miles. Far crime has a zero effect&mdash;buyers do not price crime beyond their immediate surroundings.</p>
+
+    <table style="width:100%;font-size:12px;border-collapse:collapse;margin:16px 0;">
+      <thead>
+        <tr style="border-bottom:2px solid #d3d1c7;text-align:left;">
+          <th style="padding:8px 12px;color:#672414;font-weight:600;">Property Type</th>
+          <th style="padding:8px 12px;text-align:center;">&delta;&times;100</th>
+          <th style="padding:8px 12px;text-align:center;">SE</th>
+          <th style="padding:8px 12px;text-align:center;">t-stat</th>
+          <th style="padding:8px 12px;text-align:center;">p-value</th>
+          <th style="padding:8px 12px;text-align:center;">Placebo p</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #e8e6df;background:#f9f8f5;">
+          <td style="padding:7px 12px;font-weight:600;">All Properties (6m)</td>
+          <td style="padding:7px 12px;text-align:center;color:#672414;font-weight:600;">&minus;0.114%</td>
+          <td style="padding:7px 12px;text-align:center;">0.028%</td>
+          <td style="padding:7px 12px;text-align:center;">&minus;4.03</td>
+          <td style="padding:7px 12px;text-align:center;">&lt; 0.001</td>
+          <td style="padding:7px 12px;text-align:center;color:#27ae60;">0.80</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e8e6df;">
+          <td style="padding:7px 12px;font-weight:600;">All Properties (5m)</td>
+          <td style="padding:7px 12px;text-align:center;color:#672414;">&minus;0.108%</td>
+          <td style="padding:7px 12px;text-align:center;">0.028%</td>
+          <td style="padding:7px 12px;text-align:center;">&minus;3.81</td>
+          <td style="padding:7px 12px;text-align:center;">&lt; 0.001</td>
+          <td style="padding:7px 12px;text-align:center;color:#27ae60;">0.92</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e8e6df;">
+          <td style="padding:7px 12px;font-weight:600;">Single-Family (6m)</td>
+          <td style="padding:7px 12px;text-align:center;color:#672414;font-weight:600;">&minus;0.255%</td>
+          <td style="padding:7px 12px;text-align:center;">0.121%</td>
+          <td style="padding:7px 12px;text-align:center;">&minus;2.10</td>
+          <td style="padding:7px 12px;text-align:center;">0.036</td>
+          <td style="padding:7px 12px;text-align:center;color:#27ae60;">0.44</td>
+        </tr>
+        <tr>
+          <td style="padding:7px 12px;font-weight:600;">Single-Family (12m)</td>
+          <td style="padding:7px 12px;text-align:center;color:#672414;">&minus;0.153%</td>
+          <td style="padding:7px 12px;text-align:center;">0.063%</td>
+          <td style="padding:7px 12px;text-align:center;">&minus;2.44</td>
+          <td style="padding:7px 12px;text-align:center;">0.015</td>
+          <td style="padding:7px 12px;text-align:center;color:#27ae60;">0.30</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>SF buyers are roughly twice as sensitive to nearby crime as the average property (&minus;0.25% vs &minus;0.11%), consistent with the salience mechanism&mdash;single-family homes are street-level properties where crime is directly visible.</p>
+  </div>
+</div>
+
+<!-- ──── ROBUSTNESS ──── -->
+<div class="section" id="sec-robust">
+  <div class="section-title">Robustness</div>
+  <div class="prose">
+    <p>Each robustness check addresses a specific threat to identification.</p>
+
+    <h3>Specification Curve</h3>
+    <p>Over 2,000 specifications varying the fixed effects structure, time window, spatial ring definitions, and estimator. Blue = significant in main only (clean), pink = significant in both main and placebo, gray = not significant.</p>
+  </div>
+  <div class="results-wrap" style="margin:0 32px 24px;border:1px solid #d3d1c7;border-radius:10px;overflow:hidden;background:#fff;">
+    <iframe src="spec_explorer.html?embed=1" scrolling="no" style="width:100%;height:1100px;border:none;display:block;"></iframe>
+  </div>
+  <div class="prose">
+    <div class="grid">
+      <div class="check-card">
+        <h4>Case-Shiller GLS</h4>
+        <p>GLS downweights long-gap pairs using the Case-Shiller heteroskedasticity correction.</p>
+        <div class="status status-active">Active in spec curve</div>
+      </div>
+      <div class="check-card">
+        <h4>Persistence Control</h4>
+        <p>Adds historical crime counts to separate persistent neighborhood effects from transitory shocks.</p>
+        <div class="status status-active">Active in spec curve</div>
+      </div>
+      <div class="check-card">
+        <h4>Temporal Placebo</h4>
+        <p>Crime after the sale cannot have caused the price. A null post-sale coefficient supports causal interpretation.</p>
+        <div class="status status-active">Active in spec curve</div>
+      </div>
+      <div class="check-card">
+        <h4>Spatial Placebo</h4>
+        <p>Distance-permutation tests reassign near and far rings to verify proximity specificity.</p>
+        <div class="status status-active">Active in spec curve</div>
+      </div>
+      <div class="check-card">
+        <h4>Heckman Selection</h4>
+        <p>Inverse Mills ratio corrects for non-random selection into the repeat-sales sample.</p>
+        <div class="status status-active">Active in spec curve</div>
+      </div>
+      <div class="check-card">
+        <h4>Spatial Boundary (FDR)</h4>
+        <p>Gunsilius-style false-discovery-rate test scans for spatial discontinuities at every candidate radius in [0.02, 0.30] mi. No boundaries detected across 29 crime types or 5 composites; result holds when sample is restricted to residential parcels (Cook County class&nbsp;2xx). Identification rests on a smooth proximity gradient, not a regression-discontinuity jump.</p>
+        <div class="status status-active">Active</div>
+      </div>
+      <div class="check-card">
+        <h4>Conley Spatial HAC</h4>
+        <p>Spatial HAC standard errors with a 1 km distance kernel for cross-tract correlation.</p>
+        <div class="status status-pending">Coming</div>
+      </div>
+      <div class="check-card">
+        <h4>First-Differenced</h4>
+        <p>First-difference consecutive sales directly, eliminating all time-invariant characteristics.</p>
+        <div class="status status-pending">Coming</div>
+      </div>
+      <div class="check-card">
+        <h4>Non-Linear (IHS)</h4>
+        <p>Inverse hyperbolic sine transformation of crime counts handles zeros naturally.</p>
+        <div class="status status-pending">Coming</div>
+      </div>
+    </div>
+
+    <h3>Estimator Robustness</h3>
+    <p>The result holds across all 8 estimator variants (OLS, GLS, &plusmn; persistence control, &plusmn; Heckman selection correction). All variants pass the post-sale placebo test for single-family properties (falsification rate &lt; 5%).</p>
+
+    <h3>Fixed Effects Progression</h3>
+    <ul>
+      <li><strong>PIN + CA&times;Month:</strong> Property FE + Community Area&times;Month absorbs neighborhood-level monthly shocks.</li>
+      <li><strong>PIN + CA&times;Year + Year-Month:</strong> Separates neighborhood annual trends from city-wide monthly shocks.</li>
+      <li><strong>PIN + Tract&times;Month:</strong> Finest geography&mdash;absorbs tract-level monthly variation.</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /.main -->
+
+<script>
+function scrollTo_(id){
+  var el = document.getElementById(id);
+  if(!el) return;
+  var y = el.getBoundingClientRect().top + window.pageYOffset - 44;
+  window.scrollTo({top:y, behavior:'smooth'});
+}
+
+var sections = ['sec-top','sec-geo','sec-model','sec-data','sec-results','sec-robust'];
+var navBtns = document.querySelectorAll('.topnav-item');
+window.addEventListener('scroll', function(){
+  var current = '';
+  for(var i=0;i<sections.length;i++){
+    var el = document.getElementById(sections[i]);
+    if(el && el.getBoundingClientRect().top <= 64) current = sections[i];
+  }
+  navBtns.forEach(function(btn,i){
+    if(sections[i]===current) btn.classList.add('active');
+    else btn.classList.remove('active');
+  });
+});
+</script>
+</body>
+</html>

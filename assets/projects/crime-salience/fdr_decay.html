@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FDR Distance Decay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #faf9f7;
+      color: #4a4a46;
+      padding: 24px 32px;
+    }
+    h1 {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 1.55rem;
+      color: #672414;
+      margin-bottom: 4px;
+    }
+    .subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      color: #7a7a74;
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+    #plot-container {
+      background: #fff;
+      border: 1px solid #e4e2da;
+      border-radius: 6px;
+      padding: 8px 4px 4px 4px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Spatial Decay by Crime Type</h1>
+<p class="subtitle">Free Discontinuity Regression &mdash; no spatial discontinuities detected. The price-crime relationship decays smoothly with distance.</p>
+
+<div id="plot-container">
+  <div id="fdr-plot"></div>
+</div>
+
+<script>
+// Embedded data: spec == 'A_raw', bins with bin_hi <= 0.5
+const DATA = {
+  violent: [
+    { bin_lo: 0.0,   bin_hi: 0.025, mean: 0.46589807769620023, se: 0.007863643166300107, n: 12805 },
+    { bin_lo: 0.025, bin_hi: 0.05,  mean: 0.37233348877803146, se: 0.005979126713046383, n: 19981 },
+    { bin_lo: 0.05,  bin_hi: 0.075, mean: 0.36538073960403383, se: 0.0075146868588199835, n: 9103 },
+    { bin_lo: 0.075, bin_hi: 0.1,   mean: 0.34890668356301735, se: 0.009401079863674411, n: 4191 },
+    { bin_lo: 0.1,   bin_hi: 0.15,  mean: 0.3390971830077615,  se: 0.011493385772724709, n: 2894 },
+    { bin_lo: 0.15,  bin_hi: 0.2,   mean: 0.31353646095648774, se: 0.021306283188251115, n: 645 },
+    { bin_lo: 0.2,   bin_hi: 0.3,   mean: 0.30565398783525966, se: 0.035951383406821136, n: 295 },
+    { bin_lo: 0.3,   bin_hi: 0.5,   mean: 0.43182957101290276, se: 0.08706782991385618,  n: 74 }
+  ],
+  property: [
+    { bin_lo: 0.0,   bin_hi: 0.025, mean: 0.38685952946996505, se: 0.006567163244269816, n: 15447 },
+    { bin_lo: 0.025, bin_hi: 0.05,  mean: 0.35952040603790997, se: 0.005581502303134224, n: 21977 },
+    { bin_lo: 0.05,  bin_hi: 0.075, mean: 0.44108186122984644, se: 0.00857826163265055,  n: 7910 },
+    { bin_lo: 0.075, bin_hi: 0.1,   mean: 0.4780617019230655,  se: 0.013948680742306584, n: 2626 },
+    { bin_lo: 0.1,   bin_hi: 0.15,  mean: 0.44352578825273287, se: 0.016772977995993383, n: 1557 },
+    { bin_lo: 0.15,  bin_hi: 0.2,   mean: 0.40144236738744477, se: 0.034140831247560406, n: 316 },
+    { bin_lo: 0.2,   bin_hi: 0.3,   mean: 0.463736924058862,   se: 0.06018943974702401,  n: 125 },
+    { bin_lo: 0.3,   bin_hi: 0.5,   mean: 0.14863082315567588, se: 0.08415389568962418,  n: 36 }
+  ],
+  disorder: [
+    { bin_lo: 0.0,   bin_hi: 0.025, mean: 0.4302977045101077,  se: 0.009655823614069976, n: 8312 },
+    { bin_lo: 0.025, bin_hi: 0.05,  mean: 0.378367368459353,    se: 0.006548618044345857, n: 17217 },
+    { bin_lo: 0.05,  bin_hi: 0.075, mean: 0.38980908629537264,  se: 0.007475809785055799, n: 11112 },
+    { bin_lo: 0.075, bin_hi: 0.1,   mean: 0.390651936677284,    se: 0.00881576593238529,  n: 6410 },
+    { bin_lo: 0.1,   bin_hi: 0.15,  mean: 0.3793465375746191,   se: 0.009126184030512874, n: 5036 },
+    { bin_lo: 0.15,  bin_hi: 0.2,   mean: 0.3503442732055461,   se: 0.01790404752996066,  n: 1259 },
+    { bin_lo: 0.2,   bin_hi: 0.3,   mean: 0.38926485463240246,  se: 0.028108163450042734, n: 494 },
+    { bin_lo: 0.3,   bin_hi: 0.5,   mean: 0.17340846074088215,  se: 0.07945088881854,     n: 138 }
+  ],
+  drugvice: [
+    { bin_lo: 0.0,   bin_hi: 0.025, mean: 0.5485536321533264,  se: 0.02337581998823527,  n: 2255 },
+    { bin_lo: 0.025, bin_hi: 0.05,  mean: 0.46025740920693814, se: 0.015102091266597104, n: 4585 },
+    { bin_lo: 0.05,  bin_hi: 0.075, mean: 0.46920776119976504, se: 0.014103063241579152, n: 4549 },
+    { bin_lo: 0.075, bin_hi: 0.1,   mean: 0.4350537811320638,  se: 0.01208715164566515,  n: 4712 },
+    { bin_lo: 0.1,   bin_hi: 0.15,  mean: 0.41111989034293644, se: 0.008793398144936303, n: 8747 },
+    { bin_lo: 0.15,  bin_hi: 0.2,   mean: 0.35603523302424944, se: 0.008904315107328137, n: 6530 },
+    { bin_lo: 0.2,   bin_hi: 0.3,   mean: 0.33729355589619314, se: 0.007306601252412128, n: 8816 },
+    { bin_lo: 0.3,   bin_hi: 0.5,   mean: 0.30778372461845643, se: 0.007577899396488993, n: 6695 }
+  ],
+  domestic: [
+    { bin_lo: 0.0,   bin_hi: 0.025, mean: 0.5357635509986912,  se: 0.010521653968261628, n: 7718 },
+    { bin_lo: 0.025, bin_hi: 0.05,  mean: 0.41746907469039213, se: 0.007078850577704069, n: 14976 },
+    { bin_lo: 0.05,  bin_hi: 0.075, mean: 0.3652375002025643,  se: 0.00796648389484338,  n: 10153 },
+    { bin_lo: 0.075, bin_hi: 0.1,   mean: 0.33618415584919253, se: 0.008426789099941354, n: 6488 },
+    { bin_lo: 0.1,   bin_hi: 0.15,  mean: 0.31172582188816367, se: 0.0077180497440233874, n: 6540 },
+    { bin_lo: 0.15,  bin_hi: 0.2,   mean: 0.25529878617677004, se: 0.011685136792438948, n: 2229 },
+    { bin_lo: 0.2,   bin_hi: 0.3,   mean: 0.2501879842774421,  se: 0.01804133434972657,  n: 1019 },
+    { bin_lo: 0.3,   bin_hi: 0.5,   mean: 0.3461725150798144,  se: 0.04618883696543222,  n: 246 }
+  ]
+};
+
+const CRIME_TYPES = ['violent', 'property', 'disorder', 'drugvice', 'domestic'];
+const LABELS = { violent: 'Violent', property: 'Property', disorder: 'Disorder', drugvice: 'Drug / Vice', domestic: 'Domestic' };
+const LINE_COLOR = '#1f4e79';
+const BAND_COLOR = 'rgba(31,78,121,0.15)';
+
+// Truncate: drop bins where bin_lo >= 0.5
+Object.keys(DATA).forEach(ct => {
+  DATA[ct] = DATA[ct].filter(d => d.bin_lo < 0.5);
+});
+
+// Compute shared y-axis range across all crime types
+let globalMin = Infinity, globalMax = -Infinity;
+CRIME_TYPES.forEach(ct => {
+  DATA[ct].forEach(d => {
+    const lo = d.mean - 1.96 * d.se;
+    const hi = d.mean + 1.96 * d.se;
+    if (lo < globalMin) globalMin = lo;
+    if (hi > globalMax) globalMax = hi;
+  });
+});
+const yPad = (globalMax - globalMin) * 0.10;
+const yRange = [globalMin - yPad, globalMax + yPad];
+
+// Build traces and layout
+const traces = [];
+const annotations = [];
+
+// Subplot geometry
+const nPlots = 5;
+const gapFrac = 0.04;
+const plotWidth = (1 - gapFrac * (nPlots - 1)) / nPlots;
+
+CRIME_TYPES.forEach((ct, i) => {
+  const xAxisName = i === 0 ? 'x' : 'x' + (i + 1);
+  const rows = DATA[ct];
+  const x = rows.map(d => (d.bin_lo + d.bin_hi) / 2);
+  const y = rows.map(d => d.mean);
+  const ciHi = rows.map(d => d.mean + 1.96 * d.se);
+  const ciLo = rows.map(d => d.mean - 1.96 * d.se);
+
+  // Upper CI bound (invisible line)
+  traces.push({
+    x: x, y: ciHi,
+    type: 'scatter', mode: 'lines',
+    line: { width: 0 },
+    xaxis: xAxisName,
+    yaxis: 'y',
+    showlegend: false,
+    hoverinfo: 'skip'
+  });
+
+  // Lower CI bound with fill to previous trace
+  traces.push({
+    x: x, y: ciLo,
+    type: 'scatter', mode: 'lines',
+    line: { width: 0 },
+    fill: 'tonexty',
+    fillcolor: BAND_COLOR,
+    xaxis: xAxisName,
+    yaxis: 'y',
+    showlegend: false,
+    hoverinfo: 'skip'
+  });
+
+  // Main line
+  traces.push({
+    x: x, y: y,
+    type: 'scatter', mode: 'lines+markers',
+    line: { color: LINE_COLOR, width: 2.2 },
+    marker: { color: LINE_COLOR, size: 4.5 },
+    xaxis: xAxisName,
+    yaxis: 'y',
+    showlegend: false,
+    hovertemplate: 'Distance: %{x:.3f} mi<br>Mean: %{y:.4f}<extra>' + LABELS[ct] + '</extra>'
+  });
+
+  // Domain for this subplot
+  const domStart = i * (plotWidth + gapFrac);
+  const domEnd = domStart + plotWidth;
+
+  // "No boundaries detected" annotation per subplot
+  annotations.push({
+    text: '<i>No boundaries detected</i>',
+    xref: xAxisName,
+    yref: 'y',
+    x: 0.22,
+    y: yRange[0] + (yRange[1] - yRange[0]) * 0.10,
+    showarrow: false,
+    font: { family: 'Inter, sans-serif', size: 9.5, color: '#c8c6c0' }
+  });
+
+  // Subplot title annotation
+  annotations.push({
+    text: '<b>' + LABELS[ct] + '</b>',
+    xref: 'paper',
+    yref: 'paper',
+    x: (domStart + domEnd) / 2,
+    y: 1.06,
+    showarrow: false,
+    font: { family: 'Inter, sans-serif', size: 13, color: '#672414' }
+  });
+});
+
+const layout = {
+  height: 350,
+  margin: { t: 38, b: 52, l: 60, r: 14 },
+  paper_bgcolor: '#faf9f7',
+  plot_bgcolor: '#fff',
+  font: { family: 'Inter, sans-serif', size: 11, color: '#4a4a46' },
+  yaxis: {
+    title: { text: 'Price residual', font: { size: 12, color: '#4a4a46' }, standoff: 6 },
+    range: yRange,
+    gridcolor: '#d3d1c7',
+    gridwidth: 1,
+    zeroline: true,
+    zerolinecolor: '#a09e96',
+    zerolinewidth: 1.2,
+    tickfont: { size: 10 }
+  },
+  annotations: annotations,
+  shapes: []
+};
+
+// Configure each x-axis
+CRIME_TYPES.forEach((ct, i) => {
+  const axKey = i === 0 ? 'xaxis' : 'xaxis' + (i + 1);
+  const domStart = i * (plotWidth + gapFrac);
+  const domEnd = domStart + plotWidth;
+
+  layout[axKey] = {
+    domain: [domStart, domEnd],
+    anchor: 'y',
+    title: { text: 'Distance (mi)', font: { size: 10, color: '#7a7a74' } },
+    range: [-0.01, 0.44],
+    gridcolor: '#d3d1c7',
+    gridwidth: 1,
+    tickfont: { size: 9 },
+    dtick: 0.1
+  };
+});
+
+// Add dashed zero lines as shapes for each subplot
+CRIME_TYPES.forEach((ct, i) => {
+  const xref = i === 0 ? 'x' : 'x' + (i + 1);
+  layout.shapes.push({
+    type: 'line',
+    xref: xref,
+    yref: 'y',
+    x0: -0.01, x1: 0.44,
+    y0: 0, y1: 0,
+    line: { color: '#a09e96', width: 1, dash: 'dash' }
+  });
+});
+
+Plotly.newPlot('fdr-plot', traces, layout, {
+  responsive: true,
+  displayModeBar: false
+});
+</script>
+
+</body>
+</html>

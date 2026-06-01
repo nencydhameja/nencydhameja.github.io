@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Identification &mdash; Crime, Salience, and the Housing Market</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;padding:32px 40px;font-family:'Inter',system-ui,sans-serif;color:#1a1a18;background:#faf9f7;line-height:1.7;}
+h1{font-size:22px;font-weight:500;color:#672414;font-family:'Lora',Georgia,serif;margin:0 0 20px;}
+h2{font-size:16px;font-weight:500;color:#672414;font-family:'Lora',Georgia,serif;margin:28px 0 10px;}
+.content{max-width:800px;font-size:13px;color:#4a4a46;}
+.content p{margin:0 0 12px;}
+.content strong{color:#1a1a18;}
+.content ul{margin:8px 0 16px 20px;padding:0;}
+.content li{margin-bottom:10px;}
+.content li strong{color:#1a1a18;}
+</style>
+</head>
+<body>
+<h1>Identification</h1>
+<div class="content">
+<p><strong>Repeat-sales framework:</strong> Prices are differenced within property (parcel PIN), eliminating time-invariant housing characteristics. The dependent variable is &Delta;&nbsp;ln&nbsp;<i>P<sub>i</sub></i>, the change in log sale price between consecutive sales of the same property.</p>
+<p><strong>Crime exposure:</strong> For each sale, crime is counted within spatial rings (near vs. far) and temporal windows (1&ndash;12 months before sale). The coefficient &beta; measures the price effect of an additional crime in the near ring relative to the far ring.</p>
+<p><strong>Fixed effects:</strong> Three specifications absorb different levels of unobserved confounds: PIN + CA&times;Month, PIN + CA&times;Year + YearMonth, and PIN + Tract&times;Month. Finer FE absorb more neighborhood-level trends but reduce identifying variation.</p>
+<p><strong>Identifying variation:</strong> Within-property, within-neighborhood variation in crime exposure across sales. Two sales of the same property in the same neighborhood may face different nearby crime depending on timing and the spatial realization of incidents.</p>
+<p><strong>Near vs. far:</strong> The near&ndash;far difference (&delta; = &beta;<sub>near</sub> &minus; &beta;<sub>far</sub>) nets out neighborhood-wide shocks that affect both rings equally, isolating the hyperlocal effect of crime proximity.</p>
+<p><strong>Temporal placebo:</strong> Crime occurring after the sale date cannot have caused the price. The post-sale placebo tests whether the design picks up spurious correlation. A null post-sale coefficient supports the causal interpretation.</p>
+<p><strong>Spatial placebo:</strong> Distance-permutation tests reassign near and far rings to check that the effect is specific to proximity, not an artifact of the ring structure.</p>
+<p><strong>Estimators:</strong> OLS treats all repeat-sales pairs equally. Case-Shiller GLS downweights pairs with long holding periods, whose error variance is larger. Persistence-controlled variants add historical crime counts to separate persistent from transitory capitalization.</p>
+<p><strong>Threats:</strong> Correlated neighborhood trends (gentrification, disinvestment) that move both crime and prices. Addressed by progressively finer FE and by the persistence control, which separates the persistent crime environment from transitory shocks.</p>
+
+<h2>Specification</h2>
+<div style="display:flex;gap:24px;font-size:13px;color:#4a4a46;line-height:1.9;margin-bottom:16px;font-family:'Cambria Math','Latin Modern Math',serif">
+  <div style="border-left:2px solid #e8e6df;padding-left:14px">
+    <div><b style="color:#1f4e79">Ordinary Least Squares (OLS):</b>&ensp; ln <i>P<sub>it</sub></i> = &beta;<sub>near</sub> &middot; Crime<sup>near</sup><sub>it</sub> + &beta;<sub>far</sub> &middot; Crime<sup>far</sup><sub>it</sub> + &alpha;<sub>i</sub> + &delta;<sub>t</sub> + &epsilon;<sub>it</sub></div>
+    <div><b style="color:#b03a2e">Generalized Least Squares (GLS):</b>&ensp; Same, weighted by &Omega;<sup>&minus;1</sup> (holding-period variance)</div>
+  </div>
+  <div style="border-left:2px solid #e8e6df;padding-left:14px">
+    <div><b style="color:#5b9bd5">+ Persistence Control:</b>&ensp; adds <i>P<sub>i</sub></i> (historical crime counts)</div>
+    <div style="opacity:0.45"><b>+ Heckman:</b>&ensp; adds <span style="text-decoration:none">&lambda;&#770;<sub>i</sub></span> (inverse Mills ratio)</div>
+  </div>
+</div>
+
+<h2>Research Design</h2>
+<ul>
+<li><strong>Treatment heterogeneity:</strong> Separate spec curves by crime type (violent, property, disorder, drug/vice) and visibility (night vs. day, indoor vs. outdoor) to test whether salience drives capitalization.</li>
+<li><strong>Outcome heterogeneity:</strong> Spec curves by property type (single-family, condo, multi-unit) to test whether different buyers respond differently to nearby crime.</li>
+<li><strong>Placebo treatments:</strong> Domestic crime (inside homes, not visible) and non-spatial crime (identity theft, fraud) as falsification tests&mdash;these should not capitalize if the mechanism is spatial salience.</li>
+<li><strong>Citywide attention shock:</strong> DiD using the November 2015 Laquan McDonald video as a Chicago-specific salience shock, with suburban Cook County as control.</li>
+</ul>
+</div>
+</body>
+</html>

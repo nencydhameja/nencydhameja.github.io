@@ -1,0 +1,10 @@
+Homepage / Bio page
+- Link from homepage: Job Market Paper (PDF · Overview)
+- CV link below JMP line
+
+paper.html (Overview page)
+- Add "Full Paper" PDF link to top nav bar (after Robustness tab)
+- Conley SE axis in spec explorer (grayed, pending Stata batteries)
+- First-Differenced axis in spec explorer (grayed, pending Stata batteries)
+- IHS functional form axis in spec explorer (grayed, pending Stata batteries)
+- Heckman selection axis in spec explorer (grayed, pending Stata batteries)

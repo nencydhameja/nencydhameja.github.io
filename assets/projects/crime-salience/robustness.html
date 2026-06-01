@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robustness &mdash; Crime, Salience, and the Housing Market</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;padding:32px 40px;font-family:'Inter',system-ui,sans-serif;color:#1a1a18;background:#faf9f7;line-height:1.7;}
+h1{font-size:22px;font-weight:500;color:#672414;font-family:'Lora',Georgia,serif;margin:0 0 4px;}
+.subtitle{font-size:13px;color:#888780;margin-bottom:28px;}
+h2{font-size:15px;font-weight:500;color:#672414;font-family:'Lora',Georgia,serif;margin:28px 0 10px;}
+.content{max-width:800px;font-size:13px;color:#4a4a46;}
+.content p{margin:0 0 12px;}
+.content strong{color:#1a1a18;}
+.content ul{margin:8px 0 16px 20px;padding:0;}
+.content li{margin-bottom:10px;}
+.content li strong{color:#1a1a18;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
+.check-card{background:#fff;border:1px solid #d3d1c7;border-radius:10px;padding:16px 20px;}
+.check-card h3{font-size:13px;font-weight:600;color:#1a1a18;margin:0 0 6px;font-family:'Inter',sans-serif;}
+.check-card p{margin:0;font-size:12px;color:#5f5e5a;line-height:1.6;}
+.check-card .status{font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-top:8px;}
+.status-active{color:#27ae60;}
+.status-pending{color:#b4b2a9;}
+</style>
+</head>
+<body>
+<h1>Robustness</h1>
+<p class="subtitle">Crime, Salience, and the Housing Market</p>
+<div class="content">
+<p>Each robustness check addresses a specific threat to identification. The spec curve explorer on the Results tab shows all 600 specifications simultaneously; this page summarizes the additional checks beyond the core spec curve.</p>
+
+<div class="grid">
+  <div class="check-card">
+    <h3>Case-Shiller GLS</h3>
+    <p>Repeat-sales error variance grows with holding period between sales. GLS downweights long-gap pairs using the Case-Shiller heteroskedasticity correction, reducing noise from pairs with 10+ year gaps.</p>
+    <div class="status status-active">Active in spec curve</div>
+  </div>
+
+  <div class="check-card">
+    <h3>Persistence Control</h3>
+    <p>Crime is persistent&mdash;high-crime areas stay high-crime. Adding historical crime counts (within 0.05 mi, full sample) separates persistent neighborhood effects from transitory shocks. If &beta; survives, it reflects new information, not capitalization of the permanent crime environment.</p>
+    <div class="status status-active">Active in spec curve</div>
+  </div>
+
+  <div class="check-card">
+    <h3>Temporal Placebo (Post-Sale)</h3>
+    <p>Crime occurring <em>after</em> the sale date cannot have caused the price. A null post-sale coefficient supports the causal interpretation; a significant one would indicate reverse causality or correlated trends. Shown as the lower panel in the spec curve.</p>
+    <div class="status status-active">Active in spec curve</div>
+  </div>
+
+  <div class="check-card">
+    <h3>Spatial Placebo (Distance Permutation)</h3>
+    <p>Randomly reassign near and far ring labels across distance bands. If the effect is specific to proximity (not an artifact of the ring structure), permuted specifications should produce null or attenuated coefficients. 7 permutations included per battery.</p>
+    <div class="status status-active">Active in spec curve</div>
+  </div>
+
+  <div class="check-card">
+    <h3>Heckman Selection Correction</h3>
+    <p>Repeat sales requires two transactions. Properties that sell infrequently may differ systematically from those that transact often. The Heckman two-step correction adds an inverse Mills ratio (&lambda;) estimated from a first-stage selection equation to the outcome regression.</p>
+    <div class="status status-pending">Coming</div>
+  </div>
+
+  <div class="check-card">
+    <h3>Conley Spatial HAC Standard Errors</h3>
+    <p>Clustered standard errors (by tract) may not fully account for spatial correlation across nearby tracts. Conley (1999) spatial HAC standard errors with a 1 km distance kernel allow for arbitrary spatial correlation within the kernel bandwidth.</p>
+    <div class="status status-pending">Coming</div>
+  </div>
+
+  <div class="check-card">
+    <h3>First-Differenced Framework</h3>
+    <p>Instead of levels with PIN fixed effects, first-difference consecutive sales directly. Eliminates all time-invariant property characteristics by construction. Particularly robust to concerns about functional form of the fixed effect.</p>
+    <div class="status status-pending">Coming</div>
+  </div>
+
+  <div class="check-card">
+    <h3>Non-Linear Functional Form (IHS)</h3>
+    <p>Inverse hyperbolic sine transformation of crime counts. Approximates log(2&times;crime) for large counts, handles zeros naturally. Tests whether the linear specification masks a concave dose-response relationship.</p>
+    <div class="status status-pending">Coming</div>
+  </div>
+</div>
+
+<h2>Fixed Effects Progression</h2>
+<ul>
+  <li><strong>PIN + CA&times;Month:</strong> Property FE + Community Area&times;Month absorbs neighborhood-level monthly shocks.</li>
+  <li><strong>PIN + CA&times;Year + Year-Month:</strong> Separates neighborhood annual trends from city-wide monthly shocks.</li>
+  <li><strong>PIN + Tract&times;Month:</strong> Finest geography&mdash;absorbs tract-level monthly variation. Identifying variation is purely within-tract, within-month, across-property differences in crime exposure.</li>
+</ul>
+</div>
+</body>
+</html>
