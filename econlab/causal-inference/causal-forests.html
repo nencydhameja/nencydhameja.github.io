@@ -429,6 +429,16 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>About this demo.</strong> For in-browser speed, the visualization below uses a simple <strong>binned estimator</strong> rather than the full causal-forest algorithm. Within each bin of <span class="math inline">\(x\)</span>, we compute <span class="math inline">\(\bar{Y}_{D=1} - \bar{Y}_{D=0}\)</span> and plot it against the true <span class="math inline">\(\tau(x)\)</span>. The principle — recovering <span class="math inline">\(\tau(x)\)</span> by local averaging — is the same one a forest uses; a forest just chooses <em>adaptive</em> partitions (splits that maximize heterogeneity in <span class="math inline">\(\tau\)</span>) instead of fixed bins.</p>
+</div>
+</div>
+</div>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 680
 
@@ -1135,7 +1145,7 @@ shinyApp(ui, server)</code></pre>
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com">Nency Dhameja</a> | <a href="../index.html">Econ Lab</a> | Inspired by my advisor <a href="https://sites.google.com/site/slichterdavid/home">David Slichter</a> | Built with AI assistance | <a href="mailto:nencydhameja@gmail.com">Leave Feedback</a></span></p>
+<p><span style="white-space:nowrap">Inspired by my advisor <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">David Slichter</a> | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;
