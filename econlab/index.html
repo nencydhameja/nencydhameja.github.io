@@ -74,6 +74,14 @@
     .card-bayes  { border-left-color: #8e44ad; }
     .card-health { border-left-color: #e74c3c; }
     .card-urban  { border-left-color: #16a085; }
+    .view-all {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 0.85em;
+      color: #185FA5;
+      text-decoration: none;
+    }
+    .view-all:hover { text-decoration: underline; }
     footer {
       text-align: center;
       padding: 30px;
@@ -86,101 +94,131 @@
 
 <header>
   <h1>Econ Lab</h1>
-  <p>Interactive tools for econometrics, causal inference, and applied microeconomics.</p>
+  <p>Interactive notes for econometrics, causal inference, and applied microeconomics</p>
   <p><a href="https://nencydhameja.com">&larr; Back to main site</a></p>
 </header>
 
 <div class="container">
 
-  <p style="color: #555; font-size: 0.95em; max-width: 680px; margin: 0 auto 28px; text-align: center; line-height: 1.7;">
-    These modules combine my research experience, teaching materials, and AI-assisted
-    drafting&mdash;each curated and refined for clarity. Every simulation runs
-    in your browser; no installs needed.
+  <p style="color: #2c3e50; font-size: 1em; max-width: 720px; margin: 0 auto 32px; text-align: center; line-height: 1.7;">
+    Open-access teaching notes with browser-based simulations for graduate econometrics,
+    causal inference, Bayesian methods, and applied microeconomics.
+    <strong>Five courses, 80+ modules</strong> &mdash; every page runs simulations live in your browser; no installs needed.
   </p>
 
   <div class="course-card card-stat">
     <h2><a href="stats-course/index.html">Foundations of Statistical Inference</a></h2>
     <p class="desc">
-      Simulation-based modules for statistics, econometrics, and causal inference.
+      Probability, regression, MLE/GMM, Bayesian estimation, and the statistical foundations of modern ML.
     </p>
     <div class="topics">
-      <a href="stats-course/foundations.html">Distributions</a>
-      <a href="stats-course/sampling-distribution.html">Sampling</a>
-      <a href="stats-course/simulations.html">CLT</a>
-      <a href="stats-course/lln.html">LLN</a>
+      <a href="stats-course/foundations.html">Foundations</a>
+      <a href="stats-course/variance-sd-se.html">Variance, SD &amp; SE</a>
+      <a href="stats-course/sampling-distribution.html">Sampling Distribution</a>
+      <a href="stats-course/simulations.html">CLT Simulator</a>
       <a href="stats-course/pvalues-ci.html">p-values &amp; CIs</a>
+      <a href="stats-course/test-statistics.html">Test Statistics</a>
       <a href="stats-course/bootstrap.html">Bootstrap</a>
-      <a href="stats-course/blb.html">Bag of Little Bootstraps</a>
-      <a href="stats-course/power.html">Power &amp; MDE</a>
-      <a href="stats-course/monte-carlo.html">Monte Carlo</a>
+      <a href="stats-course/multiple-testing.html">Multiple Testing</a>
       <a href="stats-course/cef.html">Regression &amp; CEF</a>
-      <a href="stats-course/fwl.html">FWL</a>
-      <a href="stats-course/omitted-variable-bias.html">Omitted Variable Bias</a>
       <a href="stats-course/maximum-likelihood.html">MLE</a>
-      <a href="stats-course/limited-dependent.html">Logit &amp; Probit</a>
+      <a href="stats-course/gmm.html">GMM</a>
+      <a href="stats-course/bayesian-estimation.html">Bayesian Estimation</a>
       <a href="stats-course/clustered-se.html">Clustered SEs</a>
-      <a href="stats-course/delta-method.html">Delta Method</a>
       <a href="stats-course/bias-variance.html">Bias-Variance</a>
-      <a href="stats-course/model-selection.html">Model Selection</a>
-      <a href="stats-course/bayesian-updating.html">Bayesian Updating</a>
-      <a href="stats-course/correlation-causation.html">Correlation &amp; Causation</a>
+      <a href="stats-course/training-as-mle.html">Stats Foundations of AI</a>
     </div>
+    <a class="view-all" href="stats-course/index.html">View all 38 modules &rarr;</a>
   </div>
 
   <div class="course-card card-causal">
     <h2><a href="causal-inference/index.html">Applied Causal Inference</a></h2>
     <p class="desc">
-      From potential outcomes to modern treatment effect estimators — see
-      selection bias, parallel trends, and reweighting in action.
+      Potential outcomes, identification strategies, modern treatment-effect estimators, and Bayesian + ML approaches to causal questions.
     </p>
     <div class="topics">
       <a href="causal-inference/potential-outcomes.html">Potential Outcomes</a>
-      <a href="causal-inference/identification-estimation.html">Identification vs Estimation</a>
+      <a href="causal-inference/identification-estimation.html">Identification</a>
       <a href="causal-inference/selection-observables.html">Selection on Observables</a>
-      <a href="causal-inference/did.html">Difference-in-Differences</a>
+      <a href="causal-inference/did.html">DiD</a>
       <a href="causal-inference/iv.html">IV</a>
       <a href="causal-inference/rdd.html">RDD</a>
       <a href="causal-inference/synth.html">Synthetic Control</a>
-      <a href="causal-inference/sample-selection.html">Sample Selection &amp; Heckman</a>
-      <a href="causal-inference/regression-adjustment.html">Regression Adjustment</a>
-      <a href="causal-inference/ipw.html">IPW</a>
       <a href="causal-inference/matching.html">Matching</a>
-      <a href="causal-inference/entropy-balancing.html">Entropy Balancing</a>
+      <a href="causal-inference/ipw.html">IPW</a>
       <a href="causal-inference/doubly-robust.html">Doubly Robust</a>
-      <a href="causal-inference/panel-fe-re.html">Fixed vs Random Effects</a>
+      <a href="causal-inference/double-debiased-ml.html">Double/Debiased ML</a>
+      <a href="causal-inference/heterogeneous-effects.html">Heterogeneous Effects</a>
+      <a href="causal-inference/causal-forests.html">Causal Forests</a>
+      <a href="causal-inference/bayesian-causal.html">Bayesian Causal</a>
     </div>
+    <a class="view-all" href="causal-inference/index.html">View all 19 modules &rarr;</a>
   </div>
 
   <div class="course-card card-bayes">
-    <h2>Introduction to Bayesian Thinking</h2>
-    <p class="desc">Coming Soon!</p>
-    <!-- <p class="desc">
-      Priors, posteriors, shrinkage, and the Bayesian-frequentist divide —
-      built from first principles with no measure theory.
+    <h2><a href="bayesian-inference/index.html">Introduction to Bayesian Thinking</a></h2>
+    <p class="desc">
+      Priors, posteriors, MCMC, hierarchical modeling, and the Bayesian-frequentist divide &mdash; built from first principles with no measure theory.
     </p>
     <div class="topics">
       <a href="bayesian-inference/bayes-theorem.html">Bayes' Theorem</a>
       <a href="bayesian-inference/priors-posteriors.html">Priors &amp; Posteriors</a>
-      <a href="bayesian-inference/shrinkage.html">Shrinkage</a>
       <a href="bayesian-inference/bayes-vs-freq.html">Bayesian vs Frequentist</a>
+      <a href="bayesian-inference/bayesian-regression.html">Bayesian Regression</a>
       <a href="bayesian-inference/mcmc.html">MCMC</a>
+      <a href="bayesian-inference/shrinkage.html">Shrinkage</a>
       <a href="bayesian-inference/hierarchical.html">Hierarchical Models</a>
-    </div> -->
+      <a href="bayesian-inference/posterior-predictive.html">Posterior Predictive</a>
+      <a href="bayesian-inference/model-comparison.html">Model Comparison</a>
+      <a href="bayesian-inference/bayesian-ml.html">Bayesian in ML &amp; AI</a>
+    </div>
+    <a class="view-all" href="bayesian-inference/index.html">View all 11 modules &rarr;</a>
   </div>
 
-  <!-- <p style="text-align: center; margin-top: 16px;"> -->
-    <!-- <a href="teaching.html" style="color: #3498db; font-size: 1.05em;"> -->
-      <!-- Interactive Teaching Modules &rarr;</a> -->
-    <!-- <span style="color: #999; font-size: 0.9em; display: block; margin-top: 4px;"> -->
-      <!-- Health Economics &middot; Urban Economics &middot; more coming -->
-    <!-- </span> -->
-  <!-- </p> -->
+  <div class="course-card card-health">
+    <h2><a href="health-econ/index.html">Health Economics</a></h2>
+    <p class="desc">
+      Insurance markets, the Grossman model of health capital, cost-effectiveness, and quasi-experimental policy evaluation.
+    </p>
+    <div class="topics">
+      <a href="health-econ/moral-hazard.html">Moral Hazard</a>
+      <a href="health-econ/adverse-selection.html">Adverse Selection</a>
+      <a href="health-econ/grossman.html">Grossman Model</a>
+      <a href="health-econ/qalys.html">QALYs &amp; CEA</a>
+      <a href="health-econ/provider-behavior.html">Provider Behavior</a>
+      <a href="health-econ/two-part-models.html">Two-Part Models</a>
+      <a href="health-econ/oregon-experiment.html">Oregon Experiment</a>
+    </div>
+    <a class="view-all" href="health-econ/index.html">View all 7 modules &rarr;</a>
+  </div>
+
+  <div class="course-card card-urban">
+    <h2><a href="urban-econ/index.html">Urban Economics</a></h2>
+    <p class="desc">
+      Land use, housing markets, agglomeration economies, and neighborhood dynamics in cities.
+    </p>
+    <div class="topics">
+      <a href="urban-econ/monocentric-city.html">Monocentric City</a>
+      <a href="urban-econ/spatial-equilibrium.html">Spatial Equilibrium</a>
+      <a href="urban-econ/hedonic-pricing.html">Hedonic Pricing</a>
+      <a href="urban-econ/zoning.html">Zoning</a>
+      <a href="urban-econ/agglomeration.html">Agglomeration</a>
+      <a href="urban-econ/tiebout.html">Tiebout Sorting</a>
+      <a href="urban-econ/gentrification.html">Gentrification</a>
+    </div>
+    <a class="view-all" href="urban-econ/index.html">View all 7 modules &rarr;</a>
+  </div>
+
+  <p style="color: #888; font-size: 0.85em; max-width: 680px; margin: 32px auto 0; text-align: center; line-height: 1.6;">
+    Notes are drafted with AI assistance and reviewed for clarity against primary sources.
+    Found something wrong, unclear, or missing?
+    <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave feedback</a>.
+  </p>
 
 </div>
 
 <footer>
-  Inspired by my advisor <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">David Slichter</a> | Built with AI assistance<br>
-  © 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a>
+  © 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | Built with AI assistance | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a>
 </footer>
 
 </body>
