@@ -442,6 +442,16 @@ window.Quarto = {
 <li><strong>Spillovers:</strong> if the treatment affects the donor units too (e.g., smokers move from California to Nevada), the synthetic control is contaminated.</li>
 <li><strong>Too few donors:</strong> with very few comparison units, the weights are forced and the match may be poor.</li>
 </ul>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>About this demo.</strong> For in-browser speed, the synthetic-control weights are estimated by <strong>OLS on the pre-period followed by non-negativity clipping and renormalization</strong> to sum to 1 — not the constrained quadratic program used in the original Abadie, Diamond &amp; Hainmueller (2010) procedure (and in the <code>Synth</code> R package). The result is close to the true SC when the donor pool is well-conditioned, but can differ when many donors are nearly collinear or when the optimal weights are strongly interior.</p>
+</div>
+</div>
+</div>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 680
 

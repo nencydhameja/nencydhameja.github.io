@@ -474,6 +474,16 @@ Y_i = \tau D_i + g(X_i) + \varepsilon_i
 \text{Double-debiased (works):} \quad \hat{\tau} - \tau \;\approx\; \frac{1}{n}\sum \underbrace{\tilde{D}_i}_{\perp\, X} \cdot \underbrace{\big(g(X_i) - \hat{g}(X_i)\big)}_{\text{ML error}}
 \]</span></p>
 <p>Now <span class="math inline">\(\tilde{D}_i \perp X_i\)</span>, so the ML errors <strong>cancel out</strong>. This is the Neyman orthogonality property — the “double” residualization makes the causal estimate immune to first-order ML mistakes.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>About this demo.</strong> For in-browser speed, the nuisance functions <span class="math inline">\(\hat{m}(X)\)</span> and <span class="math inline">\(\hat{g}(X)\)</span> are estimated with linear regression rather than a true ML estimator (random forest, lasso, neural net). The <strong>cross-fitting + Neyman-orthogonal score</strong> structure is real and is what the demo is illustrating — only the nuisance step is simplified. With <span class="math inline">\(\text{lm}\)</span> as the nuisance estimator the demo collapses to <a href="../stats-course/fwl.html">Frisch-Waugh-Lovell</a>; swapping in <code>ranger</code> or <code>glmnet</code> in real code recovers the full DML estimator.</p>
+</div>
+</div>
+</div>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 680
 
