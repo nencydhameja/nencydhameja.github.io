@@ -456,6 +456,16 @@ window.Quarto = {
 <li><strong>Weak instruments:</strong> if <span class="math inline">\(Z\)</span> barely moves <span class="math inline">\(X\)</span>, the first stage is weak and the IV estimate becomes wildly noisy and biased. Rule of thumb: first-stage F-statistic &gt; 10.</li>
 <li><strong>Exclusion restriction violated:</strong> if <span class="math inline">\(Z\)</span> affects <span class="math inline">\(Y\)</span> through channels other than <span class="math inline">\(X\)</span>, the estimate is biased. This assumption is <strong>untestable</strong> — you argue it, you don’t prove it.</li>
 </ul>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>F &gt; 10 is a rule of thumb, not a law.</strong> Staiger &amp; Stock (1997) is the classic reference and is still the most widely cited bar, but the modern literature is more demanding. Stock &amp; Yogo (2005) gave size-distortion critical values that often exceed 10. Lee, McCrary, Moreira &amp; Porter (2022, <em>AER</em>) argue the threshold should be roughly <strong>F &gt; 104.7</strong> for valid 5% inference using a “tF” adjustment. And Andrews, Stock &amp; Sun (2019, <em>Annual Review</em>) recommend reporting <strong>Anderson-Rubin confidence sets</strong> that remain valid regardless of instrument strength. Treat F &gt; 10 as a minimum bar, not a guarantee — and quote what you used.</p>
+</div>
+</div>
+</div>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 620
 
