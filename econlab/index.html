@@ -52,6 +52,17 @@
       color: #555;
       margin-bottom: 12px;
     }
+    .topic-section {
+      margin-top: 12px;
+    }
+    .topic-section-label {
+      font-size: 0.72em;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #7f8c8d;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
     .course-card .topics {
       display: flex;
       flex-wrap: wrap;
@@ -76,7 +87,7 @@
     .card-urban  { border-left-color: #16a085; }
     .view-all {
       display: inline-block;
-      margin-top: 10px;
+      margin-top: 14px;
       font-size: 0.85em;
       color: #185FA5;
       text-decoration: none;
@@ -110,24 +121,88 @@
     <p class="desc">
       Probability, regression, MLE/GMM, Bayesian estimation, and the statistical foundations of modern ML.
     </p>
-    <div class="topics">
-      <a href="stats-course/foundations.html">Foundations</a>
-      <a href="stats-course/variance-sd-se.html">Variance, SD &amp; SE</a>
-      <a href="stats-course/sampling-distribution.html">Sampling Distribution</a>
-      <a href="stats-course/simulations.html">CLT Simulator</a>
-      <a href="stats-course/pvalues-ci.html">p-values &amp; CIs</a>
-      <a href="stats-course/test-statistics.html">Test Statistics</a>
-      <a href="stats-course/bootstrap.html">Bootstrap</a>
-      <a href="stats-course/multiple-testing.html">Multiple Testing</a>
-      <a href="stats-course/cef.html">Regression &amp; CEF</a>
-      <a href="stats-course/maximum-likelihood.html">MLE</a>
-      <a href="stats-course/gmm.html">GMM</a>
-      <a href="stats-course/bayesian-estimation.html">Bayesian Estimation</a>
-      <a href="stats-course/clustered-se.html">Clustered SEs</a>
-      <a href="stats-course/bias-variance.html">Bias-Variance</a>
-      <a href="stats-course/training-as-mle.html">Stats Foundations of AI</a>
+
+    <div class="topic-section">
+      <div class="topic-section-label">Probability &amp; Sampling</div>
+      <div class="topics">
+        <a href="stats-course/foundations.html">Foundations</a>
+        <a href="stats-course/variance-sd-se.html">Variance, SD &amp; SE</a>
+        <a href="stats-course/sampling-distribution.html">Sampling Distribution</a>
+        <a href="stats-course/simulations.html">CLT Simulator</a>
+        <a href="stats-course/lln.html">LLN vs CLT</a>
+      </div>
     </div>
-    <a class="view-all" href="stats-course/index.html">View all 38 modules &rarr;</a>
+
+    <div class="topic-section">
+      <div class="topic-section-label">Inference</div>
+      <div class="topics">
+        <a href="stats-course/pvalues-ci.html">p-values &amp; CIs</a>
+        <a href="stats-course/test-statistics.html">Test Statistics</a>
+        <a href="stats-course/bootstrap.html">Bootstrap</a>
+        <a href="stats-course/blb.html">Bag of Little Bootstraps</a>
+        <a href="stats-course/power.html">Power, &alpha;, &beta; &amp; MDE</a>
+        <a href="stats-course/monte-carlo.html">Monte Carlo</a>
+        <a href="stats-course/multiple-testing.html">Multiple Testing</a>
+      </div>
+    </div>
+
+    <div class="topic-section">
+      <div class="topic-section-label">Regression</div>
+      <div class="topics">
+        <a href="stats-course/cef.html">Regression &amp; CEF</a>
+        <a href="stats-course/assumptions.html">Gauss-Markov &amp; Assumptions</a>
+        <a href="stats-course/regression-algebra.html">OLS Algebra</a>
+        <a href="stats-course/residuals.html">Residuals &amp; Controls</a>
+        <a href="stats-course/r-squared.html">R-squared</a>
+        <a href="stats-course/fwl.html">Frisch-Waugh-Lovell</a>
+        <a href="stats-course/omitted-variable-bias.html">Omitted Variable Bias</a>
+        <a href="stats-course/correlation-causation.html">Correlation &rarr; Causation</a>
+      </div>
+    </div>
+
+    <div class="topic-section">
+      <div class="topic-section-label">Estimation</div>
+      <div class="topics">
+        <a href="stats-course/method-of-moments.html">Method of Moments</a>
+        <a href="stats-course/maximum-likelihood.html">MLE</a>
+        <a href="stats-course/limited-dependent.html">Limited Dependent</a>
+        <a href="stats-course/gmm.html">GMM</a>
+        <a href="stats-course/bayesian-estimation.html">Bayesian Estimation</a>
+        <a href="stats-course/bayesian-updating.html">Bayesian Updating</a>
+      </div>
+    </div>
+
+    <div class="topic-section">
+      <div class="topic-section-label">Inference Diagnostics</div>
+      <div class="topics">
+        <a href="stats-course/heteroskedasticity.html">Heteroskedasticity</a>
+        <a href="stats-course/clustered-se.html">Clustered SEs</a>
+        <a href="stats-course/delta-method.html">Delta Method</a>
+        <a href="stats-course/measurement-error.html">Measurement Error</a>
+      </div>
+    </div>
+
+    <div class="topic-section">
+      <div class="topic-section-label">Model Building</div>
+      <div class="topics">
+        <a href="stats-course/bias-variance.html">Bias-Variance</a>
+        <a href="stats-course/model-selection.html">Model Selection</a>
+        <a href="stats-course/degeneracy.html">When Inference Breaks Down</a>
+      </div>
+    </div>
+
+    <div class="topic-section">
+      <div class="topic-section-label">Statistical Foundations of AI</div>
+      <div class="topics">
+        <a href="stats-course/training-as-mle.html">Training as MLE</a>
+        <a href="stats-course/regularization-priors.html">Regularization as Bayesian</a>
+        <a href="stats-course/prediction-vs-causation.html">Prediction vs Causation</a>
+        <a href="stats-course/experimental-design-ai.html">Experimental Design for AI</a>
+        <a href="stats-course/calibration-uncertainty.html">Calibration &amp; UQ</a>
+      </div>
+    </div>
+
+    <a class="view-all" href="stats-course/index.html">Open the full course &rarr;</a>
   </div>
 
   <div class="course-card card-causal">
@@ -135,23 +210,63 @@
     <p class="desc">
       Potential outcomes, identification strategies, modern treatment-effect estimators, and Bayesian + ML approaches to causal questions.
     </p>
-    <div class="topics">
-      <a href="causal-inference/potential-outcomes.html">Potential Outcomes</a>
-      <a href="causal-inference/identification-estimation.html">Identification</a>
-      <a href="causal-inference/selection-observables.html">Selection on Observables</a>
-      <a href="causal-inference/did.html">DiD</a>
-      <a href="causal-inference/iv.html">IV</a>
-      <a href="causal-inference/rdd.html">RDD</a>
-      <a href="causal-inference/synth.html">Synthetic Control</a>
-      <a href="causal-inference/matching.html">Matching</a>
-      <a href="causal-inference/ipw.html">IPW</a>
-      <a href="causal-inference/doubly-robust.html">Doubly Robust</a>
-      <a href="causal-inference/double-debiased-ml.html">Double/Debiased ML</a>
-      <a href="causal-inference/heterogeneous-effects.html">Heterogeneous Effects</a>
-      <a href="causal-inference/causal-forests.html">Causal Forests</a>
-      <a href="causal-inference/bayesian-causal.html">Bayesian Causal</a>
+
+    <div class="topic-section">
+      <div class="topic-section-label">Framework</div>
+      <div class="topics">
+        <a href="causal-inference/potential-outcomes.html">Potential Outcomes &amp; ATE</a>
+        <a href="causal-inference/identification-estimation.html">Identification vs Estimation</a>
+        <a href="causal-inference/when-ml-helps.html">When ML Helps</a>
+      </div>
     </div>
-    <a class="view-all" href="causal-inference/index.html">View all 19 modules &rarr;</a>
+
+    <div class="topic-section">
+      <div class="topic-section-label">Methods</div>
+      <div class="topics">
+        <a href="causal-inference/selection-observables.html">Selection on Observables</a>
+        <a href="causal-inference/did.html">Difference-in-Differences</a>
+        <a href="causal-inference/iv.html">Instrumental Variables</a>
+        <a href="causal-inference/rdd.html">Regression Discontinuity</a>
+        <a href="causal-inference/synth.html">Synthetic Control</a>
+        <a href="causal-inference/sample-selection.html">Sample Selection &amp; Heckman</a>
+      </div>
+    </div>
+
+    <div class="topic-section">
+      <div class="topic-section-label">Panel Data</div>
+      <div class="topics">
+        <a href="causal-inference/panel-fe-re.html">Fixed vs Random Effects</a>
+      </div>
+    </div>
+
+    <div class="topic-section">
+      <div class="topic-section-label">Estimation Tools</div>
+      <div class="topics">
+        <a href="causal-inference/regression-adjustment.html">Regression Adjustment</a>
+        <a href="causal-inference/ipw.html">IPW</a>
+        <a href="causal-inference/matching.html">Matching</a>
+        <a href="causal-inference/entropy-balancing.html">Entropy Balancing</a>
+        <a href="causal-inference/doubly-robust.html">Doubly Robust</a>
+        <a href="causal-inference/double-debiased-ml.html">Double/Debiased ML</a>
+      </div>
+    </div>
+
+    <div class="topic-section">
+      <div class="topic-section-label">Bayesian Causal Inference</div>
+      <div class="topics">
+        <a href="causal-inference/bayesian-causal.html">Bayesian Causal Inference</a>
+      </div>
+    </div>
+
+    <div class="topic-section">
+      <div class="topic-section-label">Beyond Averages</div>
+      <div class="topics">
+        <a href="causal-inference/heterogeneous-effects.html">Heterogeneous Treatment Effects</a>
+        <a href="causal-inference/causal-forests.html">Causal Forests</a>
+      </div>
+    </div>
+
+    <a class="view-all" href="causal-inference/index.html">Open the full course &rarr;</a>
   </div>
 
   <div class="course-card card-bayes">
@@ -162,7 +277,6 @@
   <!-- Health Economics and Urban Economics cards temporarily hidden.
        Pages remain accessible at /econlab/health-econ/ and /econlab/urban-econ/.
        Restore both card blocks here when ready to relist. -->
-
 
   <p style="color: #888; font-size: 0.85em; max-width: 680px; margin: 32px auto 0; text-align: center; line-height: 1.6;">
     Notes are drafted with AI assistance and reviewed for clarity against primary sources.
