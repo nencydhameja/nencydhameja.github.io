@@ -710,6 +710,16 @@ shinyApp(ui, server)</code></pre>
 <section id="iii.-the-likelihood-based-trinity" class="level2">
 <h2 class="anchored" data-anchor-id="iii.-the-likelihood-based-trinity">III. The likelihood-based trinity</h2>
 <p>These three tests are the workhorses of <a href="maximum-likelihood.html">MLE</a>-based inference. They all test the same null hypothesis and are <strong>asymptotically equivalent</strong> — but they differ in what you need to estimate.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>One-line intuition for likelihood.</strong> The <strong>likelihood</strong> <span class="math inline">\(L(\theta) = P(\text{data} \mid \theta)\)</span> is just the probability of the observed data viewed as a function of the parameter <span class="math inline">\(\theta\)</span>. <strong>Maximum likelihood estimation (MLE)</strong> picks the <span class="math inline">\(\hat\theta\)</span> that makes the observed data most probable. Everything below — restricted/unrestricted fits, log-likelihoods, the LR/Wald/LM tests — is a comparison of these probabilities under <span class="math inline">\(H_0\)</span> vs.&nbsp;unrestricted. The <a href="maximum-likelihood.html">MLE page</a> develops this in full; one sentence is all you need to follow this section.</p>
+</div>
+</div>
+</div>
 <section id="likelihood-ratio-lr-test" class="level3">
 <h3 class="anchored" data-anchor-id="likelihood-ratio-lr-test">Likelihood Ratio (LR) test</h3>
 <p>Estimate <strong>both</strong> the restricted and unrestricted models, then compare their log-likelihoods:</p>
