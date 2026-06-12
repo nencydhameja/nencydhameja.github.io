@@ -808,15 +808,23 @@ def make_spec_explorer():
     near_idx_map = {v: i for i, v in enumerate(near_ring_list)}
     far_idx_map = {v: i for i, v in enumerate(far_ring_list)}
 
-    prop_types = ['ALL_nonresid', 'ALL_resid', 'SF', 'Condo', 'Multi', 'Townhouse']
+    prop_types = ['ALL_', 'ALL_nonresid', 'ALL_resid', 'SF', 'Condo', 'Multi', 'Townhouse']
     crime_types_old = ['total', 'drugvice', 'disorder', 'property', 'violent', 'domestic']
     # The new het master files contain multiple crime_types per file — loop over them.
-    NEW_CRIME_TYPES = ['total_spatial', 'violent']
-    NEW_CRIME_TYPE = 'total_spatial'  # kept for blocks (OLS/GLS/Heckman) not yet refactored
+    NEW_CRIME_TYPES = [
+        'total',                  # All crime (all NIBRS, no filter)
+        'vis0', 'vis1', 'vis2', 'vis3', 'vis4',
+        'domestic',               # Domestic-flag subset (within-paper visibility placebo)
+    ]
+    NEW_CRIME_TYPE = 'total'  # default for legacy single-crime-type blocks
 
     # ── Helper: build entry dict from a filtered dataframe ────────────────
     def build_entry(pre, post_df=None):
         pre = pre.copy()
+        # Restrict spec curves to the headline Tract×Month (PIN_CAM) FE only.
+        pre = pre[pre['fe_spec'] == 'PIN_CAM']
+        if post_df is not None:
+            post_df = post_df[post_df['fe_spec'] == 'PIN_CAM']
         # Drop 0.50-1.00 far ring specs (too distant, picks up spatial sorting)
         pre = pre[pre['far_def'] != '0.50-1.00']
         if post_df is not None:
@@ -951,6 +959,18 @@ def make_spec_explorer():
         df_gls_pc_all = pd.read_csv(gls_pc_path)
         for ct in NEW_CRIME_TYPES:
             df_gls_pc = df_gls_pc_all[df_gls_pc_all['crime_type'] == ct]
+            # Visibility tiers: the master file's vis rows are inconsistently
+            # populated (vis3 missing ALL_resid; vis2/vis4 have duplicate/partial
+            # counts). Use the dedicated complete per-vis files (4,512 rows each,
+            # ALL_ prop type) as the source of truth for the ALL_ property view.
+            per_vis = HET_DIR / 'GLS_Pctrl' / f'het_nearfar_{ct}_all_ALL__allwin.csv'
+            if ct.startswith('vis') and per_vis.exists():
+                clean_all = pd.read_csv(per_vis)
+                df_gls_pc = pd.concat(
+                    [clean_all, df_gls_pc[df_gls_pc['prop_type'] != 'ALL_']],
+                    ignore_index=True,
+                )
+                print(f"    [{ct}] ALL_ sourced from {per_vis.name} ({len(clean_all)} rows)")
             # 1-month window is noisy for rare crimes — drop for violent.
             if ct == 'violent':
                 df_gls_pc = df_gls_pc[df_gls_pc['window'] != '1m']
@@ -971,6 +991,7 @@ def make_spec_explorer():
     if hurin_path.exists():
         print("  Loading het_battery Hurin (OLS+Heckman)...")
         df_hurin = pd.read_csv(hurin_path)
+        df_hurin = df_hurin[df_hurin['crime_type'] == NEW_CRIME_TYPE]
         for pt in prop_types:
             pre = df_hurin[(df_hurin['prop_type'] == pt) & (df_hurin['side'] == 'main')]
             post = df_hurin[(df_hurin['prop_type'] == pt) & (df_hurin['side'] == 'post')]
@@ -981,13 +1002,14 @@ def make_spec_explorer():
                 if pt not in all_data[NEW_CRIME_TYPE]:
                     all_data[NEW_CRIME_TYPE][pt] = {}
                 all_data[NEW_CRIME_TYPE][pt]['OLS_none_heckman'] = entry
-                print(f"    total/{pt}/OLS_none_heckman: {entry['ns']} specs, pre sig: {entry['np']}, post sig: {entry.get('nps','n/a')}")
+                print(f"    {NEW_CRIME_TYPE}/{pt}/OLS_none_heckman: {entry['ns']} specs, pre sig: {entry['np']}, post sig: {entry.get('nps','n/a')}")
 
     # OLS + Heckman + Persistence Control (Hurin_Pctrl) (from het_battery)
     hurin_pc_path = HET_DIR / 'Hurin_Pctrl' / 'Hurin_Pctrl_master.csv'
     if hurin_pc_path.exists():
         print("  Loading het_battery Hurin_Pctrl (OLS+Heckman+PC)...")
         df_hurin_pc = pd.read_csv(hurin_pc_path)
+        df_hurin_pc = df_hurin_pc[df_hurin_pc['crime_type'] == NEW_CRIME_TYPE]
         for pt in prop_types:
             pre = df_hurin_pc[(df_hurin_pc['prop_type'] == pt) & (df_hurin_pc['side'] == 'main')]
             post = df_hurin_pc[(df_hurin_pc['prop_type'] == pt) & (df_hurin_pc['side'] == 'post')]
@@ -1005,6 +1027,7 @@ def make_spec_explorer():
     if gls_hurin_path.exists():
         print("  Loading het_battery GLS_Hurin (GLS+Heckman)...")
         df_gls_hurin = pd.read_csv(gls_hurin_path)
+        df_gls_hurin = df_gls_hurin[df_gls_hurin['crime_type'] == NEW_CRIME_TYPE]
         for pt in prop_types:
             pre = df_gls_hurin[(df_gls_hurin['prop_type'] == pt) & (df_gls_hurin['side'] == 'main')]
             post = df_gls_hurin[(df_gls_hurin['prop_type'] == pt) & (df_gls_hurin['side'] == 'post')]
@@ -1015,13 +1038,14 @@ def make_spec_explorer():
                 if pt not in all_data[NEW_CRIME_TYPE]:
                     all_data[NEW_CRIME_TYPE][pt] = {}
                 all_data[NEW_CRIME_TYPE][pt]['GLS_none_heckman'] = entry
-                print(f"    total/{pt}/GLS_none_heckman: {entry['ns']} specs, pre sig: {entry['np']}, post sig: {entry.get('nps','n/a')}")
+                print(f"    {NEW_CRIME_TYPE}/{pt}/GLS_none_heckman: {entry['ns']} specs, pre sig: {entry['np']}, post sig: {entry.get('nps','n/a')}")
 
     # GLS + Heckman + Persistence Control (GLS_Hurin_Pctrl) (from het_battery)
     gls_hurin_pc_path = HET_DIR / 'GLS_Hurin_Pctrl' / 'GLS_Hurin_Pctrl_master.csv'
     if gls_hurin_pc_path.exists():
         print("  Loading het_battery GLS_Hurin_Pctrl (GLS+Heckman+PC)...")
         df_gls_hurin_pc = pd.read_csv(gls_hurin_pc_path)
+        df_gls_hurin_pc = df_gls_hurin_pc[df_gls_hurin_pc['crime_type'] == NEW_CRIME_TYPE]
         for pt in prop_types:
             pre = df_gls_hurin_pc[(df_gls_hurin_pc['prop_type'] == pt) & (df_gls_hurin_pc['side'] == 'main')]
             post = df_gls_hurin_pc[(df_gls_hurin_pc['prop_type'] == pt) & (df_gls_hurin_pc['side'] == 'post')]
@@ -1032,7 +1056,7 @@ def make_spec_explorer():
                 if pt not in all_data[NEW_CRIME_TYPE]:
                     all_data[NEW_CRIME_TYPE][pt] = {}
                 all_data[NEW_CRIME_TYPE][pt]['GLS_pc_heckman'] = entry
-                print(f"    total/{pt}/GLS_pc_heckman: {entry['ns']} specs, pre sig: {entry['np']}, post sig: {entry.get('nps','n/a')}")
+                print(f"    {NEW_CRIME_TYPE}/{pt}/GLS_pc_heckman: {entry['ns']} specs, pre sig: {entry['np']}, post sig: {entry.get('nps','n/a')}")
 
     # ── Load old spec_battery_4way for crime type heterogeneity ───────────
     ring_names_old = {
@@ -1121,7 +1145,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:#f8f7f4;color:#1a1a18}
 .explorer{display:flex;height:100vh}
 
 .sidebar{
-  width:190px;min-width:190px;padding:24px 16px;
+  width:170px;min-width:170px;padding:24px 12px;
   background:#fff;border-right:1px solid #d3d1c7;
   position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:10;
 }
@@ -1225,7 +1249,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:#f8f7f4;color:#1a1a18}
 .info-panel ul{margin:4px 0 8px 18px;padding:0}
 .info-panel li{margin-bottom:4px}
 
-.display{margin-left:190px;flex:1;padding:24px 32px;padding-top:68px;overflow-y:auto}
+.display{margin-left:170px;flex:1;padding:24px 16px;padding-top:68px;overflow-y:auto}
 .tab-frame{display:none;width:100%;height:calc(100vh - 68px)}
 .tab-frame iframe{width:100%;height:100%;border:none;}
 
@@ -1257,28 +1281,34 @@ if(EMBED){document.documentElement.classList.add('embed-mode');}
 
 <div class="explorer">
   <div class="sidebar">
-    <div class="section-heading">Treatment (crime) heterogeneity</div>
-    <h3>Crime Type</h3>
-    <select id="crime-select" onchange="render()">
-      <option value="total_spatial">Total Spatial Crime</option>
-      <option value="violent">Violent</option>
-      <option value="property" disabled>Property (coming soon)</option>
-      <option value="disorder" disabled>Disorder (coming soon)</option>
-      <option value="drugvice" disabled>Drug/Vice (coming soon)</option>
-      <option value="domestic" disabled>Domestic placebo (coming soon)</option>
-      <option value="nonspatial" disabled>Non-Spatial placebo (coming soon)</option>
-    </select>
-
     <div class="section-heading">Outcome (property) heterogeneity</div>
     <h3>Property Type</h3>
     <select id="prop-select" onchange="render()">
-      <option value="ALL_nonresid">All Properties</option>
-      <option value="ALL_resid">All (residential subset)</option>
+      <option value="ALL_" selected>All Properties</option>
+      <option value="ALL_resid">All residential</option>
       <option value="SF">Single-Family</option>
       <option value="Condo">Condo</option>
-      <option value="Multi">Multi-Unit</option>
-      <option value="Townhouse">Townhouse</option>
+      <option value="Multi" disabled>Multi-Unit — running</option>
+      <!-- <option value="Townhouse">Townhouse</option> removed: thin cell (n~7K), unstable spec curve -->
     </select>
+
+    <div class="section-heading">Treatment (crime) heterogeneity</div>
+    <h3>Crime Type</h3>
+    <select id="crime-select" onchange="onCrimeChange()">
+      <option value="total" selected>All Crime</option>
+      <option value="vis4">Vis-4 (Emergency-Response Visible)</option>
+      <option value="vis3">Vis-3 (Active Police Presence)</option>
+      <option value="vis2">Vis-2 (Observable Traces)</option>
+      <option value="vis1">Vis-1 (Partial / Indoor Observable)</option>
+      <option value="vis0">Vis-0 (Intangible / Paperwork)</option>
+      <option value="domestic">Domestic</option>
+    </select>
+
+    <div class="section-heading">Distance rings</div>
+    <h3>Near ring</h3>
+    <select id="near-select" onchange="render()"></select>
+    <h3>Far ring</h3>
+    <select id="far-select" onchange="render()"></select>
 
     <h3>Specification</h3>
     <div class="model-group">
@@ -1346,6 +1376,7 @@ if(EMBED){document.documentElement.classList.add('embed-mode');}
     </div>
     </div>
     <h2 style="text-align:left;font-size:16px;font-weight:500;color:#672414;font-family:'Lora',Georgia,serif;margin:0 0 16px">Results</h2>
+    <div id="crime-composition" style="background:#faf9f4;border-left:3px solid #b48a3b;border-radius:0 8px 8px 0;padding:10px 14px;margin:0 0 12px;font-size:12px;color:#3a3a37;line-height:1.5;"></div>
     <div id="display"></div>
     </div>
     <div class="tab-frame" id="frame-data"><iframe src="data_descriptives.html"></iframe></div>
@@ -1428,8 +1459,53 @@ function modelColor(het,pc,sel){
 /* backward compat */
 var ML = {OLS_none:'OLS \\u2014 Standard',OLS_pc:'OLS \\u2014 Persistence Controlled',
            GLS_none:'Case-Shiller GLS \\u2014 Standard',GLS_pc:'Case-Shiller GLS \\u2014 Persistence Controlled'};
-var CL = {total:'Total Spatial Crime',total_spatial:'Total Spatial Crime',drugvice:'Drug/Vice',disorder:'Disorder',
-           property:'Property',violent:'Violent',domestic:'Domestic',nonspatial:'Non-Spatial'};
+var CL = {total:'All Crime',total_spatial:'Total Spatial Crime',drugvice:'Drug/Vice',disorder:'Disorder',
+           property:'Property',violent:'Violent',domestic:'Domestic',nonspatial:'Non-Spatial',
+           vis0:'Vis-0 (Intangible / Paperwork)',vis1:'Vis-1 (Partial / Indoor Observable)',
+           vis2:'Vis-2 (Observable Traces)',vis3:'Vis-3 (Active Police Presence)',
+           vis4:'Vis-4 (Emergency-Response Visible)'};
+/* Property-pool labels */
+var PL = {'ALL_':'All Properties','ALL_resid':'All residential','SF':'Single-Family','Condo':'Condo','Multi':'Multi-Unit','Townhouse':'Townhouse'};
+
+/* Composition of visibility-gradient composites (constituent NIBRS groups) */
+var VIS_COMPOSITION = {
+  vis4: {
+    label: 'Emergency-Response Visible \\u2014 sirens, lights, crime-scene tape; immediate public spectacle',
+    groups: ['Arson', 'Homicide offenses', 'Robbery']
+  },
+  vis3: {
+    label: 'Active Police Presence \\u2014 visible enforcement activity (arrests, stops, raids), but no lasting physical damage to property',
+    groups: ['Disorderly conduct', 'Drug / narcotic offenses',
+             'Prostitution offenses', 'Trespass of real property']
+  },
+  vis2: {
+    label: 'Observable Traces \\u2014 routine property-crime signatures: broken glass, missing vehicles, neighbor witnesses; visible but normalized',
+    groups: ['Assault (non-domestic)', 'Burglary / breaking & entering',
+             'Larceny / theft', 'Motor vehicle theft',
+             'Stolen property offenses', 'Destruction / damage / vandalism']
+  },
+  vis1: {
+    label: 'Partial / Indoor Observable \\u2014 commission is private or location-tied; only some incidents leave external traces or court records',
+    groups: ['Assault (domestic)', 'Extortion / blackmail',
+             'Family offenses (nonviolent)', 'Gambling', 'Kidnapping / abduction',
+             'Liquor-law violations', 'Sex offenses (forcible)',
+             'Human trafficking', 'Weapon-law violations']
+  },
+  vis0: {
+    label: 'Intangible / Paperwork \\u2014 non-locational offenses (geocoded to victim residence rather than locus of harm); predicted near-zero salience effect, may show mild positive bias from victim-address sorting',
+    groups: ['Bad checks', 'Bribery', 'Embezzlement',
+             'Counterfeiting / forgery', 'Fraud',
+             'Pornography / obscene material', 'Sex offenses, nonforcible']
+  },
+  domestic: {
+    label: 'Domestic-flag subset \\u2014 incidents marked as domestic by CPD (within-household, private-locus crimes that produce no observable external trace). Used as a within-paper visibility placebo: a high-event-rate crime category that nonetheless lacks the observable cue salience requires.',
+    groups: ['Assault (domestic)', 'Intimidation (domestic)',
+             'Family offenses (nonviolent)', 'Other domestic-flagged incidents']
+  }
+};
+
+/* NIBRS offense groups excluded from ALL visibility composites. */
+var VIS_EXCLUDED = ['All other offenses (NIBRS catch-all, content heterogeneous)'];
 
 var FL = ['PIN+CA\\u00d7Mo','PIN+YM','PIN+CA\\u00d7Yr+YM','PIN+Tract\\u00d7Mo'];
 var WL = ['1m','2m','3m','4m','5m','6m','7m','8m','9m','10m','11m','12m'];
@@ -1439,7 +1515,7 @@ var RL = ['0.15-0.20','0.20-0.25','0.25-0.30','0.30-0.35','0.35-0.40',
            '0.40-0.50','0.20-0.30'];
 
 var CATS = [
-  {name:'FE',        labels:FL, key:'fi'},
+  /* FE category dropped: curves are restricted to PIN_CAM, so it no longer varies. */
   {name:'Window',    labels:WL, key:'wi'},
   {name:'Near ring', labels:NL, key:'ni'},
   {name:'Far ring',  labels:RL, key:'ri'}
@@ -1450,15 +1526,103 @@ function indLayout(){
   var y=0, pos={}, tv=[], tt=[], bounds=[];
   CATS.forEach(function(cat,ci){
     var start=y;
+    var step = 1.0;  /* uniform row spacing — distance bands as open as months */
     cat.labels.forEach(function(lbl,oi){
-      pos[ci+'_'+oi]=y; tv.push(y); tt.push(lbl); y++;
+      pos[ci+'_'+oi]=y; tv.push(y); tt.push(lbl); y+=step;
     });
-    bounds.push({s:start,e:y-1,name:cat.name});
+    bounds.push({s:start,e:y-step,name:cat.name});
     y+=0.6;
   });
   return {pos:pos,tv:tv,tt:tt,bounds:bounds};
 }
 var IND = indLayout();
+
+/* build an indicator layout from an arbitrary subset of categories */
+function indLayoutFor(cats){
+  var y=0,pos={},tv=[],tt=[],bounds=[];
+  cats.forEach(function(cat,ci){
+    var start=y;
+    cat.labels.forEach(function(lbl,oi){ pos[ci+'_'+oi]=y; tv.push(y); tt.push(lbl); y+=1; });
+    bounds.push({s:start,e:y-1,name:cat.name});
+    y+=0.6;
+  });
+  return {pos:pos,tv:tv,tt:tt,bounds:bounds};
+}
+
+/* Populate near/far ring filter dropdowns from NL/RL, defaulting to the
+   headline near 0-0.05 / far 0.20-0.30 definition. */
+function initRingFilters(){
+  var ns=document.getElementById('near-select'), fs=document.getElementById('far-select');
+  if(!ns||!fs) return;
+  ns.innerHTML=''; fs.innerHTML='';
+  var aN=document.createElement('option'); aN.value='all'; aN.textContent='All near rings'; ns.appendChild(aN);
+  /* display order: cumulative (0-X) bands first, then non-cumulative rings */
+  var NEAR_ORDER=['0-0.05','0-0.10','0-0.15','0-0.20','0-0.25','0-0.30','0.05-0.10','0.10-0.15','0.15-0.20','0.20-0.25','0.25-0.30','0.35-0.40'];
+  NEAR_ORDER.forEach(function(lbl){var o=document.createElement('option');o.value=lbl;o.textContent=lbl+' mi';if(lbl==='0-0.05')o.selected=true;ns.appendChild(o);});
+  var aF=document.createElement('option'); aF.value='all'; aF.textContent='All far rings'; aF.selected=true; fs.appendChild(aF);
+  RL.forEach(function(lbl){var o=document.createElement('option');o.value=lbl;o.textContent=lbl+' mi';fs.appendChild(o);});
+}
+
+/* Subset a model entry by the selected near/far ring; recompute sig counts. */
+function applyRingFilter(d){
+  var nv=document.getElementById('near-select'), fv=document.getElementById('far-select');
+  var nSel = nv ? nv.value : 'all', fSel = fv ? fv.value : 'all';
+  var nIdx = (nSel==='all') ? -1 : NL.indexOf(nSel);
+  var fIdx = (fSel==='all') ? -1 : RL.indexOf(fSel);
+  if(nIdx<0 && fIdx<0) return d;
+  var keep=[];
+  for(var k=0;k<d.ns;k++){
+    if(nIdx>=0 && d.ni[k]!==nIdx) continue;
+    if(fIdx>=0 && d.ri[k]!==fIdx) continue;
+    keep.push(k);
+  }
+  function sub(a){if(!a)return a;var o=[];for(var i=0;i<keep.length;i++)o.push(a[keep[i]]);return o;}
+  function cnt(a){var c=0;if(a)for(var i=0;i<a.length;i++)if(a[i]<0.05)c++;return c;}
+  var nd={b:sub(d.b),s:sub(d.s),p:sub(d.p),bd:sub(d.bd),sd:sub(d.sd),pd:sub(d.pd),
+          fi:sub(d.fi),wi:sub(d.wi),ni:sub(d.ni),ri:sub(d.ri),hp:d.hp,ns:keep.length};
+  if(d.hp){nd.bp=sub(d.bp);nd.sp=sub(d.sp);nd.pp=sub(d.pp);
+           nd.bpd=sub(d.bpd);nd.spd=sub(d.spd);nd.ppd=sub(d.ppd);}
+  nd.np=cnt(nd.p); nd.npd=cnt(nd.pd);
+  nd.nps=d.hp?cnt(nd.pp):null; nd.npsd=d.hp?cnt(nd.ppd):null;
+  return nd;
+}
+
+/* which (near,far) ring pairs actually exist for the current crime/prop */
+function validRingPairs(){
+  var ct=document.getElementById('crime-select').value;
+  var pt=document.getElementById('prop-select').value;
+  var node=(DATA[ct]&&DATA[ct][pt])?DATA[ct][pt]:null;
+  var set={};
+  if(node) Object.keys(node).forEach(function(mk){
+    var d=node[mk];
+    for(var k=0;k<d.ns;k++) set[d.ni[k]+'_'+d.ri[k]]=1;
+  });
+  return set;
+}
+
+/* Rebuild the Far-ring dropdown to only rings that co-occur with the selected
+   Near ring. The battery pairs each near ring with specific far bands (the wide
+   0.20-0.30 far ring only exists for the headline near 0-0.05). */
+function repopulateFar(){
+  var ns=document.getElementById('near-select'), fs=document.getElementById('far-select');
+  if(!ns||!fs) return;
+  var pairs=validRingPairs();
+  var nSel=ns.value, nIdx=(nSel==='all')?-1:NL.indexOf(nSel);
+  var ok={};
+  Object.keys(pairs).forEach(function(key){
+    var p=key.split('_'), ni=+p[0], ri=+p[1];
+    if(nIdx<0 || ni===nIdx) ok[ri]=1;
+  });
+  var prev=fs.value;
+  fs.innerHTML='';
+  var aF=document.createElement('option');aF.value='all';aF.textContent='All far rings';fs.appendChild(aF);
+  RL.forEach(function(lbl,ri){ if(ok[ri]){var o=document.createElement('option');o.value=lbl;o.textContent=lbl+' mi';fs.appendChild(o);} });
+  var vals=Array.prototype.map.call(fs.options,function(o){return o.value;});
+  if(nSel==='all') fs.value='all';                 /* All near rings → show all far too */
+  else if(vals.indexOf(prev)>=0) fs.value=prev;
+  else if(vals.indexOf('0.20-0.30')>=0) fs.value='0.20-0.30';
+  else fs.value = vals.length>1 ? vals[1] : 'all';
+}
 
 function rgba(hex,a){
   var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),
@@ -1466,11 +1630,54 @@ function rgba(hex,a){
   return 'rgba('+r+','+g+','+b+','+a+')';
 }
 
+/* Hide prop-select options that don't have data for the current crime type.
+   Auto-switch the prop selection if the current one is unavailable. */
+function syncPropDropdown(){
+  var ct = document.getElementById('crime-select').value;
+  var sel = document.getElementById('prop-select');
+  var avail = (DATA[ct] && typeof DATA[ct] === 'object') ? Object.keys(DATA[ct]) : [];
+  var firstAvail = null;
+  for(var i = 0; i < sel.options.length; i++){
+    var opt = sel.options[i];
+    if(opt.disabled && opt.value === 'Multi'){ continue; }  /* keep "running" placeholder visible */
+    var ok = avail.indexOf(opt.value) >= 0;
+    opt.hidden = !ok;
+    opt.disabled = !ok;
+    if(ok && firstAvail === null) firstAvail = opt.value;
+  }
+  if(avail.indexOf(sel.value) < 0 && firstAvail !== null){
+    sel.value = firstAvail;
+  }
+}
+
+function onCrimeChange(){
+  syncPropDropdown();
+  render();
+}
+
 function render(){
   var ct = document.getElementById('crime-select').value;
   var pt = document.getElementById('prop-select').value;
+  repopulateFar();  /* keep Far options valid for the selected Near ring */
   var isDelta = true;
   var disp = document.getElementById('display');
+
+  /* update crime-composition panel: what NIBRS groups make up this composite */
+  var compPanel = document.getElementById('crime-composition');
+  if(compPanel){
+    var comp = VIS_COMPOSITION[ct];
+    if(comp){
+      var pillStyle = 'display:inline-block;background:#fff;border:1px solid #d3d1c7;border-radius:14px;padding:2px 10px;margin:2px 4px 2px 0;font-size:11px;color:#3a3a37;';
+      var excludedStyle = 'display:inline-block;background:transparent;border:1px dashed #c8c5b8;border-radius:14px;padding:2px 10px;margin:2px 4px 2px 0;font-size:11px;color:#8a8780;';
+      compPanel.innerHTML =
+        '<div style="font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#b48a3b;margin-bottom:4px;">' + (CL[ct]||ct) + '</div>' +
+        '<div style="font-style:italic;margin-bottom:6px;color:#4a4a45;">' + comp.label + '</div>' +
+        '<div>' + comp.groups.map(function(g){return '<span style="'+pillStyle+'">'+g+'</span>';}).join('') + '</div>' +
+        (VIS_EXCLUDED && VIS_EXCLUDED.length>0 ? '<div style="font-size:10px;margin-top:6px;color:#8a8780;"><span style="font-weight:600;">Excluded from all composites:</span> ' + VIS_EXCLUDED.map(function(g){return '<span style="'+excludedStyle+'">'+g+'</span>';}).join('') + '</div>' : '');
+    } else {
+      compPanel.innerHTML = '';
+    }
+  }
 
   /* purge old plots */
   var oldPlots = disp.querySelectorAll('.card-plot');
@@ -1497,7 +1704,13 @@ function render(){
   checked.forEach(function(combo){
     var mk = combo.mk;
     if(!DATA[ct][pt][mk]) return;
-    var d = DATA[ct][pt][mk];
+    var d = applyRingFilter(DATA[ct][pt][mk]);
+    if(d.ns===0){
+      var c0=document.createElement('div'); c0.className='card';
+      c0.innerHTML='<div class="card-title"><span style="color:'+modelColor(combo.het,combo.pc,combo.sel)+'">&#9632;</span> '+modelLabel(combo.het,combo.pc,combo.sel)+'</div>'+
+        '<div style="padding:18px 20px;font-size:12px;color:#888;">No specifications match the selected near/far ring filter.</div>';
+      disp.appendChild(c0); return;
+    }
     var n = d.ns, color = modelColor(combo.het,combo.pc,combo.sel), hasPost = d.hp;
 
     /* pick arrays based on metric */
@@ -1514,11 +1727,30 @@ function render(){
     var ord = Array.from({length:n},function(_,i){return i});
     ord.sort(function(a,b){return preB[a]-preB[b]});
 
+    /* ── adaptive indicator panel: only show categories that actually vary ── */
+    var activeCats = CATS.filter(function(cat){
+      var seen={},c=0;
+      for(var k=0;k<n;k++){var v=d[cat.key][k]; if(seen[v]===undefined){seen[v]=1;c++;}}
+      return c>1;
+    });
+    if(activeCats.length===0) activeCats=[CATS[0]];
+    var ind = indLayoutFor(activeCats);
+    /* fixed row height + fixed coefficient strips → never cramped, never stretched */
+    var ROWPX=11, COEFPX=175, GAPPX=30;
+    var indUnits = ind.tv.length + (activeCats.length-1)*0.6;
+    var indPx = indUnits*ROWPX;
+    var placePx = hasPost?COEFPX:0;
+    var Hpx = COEFPX + GAPPX + indPx + (hasPost?(GAPPX+placePx):0);
+    var dPlaceTop = placePx/Hpx;
+    var dIndBot = (placePx + (hasPost?GAPPX:0))/Hpx;
+    var dIndTop = dIndBot + indPx/Hpx;
+    var dMainBot = dIndTop + GAPPX/Hpx;
+
     /* card DOM */
     var card = document.createElement('div'); card.className='card';
     var title = document.createElement('div'); title.className='card-title';
     var metLabel = isDelta ? ' (\\u03b4)' : '';
-    var ptLabel = pt !== 'All' ? ' \\u2014 '+PT_LABELS[pt] : '';
+    var ptLabel = (pt !== 'All' && pt !== 'ALL_') ? ' \\u2014 '+(PT_LABELS[pt]||PL[pt]||pt) : '';
     title.innerHTML = '<span style="color:'+color+'">&#9632;</span> '+modelLabel(combo.het,combo.pc,combo.sel)+' \\u2014 '+CL[ct]+ptLabel+metLabel;
     card.appendChild(title);
 
@@ -1554,8 +1786,8 @@ function render(){
 
     if(preNsX.length>0) traces.push({
       x:preNsX,y:preNsY,
-      error_y:{type:'data',array:preNsE,visible:true,color:'rgba(160,158,150,0.25)',thickness:0.3,width:0},
-      mode:'markers',marker:{size:3,color:'#a0a098',opacity:0.45},
+      error_y:{type:'data',array:preNsE,visible:true,color:'rgba(110,110,102,0.4)',thickness:0.3,width:0},
+      mode:'markers',marker:{size:3,color:'#6e6e66',opacity:0.65},
       hovertemplate:'%{customdata}<extra></extra>',customdata:preNsH,
       hoverlabel:{bgcolor:'#faf9f7',bordercolor:'#d3d1c7',font:{size:11,family:'Inter',color:'#b4b2a9'}},
       showlegend:false,xaxis:'x',yaxis:'y'
@@ -1570,38 +1802,37 @@ function render(){
     });
     if(preBothX.length>0) traces.push({
       x:preBothX,y:preBothY,
-      error_y:{type:'data',array:preBothE,visible:true,color:'rgba(232,160,160,0.3)',thickness:0.5,width:1},
-      mode:'markers',marker:{size:3,color:'#e8a0a0',opacity:0.8},
+      error_y:{type:'data',array:preBothE,visible:true,color:'rgba(232,160,160,0.5)',thickness:1,width:2},
+      mode:'markers',marker:{size:5,color:'#e8a0a0',opacity:1.0},
       hovertemplate:'%{customdata}<extra></extra>',customdata:preBothH,
-      hoverlabel:{bgcolor:'white',bordercolor:'#d3d1c7',font:{size:11,family:'Inter',color:'#4a4a46'}},
+      hoverlabel:{bgcolor:'white',bordercolor:'#e8a0a0',font:{size:11,family:'Inter',color:'#4a4a46'}},
       showlegend:false,xaxis:'x',yaxis:'y'
     });
 
-    /* Row 2: indicator dots (using same sort order) */
-    var dots = {none:{x:[],y:[]},pre:{x:[],y:[]},post:{x:[],y:[]},both:{x:[],y:[]}};
+    /* Row 2: indicator grid — solid square at each spec's SELECTED option per
+       category; light grey square for non-selected. Encodes the analytical
+       choice (which window / near ring / far ring), not significance. */
+    var selX=[],selY=[],bgX=[],bgY=[];
     for(var xi=0;xi<n;xi++){
       var j = ord[xi];
-      var sp = preP[j]<0.05;
-      var spo = (hasPost && postP) ? postP[j]<0.05 : false;
-      var g = (sp&&spo)?'both':sp?'pre':spo?'post':'none';
-      dots[g].x.push(xi); dots[g].y.push(IND.pos['0_'+d.fi[j]]);
-      dots[g].x.push(xi); dots[g].y.push(IND.pos['1_'+d.wi[j]]);
-      dots[g].x.push(xi); dots[g].y.push(IND.pos['2_'+d.ni[j]]);
-      dots[g].x.push(xi); dots[g].y.push(IND.pos['3_'+d.ri[j]]);
-    }
-    var dS = {
-      none:{color:'gray',opacity:0.2,size:3},
-      pre:{color:color,opacity:0.85,size:4},
-      post:{color:'#27ae60',opacity:0.85,size:4},
-      both:{color:'#e8a0a0',opacity:0.9,size:5}
-    };
-    ['none','pre','post','both'].forEach(function(g){
-      if(dots[g].x.length>0) traces.push({
-        x:dots[g].x,y:dots[g].y,mode:'markers',
-        marker:{size:dS[g].size,color:dS[g].color,opacity:dS[g].opacity,symbol:'square'},
-        showlegend:false,hoverinfo:'skip',xaxis:'x2',yaxis:'y2'
+      activeCats.forEach(function(cat,ci){
+        var activeOi = d[cat.key][j];
+        cat.labels.forEach(function(lbl,oi){
+          var yy = ind.pos[ci+'_'+oi];
+          if(yy===undefined) return;
+          if(oi===activeOi){ selX.push(xi); selY.push(yy); }
+          else { bgX.push(xi); bgY.push(yy); }
+        });
       });
-    });
+    }
+    /* non-selected: light grey grid */
+    traces.push({x:bgX,y:bgY,mode:'markers',
+      marker:{size:3,color:'#d8d5cc',opacity:0.5,symbol:'square'},
+      showlegend:false,hoverinfo:'skip',xaxis:'x2',yaxis:'y2'});
+    /* selected: solid, model-colored */
+    traces.push({x:selX,y:selY,mode:'markers',
+      marker:{size:4,color:color,opacity:1.0,symbol:'square'},
+      showlegend:false,hoverinfo:'skip',xaxis:'x2',yaxis:'y2'});
 
     /* Row 3: post-sale placebo (if exists) — green/gray scheme, distinct from main. */
     if(hasPost && postB){
@@ -1619,8 +1850,8 @@ function render(){
       }
       if(postNsX.length>0) traces.push({
         x:postNsX,y:postNsY,
-        error_y:{type:'data',array:postNsE,visible:true,color:'rgba(160,158,150,0.25)',thickness:0.3,width:0},
-        mode:'markers',marker:{size:3,color:'#a0a098',opacity:0.45},
+        error_y:{type:'data',array:postNsE,visible:true,color:'rgba(110,110,102,0.4)',thickness:0.3,width:0},
+        mode:'markers',marker:{size:3,color:'#6e6e66',opacity:0.65},
         hovertemplate:'%{customdata}<extra></extra>',customdata:postNsH,
         hoverlabel:{bgcolor:'#faf9f7',bordercolor:'#d3d1c7',font:{size:11,family:'Inter',color:'#b4b2a9'}},
         showlegend:false,xaxis:'x3',yaxis:'y3'
@@ -1636,13 +1867,14 @@ function render(){
     }
 
     /* y-axis range (symmetric, shared between pre and post) */
+    /* y-axis range — include 95% CI half-widths so error bars don't get cropped */
     var ymxP = 0;
-    for(var i=0;i<n;i++) ymxP = Math.max(ymxP, Math.abs(preB[i]));
-    var ymx = ymxP * 1.15;
+    for(var i=0;i<n;i++) ymxP = Math.max(ymxP, Math.abs(preB[i]) + 1.96 * (preS ? preS[i] : 0));
+    var ymx = ymxP * 1.08;
     if(hasPost && postB){
       var ymxQ = 0;
-      for(var i=0;i<n;i++) ymxQ = Math.max(ymxQ, Math.abs(postB[i]));
-      ymx = Math.max(ymx, ymxQ * 1.15);
+      for(var i=0;i<n;i++) ymxQ = Math.max(ymxQ, Math.abs(postB[i]) + 1.96 * (postS ? postS[i] : 0));
+      ymx = Math.max(ymx, ymxQ * 1.08);
     }
     if(ymx < 0.01) ymx = 0.05;
 
@@ -1653,7 +1885,7 @@ function render(){
     }];
 
     /* category separator lines */
-    IND.bounds.forEach(function(bd){
+    ind.bounds.forEach(function(bd){
       if(bd.s>0) shapes.push({
         type:'line',x0:-10,x1:n+10,y0:bd.s-0.3,y1:bd.s-0.3,
         xref:'x2',yref:'y2',line:{color:'#d3d1c7',width:0.5}
@@ -1661,7 +1893,7 @@ function render(){
     });
 
     /* category label annotations */
-    var anns = IND.bounds.map(function(bd){
+    var anns = ind.bounds.map(function(bd){
       return {text:'<b>'+bd.name+'</b>',x:1.01,y:(bd.s+bd.e)/2,
         xref:'paper',yref:'y2',showarrow:false,
         font:{size:9,color:'#888780'},xanchor:'left',yanchor:'middle'};
@@ -1673,7 +1905,7 @@ function render(){
       font:{size:10,color:color},xanchor:'center',yanchor:'bottom'});
 
     var lay = {
-      height: hasPost ? 650 : 500,
+      height: Hpx,
       showlegend:false,
       margin:{l:60,r:55,t:10,b:20},
       font:{family:'Inter,sans-serif',size:12,color:'#1a1a18'},
@@ -1682,14 +1914,14 @@ function render(){
       xaxis: {domain:[0,0.94],showticklabels:false,showgrid:false,zeroline:false,anchor:'y'},
       xaxis2:{domain:[0,0.94],showticklabels:false,showgrid:false,zeroline:false,anchor:'y2',matches:'x'},
       yaxis: {
-        domain:hasPost?[0.52,1.0]:[0.42,1.0],anchor:'x',
+        domain:[dMainBot,1.0],anchor:'x',
         title:{text:isDelta?'\\u03b4\\u00d7100  (% \\u0394 price)':'\\u03b2_near\\u00d7100  (% \\u0394 price)',font:{size:11}},
         gridcolor:'#d3d1c7',zeroline:false,range:[-ymx,ymx]
       },
       yaxis2:{
-        domain:hasPost?[0.18,0.50]:[0.0,0.40],anchor:'x2',
-        tickmode:'array',tickvals:IND.tv,ticktext:IND.tt,
-        tickfont:{size:7.5},gridcolor:'rgba(0,0,0,0)',zeroline:false,
+        domain:[dIndBot,dIndTop],anchor:'x2',
+        tickmode:'array',tickvals:ind.tv,ticktext:ind.tt,
+        tickfont:{size:8},gridcolor:'rgba(0,0,0,0)',zeroline:false,
         autorange:'reversed'
       },
       shapes:shapes,
@@ -1699,7 +1931,7 @@ function render(){
     if(hasPost){
       lay.xaxis3 = {domain:[0,0.94],showticklabels:false,showgrid:false,zeroline:false,anchor:'y3',matches:'x'};
       lay.yaxis3 = {
-        domain:[0.0,0.15],anchor:'x3',
+        domain:[0.0,dPlaceTop],anchor:'x3',
         title:{text:'Placebo: '+(isDelta?'\\u03b4\\u00d7100  (% \\u0394 price)':'\\u03b2_near\\u00d7100  (% \\u0394 price)'),font:{size:11}},
         gridcolor:'#d3d1c7',zeroline:false,range:[-ymx,ymx]
       };
@@ -1707,8 +1939,8 @@ function render(){
         type:'line',x0:-10,x1:n+10,y0:0,y1:0,
         xref:'x3',yref:'y3',line:{color:'black',width:0.8,dash:'dot'}
       });
-      anns.push({text:'<b>Placebo (sale before crime) \u2014 '+nPostSig+'/'+n+' sig ('+Math.round(100*nPostSig/n)+'%)</b>',x:0.47,y:0.16,
-        xref:'paper',yref:'paper',showarrow:false,
+      anns.push({text:'<b>Placebo (sale before crime) \u2014 '+nPostSig+'/'+n+' sig ('+Math.round(100*nPostSig/n)+'%)</b>',x:0.47,y:(dPlaceTop+dIndBot)/2,
+        xref:'paper',yref:'paper',showarrow:false,yanchor:'middle',
         font:{size:10,color:'#27ae60'},xanchor:'center'});
     }
 
@@ -1731,8 +1963,17 @@ function render(){
       'though we cannot cleanly distinguish \u2018no salience effect\u2019 from \u2018identification failure.\u2019';
     disp.appendChild(caveat);
   }
+
+  /* tell the embedding iframe our height so it fits the (variable) plot exactly */
+  if(EMBED){
+    setTimeout(function(){
+      if(window.parent) window.parent.postMessage({specHeight: document.body.scrollHeight}, '*');
+    }, 80);
+  }
 }
 
+initRingFilters();
+syncPropDropdown();
 render();
 </script>
 </body>

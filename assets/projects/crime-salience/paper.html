@@ -289,12 +289,20 @@ body{margin:0;font-family:'Inter',system-ui,sans-serif;color:#1a1a18;background:
   <div class="prose">
     <p>Each robustness check addresses a specific threat to identification.</p>
 
-    <h3>Specification Curve</h3>
-    <p>Over 2,000 specifications varying the fixed effects structure, time window, spatial ring definitions, and estimator. Blue = significant in main only (clean), pink = significant in both main and placebo, gray = not significant.</p>
+    <h3>Specification Curve — Visibility Gradient</h3>
+    <p>Specifications vary by FE structure × time window × valid near-ring definitions (≤ 0.20 mi) on residential repeat sales. Per-tier window filters: <strong>Vis-3</strong> uses 4–12m windows (1–3m have too few events for stable identification of common-but-low-magnitude effects); <strong>Vis-4</strong> keeps all 1–12m windows (rare-event tier — every cell is informative and the hierarchical Bayesian pooled estimate uses them all). "Near" rings beyond 0.20 mi (0.20-0.25, 0.25-0.30) and the original distant-ring tests (>0.30 mi) are all moved to the <em>spatial placebo</em> battery (384 specs per tier), which finds <strong>0/384 sig for Vis-3 and 18/384 sig (4.7%, at chance) for Vis-4</strong> — confirming the near-far identification is spatially specific. Vis-2, Vis-1, Vis-0 will populate the dropdown when their composite rebuilds complete. "All other offenses" (NIBRS catch-all) is excluded from every composite. Blue = significant in main only, pink = significant in both main and placebo, gray = not significant. For Vis-4 in particular, per-cell significance is rare due to event scarcity — the hierarchical Bayesian pooled estimate (μ = −0.060%, 95% CrI [−0.065%, −0.055%], P(μ&lt;0)=1.00) uses all 2,256 spec cells.</p>
   </div>
-  <div class="results-wrap" style="margin:0 32px 24px;border:1px solid #d3d1c7;border-radius:10px;overflow:hidden;background:#fff;">
-    <iframe src="spec_explorer.html?embed=1" scrolling="no" style="width:100%;height:1100px;border:none;display:block;"></iframe>
+  <div class="results-wrap" style="margin:0 8px 24px;border:1px solid #d3d1c7;border-radius:10px;overflow:hidden;background:#fff;">
+    <iframe id="spec-iframe" src="spec_explorer.html?embed=1" scrolling="no" style="width:100%;height:820px;border:none;display:block;"></iframe>
   </div>
+  <script>
+  window.addEventListener('message', function(e){
+    if(e.data && typeof e.data.specHeight==='number'){
+      var f=document.getElementById('spec-iframe');
+      if(f) f.style.height=(e.data.specHeight+8)+'px';
+    }
+  });
+  </script>
   <div class="prose">
     <div class="grid">
       <div class="check-card">
@@ -353,6 +361,57 @@ body{margin:0;font-family:'Inter',system-ui,sans-serif;color:#1a1a18;background:
       <li><strong>PIN + CA&times;Year + Year-Month:</strong> Separates neighborhood annual trends from city-wide monthly shocks.</li>
       <li><strong>PIN + Tract&times;Month:</strong> Finest geography&mdash;absorbs tract-level monthly variation.</li>
     </ul>
+
+    <h3>Salience Mechanism &mdash; Visibility Gradient</h3>
+    <p>The salience theory makes a sharper prediction than &ldquo;crime hurts prices.&rdquo; If buyers price what they <em>perceive</em> rather than what is technically present, then the per-incident price response should scale with the <strong>visibility</strong> of the offense. We construct five graded crime composites and one purely intangible placebo, ranked by their observability to passersby and prospective buyers.</p>
+
+    <div style="overflow-x:auto;margin:18px 0;">
+    <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+      <thead>
+        <tr style="border-bottom:2px solid #444;background:#f5f4ef;">
+          <th style="padding:8px 12px;text-align:left;">Treatment</th>
+          <th style="padding:8px 12px;text-align:left;">Composition (offense groups)</th>
+          <th style="padding:8px 12px;text-align:left;">Methodological role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #ddd;">
+          <td style="padding:8px 12px;"><strong>Vis-4</strong></td>
+          <td style="padding:8px 12px;">homicide, robbery, arson</td>
+          <td style="padding:8px 12px;">Strongest predicted effect</td>
+        </tr>
+        <tr style="border-bottom:1px solid #ddd;">
+          <td style="padding:8px 12px;"><strong>Vis-3</strong></td>
+          <td style="padding:8px 12px;">assault (non-domestic), vandalism, burglary, motor-vehicle theft</td>
+          <td style="padding:8px 12px;">Strong predicted effect</td>
+        </tr>
+        <tr style="border-bottom:1px solid #ddd;">
+          <td style="padding:8px 12px;"><strong>Vis-2</strong></td>
+          <td style="padding:8px 12px;">drug-deal, prostitution, trespass, disorderly conduct, gambling-street</td>
+          <td style="padding:8px 12px;">Moderate predicted effect</td>
+        </tr>
+        <tr style="border-bottom:1px solid #ddd;">
+          <td style="padding:8px 12px;"><strong>Vis-1</strong></td>
+          <td style="padding:8px 12px;">sex offenses, kidnapping, weapons possession, assault (domestic), liquor</td>
+          <td style="padding:8px 12px;">Near-null (hidden-spatial placebo)</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 12px;"><strong>Vis-0</strong></td>
+          <td style="padding:8px 12px;">fraud, embezzlement, forgery, bribery, family offenses, pornography, trafficking</td>
+          <td style="padding:8px 12px;">Pure intangible placebo</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p><strong>Test prediction:</strong> a monotonic gradient <code>&delta;<sub>Vis-4</sub> &gt; &delta;<sub>Vis-3</sub> &gt; &delta;<sub>Vis-2</sub> &gt; &delta;<sub>Vis-1</sub> &gt; &delta;<sub>Vis-0</sub> &approx; 0</code>. We test this with a linear regression of the spec-curve median <code>&delta;&#770;</code> on the visibility score (0&ndash;4); the salience theory predicts a positive slope with non-decreasing means and a near-zero estimate at the bottom of the ladder. Sharper than a binary spatial / non-spatial test because it imposes a continuous ordering tied directly to the perceptibility mechanism.</p>
+
+    <h3>Within-Paper Visibility Placebo &mdash; Domestic Crime</h3>
+    <p>Domestic-flagged offenses are a particularly clean within-paper placebo for the salience mechanism. Unlike the Vis-0 paperwork composite (which lacks a spatial locus by construction), domestic crimes occur at well-defined addresses and are recorded with the same geocoding precision as any other CPD incident&mdash;but the events themselves take place inside the household and produce no external observable cue to passersby. The salience prediction is therefore unambiguous: a high event-rate crime category whose locus is geographically real but perceptually invisible should produce a near-zero near&ndash;far gradient, even though the same underlying spatial-correlation patterns that drive selection-into-sample exposure are present.</p>
+
+    <p><strong>Headline cell</strong> (Case&ndash;Shiller GLS with persistence controls, PIN + CA&times;Month FE, 6-month pre-sale window, 0&ndash;0.05 mi near vs 0.20&ndash;0.30 mi far, all properties, <em>N</em>&nbsp;=&nbsp;385{,}152): <code>&beta;<sub>near</sub> = +0.054%</code> (<code>p = 0.74</code>), <code>&beta;<sub>far</sub> = &minus;0.030%</code> (<code>p = 0.48</code>), <code>&delta; = +0.084%</code> (<code>p = 0.62</code>). All four fixed-effects specifications (PIN + CA&times;Month, PIN + YM, PIN + CA&times;Year + YM, PIN + Tract&times;Month) yield positive point estimates between +0.07% and +0.23% with <code>p &gt; 0.25</code>; none is statistically distinguishable from zero. Across the 1{,}728 canonical-near-ring main specifications, <strong>3.3%</strong> reach <code>p<sub>&delta;</sub> &lt; 0.05</code> (53 negative, 4 positive) &mdash; close to the two-sided 5% chance rate and substantially below the 22.8% all-crime rate, with median <code>&delta;&#770; = &minus;0.032%</code> centered tightly around zero.</p>
+
+    <p>The contrast with all-crime headline (<code>&delta; = &minus;0.080%</code>, <code>p &lt; 0.001</code>) is what the salience theory predicts: events that <em>are</em> geographically present but <em>are not</em> observable do not capitalize. Use the explorer below to inspect the domestic spec curve directly (Crime Type &rarr; <em>Domestic (within-paper placebo)</em>).</p>
   </div>
 </div>
 
