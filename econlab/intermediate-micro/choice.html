@@ -354,9 +354,18 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-picture" id="toc-the-picture" class="nav-link active" data-scroll-target="#the-picture">The picture</a></li>
-  <li><a href="#cobb-douglas-the-closed-form-workhorse" id="toc-cobb-douglas-the-closed-form-workhorse" class="nav-link" data-scroll-target="#cobb-douglas-the-closed-form-workhorse">Cobb-Douglas: the closed-form workhorse</a></li>
-  <li><a href="#when-the-tangency-rule-fails" id="toc-when-the-tangency-rule-fails" class="nav-link" data-scroll-target="#when-the-tangency-rule-fails">When the tangency rule fails</a></li>
+  <li><a href="#where-we-are" id="toc-where-we-are" class="nav-link active" data-scroll-target="#where-we-are">Where we are</a></li>
+  <li><a href="#solve-it-by-picture-first" id="toc-solve-it-by-picture-first" class="nav-link" data-scroll-target="#solve-it-by-picture-first">Solve it by picture first</a></li>
+  <li><a href="#two-conditions-at-the-optimum" id="toc-two-conditions-at-the-optimum" class="nav-link" data-scroll-target="#two-conditions-at-the-optimum">Two conditions at the optimum</a></li>
+  <li><a href="#why-tangency-the-bite-of-apple-test" id="toc-why-tangency-the-bite-of-apple-test" class="nav-link" data-scroll-target="#why-tangency-the-bite-of-apple-test">Why tangency? The bite-of-apple test</a></li>
+  <li><a href="#cobb-douglas-the-worked-example" id="toc-cobb-douglas-the-worked-example" class="nav-link" data-scroll-target="#cobb-douglas-the-worked-example">Cobb-Douglas: the worked example</a></li>
+  <li><a href="#when-tangency-fails-corner-and-kinky-solutions" id="toc-when-tangency-fails-corner-and-kinky-solutions" class="nav-link" data-scroll-target="#when-tangency-fails-corner-and-kinky-solutions">When tangency fails: corner and kinky solutions</a>
+  <ul class="collapse">
+  <li><a href="#perfect-substitutes-corner-solution" id="toc-perfect-substitutes-corner-solution" class="nav-link" data-scroll-target="#perfect-substitutes-corner-solution">Perfect substitutes (corner solution)</a></li>
+  <li><a href="#non-convex-preferences-also-a-corner" id="toc-non-convex-preferences-also-a-corner" class="nav-link" data-scroll-target="#non-convex-preferences-also-a-corner">Non-convex preferences (also a corner)</a></li>
+  <li><a href="#perfect-complements-kinky-solution" id="toc-perfect-complements-kinky-solution" class="nav-link" data-scroll-target="#perfect-complements-kinky-solution">Perfect complements (kinky solution)</a></li>
+  </ul></li>
+  <li><a href="#the-general-pattern" id="toc-the-general-pattern" class="nav-link" data-scroll-target="#the-general-pattern">The general pattern</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -364,7 +373,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 <div style="background:#fff8e7; border-left:4px solid #d4a017; padding:12px 18px; margin:0 0 22px 0; font-size:0.9em; color:#2c3e50; border-radius:0 6px 6px 0; line-height:1.55;">
-  <strong>Course attribution.</strong> This is a simulation companion to <strong>ECON 360 — Intermediate Microeconomics</strong> at Binghamton University. The course content, slide structure, and pedagogical approach are the work of <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Professor David Slichter</a>; these pages add interactive Shinylive simulations to his materials.
+  <strong>About this page.</strong> This is a simulation-based companion to <strong>ECON 360 — Intermediate Microeconomics</strong> at Binghamton University. The lecture order, conceptual frame (the recurring "agents pursue goals subject to constraints" rail), terminology (e.g. budget <em>set</em> vs. budget <em>constraint</em>, ordinary demand, kinky solutions), running examples (Wegmans apples and bananas, the monopolist's burrito-MR puzzle), and pedagogical structure are adapted from <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Professor David Slichter</a>'s ECON 360 lecture slides. The exposition, derivations, and interactive Shinylive simulations were written independently by Nency Dhameja and are not transcriptions of the slides.
 </div>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./budget.html">Consumer Theory</a></li><li class="breadcrumb-item"><a href="./choice.html">Choice</a></li></ol></nav>
@@ -386,29 +395,81 @@ window.Quarto = {
 </header>
 
 
-<section id="the-picture" class="level2">
-<h2 class="anchored" data-anchor-id="the-picture">The picture</h2>
-<p>The consumer wants to reach the highest indifference curve they can afford. Geometrically, the optimum is where the indifference curve <strong>just touches</strong> the budget line — they are tangent.</p>
-<p>At the tangency, the slope of the indifference curve (the <strong>marginal rate of substitution</strong>, MRS) equals the slope of the budget line (the <strong>price ratio</strong>):</p>
-<p><span class="math display">\[
-\text{MRS}_{12} = \frac{p_1}{p_2}.
-\]</span></p>
-<p>That’s it. Every interior consumer choice problem reduces to this condition, plus the budget constraint <span class="math inline">\(p_1 x_1 + p_2 x_2 = m\)</span>.</p>
+<section id="where-we-are" class="level2">
+<h2 class="anchored" data-anchor-id="where-we-are">Where we are</h2>
+<p>We’ve built two ingredients separately. From the <a href="budget.html">Budget</a> lecture we have the <strong>affordable set</strong> — every bundle the consumer can pay for. From the preferences/utility lectures we have <strong>what they want</strong> — a ranking over bundles, with higher indifference curves preferred to lower ones. Now we combine them.</p>
+<p>The basic idea isn’t subtle. Agents have goals (their preferences) and face constraints (their budget). They pick whichever bundle is <strong>most preferred among the bundles that are feasible</strong>. This lecture is about turning that sentence into a picture and into algebra.</p>
 </section>
-<section id="cobb-douglas-the-closed-form-workhorse" class="level2">
-<h2 class="anchored" data-anchor-id="cobb-douglas-the-closed-form-workhorse">Cobb-Douglas: the closed-form workhorse</h2>
-<p>If preferences are Cobb-Douglas — <span class="math inline">\(u(x_1, x_2) = x_1^\alpha x_2^{1-\alpha}\)</span> with <span class="math inline">\(0 &lt; \alpha &lt; 1\)</span> — then the MRS is</p>
-<p><span class="math display">\[
-\text{MRS}_{12} = \frac{\partial u/\partial x_1}{\partial u/\partial x_2} = \frac{\alpha}{1 - \alpha} \cdot \frac{x_2}{x_1}.
-\]</span></p>
-<p>Setting MRS equal to the price ratio and using the budget constraint gives the optimal bundle:</p>
-<p><span class="math display">\[
-\boxed{\; x_1^* = \alpha \cdot \frac{m}{p_1}, \qquad x_2^* = (1 - \alpha) \cdot \frac{m}{p_2}. \;}
-\]</span></p>
-<p>Two things worth noticing:</p>
+<section id="solve-it-by-picture-first" class="level2">
+<h2 class="anchored" data-anchor-id="solve-it-by-picture-first">Solve it by picture first</h2>
+<p>There’s a fancy machinery called Karush-Kuhn-Tucker optimization that handles constrained-choice problems in full generality. We’re not going to use it. For an undergraduate microeconomics course the right method is simpler:</p>
 <ol type="1">
-<li><strong>The consumer spends a fixed share of income on each good.</strong> Spending on <span class="math inline">\(x_1\)</span> is <span class="math inline">\(p_1 x_1^* = \alpha m\)</span>. Spending on <span class="math inline">\(x_2\)</span> is <span class="math inline">\((1 - \alpha) m\)</span>. That’s why Cobb-Douglas is so popular as a workhorse model — the math is one line.</li>
-<li><strong>Demand for <span class="math inline">\(x_1\)</span> doesn’t depend on <span class="math inline">\(p_2\)</span>.</strong> Cross-price effects are zero. That’s not a feature of the world — it’s a feature of Cobb-Douglas. More flexible utility functions (CES, quasilinear) break this.</li>
+<li>Draw the budget set.</li>
+<li>Draw a few indifference curves.</li>
+<li>Find the highest indifference curve that still touches the budget set.</li>
+<li>The point of contact is the consumer’s choice.</li>
+</ol>
+<p>For “well-behaved” preferences (smooth, downward-sloping, convex indifference curves), step 3 has a clean visual: the highest reachable indifference curve <strong>just touches</strong> the budget line — they’re tangent. Tangency is what we want to find.</p>
+<p>The bundle at the tangency point is called the consumer’s <strong>ordinary demand</strong> for the given prices and income, and we’ll denote it <span class="math display">\[
+\bigl(x_1^*(p_1, p_2, m),\; x_2^*(p_1, p_2, m)\bigr).
+\]</span> The notation is verbose but useful: it reminds you that the optimal bundle depends on every input the consumer faces.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Two terms worth getting straight.</strong></p>
+<ul>
+<li>An <strong>interior</strong> optimum has <span class="math inline">\(x_1^* &gt; 0\)</span> and <span class="math inline">\(x_2^* &gt; 0\)</span> — the consumer buys some of both goods.</li>
+<li>The budget is <strong>exhausted</strong> if <span class="math inline">\(p_1 x_1^* + p_2 x_2^* = m\)</span> — every dollar is spent. For well-behaved preferences with no satiation, exhausting the budget is the only way to maximize utility (any unspent dollar could buy a little more of either good and raise utility).</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="two-conditions-at-the-optimum" class="level2">
+<h2 class="anchored" data-anchor-id="two-conditions-at-the-optimum">Two conditions at the optimum</h2>
+<p>For well-behaved preferences with an interior optimum, the optimal bundle <span class="math inline">\((x_1^*, x_2^*)\)</span> satisfies two conditions:</p>
+<p><strong>(a) Budget exhausted:</strong> <span class="math display">\[
+p_1 x_1^* + p_2 x_2^* = m.
+\]</span></p>
+<p><strong>(b) Tangency:</strong> the slope of the indifference curve at <span class="math inline">\((x_1^*, x_2^*)\)</span> equals the slope of the budget constraint: <span class="math display">\[
+\underbrace{-\,\frac{MU_1(x_1^*, x_2^*)}{MU_2(x_1^*, x_2^*)}}_{\text{IC slope}}
+\;=\;
+\underbrace{-\,\frac{p_1}{p_2}}_{\text{budget slope}}.
+\]</span></p>
+<p>That’s it. Two equations, two unknowns (<span class="math inline">\(x_1^*, x_2^*\)</span>), one bundle. Every interior consumer-choice problem in the course boils down to this.</p>
+</section>
+<section id="why-tangency-the-bite-of-apple-test" class="level2">
+<h2 class="anchored" data-anchor-id="why-tangency-the-bite-of-apple-test">Why tangency? The bite-of-apple test</h2>
+<p>Imagine apples and bananas cost the same. At the optimum, one more bite of apple must be as satisfying as one more bite of banana — if not, you could move utility <em>up</em> by reallocating your spending toward whichever bite was tastier per dollar. The optimum is exactly where you can’t improve by such a tweak.</p>
+<p>Now suppose apples are <span class="math inline">\(k\)</span> times as expensive as bananas. At the optimum, one more bite of apple must be as satisfying as <span class="math inline">\(k\)</span> more bites of banana — because spending one apple’s worth of money on bananas gets you <span class="math inline">\(k\)</span> banana-bites. Any other ratio leaves an improving move on the table. That’s the optimality condition in plain English. The math is just <span class="math display">\[
+\frac{MU_1}{MU_2} = \frac{p_1}{p_2}.
+\]</span></p>
+</section>
+<section id="cobb-douglas-the-worked-example" class="level2">
+<h2 class="anchored" data-anchor-id="cobb-douglas-the-worked-example">Cobb-Douglas: the worked example</h2>
+<p>A consumer with Cobb-Douglas preferences has utility <span class="math display">\[
+U(x_1, x_2) \;=\; x_1^{\,a}\, x_2^{\,b},
+\]</span> where <span class="math inline">\(a, b &gt; 0\)</span>. Marginal utilities are <span class="math display">\[
+MU_1 = a\, x_1^{a-1} x_2^{b}, \qquad MU_2 = b\, x_1^{a} x_2^{b-1}.
+\]</span> The marginal rate of substitution (MRS, the slope of the indifference curve) is <span class="math display">\[
+\text{MRS} = -\frac{MU_1}{MU_2} = -\frac{a\, x_2}{b\, x_1}.
+\]</span> At the optimum, MRS equals the price slope: <span class="math display">\[
+-\,\frac{a\, x_2^*}{b\, x_1^*} = -\,\frac{p_1}{p_2} \quad\Longrightarrow\quad x_2^* = \frac{b\, p_1}{a\, p_2}\, x_1^*.
+\quad(\star)
+\]</span> And the budget is exhausted: <span class="math inline">\(p_1 x_1^* + p_2 x_2^* = m\)</span>. Substitute <span class="math inline">\((\star)\)</span> into the budget equation: <span class="math display">\[
+p_1 x_1^* + p_2 \cdot \frac{b\, p_1}{a\, p_2}\, x_1^* = m
+\;\;\Longrightarrow\;\;
+p_1 x_1^* \left(1 + \frac{b}{a}\right) = m
+\;\;\Longrightarrow\;\;
+\boxed{\; x_1^* \;=\; \frac{a\, m}{(a+b)\, p_1}, \qquad x_2^* \;=\; \frac{b\, m}{(a+b)\, p_2}. \;}
+\]</span></p>
+<p>Two clean observations:</p>
+<ol type="1">
+<li><strong>The consumer spends a fixed fraction of income on each good.</strong> Total spending on good 1 is <span class="math inline">\(p_1 x_1^* = \frac{a}{a+b} m\)</span>. So a Cobb-Douglas consumer with exponents <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> devotes the share <span class="math inline">\(a/(a+b)\)</span> of income to good 1 and <span class="math inline">\(b/(a+b)\)</span> to good 2 — <em>regardless</em> of prices. Price changes shift the <em>quantity</em> bought, but not the share of the budget spent.</li>
+<li><strong>Cross-price effects are zero.</strong> Demand for good 1 doesn’t depend on <span class="math inline">\(p_2\)</span>. That’s not a feature of the world; it’s a feature of Cobb-Douglas. More flexible utility functions (CES, quasilinear, additively separable) generate non-zero cross-price effects.</li>
 </ol>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 660
@@ -416,19 +477,21 @@ window.Quarto = {
 library(shiny)
 
 ui &lt;- fluidPage(
-  titlePanel("Optimal Choice with Cobb-Douglas Preferences"),
+  titlePanel("Solve Choice by Picture: Cobb-Douglas Consumer"),
 
   sidebarLayout(
     sidebarPanel(
       width = 4,
-      sliderInput("alpha", "Preference weight α (taste for good 1):",
-                  min = 0.1, max = 0.9, value = 0.5, step = 0.05),
-      sliderInput("m",  "Income (m):",            min = 20, max = 200, value = 100, step = 10),
-      sliderInput("p1", "Price of good 1 (p₁):",  min =  1, max =  20, value =   5, step = 1),
-      sliderInput("p2", "Price of good 2 (p₂):",  min =  1, max =  20, value =   5, step = 1),
+      sliderInput("a", "Cobb-Douglas exponent a:",
+                  min = 0.5, max = 4, value = 1, step = 0.25),
+      sliderInput("b", "Cobb-Douglas exponent b:",
+                  min = 0.5, max = 4, value = 1, step = 0.25),
+      sliderInput("m",  "Income (m):",            min =  20, max = 200, value = 100, step = 10),
+      sliderInput("p1", "Price of good 1 (p₁):",  min =   1, max =  20, value =   5, step = 1),
+      sliderInput("p2", "Price of good 2 (p₂):",  min =   1, max =  20, value =   5, step = 1),
       hr(),
       checkboxInput("show_other_ics",
-                    "Show several indifference curves",
+                    "Show a ladder of indifference curves",
                     value = TRUE),
       htmlOutput("readout")
     ),
@@ -442,60 +505,53 @@ ui &lt;- fluidPage(
 server &lt;- function(input, output, session) {
 
   bundle &lt;- reactive({
-    alpha &lt;- input$alpha
-    m  &lt;- input$m; p1 &lt;- input$p1; p2 &lt;- input$p2
-    x1 &lt;- alpha * m / p1
-    x2 &lt;- (1 - alpha) * m / p2
-    u_opt &lt;- x1^alpha * x2^(1 - alpha)
-    list(alpha = alpha, m = m, p1 = p1, p2 = p2,
+    a &lt;- input$a; b &lt;- input$b
+    m &lt;- input$m; p1 &lt;- input$p1; p2 &lt;- input$p2
+    x1 &lt;- a * m / ((a + b) * p1)
+    x2 &lt;- b * m / ((a + b) * p2)
+    u_opt &lt;- x1^a * x2^b
+    list(a = a, b = b, m = m, p1 = p1, p2 = p2,
          x1 = x1, x2 = x2, u_opt = u_opt)
   })
 
   output$choice_plot &lt;- renderPlot({
-    b &lt;- bundle()
-
-    x1_int &lt;- b$m / b$p1
-    x2_int &lt;- b$m / b$p2
+    s &lt;- bundle()
+    x1_int &lt;- s$m / s$p1
+    x2_int &lt;- s$m / s$p2
 
     xmax &lt;- max(40, x1_int) * 1.05
     ymax &lt;- max(40, x2_int) * 1.05
 
     par(mar = c(4.2, 4.5, 1, 1))
     plot(NA, xlim = c(0, xmax), ylim = c(0, ymax),
-         xlab = expression(x[1]), ylab = expression(x[2]),
-         main = "")
+         xlab = expression(x[1]), ylab = expression(x[2]), main = "")
 
-    # Indifference curve at optimum: x2 = (u / x1^alpha)^(1/(1-alpha))
+    # Indifference curves: x_1^a x_2^b = U =&gt; x_2 = (U / x_1^a)^(1/b)
     ic_x &lt;- seq(0.1, xmax * 1.5, length.out = 600)
-    ic_y_opt &lt;- (b$u_opt / ic_x^b$alpha)^(1 / (1 - b$alpha))
+    ic_y_opt &lt;- (s$u_opt / ic_x^s$a)^(1 / s$b)
 
-    # Optional ladder of indifference curves.
     if (isTRUE(input$show_other_ics)) {
       for (frac in c(0.5, 0.75, 1.25)) {
-        u &lt;- b$u_opt * frac
-        y &lt;- (u / ic_x^b$alpha)^(1 / (1 - b$alpha))
+        u &lt;- s$u_opt * frac
+        y &lt;- (u / ic_x^s$a)^(1 / s$b)
         lines(ic_x, y, col = adjustcolor("#7f8c8d", 0.5), lwd = 1.2, lty = 3)
       }
     }
 
-    # Highlighted indifference curve through optimum.
     lines(ic_x, ic_y_opt, col = "#27ae60", lwd = 2.4)
 
-    # Budget line and shaded affordable set.
     polygon(c(0, x1_int, 0), c(0, 0, x2_int),
             col = adjustcolor("#3498db", 0.12), border = NA)
     segments(0, x2_int, x1_int, 0, col = "#185FA5", lwd = 3)
 
-    # Optimum point.
-    points(b$x1, b$x2, pch = 19, col = "#c0392b", cex = 1.8)
-    text(b$x1, b$x2,
-         labels = sprintf("  (%.1f, %.1f)", b$x1, b$x2),
+    points(s$x1, s$x2, pch = 19, col = "#c0392b", cex = 1.8)
+    text(s$x1, s$x2, sprintf("  (%.1f, %.1f)", s$x1, s$x2),
          pos = 4, col = "#c0392b", cex = 1.0)
 
     legend("topright",
            legend = c("Budget line", "Indifference curve through optimum",
                       if (isTRUE(input$show_other_ics)) "Other indifference curves" else NULL,
-                      "Optimal bundle"),
+                      "Optimal bundle (x₁*, x₂*)"),
            col    = c("#185FA5", "#27ae60",
                       if (isTRUE(input$show_other_ics)) "#7f8c8d" else NULL,
                       "#c0392b"),
@@ -506,24 +562,23 @@ server &lt;- function(input, output, session) {
   })
 
   output$readout &lt;- renderUI({
-    b &lt;- bundle()
-    share1 &lt;- b$alpha
-    share2 &lt;- 1 - b$alpha
+    s &lt;- bundle()
+    share1 &lt;- s$a / (s$a + s$b)
+    share2 &lt;- s$b / (s$a + s$b)
     HTML(sprintf(paste(
       "&lt;div style='margin-top:10px;font-size:13px;line-height:1.7;'&gt;",
-      "&lt;b&gt;Optimal bundle:&lt;/b&gt; x₁* = %.2f, x₂* = %.2f&lt;br&gt;",
+      "&lt;b&gt;Ordinary demand:&lt;/b&gt; x₁* = %.2f, x₂* = %.2f&lt;br&gt;",
       "&lt;b&gt;Spending on good 1:&lt;/b&gt; p₁·x₁* = %.1f (%.0f%% of income)&lt;br&gt;",
       "&lt;b&gt;Spending on good 2:&lt;/b&gt; p₂·x₂* = %.1f (%.0f%% of income)&lt;br&gt;",
       "&lt;b&gt;MRS at optimum:&lt;/b&gt; %.2f &amp;nbsp; &lt;b&gt;p₁/p₂:&lt;/b&gt; %.2f&lt;br&gt;",
       "&lt;b&gt;Utility achieved:&lt;/b&gt; %.2f",
       "&lt;/div&gt;"
     ),
-    b$x1, b$x2,
-    b$p1 * b$x1, 100 * share1,
-    b$p2 * b$x2, 100 * share2,
-    (b$alpha / (1 - b$alpha)) * (b$x2 / b$x1),
-    b$p1 / b$p2,
-    b$u_opt))
+    s$x1, s$x2,
+    s$p1 * s$x1, 100 * share1,
+    s$p2 * s$x2, 100 * share2,
+    (s$a / s$b) * (s$x2 / s$x1),
+    s$p1 / s$p2, s$u_opt))
   })
 }
 
@@ -536,28 +591,54 @@ shinyApp(ui, server)</code></pre>
 <div class="callout-body-container">
 <p><strong>Things to try.</strong></p>
 <ul>
-<li><strong>Move <span class="math inline">\(\alpha\)</span> from 0.1 to 0.9</strong> with everything else fixed. The spending share on good 1 tracks <span class="math inline">\(\alpha\)</span> exactly. The indifference curves rotate; the optimum slides along the budget line.</li>
-<li><strong>Hold <span class="math inline">\(\alpha = 0.5\)</span> and double <span class="math inline">\(p_1\)</span>.</strong> Notice the spending shares don’t change — that’s the Cobb-Douglas feature. But the <em>quantity</em> of <span class="math inline">\(x_1\)</span> halves.</li>
-<li><strong>Try a corner case</strong> — set <span class="math inline">\(\alpha = 0.9, p_1 = 1, p_2 = 20\)</span>. The optimum sits almost entirely on the <span class="math inline">\(x_1\)</span> axis; the consumer barely consumes <span class="math inline">\(x_2\)</span>.</li>
-<li><strong>Check MRS = price ratio</strong> in the readout — they should be equal at every interior optimum. If you ever see them disagree, something is at a corner.</li>
+<li><strong>Set <span class="math inline">\(a = b\)</span> and vary prices.</strong> The consumer splits income 50/50, period. Watch the <em>quantities</em> shift while the <em>spending shares</em> don’t budge.</li>
+<li><strong>Set <span class="math inline">\(a = 3, b = 1\)</span>.</strong> The consumer commits 75% of income to good 1, 25% to good 2 — for <em>any</em> prices. That’s Cobb-Douglas in a nutshell.</li>
+<li><strong>Double <span class="math inline">\(p_1\)</span> with <span class="math inline">\(a = b = 1\)</span>.</strong> Spending on good 1 stays $50 (out of $100 income), so <span class="math inline">\(x_1^*\)</span> halves. Good 2 spending and quantity don’t change.</li>
+<li><strong>Check MRS = <span class="math inline">\(p_1/p_2\)</span>.</strong> They should match at every interior optimum. If you ever see them disagree, you’re at a corner (next section).</li>
 </ul>
 </div>
 </div>
 </div>
 </section>
-<section id="when-the-tangency-rule-fails" class="level2">
-<h2 class="anchored" data-anchor-id="when-the-tangency-rule-fails">When the tangency rule fails</h2>
-<p>The “MRS = price ratio” condition is the <strong>interior</strong> first-order condition. It can fail in two ways:</p>
-<p><strong>Corner solutions.</strong> If preferences are strong enough (or the price gap large enough), the consumer wants zero of one good. Then the constraint <span class="math inline">\(x_i \geq 0\)</span> binds and the tangency condition becomes an inequality. <strong>Perfect substitutes</strong> <span class="math inline">\(u = ax_1 + bx_2\)</span> are the canonical case: the consumer buys <em>only</em> the cheaper-per-utility good unless the ratio <span class="math inline">\(a/b\)</span> exactly matches <span class="math inline">\(p_1/p_2\)</span>.</p>
-<p><strong>Kinked indifference curves.</strong> <strong>Perfect complements</strong> <span class="math inline">\(u = \min(x_1, x_2)\)</span> have no well-defined MRS at the kink, so tangency is meaningless. The optimum sits at the kink where <span class="math inline">\(x_1 = x_2\)</span> — derivable directly from the constraint without any calculus.</p>
-<p>These cases all reduce to the same idea: <strong>the consumer reaches the highest affordable indifference curve.</strong> Tangency is one way that happens; corners and kinks are others.</p>
+<section id="when-tangency-fails-corner-and-kinky-solutions" class="level2">
+<h2 class="anchored" data-anchor-id="when-tangency-fails-corner-and-kinky-solutions">When tangency fails: corner and kinky solutions</h2>
+<p>The tangency condition assumes preferences are smooth (so MRS is well-defined) and convex (so tangency picks out a <em>maximum</em>, not a minimum or saddle). Two textbook cases break those assumptions.</p>
+<section id="perfect-substitutes-corner-solution" class="level3">
+<h3 class="anchored" data-anchor-id="perfect-substitutes-corner-solution">Perfect substitutes (corner solution)</h3>
+<p>Suppose <span class="math inline">\(U(x_1, x_2) = x_1 + x_2\)</span>. Indifference curves are straight lines with slope <span class="math inline">\(-1\)</span>. The consumer is indifferent between any one-for-one trade of the two goods.</p>
+<p>There’s nothing to tangent against here — the indifference curves are themselves straight. The optimum is whichever corner of the budget set is on the highest indifference curve. If <span class="math inline">\(p_1 &lt; p_2\)</span>, good 1 is the cheap way to buy utility and the consumer spends everything on it: <span class="math inline">\(x_1^* = m/p_1,\; x_2^* = 0\)</span>. If <span class="math inline">\(p_1 &gt; p_2\)</span>, the reverse. If <span class="math inline">\(p_1 = p_2\)</span>, every bundle on the budget line is equally good. The textbook “tangency rule” doesn’t apply; you find the optimum by checking each corner.</p>
+</section>
+<section id="non-convex-preferences-also-a-corner" class="level3">
+<h3 class="anchored" data-anchor-id="non-convex-preferences-also-a-corner">Non-convex preferences (also a corner)</h3>
+<p>If indifference curves bow the wrong way — concave instead of convex — the tangency point is the <em>worst</em> affordable bundle, not the best. The optimum lies at one of the boundary points of the budget set. Same conclusion as before: tangency isn’t enough; you have to check what kind of stationary point you’ve found.</p>
+</section>
+<section id="perfect-complements-kinky-solution" class="level3">
+<h3 class="anchored" data-anchor-id="perfect-complements-kinky-solution">Perfect complements (kinky solution)</h3>
+<p>Suppose <span class="math inline">\(U(x_1, x_2) = \min\{a x_1, x_2\}\)</span>. The consumer values goods 1 and 2 only in fixed proportion <span class="math inline">\(x_2 = a x_1\)</span> — think left shoes and right shoes, where one of each is the only useful combination. Indifference curves are L-shaped, with the kink along the ray <span class="math inline">\(x_2 = a x_1\)</span>.</p>
+<p>The MRS is undefined at the kink (it’s <span class="math inline">\(0\)</span> on one side and <span class="math inline">\(-\infty\)</span> on the other), so we can’t use tangency. But the optimum logic still works: the consumer wants to be at the kink — anywhere else wastes one good while paying for it. So the optimum satisfies:</p>
+<p><strong>(a)</strong> budget exhausted: <span class="math inline">\(p_1 x_1^* + p_2 x_2^* = m\)</span>,</p>
+<p><strong>(b)</strong> kink condition: <span class="math inline">\(x_2^* = a x_1^*\)</span>.</p>
+<p>Substitute (b) into (a): <span class="math display">\[
+p_1 x_1^* + p_2 \cdot a x_1^* = m \;\;\Longrightarrow\;\; x_1^* = \frac{m}{p_1 + a\, p_2}, \quad x_2^* = \frac{a\, m}{p_1 + a\, p_2}.
+\]</span> Same approach, different optimality condition swapped in for tangency.</p>
+</section>
+</section>
+<section id="the-general-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="the-general-pattern">The general pattern</h2>
+<p>You’ve now seen three flavors of solution and they all follow the same template:</p>
+<ol type="1">
+<li>Write down the budget exhaustion condition.</li>
+<li>Write down whatever optimality condition fits the preferences (tangency, corner, or kink).</li>
+<li>Solve the two equations together.</li>
+</ol>
+<p>The flavor of the optimality condition depends on the shape of the indifference curves. The procedure doesn’t.</p>
 </section>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
 <ul>
-<li>The “tangency” picture is the <strong>Lagrangian</strong> in disguise. Maximizing <span class="math inline">\(u(x_1, x_2)\)</span> subject to <span class="math inline">\(p_1 x_1 + p_2 x_2 = m\)</span> gives the first-order conditions <span class="math inline">\(\partial u/\partial x_i = \lambda p_i\)</span>, which rearrange to <span class="math inline">\(\text{MRS} = p_1/p_2\)</span>.</li>
-<li>The Lagrange multiplier <span class="math inline">\(\lambda\)</span> at the optimum is the <strong>marginal utility of income</strong> — how much utility goes up if you give the consumer one extra dollar. That’s where the “value of an extra dollar” interpretation of <span class="math inline">\(\lambda\)</span> comes from.</li>
-<li>For Cobb-Douglas, you’ll often see the equivalent form <span class="math inline">\(u(x_1, x_2) = \alpha \log x_1 + (1 - \alpha) \log x_2\)</span> — a monotonic transformation that doesn’t change choice but makes derivatives cleaner. The log form will reappear later in the <a href="demand.html">Demand</a> chapter.</li>
+<li><strong>The tangency condition is the Lagrangian in disguise.</strong> Setting up <span class="math inline">\(L = U(x_1, x_2) + \lambda(m - p_1 x_1 - p_2 x_2)\)</span> and differentiating gives <span class="math inline">\(\partial U/\partial x_i = \lambda p_i\)</span>, which rearranges into MRS = <span class="math inline">\(p_1/p_2\)</span>. The Lagrange multiplier <span class="math inline">\(\lambda\)</span> is the <strong>marginal utility of income</strong> — how much utility goes up if the consumer is handed an extra dollar.</li>
+<li><strong>A monotonic transformation of utility doesn’t change the optimum.</strong> Cobb-Douglas is often written instead as <span class="math inline">\(U(x_1, x_2) = a \log x_1 + b \log x_2\)</span>, which produces the same demand functions because the consumer’s <em>ranking</em> of bundles is the same. The log form is easier to differentiate and reappears all over <a href="demand.html">Demand</a>, <a href="../stats-course/maximum-likelihood.html">Maximum Likelihood Estimation</a>, and price-index theory.</li>
+<li><strong>Sticky takeaway:</strong> the consumer always seeks the highest indifference curve they can afford. Tangency is one way that happens. Corners and kinks are other ways. The procedure (combine budget exhaustion with the right optimality condition) doesn’t depend on which case you’re in.</li>
 </ul>
 
 
@@ -971,7 +1052,7 @@ shinyApp(ui, server)</code></pre>
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><span style="white-space:nowrap">Course content adapted from <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Prof.&nbsp;David Slichter</a>’s ECON 360 slides | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span></p>
+<p><span style="white-space:nowrap">Lecture frame, examples, and terminology adapted from <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Prof.&nbsp;David Slichter</a>’s ECON 360 slides | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

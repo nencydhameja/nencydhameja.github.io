@@ -355,9 +355,15 @@ window.Quarto = {
    
   <ul>
   <li><a href="#the-setup" id="toc-the-setup" class="nav-link active" data-scroll-target="#the-setup">The setup</a></li>
-  <li><a href="#the-key-insight-marginal-revenue-is-below-price" id="toc-the-key-insight-marginal-revenue-is-below-price" class="nav-link" data-scroll-target="#the-key-insight-marginal-revenue-is-below-price">The key insight: marginal revenue is below price</a></li>
-  <li><a href="#solving-for-q" id="toc-solving-for-q" class="nav-link" data-scroll-target="#solving-for-q">Solving for <span class="math inline">\(q^*\)</span></a></li>
-  <li><a href="#the-lerner-index-and-elasticity" id="toc-the-lerner-index-and-elasticity" class="nav-link" data-scroll-target="#the-lerner-index-and-elasticity">The Lerner index and elasticity</a></li>
+  <li><a href="#what-makes-a-market-monopolized" id="toc-what-makes-a-market-monopolized" class="nav-link" data-scroll-target="#what-makes-a-market-monopolized">What makes a market monopolized?</a></li>
+  <li><a href="#the-defining-feature" id="toc-the-defining-feature" class="nav-link" data-scroll-target="#the-defining-feature">The defining feature</a></li>
+  <li><a href="#the-math" id="toc-the-math" class="nav-link" data-scroll-target="#the-math">The math</a>
+  <ul class="collapse">
+  <li><a href="#worked-example-linear-demand-and-quadratic-cost" id="toc-worked-example-linear-demand-and-quadratic-cost" class="nav-link" data-scroll-target="#worked-example-linear-demand-and-quadratic-cost">Worked example: linear demand and quadratic cost</a></li>
+  </ul></li>
+  <li><a href="#why-monopoly-is-inefficient-the-welfare-argument" id="toc-why-monopoly-is-inefficient-the-welfare-argument" class="nav-link" data-scroll-target="#why-monopoly-is-inefficient-the-welfare-argument">Why monopoly is inefficient: the welfare argument</a></li>
+  <li><a href="#natural-monopoly-when-scale-economies-make-one-firm-cheapest" id="toc-natural-monopoly-when-scale-economies-make-one-firm-cheapest" class="nav-link" data-scroll-target="#natural-monopoly-when-scale-economies-make-one-firm-cheapest">Natural monopoly: when scale economies make one firm cheapest</a></li>
+  <li><a href="#monopsony-one-buyer-mirror-image-of-monopoly" id="toc-monopsony-one-buyer-mirror-image-of-monopoly" class="nav-link" data-scroll-target="#monopsony-one-buyer-mirror-image-of-monopoly">Monopsony: one buyer, mirror image of monopoly</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -365,7 +371,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 <div style="background:#fff8e7; border-left:4px solid #d4a017; padding:12px 18px; margin:0 0 22px 0; font-size:0.9em; color:#2c3e50; border-radius:0 6px 6px 0; line-height:1.55;">
-  <strong>Course attribution.</strong> This is a simulation companion to <strong>ECON 360 — Intermediate Microeconomics</strong> at Binghamton University. The course content, slide structure, and pedagogical approach are the work of <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Professor David Slichter</a>; these pages add interactive Shinylive simulations to his materials.
+  <strong>About this page.</strong> This is a simulation-based companion to <strong>ECON 360 — Intermediate Microeconomics</strong> at Binghamton University. The lecture order, conceptual frame (the recurring "agents pursue goals subject to constraints" rail), terminology (e.g. budget <em>set</em> vs. budget <em>constraint</em>, ordinary demand, kinky solutions), running examples (Wegmans apples and bananas, the monopolist's burrito-MR puzzle), and pedagogical structure are adapted from <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Professor David Slichter</a>'s ECON 360 lecture slides. The exposition, derivations, and interactive Shinylive simulations were written independently by Nency Dhameja and are not transcriptions of the slides.
 </div>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./monopoly.html">Imperfect Competition &amp; Beyond</a></li><li class="breadcrumb-item"><a href="./monopoly.html">Monopoly</a></li></ol></nav>
@@ -389,38 +395,61 @@ window.Quarto = {
 
 <section id="the-setup" class="level2">
 <h2 class="anchored" data-anchor-id="the-setup">The setup</h2>
-<p>A single firm faces the <strong>entire market demand curve</strong> for its product. There are no competitors to undercut it. The firm picks one number — quantity <span class="math inline">\(q\)</span> (or equivalently, price <span class="math inline">\(p\)</span>, since they pin each other down via the demand curve) — to maximize profit.</p>
-<p>That’s the whole monopoly model. The geometry below shows everything: the demand curve, the marginal revenue curve, the marginal cost curve, the profit-maximizing quantity, and the deadweight loss relative to perfect competition.</p>
+<p>In a competitive market, firms are “not special” — they’re price takers, they earn zero economic profits in the long run, and nobody enjoys any market power. This lecture is about what happens when a firm <em>is</em> special: the only seller in its market, with no immediate threat of entry. The firm benefits from this position. Consumers, as we’ll see, pay for it. The interesting question is whether the firm’s gain outweighs the consumers’ loss. (Short answer: no, it doesn’t — that’s the welfare story.)</p>
 </section>
-<section id="the-key-insight-marginal-revenue-is-below-price" class="level2">
-<h2 class="anchored" data-anchor-id="the-key-insight-marginal-revenue-is-below-price">The key insight: marginal revenue is below price</h2>
-<p>For a competitive firm, selling one more unit adds exactly <span class="math inline">\(p\)</span> to revenue (you’re a price taker; selling more doesn’t move the price). So <strong>marginal revenue equals price</strong>.</p>
-<p>For a monopolist, selling one more unit forces the price <em>down</em> on every unit. So marginal revenue is the price you get on the new unit <em>minus</em> the revenue you lose on all the previous units:</p>
-<p><span class="math display">\[
-\text{MR}(q) = p(q) + q \cdot p'(q).
-\]</span></p>
-<p>Since <span class="math inline">\(p'(q) &lt; 0\)</span> (downward-sloping demand), <span class="math inline">\(\text{MR}(q) &lt; p(q)\)</span>. The MR curve sits <strong>below</strong> the demand curve at every quantity.</p>
-<p>With a linear demand <span class="math inline">\(p(q) = a - bq\)</span>:</p>
-<p><span class="math display">\[
-\text{MR}(q) = a - 2bq.
-\]</span></p>
-<p>Same intercept as demand, <strong>twice the slope</strong>. That’s the rule worth memorizing.</p>
+<section id="what-makes-a-market-monopolized" class="level2">
+<h2 class="anchored" data-anchor-id="what-makes-a-market-monopolized">What makes a market monopolized?</h2>
+<p>Pure monopolies don’t fall from the sky. The reasons one firm ends up alone in a market are usually one of these:</p>
+<ul>
+<li><strong>Legal grant.</strong> The government has handed the firm exclusive rights. The US Postal Service is a textbook example.</li>
+<li><strong>Patents.</strong> A new pharmaceutical drug has a temporary monopoly during the patent window.</li>
+<li><strong>Sole ownership of a critical resource.</strong> A toll highway, a single-source water supply, a mineral deposit nobody else can reach.</li>
+<li><strong>A cartel.</strong> Competing firms quietly agree to act as one, dividing up the market and propping up the price. OPEC is the textbook example.</li>
+<li><strong>Large economies of scale.</strong> Average cost falls so dramatically with output that one firm serving the whole market is cheaper than several firms each producing a smaller share. Local water and electricity utilities fit this pattern. This case is called a <strong>natural monopoly</strong> and we’ll come back to it.</li>
+</ul>
+<p>For most of this lecture we’ll just assume the monopoly exists, however it got there, and won’t be threatened by a new entrant. That lets us focus on the firm’s decision problem.</p>
 </section>
-<section id="solving-for-q" class="level2">
-<h2 class="anchored" data-anchor-id="solving-for-q">Solving for <span class="math inline">\(q^*\)</span></h2>
-<p>The monopolist maximizes <span class="math inline">\(\pi(q) = p(q) \cdot q - C(q)\)</span>. The first-order condition is</p>
-<p><span class="math display">\[
-\text{MR}(q) = \text{MC}(q).
-\]</span></p>
-<p>With linear demand <span class="math inline">\(p(q) = a - bq\)</span> and constant marginal cost <span class="math inline">\(c\)</span>:</p>
-<p><span class="math display">\[
-\boxed{\; q^* = \frac{a - c}{2b}, \qquad p^* = \frac{a + c}{2}. \;}
-\]</span></p>
-<p>Compare to perfect competition, where price equals marginal cost (<span class="math inline">\(p = c\)</span>) and so <span class="math inline">\(q^{\text{comp}} = (a - c)/b\)</span>. The monopolist produces <strong>half</strong> the competitive quantity and charges a <strong>higher</strong> price. The gap between the two is the <strong>deadweight loss</strong>:</p>
-<p><span class="math display">\[
-\text{DWL} = \tfrac{1}{2} \cdot (q^{\text{comp}} - q^*) \cdot (p^* - c) = \frac{(a - c)^2}{8 b}.
-\]</span></p>
-<p>That little triangle is the social cost of monopoly. The simulation below lets you watch it shrink and grow.</p>
+<section id="the-defining-feature" class="level2">
+<h2 class="anchored" data-anchor-id="the-defining-feature">The defining feature</h2>
+<p>In a competitive market the firm is one of many sellers, each so small that its choice of output level doesn’t move the market price. Marginal revenue equals the price — sell one more burrito, gain exactly its market price.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Sanity check.</strong> You’re in a competitive burrito market selling 10 burritos at $7 each. What’s your marginal revenue from selling the 11th?</p>
+<p>— $7. The market price doesn’t depend on your individual choice; you just gain another $7.</p>
+<p>Now you’re a <em>monopolist</em> burrito seller. At a price of $7 you can sell 10 burritos. To sell an 11th, you’d have to drop the price to $6 across the board. What’s your marginal revenue from the 11th burrito?</p>
+<p>— Revenue at 10 burritos: <span class="math inline">\(10 \times 7 = 70\)</span>. Revenue at 11 burritos: <span class="math inline">\(11 \times 6 = 66\)</span>. The 11th burrito has marginal revenue <strong>−$4</strong> — your revenue <em>fell</em>. The extra burrito brought in $6, but you also lost $1 on each of the 10 previous burritos by cutting the price.</p>
+</div>
+</div>
+</div>
+<p>That’s the punchline of the entire chapter. A monopolist faces the full downward-sloping market demand curve. When she sells more, she has to lower the price — not just on the marginal unit, but on every unit she’s already selling. So <strong>for a monopolist, marginal revenue is less than price</strong>.</p>
+</section>
+<section id="the-math" class="level2">
+<h2 class="anchored" data-anchor-id="the-math">The math</h2>
+<p>The monopolist chooses output <span class="math inline">\(y\)</span> to maximize profit: <span class="math display">\[
+\Pi(y) \;=\; \underbrace{p(y) \cdot y}_{R(y) \text{ — revenue}} \;-\; \underbrace{c(y)}_{\text{cost}}.
+\]</span> The key difference from competitive theory is that <span class="math inline">\(p\)</span> now depends on <span class="math inline">\(y\)</span>. Differentiate and set to zero: <span class="math display">\[
+\frac{d\Pi}{dy} = \frac{d(p(y) y)}{dy} - \frac{dc(y)}{dy} = 0 \;\;\Longrightarrow\;\; \boxed{MR(y^*) = MC(y^*).}
+\]</span> Marginal revenue equals marginal cost at the profit-maximizing quantity. Same rule as for a competitive firm — but here <span class="math inline">\(MR \neq p\)</span>.</p>
+<p>Expanding the derivative: <span class="math display">\[
+MR(y) = \frac{d}{dy}\bigl(p(y) y\bigr) = p(y) + y \cdot \frac{dp(y)}{dy}.
+\]</span> Two effects when output rises by one unit:</p>
+<ol type="1">
+<li><strong>Direct effect.</strong> Revenue goes up by the price of that extra unit, <span class="math inline">\(p(y)\)</span>.</li>
+<li><strong>Price effect.</strong> To sell the extra unit the price had to fall (since <span class="math inline">\(dp/dy &lt; 0\)</span>), which means revenue from every infra-marginal unit goes down. The firm loses <span class="math inline">\(y \cdot dp/dy\)</span> on the units it was already selling.</li>
+</ol>
+<p>Since <span class="math inline">\(dp/dy &lt; 0\)</span>, the price effect is negative and <span class="math inline">\(MR(y) &lt; p(y)\)</span> — exactly the burrito story above.</p>
+<p>For a price-taking competitive firm, <span class="math inline">\(dp/dy = 0\)</span>, the price effect vanishes, and <span class="math inline">\(MR = p\)</span>. That’s the only thing that’s different.</p>
+<section id="worked-example-linear-demand-and-quadratic-cost" class="level3">
+<h3 class="anchored" data-anchor-id="worked-example-linear-demand-and-quadratic-cost">Worked example: linear demand and quadratic cost</h3>
+<p>Take inverse demand <span class="math inline">\(p(y) = a - by\)</span> and cost <span class="math inline">\(c(y) = F + \alpha y + \beta y^2\)</span>. Marginal revenue and marginal cost are then <span class="math display">\[
+MR(y) = a - 2by, \qquad MC(y) = \alpha + 2\beta y.
+\]</span> The MR curve has the <strong>same intercept</strong> as demand but <strong>twice the slope</strong> — a useful fact to memorize. Setting <span class="math inline">\(MR = MC\)</span>: <span class="math display">\[
+a - 2 b y^* = \alpha + 2 \beta y^* \;\;\Longrightarrow\;\; \boxed{\; y^* \;=\; \frac{a - \alpha}{2(b + \beta)}, \qquad p^* = a - b y^*. \;}
+\]</span> A clean closed form to compare against the competitive benchmark, which we’ll derive next.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 660
 
@@ -436,13 +465,13 @@ ui &lt;- fluidPage(
                   min = 50, max = 200, value = 100, step = 10),
       sliderInput("b", "Demand slope (b):",
                   min = 0.5, max = 5,   value = 1.5, step = 0.1),
-      sliderInput("c", "Marginal cost (c):",
-                  min = 0,  max = 80,  value = 20,  step = 5),
+      sliderInput("alpha", "MC intercept (α):",
+                  min = 0, max = 80, value = 20, step = 5),
+      sliderInput("beta", "MC slope (β):",
+                  min = 0, max = 2,  value = 0,  step = 0.1),
       hr(),
-      checkboxInput("show_comp", "Show competitive outcome for comparison",
-                    value = TRUE),
-      checkboxInput("show_dwl", "Shade the deadweight loss triangle",
-                    value = TRUE),
+      checkboxInput("show_comp", "Show competitive (efficient) outcome", value = TRUE),
+      checkboxInput("show_dwl",  "Shade deadweight loss",                value = TRUE),
       htmlOutput("readout")
     ),
     mainPanel(
@@ -455,89 +484,94 @@ ui &lt;- fluidPage(
 server &lt;- function(input, output, session) {
 
   results &lt;- reactive({
-    a &lt;- input$a; b &lt;- input$b; c &lt;- input$c
-    q_mon  &lt;- (a - c) / (2 * b)
+    a &lt;- input$a; b &lt;- input$b; al &lt;- input$alpha; be &lt;- input$beta
+    q_mon  &lt;- (a - al) / (2 * (b + be))
     p_mon  &lt;- a - b * q_mon
-    q_comp &lt;- (a - c) / b
-    p_comp &lt;- c
-    profit &lt;- (p_mon - c) * q_mon
+    mc_mon &lt;- al + 2 * be * q_mon
+
+    # Efficient: p(y) = MC(y) =&gt; a - by = alpha + 2 beta y =&gt; y_e = (a-alpha)/(b+2beta)
+    q_eff  &lt;- (a - al) / (b + 2 * be)
+    p_eff  &lt;- a - b * q_eff
+
     cs_mon  &lt;- 0.5 * (a - p_mon) * q_mon
-    cs_comp &lt;- 0.5 * (a - p_comp) * q_comp
-    dwl     &lt;- 0.5 * (q_comp - q_mon) * (p_mon - c)
-    list(a = a, b = b, c = c,
-         q_mon = q_mon, p_mon = p_mon,
-         q_comp = q_comp, p_comp = p_comp,
-         profit = profit, cs_mon = cs_mon, cs_comp = cs_comp, dwl = dwl)
+    cs_eff  &lt;- 0.5 * (a - p_eff) * q_eff
+    # DWL: triangle between demand and MC from q_mon to q_eff
+    dwl     &lt;- 0.5 * (q_eff - q_mon) * (p_mon - mc_mon)
+    profit  &lt;- p_mon * q_mon - (input$alpha * q_mon + input$beta * q_mon^2)
+
+    list(a = a, b = b, al = al, be = be,
+         q_mon = q_mon, p_mon = p_mon, mc_mon = mc_mon,
+         q_eff = q_eff, p_eff = p_eff,
+         cs_mon = cs_mon, cs_eff = cs_eff, dwl = dwl, profit = profit)
   })
 
   output$monop_plot &lt;- renderPlot({
     r &lt;- results()
 
     q_seq &lt;- seq(0, r$a / r$b, length.out = 400)
-    p_d  &lt;- r$a - r$b * q_seq
-    p_mr &lt;- r$a - 2 * r$b * q_seq
+    p_d   &lt;- r$a - r$b * q_seq
+    p_mr  &lt;- r$a - 2 * r$b * q_seq
     p_mr[p_mr &lt; 0] &lt;- NA
+    p_mc  &lt;- r$al + 2 * r$be * q_seq
 
     xmax &lt;- r$a / r$b
     ymax &lt;- r$a * 1.05
 
     par(mar = c(4.2, 4.5, 1, 1))
     plot(NA, xlim = c(0, xmax), ylim = c(0, ymax),
-         xlab = "Quantity (q)", ylab = "Price (p)", main = "")
+         xlab = "Quantity (y)", ylab = "Price (p)", main = "")
 
-    # MC curve (horizontal at c).
-    abline(h = r$c, col = "#7f8c8d", lwd = 2, lty = 2)
-    text(xmax * 0.95, r$c, "MC", pos = 3, col = "#7f8c8d", cex = 0.95)
+    # MC
+    lines(q_seq, p_mc, col = "#7f8c8d", lwd = 2, lty = 2)
+    text(xmax * 0.95, r$al + 2 * r$be * xmax * 0.95, "MC", pos = 3, col = "#7f8c8d", cex = 0.95)
 
-    # Demand and MR.
+    # Demand and MR
     lines(q_seq, p_d,  col = "#185FA5", lwd = 2.5)
     lines(q_seq, p_mr, col = "#c0392b", lwd = 2, lty = 2)
     text(q_seq[10], p_d[10],  "Demand", pos = 4, col = "#185FA5", cex = 0.95)
     text(q_seq[10], p_mr[10], "MR",     pos = 4, col = "#c0392b", cex = 0.95)
 
-    # Deadweight-loss triangle.
+    # DWL triangle
     if (isTRUE(input$show_dwl)) {
-      polygon(c(r$q_mon, r$q_comp, r$q_mon),
-              c(r$p_mon, r$c,      r$c),
+      polygon(c(r$q_mon, r$q_eff, r$q_mon),
+              c(r$p_mon, r$p_eff, r$mc_mon),
               col = adjustcolor("#e67e22", 0.30), border = NA)
-      text(mean(c(r$q_mon, r$q_comp)),
-           (r$p_mon + r$c) / 2,
+      text(mean(c(r$q_mon, r$q_eff)),
+           (r$p_mon + r$mc_mon) / 2,
            "DWL", col = "#a04000", cex = 0.95, font = 2)
     }
 
-    # Monopoly outcome.
+    # Monopoly outcome
     segments(r$q_mon, 0,      r$q_mon, r$p_mon, col = "#27ae60", lwd = 1.5, lty = 3)
     segments(0,       r$p_mon, r$q_mon, r$p_mon, col = "#27ae60", lwd = 1.5, lty = 3)
     points(r$q_mon, r$p_mon, pch = 19, col = "#27ae60", cex = 1.7)
-    text(r$q_mon, r$p_mon,
-         labels = sprintf(" (%.1f, %.1f)", r$q_mon, r$p_mon),
+    text(r$q_mon, r$p_mon, sprintf(" (%.1f, %.1f)", r$q_mon, r$p_mon),
          pos = 4, col = "#27ae60", cex = 0.95)
 
-    # Competitive outcome.
+    # Competitive (efficient) outcome
     if (isTRUE(input$show_comp)) {
-      points(r$q_comp, r$p_comp, pch = 19, col = "#8e44ad", cex = 1.6)
-      text(r$q_comp, r$p_comp,
-           labels = sprintf(" (%.1f, %.1f)", r$q_comp, r$p_comp),
+      points(r$q_eff, r$p_eff, pch = 19, col = "#8e44ad", cex = 1.6)
+      text(r$q_eff, r$p_eff, sprintf(" (%.1f, %.1f)", r$q_eff, r$p_eff),
            pos = 4, col = "#8e44ad", cex = 0.95)
     }
 
     legend("topright",
            legend = c("Demand", "MR", "MC",
-                      "Monopoly (q*, p*)",
-                      if (isTRUE(input$show_comp)) "Competition (q^c, c)" else NULL,
-                      if (isTRUE(input$show_dwl))  "Deadweight loss"      else NULL),
+                      "Monopoly (y*, p*)",
+                      if (isTRUE(input$show_comp)) "Efficient (yᵉ, p(yᵉ))" else NULL,
+                      if (isTRUE(input$show_dwl))  "Deadweight loss"        else NULL),
            col    = c("#185FA5", "#c0392b", "#7f8c8d", "#27ae60",
                       if (isTRUE(input$show_comp)) "#8e44ad" else NULL,
-                      if (isTRUE(input$show_dwl))  adjustcolor("#e67e22", 0.5) else NULL),
+                      if (isTRUE(input$show_dwl)) adjustcolor("#e67e22", 0.5) else NULL),
            lwd    = c(2.5, 2, 2, NA,
                       if (isTRUE(input$show_comp)) NA else NULL,
-                      if (isTRUE(input$show_dwl))  NA else NULL),
+                      if (isTRUE(input$show_dwl)) NA else NULL),
            lty    = c(1, 2, 2, NA,
                       if (isTRUE(input$show_comp)) NA else NULL,
-                      if (isTRUE(input$show_dwl))  NA else NULL),
+                      if (isTRUE(input$show_dwl)) NA else NULL),
            pch    = c(NA, NA, NA, 19,
                       if (isTRUE(input$show_comp)) 19 else NULL,
-                      if (isTRUE(input$show_dwl))  15 else NULL),
+                      if (isTRUE(input$show_dwl)) 15 else NULL),
            bty = "n", cex = 0.85)
   })
 
@@ -545,16 +579,16 @@ server &lt;- function(input, output, session) {
     r &lt;- results()
     HTML(sprintf(paste(
       "&lt;div style='margin-top:10px;font-size:13px;line-height:1.7;'&gt;",
-      "&lt;b&gt;Monopoly:&lt;/b&gt; q* = %.1f, p* = %.1f, profit = %.1f&lt;br&gt;",
-      "&lt;b&gt;Competition:&lt;/b&gt; q = %.1f, p = %.1f&lt;br&gt;",
+      "&lt;b&gt;Monopoly:&lt;/b&gt; y* = %.1f, p* = %.1f, profit ≈ %.1f&lt;br&gt;",
+      "&lt;b&gt;Efficient (p = MC):&lt;/b&gt; yᵉ = %.1f, p(yᵉ) = %.1f&lt;br&gt;",
       "&lt;b&gt;Consumer surplus (monopoly):&lt;/b&gt; %.1f&lt;br&gt;",
-      "&lt;b&gt;Consumer surplus (competition):&lt;/b&gt; %.1f&lt;br&gt;",
+      "&lt;b&gt;Consumer surplus (efficient):&lt;/b&gt; %.1f&lt;br&gt;",
       "&lt;b&gt;Deadweight loss:&lt;/b&gt; &lt;span style='color:#a04000;font-weight:bold;'&gt;%.2f&lt;/span&gt;",
       "&lt;/div&gt;"
     ),
     r$q_mon, r$p_mon, r$profit,
-    r$q_comp, r$p_comp,
-    r$cs_mon, r$cs_comp, r$dwl))
+    r$q_eff, r$p_eff,
+    r$cs_mon, r$cs_eff, r$dwl))
   })
 }
 
@@ -567,34 +601,53 @@ shinyApp(ui, server)</code></pre>
 <div class="callout-body-container">
 <p><strong>Things to try.</strong></p>
 <ul>
-<li><strong>Raise MC (<span class="math inline">\(c\)</span>) to meet the demand curve at <span class="math inline">\(q = q^*\)</span></strong>. Monopoly profit shrinks to zero and so does the DWL — the monopolist can’t price above MC anymore.</li>
-<li><strong>Lower <span class="math inline">\(b\)</span> (flatter demand)</strong>. The DWL grows fast. Flatter demand means consumers are more sensitive; the monopolist’s distortion costs more total surplus.</li>
-<li><strong>Compare profit and DWL across settings.</strong> The monopolist captures part of what would have been consumer surplus <em>and</em> destroys some — the DWL is the destroyed part. Both shrink as the demand curve gets steeper (more inelastic).</li>
-<li><strong>Set <span class="math inline">\(c = 0\)</span>.</strong> Monopoly produces half the competitive quantity (<span class="math inline">\(q^* = a/(2b)\)</span>, <span class="math inline">\(q^{\text{comp}} = a/b\)</span>) and the DWL is <span class="math inline">\(a^2/(8b)\)</span>.</li>
+<li><strong>Raise marginal cost (α) toward the demand intercept.</strong> Profit shrinks toward zero and so does deadweight loss — the monopolist can’t price far above marginal cost when production is already expensive.</li>
+<li><strong>Lower the demand slope <span class="math inline">\(b\)</span> (flatter demand).</strong> DWL grows fast: with elastic demand, the monopolist’s quantity distortion costs society a lot more total surplus.</li>
+<li><strong>Set β = 0 (constant marginal cost) and compare profit to DWL.</strong> The monopolist’s profit comes from the rectangle she carves out of consumer surplus. The DWL triangle is <em>additional</em> surplus that no one captures.</li>
+<li><strong>β &gt; 0 with steep MC.</strong> The competitive benchmark approaches the monopoly quantity — when marginal cost rises sharply, expanding output is expensive anyway, so the welfare gap is smaller.</li>
 </ul>
 </div>
 </div>
 </div>
 </section>
-<section id="the-lerner-index-and-elasticity" class="level2">
-<h2 class="anchored" data-anchor-id="the-lerner-index-and-elasticity">The Lerner index and elasticity</h2>
-<p>Re-arrange the monopolist’s first-order condition <span class="math inline">\(\text{MR}(q) = \text{MC}(q)\)</span> using the elasticity of demand <span class="math inline">\(\varepsilon \equiv \frac{dq}{dp} \cdot \frac{p}{q}\)</span>:</p>
-<p><span class="math display">\[
-\frac{p^* - \text{MC}}{p^*} = -\frac{1}{\varepsilon}.
-\]</span></p>
-<p>This is the <strong>Lerner index</strong>. It says the <strong>markup</strong> as a fraction of price equals the reciprocal of demand elasticity.</p>
-<ul>
-<li>Very elastic demand (<span class="math inline">\(\varepsilon\)</span> large in absolute value) → small markup.</li>
-<li>Inelastic demand (<span class="math inline">\(\varepsilon\)</span> near 1 in absolute value) → big markup.</li>
-<li>A monopolist will never operate where <span class="math inline">\(|\varepsilon| &lt; 1\)</span> — they could raise price, sell less, and earn more revenue with no extra cost.</li>
-</ul>
+</section>
+<section id="why-monopoly-is-inefficient-the-welfare-argument" class="level2">
+<h2 class="anchored" data-anchor-id="why-monopoly-is-inefficient-the-welfare-argument">Why monopoly is inefficient: the welfare argument</h2>
+<p>Take any monopoly outcome <span class="math inline">\((y^*, p^*)\)</span> where <span class="math inline">\(MR(y^*) = MC(y^*) &lt; p(y^*)\)</span>. Consider the would-be <span class="math inline">\((y^* + 1)\)</span>-th unit. The marginal consumer is willing to pay <span class="math inline">\(p(y^* + 1)\)</span>, which is just under <span class="math inline">\(p(y^*)\)</span>. The cost of producing it is <span class="math inline">\(MC(y^* + 1)\)</span>, which is approximately <span class="math inline">\(MC(y^*) &lt; p(y^*)\)</span>. So <strong>there’s a unit that could be produced, that the consumer would happily buy at a price between cost and willingness-to-pay, and that the monopolist refuses to produce</strong>. Both the buyer and the seller would be better off if that trade happened. The market isn’t taking advantage of all the gains from trade.</p>
+<p>That’s the definition of Pareto inefficiency. <strong>The monopolist’s choice to constrict supply leaves gains-to-trade on the table.</strong></p>
+<p>Geometrically, the deadweight loss is the triangular region between the demand curve and the MC curve, from <span class="math inline">\(y^*\)</span> to <span class="math inline">\(y^e\)</span> (the efficient quantity where <span class="math inline">\(p(y^e) = MC(y^e)\)</span>). Same shape, same intuition as the deadweight loss from a tax — both are quantity distortions. With a tax, the wedge is artificial. With a monopoly, the wedge is the gap between price and marginal revenue. Either way, fewer trades happen than would maximize total surplus.</p>
+<p>The <strong>First Welfare Theorem</strong> says competitive markets produce Pareto-efficient outcomes under a list of assumptions, and that any violation of those assumptions is called a <strong>market failure</strong>. Monopoly violates one of the central assumptions (price-taking behavior), so monopoly is a market failure.</p>
+</section>
+<section id="natural-monopoly-when-scale-economies-make-one-firm-cheapest" class="level2">
+<h2 class="anchored" data-anchor-id="natural-monopoly-when-scale-economies-make-one-firm-cheapest">Natural monopoly: when scale economies make one firm cheapest</h2>
+<p>A <strong>natural monopoly</strong> is a firm whose technology has economies of scale so strong that one firm can supply the entire market at lower average cost than two or more firms could. Average total cost slopes downward over the relevant range. Examples: a water utility, a local electric grid, a cable network.</p>
+<p>Two questions become interesting:</p>
+<p><strong>Why isn’t the natural monopoly disciplined by entry?</strong> Suppose a competitor tries to enter and grab a quarter of the market. The incumbent, with three-quarters of demand, sits on the downward-sloping part of ATC at a lower average cost than the new entrant can achieve. The incumbent can cut its price — what’s called <strong>predatory pricing</strong> — to a level <em>between</em> its own ATC and the entrant’s ATC. The entrant loses money, exits, and the incumbent restores its price. Anyone considering entry knows this in advance, so few try.</p>
+<p><strong>Can a regulator force the natural monopolist to act efficiently?</strong> Marginal-cost pricing would make <span class="math inline">\(p = MC\)</span> and eliminate the deadweight loss — but with declining ATC, <span class="math inline">\(MC\)</span> lies <em>below</em> <span class="math inline">\(ATC\)</span>, so the firm makes an <strong>economic loss</strong> at the regulated efficient quantity. The firm exits, the market disappears, <em>all</em> the gains from trade are lost. So regulators face a constrained problem: get the firm to produce more (toward <span class="math inline">\(y^e\)</span>) without driving it to exit. In practice this leads to <strong>average-cost regulation</strong> (set <span class="math inline">\(p = ATC\)</span> so the firm at least breaks even — efficient enough, inefficient still) or <strong>two-part tariffs</strong> (a fixed access fee covering the ATC-MC gap, with marginal price equal to MC).</p>
+</section>
+<section id="monopsony-one-buyer-mirror-image-of-monopoly" class="level2">
+<h2 class="anchored" data-anchor-id="monopsony-one-buyer-mirror-image-of-monopoly">Monopsony: one buyer, mirror image of monopoly</h2>
+<p>A <strong>monopoly</strong> is a market with one seller. A <strong>monopsony</strong> is a market with one buyer. The math is exactly mirror-image and the welfare conclusion is the same: monopsony also creates a deadweight loss, in this case by <em>under-buying</em>.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Sanity check (labor).</strong> A firm hiring labor is the only employer in town. It can hire 10 workers at $10/hour. To hire an 11th, it must raise the wage to $11 (assume it can’t pay workers different wages). What’s the marginal cost of that 11th worker?</p>
+<p>— The 11th worker himself costs $11. But the firm also has to give a $1 raise to each of the 10 previous workers — an extra $10. Total marginal cost: <strong>$21</strong>.</p>
+<p>If the 11th worker would have produced only $20 in value to the firm, the firm doesn’t hire him. The hire is socially efficient (the worker is willing to work for $11, the firm gets $20 of output, total surplus $9) but the monopsonist’s marginal cost calculation says no.</p>
+</div>
+</div>
+</div>
+<p>A monopolist faces <span class="math inline">\(MR &lt; p\)</span> because raising <span class="math inline">\(y\)</span> forces <span class="math inline">\(p\)</span> down. A monopsonist faces <span class="math inline">\(MC \text{ of input} &gt; w\)</span> because raising input use forces <span class="math inline">\(w\)</span> up. Both create wedges. Both create inefficiencies. Symmetric story, same kind of fix needed.</p>
 </section>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
 <ul>
-<li>The “monopolist halves the quantity” result is a feature of <strong>linear</strong> demand. With constant-elasticity demand, the markup ratio <span class="math inline">\(p^*/\text{MC}\)</span> is constant — but quantity is not exactly half. The general statement is the <strong>Lerner index</strong>.</li>
-<li><strong>First-degree price discrimination</strong> — the monopolist charges every consumer their willingness to pay — <em>eliminates</em> the deadweight loss. Quantity returns to the competitive level. The catch is that all the surplus goes to the firm; no consumer surplus left.</li>
-<li>Modern antitrust analysis usually doesn’t try to estimate the DWL directly. Instead, it looks at whether a merger or business practice raises markups (via the Lerner index) or restricts entry. The geometry below is the conceptual scaffolding, not the empirical method.</li>
+<li><strong>The “twice the slope” rule for MR is a feature of linear demand only.</strong> With constant-elasticity demand (<span class="math inline">\(p = A q^{-1/\varepsilon}\)</span>), the markup-to-price ratio <span class="math inline">\((p - MC)/p\)</span> equals <span class="math inline">\(1/|\varepsilon|\)</span> — a constant, regardless of cost. This is the <strong>Lerner index</strong> and it’s the standard quantitative measure of market power in modern antitrust analysis.</li>
+<li><strong>First-degree price discrimination</strong> — the monopolist charges every consumer their exact willingness-to-pay — <em>eliminates</em> the deadweight loss. Quantity returns to the efficient level. The catch is that <em>all</em> the surplus goes to the firm; consumer surplus disappears. Efficient but very unequal.</li>
+<li><strong>The patent system is a deliberate temporary monopoly.</strong> The deadweight loss during the patent period is the price society pays for the incentive to invent. Generic-drug competition after patent expiry restores efficient pricing. Whether the trade-off is worth it depends on how much innovation the monopoly rents actually buy — an empirical question that’s still actively debated.</li>
 </ul>
 
 
@@ -1008,7 +1061,7 @@ shinyApp(ui, server)</code></pre>
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><span style="white-space:nowrap">Course content adapted from <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Prof.&nbsp;David Slichter</a>’s ECON 360 slides | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span></p>
+<p><span style="white-space:nowrap">Lecture frame, examples, and terminology adapted from <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Prof.&nbsp;David Slichter</a>’s ECON 360 slides | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

@@ -354,9 +354,16 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-picture" id="toc-the-picture" class="nav-link active" data-scroll-target="#the-picture">The picture</a></li>
-  <li><a href="#three-shifts-to-keep-in-mind" id="toc-three-shifts-to-keep-in-mind" class="nav-link" data-scroll-target="#three-shifts-to-keep-in-mind">Three shifts to keep in mind</a></li>
-  <li><a href="#a-few-subtleties" id="toc-a-few-subtleties" class="nav-link" data-scroll-target="#a-few-subtleties">A few subtleties</a></li>
+  <li><a href="#why-this-lecture-exists" id="toc-why-this-lecture-exists" class="nav-link active" data-scroll-target="#why-this-lecture-exists">Why this lecture exists</a></li>
+  <li><a href="#bundles-prices-and-what-affordable-means" id="toc-bundles-prices-and-what-affordable-means" class="nav-link" data-scroll-target="#bundles-prices-and-what-affordable-means">Bundles, prices, and what “affordable” means</a></li>
+  <li><a href="#the-two-good-picture" id="toc-the-two-good-picture" class="nav-link" data-scroll-target="#the-two-good-picture">The two-good picture</a>
+  <ul class="collapse">
+  <li><a href="#what-the-slope-means" id="toc-what-the-slope-means" class="nav-link" data-scroll-target="#what-the-slope-means">What the slope means</a></li>
+  </ul></li>
+  <li><a href="#comparative-statics-income-vs.-price" id="toc-comparative-statics-income-vs.-price" class="nav-link" data-scroll-target="#comparative-statics-income-vs.-price">Comparative statics: income vs.&nbsp;price</a></li>
+  <li><a href="#numéraire-and-relative-prices" id="toc-numéraire-and-relative-prices" class="nav-link" data-scroll-target="#numéraire-and-relative-prices">Numéraire and relative prices</a></li>
+  <li><a href="#two-goods-is-enough" id="toc-two-goods-is-enough" class="nav-link" data-scroll-target="#two-goods-is-enough">Two goods is enough</a></li>
+  <li><a href="#when-the-constraint-isnt-a-straight-line" id="toc-when-the-constraint-isnt-a-straight-line" class="nav-link" data-scroll-target="#when-the-constraint-isnt-a-straight-line">When the constraint isn’t a straight line</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -364,7 +371,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 <div style="background:#fff8e7; border-left:4px solid #d4a017; padding:12px 18px; margin:0 0 22px 0; font-size:0.9em; color:#2c3e50; border-radius:0 6px 6px 0; line-height:1.55;">
-  <strong>Course attribution.</strong> This is a simulation companion to <strong>ECON 360 — Intermediate Microeconomics</strong> at Binghamton University. The course content, slide structure, and pedagogical approach are the work of <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Professor David Slichter</a>; these pages add interactive Shinylive simulations to his materials.
+  <strong>About this page.</strong> This is a simulation-based companion to <strong>ECON 360 — Intermediate Microeconomics</strong> at Binghamton University. The lecture order, conceptual frame (the recurring "agents pursue goals subject to constraints" rail), terminology (e.g. budget <em>set</em> vs. budget <em>constraint</em>, ordinary demand, kinky solutions), running examples (Wegmans apples and bananas, the monopolist's burrito-MR puzzle), and pedagogical structure are adapted from <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Professor David Slichter</a>'s ECON 360 lecture slides. The exposition, derivations, and interactive Shinylive simulations were written independently by Nency Dhameja and are not transcriptions of the slides.
 </div>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./budget.html">Consumer Theory</a></li><li class="breadcrumb-item"><a href="./budget.html">Budget Constraints</a></li></ol></nav>
@@ -386,68 +393,90 @@ window.Quarto = {
 </header>
 
 
-<section id="the-picture" class="level2">
-<h2 class="anchored" data-anchor-id="the-picture">The picture</h2>
-<p>You have income <span class="math inline">\(m\)</span> and you can buy two goods <span class="math inline">\(x_1, x_2\)</span> at prices <span class="math inline">\(p_1, p_2\)</span>. The set of bundles you can afford is</p>
-<p><span class="math display">\[
-\{(x_1, x_2) \geq 0 : p_1 x_1 + p_2 x_2 \leq m\}.
-\]</span></p>
-<p>The boundary of that set — where you spend every dollar — is the <strong>budget line</strong>:</p>
-<p><span class="math display">\[
-p_1 x_1 + p_2 x_2 = m.
-\]</span></p>
-<p>Rewritten with <span class="math inline">\(x_2\)</span> on the vertical axis:</p>
-<p><span class="math display">\[
-x_2 = \frac{m}{p_2} \;-\; \frac{p_1}{p_2} x_1.
-\]</span></p>
-<p>Three things to read off this equation:</p>
-<ul>
-<li><strong>Vertical intercept</strong> <span class="math inline">\(m/p_2\)</span> — the most <span class="math inline">\(x_2\)</span> you can buy if you spend everything on <span class="math inline">\(x_2\)</span>.</li>
-<li><strong>Horizontal intercept</strong> <span class="math inline">\(m/p_1\)</span> — the most <span class="math inline">\(x_1\)</span> you can buy if you spend everything on <span class="math inline">\(x_1\)</span>.</li>
-<li><strong>Slope</strong> <span class="math inline">\(-p_1/p_2\)</span> — the rate at which the market lets you trade <span class="math inline">\(x_2\)</span> for <span class="math inline">\(x_1\)</span>. Give up one unit of <span class="math inline">\(x_1\)</span>, the market gives you <span class="math inline">\(p_1/p_2\)</span> units of <span class="math inline">\(x_2\)</span>.</li>
-</ul>
-<p>That’s the whole story. Everything else in consumer theory builds on top of this picture.</p>
+<section id="why-this-lecture-exists" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-lecture-exists">Why this lecture exists</h2>
+<p>Before we can talk about what a consumer <em>wants</em> to do, we have to talk about what they <em>can</em> do. This lecture is about the second question. The thing that stops you from buying a private jet isn’t lack of desire — it’s the budget. So we want a clean way of writing down “the set of affordable bundles.” Once that’s in hand, every later result in consumer theory will follow the same pattern: combine <em>what’s feasible</em> (budget set) with <em>what’s desired</em> (preferences) and pick the best feasible option.</p>
+<p>That pattern — agents have <strong>goals</strong>, they choose <strong>actions</strong> to pursue those goals, they face <strong>constraints</strong> that make the goals hard to reach — is the backbone of every model in the course. Today we set up the constraint side.</p>
 </section>
-<section id="three-shifts-to-keep-in-mind" class="level2">
-<h2 class="anchored" data-anchor-id="three-shifts-to-keep-in-mind">Three shifts to keep in mind</h2>
+<section id="bundles-prices-and-what-affordable-means" class="level2">
+<h2 class="anchored" data-anchor-id="bundles-prices-and-what-affordable-means">Bundles, prices, and what “affordable” means</h2>
+<p>A <strong>consumption bundle</strong> is a list of how much of each good you consume: <span class="math display">\[
+(x_1, x_2, \ldots, x_n).
+\]</span> If there are <span class="math inline">\(n\)</span> goods, there are <span class="math inline">\(n\)</span> entries. The prices are <span class="math display">\[
+(p_1, p_2, \ldots, p_n).
+\]</span> The total amount you’d spend on the bundle is just the sum of expenditures on each good: <span class="math display">\[
+p_1 x_1 + p_2 x_2 + \cdots + p_n x_n.
+\]</span> You can afford the bundle as long as that total doesn’t exceed your income <span class="math inline">\(m\)</span>. Two definitions worth keeping separate:</p>
+<ul>
+<li><strong>Budget set</strong> — the set of bundles you can afford: <span class="math display">\[
+B(p_1, \ldots, p_n, m) = \{(x_1, \ldots, x_n) \geq 0 : p_1 x_1 + \cdots + p_n x_n \leq m\}.
+\]</span></li>
+<li><strong>Budget constraint</strong> — the <em>boundary</em> of that set, where you spend every dollar: <span class="math display">\[
+p_1 x_1 + \cdots + p_n x_n = m.
+\]</span></li>
+</ul>
+<p>The constraint is just one piece of the budget set — the edge. Every bundle on the constraint is also in the budget set, but not vice versa: the interior bundles (where you don’t spend everything) are also affordable.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Concrete sanity check (Wegmans run).</strong> Apples are $0.50/lb and bananas are $2.00/lb. You have $4. A bundle of 3 lb of apples and 1 lb of bananas costs <span class="math inline">\(0.50 \cdot 3 + 2.00 \cdot 1 = 3.50\)</span>, which is less than 4 — so <span class="math inline">\((3, 1)\)</span> is <strong>in the budget set</strong> but <strong>not on the budget constraint</strong>. The bundle <span class="math inline">\((4, 1)\)</span> costs exactly $4, so it lies on the constraint.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="the-two-good-picture" class="level2">
+<h2 class="anchored" data-anchor-id="the-two-good-picture">The two-good picture</h2>
+<p>Most of microeconomics is taught in two dimensions. That’s not because real consumers buy two goods. It’s because almost everything generalizes from two, and two fits on a chalkboard. (Later we’ll see that the “second good” can stand in for “everything else.”)</p>
+<p>With two goods the constraint is <span class="math display">\[
+p_1 x_1 + p_2 x_2 = m.
+\]</span> Solve for <span class="math inline">\(x_2\)</span>: <span class="math display">\[
+x_2 \;=\; \frac{m}{p_2} \;-\; \frac{p_1}{p_2} x_1.
+\]</span> A line. So the budget constraint is a straight line with three landmarks you should be able to read off without thinking:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Change</th>
-<th>What happens to the budget line</th>
+<th>Landmark</th>
+<th>Value</th>
+<th>What it means</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Income <span class="math inline">\(m\)</span> up</strong></td>
-<td>Parallel shift outward (same slope)</td>
+<td>Vertical intercept</td>
+<td><span class="math inline">\(m/p_2\)</span></td>
+<td>“Spend everything on good 2” — most <span class="math inline">\(x_2\)</span> you can buy</td>
 </tr>
 <tr class="even">
-<td><strong>Price <span class="math inline">\(p_1\)</span> up</strong></td>
-<td>Pivots inward around the <span class="math inline">\(x_2\)</span> intercept</td>
+<td>Horizontal intercept</td>
+<td><span class="math inline">\(m/p_1\)</span></td>
+<td>“Spend everything on good 1” — most <span class="math inline">\(x_1\)</span> you can buy</td>
 </tr>
 <tr class="odd">
-<td><strong>Both prices up by the same factor</strong></td>
-<td>Same as income falling — the line shifts inward in parallel</td>
-</tr>
-<tr class="even">
-<td><strong>Composite price shift</strong> (<span class="math inline">\(p_1, p_2\)</span> both change by the same factor)</td>
-<td>Pivots around no fixed point unless you also adjust <span class="math inline">\(m\)</span></td>
+<td>Slope</td>
+<td><span class="math inline">\(-p_1/p_2\)</span></td>
+<td>Trade-off the market lets you make</td>
 </tr>
 </tbody>
 </table>
-<p>The third row is the <strong>homogeneity of degree zero</strong> result: if all prices <em>and</em> income scale by the same factor, the budget set is unchanged. Only <strong>relative</strong> prices matter for what you can buy.</p>
+<section id="what-the-slope-means" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-slope-means">What the slope means</h3>
+<p>The slope <span class="math inline">\(-p_1/p_2\)</span> has a clean interpretation: it’s the <strong>opportunity cost</strong> of good 1 in units of good 2. Move one unit to the right (buy one more unit of <span class="math inline">\(x_1\)</span>) and you must move down by <span class="math inline">\(p_1/p_2\)</span> (give up that much <span class="math inline">\(x_2\)</span>) to stay affordable. If apples cost twice as much as bananas, an extra apple costs you two bananas.</p>
+<p>(Equivalently, going the other way: an extra unit of <span class="math inline">\(x_2\)</span> costs <span class="math inline">\(p_2/p_1\)</span> units of <span class="math inline">\(x_1\)</span>. Same trade, told from the other side.)</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 620
 
 library(shiny)
 
 ui &lt;- fluidPage(
-  titlePanel("Budget Line Explorer"),
+  titlePanel("Budget Set Explorer"),
 
   sidebarLayout(
     sidebarPanel(
@@ -456,7 +485,7 @@ ui &lt;- fluidPage(
       sliderInput("p1", "Price of good 1 (p₁):",  min =   1, max =  20, value =   5, step = 1),
       sliderInput("p2", "Price of good 2 (p₂):",  min =   1, max =  20, value =  10, step = 1),
       hr(),
-      checkboxInput("show_old", "Show the previous budget line for comparison", value = TRUE),
+      checkboxInput("show_old", "Overlay the previous budget line", value = TRUE),
       htmlOutput("readout")
     ),
     mainPanel(
@@ -468,7 +497,6 @@ ui &lt;- fluidPage(
 
 server &lt;- function(input, output, session) {
 
-  # Cache the previous parameters so we can overlay the previous line.
   prev &lt;- reactiveValues(m = 100, p1 = 5, p2 = 10)
 
   observeEvent(list(input$m, input$p1, input$p2), {
@@ -492,14 +520,11 @@ server &lt;- function(input, output, session) {
 
     par(mar = c(4.2, 4.5, 1, 1))
     plot(NA, xlim = c(0, xmax), ylim = c(0, ymax),
-         xlab = expression(x[1]), ylab = expression(x[2]),
-         main = "")
+         xlab = expression(x[1]), ylab = expression(x[2]), main = "")
 
-    # Shade the affordable set.
     polygon(c(0, x1_intercept, 0), c(0, 0, x2_intercept),
             col = adjustcolor("#3498db", 0.18), border = NA)
 
-    # The previous budget line (faded), if requested.
     if (isTRUE(input$show_old) &amp;&amp;
         (prev$m_old != m || prev$p1_old != p1 || prev$p2_old != p2)) {
       segments(0, prev$m_old / prev$p2_old,
@@ -507,19 +532,15 @@ server &lt;- function(input, output, session) {
                col = "#bdc3c7", lwd = 2, lty = 2)
     }
 
-    # Current budget line.
-    segments(0, x2_intercept, x1_intercept, 0,
-             col = "#185FA5", lwd = 3)
-
-    # Intercept labels.
+    segments(0, x2_intercept, x1_intercept, 0, col = "#185FA5", lwd = 3)
     points(c(x1_intercept, 0), c(0, x2_intercept), pch = 19, col = "#185FA5")
-    text(x1_intercept, 0, labels = sprintf("m/p₁ = %.1f", x1_intercept),
+    text(x1_intercept, 0, sprintf("m/p₁ = %.1f", x1_intercept),
          pos = 3, cex = 0.9, col = "#185FA5")
-    text(0, x2_intercept, labels = sprintf("m/p₂ = %.1f", x2_intercept),
+    text(0, x2_intercept, sprintf("m/p₂ = %.1f", x2_intercept),
          pos = 4, cex = 0.9, col = "#185FA5")
 
     legend("topright",
-           legend = c("Current budget line", "Affordable bundles",
+           legend = c("Current budget line", "Budget set (affordable)",
                       if (isTRUE(input$show_old)) "Previous budget line" else NULL),
            col    = c("#185FA5", adjustcolor("#3498db", 0.4),
                       if (isTRUE(input$show_old)) "#bdc3c7" else NULL),
@@ -534,8 +555,8 @@ server &lt;- function(input, output, session) {
     m  &lt;- input$m; p1 &lt;- input$p1; p2 &lt;- input$p2
     HTML(sprintf(paste(
       "&lt;div style='margin-top:10px;font-size:13px;line-height:1.7;'&gt;",
-      "&lt;b&gt;Budget line:&lt;/b&gt; %d · x₁ + %d · x₂ = %d&lt;br&gt;",
-      "&lt;b&gt;Slope (−p₁/p₂):&lt;/b&gt; %.2f&lt;br&gt;",
+      "&lt;b&gt;Constraint:&lt;/b&gt; %d·x₁ + %d·x₂ = %d&lt;br&gt;",
+      "&lt;b&gt;Slope:&lt;/b&gt; %.2f&lt;br&gt;",
       "&lt;b&gt;Max x₁:&lt;/b&gt; %.1f &amp;nbsp; &lt;b&gt;Max x₂:&lt;/b&gt; %.1f",
       "&lt;/div&gt;"
     ), p1, p2, m, -p1 / p2, m / p1, m / p2))
@@ -551,34 +572,58 @@ shinyApp(ui, server)</code></pre>
 <div class="callout-body-container">
 <p><strong>Things to try.</strong></p>
 <ul>
-<li><strong>Raise income <span class="math inline">\(m\)</span></strong>: the line slides outward without changing its slope. Affordable region grows; trade-off between goods is unchanged.</li>
-<li><strong>Raise <span class="math inline">\(p_1\)</span></strong>: the horizontal intercept moves in, the vertical one stays put. The line pivots. Good 1 is more expensive relative to good 2, so the slope steepens.</li>
-<li><strong>Double both prices</strong>: same as halving income. The line shifts in parallel, even though no “price ratio” has changed. Relative prices alone don’t determine what you can afford — your real income does too.</li>
-<li><strong>Try <span class="math inline">\(p_1 = p_2\)</span></strong>: the slope is −1. One unit of either good costs the same; the budget line cuts the axes at <span class="math inline">\(m/p\)</span> in both directions.</li>
+<li><strong>Raise income <span class="math inline">\(m\)</span></strong>: the line slides outward in parallel. Same trade-off, more bundles in reach.</li>
+<li><strong>Raise <span class="math inline">\(p_1\)</span></strong>: the line <strong>pivots</strong> around the <span class="math inline">\(x_2\)</span> intercept (good 2’s max didn’t change) and rotates inward. Good 1 is now more expensive relative to good 2, so the slope steepens.</li>
+<li><strong>Lower <span class="math inline">\(p_1\)</span></strong>: the line pivots <em>outward</em>. No old bundle becomes unaffordable, but new ones become reachable.</li>
+<li><strong>Make <span class="math inline">\(p_1 = p_2\)</span></strong>: the slope becomes <span class="math inline">\(-1\)</span>. The market values both goods at the same rate; one apple costs exactly one banana.</li>
 </ul>
 </div>
 </div>
 </div>
 </section>
-<section id="a-few-subtleties" class="level2">
-<h2 class="anchored" data-anchor-id="a-few-subtleties">A few subtleties</h2>
-<p><strong>Composite goods.</strong> Real consumers buy thousands of goods. The two-good model isn’t a claim that there are two goods — it’s a claim that you can lump “everything else” into a composite good <span class="math inline">\(x_2\)</span> with price normalized to <span class="math inline">\(1\)</span>. Then <span class="math inline">\(m - p_1 x_1\)</span> is what’s left over for everything else. That makes <span class="math inline">\(x_1\)</span> the choice variable of interest and keeps the geometry two-dimensional.</p>
-<p><strong>Taxes, subsidies, rationing.</strong> Each of these <em>changes the budget set’s shape</em>:</p>
-<ul>
-<li>A <strong>quantity tax</strong> of <span class="math inline">\(t\)</span> on good 1 acts like a higher price: <span class="math inline">\(p_1\)</span> becomes <span class="math inline">\(p_1 + t\)</span>.</li>
-<li>A <strong>value tax</strong> (<span class="math inline">\(\tau\)</span>) acts like a price multiplier: <span class="math inline">\(p_1\)</span> becomes <span class="math inline">\((1 + \tau) p_1\)</span>.</li>
-<li>A <strong>lump-sum tax</strong> of <span class="math inline">\(T\)</span> acts like an income drop: <span class="math inline">\(m\)</span> becomes <span class="math inline">\(m - T\)</span>.</li>
-<li>A <strong>food-stamp subsidy</strong> (lower price on <span class="math inline">\(x_1\)</span> up to a quantity cap) kinks the budget line.</li>
-<li>A <strong>ration</strong> (hard quantity ceiling on <span class="math inline">\(x_1\)</span>) truncates the budget set with a vertical line.</li>
-</ul>
-<p>Each of these is one or two extra strokes on the same picture. Try sketching them.</p>
-<p><strong>Endowment-based income.</strong> What if you don’t have money — you have stuff? You start with <span class="math inline">\((\omega_1, \omega_2)\)</span> units of the two goods. Then your “income” at prices <span class="math inline">\((p_1, p_2)\)</span> is <span class="math inline">\(m = p_1 \omega_1 + p_2 \omega_2\)</span>, and the budget line passes through your endowment. We’ll come back to this when we cover <a href="buying-selling.html">Buying and Selling</a> and <a href="exchange.html">Exchange</a>.</p>
+</section>
+<section id="comparative-statics-income-vs.-price" class="level2">
+<h2 class="anchored" data-anchor-id="comparative-statics-income-vs.-price">Comparative statics: income vs.&nbsp;price</h2>
+<p>Two kinds of shifts to keep straight.</p>
+<p><strong>Income changes</strong> are parallel shifts. The slope is <span class="math inline">\(-p_1/p_2\)</span>, which has no <span class="math inline">\(m\)</span> in it — so changing <span class="math inline">\(m\)</span> doesn’t change the slope. A larger <span class="math inline">\(m\)</span> pushes both intercepts outward by the same factor; the new constraint is parallel to the old one. Lower income, same story going the other way. Higher income gives you more choice. Lower income gives you less.</p>
+<p><strong>Own-price changes</strong> are pivots. If <span class="math inline">\(p_1\)</span> falls, the <span class="math inline">\(x_2\)</span> intercept <span class="math inline">\(m/p_2\)</span> doesn’t budge, but <span class="math inline">\(m/p_1\)</span> shoots out — the constraint pivots outward around the <span class="math inline">\(x_2\)</span> axis and gets flatter (slope <span class="math inline">\(-p_1/p_2\)</span> shrinks in magnitude). Old bundles stay affordable; new ones appear. A price increase does the reverse: pivot inward, slope steepens.</p>
+<p>If you like having more options, you’d rather have <strong>lots of income</strong> facing <strong>low prices</strong>.</p>
+</section>
+<section id="numéraire-and-relative-prices" class="level2">
+<h2 class="anchored" data-anchor-id="numéraire-and-relative-prices">Numéraire and relative prices</h2>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Sanity check.</strong> Ann has 1 million dollars. Bill has 100 million cents. Who can afford to buy more stuff?</p>
+</div>
+</div>
+</div>
+<p>The point of the question is that <strong>only relative prices and real income matter</strong>, not the units they’re measured in. If you re-denominate everything in cents — <span class="math inline">\(p_1 = 200\)</span>, <span class="math inline">\(p_2 = 300\)</span>, <span class="math inline">\(m = 1200\)</span> instead of <span class="math inline">\(p_1 = 2\)</span>, <span class="math inline">\(p_2 = 3\)</span>, <span class="math inline">\(m = 12\)</span> — the constraint <span class="math inline">\(200 x_1 + 300 x_2 = 1200\)</span> is the same line as <span class="math inline">\(2 x_1 + 3 x_2 = 12\)</span>. Same budget set. Same trade-offs. Ann and Bill can afford the exact same bundles.</p>
+<p>This invariance lets us pick any one good to be the <strong>numéraire</strong> — the unit of account — by setting its price to 1. If we set <span class="math inline">\(p_1 = 1\)</span>, then <span class="math inline">\(p_2\)</span> becomes “the price of good 2 measured in units of good 1.” The relative price <span class="math inline">\(p_2/p_1 = 3/2\)</span> tells you that you’d give up 1.5 units of good 1 for an extra unit of good 2. Same exchange rate, expressed in real terms instead of dollars.</p>
+<p>This isn’t a mathematical curiosity. The fact that <em>only relative prices matter</em> is the reason that, in macro, doubling all prices and all wages overnight changes nothing real. The budget set is unchanged.</p>
+</section>
+<section id="two-goods-is-enough" class="level2">
+<h2 class="anchored" data-anchor-id="two-goods-is-enough">Two goods is enough</h2>
+<p>You might worry that “two goods” is an absurd simplification of consumer choice. It isn’t. Pick any one good you care about — call it good 1. Lump everything else the consumer might spend their income on into a composite “other stuff” good 2, with price normalized to 1. Then <span class="math inline">\(p_1 x_1 + x_2 = m\)</span> — the same algebra, but <span class="math inline">\(x_2\)</span> is now “dollars spent on everything else.” Two-good geometry, n-good reality.</p>
+<p>The full <span class="math inline">\(n\)</span>-commodity budget set is a simplex (a triangle in three dimensions, a tetrahedron in four, etc.). It’s never visualized after <span class="math inline">\(n = 3\)</span> but the algebra works identically.</p>
+</section>
+<section id="when-the-constraint-isnt-a-straight-line" class="level2">
+<h2 class="anchored" data-anchor-id="when-the-constraint-isnt-a-straight-line">When the constraint isn’t a straight line</h2>
+<p>The picture we’ve been drawing has a constant slope <span class="math inline">\(-p_1/p_2\)</span>. That requires <strong>constant prices</strong> — you pay the same per unit regardless of how much you buy. Real markets often violate this.</p>
+<p><strong>Quantity discounts.</strong> Suppose <span class="math inline">\(p_2 = \$1\)</span> always, but <span class="math inline">\(p_1 = \$2\)</span> for the first 20 units and $1 for every additional unit. The constraint now has a <strong>kink</strong> at <span class="math inline">\(x_1 = 20\)</span>: slope <span class="math inline">\(-2\)</span> for <span class="math inline">\(x_1 \leq 20\)</span>, slope <span class="math inline">\(-1\)</span> thereafter. Buying in bulk gets cheaper, so the constraint flattens past the threshold.</p>
+<p><strong>Quantity penalties.</strong> A “buy too much and we charge more” pricing scheme does the opposite — the constraint steepens above some threshold.</p>
+<p><strong>Multiple constraints.</strong> Sometimes a consumer faces more than just a budget. Maybe at least 10 units of food are needed to survive (<span class="math inline">\(x_1 \geq 10\)</span>). Maybe time is also limited and producing each good takes some hours, capping the total. <strong>The effective choice set is the intersection of all the constraints.</strong> Whatever you can do, you must satisfy every constraint at once.</p>
+<p>The general lesson — <strong>a bundle is feasible only if it satisfies every constraint</strong> — generalizes far beyond this lecture and shows up in producer theory, intertemporal choice, and labor supply.</p>
 </section>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
 <ul>
-<li>The two-good budget line is sometimes called the <strong>trade-off line</strong> or <strong>price line</strong>. Different textbooks emphasize different framings: as a <em>constraint</em> (what you can afford), as an <em>opportunity cost</em> schedule (how much <span class="math inline">\(x_2\)</span> a unit of <span class="math inline">\(x_1\)</span> costs you), or as a <em>market trade rate</em>. All three readings are the same line.</li>
-<li>The standard “all-or-nothing” framing — your budget is exactly <span class="math inline">\(m\)</span>, no borrowing, no saving — drops in <a href="intertemporal.html">Intertemporal Choice</a>, where the budget constraint becomes a present-value constraint over two or more periods.</li>
+<li>The “budget set” and “budget constraint” are formally different objects — the set vs.&nbsp;its boundary — and homework or exam questions often turn on the distinction. <em>Is the bundle <span class="math inline">\((3, 1)\)</span> in the budget set?</em> Yes, if it’s affordable. <em>Is it on the budget constraint?</em> Only if it spends every dollar.</li>
+<li>The “two-good with composite outside good” trick is what lets economics keep pictures relevant in a thousand-good world. We’ll use it again in <a href="choice.html">Choice</a>, <a href="demand.html">Demand</a>, and <a href="intertemporal.html">Intertemporal Choice</a>.</li>
+<li>Quantity discounts and penalties give kinked constraints that we’ll revisit when we discuss <a href="slutsky.html">Slutsky decomposition</a> and policy interventions — many real-world programs (food stamps, EITC, marginal income tax brackets) impose exactly this kind of kink on the budget set.</li>
 </ul>
 
 
@@ -992,7 +1037,7 @@ shinyApp(ui, server)</code></pre>
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><span style="white-space:nowrap">Course content adapted from <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Prof.&nbsp;David Slichter</a>’s ECON 360 slides | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span></p>
+<p><span style="white-space:nowrap">Lecture frame, examples, and terminology adapted from <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Prof.&nbsp;David Slichter</a>’s ECON 360 slides | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;
