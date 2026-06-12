@@ -1,0 +1,13 @@
+/* Match the Econ Lab look */
+.callout-note.callout-style-simple {
+  border-left: 4px solid #185FA5;
+  background: #f4f8fb;
+}
+.callout-tip.callout-style-simple {
+  border-left: 4px solid #27ae60;
+  background: #f0f9f3;
+}
+h1 { color: #2c3e50; }
+h2 { color: #2c3e50; border-bottom: 1px solid #eaecef; padding-bottom: 4px; }
+h3 { color: #34495e; }
+.sidebar-section .sidebar-item-text { font-size: 0.9em; }

@@ -1,0 +1,439 @@
+[
+  {
+    "objectID": "cost-min.html",
+    "href": "cost-min.html",
+    "title": "Cost Minimization",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Production & Costs",
+      "Cost Minimization"
+    ]
+  },
+  {
+    "objectID": "technology.html",
+    "href": "technology.html",
+    "title": "Technology",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Production & Costs",
+      "Technology"
+    ]
+  },
+  {
+    "objectID": "buying-selling.html",
+    "href": "buying-selling.html",
+    "title": "Buying & Selling",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Consumer Theory",
+      "Buying & Selling"
+    ]
+  },
+  {
+    "objectID": "budget.html",
+    "href": "budget.html",
+    "title": "Budget Constraints",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.",
+    "crumbs": [
+      "Consumer Theory",
+      "Budget Constraints"
+    ]
+  },
+  {
+    "objectID": "budget.html#the-picture",
+    "href": "budget.html#the-picture",
+    "title": "Budget Constraints",
+    "section": "The picture",
+    "text": "The picture\nYou have income \\(m\\) and you can buy two goods \\(x_1, x_2\\) at prices \\(p_1, p_2\\). The set of bundles you can afford is\n\\[\n\\{(x_1, x_2) \\geq 0 : p_1 x_1 + p_2 x_2 \\leq m\\}.\n\\]\nThe boundary of that set — where you spend every dollar — is the budget line:\n\\[\np_1 x_1 + p_2 x_2 = m.\n\\]\nRewritten with \\(x_2\\) on the vertical axis:\n\\[\nx_2 = \\frac{m}{p_2} \\;-\\; \\frac{p_1}{p_2} x_1.\n\\]\nThree things to read off this equation:\n\nVertical intercept \\(m/p_2\\) — the most \\(x_2\\) you can buy if you spend everything on \\(x_2\\).\nHorizontal intercept \\(m/p_1\\) — the most \\(x_1\\) you can buy if you spend everything on \\(x_1\\).\nSlope \\(-p_1/p_2\\) — the rate at which the market lets you trade \\(x_2\\) for \\(x_1\\). Give up one unit of \\(x_1\\), the market gives you \\(p_1/p_2\\) units of \\(x_2\\).\n\nThat’s the whole story. Everything else in consumer theory builds on top of this picture.",
+    "crumbs": [
+      "Consumer Theory",
+      "Budget Constraints"
+    ]
+  },
+  {
+    "objectID": "budget.html#three-shifts-to-keep-in-mind",
+    "href": "budget.html#three-shifts-to-keep-in-mind",
+    "title": "Budget Constraints",
+    "section": "Three shifts to keep in mind",
+    "text": "Three shifts to keep in mind\n\n\n\n\n\n\n\nChange\nWhat happens to the budget line\n\n\n\n\nIncome \\(m\\) up\nParallel shift outward (same slope)\n\n\nPrice \\(p_1\\) up\nPivots inward around the \\(x_2\\) intercept\n\n\nBoth prices up by the same factor\nSame as income falling — the line shifts inward in parallel\n\n\nComposite price shift (\\(p_1, p_2\\) both change by the same factor)\nPivots around no fixed point unless you also adjust \\(m\\)\n\n\n\nThe third row is the homogeneity of degree zero result: if all prices and income scale by the same factor, the budget set is unchanged. Only relative prices matter for what you can buy.\n#| standalone: true\n#| viewerHeight: 620\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  titlePanel(\"Budget Line Explorer\"),\n\n  sidebarLayout(\n    sidebarPanel(\n      width = 4,\n      sliderInput(\"m\",  \"Income (m):\",            min =  20, max = 200, value = 100, step = 10),\n      sliderInput(\"p1\", \"Price of good 1 (p₁):\",  min =   1, max =  20, value =   5, step = 1),\n      sliderInput(\"p2\", \"Price of good 2 (p₂):\",  min =   1, max =  20, value =  10, step = 1),\n      hr(),\n      checkboxInput(\"show_old\", \"Show the previous budget line for comparison\", value = TRUE),\n      htmlOutput(\"readout\")\n    ),\n    mainPanel(\n      width = 8,\n      plotOutput(\"budget_plot\", height = \"480px\")\n    )\n  )\n)\n\nserver &lt;- function(input, output, session) {\n\n  # Cache the previous parameters so we can overlay the previous line.\n  prev &lt;- reactiveValues(m = 100, p1 = 5, p2 = 10)\n\n  observeEvent(list(input$m, input$p1, input$p2), {\n    isolate({\n      prev$m_old  &lt;- prev$m\n      prev$p1_old &lt;- prev$p1\n      prev$p2_old &lt;- prev$p2\n      prev$m  &lt;- input$m\n      prev$p1 &lt;- input$p1\n      prev$p2 &lt;- input$p2\n    })\n  })\n\n  output$budget_plot &lt;- renderPlot({\n    m  &lt;- input$m;  p1 &lt;- input$p1; p2 &lt;- input$p2\n    x1_intercept &lt;- m / p1\n    x2_intercept &lt;- m / p2\n\n    xmax &lt;- max(220 / 5, x1_intercept) * 1.1\n    ymax &lt;- max(220 / 5, x2_intercept) * 1.1\n\n    par(mar = c(4.2, 4.5, 1, 1))\n    plot(NA, xlim = c(0, xmax), ylim = c(0, ymax),\n         xlab = expression(x[1]), ylab = expression(x[2]),\n         main = \"\")\n\n    # Shade the affordable set.\n    polygon(c(0, x1_intercept, 0), c(0, 0, x2_intercept),\n            col = adjustcolor(\"#3498db\", 0.18), border = NA)\n\n    # The previous budget line (faded), if requested.\n    if (isTRUE(input$show_old) &&\n        (prev$m_old != m || prev$p1_old != p1 || prev$p2_old != p2)) {\n      segments(0, prev$m_old / prev$p2_old,\n               prev$m_old / prev$p1_old, 0,\n               col = \"#bdc3c7\", lwd = 2, lty = 2)\n    }\n\n    # Current budget line.\n    segments(0, x2_intercept, x1_intercept, 0,\n             col = \"#185FA5\", lwd = 3)\n\n    # Intercept labels.\n    points(c(x1_intercept, 0), c(0, x2_intercept), pch = 19, col = \"#185FA5\")\n    text(x1_intercept, 0, labels = sprintf(\"m/p₁ = %.1f\", x1_intercept),\n         pos = 3, cex = 0.9, col = \"#185FA5\")\n    text(0, x2_intercept, labels = sprintf(\"m/p₂ = %.1f\", x2_intercept),\n         pos = 4, cex = 0.9, col = \"#185FA5\")\n\n    legend(\"topright\",\n           legend = c(\"Current budget line\", \"Affordable bundles\",\n                      if (isTRUE(input$show_old)) \"Previous budget line\" else NULL),\n           col    = c(\"#185FA5\", adjustcolor(\"#3498db\", 0.4),\n                      if (isTRUE(input$show_old)) \"#bdc3c7\" else NULL),\n           lwd    = c(3, NA, if (isTRUE(input$show_old)) 2 else NULL),\n           lty    = c(1, NA, if (isTRUE(input$show_old)) 2 else NULL),\n           pch    = c(NA, 15, if (isTRUE(input$show_old)) NA else NULL),\n           pt.cex = 1.6,\n           bty = \"n\", cex = 0.9)\n  })\n\n  output$readout &lt;- renderUI({\n    m  &lt;- input$m; p1 &lt;- input$p1; p2 &lt;- input$p2\n    HTML(sprintf(paste(\n      \"&lt;div style='margin-top:10px;font-size:13px;line-height:1.7;'&gt;\",\n      \"&lt;b&gt;Budget line:&lt;/b&gt; %d · x₁ + %d · x₂ = %d&lt;br&gt;\",\n      \"&lt;b&gt;Slope (−p₁/p₂):&lt;/b&gt; %.2f&lt;br&gt;\",\n      \"&lt;b&gt;Max x₁:&lt;/b&gt; %.1f &nbsp; &lt;b&gt;Max x₂:&lt;/b&gt; %.1f\",\n      \"&lt;/div&gt;\"\n    ), p1, p2, m, -p1 / p2, m / p1, m / p2))\n  })\n}\n\nshinyApp(ui, server)\n\n\n\n\n\n\nThings to try.\n\nRaise income \\(m\\): the line slides outward without changing its slope. Affordable region grows; trade-off between goods is unchanged.\nRaise \\(p_1\\): the horizontal intercept moves in, the vertical one stays put. The line pivots. Good 1 is more expensive relative to good 2, so the slope steepens.\nDouble both prices: same as halving income. The line shifts in parallel, even though no “price ratio” has changed. Relative prices alone don’t determine what you can afford — your real income does too.\nTry \\(p_1 = p_2\\): the slope is −1. One unit of either good costs the same; the budget line cuts the axes at \\(m/p\\) in both directions.",
+    "crumbs": [
+      "Consumer Theory",
+      "Budget Constraints"
+    ]
+  },
+  {
+    "objectID": "budget.html#a-few-subtleties",
+    "href": "budget.html#a-few-subtleties",
+    "title": "Budget Constraints",
+    "section": "A few subtleties",
+    "text": "A few subtleties\nComposite goods. Real consumers buy thousands of goods. The two-good model isn’t a claim that there are two goods — it’s a claim that you can lump “everything else” into a composite good \\(x_2\\) with price normalized to \\(1\\). Then \\(m - p_1 x_1\\) is what’s left over for everything else. That makes \\(x_1\\) the choice variable of interest and keeps the geometry two-dimensional.\nTaxes, subsidies, rationing. Each of these changes the budget set’s shape:\n\nA quantity tax of \\(t\\) on good 1 acts like a higher price: \\(p_1\\) becomes \\(p_1 + t\\).\nA value tax (\\(\\tau\\)) acts like a price multiplier: \\(p_1\\) becomes \\((1 + \\tau) p_1\\).\nA lump-sum tax of \\(T\\) acts like an income drop: \\(m\\) becomes \\(m - T\\).\nA food-stamp subsidy (lower price on \\(x_1\\) up to a quantity cap) kinks the budget line.\nA ration (hard quantity ceiling on \\(x_1\\)) truncates the budget set with a vertical line.\n\nEach of these is one or two extra strokes on the same picture. Try sketching them.\nEndowment-based income. What if you don’t have money — you have stuff? You start with \\((\\omega_1, \\omega_2)\\) units of the two goods. Then your “income” at prices \\((p_1, p_2)\\) is \\(m = p_1 \\omega_1 + p_2 \\omega_2\\), and the budget line passes through your endowment. We’ll come back to this when we cover Buying and Selling and Exchange.",
+    "crumbs": [
+      "Consumer Theory",
+      "Budget Constraints"
+    ]
+  },
+  {
+    "objectID": "budget.html#did-you-know",
+    "href": "budget.html#did-you-know",
+    "title": "Budget Constraints",
+    "section": "Did you know?",
+    "text": "Did you know?\n\nThe two-good budget line is sometimes called the trade-off line or price line. Different textbooks emphasize different framings: as a constraint (what you can afford), as an opportunity cost schedule (how much \\(x_2\\) a unit of \\(x_1\\) costs you), or as a market trade rate. All three readings are the same line.\nThe standard “all-or-nothing” framing — your budget is exactly \\(m\\), no borrowing, no saving — drops in Intertemporal Choice, where the budget constraint becomes a present-value constraint over two or more periods.",
+    "crumbs": [
+      "Consumer Theory",
+      "Budget Constraints"
+    ]
+  },
+  {
+    "objectID": "game-theory.html",
+    "href": "game-theory.html",
+    "title": "Game Theory",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Imperfect Competition & Beyond",
+      "Game Theory"
+    ]
+  },
+  {
+    "objectID": "profit-max.html",
+    "href": "profit-max.html",
+    "title": "Profit Maximization",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Production & Costs",
+      "Profit Maximization"
+    ]
+  },
+  {
+    "objectID": "equilibrium.html",
+    "href": "equilibrium.html",
+    "title": "Equilibrium",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Markets & Welfare",
+      "Equilibrium"
+    ]
+  },
+  {
+    "objectID": "utility.html",
+    "href": "utility.html",
+    "title": "Utility",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Consumer Theory",
+      "Utility"
+    ]
+  },
+  {
+    "objectID": "exchange.html",
+    "href": "exchange.html",
+    "title": "Exchange",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Markets & Welfare",
+      "Exchange"
+    ]
+  },
+  {
+    "objectID": "asymmetric-info.html",
+    "href": "asymmetric-info.html",
+    "title": "Asymmetric Information",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Imperfect Competition & Beyond",
+      "Asymmetric Information"
+    ]
+  },
+  {
+    "objectID": "uncertainty.html",
+    "href": "uncertainty.html",
+    "title": "Uncertainty",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Imperfect Competition & Beyond",
+      "Uncertainty"
+    ]
+  },
+  {
+    "objectID": "slutsky.html",
+    "href": "slutsky.html",
+    "title": "Slutsky Decomposition",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Consumer Theory",
+      "Slutsky Decomposition"
+    ]
+  },
+  {
+    "objectID": "monopoly.html",
+    "href": "monopoly.html",
+    "title": "Monopoly",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.",
+    "crumbs": [
+      "Imperfect Competition & Beyond",
+      "Monopoly"
+    ]
+  },
+  {
+    "objectID": "monopoly.html#the-setup",
+    "href": "monopoly.html#the-setup",
+    "title": "Monopoly",
+    "section": "The setup",
+    "text": "The setup\nA single firm faces the entire market demand curve for its product. There are no competitors to undercut it. The firm picks one number — quantity \\(q\\) (or equivalently, price \\(p\\), since they pin each other down via the demand curve) — to maximize profit.\nThat’s the whole monopoly model. The geometry below shows everything: the demand curve, the marginal revenue curve, the marginal cost curve, the profit-maximizing quantity, and the deadweight loss relative to perfect competition.",
+    "crumbs": [
+      "Imperfect Competition & Beyond",
+      "Monopoly"
+    ]
+  },
+  {
+    "objectID": "monopoly.html#the-key-insight-marginal-revenue-is-below-price",
+    "href": "monopoly.html#the-key-insight-marginal-revenue-is-below-price",
+    "title": "Monopoly",
+    "section": "The key insight: marginal revenue is below price",
+    "text": "The key insight: marginal revenue is below price\nFor a competitive firm, selling one more unit adds exactly \\(p\\) to revenue (you’re a price taker; selling more doesn’t move the price). So marginal revenue equals price.\nFor a monopolist, selling one more unit forces the price down on every unit. So marginal revenue is the price you get on the new unit minus the revenue you lose on all the previous units:\n\\[\n\\text{MR}(q) = p(q) + q \\cdot p'(q).\n\\]\nSince \\(p'(q) &lt; 0\\) (downward-sloping demand), \\(\\text{MR}(q) &lt; p(q)\\). The MR curve sits below the demand curve at every quantity.\nWith a linear demand \\(p(q) = a - bq\\):\n\\[\n\\text{MR}(q) = a - 2bq.\n\\]\nSame intercept as demand, twice the slope. That’s the rule worth memorizing.",
+    "crumbs": [
+      "Imperfect Competition & Beyond",
+      "Monopoly"
+    ]
+  },
+  {
+    "objectID": "monopoly.html#solving-for-q",
+    "href": "monopoly.html#solving-for-q",
+    "title": "Monopoly",
+    "section": "Solving for \\(q^*\\)",
+    "text": "Solving for \\(q^*\\)\nThe monopolist maximizes \\(\\pi(q) = p(q) \\cdot q - C(q)\\). The first-order condition is\n\\[\n\\text{MR}(q) = \\text{MC}(q).\n\\]\nWith linear demand \\(p(q) = a - bq\\) and constant marginal cost \\(c\\):\n\\[\n\\boxed{\\; q^* = \\frac{a - c}{2b}, \\qquad p^* = \\frac{a + c}{2}. \\;}\n\\]\nCompare to perfect competition, where price equals marginal cost (\\(p = c\\)) and so \\(q^{\\text{comp}} = (a - c)/b\\). The monopolist produces half the competitive quantity and charges a higher price. The gap between the two is the deadweight loss:\n\\[\n\\text{DWL} = \\tfrac{1}{2} \\cdot (q^{\\text{comp}} - q^*) \\cdot (p^* - c) = \\frac{(a - c)^2}{8 b}.\n\\]\nThat little triangle is the social cost of monopoly. The simulation below lets you watch it shrink and grow.\n#| standalone: true\n#| viewerHeight: 660\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  titlePanel(\"Monopoly vs. Competition\"),\n\n  sidebarLayout(\n    sidebarPanel(\n      width = 4,\n      sliderInput(\"a\", \"Demand intercept (a):\",\n                  min = 50, max = 200, value = 100, step = 10),\n      sliderInput(\"b\", \"Demand slope (b):\",\n                  min = 0.5, max = 5,   value = 1.5, step = 0.1),\n      sliderInput(\"c\", \"Marginal cost (c):\",\n                  min = 0,  max = 80,  value = 20,  step = 5),\n      hr(),\n      checkboxInput(\"show_comp\", \"Show competitive outcome for comparison\",\n                    value = TRUE),\n      checkboxInput(\"show_dwl\", \"Shade the deadweight loss triangle\",\n                    value = TRUE),\n      htmlOutput(\"readout\")\n    ),\n    mainPanel(\n      width = 8,\n      plotOutput(\"monop_plot\", height = \"520px\")\n    )\n  )\n)\n\nserver &lt;- function(input, output, session) {\n\n  results &lt;- reactive({\n    a &lt;- input$a; b &lt;- input$b; c &lt;- input$c\n    q_mon  &lt;- (a - c) / (2 * b)\n    p_mon  &lt;- a - b * q_mon\n    q_comp &lt;- (a - c) / b\n    p_comp &lt;- c\n    profit &lt;- (p_mon - c) * q_mon\n    cs_mon  &lt;- 0.5 * (a - p_mon) * q_mon\n    cs_comp &lt;- 0.5 * (a - p_comp) * q_comp\n    dwl     &lt;- 0.5 * (q_comp - q_mon) * (p_mon - c)\n    list(a = a, b = b, c = c,\n         q_mon = q_mon, p_mon = p_mon,\n         q_comp = q_comp, p_comp = p_comp,\n         profit = profit, cs_mon = cs_mon, cs_comp = cs_comp, dwl = dwl)\n  })\n\n  output$monop_plot &lt;- renderPlot({\n    r &lt;- results()\n\n    q_seq &lt;- seq(0, r$a / r$b, length.out = 400)\n    p_d  &lt;- r$a - r$b * q_seq\n    p_mr &lt;- r$a - 2 * r$b * q_seq\n    p_mr[p_mr &lt; 0] &lt;- NA\n\n    xmax &lt;- r$a / r$b\n    ymax &lt;- r$a * 1.05\n\n    par(mar = c(4.2, 4.5, 1, 1))\n    plot(NA, xlim = c(0, xmax), ylim = c(0, ymax),\n         xlab = \"Quantity (q)\", ylab = \"Price (p)\", main = \"\")\n\n    # MC curve (horizontal at c).\n    abline(h = r$c, col = \"#7f8c8d\", lwd = 2, lty = 2)\n    text(xmax * 0.95, r$c, \"MC\", pos = 3, col = \"#7f8c8d\", cex = 0.95)\n\n    # Demand and MR.\n    lines(q_seq, p_d,  col = \"#185FA5\", lwd = 2.5)\n    lines(q_seq, p_mr, col = \"#c0392b\", lwd = 2, lty = 2)\n    text(q_seq[10], p_d[10],  \"Demand\", pos = 4, col = \"#185FA5\", cex = 0.95)\n    text(q_seq[10], p_mr[10], \"MR\",     pos = 4, col = \"#c0392b\", cex = 0.95)\n\n    # Deadweight-loss triangle.\n    if (isTRUE(input$show_dwl)) {\n      polygon(c(r$q_mon, r$q_comp, r$q_mon),\n              c(r$p_mon, r$c,      r$c),\n              col = adjustcolor(\"#e67e22\", 0.30), border = NA)\n      text(mean(c(r$q_mon, r$q_comp)),\n           (r$p_mon + r$c) / 2,\n           \"DWL\", col = \"#a04000\", cex = 0.95, font = 2)\n    }\n\n    # Monopoly outcome.\n    segments(r$q_mon, 0,      r$q_mon, r$p_mon, col = \"#27ae60\", lwd = 1.5, lty = 3)\n    segments(0,       r$p_mon, r$q_mon, r$p_mon, col = \"#27ae60\", lwd = 1.5, lty = 3)\n    points(r$q_mon, r$p_mon, pch = 19, col = \"#27ae60\", cex = 1.7)\n    text(r$q_mon, r$p_mon,\n         labels = sprintf(\" (%.1f, %.1f)\", r$q_mon, r$p_mon),\n         pos = 4, col = \"#27ae60\", cex = 0.95)\n\n    # Competitive outcome.\n    if (isTRUE(input$show_comp)) {\n      points(r$q_comp, r$p_comp, pch = 19, col = \"#8e44ad\", cex = 1.6)\n      text(r$q_comp, r$p_comp,\n           labels = sprintf(\" (%.1f, %.1f)\", r$q_comp, r$p_comp),\n           pos = 4, col = \"#8e44ad\", cex = 0.95)\n    }\n\n    legend(\"topright\",\n           legend = c(\"Demand\", \"MR\", \"MC\",\n                      \"Monopoly (q*, p*)\",\n                      if (isTRUE(input$show_comp)) \"Competition (q^c, c)\" else NULL,\n                      if (isTRUE(input$show_dwl))  \"Deadweight loss\"      else NULL),\n           col    = c(\"#185FA5\", \"#c0392b\", \"#7f8c8d\", \"#27ae60\",\n                      if (isTRUE(input$show_comp)) \"#8e44ad\" else NULL,\n                      if (isTRUE(input$show_dwl))  adjustcolor(\"#e67e22\", 0.5) else NULL),\n           lwd    = c(2.5, 2, 2, NA,\n                      if (isTRUE(input$show_comp)) NA else NULL,\n                      if (isTRUE(input$show_dwl))  NA else NULL),\n           lty    = c(1, 2, 2, NA,\n                      if (isTRUE(input$show_comp)) NA else NULL,\n                      if (isTRUE(input$show_dwl))  NA else NULL),\n           pch    = c(NA, NA, NA, 19,\n                      if (isTRUE(input$show_comp)) 19 else NULL,\n                      if (isTRUE(input$show_dwl))  15 else NULL),\n           bty = \"n\", cex = 0.85)\n  })\n\n  output$readout &lt;- renderUI({\n    r &lt;- results()\n    HTML(sprintf(paste(\n      \"&lt;div style='margin-top:10px;font-size:13px;line-height:1.7;'&gt;\",\n      \"&lt;b&gt;Monopoly:&lt;/b&gt; q* = %.1f, p* = %.1f, profit = %.1f&lt;br&gt;\",\n      \"&lt;b&gt;Competition:&lt;/b&gt; q = %.1f, p = %.1f&lt;br&gt;\",\n      \"&lt;b&gt;Consumer surplus (monopoly):&lt;/b&gt; %.1f&lt;br&gt;\",\n      \"&lt;b&gt;Consumer surplus (competition):&lt;/b&gt; %.1f&lt;br&gt;\",\n      \"&lt;b&gt;Deadweight loss:&lt;/b&gt; &lt;span style='color:#a04000;font-weight:bold;'&gt;%.2f&lt;/span&gt;\",\n      \"&lt;/div&gt;\"\n    ),\n    r$q_mon, r$p_mon, r$profit,\n    r$q_comp, r$p_comp,\n    r$cs_mon, r$cs_comp, r$dwl))\n  })\n}\n\nshinyApp(ui, server)\n\n\n\n\n\n\nThings to try.\n\nRaise MC (\\(c\\)) to meet the demand curve at \\(q = q^*\\). Monopoly profit shrinks to zero and so does the DWL — the monopolist can’t price above MC anymore.\nLower \\(b\\) (flatter demand). The DWL grows fast. Flatter demand means consumers are more sensitive; the monopolist’s distortion costs more total surplus.\nCompare profit and DWL across settings. The monopolist captures part of what would have been consumer surplus and destroys some — the DWL is the destroyed part. Both shrink as the demand curve gets steeper (more inelastic).\nSet \\(c = 0\\). Monopoly produces half the competitive quantity (\\(q^* = a/(2b)\\), \\(q^{\\text{comp}} = a/b\\)) and the DWL is \\(a^2/(8b)\\).",
+    "crumbs": [
+      "Imperfect Competition & Beyond",
+      "Monopoly"
+    ]
+  },
+  {
+    "objectID": "monopoly.html#the-lerner-index-and-elasticity",
+    "href": "monopoly.html#the-lerner-index-and-elasticity",
+    "title": "Monopoly",
+    "section": "The Lerner index and elasticity",
+    "text": "The Lerner index and elasticity\nRe-arrange the monopolist’s first-order condition \\(\\text{MR}(q) = \\text{MC}(q)\\) using the elasticity of demand \\(\\varepsilon \\equiv \\frac{dq}{dp} \\cdot \\frac{p}{q}\\):\n\\[\n\\frac{p^* - \\text{MC}}{p^*} = -\\frac{1}{\\varepsilon}.\n\\]\nThis is the Lerner index. It says the markup as a fraction of price equals the reciprocal of demand elasticity.\n\nVery elastic demand (\\(\\varepsilon\\) large in absolute value) → small markup.\nInelastic demand (\\(\\varepsilon\\) near 1 in absolute value) → big markup.\nA monopolist will never operate where \\(|\\varepsilon| &lt; 1\\) — they could raise price, sell less, and earn more revenue with no extra cost.",
+    "crumbs": [
+      "Imperfect Competition & Beyond",
+      "Monopoly"
+    ]
+  },
+  {
+    "objectID": "monopoly.html#did-you-know",
+    "href": "monopoly.html#did-you-know",
+    "title": "Monopoly",
+    "section": "Did you know?",
+    "text": "Did you know?\n\nThe “monopolist halves the quantity” result is a feature of linear demand. With constant-elasticity demand, the markup ratio \\(p^*/\\text{MC}\\) is constant — but quantity is not exactly half. The general statement is the Lerner index.\nFirst-degree price discrimination — the monopolist charges every consumer their willingness to pay — eliminates the deadweight loss. Quantity returns to the competitive level. The catch is that all the surplus goes to the firm; no consumer surplus left.\nModern antitrust analysis usually doesn’t try to estimate the DWL directly. Instead, it looks at whether a merger or business practice raises markups (via the Lerner index) or restricts entry. The geometry below is the conceptual scaffolding, not the empirical method.",
+    "crumbs": [
+      "Imperfect Competition & Beyond",
+      "Monopoly"
+    ]
+  },
+  {
+    "objectID": "revealed-preference.html",
+    "href": "revealed-preference.html",
+    "title": "Revealed Preference",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Consumer Theory",
+      "Revealed Preference"
+    ]
+  },
+  {
+    "objectID": "market-demand.html",
+    "href": "market-demand.html",
+    "title": "Market Demand",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Markets & Welfare",
+      "Market Demand"
+    ]
+  },
+  {
+    "objectID": "industry-supply.html",
+    "href": "industry-supply.html",
+    "title": "Industry Supply",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Production & Costs",
+      "Industry Supply"
+    ]
+  },
+  {
+    "objectID": "externalities.html",
+    "href": "externalities.html",
+    "title": "Externalities",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Imperfect Competition & Beyond",
+      "Externalities"
+    ]
+  },
+  {
+    "objectID": "intertemporal.html",
+    "href": "intertemporal.html",
+    "title": "Intertemporal Choice",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Consumer Theory",
+      "Intertemporal Choice"
+    ]
+  },
+  {
+    "objectID": "firm-supply.html",
+    "href": "firm-supply.html",
+    "title": "Firm Supply",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Production & Costs",
+      "Firm Supply"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Intermediate Microeconomics — ECON 360",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\nWelcome to the simulation-based companion notes for ECON 360: Intermediate Microeconomics at Binghamton University.\nEvery chapter pairs short conceptual notes with an interactive demo that runs entirely in your browser — drag a slider, see the budget line pivot, watch the indifference curve move, find the monopoly profit maximum, build your own payoff matrix. There is nothing to install.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#whats-here",
+    "href": "index.html#whats-here",
+    "title": "Intermediate Microeconomics — ECON 360",
+    "section": "What’s here",
+    "text": "What’s here\n\nConsumer Theory — Budget constraints, preferences, utility, the consumer’s choice problem, demand, Slutsky decomposition, intertemporal choice\nMarkets & Welfare — Consumer surplus, market demand, equilibrium, exchange\nProduction & Costs — Technology, cost minimization, profit maximization, supply curves\nImperfect Competition & Beyond — Monopoly, externalities, game theory, asymmetric information, decision under uncertainty",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-use-these-notes",
+    "href": "index.html#how-to-use-these-notes",
+    "title": "Intermediate Microeconomics — ECON 360",
+    "section": "How to use these notes",
+    "text": "How to use these notes\nThe fastest path is: read the page top-to-bottom, run the simulation while reading, then revisit the math once you’ve seen the picture move. Most demos let you reach a result that would otherwise take a paragraph of derivation.\nUse the sidebar (left) to jump around. Topics follow the Varian textbook order so they line up with our lecture sequence.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "demand.html",
+    "href": "demand.html",
+    "title": "Demand",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Consumer Theory",
+      "Demand"
+    ]
+  },
+  {
+    "objectID": "preferences.html",
+    "href": "preferences.html",
+    "title": "Preferences",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Consumer Theory",
+      "Preferences"
+    ]
+  },
+  {
+    "objectID": "consumer-surplus.html",
+    "href": "consumer-surplus.html",
+    "title": "Consumer Surplus",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Markets & Welfare",
+      "Consumer Surplus"
+    ]
+  },
+  {
+    "objectID": "choice.html",
+    "href": "choice.html",
+    "title": "The Consumer’s Choice Problem",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.",
+    "crumbs": [
+      "Consumer Theory",
+      "Choice"
+    ]
+  },
+  {
+    "objectID": "choice.html#the-picture",
+    "href": "choice.html#the-picture",
+    "title": "The Consumer’s Choice Problem",
+    "section": "The picture",
+    "text": "The picture\nThe consumer wants to reach the highest indifference curve they can afford. Geometrically, the optimum is where the indifference curve just touches the budget line — they are tangent.\nAt the tangency, the slope of the indifference curve (the marginal rate of substitution, MRS) equals the slope of the budget line (the price ratio):\n\\[\n\\text{MRS}_{12} = \\frac{p_1}{p_2}.\n\\]\nThat’s it. Every interior consumer choice problem reduces to this condition, plus the budget constraint \\(p_1 x_1 + p_2 x_2 = m\\).",
+    "crumbs": [
+      "Consumer Theory",
+      "Choice"
+    ]
+  },
+  {
+    "objectID": "choice.html#cobb-douglas-the-closed-form-workhorse",
+    "href": "choice.html#cobb-douglas-the-closed-form-workhorse",
+    "title": "The Consumer’s Choice Problem",
+    "section": "Cobb-Douglas: the closed-form workhorse",
+    "text": "Cobb-Douglas: the closed-form workhorse\nIf preferences are Cobb-Douglas — \\(u(x_1, x_2) = x_1^\\alpha x_2^{1-\\alpha}\\) with \\(0 &lt; \\alpha &lt; 1\\) — then the MRS is\n\\[\n\\text{MRS}_{12} = \\frac{\\partial u/\\partial x_1}{\\partial u/\\partial x_2} = \\frac{\\alpha}{1 - \\alpha} \\cdot \\frac{x_2}{x_1}.\n\\]\nSetting MRS equal to the price ratio and using the budget constraint gives the optimal bundle:\n\\[\n\\boxed{\\; x_1^* = \\alpha \\cdot \\frac{m}{p_1}, \\qquad x_2^* = (1 - \\alpha) \\cdot \\frac{m}{p_2}. \\;}\n\\]\nTwo things worth noticing:\n\nThe consumer spends a fixed share of income on each good. Spending on \\(x_1\\) is \\(p_1 x_1^* = \\alpha m\\). Spending on \\(x_2\\) is \\((1 - \\alpha) m\\). That’s why Cobb-Douglas is so popular as a workhorse model — the math is one line.\nDemand for \\(x_1\\) doesn’t depend on \\(p_2\\). Cross-price effects are zero. That’s not a feature of the world — it’s a feature of Cobb-Douglas. More flexible utility functions (CES, quasilinear) break this.\n\n#| standalone: true\n#| viewerHeight: 660\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  titlePanel(\"Optimal Choice with Cobb-Douglas Preferences\"),\n\n  sidebarLayout(\n    sidebarPanel(\n      width = 4,\n      sliderInput(\"alpha\", \"Preference weight α (taste for good 1):\",\n                  min = 0.1, max = 0.9, value = 0.5, step = 0.05),\n      sliderInput(\"m\",  \"Income (m):\",            min = 20, max = 200, value = 100, step = 10),\n      sliderInput(\"p1\", \"Price of good 1 (p₁):\",  min =  1, max =  20, value =   5, step = 1),\n      sliderInput(\"p2\", \"Price of good 2 (p₂):\",  min =  1, max =  20, value =   5, step = 1),\n      hr(),\n      checkboxInput(\"show_other_ics\",\n                    \"Show several indifference curves\",\n                    value = TRUE),\n      htmlOutput(\"readout\")\n    ),\n    mainPanel(\n      width = 8,\n      plotOutput(\"choice_plot\", height = \"520px\")\n    )\n  )\n)\n\nserver &lt;- function(input, output, session) {\n\n  bundle &lt;- reactive({\n    alpha &lt;- input$alpha\n    m  &lt;- input$m; p1 &lt;- input$p1; p2 &lt;- input$p2\n    x1 &lt;- alpha * m / p1\n    x2 &lt;- (1 - alpha) * m / p2\n    u_opt &lt;- x1^alpha * x2^(1 - alpha)\n    list(alpha = alpha, m = m, p1 = p1, p2 = p2,\n         x1 = x1, x2 = x2, u_opt = u_opt)\n  })\n\n  output$choice_plot &lt;- renderPlot({\n    b &lt;- bundle()\n\n    x1_int &lt;- b$m / b$p1\n    x2_int &lt;- b$m / b$p2\n\n    xmax &lt;- max(40, x1_int) * 1.05\n    ymax &lt;- max(40, x2_int) * 1.05\n\n    par(mar = c(4.2, 4.5, 1, 1))\n    plot(NA, xlim = c(0, xmax), ylim = c(0, ymax),\n         xlab = expression(x[1]), ylab = expression(x[2]),\n         main = \"\")\n\n    # Indifference curve at optimum: x2 = (u / x1^alpha)^(1/(1-alpha))\n    ic_x &lt;- seq(0.1, xmax * 1.5, length.out = 600)\n    ic_y_opt &lt;- (b$u_opt / ic_x^b$alpha)^(1 / (1 - b$alpha))\n\n    # Optional ladder of indifference curves.\n    if (isTRUE(input$show_other_ics)) {\n      for (frac in c(0.5, 0.75, 1.25)) {\n        u &lt;- b$u_opt * frac\n        y &lt;- (u / ic_x^b$alpha)^(1 / (1 - b$alpha))\n        lines(ic_x, y, col = adjustcolor(\"#7f8c8d\", 0.5), lwd = 1.2, lty = 3)\n      }\n    }\n\n    # Highlighted indifference curve through optimum.\n    lines(ic_x, ic_y_opt, col = \"#27ae60\", lwd = 2.4)\n\n    # Budget line and shaded affordable set.\n    polygon(c(0, x1_int, 0), c(0, 0, x2_int),\n            col = adjustcolor(\"#3498db\", 0.12), border = NA)\n    segments(0, x2_int, x1_int, 0, col = \"#185FA5\", lwd = 3)\n\n    # Optimum point.\n    points(b$x1, b$x2, pch = 19, col = \"#c0392b\", cex = 1.8)\n    text(b$x1, b$x2,\n         labels = sprintf(\"  (%.1f, %.1f)\", b$x1, b$x2),\n         pos = 4, col = \"#c0392b\", cex = 1.0)\n\n    legend(\"topright\",\n           legend = c(\"Budget line\", \"Indifference curve through optimum\",\n                      if (isTRUE(input$show_other_ics)) \"Other indifference curves\" else NULL,\n                      \"Optimal bundle\"),\n           col    = c(\"#185FA5\", \"#27ae60\",\n                      if (isTRUE(input$show_other_ics)) \"#7f8c8d\" else NULL,\n                      \"#c0392b\"),\n           lwd    = c(3, 2.4, if (isTRUE(input$show_other_ics)) 1.2 else NULL, NA),\n           lty    = c(1, 1, if (isTRUE(input$show_other_ics)) 3 else NULL, NA),\n           pch    = c(NA, NA, if (isTRUE(input$show_other_ics)) NA else NULL, 19),\n           bty = \"n\", cex = 0.9)\n  })\n\n  output$readout &lt;- renderUI({\n    b &lt;- bundle()\n    share1 &lt;- b$alpha\n    share2 &lt;- 1 - b$alpha\n    HTML(sprintf(paste(\n      \"&lt;div style='margin-top:10px;font-size:13px;line-height:1.7;'&gt;\",\n      \"&lt;b&gt;Optimal bundle:&lt;/b&gt; x₁* = %.2f, x₂* = %.2f&lt;br&gt;\",\n      \"&lt;b&gt;Spending on good 1:&lt;/b&gt; p₁·x₁* = %.1f (%.0f%% of income)&lt;br&gt;\",\n      \"&lt;b&gt;Spending on good 2:&lt;/b&gt; p₂·x₂* = %.1f (%.0f%% of income)&lt;br&gt;\",\n      \"&lt;b&gt;MRS at optimum:&lt;/b&gt; %.2f &nbsp; &lt;b&gt;p₁/p₂:&lt;/b&gt; %.2f&lt;br&gt;\",\n      \"&lt;b&gt;Utility achieved:&lt;/b&gt; %.2f\",\n      \"&lt;/div&gt;\"\n    ),\n    b$x1, b$x2,\n    b$p1 * b$x1, 100 * share1,\n    b$p2 * b$x2, 100 * share2,\n    (b$alpha / (1 - b$alpha)) * (b$x2 / b$x1),\n    b$p1 / b$p2,\n    b$u_opt))\n  })\n}\n\nshinyApp(ui, server)\n\n\n\n\n\n\nThings to try.\n\nMove \\(\\alpha\\) from 0.1 to 0.9 with everything else fixed. The spending share on good 1 tracks \\(\\alpha\\) exactly. The indifference curves rotate; the optimum slides along the budget line.\nHold \\(\\alpha = 0.5\\) and double \\(p_1\\). Notice the spending shares don’t change — that’s the Cobb-Douglas feature. But the quantity of \\(x_1\\) halves.\nTry a corner case — set \\(\\alpha = 0.9, p_1 = 1, p_2 = 20\\). The optimum sits almost entirely on the \\(x_1\\) axis; the consumer barely consumes \\(x_2\\).\nCheck MRS = price ratio in the readout — they should be equal at every interior optimum. If you ever see them disagree, something is at a corner.",
+    "crumbs": [
+      "Consumer Theory",
+      "Choice"
+    ]
+  },
+  {
+    "objectID": "choice.html#when-the-tangency-rule-fails",
+    "href": "choice.html#when-the-tangency-rule-fails",
+    "title": "The Consumer’s Choice Problem",
+    "section": "When the tangency rule fails",
+    "text": "When the tangency rule fails\nThe “MRS = price ratio” condition is the interior first-order condition. It can fail in two ways:\nCorner solutions. If preferences are strong enough (or the price gap large enough), the consumer wants zero of one good. Then the constraint \\(x_i \\geq 0\\) binds and the tangency condition becomes an inequality. Perfect substitutes \\(u = ax_1 + bx_2\\) are the canonical case: the consumer buys only the cheaper-per-utility good unless the ratio \\(a/b\\) exactly matches \\(p_1/p_2\\).\nKinked indifference curves. Perfect complements \\(u = \\min(x_1, x_2)\\) have no well-defined MRS at the kink, so tangency is meaningless. The optimum sits at the kink where \\(x_1 = x_2\\) — derivable directly from the constraint without any calculus.\nThese cases all reduce to the same idea: the consumer reaches the highest affordable indifference curve. Tangency is one way that happens; corners and kinks are others.",
+    "crumbs": [
+      "Consumer Theory",
+      "Choice"
+    ]
+  },
+  {
+    "objectID": "choice.html#did-you-know",
+    "href": "choice.html#did-you-know",
+    "title": "The Consumer’s Choice Problem",
+    "section": "Did you know?",
+    "text": "Did you know?\n\nThe “tangency” picture is the Lagrangian in disguise. Maximizing \\(u(x_1, x_2)\\) subject to \\(p_1 x_1 + p_2 x_2 = m\\) gives the first-order conditions \\(\\partial u/\\partial x_i = \\lambda p_i\\), which rearrange to \\(\\text{MRS} = p_1/p_2\\).\nThe Lagrange multiplier \\(\\lambda\\) at the optimum is the marginal utility of income — how much utility goes up if you give the consumer one extra dollar. That’s where the “value of an extra dollar” interpretation of \\(\\lambda\\) comes from.\nFor Cobb-Douglas, you’ll often see the equivalent form \\(u(x_1, x_2) = \\alpha \\log x_1 + (1 - \\alpha) \\log x_2\\) — a monotonic transformation that doesn’t change choice but makes derivatives cleaner. The log form will reappear later in the Demand chapter.",
+    "crumbs": [
+      "Consumer Theory",
+      "Choice"
+    ]
+  },
+  {
+    "objectID": "cost-curves.html",
+    "href": "cost-curves.html",
+    "title": "Cost Curves",
+    "section": "",
+    "text": "Course attribution. This is a simulation companion to ECON 360 — Intermediate Microeconomics at Binghamton University. The course content, slide structure, and pedagogical approach are the work of Professor David Slichter; these pages add interactive Shinylive simulations to his materials.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "crumbs": [
+      "Production & Costs",
+      "Cost Curves"
+    ]
+  }
+]
