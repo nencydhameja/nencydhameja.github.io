@@ -371,7 +371,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 <div style="background:#fff8e7; border-left:4px solid #d4a017; padding:12px 18px; margin:0 0 22px 0; font-size:0.9em; color:#2c3e50; border-radius:0 6px 6px 0; line-height:1.55;">
-  <strong>About this page.</strong> This is a simulation-based companion to <strong>ECON 360 — Intermediate Microeconomics</strong> at Binghamton University. The lecture order, conceptual frame (the recurring "agents pursue goals subject to constraints" rail), terminology (e.g. budget <em>set</em> vs. budget <em>constraint</em>, ordinary demand, kinky solutions), running examples (Wegmans apples and bananas, the monopolist's burrito-MR puzzle), and pedagogical structure are adapted from <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Professor David Slichter</a>'s ECON 360 lecture slides. The exposition, derivations, and interactive Shinylive simulations are not transcriptions of the slides.
+  <strong>About this page.</strong> Simulation-based companion notes for <strong>ECON 360 — Intermediate Microeconomics</strong> at Binghamton University. Topic order follows <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Professor David Slichter</a>'s ECON 360 syllabus.
 </div>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./budget.html">Consumer Theory</a></li><li class="breadcrumb-item"><a href="./budget.html">Budget Constraints</a></li></ol></nav>
@@ -422,7 +422,7 @@ p_1 x_1 + \cdots + p_n x_n = m.
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Concrete sanity check (Wegmans run).</strong> Apples are $0.50/lb and bananas are $2.00/lb. You have $4. A bundle of 3 lb of apples and 1 lb of bananas costs <span class="math inline">\(0.50 \cdot 3 + 2.00 \cdot 1 = 3.50\)</span>, which is less than 4 — so <span class="math inline">\((3, 1)\)</span> is <strong>in the budget set</strong> but <strong>not on the budget constraint</strong>. The bundle <span class="math inline">\((4, 1)\)</span> costs exactly $4, so it lies on the constraint.</p>
+<p><strong>Set vs.&nbsp;boundary.</strong> A bundle whose cost is strictly less than <span class="math inline">\(m\)</span> lies <em>inside</em> the budget set — affordable, with money left over. A bundle whose cost equals <span class="math inline">\(m\)</span> exactly lies <em>on</em> the budget constraint — the boundary, where every dollar is spent. Anything that costs more than <span class="math inline">\(m\)</span> is outside the budget set, unaffordable.</p>
 </div>
 </div>
 </div>
@@ -591,17 +591,7 @@ shinyApp(ui, server)</code></pre>
 </section>
 <section id="numéraire-and-relative-prices" class="level2">
 <h2 class="anchored" data-anchor-id="numéraire-and-relative-prices">Numéraire and relative prices</h2>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>Sanity check.</strong> Ann has 1 million dollars. Bill has 100 million cents. Who can afford to buy more stuff?</p>
-</div>
-</div>
-</div>
-<p>The point of the question is that <strong>only relative prices and real income matter</strong>, not the units they’re measured in. If you re-denominate everything in cents — <span class="math inline">\(p_1 = 200\)</span>, <span class="math inline">\(p_2 = 300\)</span>, <span class="math inline">\(m = 1200\)</span> instead of <span class="math inline">\(p_1 = 2\)</span>, <span class="math inline">\(p_2 = 3\)</span>, <span class="math inline">\(m = 12\)</span> — the constraint <span class="math inline">\(200 x_1 + 300 x_2 = 1200\)</span> is the same line as <span class="math inline">\(2 x_1 + 3 x_2 = 12\)</span>. Same budget set. Same trade-offs. Ann and Bill can afford the exact same bundles.</p>
+<p><strong>Only relative prices and real income matter</strong>, not the units they’re measured in. If you multiply every price <em>and</em> income by the same positive constant <span class="math inline">\(c\)</span> — measuring everything in cents instead of dollars, say — the constraint <span class="math inline">\(p_1 x_1 + p_2 x_2 = m\)</span> becomes <span class="math inline">\((c p_1) x_1 + (c p_2) x_2 = c m\)</span>, which is exactly the same line after dividing through by <span class="math inline">\(c\)</span>. The set of affordable bundles doesn’t change.</p>
 <p>This invariance lets us pick any one good to be the <strong>numéraire</strong> — the unit of account — by setting its price to 1. If we set <span class="math inline">\(p_1 = 1\)</span>, then <span class="math inline">\(p_2\)</span> becomes “the price of good 2 measured in units of good 1.” The relative price <span class="math inline">\(p_2/p_1 = 3/2\)</span> tells you that you’d give up 1.5 units of good 1 for an extra unit of good 2. Same exchange rate, expressed in real terms instead of dollars.</p>
 <p>This isn’t a mathematical curiosity. The fact that <em>only relative prices matter</em> is the reason that, in macro, doubling all prices and all wages overnight changes nothing real. The budget set is unchanged.</p>
 </section>
@@ -621,7 +611,7 @@ shinyApp(ui, server)</code></pre>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
 <ul>
-<li>The “budget set” and “budget constraint” are formally different objects — the set vs.&nbsp;its boundary. <em>Is the bundle <span class="math inline">\((3, 1)\)</span> in the budget set?</em> Yes, if it’s affordable. <em>Is it on the budget constraint?</em> Only if it spends every dollar.</li>
+<li>The “budget set” and “budget constraint” are formally different objects — the set vs.&nbsp;its boundary. A bundle inside the budget set is affordable but doesn’t exhaust income; a bundle on the budget constraint exhausts it exactly.</li>
 <li>The “two-good with composite outside good” trick is what lets economics keep pictures relevant in a thousand-good world. We’ll use it again in <a href="choice.html">Choice</a>, <a href="demand.html">Demand</a>, and <a href="intertemporal.html">Intertemporal Choice</a>.</li>
 <li>Quantity discounts and penalties give kinked constraints that we’ll revisit when we discuss <a href="slutsky.html">Slutsky decomposition</a> and policy interventions — many real-world programs (food stamps, EITC, marginal income tax brackets) impose exactly this kind of kink on the budget set.</li>
 </ul>
@@ -1037,7 +1027,7 @@ shinyApp(ui, server)</code></pre>
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><span style="white-space:nowrap">Lecture frame, examples, and terminology adapted from <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Prof.&nbsp;David Slichter</a>’s ECON 360 slides | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span></p>
+<p><span style="white-space:nowrap">Topic order follows <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Prof.&nbsp;David Slichter</a>’s ECON 360 syllabus | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

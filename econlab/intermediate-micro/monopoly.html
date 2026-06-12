@@ -371,7 +371,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 <div style="background:#fff8e7; border-left:4px solid #d4a017; padding:12px 18px; margin:0 0 22px 0; font-size:0.9em; color:#2c3e50; border-radius:0 6px 6px 0; line-height:1.55;">
-  <strong>About this page.</strong> This is a simulation-based companion to <strong>ECON 360 — Intermediate Microeconomics</strong> at Binghamton University. The lecture order, conceptual frame (the recurring "agents pursue goals subject to constraints" rail), terminology (e.g. budget <em>set</em> vs. budget <em>constraint</em>, ordinary demand, kinky solutions), running examples (Wegmans apples and bananas, the monopolist's burrito-MR puzzle), and pedagogical structure are adapted from <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Professor David Slichter</a>'s ECON 360 lecture slides. The exposition, derivations, and interactive Shinylive simulations are not transcriptions of the slides.
+  <strong>About this page.</strong> Simulation-based companion notes for <strong>ECON 360 — Intermediate Microeconomics</strong> at Binghamton University. Topic order follows <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Professor David Slichter</a>'s ECON 360 syllabus.
 </div>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./monopoly.html">Imperfect Competition &amp; Beyond</a></li><li class="breadcrumb-item"><a href="./monopoly.html">Monopoly</a></li></ol></nav>
@@ -411,21 +411,8 @@ window.Quarto = {
 </section>
 <section id="the-defining-feature" class="level2">
 <h2 class="anchored" data-anchor-id="the-defining-feature">The defining feature</h2>
-<p>In a competitive market the firm is one of many sellers, each so small that its choice of output level doesn’t move the market price. Marginal revenue equals the price — sell one more burrito, gain exactly its market price.</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>Sanity check.</strong> You’re in a competitive burrito market selling 10 burritos at $7 each. What’s your marginal revenue from selling the 11th?</p>
-<p>— $7. The market price doesn’t depend on your individual choice; you just gain another $7.</p>
-<p>Now you’re a <em>monopolist</em> burrito seller. At a price of $7 you can sell 10 burritos. To sell an 11th, you’d have to drop the price to $6 across the board. What’s your marginal revenue from the 11th burrito?</p>
-<p>— Revenue at 10 burritos: <span class="math inline">\(10 \times 7 = 70\)</span>. Revenue at 11 burritos: <span class="math inline">\(11 \times 6 = 66\)</span>. The 11th burrito has marginal revenue <strong>−$4</strong> — your revenue <em>fell</em>. The extra burrito brought in $6, but you also lost $1 on each of the 10 previous burritos by cutting the price.</p>
-</div>
-</div>
-</div>
-<p>That’s the punchline of the entire chapter. A monopolist faces the full downward-sloping market demand curve. When she sells more, she has to lower the price — not just on the marginal unit, but on every unit she’s already selling. So <strong>for a monopolist, marginal revenue is less than price</strong>.</p>
+<p>In a competitive market the firm is one of many sellers, each so small that its choice of output level doesn’t move the market price. Marginal revenue equals the price: sell one more unit, gain exactly <span class="math inline">\(p\)</span> in revenue.</p>
+<p>A monopolist is in a different situation. She faces the full downward-sloping market demand curve. When she sells more, the price falls — not just on the new unit, but on every unit she’s already selling. So her revenue from selling one more unit is the price of that marginal unit <em>minus</em> the lost revenue on every infra-marginal unit. <strong>For a monopolist, marginal revenue is less than price</strong>, and at high enough output levels marginal revenue can even be negative.</p>
 </section>
 <section id="the-math" class="level2">
 <h2 class="anchored" data-anchor-id="the-math">The math</h2>
@@ -441,7 +428,7 @@ MR(y) = \frac{d}{dy}\bigl(p(y) y\bigr) = p(y) + y \cdot \frac{dp(y)}{dy}.
 <li><strong>Direct effect.</strong> Revenue goes up by the price of that extra unit, <span class="math inline">\(p(y)\)</span>.</li>
 <li><strong>Price effect.</strong> To sell the extra unit the price had to fall (since <span class="math inline">\(dp/dy &lt; 0\)</span>), which means revenue from every infra-marginal unit goes down. The firm loses <span class="math inline">\(y \cdot dp/dy\)</span> on the units it was already selling.</li>
 </ol>
-<p>Since <span class="math inline">\(dp/dy &lt; 0\)</span>, the price effect is negative and <span class="math inline">\(MR(y) &lt; p(y)\)</span> — exactly the burrito story above.</p>
+<p>Since <span class="math inline">\(dp/dy &lt; 0\)</span>, the price effect is negative and <span class="math inline">\(MR(y) &lt; p(y)\)</span> for any <span class="math inline">\(y &gt; 0\)</span>.</p>
 <p>For a price-taking competitive firm, <span class="math inline">\(dp/dy = 0\)</span>, the price effect vanishes, and <span class="math inline">\(MR = p\)</span>. That’s the only thing that’s different.</p>
 <section id="worked-example-linear-demand-and-quadratic-cost" class="level3">
 <h3 class="anchored" data-anchor-id="worked-example-linear-demand-and-quadratic-cost">Worked example: linear demand and quadratic cost</h3>
@@ -628,19 +615,7 @@ shinyApp(ui, server)</code></pre>
 <section id="monopsony-one-buyer-mirror-image-of-monopoly" class="level2">
 <h2 class="anchored" data-anchor-id="monopsony-one-buyer-mirror-image-of-monopoly">Monopsony: one buyer, mirror image of monopoly</h2>
 <p>A <strong>monopoly</strong> is a market with one seller. A <strong>monopsony</strong> is a market with one buyer. The math is exactly mirror-image and the welfare conclusion is the same: monopsony also creates a deadweight loss, in this case by <em>under-buying</em>.</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>Sanity check (labor).</strong> A firm hiring labor is the only employer in town. It can hire 10 workers at $10/hour. To hire an 11th, it must raise the wage to $11 (assume it can’t pay workers different wages). What’s the marginal cost of that 11th worker?</p>
-<p>— The 11th worker himself costs $11. But the firm also has to give a $1 raise to each of the 10 previous workers — an extra $10. Total marginal cost: <strong>$21</strong>.</p>
-<p>If the 11th worker would have produced only $20 in value to the firm, the firm doesn’t hire him. The hire is socially efficient (the worker is willing to work for $11, the firm gets $20 of output, total surplus $9) but the monopsonist’s marginal cost calculation says no.</p>
-</div>
-</div>
-</div>
-<p>A monopolist faces <span class="math inline">\(MR &lt; p\)</span> because raising <span class="math inline">\(y\)</span> forces <span class="math inline">\(p\)</span> down. A monopsonist faces <span class="math inline">\(MC \text{ of input} &gt; w\)</span> because raising input use forces <span class="math inline">\(w\)</span> up. Both create wedges. Both create inefficiencies. Symmetric story, same kind of fix needed.</p>
+<p>A monopolist faces <span class="math inline">\(MR &lt; p\)</span> because raising <span class="math inline">\(y\)</span> forces <span class="math inline">\(p\)</span> down. A monopsonist faces <span class="math inline">\(MC_{\text{input}} &gt; w\)</span> because raising input use forces <span class="math inline">\(w\)</span> up: to hire one more unit of the input, the firm must offer a higher wage, and (if it can’t wage-discriminate) it pays that higher wage to every existing employee too. Both situations create a wedge between price and marginal value, and both leave socially beneficial trades unmade.</p>
 </section>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
@@ -1061,7 +1036,7 @@ shinyApp(ui, server)</code></pre>
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><span style="white-space:nowrap">Lecture frame, examples, and terminology adapted from <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Prof.&nbsp;David Slichter</a>’s ECON 360 slides | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span></p>
+<p><span style="white-space:nowrap">Topic order follows <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Prof.&nbsp;David Slichter</a>’s ECON 360 syllabus | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;
