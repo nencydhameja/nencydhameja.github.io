@@ -460,22 +460,24 @@ Z \;\to\; D, \qquad Z \;\not\to\; Y \text{ except through } D.
 
 library(shiny)
 
+# Fixed DGP:
+#   W -&gt; D, W -&gt; Y       (W is a confounder)
+#   D -&gt; M, M -&gt; Y       (M is a mediator on the D -&gt; M -&gt; Y path)
+#   D -&gt; C, Y -&gt; C       (C is a collider)
+# True total effect of D on Y is tau.
+# Path D -&gt; M -&gt; Y has size beta_DM * beta_MY; the direct D -&gt; Y effect is
+# tau minus that, so the *total* derivative dY/dD equals tau by construction.
+
 ui &lt;- fluidPage(
-  titlePanel("What controls do — confounder, mediator, collider"),
+  titlePanel("What different control choices do to the OLS estimate"),
 
   sidebarLayout(
     sidebarPanel(
       width = 4,
       sliderInput("n", "Sample size:",
-                  min = 200, max = 5000, value = 1000, step = 100),
+                  min = 200, max = 5000, value = 1500, step = 100),
       sliderInput("tau", "True total effect τ (D → Y):",
                   min = 0, max = 3, value = 1, step = 0.1),
-      hr(),
-      strong("Choose control set:"),
-      checkboxInput("ctrl_W", "Include W (confounder)",   value = FALSE),
-      checkboxInput("ctrl_M", "Include M (mediator)",     value = FALSE),
-      checkboxInput("ctrl_C", "Include C (collider)",     value = FALSE),
-      hr(),
       actionButton("go", "Resample", class = "btn-primary", width = "100%"),
       htmlOutput("readout")
     ),
@@ -493,29 +495,25 @@ server &lt;- function(input, output, session) {
     n   &lt;- input$n
     tau &lt;- input$tau
 
-    # Data-generating process:
-    #   W -&gt; D, W -&gt; Y       (confounder)
-    #   D -&gt; M -&gt; Y          (mediator -- carries part of effect via beta_M)
-    #   D -&gt; C, Y -&gt; C       (collider)
+    beta_DM &lt;- 0.7    # D -&gt; M
+    beta_MY &lt;- 0.6    # M -&gt; Y
+    indirect &lt;- beta_DM * beta_MY                # part of tau that flows via M
+    direct   &lt;- tau - indirect                   # remaining direct D -&gt; Y effect
+
     W &lt;- rnorm(n)
     D &lt;- 0.8 * W + rnorm(n)
-    M &lt;- 0.7 * D + rnorm(n)                          # mediator on D -&gt; M -&gt; Y
-    beta_M &lt;- 0.6                                    # part of tau goes through M
-    direct &lt;- tau - beta_M * 0.7                     # direct D -&gt; Y component
-    Y &lt;- direct * D + beta_M * M + 1.0 * W + rnorm(n)
-    C &lt;- 1.2 * D + 1.2 * Y + rnorm(n)                # collider
+    M &lt;- beta_DM * D + rnorm(n)
+    Y &lt;- direct * D + beta_MY * M + 1.0 * W + rnorm(n)
+    C &lt;- 1.2 * D + 1.2 * Y + rnorm(n)            # both D and Y point into C
 
-    # OLS specifications matching the checkboxes
-    specs &lt;- list()
-    specs$base                  &lt;- lm(Y ~ D)
-    if (input$ctrl_W) specs$W   &lt;- lm(Y ~ D + W)
-    if (input$ctrl_M) specs$M   &lt;- lm(Y ~ D + M)
-    if (input$ctrl_C) specs$C   &lt;- lm(Y ~ D + C)
-    if (input$ctrl_W &amp;&amp; input$ctrl_M) specs$WM &lt;- lm(Y ~ D + W + M)
-    if (input$ctrl_W &amp;&amp; input$ctrl_C) specs$WC &lt;- lm(Y ~ D + W + C)
-    if (input$ctrl_W &amp;&amp; input$ctrl_M &amp;&amp; input$ctrl_C) specs$WMC &lt;- lm(Y ~ D + W + M + C)
+    specs &lt;- list(
+      "no controls"       = lm(Y ~ D),
+      "+ W (confounder)"  = lm(Y ~ D + W),
+      "+ M (mediator)"    = lm(Y ~ D + M),
+      "+ C (collider)"    = lm(Y ~ D + C)
+    )
 
-    list(specs = specs, tau = tau)
+    list(specs = specs, tau = tau, direct = direct)
   })
 
   output$bias_plot &lt;- renderPlot({
@@ -523,26 +521,29 @@ server &lt;- function(input, output, session) {
     coefs &lt;- sapply(d$specs, function(fit) coef(fit)["D"])
     ses   &lt;- sapply(d$specs, function(fit) summary(fit)$coefficients["D", "Std. Error"])
 
-    labels &lt;- c(base = "no controls",
-                W    = "+ W (confounder)",
-                M    = "+ M (mediator)",
-                C    = "+ C (collider)",
-                WM   = "+ W + M",
-                WC   = "+ W + C",
-                WMC  = "+ W + M + C")
-    nm &lt;- labels[names(coefs)]
+    # Color each bar according to whether it gives the right answer
+    bar_cols &lt;- c("#e67e22",   # no controls  -- confounded
+                  "#27ae60",   # +W           -- unbiased (target)
+                  "#3498db",   # +M           -- direct effect, not total
+                  "#c0392b")   # +C           -- collider bias
 
-    par(mar = c(7, 5, 1.5, 1))
-    ymin &lt;- min(c(0, coefs - 2 * ses, d$tau)) - 0.2
-    ymax &lt;- max(c(coefs + 2 * ses, d$tau))   + 0.2
-    bp &lt;- barplot(coefs, names.arg = nm, las = 2, col = "#3498db",
-                  ylim = c(ymin, ymax),
-                  ylab = expression("Estimated " * hat(tau)),
+    par(mar = c(7.5, 5, 1.5, 1))
+    ymin &lt;- min(c(0, coefs - 2 * ses, d$tau, d$direct)) - 0.2
+    ymax &lt;- max(c(coefs + 2 * ses, d$tau, d$direct))   + 0.3
+    bp &lt;- barplot(coefs, names.arg = names(d$specs), las = 2,
+                  col = bar_cols, ylim = c(ymin, ymax),
+                  ylab = expression("Estimated coefficient on " * D),
                   main = "")
-    abline(h = d$tau, col = "#27ae60", lwd = 2, lty = 2)
-    text(par("usr")[2] - 0.1, d$tau, "true τ", pos = 2, col = "#27ae60", cex = 0.95)
     arrows(bp, coefs - 1.96 * ses, bp, coefs + 1.96 * ses,
            code = 3, angle = 90, length = 0.05, col = "#2c3e50")
+    abline(h = d$tau, col = "#27ae60", lwd = 2, lty = 2)
+    text(par("usr")[2] * 0.98, d$tau,
+         sprintf("true total effect τ = %.2f", d$tau),
+         pos = 2, col = "#27ae60", cex = 0.95)
+    abline(h = d$direct, col = "#3498db", lwd = 1.5, lty = 3)
+    text(par("usr")[2] * 0.98, d$direct,
+         sprintf("direct effect = %.2f", d$direct),
+         pos = 2, col = "#3498db", cex = 0.85)
     abline(h = 0, col = "gray70", lty = 3)
   })
 
@@ -550,17 +551,17 @@ server &lt;- function(input, output, session) {
     d &lt;- dat()
     coefs &lt;- sapply(d$specs, function(fit) coef(fit)["D"])
     HTML(sprintf(paste(
-      "&lt;div style='margin-top:10px;font-size:13px;line-height:1.7;'&gt;",
-      "&lt;b&gt;True τ:&lt;/b&gt; %.2f&lt;br&gt;",
-      "&lt;b&gt;OLS without any controls:&lt;/b&gt; %.3f &amp;nbsp; (confounded by W)&lt;br&gt;",
-      "%s",
+      "&lt;div style='margin-top:10px;font-size:13px;line-height:1.65;'&gt;",
+      "&lt;b&gt;True total τ:&lt;/b&gt; %.2f&lt;br&gt;",
+      "&lt;b&gt;Direct effect (after stripping D → M → Y):&lt;/b&gt; %.2f&lt;br&gt;&lt;br&gt;",
+      "&lt;span style='color:#e67e22;'&gt;● &lt;b&gt;no controls:&lt;/b&gt; %.3f&lt;/span&gt; — confounded upward by W&lt;br&gt;",
+      "&lt;span style='color:#27ae60;'&gt;● &lt;b&gt;+ W:&lt;/b&gt; %.3f&lt;/span&gt; — unbiased estimate of τ&lt;br&gt;",
+      "&lt;span style='color:#3498db;'&gt;● &lt;b&gt;+ M:&lt;/b&gt; %.3f&lt;/span&gt; — measures the &lt;i&gt;direct&lt;/i&gt; effect, not the total&lt;br&gt;",
+      "&lt;span style='color:#c0392b;'&gt;● &lt;b&gt;+ C:&lt;/b&gt; %.3f&lt;/span&gt; — collider bias from conditioning on a common effect",
       "&lt;/div&gt;"
     ),
-    d$tau,
-    coefs["base"],
-    if (!is.null(coefs["W"])) sprintf("&lt;b&gt;OLS + W only:&lt;/b&gt; %.3f &amp;nbsp; (closest to true τ)&lt;br&gt;", coefs["W"]) else "",
-    if (!is.null(coefs["WC"])) sprintf("&lt;b&gt;OLS + W + C:&lt;/b&gt; %.3f &amp;nbsp; (collider bias creeps in)&lt;br&gt;", coefs["WC"]) else ""
-    ))
+    d$tau, d$direct,
+    coefs[1], coefs[2], coefs[3], coefs[4]))
   })
 }
 
@@ -571,14 +572,14 @@ shinyApp(ui, server)</code></pre>
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Things to try.</strong></p>
+<p><strong>Reading the four bars.</strong></p>
 <ul>
-<li><strong>Start with no controls.</strong> OLS is biased by the confounder <span class="math inline">\(W\)</span>.</li>
-<li><strong>Add only <span class="math inline">\(W\)</span>.</strong> The estimate snaps close to the true <span class="math inline">\(\tau\)</span>. This is the backdoor criterion at work — one variable blocks the only backdoor path.</li>
-<li><strong>Add only <span class="math inline">\(M\)</span> (mediator).</strong> The estimate shrinks toward the <em>direct</em> effect, not the total. Controlling for the mediator strips out the part of <span class="math inline">\(\tau\)</span> that flows through <span class="math inline">\(M\)</span>.</li>
-<li><strong>Add only <span class="math inline">\(C\)</span> (collider).</strong> A new bias appears even though <span class="math inline">\(C\)</span> is <em>not</em> a confounder. Conditioning on the collider opens a non-causal path between <span class="math inline">\(D\)</span> and <span class="math inline">\(Y\)</span>.</li>
-<li><strong>Add <span class="math inline">\(W + C\)</span>.</strong> The collider bias from <span class="math inline">\(C\)</span> doesn’t go away just because you also controlled for <span class="math inline">\(W\)</span>. More controls is not safer.</li>
+<li><strong>No controls (orange).</strong> OLS is confounded by <span class="math inline">\(W\)</span>, which pushes both <span class="math inline">\(D\)</span> and <span class="math inline">\(Y\)</span> up; the bar lands <em>above</em> the dashed green line.</li>
+<li><strong>+ W (green).</strong> Controlling for the only backdoor path delivers an unbiased estimate of the total effect. The bar lands on the dashed line — this is what the backdoor criterion gives you.</li>
+<li><strong>+ M (blue).</strong> Mathematically valid OLS, but it now answers a different question. It estimates the <em>direct</em> effect of <span class="math inline">\(D\)</span> on <span class="math inline">\(Y\)</span> (dashed blue reference line), having stripped out the part that flows through <span class="math inline">\(M\)</span>.</li>
+<li><strong>+ C (red).</strong> Conditioning on a common effect opens a non-causal path between <span class="math inline">\(D\)</span> and <span class="math inline">\(Y\)</span>. The bar moves to a new, biased value that doesn’t correspond to any causal quantity at all.</li>
 </ul>
+<p>The headline: <em>only the green bar answers the question “what is the total causal effect of <span class="math inline">\(D\)</span> on <span class="math inline">\(Y\)</span>?”</em> Three of the four specifications are perfectly fine OLS regressions; only one is the right causal estimator.</p>
 </div>
 </div>
 </div>
