@@ -484,9 +484,14 @@ window.Quarto = {
    
   <ul>
   <li><a href="#the-conceptual-problem" id="toc-the-conceptual-problem" class="nav-link active" data-scroll-target="#the-conceptual-problem">The conceptual problem</a></li>
+  <li><a href="#the-eyeball-test" id="toc-the-eyeball-test" class="nav-link" data-scroll-target="#the-eyeball-test">The eyeball test</a></li>
   <li><a href="#tost-turn-the-question-around" id="toc-tost-turn-the-question-around" class="nav-link" data-scroll-target="#tost-turn-the-question-around">TOST: turn the question around</a></li>
   <li><a href="#the-ci-against-sesoi-shortcut" id="toc-the-ci-against-sesoi-shortcut" class="nav-link" data-scroll-target="#the-ci-against-sesoi-shortcut">The CI-against-SESOI shortcut</a></li>
-  <li><a href="#the-bayesian-alternative" id="toc-the-bayesian-alternative" class="nav-link" data-scroll-target="#the-bayesian-alternative">The Bayesian alternative</a></li>
+  <li><a href="#the-bayesian-alternative" id="toc-the-bayesian-alternative" class="nav-link" data-scroll-target="#the-bayesian-alternative">The Bayesian alternative</a>
+  <ul class="collapse">
+  <li><a href="#worked-example-a-small-evaluation-large-se" id="toc-worked-example-a-small-evaluation-large-se" class="nav-link" data-scroll-target="#worked-example-a-small-evaluation-large-se">Worked example: a small evaluation, large SE</a></li>
+  <li><a href="#why-this-matters" id="toc-why-this-matters" class="nav-link" data-scroll-target="#why-this-matters">Why this matters</a></li>
+  </ul></li>
   <li><a href="#what-not-to-do-post-hoc-power" id="toc-what-not-to-do-post-hoc-power" class="nav-link" data-scroll-target="#what-not-to-do-post-hoc-power">What not to do: post-hoc power</a></li>
   <li><a href="#how-to-report" id="toc-how-to-report" class="nav-link" data-scroll-target="#how-to-report">How to report</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
@@ -521,6 +526,14 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="the-conceptual-problem">The conceptual problem</h2>
 <p>The classical Neyman-Pearson framework is asymmetric: a small p-value is <em>evidence</em> that the null is wrong, but a large p-value is <em>not</em> evidence that the null is right. It’s the <em>absence</em> of evidence either way. So a p-value of 0.32 leaves you stranded — you can’t conclude there’s an effect, but you also can’t conclude there isn’t.</p>
 <p>The asymmetry comes from how the null is set up. The standard null is a point: <span class="math inline">\(H_0: \beta = 0\)</span>. Failure to reject it could happen because <span class="math inline">\(\beta\)</span> is exactly zero, or because <span class="math inline">\(\beta\)</span> is small but nonzero, or because <span class="math inline">\(\beta\)</span> is large but your sample is too small to detect it. The data don’t distinguish these cases unless you bring extra information to the analysis — namely, what counts as a substantively meaningful effect.</p>
+</section>
+<section id="the-eyeball-test" class="level2">
+<h2 class="anchored" data-anchor-id="the-eyeball-test">The eyeball test</h2>
+<p>Before any formal procedure, you can almost always tell the two apart just by looking at the confidence interval. Three rules:</p>
+<p><strong>1. Look at the CI, not the p-value.</strong> A p-value of <span class="math inline">\(0.4\)</span> with CI <span class="math inline">\([-0.01, 0.02]\)</span> is a precise null. A p-value of <span class="math inline">\(0.4\)</span> with CI <span class="math inline">\([-0.50, 0.50]\)</span> is underpowered. Same p-value, opposite stories. The p-value hides the precision; the CI bounds expose it.</p>
+<p><strong>2. Ask one question of the CI.</strong> <em>“If the truth were at the worst edge of this interval, would I still care?”</em> If no — even at the edge, the effect is too small to be substantively interesting — you have a precise null. If yes — the interval still allows for an effect you’d consider meaningful — you’re underpowered. The “would I care” answer is substantive, not statistical.</p>
+<p><strong>3. Compare CI width to the natural scale of the outcome.</strong> A blood-pressure study with a CI of <span class="math inline">\((-0.3,\, +0.5)\)</span> mm Hg is narrow on the clinical scale (blood pressure has to move 5–10 mm Hg to matter) → <strong>precise null</strong>. A CI of <span class="math inline">\((-4,\, +5)\)</span> mm Hg is wide on that scale → <strong>underpowered</strong>. Same logic applies to any outcome: compare interval width to “how big is big” in that variable’s natural units.</p>
+<p>These three checks get you the right answer in most applied situations without ever running TOST or computing a Bayes factor. The formal methods below are for when you need to report a <em>specific</em> claim — <em>“we can rule out effects larger than <span class="math inline">\(\delta\)</span> with 95% confidence”</em> — rather than just read the picture.</p>
 </section>
 <section id="tost-turn-the-question-around" class="level2">
 <h2 class="anchored" data-anchor-id="tost-turn-the-question-around">TOST: turn the question around</h2>
@@ -696,7 +709,27 @@ shinyApp(ui, server)</code></pre>
 <li><strong>Posterior probability inside the SESOI</strong>: compute <span class="math inline">\(P(|\beta| &lt; \delta \mid \text{data})\)</span>. If it’s, say, &gt; 95%, you’ve established a precise null in the Bayesian sense.</li>
 <li><strong>Bayes factor</strong>: <span class="math inline">\(BF_{01}\)</span> compares the null model (<span class="math inline">\(\beta\)</span> near 0) to an alternative (<span class="math inline">\(\beta\)</span> distributed under some prior). <span class="math inline">\(BF_{01} &gt; 3\)</span> is conventionally “moderate evidence for the null”; <span class="math inline">\(BF_{01} &gt; 10\)</span> is “strong evidence for the null.” <span class="math inline">\(BF \approx 1\)</span> is the clean statement <em>“the data are inconclusive.”</em></li>
 </ul>
+<section id="worked-example-a-small-evaluation-large-se" class="level3">
+<h3 class="anchored" data-anchor-id="worked-example-a-small-evaluation-large-se">Worked example: a small evaluation, large SE</h3>
+<p>A workforce training program is evaluated by RCT. Monthly wage difference between treatment and control: <span class="math inline">\(\hat\beta = \$50\)</span> with <span class="math inline">\(SE = \$200\)</span>. The standard t-statistic is <span class="math inline">\(0.25\)</span>; the p-value is <span class="math inline">\(0.80\)</span>. The 95% CI is roughly <span class="math inline">\([-\$342,\, +\$442]\)</span>.</p>
+<p>A p-value of <span class="math inline">\(0.80\)</span> feels like “no effect.” But the CI is wide. Is this a precise null, or is the study just uninformative? Let’s see what a Bayes factor says.</p>
+<p>Pick a weakly informative prior under <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\beta \sim \mathcal{N}(0, \tau^2)\)</span> with <span class="math inline">\(\tau = \$500\)</span> (you think effects up to a few hundred dollars per month are plausible). Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(\beta = 0\)</span>. With Gaussian likelihood, there’s a closed-form Bayes factor:</p>
+<p><span class="math display">\[
+BF_{01} \;=\; \sqrt{1 + \frac{\tau^2}{SE^2}}\;\cdot\; \exp\!\left[-\,\frac{1}{2}\,t^2\cdot\frac{\tau^2}{\tau^2 + SE^2}\right],
+\]</span></p>
+<p>where <span class="math inline">\(t = \hat\beta/SE\)</span>. Plugging in <span class="math inline">\(\tau = 500\)</span>, <span class="math inline">\(SE = 200\)</span>, <span class="math inline">\(t = 0.25\)</span>:</p>
+<ul>
+<li><span class="math inline">\(\tau^2/SE^2 = 250000/40000 = 6.25\)</span>, so the first factor is <span class="math inline">\(\sqrt{7.25} \approx 2.69\)</span>.</li>
+<li><span class="math inline">\(\tau^2/(\tau^2 + SE^2) = 250000/290000 \approx 0.862\)</span>, so the exponent is <span class="math inline">\(-\tfrac{1}{2}(0.0625)(0.862) \approx -0.027\)</span>, giving <span class="math inline">\(\exp(-0.027) \approx 0.973\)</span>.</li>
+<li><span class="math inline">\(BF_{01} \approx 2.69 \cdot 0.973 \approx 2.6\)</span>.</li>
+</ul>
+<p>So the data give you about <strong>2.6 to 1 odds in favor of the null</strong> — on the Jeffreys scale that’s “anecdotal,” not even moderate evidence. <strong>Inconclusive, leaning slightly toward the null.</strong> Not a precise null, not a detected effect — underpowered, the same conclusion the eyeball test gives.</p>
+<p>Now suppose you ran a larger study and got <span class="math inline">\(\hat\beta = \$50\)</span> with <span class="math inline">\(SE = \$30\)</span> (CI roughly <span class="math inline">\([-\$9, \$109]\)</span>). Same prior, same point estimate. Now <span class="math inline">\(t = 1.67\)</span>, <span class="math inline">\(\tau^2/SE^2 \approx 278\)</span>, and <span class="math inline">\(BF_{01} \approx 16.7 \cdot 0.20 \approx 3.3\)</span>. <strong>Moderate evidence for the null.</strong> Same headline number, much tighter CI → the Bayes factor flips from “inconclusive” to “the null is winning.” That flip is exactly what the eyeball test was tracking, just quantified.</p>
+</section>
+<section id="why-this-matters" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-matters">Why this matters</h3>
 <p>Bayes factors handle the inconclusive case better than frequentist equivalence testing: a frequentist failure to reject doesn’t quantify <em>how</em> uninformative the data are, but <span class="math inline">\(BF \approx 1\)</span> does. See <a href="../bayesian-inference/model-comparison.html">Model Comparison</a> for the mechanics and <a href="bayesian-estimation.html">Bayesian Estimation</a> for the posterior framework.</p>
+</section>
 </section>
 <section id="what-not-to-do-post-hoc-power" class="level2">
 <h2 class="anchored" data-anchor-id="what-not-to-do-post-hoc-power">What not to do: post-hoc power</h2>
