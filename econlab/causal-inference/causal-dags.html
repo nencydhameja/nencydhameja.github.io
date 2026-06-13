@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Regression Adjustment – Applied Causal Inference</title>
+<title>Causal DAGs and the choice of controls – Applied Causal Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -160,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./regression-adjustment.html">Estimation Tools</a></li><li class="breadcrumb-item"><a href="./regression-adjustment.html">Regression Adjustment</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./potential-outcomes.html">Framework</a></li><li class="breadcrumb-item"><a href="./causal-dags.html">Causal DAGs &amp; the Choice of Controls</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -214,7 +179,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./causal-dags.html" class="sidebar-item-text sidebar-link">
+  <a href="./causal-dags.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Causal DAGs &amp; the Choice of Controls</span></a>
   </div>
 </li>
@@ -301,7 +266,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./regression-adjustment.html" class="sidebar-item-text sidebar-link active">
+  <a href="./regression-adjustment.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Regression Adjustment</span></a>
   </div>
 </li>
@@ -387,14 +352,18 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-idea" id="toc-the-idea" class="nav-link active" data-scroll-target="#the-idea">The idea</a>
+  <li><a href="#the-setup-variables-and-arrows" id="toc-the-setup-variables-and-arrows" class="nav-link active" data-scroll-target="#the-setup-variables-and-arrows">The setup: variables and arrows</a></li>
+  <li><a href="#the-four-roles" id="toc-the-four-roles" class="nav-link" data-scroll-target="#the-four-roles">The four roles</a>
   <ul class="collapse">
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions">Assumptions</a></li>
-  <li><a href="#the-vulnerability-functional-form" id="toc-the-vulnerability-functional-form" class="nav-link" data-scroll-target="#the-vulnerability-functional-form">The vulnerability: functional form</a></li>
-  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
-  <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
+  <li><a href="#confounder-w-a-common-cause-of-d-and-y" id="toc-confounder-w-a-common-cause-of-d-and-y" class="nav-link" data-scroll-target="#confounder-w-a-common-cause-of-d-and-y">Confounder (<span class="math inline">\(W\)</span>): a common cause of <span class="math inline">\(D\)</span> and <span class="math inline">\(Y\)</span></a></li>
+  <li><a href="#mediator-m-on-the-causal-pathway-from-d-to-y" id="toc-mediator-m-on-the-causal-pathway-from-d-to-y" class="nav-link" data-scroll-target="#mediator-m-on-the-causal-pathway-from-d-to-y">Mediator (<span class="math inline">\(M\)</span>): on the causal pathway from <span class="math inline">\(D\)</span> to <span class="math inline">\(Y\)</span></a></li>
+  <li><a href="#collider-c-a-common-effect-of-d-and-y" id="toc-collider-c-a-common-effect-of-d-and-y" class="nav-link" data-scroll-target="#collider-c-a-common-effect-of-d-and-y">Collider (<span class="math inline">\(C\)</span>): a common effect of <span class="math inline">\(D\)</span> and <span class="math inline">\(Y\)</span></a></li>
+  <li><a href="#instrument-z-a-cause-of-d-that-affects-y-only-through-d" id="toc-instrument-z-a-cause-of-d-that-affects-y-only-through-d" class="nav-link" data-scroll-target="#instrument-z-a-cause-of-d-that-affects-y-only-through-d">Instrument (<span class="math inline">\(Z\)</span>): a cause of <span class="math inline">\(D\)</span> that affects <span class="math inline">\(Y\)</span> only through <span class="math inline">\(D\)</span></a></li>
   </ul></li>
-  <li><a href="#in-stata" id="toc-in-stata" class="nav-link" data-scroll-target="#in-stata">In Stata</a></li>
+  <li><a href="#the-backdoor-criterion-stated-practically" id="toc-the-backdoor-criterion-stated-practically" class="nav-link" data-scroll-target="#the-backdoor-criterion-stated-practically">The backdoor criterion, stated practically</a></li>
+  <li><a href="#collider-bias-in-action" id="toc-collider-bias-in-action" class="nav-link" data-scroll-target="#collider-bias-in-action">Collider bias in action</a></li>
+  <li><a href="#a-cheat-sheet-for-econometricians" id="toc-a-cheat-sheet-for-econometricians" class="nav-link" data-scroll-target="#a-cheat-sheet-for-econometricians">A cheat sheet for econometricians</a></li>
+  <li><a href="#how-this-connects-to-the-rest-of-the-site" id="toc-how-this-connects-to-the-rest-of-the-site" class="nav-link" data-scroll-target="#how-this-connects-to-the-rest-of-the-site">How this connects to the rest of the site</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
   </ul>
 </nav>
@@ -402,9 +371,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./regression-adjustment.html">Estimation Tools</a></li><li class="breadcrumb-item"><a href="./regression-adjustment.html">Regression Adjustment</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./potential-outcomes.html">Framework</a></li><li class="breadcrumb-item"><a href="./causal-dags.html">Causal DAGs &amp; the Choice of Controls</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Regression Adjustment</h1>
+<h1 class="title">Causal DAGs and the choice of controls</h1>
 </div>
 
 
@@ -421,102 +390,98 @@ window.Quarto = {
 </header>
 
 
-<section id="the-idea" class="level2">
-<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
-<p>The simplest way to estimate a causal effect from observational data: run a regression of the outcome on the treatment indicator and the confounders.</p>
-<p><span class="math display">\[Y_i = \alpha + \tau D_i + \beta X_i + \varepsilon_i\]</span></p>
-<p>The coefficient <span class="math inline">\(\hat{\tau}\)</span> is your treatment effect estimate, “adjusted” for <span class="math inline">\(X\)</span>. OLS compares treated and control units <em>within levels of X</em> — holding the confounder constant to isolate the effect of treatment.</p>
-<p>The gap between the two regression lines (treated vs control) is <span class="math inline">\(\hat{\tau}\)</span>.</p>
-<section id="assumptions" class="level3">
-<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
-<ol type="1">
-<li><strong>Selection on observables (CIA):</strong> all confounders are included in <span class="math inline">\(X\)</span>. If an unobserved variable drives both treatment and outcome, the estimate is biased — same as every other tool under SOO.</li>
-<li><strong>Correct functional form:</strong> the relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is correctly specified. If you fit a linear model but the truth is quadratic, the adjustment is wrong and <span class="math inline">\(\hat{\tau}\)</span> is biased. <strong>This is the key vulnerability.</strong></li>
-<li><strong>Overlap:</strong> treated and control groups share common support in <span class="math inline">\(X\)</span>.</li>
-</ol>
+<p>The single most common question in applied work is: <strong>which variables should I control for, and which should I leave out?</strong> Throw in too few and your estimate is confounded. Throw in too many and you can introduce a different bias that’s harder to see. Causal DAGs — directed acyclic graphs — give you a clean visual framework for answering this question without invoking heavy machinery.</p>
+<p>This page is the practical version. We’re not going to develop the do-calculus. We’re going to draw graphs, name the four roles a covariate can play, and state one rule (the backdoor criterion) that tells you what to do with each.</p>
+<section id="the-setup-variables-and-arrows" class="level2">
+<h2 class="anchored" data-anchor-id="the-setup-variables-and-arrows">The setup: variables and arrows</h2>
+<p>A <strong>causal DAG</strong> is a picture of the data-generating process. Each variable is a node. Each arrow is a direct causal effect: <span class="math inline">\(A \to B\)</span> means <span class="math inline">\(A\)</span> is a cause of <span class="math inline">\(B\)</span>, with no other variable in between.</p>
+<p>The graph is <strong>directed</strong> (arrows point from cause to effect) and <strong>acyclic</strong> (no variable causes itself, possibly indirectly through a loop). That’s the entire definition.</p>
+<p>What the graph does <em>not</em> tell you is the <em>size</em> of any effect — only its sign and structure. The numbers come from data.</p>
 </section>
-<section id="the-vulnerability-functional-form" class="level3">
-<h3 class="anchored" data-anchor-id="the-vulnerability-functional-form">The vulnerability: functional form</h3>
-<p>Regression adjustment <strong>models the outcome</strong> — it writes down a specific equation for how <span class="math inline">\(Y\)</span> relates to <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span>. That equation is the <strong>functional form</strong>:</p>
+<section id="the-four-roles" class="level2">
+<h2 class="anchored" data-anchor-id="the-four-roles">The four roles</h2>
+<p>Once you’ve drawn the DAG with your <strong>treatment</strong> <span class="math inline">\(D\)</span> and <strong>outcome</strong> <span class="math inline">\(Y\)</span>, every other variable plays one of four roles. The right thing to do with each is different.</p>
+<section id="confounder-w-a-common-cause-of-d-and-y" class="level3">
+<h3 class="anchored" data-anchor-id="confounder-w-a-common-cause-of-d-and-y">Confounder (<span class="math inline">\(W\)</span>): a common cause of <span class="math inline">\(D\)</span> and <span class="math inline">\(Y\)</span></h3>
+<p><span class="math display">\[
+W \;\to\; D, \qquad W \;\to\; Y.
+\]</span></p>
+<p>A variable that causes both treatment and outcome generates a spurious association between them. Cities with more parks (<span class="math inline">\(W\)</span>) have higher housing prices (<span class="math inline">\(Y\)</span>) <em>and</em> more crime (<span class="math inline">\(D\)</span>, because cities are large). Unless you control for <span class="math inline">\(W\)</span>, the OLS coefficient on <span class="math inline">\(D\)</span> is biased.</p>
+<p><strong>Rule:</strong> confounders must be in your regression. This is the entire content of “selection on observables.”</p>
+</section>
+<section id="mediator-m-on-the-causal-pathway-from-d-to-y" class="level3">
+<h3 class="anchored" data-anchor-id="mediator-m-on-the-causal-pathway-from-d-to-y">Mediator (<span class="math inline">\(M\)</span>): on the causal pathway from <span class="math inline">\(D\)</span> to <span class="math inline">\(Y\)</span></h3>
+<p><span class="math display">\[
+D \;\to\; M \;\to\; Y.
+\]</span></p>
+<p>A mediator transmits some of the effect of <span class="math inline">\(D\)</span> on <span class="math inline">\(Y\)</span>. Education (<span class="math inline">\(D\)</span>) increases earnings (<span class="math inline">\(Y\)</span>) partly through occupation (<span class="math inline">\(M\)</span>): more education opens up higher-paying jobs.</p>
+<p><strong>Rule:</strong> if you want the <strong>total effect</strong> of <span class="math inline">\(D\)</span> on <span class="math inline">\(Y\)</span>, <em>don’t</em> control for the mediator. Controlling for <span class="math inline">\(M\)</span> blocks part of the very effect you’re trying to measure, giving you a “direct effect” instead. If you really want the direct effect, control. If you don’t, leave it out.</p>
+</section>
+<section id="collider-c-a-common-effect-of-d-and-y" class="level3">
+<h3 class="anchored" data-anchor-id="collider-c-a-common-effect-of-d-and-y">Collider (<span class="math inline">\(C\)</span>): a common effect of <span class="math inline">\(D\)</span> and <span class="math inline">\(Y\)</span></h3>
+<p><span class="math display">\[
+D \;\to\; C, \qquad Y \;\to\; C.
+\]</span></p>
+<p>This is the dangerous one. A collider is a variable that both the treatment <em>and</em> the outcome cause. In the raw data <span class="math inline">\(D\)</span> and <span class="math inline">\(Y\)</span> are uncorrelated through <span class="math inline">\(C\)</span> (the arrows point <em>into</em> <span class="math inline">\(C\)</span>, so the path doesn’t transmit association). But the instant you <strong>condition on</strong> <span class="math inline">\(C\)</span> — by sampling on it, controlling for it in a regression, or stratifying — you <em>open</em> the path. A spurious correlation appears between <span class="math inline">\(D\)</span> and <span class="math inline">\(Y\)</span> that wasn’t there before.</p>
+<p>This is <strong>collider bias</strong>, also called Berkson’s paradox in the epidemiological literature. The classic example: two diseases are independent in the population, but among hospitalized patients (a population conditioned on hospitalization, which both diseases cause), the diseases look negatively correlated. Seeing one disease in a hospitalized patient lowers the conditional probability of the other.</p>
+<p><strong>Rule:</strong> <em>never</em> control for a collider. This is the rule most often broken in applied work, and the bias it creates can be larger than the original confounding you were trying to fix.</p>
+</section>
+<section id="instrument-z-a-cause-of-d-that-affects-y-only-through-d" class="level3">
+<h3 class="anchored" data-anchor-id="instrument-z-a-cause-of-d-that-affects-y-only-through-d">Instrument (<span class="math inline">\(Z\)</span>): a cause of <span class="math inline">\(D\)</span> that affects <span class="math inline">\(Y\)</span> only through <span class="math inline">\(D\)</span></h3>
+<p><span class="math display">\[
+Z \;\to\; D, \qquad Z \;\not\to\; Y \text{ except through } D.
+\]</span></p>
+<p>An instrument doesn’t go in your OLS controls list — it goes into a different estimator entirely (<a href="iv.html">IV</a>, 2SLS, GMM). Instruments are the basis of identification when confounders are unobserved. The DAG framework formalizes what makes a good instrument: relevance (<span class="math inline">\(Z \to D\)</span> is real) and exclusion (<span class="math inline">\(Z\)</span> doesn’t have any other path to <span class="math inline">\(Y\)</span>).</p>
+</section>
+</section>
+<section id="the-backdoor-criterion-stated-practically" class="level2">
+<h2 class="anchored" data-anchor-id="the-backdoor-criterion-stated-practically">The backdoor criterion, stated practically</h2>
+<p>A <strong>backdoor path</strong> from <span class="math inline">\(D\)</span> to <span class="math inline">\(Y\)</span> is any path between them that starts with an arrow into <span class="math inline">\(D\)</span> (i.e., it doesn’t begin with <span class="math inline">\(D\)</span> causing something). If you can block every backdoor path, you’ve removed all the confounding.</p>
+<p>A set of variables <span class="math inline">\(X\)</span> blocks all backdoor paths if:</p>
+<ol type="1">
+<li>Every backdoor path between <span class="math inline">\(D\)</span> and <span class="math inline">\(Y\)</span> passes through at least one variable in <span class="math inline">\(X\)</span> that is <strong>not</strong> a collider on that path.</li>
+<li>No variable in <span class="math inline">\(X\)</span> is a descendant of <span class="math inline">\(D\)</span> (i.e., <span class="math inline">\(X\)</span> contains no post-treatment variables — no mediators, no colliders).</li>
+</ol>
+<p>Condition 1 is “control for enough.” Condition 2 is “don’t control for too much.” Both matter, and missing either one leaves a bias.</p>
+<p>The practical workflow:</p>
 <ul>
-<li><strong>Linear:</strong> <span class="math inline">\(Y = \alpha + \tau D + \beta X\)</span> — assumes <span class="math inline">\(Y\)</span> changes at a constant rate with <span class="math inline">\(X\)</span>. A straight line.</li>
-<li><strong>Quadratic:</strong> <span class="math inline">\(Y = \alpha + \tau D + \beta_1 X + \beta_2 X^2\)</span> — allows curvature.</li>
-<li><strong>Log:</strong> <span class="math inline">\(Y = \alpha + \tau D + \beta \log(X)\)</span> — assumes diminishing returns.</li>
+<li>Draw the DAG.</li>
+<li>For each backdoor path, find a non-collider variable on it.</li>
+<li>Control for that variable (or use one of its descendants that captures the same information).</li>
+<li>Do <strong>not</strong> control for any post-treatment variables.</li>
 </ul>
-<p>When you run <code>lm(y ~ treat + x)</code>, you’ve chosen the linear form. If the truth is quadratic but you fit a line, the line can’t capture the curvature — and that misfit contaminates your estimate of <span class="math inline">\(\hat{\tau}\)</span>. The model is wrong, so the estimate is biased, even when all confounders are observed. This is an <em>estimation</em> bias, not an identification failure.</p>
-<p>Compare this to <a href="ipw.html">IPW</a>, which <strong>models the treatment assignment</strong> instead — it writes down an equation for the propensity score <span class="math inline">\(P(D = 1 \mid X)\)</span>, not for <span class="math inline">\(Y\)</span>, and reweights each observation by <span class="math inline">\(1/P(D = d_i \mid X_i)\)</span> so the treated and control groups look like the same population. (See the <a href="ipw.html">IPW page</a> for the full derivation; the one-line intuition is all you need here.) IPW never touches the outcome. It just reweights the raw <span class="math inline">\(Y\)</span> values using the propensity score. So if the outcome-<span class="math inline">\(X\)</span> relationship is nonlinear, IPW doesn’t care — as long as the propensity score model is right.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th></th>
-<th>What it models</th>
-<th>What can go wrong</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Regression adjustment</strong></td>
-<td><span class="math inline">\(E[Y \mid X, D]\)</span> (the outcome)</td>
-<td>Wrong functional form for <span class="math inline">\(Y\)</span></td>
-</tr>
-<tr class="even">
-<td><strong><a href="ipw.html">IPW</a></strong></td>
-<td><span class="math inline">\(P(D=1 \mid X)\)</span> (the treatment)</td>
-<td>Wrong propensity score model</td>
-</tr>
-<tr class="odd">
-<td><strong><a href="doubly-robust.html">Doubly robust</a></strong></td>
-<td>Both</td>
-<td>Fails only if <em>both</em> are wrong</td>
-</tr>
-</tbody>
-</table>
-<p>Each method bets on getting one model right. <a href="doubly-robust.html">Doubly robust</a> estimation hedges by combining both — it only needs one to be correct.</p>
+<p>That’s it. Selection on observables, propensity score methods, regression adjustment — all of these are operationalizations of the backdoor criterion under different functional-form assumptions.</p>
+</section>
+<section id="collider-bias-in-action" class="level2">
+<h2 class="anchored" data-anchor-id="collider-bias-in-action">Collider bias in action</h2>
+<p>The interactive demo below shows what happens to the OLS estimate of the treatment effect as you toggle the control set. The DGP has a known true effect (<span class="math inline">\(\tau = 1\)</span>), a confounder, a mediator, and a collider. Each combination of controls gives a different bias. The lesson — <em>what you control for changes the meaning of your estimate, not just its precision</em> — is visible in the bars.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 620
+#| viewerHeight: 640
 
 library(shiny)
 
 ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
-    }
-    .stats-box b { color: #2c3e50; }
-    .good { color: #27ae60; font-weight: bold; }
-    .bad  { color: #e74c3c; font-weight: bold; }
-  "))),
+  titlePanel("What controls do — confounder, mediator, collider"),
 
   sidebarLayout(
     sidebarPanel(
-      width = 3,
-
+      width = 4,
       sliderInput("n", "Sample size:",
-                  min = 200, max = 2000, value = 500, step = 100),
-
-      sliderInput("ate", "True ATE:",
-                  min = 0, max = 5, value = 2, step = 0.5),
-
-      sliderInput("confounding", "Confounding strength:",
-                  min = 0, max = 3, value = 1.5, step = 0.25),
-
-      selectInput("shape", "True outcome model:",
-                  choices = c("Linear (Y ~ X)"      = "linear",
-                              "Quadratic (Y ~ X\u00b2)" = "quadratic")),
-
-      actionButton("go", "New draw",
-                   class = "btn-primary", width = "100%"),
-
-      uiOutput("results")
+                  min = 200, max = 5000, value = 1000, step = 100),
+      sliderInput("tau", "True total effect τ (D → Y):",
+                  min = 0, max = 3, value = 1, step = 0.1),
+      hr(),
+      strong("Choose control set:"),
+      checkboxInput("ctrl_W", "Include W (confounder)",   value = FALSE),
+      checkboxInput("ctrl_M", "Include M (mediator)",     value = FALSE),
+      checkboxInput("ctrl_C", "Include C (collider)",     value = FALSE),
+      hr(),
+      actionButton("go", "Resample", class = "btn-primary", width = "100%"),
+      htmlOutput("readout")
     ),
-
     mainPanel(
-      width = 9,
-      fluidRow(
-        column(6, plotOutput("scatter_plot", height = "400px")),
-        column(6, plotOutput("compare_plot", height = "400px"))
-      )
+      width = 8,
+      plotOutput("bias_plot", height = "500px")
     )
   )
 )
@@ -525,189 +490,169 @@ server &lt;- function(input, output, session) {
 
   dat &lt;- reactive({
     input$go
-    n    &lt;- input$n
-    ate  &lt;- input$ate
-    conf &lt;- input$confounding
-    is_linear &lt;- input$shape == "linear"
+    n   &lt;- input$n
+    tau &lt;- input$tau
 
-    # Confounder
-    x &lt;- rnorm(n)
+    # Data-generating process:
+    #   W -&gt; D, W -&gt; Y       (confounder)
+    #   D -&gt; M -&gt; Y          (mediator -- carries part of effect via beta_M)
+    #   D -&gt; C, Y -&gt; C       (collider)
+    W &lt;- rnorm(n)
+    D &lt;- 0.8 * W + rnorm(n)
+    M &lt;- 0.7 * D + rnorm(n)                          # mediator on D -&gt; M -&gt; Y
+    beta_M &lt;- 0.6                                    # part of tau goes through M
+    direct &lt;- tau - beta_M * 0.7                     # direct D -&gt; Y component
+    Y &lt;- direct * D + beta_M * M + 1.0 * W + rnorm(n)
+    C &lt;- 1.2 * D + 1.2 * Y + rnorm(n)                # collider
 
-    # Treatment depends on x
-    p_true &lt;- pnorm(conf * x)
-    treat  &lt;- rbinom(n, 1, p_true)
+    # OLS specifications matching the checkboxes
+    specs &lt;- list()
+    specs$base                  &lt;- lm(Y ~ D)
+    if (input$ctrl_W) specs$W   &lt;- lm(Y ~ D + W)
+    if (input$ctrl_M) specs$M   &lt;- lm(Y ~ D + M)
+    if (input$ctrl_C) specs$C   &lt;- lm(Y ~ D + C)
+    if (input$ctrl_W &amp;&amp; input$ctrl_M) specs$WM &lt;- lm(Y ~ D + W + M)
+    if (input$ctrl_W &amp;&amp; input$ctrl_C) specs$WC &lt;- lm(Y ~ D + W + C)
+    if (input$ctrl_W &amp;&amp; input$ctrl_M &amp;&amp; input$ctrl_C) specs$WMC &lt;- lm(Y ~ D + W + M + C)
 
-    # Outcome depends on x (linearly or quadratically) + treatment
-    if (is_linear) {
-      y &lt;- 1 + 2 * x + ate * treat + rnorm(n)
-    } else {
-      y &lt;- 1 + 2 * x^2 + ate * treat + rnorm(n)
-    }
-
-    # Naive (no controls)
-    naive &lt;- mean(y[treat == 1]) - mean(y[treat == 0])
-
-    # Regression adjustment (always linear: Y ~ D + X)
-    fit &lt;- lm(y ~ treat + x)
-    reg_est &lt;- coef(fit)["treat"]
-
-    # IPW for comparison
-    ps &lt;- fitted(glm(treat ~ x, family = binomial))
-    w &lt;- ifelse(treat == 1, 1 / ps, 1 / (1 - ps))
-    ipw_est &lt;- weighted.mean(y[treat == 1], w[treat == 1]) -
-               weighted.mean(y[treat == 0], w[treat == 0])
-
-    list(x = x, treat = treat, y = y, fit = fit,
-         naive = naive, reg_est = reg_est, ipw_est = ipw_est,
-         ate = ate, is_linear = is_linear)
+    list(specs = specs, tau = tau)
   })
 
-  output$scatter_plot &lt;- renderPlot({
+  output$bias_plot &lt;- renderPlot({
     d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
+    coefs &lt;- sapply(d$specs, function(fit) coef(fit)["D"])
+    ses   &lt;- sapply(d$specs, function(fit) summary(fit)$coefficients["D", "Std. Error"])
 
-    plot(d$x, d$y, pch = 16, cex = 0.5,
-         col = ifelse(d$treat == 1, "#3498db50", "#e74c3c50"),
-         xlab = "X (confounder)", ylab = "Y (outcome)",
-         main = "Data + Regression Fit")
+    labels &lt;- c(base = "no controls",
+                W    = "+ W (confounder)",
+                M    = "+ M (mediator)",
+                C    = "+ C (collider)",
+                WM   = "+ W + M",
+                WC   = "+ W + C",
+                WMC  = "+ W + M + C")
+    nm &lt;- labels[names(coefs)]
 
-    # Fitted regression lines (always linear)
-    x_seq &lt;- seq(min(d$x), max(d$x), length.out = 200)
-    pred_t &lt;- predict(d$fit,
-      newdata = data.frame(treat = 1, x = x_seq))
-    pred_c &lt;- predict(d$fit,
-      newdata = data.frame(treat = 0, x = x_seq))
-    lines(x_seq, pred_t, col = "#3498db", lwd = 2.5)
-    lines(x_seq, pred_c, col = "#e74c3c", lwd = 2.5)
-
-    # True conditional means (dashed)
-    if (d$is_linear) {
-      true_t &lt;- 1 + 2 * x_seq + d$ate
-      true_c &lt;- 1 + 2 * x_seq
-    } else {
-      true_t &lt;- 1 + 2 * x_seq^2 + d$ate
-      true_c &lt;- 1 + 2 * x_seq^2
-    }
-    lines(x_seq, true_t, col = "#3498db", lwd = 1.5, lty = 3)
-    lines(x_seq, true_c, col = "#e74c3c", lwd = 1.5, lty = 3)
-
-    # Gap arrow at x = 0
-    mid_t &lt;- predict(d$fit,
-      newdata = data.frame(treat = 1, x = 0))
-    mid_c &lt;- predict(d$fit,
-      newdata = data.frame(treat = 0, x = 0))
-    arrows(0, mid_c, 0, mid_t, code = 3,
-           col = "#2c3e50", lwd = 2, length = 0.08)
-    text(0.3, (mid_t + mid_c) / 2,
-         bquote(hat(tau) == .(round(coef(d$fit)["treat"], 2))),
-         cex = 0.95, font = 2)
-
-    legend("topleft", bty = "n", cex = 0.8,
-           legend = c("Treated", "Control",
-                      "Regression fit", "True E[Y|X,D]"),
-           col = c("#3498db", "#e74c3c", "gray40", "gray40"),
-           pch = c(16, 16, NA, NA),
-           lwd = c(NA, NA, 2.5, 1.5),
-           lty = c(NA, NA, 1, 3))
+    par(mar = c(7, 5, 1.5, 1))
+    ymin &lt;- min(c(0, coefs - 2 * ses, d$tau)) - 0.2
+    ymax &lt;- max(c(coefs + 2 * ses, d$tau))   + 0.2
+    bp &lt;- barplot(coefs, names.arg = nm, las = 2, col = "#3498db",
+                  ylim = c(ymin, ymax),
+                  ylab = expression("Estimated " * hat(tau)),
+                  main = "")
+    abline(h = d$tau, col = "#27ae60", lwd = 2, lty = 2)
+    text(par("usr")[2] - 0.1, d$tau, "true τ", pos = 2, col = "#27ae60", cex = 0.95)
+    arrows(bp, coefs - 1.96 * ses, bp, coefs + 1.96 * ses,
+           code = 3, angle = 90, length = 0.05, col = "#2c3e50")
+    abline(h = 0, col = "gray70", lty = 3)
   })
 
-  output$compare_plot &lt;- renderPlot({
+  output$readout &lt;- renderUI({
     d &lt;- dat()
-    par(mar = c(4.5, 9, 3, 2))
-
-    ests &lt;- c(d$ipw_est, d$reg_est, d$naive)
-    labels &lt;- c("IPW", "Regression adj.", "Naive")
-    cols &lt;- c("#27ae60", "#3498db", "#e74c3c")
-
-    xlim &lt;- range(c(ests, d$ate))
-    pad  &lt;- max(diff(xlim) * 0.4, 0.5)
-    xlim &lt;- xlim + c(-pad, pad)
-
-    plot(ests, 1:3, pch = 19, cex = 2, col = cols,
-         xlim = xlim, ylim = c(0.5, 3.5),
-         yaxt = "n", xlab = "Estimated treatment effect",
-         ylab = "", main = "Estimator Comparison")
-    axis(2, at = 1:3, labels = labels,
-         las = 1, cex.axis = 0.9)
-
-    abline(v = d$ate, lty = 2, col = "#2c3e50", lwd = 2)
-    text(d$ate, 3.45,
-         paste0("True ATE = ", d$ate),
-         cex = 0.85, font = 2, col = "#2c3e50")
-
-    # Lines from true to estimate
-    segments(d$ate, 1:3, ests, 1:3,
-             col = cols, lwd = 2, lty = 2)
-  })
-
-  output$results &lt;- renderUI({
-    d &lt;- dat()
-    b_naive &lt;- d$naive - d$ate
-    b_reg   &lt;- d$reg_est - d$ate
-    b_ipw   &lt;- d$ipw_est - d$ate
-    reg_ok  &lt;- abs(b_reg) &lt; abs(b_naive) * 0.5
-    ipw_ok  &lt;- abs(b_ipw) &lt; abs(b_naive) * 0.5
-
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;True ATE:&lt;/b&gt; ", d$ate, "&lt;br&gt;",
-        "&lt;b&gt;Naive:&lt;/b&gt; &lt;span class='bad'&gt;",
-        round(d$naive, 3), "&lt;/span&gt;",
-        " (bias: ", round(b_naive, 3), ")&lt;br&gt;",
-        "&lt;b&gt;Reg. adj:&lt;/b&gt; &lt;span class='",
-        ifelse(reg_ok, "good", "bad"), "'&gt;",
-        round(d$reg_est, 3), "&lt;/span&gt;",
-        " (bias: ", round(b_reg, 3), ")&lt;br&gt;",
-        "&lt;b&gt;IPW:&lt;/b&gt; &lt;span class='",
-        ifelse(ipw_ok, "good", "bad"), "'&gt;",
-        round(d$ipw_est, 3), "&lt;/span&gt;",
-        " (bias: ", round(b_ipw, 3), ")"
-      ))
-    )
+    coefs &lt;- sapply(d$specs, function(fit) coef(fit)["D"])
+    HTML(sprintf(paste(
+      "&lt;div style='margin-top:10px;font-size:13px;line-height:1.7;'&gt;",
+      "&lt;b&gt;True τ:&lt;/b&gt; %.2f&lt;br&gt;",
+      "&lt;b&gt;OLS without any controls:&lt;/b&gt; %.3f &amp;nbsp; (confounded by W)&lt;br&gt;",
+      "%s",
+      "&lt;/div&gt;"
+    ),
+    d$tau,
+    coefs["base"],
+    if (!is.null(coefs["W"])) sprintf("&lt;b&gt;OLS + W only:&lt;/b&gt; %.3f &amp;nbsp; (closest to true τ)&lt;br&gt;", coefs["W"]) else "",
+    if (!is.null(coefs["WC"])) sprintf("&lt;b&gt;OLS + W + C:&lt;/b&gt; %.3f &amp;nbsp; (collider bias creeps in)&lt;br&gt;", coefs["WC"]) else ""
+    ))
   })
 }
 
 shinyApp(ui, server)</code></pre>
-</section>
-<section id="things-to-try" class="level3">
-<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Things to try.</strong></p>
 <ul>
-<li><strong>Linear outcome, confounding = 1.5:</strong> regression adjustment works well. The fitted lines (solid) match the true curves (dotted). The estimate is close to the true ATE.</li>
-<li><strong>Switch to Quadratic:</strong> now the true outcome is <span class="math inline">\(Y = 1 + 2X^2 + \tau D\)</span>, but regression still fits a line. The solid lines miss the curvature (compare to the dotted true curves). The regression estimate is <strong>biased</strong> — it’s a functional form problem, not a confounding problem.</li>
-<li><strong>Quadratic outcome, compare to IPW:</strong> IPW doesn’t model the outcome, so it still works. The green dot (IPW) is close to the true ATE; the blue dot (regression) is not.</li>
-<li><strong>Confounding = 0:</strong> treatment is random. All three estimators agree, and functional form doesn’t matter (no confounding to adjust for).</li>
+<li><strong>Start with no controls.</strong> OLS is biased by the confounder <span class="math inline">\(W\)</span>.</li>
+<li><strong>Add only <span class="math inline">\(W\)</span>.</strong> The estimate snaps close to the true <span class="math inline">\(\tau\)</span>. This is the backdoor criterion at work — one variable blocks the only backdoor path.</li>
+<li><strong>Add only <span class="math inline">\(M\)</span> (mediator).</strong> The estimate shrinks toward the <em>direct</em> effect, not the total. Controlling for the mediator strips out the part of <span class="math inline">\(\tau\)</span> that flows through <span class="math inline">\(M\)</span>.</li>
+<li><strong>Add only <span class="math inline">\(C\)</span> (collider).</strong> A new bias appears even though <span class="math inline">\(C\)</span> is <em>not</em> a confounder. Conditioning on the collider opens a non-causal path between <span class="math inline">\(D\)</span> and <span class="math inline">\(Y\)</span>.</li>
+<li><strong>Add <span class="math inline">\(W + C\)</span>.</strong> The collider bias from <span class="math inline">\(C\)</span> doesn’t go away just because you also controlled for <span class="math inline">\(W\)</span>. More controls is not safer.</li>
 </ul>
+</div>
+</div>
+</div>
 </section>
-<section id="the-bottom-line" class="level3">
-<h3 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h3>
-<p>Regression adjustment is the simplest and most common tool. It works great when the outcome model is correctly specified. But it’s <strong>fragile to functional form misspecification</strong> — fitting a line when the truth is curved introduces bias even when all confounders are observed.</p>
-<p>This is why alternatives like <a href="ipw.html">IPW</a> and <a href="entropy-balancing.html">entropy balancing</a> exist: they avoid modeling the outcome entirely. And <a href="doubly-robust.html">doubly robust</a> methods hedge both bets.</p>
-<hr>
+<section id="a-cheat-sheet-for-econometricians" class="level2">
+<h2 class="anchored" data-anchor-id="a-cheat-sheet-for-econometricians">A cheat sheet for econometricians</h2>
+<p>For a clean estimate of the <strong>total causal effect</strong> of <span class="math inline">\(D\)</span> on <span class="math inline">\(Y\)</span>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 38%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable role</th>
+<th style="text-align: center;">Include in OLS?</th>
+<th style="text-align: left;">Why</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Pre-treatment confounder (<span class="math inline">\(W\)</span>)</td>
+<td style="text-align: center;">✅ Yes</td>
+<td style="text-align: left;">Blocks a backdoor path</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pre-treatment instrument (<span class="math inline">\(Z\)</span>)</td>
+<td style="text-align: center;">❌ No (use IV)</td>
+<td style="text-align: left;">Conditioning on <span class="math inline">\(Z\)</span> throws away identifying variation</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mediator (<span class="math inline">\(M\)</span>, on the path <span class="math inline">\(D \to M \to Y\)</span>)</td>
+<td style="text-align: center;">❌ No</td>
+<td style="text-align: left;">Removes part of the total effect</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Collider (<span class="math inline">\(C\)</span>, with <span class="math inline">\(D \to C\)</span> and <span class="math inline">\(Y \to C\)</span>)</td>
+<td style="text-align: center;">❌ Never</td>
+<td style="text-align: left;">Opens a non-causal path</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Descendant of <span class="math inline">\(D\)</span> that’s <em>not</em> on the <span class="math inline">\(D \to Y\)</span> pathway</td>
+<td style="text-align: center;">❌ No</td>
+<td style="text-align: left;">Often correlated with unobserved confounders in dangerous ways</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Variable that’s neither a cause of <span class="math inline">\(D\)</span> nor of <span class="math inline">\(Y\)</span></td>
+<td style="text-align: center;">Don’t care (no bias)</td>
+<td style="text-align: left;">Wastes degrees of freedom but doesn’t bias point estimate</td>
+</tr>
+</tbody>
+</table>
+<p>Two rules of thumb that follow:</p>
+<p><strong>1. Pre-treatment vs.&nbsp;post-treatment is the simplest filter.</strong> If a variable was determined before the treatment, controlling for it is at worst harmless (if it’s irrelevant) and at best correct (if it’s a confounder). If a variable was determined after the treatment, controlling for it is at best harmless and often wrong (mediator or collider).</p>
+<p><strong>2. “Including more controls is safer” is wrong.</strong> Adding a collider or a mediator can introduce a bias <em>bigger</em> than the confounding you were trying to fix. This is the most consequential lesson from the DAG framework and the hardest sell to applied workers trained on “kitchen sink” regressions.</p>
 </section>
-</section>
-<section id="in-stata" class="level2">
-<h2 class="anchored" data-anchor-id="in-stata">In Stata</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>* Basic regression adjustment</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> outcome treatment x1 <span class="kw">x2</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>* Stata's teffects <span class="kw">version</span> (potential outcomes framework)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>teffects ra (outcome x1 <span class="kw">x2</span>) (treatment)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>* Lin (2013) fix: interact treatment with demeaned covariates</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>* (<span class="kw">robust</span> to functional form misspecification)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">foreach</span> <span class="kw">var</span> <span class="kw">of</span> <span class="kw">varlist</span> x1 <span class="kw">x2</span> {</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">sum</span> <span class="ot">`var'</span>, <span class="kw">meanonly</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">gen</span> <span class="ot">`var'</span>_dm = <span class="ot">`var'</span> - <span class="fu">r</span>(<span class="kw">mean</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> outcome treatment c.treatment#c.(x1_dm x2_dm) x1 <span class="kw">x2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Plain <code>reg outcome treatment x1 x2</code> and <code>teffects ra</code> give the same point estimate under linearity. The Lin (2013) interaction approach is safer when you’re unsure about functional form.</p>
-<hr>
+<section id="how-this-connects-to-the-rest-of-the-site" class="level2">
+<h2 class="anchored" data-anchor-id="how-this-connects-to-the-rest-of-the-site">How this connects to the rest of the site</h2>
+<p>The backdoor criterion is the formal statement behind much of what other pages on this site assume:</p>
+<ul>
+<li><a href="selection-observables.html">Selection on Observables</a> is the identification strategy that the backdoor criterion enables — controlling for the right pre-treatment variables.</li>
+<li><a href="regression-adjustment.html">Regression Adjustment</a>, <a href="ipw.html">IPW</a>, and <a href="matching.html">Matching</a> are different ways to operationalize the same backdoor adjustment.</li>
+<li><a href="iv.html">Instrumental Variables</a> is what you do when you <em>can’t</em> satisfy the backdoor criterion because a key confounder is unobserved — you find a <span class="math inline">\(Z\)</span> that exploits a frontdoor path instead.</li>
+<li><a href="did.html">DiD</a>, <a href="rdd.html">RDD</a>, and <a href="synth.html">Synthetic Control</a> are designs that use a different blocking strategy — exploiting timing, thresholds, or counterfactual construction — to avoid relying on observable confounders at all.</li>
+</ul>
+<p>The DAG framework makes those choices explicit. You draw what you think the world looks like, you check whether the backdoor criterion holds with your chosen controls, and if it doesn’t, you reach for a different research design.</p>
 </section>
 <section id="did-you-know" class="level2">
 <h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
 <ul>
-<li><p>Regression adjustment is so natural that most applied researchers use it without thinking of it as a “method.” But <strong>Freedman (2008)</strong> showed that even in randomized experiments, regression adjustment can be biased in finite samples if the model is wrong — the linear adjustment can <em>introduce</em> bias that wasn’t there. <strong>Lin (2013)</strong> showed how to fix this: interact the treatment indicator with all covariates, and the resulting estimator is asymptotically unbiased regardless of the true functional form.</p></li>
-<li><p>The vulnerability of regression to functional form is a key motivation for <strong>semiparametric</strong> and <strong>nonparametric</strong> methods. Instead of assuming <span class="math inline">\(E[Y \mid X] = \alpha + \beta X\)</span> (which might be wrong), methods like kernel regression or series estimation let the data determine the shape.</p></li>
+<li><strong>Judea Pearl</strong> won the 2011 Turing Award largely for developing the DAG framework and the do-calculus. He has been openly frustrated that economists adopted the potential-outcomes notation of Rubin and Imbens while remaining cool to graphical methods for decades. The two frameworks are mathematically equivalent for most everyday problems; the gap was about taste, language, and which department you read papers from.</li>
+<li>The <strong>“bad controls” warning</strong> dates back at least to Rosenbaum (1984), but the literature exploded after Cinelli, Forney &amp; Pearl (2024) “A Crash Course in Good and Bad Controls” laid out a taxonomy with twenty-three different DAG configurations and the right answer for each. That paper is now widely assigned in applied econometrics PhD courses.</li>
+<li><strong>Collider bias in everyday data.</strong> Restaurant reviews on Yelp tend to show a <em>negative</em> correlation between food quality and service quality — not because they trade off, but because both have to clear a threshold for the restaurant to stay in business (the collider). Among surviving restaurants, a great kitchen with rude service can compensate for a great service with mediocre food. Condition on survival and the correlation flips.</li>
 </ul>
 
 
