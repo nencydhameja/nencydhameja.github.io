@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Bayesian Updating: One Gentle Introduction – Foundations of Statistical Inference</title>
+<title>Bayesian inference as statistical mechanics – Foundations of Statistical Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -82,9 +82,6 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -128,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./method-of-moments.html">Estimation</a></li><li class="breadcrumb-item"><a href="./bayesian-updating.html">Bayesian Updating</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./method-of-moments.html">Estimation</a></li><li class="breadcrumb-item"><a href="./bayesian-stat-mech.html">Bayesian Inference as Statistical Mechanics</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -353,13 +350,13 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bayesian-updating.html" class="sidebar-item-text sidebar-link active">
+  <a href="./bayesian-updating.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Bayesian Updating</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bayesian-stat-mech.html" class="sidebar-item-text sidebar-link">
+  <a href="./bayesian-stat-mech.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Bayesian Inference as Statistical Mechanics</span></a>
   </div>
 </li>
@@ -480,29 +477,21 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-bayesian-recipe" id="toc-the-bayesian-recipe" class="nav-link active" data-scroll-target="#the-bayesian-recipe">The Bayesian recipe</a>
-  <ul class="collapse">
-  <li><a href="#how-is-this-different-from-frequentist-inference" id="toc-how-is-this-different-from-frequentist-inference" class="nav-link" data-scroll-target="#how-is-this-different-from-frequentist-inference">How is this different from frequentist inference?</a></li>
-  </ul></li>
-  <li><a href="#simulation-1-coin-flipping-watch-the-posterior-update" id="toc-simulation-1-coin-flipping-watch-the-posterior-update" class="nav-link" data-scroll-target="#simulation-1-coin-flipping-watch-the-posterior-update">Simulation 1: Coin flipping — watch the posterior update</a></li>
-  <li><a href="#simulation-2-prior-sensitivity-different-priors-same-data" id="toc-simulation-2-prior-sensitivity-different-priors-same-data" class="nav-link" data-scroll-target="#simulation-2-prior-sensitivity-different-priors-same-data">Simulation 2: Prior sensitivity — different priors, same data</a>
-  <ul class="collapse">
-  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
-  <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
-  </ul></li>
-  <li><a href="#how-the-pieces-fit-together" id="toc-how-the-pieces-fit-together" class="nav-link" data-scroll-target="#how-the-pieces-fit-together">How the pieces fit together</a>
-  <ul class="collapse">
+  <li><a href="#the-energy-landscape" id="toc-the-energy-landscape" class="nav-link active" data-scroll-target="#the-energy-landscape">The energy landscape</a></li>
+  <li><a href="#simulated-annealing-cooling-to-find-the-map" id="toc-simulated-annealing-cooling-to-find-the-map" class="nav-link" data-scroll-target="#simulated-annealing-cooling-to-find-the-map">Simulated annealing: cooling to find the MAP</a></li>
+  <li><a href="#hamiltonian-monte-carlo-newtonian-sampling" id="toc-hamiltonian-monte-carlo-newtonian-sampling" class="nav-link" data-scroll-target="#hamiltonian-monte-carlo-newtonian-sampling">Hamiltonian Monte Carlo: Newtonian sampling</a></li>
+  <li><a href="#variational-inference-free-energy-minimization" id="toc-variational-inference-free-energy-minimization" class="nav-link" data-scroll-target="#variational-inference-free-energy-minimization">Variational inference: free-energy minimization</a></li>
+  <li><a href="#why-this-matters-for-econometrics" id="toc-why-this-matters-for-econometrics" class="nav-link" data-scroll-target="#why-this-matters-for-econometrics">Why this matters for econometrics</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./method-of-moments.html">Estimation</a></li><li class="breadcrumb-item"><a href="./bayesian-updating.html">Bayesian Updating</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./method-of-moments.html">Estimation</a></li><li class="breadcrumb-item"><a href="./bayesian-stat-mech.html">Bayesian Inference as Statistical Mechanics</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Bayesian Updating: One Gentle Introduction</h1>
+<h1 class="title">Bayesian inference as statistical mechanics</h1>
 </div>
 
 
@@ -519,434 +508,254 @@ window.Quarto = {
 </header>
 
 
-<section id="the-bayesian-recipe" class="level2">
-<h2 class="anchored" data-anchor-id="the-bayesian-recipe">The Bayesian recipe</h2>
-<p>Bayesian inference has exactly one formula:</p>
-<p><span class="math display">\[\text{Posterior} \propto \text{Prior} \times \text{Likelihood}\]</span></p>
-<p>That’s it. Everything else is details.</p>
-<ul>
-<li><strong>Prior</strong>: what you believed before seeing data</li>
-<li><strong>Likelihood</strong>: how probable the data is under each possible parameter value</li>
-<li><strong>Posterior</strong>: your updated belief after seeing data</li>
-</ul>
-<p>The key insight: <strong>your belief gets updated as data arrives.</strong> Start with a prior (maybe vague, maybe informed), observe data, and the posterior combines both. With enough data, the prior gets overwhelmed — the data speaks for itself.</p>
-<section id="how-is-this-different-from-frequentist-inference" class="level3">
-<h3 class="anchored" data-anchor-id="how-is-this-different-from-frequentist-inference">How is this different from frequentist inference?</h3>
+<p>Most of the algorithms statisticians use to do Bayesian computation — simulated annealing for MAP, Hamiltonian Monte Carlo for sampling, variational inference for fast approximation — were not invented by statisticians. They came from physics, specifically from the statistical mechanics tradition that traces back to Boltzmann and Gibbs in the nineteenth century, runs through Los Alamos in the 1940s, and was finally imported into statistics in the 1980s.</p>
+<p>The reason these methods transfer so cleanly is that the math is identical. A Bayesian posterior <strong>is</strong> the equilibrium distribution of a physical system in thermal contact with a heat bath. Everything else follows from that.</p>
+<section id="the-energy-landscape" class="level2">
+<h2 class="anchored" data-anchor-id="the-energy-landscape">The energy landscape</h2>
+<p>In statistical mechanics, the probability that a system at temperature <span class="math inline">\(T\)</span> is in a state with energy <span class="math inline">\(E\)</span> is the <strong>Boltzmann distribution</strong>:</p>
+<p><span class="math display">\[
+P(\text{state}) \;\propto\; \exp\!\left[-\frac{E(\text{state})}{k_B T}\right].
+\]</span></p>
+<p>A Bayesian posterior takes the same form:</p>
+<p><span class="math display">\[
+p(\theta \mid \text{data})
+\;\propto\;
+p(\text{data} \mid \theta)\, p(\theta)
+\;=\;
+\exp\!\bigl[\,\log p(\text{data} \mid \theta) + \log p(\theta)\,\bigr].
+\]</span></p>
+<p>Define the <strong>energy</strong> of a parameter value <span class="math inline">\(\theta\)</span> as</p>
+<p><span class="math display">\[
+E(\theta) \;\equiv\; -\log p(\text{data} \mid \theta) \;-\; \log p(\theta).
+\]</span></p>
+<p>Then the posterior is exactly a Boltzmann distribution over parameter space with <span class="math inline">\(k_B T = 1\)</span>:</p>
+<p><span class="math display">\[
+p(\theta \mid \text{data}) \;\propto\; \exp[-E(\theta)].
+\]</span></p>
+<p>The duality gives every part of the Bayesian setup a physical interpretation:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
-<th></th>
-<th>Frequentist</th>
-<th>Bayesian</th>
+<th style="text-align: left;">Statistics</th>
+<th style="text-align: left;">Statistical mechanics</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Parameters</strong></td>
-<td>Fixed but unknown</td>
-<td>Random variables with distributions</td>
+<td style="text-align: left;">Parameter <span class="math inline">\(\theta\)</span></td>
+<td style="text-align: left;">State of the system</td>
 </tr>
 <tr class="even">
-<td><strong>Probability</strong></td>
-<td>Long-run frequency</td>
-<td>Degree of belief</td>
+<td style="text-align: left;">Negative log-posterior <span class="math inline">\(-\log p(\theta \mid \text{data})\)</span></td>
+<td style="text-align: left;">Energy <span class="math inline">\(E(\theta)\)</span></td>
 </tr>
 <tr class="odd">
-<td><strong>Can say</strong></td>
-<td>“If H₀ is true, data this extreme has p = 0.03”</td>
-<td>“Given the data, P(parameter &gt; 0) = 0.97”</td>
+<td style="text-align: left;">MAP estimate (mode of posterior)</td>
+<td style="text-align: left;">Ground state (lowest-energy configuration)</td>
 </tr>
 <tr class="even">
-<td><strong>CI / CrI</strong></td>
-<td>“95% of intervals from this procedure contain <span class="math inline">\(\theta\)</span>”</td>
-<td>“There’s a 95% probability <span class="math inline">\(\theta\)</span> is in this interval”</td>
+<td style="text-align: left;">Posterior samples</td>
+<td style="text-align: left;">Thermal fluctuations at <span class="math inline">\(T = 1\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tempering (anneal <span class="math inline">\(T\)</span> down)</td>
+<td style="text-align: left;">Cooling a physical system</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Log marginal likelihood</td>
+<td style="text-align: left;">Negative free energy <span class="math inline">\(-F = -(U - TS)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Multimodal posterior</td>
+<td style="text-align: left;">Glassy energy landscape with many local minima</td>
 </tr>
 </tbody>
 </table>
-<p>The Bayesian interpretation is often what people <em>think</em> a confidence interval means — but it requires a prior.</p>
+<p>This isn’t analogy. The equations are the same. That is why physicists’ methods work on statisticians’ problems.</p>
+</section>
+<section id="simulated-annealing-cooling-to-find-the-map" class="level2">
+<h2 class="anchored" data-anchor-id="simulated-annealing-cooling-to-find-the-map">Simulated annealing: cooling to find the MAP</h2>
+<p>If MAP estimation is finding the ground state of an energy landscape, then any physics technique for finding ground states is a candidate optimizer. The oldest is <strong>simulated annealing</strong> (Kirkpatrick, Gelatt &amp; Vecchi 1983):</p>
+<ol type="1">
+<li>Replace the posterior <span class="math inline">\(p(\theta \mid \text{data}) \propto e^{-E(\theta)}\)</span> with a <em>tempered</em> posterior <span class="math inline">\(p_T(\theta) \propto e^{-E(\theta)/T}\)</span>.</li>
+<li>At high <span class="math inline">\(T\)</span>, this is flat — easy to wander around the parameter space without getting stuck in local minima.</li>
+<li>Gradually lower <span class="math inline">\(T\)</span> toward <span class="math inline">\(0\)</span>. As <span class="math inline">\(T \to 0\)</span>, <span class="math inline">\(p_T\)</span> concentrates entirely on the global minimum of <span class="math inline">\(E\)</span> — the MAP.</li>
+<li>At each <span class="math inline">\(T\)</span>, run a Metropolis–Hastings chain. The slow cooling lets the chain escape local minima while it still has thermal energy, and settle into the global minimum as it freezes.</li>
+</ol>
+<p>Simulated annealing is the canonical example of physics serving optimization. It’s used today in chip layout, vehicle routing, protein folding, and combinatorial problems where the energy landscape has lots of false summits.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 580
+
+library(shiny)
+
+# Bimodal target "energy" landscape -- two valleys, one deeper than the other.
+# E(theta) = -log( 0.6 * dnorm(theta, -2, 0.6) + 0.4 * dnorm(theta, 2.0, 0.5) )
+energy &lt;- function(theta) {
+  -log(0.6 * dnorm(theta, -2.0, 0.6) + 0.4 * dnorm(theta, 2.0, 0.5))
+}
+
+ui &lt;- fluidPage(
+  titlePanel("Simulated annealing on a bimodal energy landscape"),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 4,
+      sliderInput("T_start", "Starting temperature:",
+                  min = 0.1, max = 5, value = 2.5, step = 0.1),
+      sliderInput("T_end", "Final temperature:",
+                  min = 0.001, max = 1, value = 0.05, step = 0.01),
+      sliderInput("n_steps", "Cooling steps:",
+                  min = 200, max = 5000, value = 1500, step = 100),
+      sliderInput("theta0", "Start point θ₀:",
+                  min = -4, max = 4, value = 3, step = 0.1),
+      actionButton("go", "Run annealing", class = "btn-primary", width = "100%"),
+      htmlOutput("readout")
+    ),
+    mainPanel(
+      width = 8,
+      plotOutput("anneal_plot", height = "480px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  run &lt;- eventReactive(input$go, {
+    n   &lt;- input$n_steps
+    T0  &lt;- input$T_start
+    T1  &lt;- input$T_end
+    # geometric cooling schedule
+    schedule &lt;- T0 * (T1 / T0)^(seq_len(n) / n)
+
+    theta &lt;- numeric(n + 1)
+    E_path &lt;- numeric(n + 1)
+    theta[1] &lt;- input$theta0
+    E_path[1] &lt;- energy(theta[1])
+    accepts &lt;- 0
+    for (k in seq_len(n)) {
+      T &lt;- schedule[k]
+      proposal &lt;- theta[k] + rnorm(1, 0, 0.5)
+      dE &lt;- energy(proposal) - E_path[k]
+      if (dE &lt; 0 || runif(1) &lt; exp(-dE / T)) {
+        theta[k + 1]  &lt;- proposal
+        E_path[k + 1] &lt;- energy(proposal)
+        accepts &lt;- accepts + 1
+      } else {
+        theta[k + 1]  &lt;- theta[k]
+        E_path[k + 1] &lt;- E_path[k]
+      }
+    }
+    list(theta = theta, E = E_path, schedule = schedule,
+         accept_rate = accepts / n)
+  }, ignoreNULL = FALSE)
+
+  output$anneal_plot &lt;- renderPlot({
+    r &lt;- run()
+    par(mfrow = c(2, 1), mar = c(4, 4.5, 1.5, 1))
+
+    # Top panel: energy landscape with trajectory
+    grid &lt;- seq(-4, 4, length.out = 600)
+    plot(grid, energy(grid), type = "l", lwd = 2.5, col = "#2c3e50",
+         xlab = expression(theta), ylab = expression(E(theta)),
+         main = "Energy landscape and annealing trajectory")
+    points(r$theta[1], r$E[1], pch = 19, col = "#c0392b", cex = 1.6)
+    points(tail(r$theta, 1), tail(r$E, 1), pch = 19, col = "#27ae60", cex = 1.8)
+    sub &lt;- seq(1, length(r$theta), length.out = 150)
+    lines(r$theta[sub], r$E[sub], col = adjustcolor("#3498db", 0.4), lwd = 1)
+    legend("topright",
+           legend = c("Energy curve", "Trajectory", "Start", "End"),
+           col = c("#2c3e50", adjustcolor("#3498db", 0.6), "#c0392b", "#27ae60"),
+           lwd = c(2.5, 1, NA, NA), pch = c(NA, NA, 19, 19),
+           bty = "n", cex = 0.95)
+
+    # Bottom panel: temperature schedule
+    plot(seq_along(r$schedule), r$schedule, type = "l", lwd = 2, col = "#8e44ad",
+         xlab = "Step", ylab = "Temperature", main = "Cooling schedule (log-y)",
+         log = "y")
+  })
+
+  output$readout &lt;- renderUI({
+    r &lt;- run()
+    final_theta &lt;- tail(r$theta, 1)
+    HTML(sprintf(paste(
+      "&lt;div style='margin-top:10px;font-size:13px;line-height:1.7;'&gt;",
+      "&lt;b&gt;Final θ:&lt;/b&gt; %.3f&lt;br&gt;",
+      "&lt;b&gt;Final energy:&lt;/b&gt; %.3f&lt;br&gt;",
+      "&lt;b&gt;Acceptance rate:&lt;/b&gt; %.0f%%&lt;br&gt;&lt;br&gt;",
+      "Global minimum is near θ ≈ −2.&lt;br&gt;",
+      "If the chain ended up near +2 instead, it got trapped in the shallower well — try a higher starting temperature.",
+      "&lt;/div&gt;"
+    ), final_theta, tail(r$E, 1), 100 * r$accept_rate))
+  })
+}
+
+shinyApp(ui, server)</code></pre>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>The Oracle View.</strong> In these simulations, we set the true coin bias — so we can watch the posterior converge to the right answer. In practice, you don’t know the true parameter. You choose a prior, observe data, and update. The posterior is your best belief — but you never get to check it against the truth.</p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="simulation-1-coin-flipping-watch-the-posterior-update" class="level2">
-<h2 class="anchored" data-anchor-id="simulation-1-coin-flipping-watch-the-posterior-update">Simulation 1: Coin flipping — watch the posterior update</h2>
-<p>Start with a prior belief about a coin’s bias. Flip the coin one at a time and watch the posterior distribution update in real time. With enough flips, the posterior concentrates around the true bias — regardless of the prior.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 680
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
-    }
-    .stats-box b { color: #2c3e50; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      sliderInput("true_p", "True coin bias:",
-                  min = 0.1, max = 0.9, value = 0.7, step = 0.05),
-
-      selectInput("prior", "Prior belief:",
-                  choices = c("Uniform (a=1, b=1)" = "uniform",
-                              "Skeptical of bias (a=5, b=5)" = "skeptical",
-                              "Believe heads-biased (a=8, b=2)" = "heads",
-                              "Believe tails-biased (a=2, b=8)" = "tails",
-                              "Very strong fair (a=50, b=50)" = "strong_fair")),
-
-      sliderInput("n_flips", "Number of flips:",
-                  min = 1, max = 200, value = 10, step = 1),
-
-      actionButton("go", "Flip coins",
-                   class = "btn-primary", width = "100%"),
-
-      uiOutput("results")
-    ),
-
-    mainPanel(
-      width = 9,
-      fluidRow(
-        column(12, plotOutput("posterior_plot", height = "400px"))
-      )
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  get_prior &lt;- function(prior) {
-    switch(prior,
-      "uniform"      = c(a = 1, b = 1),
-      "skeptical"    = c(a = 5, b = 5),
-      "heads"        = c(a = 8, b = 2),
-      "tails"        = c(a = 2, b = 8),
-      "strong_fair"  = c(a = 50, b = 50)
-    )
-  }
-
-  dat &lt;- reactive({
-    input$go
-    true_p  &lt;- input$true_p
-    prior   &lt;- input$prior
-    n_flips &lt;- input$n_flips
-
-    ab &lt;- get_prior(prior)
-    a0 &lt;- ab["a"]; b0 &lt;- ab["b"]
-
-    # Generate flips
-    flips &lt;- rbinom(n_flips, 1, true_p)
-    heads &lt;- sum(flips)
-    tails &lt;- n_flips - heads
-
-    # Posterior parameters
-    a_post &lt;- a0 + heads
-    b_post &lt;- b0 + tails
-
-    list(a0 = a0, b0 = b0, a_post = a_post, b_post = b_post,
-         true_p = true_p, n_flips = n_flips, heads = heads,
-         tails = tails, flips = flips)
-  })
-
-  output$posterior_plot &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    x &lt;- seq(0, 1, length.out = 500)
-    y_prior &lt;- dbeta(x, d$a0, d$b0)
-    y_post  &lt;- dbeta(x, d$a_post, d$b_post)
-
-    ylim &lt;- c(0, max(c(y_prior, y_post)) * 1.1)
-
-    plot(x, y_post, type = "l", lwd = 3, col = "#3498db",
-         xlab = expression("Coin bias (" * theta * ")"),
-         ylab = "Density",
-         main = paste0("Bayesian updating after ", d$n_flips,
-                      " flips (", d$heads, "H, ", d$tails, "T)"),
-         ylim = ylim)
-
-    # Prior
-    lines(x, y_prior, lwd = 2, col = "#95a5a6", lty = 2)
-
-    # Shade posterior
-    polygon(c(0, x, 1), c(0, y_post, 0),
-            col = adjustcolor("#3498db", 0.2), border = NA)
-
-    # True value
-    abline(v = d$true_p, lwd = 2.5, col = "#e74c3c", lty = 2)
-
-    # Posterior mean
-    post_mean &lt;- d$a_post / (d$a_post + d$b_post)
-    abline(v = post_mean, lwd = 2, col = "#27ae60", lty = 3)
-
-    # 95% credible interval
-    ci_lo &lt;- qbeta(0.025, d$a_post, d$b_post)
-    ci_hi &lt;- qbeta(0.975, d$a_post, d$b_post)
-    x_ci &lt;- seq(ci_lo, ci_hi, length.out = 200)
-    y_ci &lt;- dbeta(x_ci, d$a_post, d$b_post)
-    polygon(c(ci_lo, x_ci, ci_hi), c(0, y_ci, 0),
-            col = adjustcolor("#3498db", 0.3), border = NA)
-
-    legend("topright", bty = "n", cex = 0.85,
-           legend = c("Prior",
-                      "Posterior",
-                      "95% credible interval",
-                      paste0("True \u03b8 = ", d$true_p),
-                      paste0("Posterior mean = ", round(post_mean, 3))),
-           col = c("#95a5a6", "#3498db",
-                   adjustcolor("#3498db", 0.4),
-                   "#e74c3c", "#27ae60"),
-           lwd = c(2, 3, 8, 2.5, 2),
-           lty = c(2, 1, 1, 2, 3))
-  })
-
-  output$results &lt;- renderUI({
-    d &lt;- dat()
-    post_mean &lt;- d$a_post / (d$a_post + d$b_post)
-    ci_lo &lt;- qbeta(0.025, d$a_post, d$b_post)
-    ci_hi &lt;- qbeta(0.975, d$a_post, d$b_post)
-
-    prior_mean &lt;- d$a0 / (d$a0 + d$b0)
-
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;Prior:&lt;/b&gt; Beta(", d$a0, ", ", d$b0, ")&lt;br&gt;",
-        "Prior mean: ", round(prior_mean, 3), "&lt;br&gt;",
-        "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;Data:&lt;/b&gt; ", d$heads, "H / ", d$tails, "T&lt;br&gt;",
-        "MLE: ", round(d$heads / d$n_flips, 3), "&lt;br&gt;",
-        "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;Posterior:&lt;/b&gt; Beta(", d$a_post, ", ", d$b_post, ")&lt;br&gt;",
-        "Post. mean: ", round(post_mean, 3), "&lt;br&gt;",
-        "95% CrI: [", round(ci_lo, 3), ", ", round(ci_hi, 3), "]&lt;br&gt;",
-        "&lt;b&gt;True \u03b8:&lt;/b&gt; ", d$true_p
-      ))
-    )
-  })
-}
-
-shinyApp(ui, server)</code></pre>
-</section>
-<section id="simulation-2-prior-sensitivity-different-priors-same-data" class="level2">
-<h2 class="anchored" data-anchor-id="simulation-2-prior-sensitivity-different-priors-same-data">Simulation 2: Prior sensitivity — different priors, same data</h2>
-<p>Same coin, same flips, but different starting beliefs. With little data, the prior matters a lot. With enough data, all priors converge to the same posterior. <strong>The data overwhelms the prior.</strong></p>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 580
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
-    }
-    .stats-box b { color: #2c3e50; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      sliderInput("true_p2", "True coin bias:",
-                  min = 0.1, max = 0.9, value = 0.7, step = 0.05),
-
-      sliderInput("n_flips2", "Number of flips:",
-                  min = 1, max = 500, value = 10, step = 1),
-
-      actionButton("go2", "Flip coins",
-                   class = "btn-primary", width = "100%"),
-
-      uiOutput("results2")
-    ),
-
-    mainPanel(
-      width = 9,
-      plotOutput("sensitivity_plot", height = "450px")
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  dat &lt;- reactive({
-    input$go2
-    true_p  &lt;- input$true_p2
-    n_flips &lt;- input$n_flips2
-
-    # Generate one set of flips (shared across priors)
-    flips &lt;- rbinom(n_flips, 1, true_p)
-    heads &lt;- sum(flips)
-    tails &lt;- n_flips - heads
-
-    priors &lt;- list(
-      "Uniform (1,1)"        = c(1, 1),
-      "Fair-biased (10,10)"  = c(10, 10),
-      "Heads-biased (8,2)"   = c(8, 2),
-      "Tails-biased (2,8)"   = c(2, 8),
-      "Strong fair (50,50)"  = c(50, 50)
-    )
-
-    list(priors = priors, heads = heads, tails = tails,
-         true_p = true_p, n_flips = n_flips)
-  })
-
-  output$sensitivity_plot &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    x &lt;- seq(0, 1, length.out = 500)
-    cols &lt;- c("#3498db", "#e74c3c", "#27ae60", "#9b59b6", "#e67e22")
-
-    # Find y range
-    ymax &lt;- 0
-    for (i in seq_along(d$priors)) {
-      ab &lt;- d$priors[[i]]
-      y &lt;- dbeta(x, ab[1] + d$heads, ab[2] + d$tails)
-      ymax &lt;- max(ymax, max(y))
-    }
-
-    plot(NULL, xlim = c(0, 1), ylim = c(0, ymax * 1.1),
-         xlab = expression("Coin bias (" * theta * ")"),
-         ylab = "Posterior density",
-         main = paste0("5 priors, same data (",
-                      d$heads, "H / ", d$tails, "T out of ",
-                      d$n_flips, " flips)"))
-
-    for (i in seq_along(d$priors)) {
-      ab &lt;- d$priors[[i]]
-      y &lt;- dbeta(x, ab[1] + d$heads, ab[2] + d$tails)
-      lines(x, y, lwd = 2.5, col = cols[i])
-    }
-
-    abline(v = d$true_p, lty = 2, lwd = 2.5, col = "#2c3e50")
-
-    legend("topright", bty = "n", cex = 0.8,
-           legend = c(names(d$priors),
-                      paste0("True \u03b8 = ", d$true_p)),
-           col = c(cols, "#2c3e50"),
-           lwd = c(rep(2.5, 5), 2.5),
-           lty = c(rep(1, 5), 2))
-  })
-
-  output$results2 &lt;- renderUI({
-    d &lt;- dat()
-
-    lines &lt;- sapply(seq_along(d$priors), function(i) {
-      ab &lt;- d$priors[[i]]
-      a_post &lt;- ab[1] + d$heads
-      b_post &lt;- ab[2] + d$tails
-      post_mean &lt;- a_post / (a_post + b_post)
-      paste0(names(d$priors)[i], ": ",
-             round(post_mean, 3))
-    })
-
-    mle &lt;- d$heads / d$n_flips
-
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;Posterior means:&lt;/b&gt;&lt;br&gt;",
-        paste(lines, collapse = "&lt;br&gt;"), "&lt;br&gt;",
-        "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;b&gt;MLE:&lt;/b&gt; ", round(mle, 3), "&lt;br&gt;",
-        "&lt;b&gt;True \u03b8:&lt;/b&gt; ", d$true_p, "&lt;br&gt;",
-        "&lt;small&gt;With more flips, all posteriors&lt;br&gt;",
-        "converge to the MLE.&lt;/small&gt;"
-      ))
-    )
-  })
-}
-
-shinyApp(ui, server)</code></pre>
-<section id="things-to-try" class="level3">
-<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<p><strong>Things to try.</strong></p>
 <ul>
-<li><strong>Sim 1, 5 flips:</strong> the posterior is wide and heavily influenced by the prior. The 95% credible interval is broad.</li>
-<li><strong>Sim 1, 100 flips:</strong> the posterior is sharp and centered near the true bias. The prior barely matters anymore.</li>
-<li><strong>Sim 1, strong fair prior (a=50, b=50) with true bias = 0.7:</strong> the prior pulls the posterior toward 0.5. You need many flips to overcome a strong prior.</li>
-<li><strong>Sim 2, 10 flips:</strong> the five posteriors are spread apart — the prior matters a lot.</li>
-<li><strong>Sim 2, 200 flips:</strong> all five posteriors are nearly identical and centered on the true value. <strong>The data overwhelms the prior.</strong></li>
-<li><strong>Sim 2, slide from 1 to 500 flips:</strong> watch the posteriors converge in real time. This is the key Bayesian result — with enough data, the prior washes out.</li>
+<li><strong>Drop the starting temperature to 0.5.</strong> The chain becomes a local search — it slides into whichever well is closest to <span class="math inline">\(\theta_0\)</span>. Try <span class="math inline">\(\theta_0 = 3\)</span> and watch it get stuck near the shallow minimum at <span class="math inline">\(+2\)</span>.</li>
+<li><strong>Start at <span class="math inline">\(T = 4\)</span>.</strong> The chain has plenty of thermal energy to climb over the barrier between wells. It nearly always lands at the deep minimum near <span class="math inline">\(-2\)</span> regardless of <span class="math inline">\(\theta_0\)</span>.</li>
+<li><strong>Cool too fast (small <span class="math inline">\(n\)</span>).</strong> The chain freezes before it finds the global minimum. Cool too slow and you waste compute. The art of simulated annealing is the cooling schedule.</li>
 </ul>
+</div>
+</div>
+</div>
 </section>
-<section id="the-bottom-line" class="level3">
-<h3 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h3>
-<ul>
-<li><strong>Bayesian inference = prior × likelihood → posterior.</strong> That’s the entire framework.</li>
-<li>The <strong>prior</strong> encodes what you know before seeing data. It can be informative (based on previous studies) or vague (letting the data speak).</li>
-<li>The <strong>posterior</strong> is your updated belief. It’s a full distribution, not just a point estimate — you get a complete picture of uncertainty.</li>
-<li>With enough data, <strong>the prior doesn’t matter.</strong> All reasonable priors converge to the same posterior. This is reassuring: Bayesian inference isn’t “subjective” in the long run.</li>
-<li>The <strong>credible interval</strong> has the interpretation people <em>want</em> from a confidence interval: “There’s a 95% probability that <span class="math inline">\(\theta\)</span> is in this interval.” But this requires accepting the Bayesian framework (and a prior).</li>
-</ul>
+<section id="hamiltonian-monte-carlo-newtonian-sampling" class="level2">
+<h2 class="anchored" data-anchor-id="hamiltonian-monte-carlo-newtonian-sampling">Hamiltonian Monte Carlo: Newtonian sampling</h2>
+<p>Simulated annealing finds a single point. To get the <em>whole</em> posterior you need samples. The dominant modern sampler is <strong>Hamiltonian Monte Carlo</strong> (Duane et al.&nbsp;1987, originally developed for lattice QCD), and it’s even more directly physical than simulated annealing.</p>
+<p>The recipe:</p>
+<ol type="1">
+<li>Introduce a fictitious <strong>momentum variable</strong> <span class="math inline">\(p\)</span> alongside the parameter <span class="math inline">\(\theta\)</span>. Give it a kinetic-energy density <span class="math inline">\(K(p) = \tfrac{1}{2} p^\top M^{-1} p\)</span> for some mass matrix <span class="math inline">\(M\)</span> (usually identity).</li>
+<li>The total <strong>Hamiltonian</strong> is <span class="math display">\[
+H(\theta, p) \;=\; E(\theta) + K(p) \;=\; -\log p(\theta \mid \text{data}) + \tfrac{1}{2} p^\top M^{-1} p.
+\]</span></li>
+<li>To propose a new sample: sample momentum <span class="math inline">\(p \sim \mathcal{N}(0, M)\)</span>, then <strong>simulate Hamilton’s equations of motion</strong> numerically for some short trajectory using leapfrog integration (also borrowed from molecular dynamics).</li>
+<li>Accept or reject the endpoint using Metropolis–Hastings on the joint energy <span class="math inline">\(H\)</span>.</li>
+</ol>
+<p>Geometrically, you’re rolling a frictionless ball along the negative log-posterior surface. The ball can climb hills (use kinetic energy to surmount barriers) and roll across long flat valleys without random-walk dithering. That makes HMC dramatically more efficient than Metropolis–Hastings in high-dimensional, correlated posteriors.</p>
+<p>The No-U-Turn Sampler (NUTS) inside Stan and PyMC is HMC with an automated stop rule for trajectory length. Every modern Bayesian regression you fit is ultimately solving a physics problem.</p>
+<p>See <a href="../bayesian-inference/mcmc.html">MCMC</a> for the broader sampling landscape.</p>
 </section>
+<section id="variational-inference-free-energy-minimization" class="level2">
+<h2 class="anchored" data-anchor-id="variational-inference-free-energy-minimization">Variational inference: free-energy minimization</h2>
+<p>When MCMC is too slow, the alternative is <strong>variational inference (VI)</strong>: approximate the true posterior <span class="math inline">\(p(\theta \mid x)\)</span> by a simpler distribution <span class="math inline">\(q(\theta)\)</span> chosen from a tractable family. The VI objective is</p>
+<p><span class="math display">\[
+\mathcal{L}(q) \;=\; \mathbb{E}_q\!\bigl[\,-\log p(x, \theta)\,\bigr] \;-\; H(q),
+\]</span></p>
+<p>where <span class="math inline">\(H(q) = -\mathbb{E}_q[\log q(\theta)]\)</span> is the entropy of <span class="math inline">\(q\)</span>. This is <strong>exactly</strong> the Helmholtz free energy</p>
+<p><span class="math display">\[
+F \;=\; U \;-\; T S
+\]</span></p>
+<p>from thermodynamics — internal energy minus temperature times entropy (with <span class="math inline">\(T=1\)</span>). Minimizing the variational objective is minimizing free energy, the central principle of equilibrium statistical mechanics.</p>
+<p>The most common VI choice — assume the variational distribution factorizes, <span class="math inline">\(q(\theta) = \prod_i q_i(\theta_i)\)</span> — is the <strong>mean-field approximation</strong>, originally developed by Pierre Weiss (1907) for ferromagnetic systems. The modern mean-field VI updates derived by Beal and Ghahramani in the 2000s are mathematically the same equations physicists had been writing since World War I.</p>
 </section>
-<section id="how-the-pieces-fit-together" class="level2">
-<h2 class="anchored" data-anchor-id="how-the-pieces-fit-together">How the pieces fit together</h2>
-<p>People sometimes use <em>updating</em>, <em>estimation</em>, and <em>inference</em> interchangeably. They’re related but distinct:</p>
-<div class="cell" data-fig-width="7" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    INF("&lt;b&gt;Bayesian Inference&lt;/b&gt;&lt;br/&gt;&lt;i&gt;The whole framework&lt;/i&gt;")
-    UPD("&lt;b&gt;Updating&lt;/b&gt;&lt;br/&gt;Prior × Likelihood → Posterior&lt;br/&gt;&lt;i&gt;this page&lt;/i&gt;")
-    EST("&lt;b&gt;Estimation&lt;/b&gt;&lt;br/&gt;Posterior → point estimates&lt;br/&gt;MAP · posterior mean")
-    UNC("&lt;b&gt;Uncertainty&lt;/b&gt;&lt;br/&gt;Posterior → credible intervals")
-    PRED("&lt;b&gt;Prediction&lt;/b&gt;&lt;br/&gt;Posterior → forecasts")
-
-    INF --&gt; UPD
-    UPD --&gt; EST
-    UPD --&gt; UNC
-    UPD --&gt; PRED
-
-    style INF fill:#2c3e50,color:#fff,stroke:#2c3e50
-    style UPD fill:#3498db,color:#fff,stroke:#3498db
-    style EST fill:#27ae60,color:#fff,stroke:#27ae60
-    style UNC fill:#8e44ad,color:#fff,stroke:#8e44ad
-    style PRED fill:#e67e22,color:#fff,stroke:#e67e22
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
+<section id="why-this-matters-for-econometrics" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-matters-for-econometrics">Why this matters for econometrics</h2>
+<p>Three takeaways for someone who fits regressions for a living:</p>
+<p><strong>1. Multimodality is a real risk and there are physics tools for it.</strong> Most econometric estimators assume the objective surface is convex — a single global optimum. When it isn’t (mixture models, nonlinear systems, structural models with multiple equilibria), the “energy landscape” framing gives you a vocabulary and a toolbox. Simulated annealing, parallel tempering, and HMC-with-restarts come straight from this tradition.</p>
+<p><strong>2. Modern Bayesian software is doing Newtonian mechanics.</strong> When PyMC, Stan, or NumPyro samples from a posterior, the engine inside is HMC/NUTS — literally simulating ball-on-landscape physics. Knowing this changes how you diagnose problems: divergent transitions usually mean the leapfrog stepsize is too large for the curvature of your posterior, a problem that’s instantly intuitive once you picture a fast ball overshooting a sharp valley.</p>
+<p><strong>3. Variational methods are free-energy minimization.</strong> When you fit a variational autoencoder, a topic model, or a fast Bayesian neural net, you are minimizing the same Helmholtz free energy that statistical physicists have been minimizing since the 1870s. The reason VI sometimes underestimates posterior variance is the same reason mean-field theory misses correlations in spin glasses. The known limitations of physics models map directly onto the known limitations of variational Bayes.</p>
+<p>The bridge runs both ways. Bayesian inference inherits the algorithms and intuitions of statistical mechanics. The same mathematical structure that governs gas molecules in a box governs the posterior over the parameters of a hedonic regression. Once you see it, it’s hard to unsee.</p>
+</section>
+<section id="did-you-know" class="level2">
+<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
 <ul>
-<li><strong>Inference</strong> is the umbrella — the entire Bayesian approach to learning from data.</li>
-<li><strong>Updating</strong> is the engine inside: take a prior, combine it with the likelihood, get a posterior. That’s what the simulations above demonstrate.</li>
-<li><strong>Estimation</strong> takes the posterior and extracts a single “best guess” — the MAP (the peak) or the posterior mean (the center of mass). With a flat prior, MAP reduces to <a href="maximum-likelihood.html">MLE</a>. With a normal prior, MAP gives you ridge regression. This is covered in <a href="bayesian-estimation.html">Bayesian Estimation</a>.</li>
-<li><strong>Uncertainty</strong> and <strong>prediction</strong> also flow from the posterior — credible intervals, posterior predictive checks, and forecasting all start from the same updated distribution.</li>
-</ul>
-<p>The key insight: <strong>updating comes first.</strong> You can’t estimate or quantify uncertainty until you have a posterior. Everything downstream depends on the prior-to-posterior step.</p>
-<hr>
-<section id="did-you-know" class="level3">
-<h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
-<ul>
-<li><strong>Thomas Bayes</strong> was an English Presbyterian minister who never published his theorem. His friend <strong>Richard Price</strong> found the manuscript after Bayes’ death and published it in 1763 as “An Essay towards solving a Problem in the Doctrine of Chances.” Bayes’ original example was essentially the coin flipping problem in this simulation.</li>
-<li>Bayesian methods were largely abandoned in the 20th century because they were <strong>computationally intractable</strong> — computing posteriors for realistic problems required integrals that couldn’t be solved analytically. The revival came with <strong>Markov Chain Monte Carlo (MCMC)</strong> algorithms in the 1990s, which made it possible to <em>sample</em> from posteriors instead of computing them exactly.</li>
-<li><strong>Pierre-Simon Laplace</strong> independently discovered Bayes’ theorem and used it extensively — including to estimate the mass of Saturn, the probability that the sun would rise tomorrow, and the bias of a coin. Laplace was arguably the first true Bayesian; Bayes himself only scratched the surface.</li>
-<li>This page is a teaser. The full Bayesian course covers MCMC, hierarchical models, prior selection, and model comparison in depth.</li>
+<li>The Metropolis algorithm was developed in 1953 for simulating equation of state for a system of interacting hard spheres on MANIAC I, the Los Alamos computer. The five authors — Metropolis, the Rosenbluths, and the Tellers — were a mix of physicists, applied mathematicians, and computer pioneers. Bayesian statisticians didn’t widely adopt the method until Gelfand &amp; Smith (1990).</li>
+<li>Edwin Jaynes argued in the 1950s and 60s that statistical mechanics is <em>itself</em> an application of Bayesian inference — the Boltzmann distribution is the maximum-entropy distribution consistent with an expected-energy constraint. So in Jaynes’s view, the connection isn’t that Bayesian inference borrowed from physics; it’s that physics was Bayesian inference all along and didn’t realize it.</li>
+<li>The “free energy principle” in computational neuroscience (Karl Friston) proposes that the brain itself is doing variational free energy minimization in real time. Whether or not you find that convincing, the fact that someone could make the argument tells you how transferable the free-energy framework is.</li>
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
