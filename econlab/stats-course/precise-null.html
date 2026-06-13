@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Residuals &amp; Controls – Foundations of Statistical Inference</title>
+<title>Precise null vs.&nbsp;underpowered – Foundations of Statistical Inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -125,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cef.html">Regression</a></li><li class="breadcrumb-item"><a href="./residuals.html">Residuals &amp; Controls</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./precise-null.html">Precise Null vs.&nbsp;Underpowered</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -238,7 +238,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./precise-null.html" class="sidebar-item-text sidebar-link">
+  <a href="./precise-null.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Precise Null vs.&nbsp;Underpowered</span></a>
   </div>
 </li>
@@ -285,7 +285,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./residuals.html" class="sidebar-item-text sidebar-link active">
+  <a href="./residuals.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Residuals &amp; Controls</span></a>
   </div>
 </li>
@@ -483,31 +483,22 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-is-a-residual" id="toc-what-is-a-residual" class="nav-link active" data-scroll-target="#what-is-a-residual">What is a residual?</a></li>
-  <li><a href="#residuals-and-the-cef" id="toc-residuals-and-the-cef" class="nav-link" data-scroll-target="#residuals-and-the-cef">Residuals and the CEF</a>
-  <ul class="collapse">
-  <li><a href="#reading-the-three-panels" id="toc-reading-the-three-panels" class="nav-link" data-scroll-target="#reading-the-three-panels">Reading the three panels</a></li>
-  </ul></li>
-  <li><a href="#residuals-vs-fitted-vs-residuals-vs-x" id="toc-residuals-vs-fitted-vs-residuals-vs-x" class="nav-link" data-scroll-target="#residuals-vs-fitted-vs-residuals-vs-x">Residuals vs Fitted vs Residuals vs X</a>
-  <ul class="collapse">
-  <li><a href="#what-the-patterns-mean" id="toc-what-the-patterns-mean" class="nav-link" data-scroll-target="#what-the-patterns-mean">What the patterns mean</a></li>
-  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
-  <li><a href="#in-practice" id="toc-in-practice" class="nav-link" data-scroll-target="#in-practice">In practice</a></li>
-  </ul></li>
-  <li><a href="#controls-and-residuals" id="toc-controls-and-residuals" class="nav-link" data-scroll-target="#controls-and-residuals">Controls and residuals</a>
-  <ul class="collapse">
-  <li><a href="#things-to-try-1" id="toc-things-to-try-1" class="nav-link" data-scroll-target="#things-to-try-1">Things to try</a></li>
+  <li><a href="#the-conceptual-problem" id="toc-the-conceptual-problem" class="nav-link active" data-scroll-target="#the-conceptual-problem">The conceptual problem</a></li>
+  <li><a href="#tost-turn-the-question-around" id="toc-tost-turn-the-question-around" class="nav-link" data-scroll-target="#tost-turn-the-question-around">TOST: turn the question around</a></li>
+  <li><a href="#the-ci-against-sesoi-shortcut" id="toc-the-ci-against-sesoi-shortcut" class="nav-link" data-scroll-target="#the-ci-against-sesoi-shortcut">The CI-against-SESOI shortcut</a></li>
+  <li><a href="#the-bayesian-alternative" id="toc-the-bayesian-alternative" class="nav-link" data-scroll-target="#the-bayesian-alternative">The Bayesian alternative</a></li>
+  <li><a href="#what-not-to-do-post-hoc-power" id="toc-what-not-to-do-post-hoc-power" class="nav-link" data-scroll-target="#what-not-to-do-post-hoc-power">What not to do: post-hoc power</a></li>
+  <li><a href="#how-to-report" id="toc-how-to-report" class="nav-link" data-scroll-target="#how-to-report">How to report</a></li>
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cef.html">Regression</a></li><li class="breadcrumb-item"><a href="./residuals.html">Residuals &amp; Controls</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pvalues-ci.html">Inference</a></li><li class="breadcrumb-item"><a href="./precise-null.html">Precise Null vs.&nbsp;Underpowered</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Residuals &amp; Controls</h1>
+<h1 class="title">Precise null vs.&nbsp;underpowered</h1>
 </div>
 
 
@@ -524,544 +515,215 @@ window.Quarto = {
 </header>
 
 
-<section id="what-is-a-residual" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-a-residual">What is a residual?</h2>
-<p>A residual is what’s <strong>left over</strong> after your model has done its best:</p>
-<p><span class="math display">\[e_i = Y_i - \hat{Y}_i\]</span></p>
-<p>It’s the vertical distance between the actual data point and the regression line. If your model is good, residuals should look like random noise — no patterns, no structure.</p>
-<p>If the residuals <em>do</em> have structure, your model is missing something. This is the single most important diagnostic in regression.</p>
+<p>A nonsignificant result is ambiguous. It could mean <strong>the effect is truly close to zero</strong> — a <em>precise null</em>. Or it could mean <strong>your study didn’t have enough power to detect any effect of interest</strong> — <em>underpowered</em>. Standard significance testing doesn’t tell you which one you have, because both produce the same “fail to reject <span class="math inline">\(H_0\)</span>” verdict.</p>
+<p>This page is about how to actually distinguish them, and which standard tools the literature uses to do so. The short version: don’t read “no effect” from a nonsignificant result alone. Pre-specify a <strong>smallest effect size of interest</strong> (SESOI), then ask whether your confidence interval rules out everything outside that band. If it does, you have a precise null. If it doesn’t, you’re underpowered relative to that question.</p>
+<section id="the-conceptual-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-conceptual-problem">The conceptual problem</h2>
+<p>The classical Neyman-Pearson framework is asymmetric: a small p-value is <em>evidence</em> that the null is wrong, but a large p-value is <em>not</em> evidence that the null is right. It’s the <em>absence</em> of evidence either way. So a p-value of 0.32 leaves you stranded — you can’t conclude there’s an effect, but you also can’t conclude there isn’t.</p>
+<p>The asymmetry comes from how the null is set up. The standard null is a point: <span class="math inline">\(H_0: \beta = 0\)</span>. Failure to reject it could happen because <span class="math inline">\(\beta\)</span> is exactly zero, or because <span class="math inline">\(\beta\)</span> is small but nonzero, or because <span class="math inline">\(\beta\)</span> is large but your sample is too small to detect it. The data don’t distinguish these cases unless you bring extra information to the analysis — namely, what counts as a substantively meaningful effect.</p>
 </section>
-<section id="residuals-and-the-cef" class="level2">
-<h2 class="anchored" data-anchor-id="residuals-and-the-cef">Residuals and the CEF</h2>
-<p>Recall from the <a href="cef.html">CEF page</a>: OLS is the best <em>linear</em> approximation to <span class="math inline">\(E[Y \mid X]\)</span>. When the CEF is nonlinear, the residuals absorb the nonlinearity. That’s why a curved pattern in the residual plot signals model misspecification — the residuals are doing the work the model should be doing.</p>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>The Oracle View.</strong> In these simulations, we set the true DGP — including any omitted variables and the true functional form. We can see exactly what the residuals are “absorbing.” In practice, you don’t know what’s missing from your model. Residual diagnostics are your flashlight in the dark.</p>
-</div>
-</div>
-</div>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 600
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .info-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.8;
-    }
-    .info-box b { color: #2c3e50; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      selectInput("dgp", "True relationship:",
-                  choices = c("Linear (correct spec)",
-                              "Quadratic (misspecified)",
-                              "Heteroskedastic",
-                              "Outliers")),
-
-      sliderInput("n", "Sample size:",
-                  min = 50, max = 500, value = 200, step = 50),
-
-      sliderInput("sigma", "Noise (SD):",
-                  min = 0.5, max = 4, value = 1.5, step = 0.5),
-
-      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
-
-      uiOutput("info")
-    ),
-
-    mainPanel(
-      width = 9,
-      fluidRow(
-        column(4, plotOutput("scatter", height = "380px")),
-        column(4, plotOutput("resid_fitted", height = "380px")),
-        column(4, plotOutput("resid_hist", height = "380px"))
-      )
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  dat &lt;- reactive({
-    input$go
-    n     &lt;- input$n
-    sigma &lt;- input$sigma
-    dgp   &lt;- input$dgp
-
-    x &lt;- runif(n, -3, 5)
-
-    if (dgp == "Linear (correct spec)") {
-      y &lt;- 2 + 1.5 * x + rnorm(n, sd = sigma)
-    } else if (dgp == "Quadratic (misspecified)") {
-      y &lt;- 1 + 0.5 * x - 0.3 * x^2 + rnorm(n, sd = sigma)
-    } else if (dgp == "Heteroskedastic") {
-      y &lt;- 2 + 1.5 * x + rnorm(n, sd = sigma * (0.3 + 0.4 * abs(x)))
-    } else {
-      y &lt;- 2 + 1.5 * x + rnorm(n, sd = sigma)
-      # Add outliers
-      outlier_idx &lt;- sample(n, 5)
-      y[outlier_idx] &lt;- y[outlier_idx] + sample(c(-1, 1), 5, replace = TRUE) * 8
-    }
-
-    fit &lt;- lm(y ~ x)
-    list(x = x, y = y, fit = fit, dgp = dgp)
-  })
-
-  output$scatter &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
-    plot(d$x, d$y, pch = 16, col = "#3498db80", cex = 0.7,
-         xlab = "X", ylab = "Y", main = "Data + OLS fit")
-    abline(d$fit, col = "#e74c3c", lwd = 2.5)
-  })
-
-  output$resid_fitted &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    r  &lt;- resid(d$fit)
-    fv &lt;- fitted(d$fit)
-
-    plot(fv, r, pch = 16, col = "#9b59b680", cex = 0.7,
-         xlab = "Fitted values", ylab = "Residuals",
-         main = "Residuals vs Fitted")
-    abline(h = 0, lty = 2, col = "gray40", lwd = 1.5)
-
-    lo &lt;- loess(r ~ fv)
-    ox &lt;- order(fv)
-    lines(fv[ox], predict(lo)[ox], col = "#e74c3c", lwd = 2)
-  })
-
-  output$resid_hist &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    r &lt;- resid(d$fit)
-    hist(r, breaks = 30, probability = TRUE,
-         col = "#dae8fc", border = "#6c8ebf",
-         main = "Residual Distribution",
-         xlab = "Residuals", ylab = "Density")
-    x_seq &lt;- seq(min(r), max(r), length.out = 200)
-    lines(x_seq, dnorm(x_seq, mean = 0, sd = sd(r)),
-          col = "#e74c3c", lwd = 2)
-  })
-
-  output$info &lt;- renderUI({
-    d &lt;- dat()
-    r &lt;- resid(d$fit)
-
-    msg &lt;- switch(d$dgp,
-      "Linear (correct spec)" =
-        "Residuals look like random noise. No patterns in the residual plot. The model is correctly specified.",
-      "Quadratic (misspecified)" =
-        "U-shaped pattern in residuals! The LOESS curve bends, revealing the quadratic structure OLS is missing.",
-      "Heteroskedastic" =
-        "Fan shape: residuals spread out as fitted values increase. The variance isn't constant (heteroskedasticity).",
-      "Outliers" =
-        "A few points have huge residuals. Check the histogram for heavy tails. These points have outsized influence on the fit."
-    )
-
-    tags$div(class = "info-box", HTML(paste0("&lt;b&gt;Diagnosis:&lt;/b&gt;&lt;br&gt;", msg)))
-  })
-}
-
-shinyApp(ui, server)</code></pre>
-<section id="reading-the-three-panels" class="level3">
-<h3 class="anchored" data-anchor-id="reading-the-three-panels">Reading the three panels</h3>
-<ol type="1">
-<li><strong>Left — Scatter + fit:</strong> does the line follow the data?</li>
-<li><strong>Middle — Residuals vs fitted:</strong> the key diagnostic. If you see a pattern (curve, fan, clusters), your model is missing something.</li>
-<li><strong>Right — Residual histogram:</strong> should look roughly normal and centered at 0. Heavy tails or skew signal problems.</li>
-</ol>
-<p>Switch between the four DGPs above and learn to recognize each pattern — you’ll see these in every applied paper you read.</p>
-<hr>
+<section id="tost-turn-the-question-around" class="level2">
+<h2 class="anchored" data-anchor-id="tost-turn-the-question-around">TOST: turn the question around</h2>
+<p><strong>Equivalence testing</strong> — also called the <strong>two one-sided tests (TOST)</strong> procedure — flips the null. Instead of asking <em>“is the effect zero?”</em>, it asks <em>“is the effect inside a band that’s small enough to be practically zero?”</em></p>
+<p>You pre-specify equivalence bounds <span class="math inline">\(\pm\delta\)</span> representing the smallest effect size of substantive interest (SESOI). Then you run <strong>two</strong> one-sided tests:</p>
+<p><span class="math display">\[
+H_{0,L}: \beta \leq -\delta \qquad \text{vs.} \qquad H_{1,L}: \beta &gt; -\delta
+\]</span> <span class="math display">\[
+H_{0,U}: \beta \geq +\delta \qquad \text{vs.} \qquad H_{1,U}: \beta &lt; +\delta
+\]</span></p>
+<p>If you reject <strong>both</strong> at the <span class="math inline">\(\alpha\)</span> level (so the 100(1−2α)% CI lies entirely inside <span class="math inline">\((-\delta, +\delta)\)</span>), you’ve established <strong>equivalence</strong>: the effect is too small to matter. That’s a positive claim — <em>“the data support a null effect”</em> — not just a failure to reject.</p>
+<p>If you can’t reject both, you’re either truly null but your sample isn’t big enough, or there really is an effect inside the equivalence band. Either way, <strong>inconclusive</strong>.</p>
+<p>The accessible reference is <a href="https://doi.org/10.1177/1948550617697177">Lakens (2017)</a> <em>Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses</em> in <em>Social Psychological and Personality Science</em>. He maintains the <strong>TOSTER</strong> R package.</p>
 </section>
-</section>
-<section id="residuals-vs-fitted-vs-residuals-vs-x" class="level2">
-<h2 class="anchored" data-anchor-id="residuals-vs-fitted-vs-residuals-vs-x">Residuals vs Fitted vs Residuals vs X</h2>
-<p>The app above plots residuals against <span class="math inline">\(\hat{Y}\)</span> (fitted values). But you should also plot residuals against each explanatory variable <span class="math inline">\(X_k\)</span>. These two plots answer <strong>different questions</strong>:</p>
+<section id="the-ci-against-sesoi-shortcut" class="level2">
+<h2 class="anchored" data-anchor-id="the-ci-against-sesoi-shortcut">The CI-against-SESOI shortcut</h2>
+<p>TOST has a clean visual equivalent. Draw the 95% CI for your effect, then draw the equivalence bounds <span class="math inline">\(\pm\delta\)</span> as a second band. There are exactly three pictures:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 18%">
-<col style="width: 24%">
-<col style="width: 57%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Plot</th>
-<th>X-axis</th>
-<th>What it diagnoses</th>
+<th>Picture</th>
+<th>Verdict</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Residuals vs <span class="math inline">\(\hat{Y}\)</span></td>
-<td>Predicted value</td>
-<td>Overall model misspecification</td>
+<td>CI is entirely inside <span class="math inline">\((-\delta, +\delta)\)</span></td>
+<td><strong>Precise null.</strong> Equivalent to the TOST rejecting both equivalence-null hypotheses at <span class="math inline">\(\alpha\)</span>. The effect, even at the edge of the CI, is too small to matter.</td>
 </tr>
 <tr class="even">
-<td>Residuals vs <span class="math inline">\(X_k\)</span></td>
-<td>Explanatory variable</td>
-<td>Whether the <span class="math inline">\(X_k\)</span> relationship is correctly specified</td>
+<td>CI excludes 0 and stretches outside <span class="math inline">\((-\delta, +\delta)\)</span></td>
+<td><strong>Detected effect.</strong> Standard significance, plus the magnitude is substantive.</td>
+</tr>
+<tr class="odd">
+<td>CI includes 0 <em>and</em> extends past <span class="math inline">\(\pm\delta\)</span> in at least one direction</td>
+<td><strong>Underpowered (or inconclusive).</strong> Effects of policy-relevant size are still inside your interval. The data don’t pin the truth down.</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Why the distinction matters.</strong> With one regressor, fitted values are just a linear rescaling of <span class="math inline">\(X\)</span>, so the two plots look identical. With multiple regressors, <span class="math inline">\(\hat{Y}\)</span> blends all the <span class="math inline">\(X\)</span>’s together. A problem with <em>one</em> variable’s functional form may be hard to spot in the residuals-vs-fitted plot but jumps out when you plot residuals against that specific <span class="math inline">\(X\)</span>.</p>
-<p>The residuals-vs-<span class="math inline">\(X\)</span> plot directly tests the key OLS assumption:</p>
-<p><span class="math display">\[E[\varepsilon \mid X] = 0\]</span></p>
-<p>If residuals trend or curve against <span class="math inline">\(X_k\)</span>, this assumption is violated for that variable.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 600
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .info-box2 {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.8;
-    }
-    .info-box2 b { color: #2c3e50; }
-    .good { color: #27ae60; font-weight: bold; }
-    .bad  { color: #e74c3c; font-weight: bold; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      selectInput("scenario", "Scenario:",
-                  choices = c("Both linear (correct)",
-                              "X2 quadratic (misspecified)",
-                              "Heteroskedastic in X1",
-                              "Omitted variable (corr with X1)")),
-
-      sliderInput("n2", "Sample size:",
-                  min = 100, max = 500, value = 300, step = 50),
-
-      actionButton("go2", "New draw", class = "btn-primary", width = "100%"),
-
-      uiOutput("info2")
-    ),
-
-    mainPanel(
-      width = 9,
-      fluidRow(
-        column(4, plotOutput("resid_fitted2", height = "380px")),
-        column(4, plotOutput("resid_x1", height = "380px")),
-        column(4, plotOutput("resid_x2", height = "380px"))
-      )
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  dat2 &lt;- reactive({
-    input$go2
-    n &lt;- input$n2
-    scenario &lt;- input$scenario
-
-    x1 &lt;- rnorm(n, 0, 2)
-    x2 &lt;- rnorm(n, 0, 2)
-
-    if (scenario == "Both linear (correct)") {
-      y &lt;- 1 + 0.8 * x1 + 1.2 * x2 + rnorm(n, sd = 1.5)
-    } else if (scenario == "X2 quadratic (misspecified)") {
-      y &lt;- 1 + 0.8 * x1 + 0.5 * x2 + 0.4 * x2^2 + rnorm(n, sd = 1.5)
-    } else if (scenario == "Heteroskedastic in X1") {
-      y &lt;- 1 + 0.8 * x1 + 1.2 * x2 + rnorm(n, sd = 0.5 + 0.5 * abs(x1))
-    } else {
-      z &lt;- 0.7 * x1 + rnorm(n, sd = 1)
-      y &lt;- 1 + 0.3 * x1 + 1.2 * x2 + 2 * z + rnorm(n, sd = 1.5)
-    }
-
-    fit &lt;- lm(y ~ x1 + x2)
-    list(x1 = x1, x2 = x2, y = y, fit = fit, scenario = scenario)
-  })
-
-  make_resid_plot &lt;- function(xvar, r, xlab, title, col) {
-    plot(xvar, r, pch = 16, col = col, cex = 0.6,
-         xlab = xlab, ylab = "Residuals", main = title)
-    abline(h = 0, lty = 2, col = "gray40", lwd = 1.5)
-    lo &lt;- loess(r ~ xvar)
-    ox &lt;- order(xvar)
-    lines(xvar[ox], predict(lo)[ox], col = "#e74c3c", lwd = 2)
-  }
-
-  output$resid_fitted2 &lt;- renderPlot({
-    d &lt;- dat2()
-    par(mar = c(4.5, 4.5, 3, 1))
-    r &lt;- resid(d$fit); fv &lt;- fitted(d$fit)
-    make_resid_plot(fv, r, "Fitted values",
-                    expression("Residuals vs " * hat(Y)), "#9b59b680")
-  })
-
-  output$resid_x1 &lt;- renderPlot({
-    d &lt;- dat2()
-    par(mar = c(4.5, 4.5, 3, 1))
-    make_resid_plot(d$x1, resid(d$fit), expression(X[1]),
-                    expression("Residuals vs " * X[1]), "#3498db80")
-  })
-
-  output$resid_x2 &lt;- renderPlot({
-    d &lt;- dat2()
-    par(mar = c(4.5, 4.5, 3, 1))
-    make_resid_plot(d$x2, resid(d$fit), expression(X[2]),
-                    expression("Residuals vs " * X[2]), "#e67e2280")
-  })
-
-  output$info2 &lt;- renderUI({
-    d &lt;- dat2()
-
-    msg &lt;- switch(d$scenario,
-      "Both linear (correct)" =
-        "All three plots: &lt;span class='good'&gt;random scatter&lt;/span&gt;. The LOESS curves stay near zero. Model is correctly specified.",
-      "X2 quadratic (misspecified)" =
-        "Residuals vs X&lt;sub&gt;2&lt;/sub&gt;: &lt;span class='bad'&gt;clear U-shape&lt;/span&gt; — the missing X&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt; term. Residuals vs X&lt;sub&gt;1&lt;/sub&gt;: clean. Residuals vs fitted: pattern present but harder to attribute to a specific variable.",
-      "Heteroskedastic in X1" =
-        "Residuals vs X&lt;sub&gt;1&lt;/sub&gt;: &lt;span class='bad'&gt;fan shape&lt;/span&gt; — variance grows with |X&lt;sub&gt;1&lt;/sub&gt;|. Residuals vs X&lt;sub&gt;2&lt;/sub&gt;: no fan. The fitted-values plot shows spreading too, but doesn't tell you &lt;em&gt;which&lt;/em&gt; variable causes it.",
-      "Omitted variable (corr with X1)" =
-        "Residuals vs X&lt;sub&gt;1&lt;/sub&gt;: &lt;span class='bad'&gt;upward trend&lt;/span&gt; — the omitted Z is correlated with X&lt;sub&gt;1&lt;/sub&gt;, so E[&amp;epsilon;|X&lt;sub&gt;1&lt;/sub&gt;] &amp;ne; 0. Residuals vs X&lt;sub&gt;2&lt;/sub&gt;: clean (Z is uncorrelated with X&lt;sub&gt;2&lt;/sub&gt;)."
-    )
-
-    tags$div(class = "info-box2", HTML(msg))
-  })
-}
-
-shinyApp(ui, server)</code></pre>
-<section id="what-the-patterns-mean" class="level3">
-<h3 class="anchored" data-anchor-id="what-the-patterns-mean">What the patterns mean</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 51%">
-<col style="width: 26%">
-<col style="width: 21%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Pattern in residuals</th>
-<th>Diagnosis</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Random scatter around zero</td>
-<td>Correctly specified</td>
-<td>—</td>
-</tr>
-<tr class="even">
-<td>U-shape / curve</td>
-<td>Missing nonlinear term</td>
-<td>True model has <span class="math inline">\(X^2\)</span> but you fit only <span class="math inline">\(X\)</span></td>
-</tr>
-<tr class="odd">
-<td>Fan / funnel</td>
-<td>Heteroskedasticity</td>
-<td>Variance of <span class="math inline">\(\varepsilon\)</span> depends on <span class="math inline">\(X\)</span></td>
-</tr>
-<tr class="even">
-<td>Linear trend</td>
-<td>Omitted variable correlated with <span class="math inline">\(X\)</span></td>
-<td><span class="math inline">\(E[\varepsilon \mid X] \neq 0\)</span></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="things-to-try" class="level3">
-<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
-<ul>
-<li><strong>“X2 quadratic”:</strong> the U-shape shows up clearly in Residuals vs <span class="math inline">\(X_2\)</span> but is muddled in Residuals vs <span class="math inline">\(\hat{Y}\)</span>. Residuals vs <span class="math inline">\(X_1\)</span> stays clean — the problem is with <span class="math inline">\(X_2\)</span>’s functional form, not <span class="math inline">\(X_1\)</span>’s.</li>
-<li><strong>“Heteroskedastic in X1”:</strong> the fan opens up against <span class="math inline">\(X_1\)</span> but not <span class="math inline">\(X_2\)</span>. The fitted-values plot shows a fan too but can’t pinpoint the source.</li>
-<li><strong>“Omitted variable”:</strong> residuals trend upward against <span class="math inline">\(X_1\)</span> because the omitted <span class="math inline">\(Z\)</span> is correlated with <span class="math inline">\(X_1\)</span>. <span class="math inline">\(X_2\)</span> is unaffected.</li>
-</ul>
-</section>
-<section id="in-practice" class="level3">
-<h3 class="anchored" data-anchor-id="in-practice">In practice</h3>
-<p>Most applied researchers follow this workflow:</p>
-<ol type="1">
-<li><strong>Residuals vs fitted</strong> — general health check for the overall model</li>
-<li><strong>Residuals vs each <span class="math inline">\(X\)</span></strong> — pinpoint which variable’s relationship is wrong</li>
-</ol>
-<hr>
-</section>
-</section>
-<section id="controls-and-residuals" class="level2">
-<h2 class="anchored" data-anchor-id="controls-and-residuals">Controls and residuals</h2>
-<p>When you “control for” a variable in a regression, what you’re really doing is <strong>removing its influence via residuals</strong>. This is the Frisch-Waugh-Lovell theorem in action (see the <a href="fwl.html">FWL page</a>).</p>
-<p>Adding <span class="math inline">\(X_2\)</span> as a control means:</p>
-<ol type="1">
-<li>Regress <span class="math inline">\(Y\)</span> on <span class="math inline">\(X_2\)</span> → residuals <span class="math inline">\(\tilde{Y}\)</span> (variation in <span class="math inline">\(Y\)</span> not explained by <span class="math inline">\(X_2\)</span>)</li>
-<li>Regress <span class="math inline">\(X_1\)</span> on <span class="math inline">\(X_2\)</span> → residuals <span class="math inline">\(\tilde{X}_1\)</span> (variation in <span class="math inline">\(X_1\)</span> not explained by <span class="math inline">\(X_2\)</span>)</li>
-<li>Regress <span class="math inline">\(\tilde{Y}\)</span> on <span class="math inline">\(\tilde{X}_1\)</span> → the coefficient is <span class="math inline">\(\hat{\beta}_1\)</span></li>
-</ol>
-<p><strong>“Controlling for <span class="math inline">\(X_2\)</span>”</strong> = looking at the relationship between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X_1\)</span> after removing what <span class="math inline">\(X_2\)</span> explains about each.</p>
+<p>The headline: <strong>the precision of your study is the width of your CI, and “precise” is defined relative to a pre-specified SESOI.</strong> Whether you have a precise null isn’t a property of <span class="math inline">\(\hat\beta\)</span> alone; it’s a joint property of <span class="math inline">\(\hat\beta\)</span>, <span class="math inline">\(\text{SE}(\hat\beta)\)</span>, and <span class="math inline">\(\delta\)</span>.</p>
+<p>The simulation below shows how this works. Drag the standard error and the SESOI and watch the same point estimate cycle between verdicts.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 580
 
 library(shiny)
 
 ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
-    }
-    .stats-box b { color: #2c3e50; }
-    .good { color: #27ae60; }
-    .bad  { color: #e74c3c; }
-  "))),
+  titlePanel("Same effect estimate, different verdict"),
 
   sidebarLayout(
     sidebarPanel(
-      width = 3,
-
-      sliderInput("n", "Sample size:", min = 100, max = 500, value = 300, step = 50),
-
-      sliderInput("b1", HTML("True &amp;beta;&lt;sub&gt;1&lt;/sub&gt;:"),
-                  min = -2, max = 3, value = 0.5, step = 0.25),
-
-      sliderInput("b2", HTML("True &amp;beta;&lt;sub&gt;2&lt;/sub&gt; (confounder effect):"),
-                  min = -3, max = 3, value = 2, step = 0.25),
-
-      sliderInput("rho", HTML("Corr(X&lt;sub&gt;1&lt;/sub&gt;, X&lt;sub&gt;2&lt;/sub&gt;):"),
-                  min = -0.9, max = 0.9, value = 0.7, step = 0.1),
-
-      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
-
-      uiOutput("results")
+      width = 4,
+      sliderInput("beta", "Observed effect β̂:",
+                  min = -1, max = 1, value = 0.05, step = 0.01),
+      sliderInput("se", "Standard error SE(β̂):",
+                  min = 0.01, max = 0.6, value = 0.05, step = 0.01),
+      sliderInput("sesoi", "Smallest effect size of interest δ (SESOI):",
+                  min = 0.05, max = 1, value = 0.30, step = 0.05),
+      hr(),
+      htmlOutput("readout")
     ),
-
     mainPanel(
-      width = 9,
-      fluidRow(
-        column(4, plotOutput("raw_plot",  height = "380px")),
-        column(4, plotOutput("ctrl_y",    height = "380px")),
-        column(4, plotOutput("ctrl_both", height = "380px"))
-      )
+      width = 8,
+      plotOutput("ci_plot", height = "480px")
     )
   )
 )
 
 server &lt;- function(input, output, session) {
 
-  dat &lt;- reactive({
-    input$go
-    n   &lt;- input$n
-    b1  &lt;- input$b1
-    b2  &lt;- input$b2
-    rho &lt;- input$rho
+  verdict &lt;- reactive({
+    b   &lt;- input$beta
+    se  &lt;- input$se
+    d   &lt;- input$sesoi
+    ci_lo &lt;- b - 1.96 * se
+    ci_hi &lt;- b + 1.96 * se
 
-    z1 &lt;- rnorm(n)
-    z2 &lt;- rnorm(n)
-    x1 &lt;- z1
-    x2 &lt;- rho * z1 + sqrt(1 - rho^2) * z2
-    y  &lt;- b1 * x1 + b2 * x2 + rnorm(n)
+    excludes_zero      &lt;- (ci_lo &gt; 0) || (ci_hi &lt; 0)
+    ci_inside_band     &lt;- (ci_lo &gt; -d) &amp;&amp; (ci_hi &lt; d)
+    extends_past_sesoi &lt;- (ci_lo &lt; -d) || (ci_hi &gt; d)
 
-    # Without control
-    naive_fit &lt;- lm(y ~ x1)
-    naive_b1 &lt;- coef(naive_fit)[2]
-
-    # With control
-    full_fit &lt;- lm(y ~ x1 + x2)
-    full_b1 &lt;- coef(full_fit)[2]
-
-    # FWL residuals
-    ey &lt;- resid(lm(y ~ x2))
-    ex &lt;- resid(lm(x1 ~ x2))
-
-    list(x1 = x1, x2 = x2, y = y, ey = ey, ex = ex,
-         naive_b1 = naive_b1, full_b1 = full_b1,
-         b1 = b1, b2 = b2, rho = rho)
+    if (ci_inside_band) {
+      v &lt;- "PRECISE NULL"
+      col &lt;- "#27ae60"
+    } else if (excludes_zero) {
+      v &lt;- "DETECTED EFFECT"
+      col &lt;- "#185FA5"
+    } else {
+      v &lt;- "UNDERPOWERED / INCONCLUSIVE"
+      col &lt;- "#c0392b"
+    }
+    list(v = v, col = col, ci_lo = ci_lo, ci_hi = ci_hi,
+         p = 2 * pnorm(-abs(b / se)),
+         p_tost_lower = pnorm((b + d) / se, lower.tail = FALSE),
+         p_tost_upper = pnorm((b - d) / se))
   })
 
-  output$raw_plot &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
-    plot(d$x1, d$y, pch = 16, col = "#3498db60", cex = 0.6,
-         xlab = expression(X[1]), ylab = "Y",
-         main = "No control (omit X2)")
-    abline(lm(d$y ~ d$x1), col = "#e74c3c", lwd = 2.5)
-    legend("topleft", bty = "n", cex = 0.85,
-           legend = paste0("Slope = ", round(d$naive_b1, 3)))
+  output$ci_plot &lt;- renderPlot({
+    r &lt;- verdict()
+    b &lt;- input$beta; d &lt;- input$sesoi
+
+    xlim &lt;- c(min(-1.2, r$ci_lo - 0.1, -d - 0.1),
+              max( 1.2, r$ci_hi + 0.1,  d + 0.1))
+
+    par(mar = c(4, 4, 1.5, 1))
+    plot(NA, xlim = xlim, ylim = c(0, 1.4),
+         xlab = "Effect size", ylab = "", yaxt = "n", main = "")
+
+    # SESOI band
+    rect(-d, 0.1, d, 1.0, col = adjustcolor("#27ae60", 0.10), border = NA)
+    abline(v = c(-d, d), col = "#27ae60", lwd = 2, lty = 2)
+    text(-d, 1.1, expression(-delta), col = "#27ae60", cex = 1.1)
+    text( d, 1.1, expression(+delta), col = "#27ae60", cex = 1.1)
+    text(0, 1.25, "SESOI band (effect 'too small to matter')",
+         col = "#27ae60", cex = 0.95)
+
+    # null
+    abline(v = 0, col = "gray60", lwd = 1, lty = 3)
+
+    # CI bar
+    segments(r$ci_lo, 0.55, r$ci_hi, 0.55, col = r$col, lwd = 5)
+    points(b, 0.55, pch = 19, col = r$col, cex = 1.7)
+    text(b, 0.7, sprintf("β̂ = %.2f", b), col = r$col, cex = 1, pos = 3)
+    text(r$ci_lo, 0.55, sprintf("%.2f", r$ci_lo), col = r$col, cex = 0.9, pos = 1)
+    text(r$ci_hi, 0.55, sprintf("%.2f", r$ci_hi), col = r$col, cex = 0.9, pos = 1)
+    text(b, 0.42, "95% CI", col = r$col, cex = 0.9)
   })
 
-  output$ctrl_y &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
-    plot(d$x1, d$ey, pch = 16, col = "#9b59b660", cex = 0.6,
-         xlab = expression(X[1]),
-         ylab = expression("Residualized Y  (" * tilde(Y) * ")"),
-         main = expression("Remove " * X[2] * " from Y"))
-    abline(h = 0, lty = 2, col = "gray60")
-  })
-
-  output$ctrl_both &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
-    plot(d$ex, d$ey, pch = 16, col = "#27ae6080", cex = 0.6,
-         xlab = expression("Residualized " * X[1] * "  (" * tilde(X)[1] * ")"),
-         ylab = expression("Residualized Y  (" * tilde(Y) * ")"),
-         main = "After controlling for X2")
-    abline(lm(d$ey ~ d$ex), col = "#e74c3c", lwd = 2.5)
-    legend("topleft", bty = "n", cex = 0.85,
-           legend = paste0("Slope = ", round(d$full_b1, 3)))
-  })
-
-  output$results &lt;- renderUI({
-    d &lt;- dat()
-    bias &lt;- d$naive_b1 - d$b1
-
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;True &amp;beta;&lt;sub&gt;1&lt;/sub&gt;:&lt;/b&gt; ", d$b1, "&lt;br&gt;",
-        "&lt;b&gt;Without control:&lt;/b&gt; &lt;span class='bad'&gt;",
-        round(d$naive_b1, 3), "&lt;/span&gt;",
-        " (bias: ", round(bias, 3), ")&lt;br&gt;",
-        "&lt;b&gt;With control:&lt;/b&gt; &lt;span class='good'&gt;",
-        round(d$full_b1, 3), "&lt;/span&gt;&lt;br&gt;",
-        "&lt;hr style='margin:8px 0'&gt;",
-        "&lt;small&gt;Omitted variable bias = &amp;beta;&lt;sub&gt;2&lt;/sub&gt; &amp;times; ",
-        "corr(X&lt;sub&gt;1&lt;/sub&gt;,X&lt;sub&gt;2&lt;/sub&gt;) / ... &lt;br&gt;",
-        "Higher confounding (&amp;beta;&lt;sub&gt;2&lt;/sub&gt;) + higher correlation ",
-        "= more bias when you don't control.&lt;/small&gt;"
-      ))
-    )
+  output$readout &lt;- renderUI({
+    r &lt;- verdict()
+    HTML(sprintf(paste(
+      "&lt;div style='margin-top:10px;font-size:13px;line-height:1.7;'&gt;",
+      "&lt;b&gt;95%% CI:&lt;/b&gt; [%.3f, %.3f]&lt;br&gt;",
+      "&lt;b&gt;SESOI band:&lt;/b&gt; [−%.2f, +%.2f]&lt;br&gt;&lt;br&gt;",
+      "&lt;b&gt;Standard p-value&lt;/b&gt; (H₀: β = 0): %.3f&lt;br&gt;",
+      "&lt;b&gt;TOST p-values&lt;/b&gt; (equivalence): %.3f (lower), %.3f (upper)&lt;br&gt;&lt;br&gt;",
+      "&lt;div style='padding:8px;background:%s;color:white;font-weight:bold;border-radius:4px;text-align:center;'&gt;%s&lt;/div&gt;",
+      "&lt;/div&gt;"
+    ),
+    r$ci_lo, r$ci_hi,
+    input$sesoi, input$sesoi,
+    r$p, r$p_tost_lower, r$p_tost_upper,
+    r$col, r$v))
   })
 }
 
 shinyApp(ui, server)</code></pre>
-<section id="things-to-try-1" class="level3">
-<h3 class="anchored" data-anchor-id="things-to-try-1">Things to try</h3>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Things to try.</strong></p>
 <ul>
-<li><strong>True <span class="math inline">\(\beta_1\)</span> = 0.5, Corr = 0.7, <span class="math inline">\(\beta_2\)</span> = 2:</strong> the naive slope (left panel) is way off because <span class="math inline">\(X_2\)</span> confounds the relationship. The controlled slope (right panel) recovers the truth.</li>
-<li><strong>Set Corr = 0:</strong> no confounding. Both estimates are the same — controls don’t help when there’s nothing to control for.</li>
-<li><strong>Set <span class="math inline">\(\beta_2\)</span> = 0:</strong> same thing. Even if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are correlated, <span class="math inline">\(X_2\)</span> doesn’t affect <span class="math inline">\(Y\)</span>, so omitting it doesn’t bias <span class="math inline">\(\beta_1\)</span>.</li>
-<li><strong>Middle panel:</strong> shows what <span class="math inline">\(Y\)</span> looks like after removing <span class="math inline">\(X_2\)</span>’s contribution. The right panel adds the second step — removing <span class="math inline">\(X_2\)</span> from <span class="math inline">\(X_1\)</span> too — which isolates the <em>independent</em> variation in <span class="math inline">\(X_1\)</span>.</li>
+<li><strong>Start with β̂ = 0.05, SE = 0.05, δ = 0.30.</strong> The CI is roughly <span class="math inline">\((-0.05, 0.15)\)</span>, entirely inside <span class="math inline">\((-0.30, 0.30)\)</span>. <strong>Precise null.</strong> You have evidence the effect is too small to matter — even though the standard p-value is unimpressive.</li>
+<li><strong>Now raise SE to 0.20</strong> with everything else fixed. CI becomes roughly <span class="math inline">\((-0.34, 0.44)\)</span> — extends past <span class="math inline">\(\delta\)</span> in both directions. Same point estimate, but now <strong>underpowered</strong>.</li>
+<li><strong>Move β̂ to 0.40</strong> and keep SE at 0.05. CI is roughly <span class="math inline">\((0.30, 0.50)\)</span> — excludes zero AND extends past <span class="math inline">\(\delta\)</span>. <strong>Detected effect.</strong></li>
+<li><strong>Tighten δ to 0.10</strong> with β̂ = 0.05, SE = 0.05. The CI no longer fits inside the SESOI band. <strong>Underpowered</strong> for a stricter equivalence margin. Same data; the verdict changed because the substantive question got more demanding.</li>
 </ul>
-<hr>
+</div>
+</div>
+</div>
 </section>
-<section id="did-you-know" class="level3">
-<h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
+<section id="the-bayesian-alternative" class="level2">
+<h2 class="anchored" data-anchor-id="the-bayesian-alternative">The Bayesian alternative</h2>
+<p>In a Bayesian framework, you don’t need a separate testing procedure for the null — the posterior already quantifies what you believe.</p>
 <ul>
-<li><strong>Carl Friedrich Gauss</strong> invented the method of least squares at age <strong>18</strong> in 1795 to predict the orbit of the asteroid Ceres. When Ceres reappeared exactly where Gauss predicted, he became an overnight celebrity. The entire method is built on minimizing the sum of squared <em>residuals</em>.</li>
-<li><strong>Adrien-Marie Legendre</strong> independently published the method in 1805, before Gauss. But Gauss claimed he’d been using it since 1795. The priority dispute was never fully resolved — but we call it “Gaussian” anyway.</li>
-<li>The idea of “controlling for” a variable sounds scientific, but it’s been criticized. As <strong>Edward Leamer</strong> wrote in his famous 1983 paper <em>“Let’s Take the Con Out of Econometrics”</em>: adding controls is not the same as running an experiment. The choice of what to control for is often arbitrary and can introduce more bias than it removes (see: bad controls, collider bias).</li>
+<li><strong>Posterior probability inside the SESOI</strong>: compute <span class="math inline">\(P(|\beta| &lt; \delta \mid \text{data})\)</span>. If it’s, say, &gt; 95%, you’ve established a precise null in the Bayesian sense.</li>
+<li><strong>Bayes factor</strong>: <span class="math inline">\(BF_{01}\)</span> compares the null model (<span class="math inline">\(\beta\)</span> near 0) to an alternative (<span class="math inline">\(\beta\)</span> distributed under some prior). <span class="math inline">\(BF_{01} &gt; 3\)</span> is conventionally “moderate evidence for the null”; <span class="math inline">\(BF_{01} &gt; 10\)</span> is “strong evidence for the null.” <span class="math inline">\(BF \approx 1\)</span> is the clean statement <em>“the data are inconclusive.”</em></li>
+</ul>
+<p>Bayes factors handle the inconclusive case better than frequentist equivalence testing: a frequentist failure to reject doesn’t quantify <em>how</em> uninformative the data are, but <span class="math inline">\(BF \approx 1\)</span> does. See <a href="../bayesian-inference/model-comparison.html">Model Comparison</a> for the mechanics and <a href="bayesian-estimation.html">Bayesian Estimation</a> for the posterior framework.</p>
+</section>
+<section id="what-not-to-do-post-hoc-power" class="level2">
+<h2 class="anchored" data-anchor-id="what-not-to-do-post-hoc-power">What not to do: post-hoc power</h2>
+<p>A surprisingly common move is to take a nonsignificant result, compute the <strong>observed (post-hoc) power</strong> using <span class="math inline">\(|\hat\beta|\)</span> as the effect size, and report it as evidence for or against the null. <strong>This is mathematically useless.</strong> For a fixed significance level, observed power is a one-to-one function of the observed p-value: a small p-value gives high observed power, a large p-value gives low observed power, and so the “observed power” carries no information beyond what the p-value already told you.</p>
+<p><a href="https://www.tandfonline.com/doi/abs/10.1198/000313001300339897">Hoenig and Heisey (2001)</a>, <em>“The Abuse of Power: The Pervasive Fallacy of Power Calculations for Data Analysis”</em> (<em>The American Statistician</em>), is the canonical takedown. Their point: power calculations belong in study design, with a <em>pre-specified</em> effect size. Computing power after the fact using the observed effect adds nothing.</p>
+<p>So if a referee or coauthor asks for “observed power” to interpret a null result, redirect to one of the three legitimate methods above instead.</p>
+</section>
+<section id="how-to-report" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-report">How to report</h2>
+<p>A clean nonsignificant result writeup includes four things:</p>
+<ol type="1">
+<li><strong>Pre-specified SESOI</strong> — what magnitude of effect would have mattered, decided before looking at the data, with a citation or substantive justification.</li>
+<li><strong>Point estimate and confidence interval</strong> — the actual data summary.</li>
+<li><strong>Verdict against the SESOI</strong> — either equivalence-test result (TOST p-values) or the visual CI-vs-SESOI comparison, with the conclusion stated explicitly: <em>“we can rule out effects larger than <span class="math inline">\(\delta\)</span>”</em> vs.&nbsp;<em>“effects up to <span class="math inline">\(\delta\)</span> remain consistent with our data.”</em></li>
+<li><strong>What it would have taken to be definitive</strong> — e.g., “to detect an effect of <span class="math inline">\(\delta\)</span> with 80% power would require <span class="math inline">\(n = N^*\)</span>, which is <span class="math inline">\(k\times\)</span> our actual sample.” This puts the underpowered case in context.</li>
+</ol>
+<p>That language turns a nonsignificant result from “we don’t know” into one of two informative statements: <em>“the effect, if any, is small”</em> or <em>“we can’t tell from this study.”</em></p>
+</section>
+<section id="did-you-know" class="level2">
+<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
+<ul>
+<li>The standard test framework treats null and alternative <strong>asymmetrically by design</strong>. Fisher (1935) was explicit: a small p-value rejects the null, but a large one is “absence of evidence, not evidence of absence.” Equivalence testing was developed in the 1970s and 1980s for the bioequivalence question — generic drug X is “as good as” name-brand drug Y — and only later imported into the social sciences.</li>
+<li>The “absence of evidence is not evidence of absence” line is sometimes attributed to Carl Sagan, but the phrasing dates at least to the 1990s in clinical-trial methodology, where it was the warning to FDA reviewers about underpowered equivalence trials.</li>
+<li>The 2016 ASA statement on p-values (Wasserstein &amp; Lazar) explicitly calls out “a p-value does not measure the probability that the null hypothesis is true.” Equivalence testing and Bayes factors are the standard fixes for the question p-values can’t answer.</li>
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
