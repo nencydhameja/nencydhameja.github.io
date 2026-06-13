@@ -482,6 +482,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#posterior-mean-vs-map" id="toc-posterior-mean-vs-map" class="nav-link" data-scroll-target="#posterior-mean-vs-map">Posterior mean vs MAP</a></li>
   <li><a href="#credible-intervals-vs-confidence-intervals" id="toc-credible-intervals-vs-confidence-intervals" class="nav-link" data-scroll-target="#credible-intervals-vs-confidence-intervals">Credible intervals vs confidence intervals</a></li>
+  <li><a href="#map-is-one-bayesian-tool-not-the-only-one" id="toc-map-is-one-bayesian-tool-not-the-only-one" class="nav-link" data-scroll-target="#map-is-one-bayesian-tool-not-the-only-one">MAP is one Bayesian tool, not the only one</a></li>
   <li><a href="#the-estimation-landscape" id="toc-the-estimation-landscape" class="nav-link" data-scroll-target="#the-estimation-landscape">The estimation landscape</a></li>
   </ul>
 </nav>
@@ -811,6 +812,12 @@ P(\theta \in [a, b] \mid \text{data}) = 0.95
 \]</span></p>
 <p>This is the interpretation people <em>want</em> confidence intervals to have: “there’s a 95% probability the parameter is in this interval.” Confidence intervals don’t actually mean that — they’re about the procedure’s long-run coverage rate, not the probability of a specific interval containing <span class="math inline">\(\theta\)</span>.</p>
 <p>For more on the mechanics of how posteriors are computed and updated, see <a href="bayesian-updating.html">Bayesian Updating</a>. For the frequentist perspective on confidence intervals and why they’re often misinterpreted, see <a href="pvalues-ci.html">p-values &amp; Confidence Intervals</a>.</p>
+</section>
+<section id="map-is-one-bayesian-tool-not-the-only-one" class="level2">
+<h2 class="anchored" data-anchor-id="map-is-one-bayesian-tool-not-the-only-one">MAP is one Bayesian tool, not the only one</h2>
+<p>This page treats Bayesian estimation as <strong>MAP</strong> — optimize the log-posterior and report the peak. That gives you a single point estimate, which is enough when all you need is a number to plug into a downstream calculation.</p>
+<p>But the peak isn’t the whole posterior. If you want the <em>full</em> distribution — to read off a credible interval, the probability that the effect is negative, or how skewed the posterior is — you don’t optimize, you <strong>sample</strong>. The standard tool is MCMC (NUTS, Gibbs, Metropolis–Hastings), which draws thousands of values from the posterior so you can compute any summary you want by counting draws.</p>
+<p>The connection back is clean: a Normal prior on regression coefficients gives MAP = ridge regression, and the random-effects shrinkage you get from a hierarchical MCMC fit is the <em>fully-sampled</em> version of that same Normal-prior idea. Same Bayesian foundation, different machinery. See <a href="../bayesian-inference/mcmc.html">MCMC</a> and <a href="../bayesian-inference/hierarchical.html">Hierarchical Models</a> for the sampling side.</p>
 </section>
 <section id="the-estimation-landscape" class="level2">
 <h2 class="anchored" data-anchor-id="the-estimation-landscape">The estimation landscape</h2>
