@@ -340,6 +340,16 @@ window.Quarto = {
 
 <section id="what-a-bayes-factor-is" class="level2">
 <h2 class="anchored" data-anchor-id="what-a-bayes-factor-is">What a Bayes factor is</h2>
+<div class="callout callout-style-simple callout-important no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>One-line intuition.</strong> A Bayes factor asks: <em>which hypothesis was less surprised by the data you actually saw?</em> The one that “called it” better wins, and the ratio tells you by how much.</p>
+</div>
+</div>
+</div>
 <p>Suppose you have two hypotheses — call them <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span> — and a body of data <span class="math inline">\(y\)</span>. Both hypotheses make predictions about what <span class="math inline">\(y\)</span> should look like, but those predictions depend on unknown parameters. The <strong>Bayes factor</strong> is the ratio of the average probability each hypothesis assigns to the data, where the averaging is over your prior beliefs about each hypothesis’s parameters:</p>
 <p><span class="math display">\[
 BF_{10} \;=\; \frac{p(y \mid H_1)}{p(y \mid H_0)}
