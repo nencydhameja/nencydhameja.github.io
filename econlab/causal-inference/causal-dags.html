@@ -407,7 +407,7 @@ window.Quarto = {
 W \;\to\; D, \qquad W \;\to\; Y.
 \]</span></p>
 <p>A variable that causes both treatment and outcome generates a spurious association between them. Cities with more parks (<span class="math inline">\(W\)</span>) have higher housing prices (<span class="math inline">\(Y\)</span>) <em>and</em> more crime (<span class="math inline">\(D\)</span>, because cities are large). Unless you control for <span class="math inline">\(W\)</span>, the OLS coefficient on <span class="math inline">\(D\)</span> is biased.</p>
-<p><strong>Rule:</strong> confounders must be in your regression. This is the entire content of “selection on observables.”</p>
+<p><strong>Rule:</strong> confounders must be in your regression. That single move — controlling for the common cause — is the essence of “selection on observables.”</p>
 </section>
 <section id="mediator-m-on-the-causal-pathway-from-d-to-y" class="level3">
 <h3 class="anchored" data-anchor-id="mediator-m-on-the-causal-pathway-from-d-to-y">Mediator (<span class="math inline">\(M\)</span>): on the causal pathway from <span class="math inline">\(D\)</span> to <span class="math inline">\(Y\)</span></h3>
