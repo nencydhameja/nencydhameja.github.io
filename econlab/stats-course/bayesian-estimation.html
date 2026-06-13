@@ -818,6 +818,16 @@ P(\theta \in [a, b] \mid \text{data}) = 0.95
 <p>This page treats Bayesian estimation as <strong>MAP</strong> — optimize the log-posterior and report the peak. That gives you a single point estimate, which is enough when all you need is a number to plug into a downstream calculation.</p>
 <p>But the peak isn’t the whole posterior. If you want the <em>full</em> distribution — to read off a credible interval, the probability that the effect is negative, or how skewed the posterior is — you don’t optimize, you <strong>sample</strong>. The standard tool is MCMC (NUTS, Gibbs, Metropolis–Hastings), which draws thousands of values from the posterior so you can compute any summary you want by counting draws.</p>
 <p>The connection back is clean: a Normal prior on regression coefficients gives MAP = ridge regression, and the random-effects shrinkage you get from a hierarchical MCMC fit is the <em>fully-sampled</em> version of that same Normal-prior idea. Same Bayesian foundation, different machinery. See <a href="../bayesian-inference/mcmc.html">MCMC</a> and <a href="../bayesian-inference/hierarchical.html">Hierarchical Models</a> for the sampling side.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Historical note.</strong> MCMC originated in nuclear physics, not statistics. Stanislaw Ulam and John von Neumann developed Monte Carlo methods at Los Alamos in the late 1940s to simulate neutron diffusion during the Manhattan Project. The Metropolis algorithm — the one underlying every modern MCMC sampler — was published in 1953 by Metropolis, Rosenbluth, Rosenbluth, Teller &amp; Teller for simulating molecular configurations in statistical mechanics. Statisticians didn’t widely adopt it for Bayesian inference until the 1980s (Geman &amp; Geman 1984, Gelfand &amp; Smith 1990). Bayesian computation as we know it today is borrowed nuclear-physics machinery.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="the-estimation-landscape" class="level2">
 <h2 class="anchored" data-anchor-id="the-estimation-landscape">The estimation landscape</h2>
