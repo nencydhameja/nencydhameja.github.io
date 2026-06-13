@@ -491,6 +491,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#worked-example-a-small-evaluation-large-se" id="toc-worked-example-a-small-evaluation-large-se" class="nav-link" data-scroll-target="#worked-example-a-small-evaluation-large-se">Worked example: a small evaluation, large SE</a></li>
   <li><a href="#why-this-matters" id="toc-why-this-matters" class="nav-link" data-scroll-target="#why-this-matters">Why this matters</a></li>
+  <li><a href="#the-catch-lindleys-paradox" id="toc-the-catch-lindleys-paradox" class="nav-link" data-scroll-target="#the-catch-lindleys-paradox">The catch: Lindley’s paradox</a></li>
   </ul></li>
   <li><a href="#what-not-to-do-post-hoc-power" id="toc-what-not-to-do-post-hoc-power" class="nav-link" data-scroll-target="#what-not-to-do-post-hoc-power">What not to do: post-hoc power</a></li>
   <li><a href="#how-to-report" id="toc-how-to-report" class="nav-link" data-scroll-target="#how-to-report">How to report</a></li>
@@ -729,6 +730,27 @@ BF_{01} \;=\; \sqrt{1 + \frac{\tau^2}{SE^2}}\;\cdot\; \exp\!\left[-\,\frac{1}{2}
 <section id="why-this-matters" class="level3">
 <h3 class="anchored" data-anchor-id="why-this-matters">Why this matters</h3>
 <p>Bayes factors handle the inconclusive case better than frequentist equivalence testing: a frequentist failure to reject doesn’t quantify <em>how</em> uninformative the data are, but <span class="math inline">\(BF \approx 1\)</span> does. See <a href="../bayesian-inference/model-comparison.html">Model Comparison</a> for the mechanics and <a href="bayesian-estimation.html">Bayesian Estimation</a> for the posterior framework.</p>
+</section>
+<section id="the-catch-lindleys-paradox" class="level3">
+<h3 class="anchored" data-anchor-id="the-catch-lindleys-paradox">The catch: Lindley’s paradox</h3>
+<p>Bayes factors depend on the prior you assign to the parameter under <span class="math inline">\(H_1\)</span>, and that dependence is sharp. A diffuse prior makes <span class="math inline">\(H_1\)</span> predict the data poorly on average, which biases <span class="math inline">\(BF_{10}\)</span> toward the null. Push this hard enough and you get a situation where a frequentist test rejects the null while a Bayes factor with a vague prior favors it — <strong>Lindley’s paradox</strong> (Lindley 1957).</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>The toy example.</strong> Suppose you measure the proportion of male births in a sample of <span class="math inline">\(n = 98{,}000\)</span> newborns against the null hypothesis of <span class="math inline">\(50\%\)</span>. The observed proportion is <span class="math inline">\(50.36\%\)</span>. With that sample size, the z-statistic is about <span class="math inline">\(2.27\)</span> — a p-value of roughly <span class="math inline">\(0.02\)</span>. The frequentist verdict: <strong>reject the null.</strong></p>
+<p>Now compute a Bayes factor against a flat prior on <span class="math inline">\(H_1\)</span> — “the true proportion could be anywhere from 0 to 1 with equal plausibility.” Under this prior, <span class="math inline">\(H_1\)</span> spreads its predictive mass across all possible proportions, most of which are far from <span class="math inline">\(50.36\%\)</span>. The Bayes factor turns out to <strong>favor the null</strong> by a substantial margin. The two procedures disagree on the same data.</p>
+</div>
+</div>
+</div>
+<p>Why? The null is a point — <em>“exactly 50%”</em> — so it predicts the observed <span class="math inline">\(50.36\%\)</span> with a definite probability density. The alternative is a distribution. With a wide prior the alternative spreads its mass over a huge range, most of which is far from <span class="math inline">\(50.36\%\)</span>. Averaged over the whole range, the alternative model predicts the observed value <em>poorly</em>. So the data look “close enough to 50%” relative to a model that allowed anything. The null wins by being specific.</p>
+<p>The takeaway has two parts:</p>
+<ul>
+<li><strong>Bayes factors and p-values answer different questions.</strong> A p-value asks <em>“if the null were true, how surprising is this data?”</em> A Bayes factor asks <em>“which of two specific models predicts this data better?”</em> When sample size is large, even tiny deviations from the null become very surprising under <span class="math inline">\(H_0\)</span> — so p-values shrink. But the deviation is also small relative to the range the prior allowed, so the Bayes factor favors the null. Different questions, different answers, both legitimate.</li>
+<li><strong>Don’t use diffuse priors with Bayes factors.</strong> A standard practice is to set the prior under <span class="math inline">\(H_1\)</span> to match what <em>you actually believed</em> about plausible effect sizes before seeing the data — informed by the literature, by physical limits, by past studies. Reporting a Bayes factor without disclosing the prior is incomplete.</li>
+</ul>
 </section>
 </section>
 <section id="what-not-to-do-post-hoc-power" class="level2">
