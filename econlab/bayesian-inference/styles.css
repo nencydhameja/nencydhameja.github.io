@@ -1,3 +1,14 @@
+/* "In plain words" intuition boxes — light beige */
+.plain-english {
+  background-color: #faf5e9;
+  border-left: 4px solid #c9b07a;
+  padding: 0.85rem 1.1rem;
+  margin: 1rem 0 1.5rem 0;
+  border-radius: 4px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
 /* "Did you know?" sections */
 section#did-you-know {
   background: #fef9e7;
