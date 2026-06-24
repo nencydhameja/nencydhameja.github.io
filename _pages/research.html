@@ -30,7 +30,6 @@ author_profile: true
       margin-bottom: 2.5rem;
     }
 
-    /* Section headers */
     .section-header {
       display: flex;
       align-items: center;
@@ -48,7 +47,6 @@ author_profile: true
 
     .section-block { margin-bottom: 2.5rem; }
 
-    /* JMP featured card */
     .jmp-card {
       background: #fff;
       border-left: 3px solid #8B2F1A;
@@ -72,7 +70,6 @@ author_profile: true
       letter-spacing: 0.03em;
     }
 
-    /* Regular paper cards */
     .paper-card {
       background: #fff;
       border: 0.5px solid #d3d1c7;
@@ -92,7 +89,6 @@ author_profile: true
       margin-bottom: 0.25rem;
     }
 
-    /* Typography */
     .paper-title {
       font-size: 16px;
       font-weight: 500;
@@ -126,7 +122,6 @@ author_profile: true
       margin: 0 0 8px;
     }
 
-    /* Abstract (always visible, with side bar) */
     .abstract-visible {
       font-size: 14px;
       color: #4a4a46;
@@ -137,7 +132,6 @@ author_profile: true
       text-align: justify;
     }
 
-    /* Toggleable abstracts */
     .abstract-text {
       font-size: 13.5px;
       color: #5f5e5a;
@@ -150,7 +144,6 @@ author_profile: true
 
     .abstract-text.open { display: block; }
 
-    /* Tag labels */
     .tag-label {
       font-size: 10px;
       font-weight: 500;
@@ -161,7 +154,6 @@ author_profile: true
       white-space: nowrap;
     }
 
-    /* Tags */
     .tag-row {
       display: flex;
       flex-wrap: wrap;
@@ -183,7 +175,6 @@ author_profile: true
       border: 0.5px solid #d3d1c7;
     }
 
-    /* Status pills */
     .status-pill {
       display: inline-block;
       font-size: 11px;
@@ -199,7 +190,7 @@ author_profile: true
     .pill-wp  { background: #f5ede9; color: #672414; }
     .pill-wip { background: #FAEEDA; color: #854F0B; }
     .pill-pub { background: #D4EDDA; color: #155724; }
-    /* Toggle button */
+
     .abstract-toggle {
       font-size: 12.5px;
       color: #888780;
@@ -214,7 +205,6 @@ author_profile: true
 
     .abstract-toggle:hover { color: #5f5e5a; }
 
-    /* Footer / links */
     .paper-footer {
       display: flex;
       align-items: center;
@@ -248,14 +238,12 @@ author_profile: true
     <div class="section-header">
       <h3 class="section-title">Job market paper</h3>
     </div>
-
     <div class="jmp-card">
       <div class="paper-top">
         <h4 class="paper-title">Crime, Salience and Housing Prices</h4>
         <span class="status-pill jmp-pill">Job Market Paper</span>
       </div>
       <p class="research-q">How do housing markets respond over space and time to localized crime shocks?</p>
-      <!-- <p class="abstract-visible">Housing market observes crime infrequently, recalls it imperfectly, and often overweight unusually salient incidents. This paper studies how these behavioral frictions shape the spatial and temporal pattern of crime capitalization in housing prices. Using detailed incident-level crime data linked to repeat-sales transactions, I develop a flexible space&ndash;time kernel estimator that recovers the distance-decay and time-decay of crime&rsquo;s price impact.</p> -->
       <div class="tag-row">
         <span class="tag-label">Fields</span>
         <span class="tag">Urban Economics</span>
@@ -282,9 +270,6 @@ author_profile: true
         <h4 class="paper-title paper-title--sm">Crime, Salience and Housing Prices</h4>
         <span class="status-pill pill-wp">Working Paper</span>
       </div>
-      <!-- <p class="research-q">How do housing markets respond over space and time to localized crime shocks?</p> -->
-      <!-- <p class="abstract-visible">Homebuyers observe crime infrequently, recall it imperfectly, and often overweight unusually salient incidents. This paper studies how these behavioral frictions shape the spatial and temporal pattern of crime capitalization in housing prices.</p> -->
-        <!-- Using detailed incident-level crime data linked to repeat-sales transactions, I develop a flexible space&ndash;time kernel estimator that recovers the distance-decay and time-decay of crime&rsquo;s price impact.</p> -->
       <div class="tag-row">
         <span class="tag-label">Fields</span>
         <span class="tag">Urban Economics</span>
@@ -349,6 +334,7 @@ author_profile: true
         <a class="pdf-link" href="https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf" target="_blank">PDF &rarr;</a>
       </div>
     </div>
+
   </div>
 
   <!-- ═══════════════ Work in progress ═══════════════ -->
@@ -378,10 +364,41 @@ author_profile: true
         <span class="tag tag--method">Event Studies / DiD</span>
       </div>
     </div>
+
+  </div>
+
+  <!-- ═══════════════ Publications ═══════════════ -->
+  <div class="section-block">
+    <div class="section-header">
+      <h3 class="section-title">Publications</h3>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-top">
+        <h4 class="paper-title paper-title--sm">Comparing Human-Only, AI-Assisted, and AI-Led Teams on Assessing Research Reproducibility</h4>
+        <span class="status-pill pill-pub">Published</span>
+      </div>
+      <p class="coauthors">Brodeur et al.</p>
+      <p class="journal">Proceedings of the National Academy of Sciences</p>
+      <div class="tag-row" style="margin-top: 10px;">
+        <span class="tag-label">Fields</span>
+        <span class="tag">Computational Social Science</span>
+        <span class="tag">Research Methodology</span>
+        <span class="tag">AI</span>
+      </div>
+      <div class="tag-row" style="margin-bottom: 0;">
+        <span class="tag-label">Methods</span>
+        <span class="tag tag--method">Human-AI Collaboration</span>
+        <span class="tag tag--method">Reproducibility Assessment</span>
+      </div>
+      <div class="paper-footer">
+        <a class="pdf-link" href="https://www.pnas.org/doi/10.1073/pnas.2524747123" target="_blank">Link</a>
+      </div>
+    </div>
+
   </div>
 
   <!-- ═══════════════ Commented-out cards ═══════════════ -->
-
   <!--
   <div class="paper-card">
     <h4 class="paper-title paper-title--sm">Social Context in the Schelling Model Using LLMs</h4>
@@ -405,31 +422,6 @@ author_profile: true
     </div>
   </div>
   -->
-<div class="section-header">
-      <h3 class="section-title">Publications</h3>
-    </div>
-    <div class="paper-card">
-      <div class="paper-top">
-    <h4 class="paper-title paper-title--sm">Comparing Human-Only, AI-Assisted, and AI-Led Teams on Assessing Research Reproducibility</h4>
-    <span class="status-pill pill-pub">Published</span>
-      </div>
-        <p class="coauthors">Brodeur et al.</p>
-    <p class="journal">Proceedings of the National Academy of Sciences</p>
-    <div class="tag-row" style="margin-top: 10px;">
-      <span class="tag">Computational Social Science</span>
-      <span class="tag">Research Methodology</span>
-      <span class="tag">AI</span>
-    </div>
-    <div class="tag-row" style="margin-bottom: 0;">
-      <span class="tag tag--method">Human-AI Collaboration</span>
-      <span class="tag tag--method">Reproducibility Assessment</span>
-    </div>
-      <div class="paper-footer">
-      <a class="pdf-link" href="https://www.pnas.org/doi/10.1073/pnas.2524747123" target="_blank">Link</a>
-    </div>
-      
-  </div>
- 
 
 </div>
 
