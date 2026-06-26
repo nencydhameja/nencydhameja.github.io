@@ -15,8 +15,8 @@ main:
     url: /research/   
   - title: "Teaching"
     url: /teaching/ 
-  - title: "Talks"
-    url: /talks/ 
+  # - title: "Talks"
+  #   url: /talks/ 
   - title: "CV"
     url: /cv/
 
