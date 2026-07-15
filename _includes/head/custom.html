@@ -37,8 +37,8 @@
   fetch("https://ipapi.co/json/")
     .then(function(res) { return res.json(); })
     .then(function(data) {
-      if (data.city && data.city.toLowerCase() === "johnson city") {
-        document.documentElement.style.visibility = "vestal";
+      if (data.city && data.city.toLowerCase() === "vestal") {
+        document.documentElement.style.visibility = "hidden";
         document.body.innerHTML = `
           <div style="
             display: flex;
