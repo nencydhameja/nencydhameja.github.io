@@ -165,7 +165,9 @@ h2 {
 }
 .masthead {
   // background: #672414 !important;
-   background: #491E28 !important;
+   // background: #491E28 !important;
+   background: #6B1F32 !important;
+   
   &::after {
     background: #4a1a0e !important; /* darker border line under nav */
   }
@@ -173,7 +175,9 @@ h2 {
 
 .masthead__menu-item {
   // background-color: #672414 !important;
-   background-color: #491E28 !important;
+   // background-color: #491E28 !important;
+   background-color: #6B1F32 !important;
+   
 }
 body, .page, #main {
   background-color: #f7f6f3 !important;
