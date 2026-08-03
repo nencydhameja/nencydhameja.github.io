@@ -24,10 +24,10 @@ My research is centered on causal inference and policy evaluation in applied mic
 <p>
 Prior to my Ph.D., I pursued an Executive MBA in Singapore and earned a Bachelor of Technology in India. This technical background informs my research through an emphasis on reproducible workflows, large-scale administrative data, and computational modeling, including LLM-based agent simulations, for studying economic behavior and policy interventions.
 </p> -->
-<p>I study how local environments and institutional policies shape economic and social outcomes. My current research examines how housing markets respond to crime — buyers price the crime they directly observe and ignore predictive signals from nearby blocks, evidence of salience-driven capitalization. Related work examines retail food environments and health outcomes, and how diversity statement requirements affect faculty hiring.</p>
+<p>I study how local environments and institutional policies shape economic and social outcomes. My job market paper examines how housing markets respond to crime: the market prices crime that leaves a visible trace and ignores crime that doesn't, though both predict future risk. Related work examines retail food environments and health outcomes, and how diversity statement requirements affect faculty hiring.</p>
 <p>Prior to my Ph.D., I completed an Executive MBA in Singapore and a Bachelor of Technology in India.</p>
 <!-- Fields: Applied Microeconomics — Urban Economics, Behavioral Economics, Labor Economics -->
-<p><strong>Fields</strong>: Applied Microeconomics - Urban Economics, Economics of Education, Behavioral Economics, Health Economics </p>
+<!--<p><strong>Fields</strong>: Applied Microeconomics - Urban Economics, Economics of Education, Behavioral Economics, Health Economics </p>-->
 
 <p><strong>Primary fields</strong>: Urban Economics, Public Economics<br>
 <strong>Secondary fields</strong>: Labor Economics, Health Economics</p>
