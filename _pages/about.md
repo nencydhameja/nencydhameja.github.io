@@ -24,7 +24,7 @@ My research is centered on causal inference and policy evaluation in applied mic
 <p>
 Prior to my Ph.D., I pursued an Executive MBA in Singapore and earned a Bachelor of Technology in India. This technical background informs my research through an emphasis on reproducible workflows, large-scale administrative data, and computational modeling, including LLM-based agent simulations, for studying economic behavior and policy interventions.
 </p> -->
-<p>I study how neighborhood conditions and institutional policies shape housing markets, health, and labor outcomes using quasi-experimental methods and large-scale administrative data.</p>
+<p>I study how neighborhood conditions and institutional policies affect housing markets, health, and labor outcomes using quasi-experimental methods and large-scale administrative data.</p>
 <p>My job market paper studies how crime disrupts housing markets — which crimes price, how the discount travels from listing to closing, and who bears the cost. Related work examines retail food environments and health outcomes, and how diversity statement requirements affect faculty hiring.</p>
 <p>Prior to my Ph.D., I completed an Executive MBA in Singapore and a Bachelor of Technology in India.</p>
 <!-- Fields: Applied Microeconomics — Urban Economics, Behavioral Economics, Labor Economics -->
