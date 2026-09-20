@@ -185,8 +185,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./law-of-large-numbers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Law of Large Numbers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./simulations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CLT Simulator</span></a>
+ <span class="menu-text">Central Limit Theorem</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -275,6 +281,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./assumptions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Gauss-Markov &amp; Gaussian Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sampling-distribution-ols.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sampling Distribution of OLS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -484,8 +496,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#two-theorems-two-different-promises" id="toc-two-theorems-two-different-promises" class="nav-link active" data-scroll-target="#two-theorems-two-different-promises">Two theorems, two different promises</a></li>
-  <li><a href="#simulation-1-the-running-average" id="toc-simulation-1-the-running-average" class="nav-link" data-scroll-target="#simulation-1-the-running-average">Simulation 1: The running average</a></li>
-  <li><a href="#simulation-2-lln-vs-clt-side-by-side" id="toc-simulation-2-lln-vs-clt-side-by-side" class="nav-link" data-scroll-target="#simulation-2-lln-vs-clt-side-by-side">Simulation 2: LLN vs CLT side by side</a>
+  <li><a href="#lln-vs-clt-side-by-side" id="toc-lln-vs-clt-side-by-side" class="nav-link" data-scroll-target="#lln-vs-clt-side-by-side">LLN vs CLT side by side</a>
   <ul class="collapse">
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   <li><a href="#the-bottom-line" id="toc-the-bottom-line" class="nav-link" data-scroll-target="#the-bottom-line">The bottom line</a></li>
@@ -493,8 +504,7 @@ window.Quarto = {
   <li><a href="#when-does-each-theorem-kick-in" id="toc-when-does-each-theorem-kick-in" class="nav-link" data-scroll-target="#when-does-each-theorem-kick-in">When does each theorem kick in?</a>
   <ul class="collapse">
   <li><a href="#why-does-skewness-slow-things-down" id="toc-why-does-skewness-slow-things-down" class="nav-link" data-scroll-target="#why-does-skewness-slow-things-down">Why does skewness slow things down?</a></li>
-  <li><a href="#simulation-3-watch-clt-kick-in-at-different-speeds" id="toc-simulation-3-watch-clt-kick-in-at-different-speeds" class="nav-link" data-scroll-target="#simulation-3-watch-clt-kick-in-at-different-speeds">Simulation 3: watch CLT kick in at different speeds</a></li>
-  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
+  <li><a href="#watch-clt-kick-in-at-different-speeds" id="toc-watch-clt-kick-in-at-different-speeds" class="nav-link" data-scroll-target="#watch-clt-kick-in-at-different-speeds">Watch CLT kick in at different speeds</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -572,6 +582,7 @@ window.Quarto = {
 </table>
 <p><strong>LLN says the mean settles down. CLT says <em>where</em> it settles follows a normal distribution.</strong></p>
 <p>Think of it this way: LLN tells you that if you flip a fair coin enough times, the fraction of heads approaches 0.5. CLT tells you that if you repeat the <em>entire experiment</em> many times, the distribution of those fractions is bell-shaped.</p>
+<p>Want each theorem on its own first? See <a href="law-of-large-numbers.html">The Law of Large Numbers</a> (what it says, weak vs.&nbsp;strong, and the running-average simulator) and <a href="simulations.html">The Central Limit Theorem</a>. This page runs the two head-to-head.</p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -583,143 +594,9 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="simulation-1-the-running-average" class="level2">
-<h2 class="anchored" data-anchor-id="simulation-1-the-running-average">Simulation 1: The running average</h2>
-<p>Watch one running average converge to the true mean as you add observations one at a time. This is LLN in action — the cumulative mean stabilizes. Try different distributions and notice that convergence happens regardless of the population shape.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 620
-
-library(shiny)
-
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    .stats-box {
-      background: #f0f4f8; border-radius: 6px; padding: 14px;
-      margin-top: 12px; font-size: 14px; line-height: 1.9;
-    }
-    .stats-box b { color: #2c3e50; }
-  "))),
-
-  sidebarLayout(
-    sidebarPanel(
-      width = 3,
-
-      selectInput("pop", "Population:",
-                  choices = c("Uniform(0, 1)",
-                              "Exponential(1)",
-                              "Bimodal",
-                              "Bernoulli(0.3)",
-                              "Heavy-tailed (t, df=2)")),
-
-      sliderInput("n", "Number of observations:",
-                  min = 50, max = 5000, value = 500, step = 50),
-
-      sliderInput("paths", "Number of paths:",
-                  min = 1, max = 10, value = 3, step = 1),
-
-      actionButton("go", "Draw new paths",
-                   class = "btn-primary", width = "100%"),
-
-      uiOutput("results")
-    ),
-
-    mainPanel(
-      width = 9,
-      plotOutput("running_avg", height = "500px")
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  draw_pop &lt;- function(n, pop) {
-    switch(pop,
-      "Uniform(0, 1)"          = runif(n),
-      "Exponential(1)"         = rexp(n, rate = 1),
-      "Bimodal"                = {
-        k &lt;- rbinom(n, 1, 0.5)
-        k * rnorm(n, -2, 0.6) + (1 - k) * rnorm(n, 2, 0.6)
-      },
-      "Bernoulli(0.3)"         = rbinom(n, 1, 0.3),
-      "Heavy-tailed (t, df=2)" = rt(n, df = 2)
-    )
-  }
-
-  pop_mu &lt;- function(pop) {
-    switch(pop,
-      "Uniform(0, 1)"          = 0.5,
-      "Exponential(1)"         = 1,
-      "Bimodal"                = 0,
-      "Bernoulli(0.3)"         = 0.3,
-      "Heavy-tailed (t, df=2)" = 0
-    )
-  }
-
-  dat &lt;- reactive({
-    input$go
-    n     &lt;- input$n
-    paths &lt;- input$paths
-    pop   &lt;- input$pop
-    mu    &lt;- pop_mu(pop)
-
-    all_paths &lt;- lapply(seq_len(paths), function(i) {
-      x &lt;- draw_pop(n, pop)
-      cumsum(x) / seq_along(x)
-    })
-
-    list(all_paths = all_paths, n = n, mu = mu, pop = pop, paths = paths)
-  })
-
-  output$running_avg &lt;- renderPlot({
-    d &lt;- dat()
-    par(mar = c(4.5, 4.5, 3, 1))
-
-    ylim &lt;- range(unlist(d$all_paths))
-    ylim &lt;- ylim + c(-1, 1) * 0.1 * diff(ylim)
-
-    cols &lt;- c("#e74c3c", "#3498db", "#27ae60", "#9b59b6", "#e67e22",
-              "#1abc9c", "#34495e", "#f39c12", "#2ecc71", "#c0392b")
-
-    plot(NULL, xlim = c(1, d$n), ylim = ylim,
-         xlab = "Number of observations",
-         ylab = "Cumulative mean",
-         main = paste0("LLN: Running average converges to \u03bc = ", d$mu))
-
-    abline(h = d$mu, lty = 2, lwd = 2.5, col = "#2c3e50")
-
-    for (i in seq_along(d$all_paths)) {
-      lines(seq_along(d$all_paths[[i]]), d$all_paths[[i]],
-            col = adjustcolor(cols[i], 0.7), lwd = 1.5)
-    }
-
-    legend("topright", bty = "n", cex = 0.9,
-           legend = c(paste0("True mean (\u03bc = ", d$mu, ")"),
-                      paste0(d$paths, " sample path(s)")),
-           col = c("#2c3e50", cols[1]),
-           lwd = c(2.5, 1.5), lty = c(2, 1))
-  })
-
-  output$results &lt;- renderUI({
-    d &lt;- dat()
-    final_means &lt;- sapply(d$all_paths, function(p) p[length(p)])
-
-    tags$div(class = "stats-box",
-      HTML(paste0(
-        "&lt;b&gt;True mean:&lt;/b&gt; ", d$mu, "&lt;br&gt;",
-        "&lt;b&gt;Final running avg(s):&lt;/b&gt;&lt;br&gt;",
-        paste(round(final_means, 4), collapse = ", "), "&lt;br&gt;",
-        "&lt;b&gt;Max deviation:&lt;/b&gt; ",
-        round(max(abs(final_means - d$mu)), 4)
-      ))
-    )
-  })
-}
-
-shinyApp(ui, server)</code></pre>
-</section>
-<section id="simulation-2-lln-vs-clt-side-by-side" class="level2">
-<h2 class="anchored" data-anchor-id="simulation-2-lln-vs-clt-side-by-side">Simulation 2: LLN vs CLT side by side</h2>
-<p>Now see both theorems at once. The <strong>left panel</strong> shows LLN — one running average converging to <span class="math inline">\(\mu\)</span>. The <strong>right panel</strong> shows CLT — the histogram of many sample means forming a normal distribution. Same data, different questions.</p>
+<section id="lln-vs-clt-side-by-side" class="level2">
+<h2 class="anchored" data-anchor-id="lln-vs-clt-side-by-side">LLN vs CLT side by side</h2>
+<p>See both theorems at once. The <strong>left panel</strong> shows LLN — one running average converging to <span class="math inline">\(\mu\)</span>. The <strong>right panel</strong> shows CLT — the histogram of many sample means forming a normal distribution. Same data, different questions.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 580
 
@@ -749,9 +626,6 @@ ui &lt;- fluidPage(
 
       sliderInput("reps2", "Number of experiments:",
                   min = 200, max = 3000, value = 1000, step = 100),
-
-      actionButton("go2", "Run experiments",
-                   class = "btn-primary", width = "100%"),
 
       uiOutput("results2")
     ),
@@ -799,7 +673,6 @@ server &lt;- function(input, output, session) {
   }
 
   dat &lt;- reactive({
-    input$go2
     n    &lt;- input$n2
     reps &lt;- input$reps2
     pop  &lt;- input$pop2
@@ -830,7 +703,7 @@ server &lt;- function(input, output, session) {
 
     legend("topright", bty = "n", cex = 0.85,
            legend = c("Running average",
-                      paste0("True \u03bc = ", d$mu)),
+                      paste0("True μ = ", d$mu)),
            col = c("#3498db", "#e74c3c"),
            lwd = c(1.5, 2.5), lty = c(1, 2))
   })
@@ -853,8 +726,8 @@ server &lt;- function(input, output, session) {
 
     legend("topright", bty = "n", cex = 0.85,
            legend = c("Sampling distribution",
-                      paste0("N(\u03bc, \u03c3/\u221an) overlay"),
-                      paste0("True \u03bc = ", d$mu)),
+                      paste0("N(μ, σ/√n) overlay"),
+                      paste0("True μ = ", d$mu)),
            col = c("#3498db80", "#e74c3c", "#2c3e50"),
            lwd = c(8, 2.5, 2), lty = c(1, 1, 2))
   })
@@ -867,7 +740,7 @@ server &lt;- function(input, output, session) {
       HTML(paste0(
         "&lt;b&gt;LLN (left):&lt;/b&gt;&lt;br&gt;",
         "Final avg: ", round(d$running[length(d$running)], 4), "&lt;br&gt;",
-        "True \u03bc: ", d$mu, "&lt;br&gt;",
+        "True μ: ", d$mu, "&lt;br&gt;",
         "&lt;hr style='margin:8px 0'&gt;",
         "&lt;b&gt;CLT (right):&lt;/b&gt;&lt;br&gt;",
         "Mean of means: ", round(mean(d$means), 4), "&lt;br&gt;",
@@ -885,7 +758,7 @@ shinyApp(ui, server)</code></pre>
 <li><strong>Exponential, n = 5:</strong> the LLN panel shows the running average still wobbling, while the CLT histogram is visibly skewed. Neither theorem has fully “kicked in” yet — but they will at different rates.</li>
 <li><strong>Exponential, n = 100:</strong> the running average has settled (LLN), and the histogram is now bell-shaped (CLT). Both theorems have done their job.</li>
 <li><strong>Bimodal:</strong> the running average converges to 0 (the midpoint), even though no individual observation is near 0. LLN doesn’t care about the shape.</li>
-<li><strong>Multiple paths (Sim 1):</strong> all paths converge to the same <span class="math inline">\(\mu\)</span>, but they take different routes. The early wobble is sampling variability; the eventual convergence is LLN.</li>
+<li><strong>Multiple paths:</strong> all paths converge to the same <span class="math inline">\(\mu\)</span>, but they take different routes. The early wobble is sampling variability; the eventual convergence is LLN.</li>
 </ul>
 </section>
 <section id="the-bottom-line" class="level3">
@@ -947,9 +820,10 @@ shinyApp(ui, server)</code></pre>
 \]</span></p>
 <p>where <span class="math inline">\(\rho = E[|X - \mu|^3]\)</span> is the third absolute moment. The ratio <span class="math inline">\(\rho / \sigma^3\)</span> measures how “non-normal” the population is — distributions with heavy tails or strong skewness have a large <span class="math inline">\(\rho / \sigma^3\)</span>, which means the bound shrinks more slowly with <span class="math inline">\(n\)</span>. That’s the mathematical reason skewed distributions need more data before CLT kicks in.</p>
 </section>
-<section id="simulation-3-watch-clt-kick-in-at-different-speeds" class="level3">
-<h3 class="anchored" data-anchor-id="simulation-3-watch-clt-kick-in-at-different-speeds">Simulation 3: watch CLT kick in at different speeds</h3>
-<p>Pick a population and see how the sampling distribution of <span class="math inline">\(\bar{X}_n\)</span> (standardised) compares to the <span class="math inline">\(N(0, 1)\)</span> curve at four sample sizes. The KS distance measures how far the sampling distribution is from normal — smaller = closer.</p>
+<section id="watch-clt-kick-in-at-different-speeds" class="level3">
+<h3 class="anchored" data-anchor-id="watch-clt-kick-in-at-different-speeds">Watch CLT kick in at different speeds</h3>
+<p>Pick a population and see how the sampling distribution of <span class="math inline">\(\bar{X}_n\)</span> (standardised) compares to the <span class="math inline">\(N(0, 1)\)</span> curve at four sample sizes.</p>
+<p>The <strong>KS (Kolmogorov–Smirnov) distance</strong> turns “how normal is it?” into one number. Lay the two cumulative curves on top of each other — the one built from the simulated standardised means and the theoretical <span class="math inline">\(N(0,1)\)</span> — and read off the single largest vertical gap between them. That gap is the KS distance: <span class="math inline">\(0\)</span> means identical to normal, and it grows as the two curves pull apart. Here it turns green once it drops below <span class="math inline">\(0.03\)</span>. Watch it shrink as <span class="math inline">\(n\)</span> grows — that is the CLT arriving, measured in one number. (It is the same statistic as R’s <code>ks.test</code>.)</p>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 620
 
@@ -980,11 +854,6 @@ ui &lt;- fluidPage(
         selected = "exp"
       ),
 
-      actionButton("run3", "Run 2,000 experiments",
-                   style = "width:100%; margin-top:10px;
-                            background:#3498db; color:white;
-                            border:none; padding:10px; font-weight:bold;"),
-
       uiOutput("stats3")
     ),
 
@@ -997,9 +866,7 @@ ui &lt;- fluidPage(
 
 server &lt;- function(input, output, session) {
 
-  sim_data &lt;- reactiveVal(NULL)
-
-  observeEvent(input$run3, {
+  sim_data &lt;- reactive({
     pop &lt;- input$pop3
     B   &lt;- 2000
     ns  &lt;- c(5, 30, 100, 500)
@@ -1028,24 +895,18 @@ server &lt;- function(input, output, session) {
       list(means = means, n = n)
     })
 
-    sim_data(list(results = results, mu = mu, sig = sig,
-                  pop = pop, ns = ns))
+    list(results = results, mu = mu, sig = sig,
+         pop = pop, ns = ns)
   })
 
   output$grid_plot &lt;- renderPlot({
     d &lt;- sim_data()
-    if (is.null(d)) {
-      plot.new()
-      text(0.5, 0.5, "Press the button to run",
-           cex = 1.4, col = "#7f8c8d")
-      return()
-    }
 
     par(mfrow = c(2, 2), mar = c(4, 4, 3.5, 1), oma = c(0, 0, 2, 0))
 
     pop_label &lt;- switch(d$pop,
       normal = "Normal(0, 1)", uniform = "Uniform(0, 1)",
-      exp = "Exponential(1)", chisq = "\u03c7\u00b2(3)",
+      exp = "Exponential(1)", chisq = "χ²(3)",
       bern = "Bernoulli(0.1)", lognorm = "Log-normal(0, 1)")
 
     for (i in seq_along(d$results)) {
@@ -1074,7 +935,6 @@ server &lt;- function(input, output, session) {
 
   output$stats3 &lt;- renderUI({
     d &lt;- sim_data()
-    if (is.null(d)) return(NULL)
 
     ks_vals &lt;- sapply(d$results, function(r) {
       se &lt;- d$sig / sqrt(r$n)
@@ -1114,15 +974,6 @@ shinyApp(ui, server)</code></pre>
 </div>
 </div>
 </div>
-<hr>
-</section>
-<section id="did-you-know" class="level3">
-<h3 class="anchored" data-anchor-id="did-you-know">Did you know?</h3>
-<ul>
-<li><strong>Jacob Bernoulli</strong> proved the first version of the Law of Large Numbers in his book <em>Ars Conjectandi</em>, published posthumously in <strong>1713</strong>. He called it his “golden theorem” and spent over 20 years working on the proof. The result seems obvious in hindsight — of course averages converge — but rigorously proving <em>why</em> required entirely new mathematical machinery.</li>
-<li>There are actually two versions: the <strong>Weak LLN</strong> (convergence in probability, proved by Bernoulli and later Chebyshev) and the <strong>Strong LLN</strong> (almost sure convergence, proved by Kolmogorov in 1933). The strong version says that convergence happens with probability 1, not just “usually.”</li>
-<li>The heavy-tailed <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(\text{df} = 1\)</span> (the Cauchy distribution) has <strong>no finite mean</strong>, so LLN doesn’t apply. The running average never settles down, no matter how much data you collect. Try it in the simulation above — it keeps jumping around forever.</li>
-</ul>
 
 
 </section>
