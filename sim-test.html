@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simulation Embed Test</title>
-<!-- cross-origin isolation service worker (credentialless mode) -->
-<script>window.coi = { coepCredentialless: () => true };</script>
+<!-- cross-origin isolation service worker (require-corp mode, to match the sim's own SW) -->
+<script>window.coi = { coepCredentialless: () => false };</script>
 <script src="/coi-serviceworker.js"></script>
 <style>
   body { font-family: system-ui, -apple-system, sans-serif; max-width: 920px; margin: 2rem auto; padding: 0 1rem; color:#222; line-height:1.5; }
