@@ -5,6 +5,10 @@ permalink: /teaching/
 author_profile: true
 ---
 
+<!-- Make /teaching/ cross-origin isolated so the embedded shinylive sims can run (same idea as the Econ Lab sim pages). credentialless mode avoids breaking cross-origin fonts/images. -->
+<script>window.coi = { coepCredentialless: () => true };</script>
+<script src="/coi-serviceworker.js"></script>
+
 <style>
   body, .page, #main { background: #f7f6f3 !important; }  /* CHANGED: warm page bg so white panels pop (homepage stays white) */
 
@@ -228,28 +232,28 @@ author_profile: true
 <div class="page-heading">Teaching Tools &amp; Simulations</div>
 <p class="page-intro">
   I build browser-based teaching simulations that run entirely in the browser (no installs), so
-  students can experiment with the models directly. A few are linked below; each opens the full
-  interactive simulation in a new tab, in my <a href="/econlab/" style="color:#185FA5;text-decoration:none;">Econ&nbsp;Lab</a>.
+  students can experiment with the models directly. A few are embedded below; each links to the full
+  companion notes in my <a href="/econlab/" style="color:#185FA5;text-decoration:none;">Econ&nbsp;Lab</a>.
 </p>
 
 <!-- CHANGED: simulations auto-load (no click) but lazily — each shinylive-R (webR) sim is
      injected when its card scrolls into view (IntersectionObserver), so /teaching/ still
      opens fast instead of firing all four webR runtimes on page load. -->
 <div class="demo-grid">
-<a class="demo-card demo-launch-card" href="/econlab/stats-course/simulations.html" target="_blank" rel="noopener">
+<div class="demo-card">
   <div class="demo-card-header">
     <span class="demo-title">Central Limit Theorem <span class="talk-abbr">Statistics</span></span>
-    <span class="demo-open">Launch &#8599;</span>
+    <a class="demo-open" href="/econlab/stats-course/simulations.html" target="_blank" rel="noopener">Full notes &#8599;</a>
   </div>
-  <div class="demo-launch"><span class="demo-spin">Open interactive simulation</span><small>runs in your browser &middot; new tab</small></div>
-</a>
-<a class="demo-card demo-launch-card" href="/econlab/intermediate-micro/choice.html" target="_blank" rel="noopener">
+  <div class="demo-viewport" data-src="/econlab/stats-course/simulations.embed.html" data-title="Central Limit Theorem — interactive simulation"><span class="demo-ph">Loading simulation…</span></div>
+</div>
+<div class="demo-card">
   <div class="demo-card-header">
     <span class="demo-title">Consumer Choice <span class="talk-abbr">Intermediate Micro</span></span>
-    <span class="demo-open">Launch &#8599;</span>
+    <a class="demo-open" href="/econlab/intermediate-micro/choice.html" target="_blank" rel="noopener">Full notes &#8599;</a>
   </div>
-  <div class="demo-launch"><span class="demo-spin">Open interactive simulation</span><small>runs in your browser &middot; new tab</small></div>
-</a>
+  <div class="demo-viewport" data-src="/econlab/intermediate-micro/choice.embed.html" data-title="Consumer Choice — interactive simulation"><span class="demo-ph">Loading simulation…</span></div>
+</div>
 <!-- Extra simulations hidden for now (uncomment to restore Monopoly / Prospect Theory / Regression Discontinuity)
 <div class="demo-card">
   <div class="demo-card-header">
