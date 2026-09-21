@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulation Embed Test</title>
+<!-- cross-origin isolation service worker (credentialless mode) -->
+<script>window.coi = { coepCredentialless: () => true };</script>
+<script src="/coi-serviceworker.js"></script>
+<style>
+  body { font-family: system-ui, -apple-system, sans-serif; max-width: 920px; margin: 2rem auto; padding: 0 1rem; color:#222; line-height:1.5; }
+  h1 { font-size: 1.4rem; } h2 { font-size: 1.05rem; margin-top: 1.6rem; }
+  .status { padding: 12px 16px; border-radius: 6px; margin: 1rem 0; font-family: ui-monospace, Menlo, monospace; font-size: 13px; }
+  .ok  { background:#d4edda; color:#155724; }
+  .bad { background:#f8d7da; color:#721c24; }
+  iframe { width:100%; height:660px; border:1px solid #ccc; border-radius:4px; }
+  code { background:#f4f4f4; padding:1px 5px; border-radius:3px; }
+  .note { color:#666; font-size:13px; }
+</style>
+</head>
+<body>
+<h1>Simulation embed test</h1>
+<p class="note">Throwaway sandbox (<code>/sim-test.html</code>) for getting embedded shinylive sims to run, so the teaching page stays safe. On first load this page may <b>reload itself once</b> (the service worker activating) — that's expected.</p>
+
+<div id="status" class="status">checking isolation…</div>
+
+<h2>1 · Embedded in an iframe — the thing we want to work</h2>
+<p class="note">If cross-origin isolation is working, this should boot webR and run in ~10–15s.</p>
+<iframe src="/econlab/stats-course/simulations.embed.html" title="CLT simulation (embedded)"></iframe>
+
+<h2>2 · Direct link — known to work standalone (baseline)</h2>
+<p><a href="/econlab/stats-course/simulations.html" target="_blank" rel="noopener">Open the CLT simulation in a new tab &rarr;</a></p>
+
+<script>
+  function update() {
+    var el = document.getElementById('status');
+    var iso = window.crossOriginIsolated;
+    var sab = (typeof SharedArrayBuffer !== 'undefined');
+    el.className = 'status ' + (iso ? 'ok' : 'bad');
+    el.textContent =
+      'crossOriginIsolated = ' + iso +
+      '   |   SharedArrayBuffer available = ' + sab +
+      (iso ? '   ✓ embedding should work' : '   ✗ iframe sim will NOT run until this reads true');
+  }
+  update();
+  setTimeout(update, 2500);
+</script>
+</body>
+</html>
