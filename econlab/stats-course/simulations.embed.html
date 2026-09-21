@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>simulations — interactive simulation</title>
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<style>html,body{margin:0;padding:0;background:#fff}body{padding:6px 8px}.shinylive-r{margin:0}</style>
+</head><body>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 600
+
+library(shiny)
+
+# ---------------------------------------------------------------------------
+# Helper: draw a single random sample from the chosen distribution
+# ---------------------------------------------------------------------------
+draw_sample &lt;- function(n, dist) {
+  switch(dist,
+    "Uniform(0, 1)"      = runif(n),
+    "Exponential(1)"     = rexp(n, rate = 1),
+    "Right-skewed"       = rchisq(n, df = 3),
+    "Bimodal"            = {
+      k &lt;- rbinom(n, 1, 0.5)
+      k * rnorm(n, mean = -2, sd = 0.6) + (1 - k) * rnorm(n, mean = 2, sd = 0.6)
+    },
+    "Bernoulli(0.3)"     = rbinom(n, size = 1, prob = 0.3),
+    runif(n)
+  )
+}
+
+# Theoretical mean &amp; sd of each population distribution
+pop_params &lt;- list(
+  "Uniform(0, 1)"  = list(mu = 0.5, sigma = sqrt(1 / 12)),
+  "Exponential(1)" = list(mu = 1,   sigma = 1),
+  "Right-skewed"   = list(mu = 3,   sigma = sqrt(6)),
+  "Bimodal"        = list(mu = 0,   sigma = sqrt(0.6^2 + 4)),
+  "Bernoulli(0.3)" = list(mu = 0.3, sigma = sqrt(0.3 * 0.7))
+)
+
+# ---------------------------------------------------------------------------
+# UI
+# ---------------------------------------------------------------------------
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #eaf2f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.8;
+    }
+    .stats-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      selectInput("dist", "Population distribution:",
+                  choices = names(pop_params)),
+
+      sliderInput("n", "Sample size (n):",
+                  min = 1, max = 200, value = 5, step = 1),
+
+      sliderInput("reps", "Number of samples:",
+                  min = 100, max = 3000, value = 1000, step = 100),
+
+      actionButton("resample", "Draw new samples",
+                   class = "btn-primary", width = "100%"),
+
+      uiOutput("stats_box")
+    ),
+
+    mainPanel(
+      width = 9,
+      fluidRow(
+        column(6, plotOutput("parent_plot", height = "380px")),
+        column(6, plotOutput("sampling_plot", height = "380px"))
+      )
+    )
+  )
+)
+
+# ---------------------------------------------------------------------------
+# Server
+# ---------------------------------------------------------------------------
+server &lt;- function(input, output, session) {
+
+  sim &lt;- reactive({
+    input$resample
+    n    &lt;- input$n
+    reps &lt;- input$reps
+    dist &lt;- input$dist
+
+    means &lt;- replicate(reps, mean(draw_sample(n, dist)))
+
+    params &lt;- pop_params[[dist]]
+    theo_mu &lt;- params$mu
+    theo_se &lt;- params$sigma / sqrt(n)
+
+    list(means = means, dist = dist, n = n, reps = reps,
+         theo_mu = theo_mu, theo_se = theo_se)
+  })
+
+  output$parent_plot &lt;- renderPlot({
+    dist &lt;- input$dist
+    big  &lt;- draw_sample(10000, dist)
+
+    par(mar = c(4.5, 4, 3, 1))
+    hist(big, breaks = 60, probability = TRUE,
+         col = "#d5e8d4", border = "#82b366",
+         main = paste("True Population:", dist),
+         xlab = "x", ylab = "Density")
+  })
+
+  output$sampling_plot &lt;- renderPlot({
+    s &lt;- sim()
+
+    par(mar = c(4.5, 4, 3, 1))
+    hist(s$means, breaks = 40, probability = TRUE,
+         col = "#dae8fc", border = "#6c8ebf",
+         main = paste0("Sampling Distribution of the Mean (n = ", s$n, ")"),
+         xlab = "Sample mean", ylab = "Density")
+
+    x_seq &lt;- seq(min(s$means), max(s$means), length.out = 300)
+    lines(x_seq, dnorm(x_seq, mean = s$theo_mu, sd = s$theo_se),
+          col = "#e74c3c", lwd = 2.5)
+
+    abline(v = s$theo_mu, lty = 2, lwd = 2, col = "#2c3e50")
+
+    legend("topright",
+           legend = c("Normal approximation", "Theoretical mean"),
+           col    = c("#e74c3c", "#2c3e50"),
+           lwd    = c(2.5, 2),
+           lty    = c(1, 2),
+           bty    = "n", cex = 0.9)
+  })
+
+  output$stats_box &lt;- renderUI({
+    s &lt;- sim()
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;Theoretical mean:&lt;/b&gt; ",   round(s$theo_mu, 4), "&lt;br&gt;",
+        "&lt;b&gt;Observed mean:&lt;/b&gt; ",      round(mean(s$means), 4), "&lt;br&gt;",
+        "&lt;b&gt;Theoretical SE:&lt;/b&gt; ",     round(s$theo_se, 4), "&lt;br&gt;",
+        "&lt;b&gt;Observed SD:&lt;/b&gt; ",        round(sd(s$means), 4)
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</body></html>
