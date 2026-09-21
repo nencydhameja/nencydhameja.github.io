@@ -498,6 +498,7 @@ window.Quarto = {
   <li><a href="#what-the-theorem-actually-says" id="toc-what-the-theorem-actually-says" class="nav-link active" data-scroll-target="#what-the-theorem-actually-says">What the theorem actually says</a></li>
   <li><a href="#why-sqrtn-not-n" id="toc-why-sqrtn-not-n" class="nav-link" data-scroll-target="#why-sqrtn-not-n">Why <span class="math inline">\(\sqrt{n}\)</span>, not <span class="math inline">\(n\)</span></a></li>
   <li><a href="#what-it-does-not-say" id="toc-what-it-does-not-say" class="nav-link" data-scroll-target="#what-it-does-not-say">What it does <em>not</em> say</a></li>
+  <li><a href="#one-sample-many-hypothetical-samples" id="toc-one-sample-many-hypothetical-samples" class="nav-link" data-scroll-target="#one-sample-many-hypothetical-samples">One sample, many hypothetical samples</a></li>
   <li><a href="#watch-it-happen" id="toc-watch-it-happen" class="nav-link" data-scroll-target="#watch-it-happen">Watch it happen</a>
   <ul class="collapse">
   <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
@@ -552,9 +553,23 @@ window.Quarto = {
 <li><strong>It’s about the mean.</strong> Sums and averages converge; the <em>maximum</em> of a sample has its own (non-normal) limit no matter how large <span class="math inline">\(n\)</span> gets.</li>
 </ul>
 </section>
+<section id="one-sample-many-hypothetical-samples" class="level2">
+<h2 class="anchored" data-anchor-id="one-sample-many-hypothetical-samples">One sample, many hypothetical samples</h2>
+<p>In real work you observe <strong>one</strong> sample and compute <strong>one</strong> estimate — a single <span class="math inline">\(\bar{X}\)</span> (or a single <span class="math inline">\(\hat{\beta}\)</span>). The “many samples” in the CLT are <strong>hypothetical repetitions</strong> of the same data-generating process; you never actually collect them. You have</p>
+<p><span class="math display">\[\text{one observed sample} \;\longrightarrow\; \hat\theta,\]</span></p>
+<p>but inference asks a <em>what-if</em>:</p>
+<p><span class="math display">\[\text{if I redrew samples of the same size } n \text{ over and over, how much would } \hat\theta \text{ vary?}\]</span></p>
+<p>That hypothetical distribution of <span class="math inline">\(\hat\theta\)</span> is the <strong>sampling distribution</strong>.</p>
+<p>This is why the simulator’s two controls play completely different roles:</p>
+<ul>
+<li><strong>Sample size <span class="math inline">\(n\)</span> is fundamental.</strong> The spread of the sampling distribution is <span class="math inline">\(SE(\bar{X}) = \sigma/\sqrt{n}\)</span> — it depends on <span class="math inline">\(n\)</span> and nothing else. Bigger <span class="math inline">\(n\)</span> → tighter distribution.</li>
+<li><strong>Number of samples <span class="math inline">\(R\)</span> is only simulation resolution.</strong> Drawing 100 vs.&nbsp;100,000 repetitions gives a rougher vs.&nbsp;smoother picture of the <em>same</em> theoretical sampling distribution. <span class="math inline">\(R\)</span> never appears in <span class="math inline">\(\sigma/\sqrt{n}\)</span>; in theory we imagine essentially <em>all</em> possible samples of size <span class="math inline">\(n\)</span>, not a particular number of them.</li>
+</ul>
+<p>There is something genuinely striking here: we observe a single sample, yet we quantify our uncertainty by reasoning about samples we never drew. That “what would happen across repeated samples” move is the core of frequentist inference.</p>
+</section>
 <section id="watch-it-happen" class="level2">
 <h2 class="anchored" data-anchor-id="watch-it-happen">Watch it happen</h2>
-<p>Drag the <strong>sample size</strong> slider and watch claim 3 in real time. The left plot shows the true population; the right shows the sampling distribution of the mean. However ugly the population, the right panel marches toward the red normal curve as <span class="math inline">\(n\)</span> grows.</p>
+<p>Drag the <strong>sample size</strong> slider and watch claim 3 in real time. The left plot shows the true population; the right shows the sampling distribution of the mean. However ugly the population, the right panel marches toward the red normal curve as <span class="math inline">\(n\)</span> grows. Turn up <strong>number of samples</strong> and the histogram only gets <em>smoother</em> — its width is set by <span class="math inline">\(n\)</span>.</p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">

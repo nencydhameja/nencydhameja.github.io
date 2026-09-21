@@ -41,7 +41,7 @@ author_profile: true
     padding: 0.26rem 1.2rem;
     border-bottom: 0.5px solid #f1efe8;
   }
-  .talk-year { font-size: 12px; font-weight: 600; color: #8a8880; }  /* CHANGED: now holds term+year (e.g. "Fall 2026"); darkened slightly for legibility */
+  .talk-year { font-size: 12px; font-weight: 400; color: #8a8880; }  /* CHANGED: term+year, no longer bold (was font-weight 600) */
   .talk-num { font-size: 8.5px; color: #a7a59c; letter-spacing: 0.02em; text-align: right; white-space: nowrap; }  /* CHANGED: small course number in right column (where the term column used to be) */
 
   .talk-row:last-child { border-bottom: none; }
