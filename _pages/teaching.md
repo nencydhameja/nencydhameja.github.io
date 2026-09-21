@@ -228,13 +228,14 @@ author_profile: true
 <div class="page-heading">Teaching Tools &amp; Simulations</div>
 <p class="page-intro">
   I build browser-based teaching simulations that run entirely in the browser (no installs), so
-  students can experiment with the models directly. A few are linked below; each opens the full
-  interactive simulation in a new tab, in my <a href="/econlab/" style="color:#185FA5;text-decoration:none;">Econ&nbsp;Lab</a>.
+  students can experiment with the models directly. Explore them in my
+  <a href="/econlab/" style="color:#185FA5;text-decoration:none;">Econ&nbsp;Lab</a>.
 </p>
 
 <!-- CHANGED: simulations auto-load (no click) but lazily — each shinylive-R (webR) sim is
      injected when its card scrolls into view (IntersectionObserver), so /teaching/ still
      opens fast instead of firing all four webR runtimes on page load. -->
+<!-- Simulations removed from the teaching page for now (they live in Econ Lab). Uncomment this whole block to bring the launch cards back.
 <div class="demo-grid">
 <a class="demo-card demo-launch-card" href="/econlab/stats-course/simulations.html" target="_blank" rel="noopener">
   <div class="demo-card-header">
@@ -250,7 +251,6 @@ author_profile: true
   </div>
   <div class="demo-launch"><span class="demo-spin">Open interactive simulation</span><small>runs in your browser &middot; new tab</small></div>
 </a>
-<!-- Extra simulations hidden for now (uncomment to restore Monopoly / Prospect Theory / Regression Discontinuity)
 <div class="demo-card">
   <div class="demo-card-header">
     <span class="demo-title">Monopoly <span class="talk-abbr">Intermediate Micro</span></span>
@@ -272,7 +272,6 @@ author_profile: true
   </div>
   <div class="demo-viewport" data-src="/econlab/causal-inference/rdd.embed.html" data-title="Regression Discontinuity — interactive simulation"><span class="demo-ph">Loading simulation…</span></div>
 </div>
--->
 </div>
 
 <script>
@@ -300,4 +299,5 @@ author_profile: true
   }
 })();
 </script>
+-->
 
