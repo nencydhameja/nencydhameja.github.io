@@ -24,9 +24,12 @@
 
 <div id="status" class="status">checking isolation…</div>
 
-<h2>1 · Embedded in an iframe — the thing we want to work</h2>
-<p class="note">If cross-origin isolation is working, this should boot webR and run in ~10–15s.</p>
-<iframe src="/econlab/stats-course/simulations.embed.html" title="CLT simulation (embedded)"></iframe>
+<h2>1a · Embedded — FULL page (simulations.html)</h2>
+<p class="note">Now that the page is isolated, try the full proven page in the frame.</p>
+<iframe src="/econlab/stats-course/simulations.html" title="CLT simulation (full page, embedded)"></iframe>
+
+<h2>1b · Embedded — stripped embed (simulations.embed.html)</h2>
+<iframe src="/econlab/stats-course/simulations.embed.html" title="CLT simulation (embed, embedded)"></iframe>
 
 <h2>2 · Direct link — known to work standalone (baseline)</h2>
 <p><a href="/econlab/stats-course/simulations.html" target="_blank" rel="noopener">Open the CLT simulation in a new tab &rarr;</a></p>
