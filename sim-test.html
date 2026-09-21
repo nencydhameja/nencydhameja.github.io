@@ -4,9 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simulation Embed Test</title>
-<!-- cross-origin isolation service worker (require-corp mode, to match the sim's own SW) -->
-<script>window.coi = { coepCredentialless: () => false };</script>
-<script src="/coi-serviceworker.js"></script>
+<!-- Register SHINYLIVE's own service worker at the SITE ROOT so it both isolates the page
+     AND serves the webR runtime to the embedded app. Mirrors load-shinylive-sw.js's logic. -->
+<script type="module">
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/shinylive-sw.js", { type: "module" })
+      .then(() => console.log("shinylive-sw registered at root"))
+      .catch((e) => console.log("SW registration failed", e));
+    navigator.serviceWorker.ready.then(() => {
+      if (!navigator.serviceWorker.controller) {
+        // not yet controlled -> reload once so the SW takes over and isolates the page
+        window.location.reload();
+      }
+    });
+  }
+</script>
 <style>
   body { font-family: system-ui, -apple-system, sans-serif; max-width: 920px; margin: 2rem auto; padding: 0 1rem; color:#222; line-height:1.5; }
   h1 { font-size: 1.4rem; } h2 { font-size: 1.05rem; margin-top: 1.6rem; }
@@ -19,19 +31,16 @@
 </style>
 </head>
 <body>
-<h1>Simulation embed test</h1>
-<p class="note">Throwaway sandbox (<code>/sim-test.html</code>) for getting embedded shinylive sims to run, so the teaching page stays safe. On first load this page may <b>reload itself once</b> (the service worker activating) — that's expected.</p>
+<h1>Simulation embed test — shinylive SW at root</h1>
+<p class="note">Now using shinylive's <b>own</b> service worker (root scope) so it both isolates the page and serves webR. On first load this page <b>reloads itself once</b>. Test in a <b>fresh Incognito window</b> so the old worker isn't cached.</p>
 
 <div id="status" class="status">checking isolation…</div>
 
-<h2>1a · Embedded — FULL page (simulations.html)</h2>
-<p class="note">Now that the page is isolated, try the full proven page in the frame.</p>
-<iframe src="/econlab/stats-course/simulations.html" title="CLT simulation (full page, embedded)"></iframe>
+<h2>Embedded — full simulations.html</h2>
+<p class="note">Should now boot webR and show sliders + plot in ~10–15s.</p>
+<iframe src="/econlab/stats-course/simulations.html" title="CLT simulation (embedded)"></iframe>
 
-<h2>1b · Embedded — stripped embed (simulations.embed.html)</h2>
-<iframe src="/econlab/stats-course/simulations.embed.html" title="CLT simulation (embed, embedded)"></iframe>
-
-<h2>2 · Direct link — known to work standalone (baseline)</h2>
+<h2>Direct link (baseline)</h2>
 <p><a href="/econlab/stats-course/simulations.html" target="_blank" rel="noopener">Open the CLT simulation in a new tab &rarr;</a></p>
 
 <script>
@@ -41,9 +50,8 @@
     var sab = (typeof SharedArrayBuffer !== 'undefined');
     el.className = 'status ' + (iso ? 'ok' : 'bad');
     el.textContent =
-      'crossOriginIsolated = ' + iso +
-      '   |   SharedArrayBuffer available = ' + sab +
-      (iso ? '   ✓ embedding should work' : '   ✗ iframe sim will NOT run until this reads true');
+      'crossOriginIsolated = ' + iso + '   |   SharedArrayBuffer = ' + sab +
+      (iso ? '   ✓ isolated by shinylive-sw' : '   ✗ not isolated yet');
   }
   update();
   setTimeout(update, 2500);
