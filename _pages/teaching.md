@@ -228,76 +228,23 @@ author_profile: true
 <div class="page-heading">Teaching Tools &amp; Simulations</div>
 <p class="page-intro">
   I build browser-based teaching simulations that run entirely in the browser (no installs), so
-  students can experiment with the models directly. Explore them in my
+  students can experiment with the models directly. Launch one below (opens as its own page), or browse them all in my
   <a href="/econlab/" style="color:#185FA5;text-decoration:none;">Econ&nbsp;Lab</a>.
 </p>
 
-<!-- CHANGED: simulations auto-load (no click) but lazily — each shinylive-R (webR) sim is
-     injected when its card scrolls into view (IntersectionObserver), so /teaching/ still
-     opens fast instead of firing all four webR runtimes on page load. -->
-<!-- Simulations removed from the teaching page for now (they live in Econ Lab). Uncomment this whole block to bring the launch cards back.
 <div class="demo-grid">
 <a class="demo-card demo-launch-card" href="/econlab/stats-course/simulations.html" target="_blank" rel="noopener">
   <div class="demo-card-header">
     <span class="demo-title">Central Limit Theorem <span class="talk-abbr">Statistics</span></span>
     <span class="demo-open">Launch &#8599;</span>
   </div>
-  <div class="demo-launch"><span class="demo-spin">Open interactive simulation</span><small>runs in your browser &middot; new tab</small></div>
+  <div class="demo-launch"><span class="demo-spin">Open interactive simulation</span><small>runs in your browser</small></div>
 </a>
 <a class="demo-card demo-launch-card" href="/econlab/intermediate-micro/choice.html" target="_blank" rel="noopener">
   <div class="demo-card-header">
     <span class="demo-title">Consumer Choice <span class="talk-abbr">Intermediate Micro</span></span>
     <span class="demo-open">Launch &#8599;</span>
   </div>
-  <div class="demo-launch"><span class="demo-spin">Open interactive simulation</span><small>runs in your browser &middot; new tab</small></div>
+  <div class="demo-launch"><span class="demo-spin">Open interactive simulation</span><small>runs in your browser</small></div>
 </a>
-<div class="demo-card">
-  <div class="demo-card-header">
-    <span class="demo-title">Monopoly <span class="talk-abbr">Intermediate Micro</span></span>
-    <a class="demo-open" href="/econlab/intermediate-micro/monopoly.html" target="_blank" rel="noopener">Full notes &#8599;</a>
-  </div>
-  <div class="demo-viewport" data-src="/econlab/intermediate-micro/monopoly.embed.html" data-title="Monopoly — interactive simulation"><span class="demo-ph">Loading simulation…</span></div>
 </div>
-<div class="demo-card">
-  <div class="demo-card-header">
-    <span class="demo-title">Prospect Theory &amp; Loss Aversion <span class="talk-abbr">Behavioral Economics</span></span>
-    <a class="demo-open" href="/econlab/intermediate-micro/prospect-theory.embed.html" target="_blank" rel="noopener">Open full &#8599;</a>
-  </div>
-  <div class="demo-viewport" data-src="/econlab/intermediate-micro/prospect-theory.embed.html" data-title="Prospect Theory — value function and loss aversion"><span class="demo-ph">Loading simulation…</span></div>
-</div>
-<div class="demo-card">
-  <div class="demo-card-header">
-    <span class="demo-title">Regression Discontinuity <span class="talk-abbr">Causal Inference</span></span>
-    <a class="demo-open" href="/econlab/causal-inference/rdd.html" target="_blank" rel="noopener">Full notes &#8599;</a>
-  </div>
-  <div class="demo-viewport" data-src="/econlab/causal-inference/rdd.embed.html" data-title="Regression Discontinuity — interactive simulation"><span class="demo-ph">Loading simulation…</span></div>
-</div>
-</div>
-
-<script>
-// CHANGED: auto-load each sim (no click) when its card nears the viewport, so the page
-// stays fast but visitors don't have to do anything to see the simulations run.
-(function () {
-  function load(vp) {
-    var f = document.createElement('iframe');
-    f.className = 'demo-frame';
-    f.src = vp.getAttribute('data-src');
-    f.title = vp.getAttribute('data-title') || 'Interactive simulation';
-    vp.innerHTML = '';
-    vp.appendChild(f);
-  }
-  var cards = document.querySelectorAll('.demo-viewport[data-src]');
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { io.unobserve(e.target); load(e.target); }
-      });
-    }, { rootMargin: '300px' });
-    cards.forEach(function (vp) { io.observe(vp); });
-  } else {
-    cards.forEach(load); // fallback: just load them all
-  }
-})();
-</script>
--->
-
