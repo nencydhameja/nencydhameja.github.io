@@ -1,3 +1,15 @@
+/* CHANGED: added site fonts — Inter headings/nav + Source Serif 4 body.
+   Was: Bootstrap default system-sans stack (no chosen font). Delete this block to revert. */
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opt_sz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600;700&display=swap');
+
+:root { --bs-body-font-family: 'Source Serif 4', Charter, Georgia, serif; }
+body { font-family: 'Source Serif 4', Charter, Georgia, serif; }
+h1, h2, h3, h4, h5, h6,
+.navbar, .sidebar, .sidebar-title, .quarto-title-banner,
+.sidebar-item-text { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+/* code stays monospace */
+code, pre, kbd, samp, .sourceCode { font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+
 /* "Did you know?" sections */
 section#did-you-know {
   background: #fef9e7;
