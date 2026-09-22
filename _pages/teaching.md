@@ -228,11 +228,12 @@ author_profile: true
 <div class="page-heading">Teaching Tools &amp; Simulations</div>
 <p class="page-intro">
   I build browser-based teaching simulations that run entirely in the browser (no installs), so
-  students can experiment with the models directly. Launch one below (opens as its own page), or browse them all in my
+  students can experiment with the models directly. Explore them in my
   <a href="/econlab/" style="color:#185FA5;text-decoration:none;">Econ&nbsp;Lab</a>.
 </p>
 
-<!-- <div class="demo-grid">
+<!-- Simulation cards hidden for now (they live in Econ Lab); uncomment to show them here
+<div class="demo-grid">
 <a class="demo-card demo-launch-card" href="/econlab/stats-course/simulations.html" target="_blank" rel="noopener">
   <div class="demo-card-header">
     <span class="demo-title">Central Limit Theorem <span class="talk-abbr">Statistics</span></span>
@@ -245,6 +246,7 @@ author_profile: true
     <span class="demo-title">Consumer Choice <span class="talk-abbr">Intermediate Micro</span></span>
     <span class="demo-open">Launch &#8599;</span>
   </div>
-  <div class="demo-launch"><span class="demo-spin">Open interactive simulation</span><small>runs in your browser</small></div> -->
+  <div class="demo-launch"><span class="demo-spin">Open interactive simulation</span><small>runs in your browser</small></div>
 </a>
 </div>
+-->
