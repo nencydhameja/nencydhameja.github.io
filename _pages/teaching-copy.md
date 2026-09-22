@@ -204,6 +204,7 @@ author_profile: true
   .demo-launch-card { display: block; text-decoration: none; }
   .demo-launch-card .demo-launch { min-height: 128px; }
   .sim-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; align-items:start; }
+  .sim-grid > div { min-width:0; overflow:hidden; }
   .sim-clip { overflow:hidden; height:250px; border:0.5px solid #d3d1c7; }
   .sim-scale { width:156%; transform:scale(0.64); transform-origin:top left; }
   @media (max-width:820px){ .sim-grid{ grid-template-columns:1fr; } }
