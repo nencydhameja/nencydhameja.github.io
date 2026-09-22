@@ -242,7 +242,7 @@ author_profile: true
 <div>
 <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin:1.3rem 0 0.4rem;"><span style="font-size:15px;font-weight:500;color:#1a1a18;">Central Limit Theorem <span style="color:#888780;font-weight:400;">Statistics</span></span><a href="/econlab/stats-course/simulations.html" target="_blank" rel="noopener" style="font-size:12px;color:#185FA5;text-decoration:none;white-space:nowrap;">Full notes &#8599;</a></div>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 420
+#| viewerHeight: 360
 
 library(shiny)
 
@@ -306,8 +306,8 @@ ui &lt;- fluidPage(
     mainPanel(
       width = 9,
       fluidRow(
-        column(6, plotOutput("parent_plot", height = "380px")),
-        column(6, plotOutput("sampling_plot", height = "380px"))
+        column(6, plotOutput("parent_plot", height = "230px")),
+        column(6, plotOutput("sampling_plot", height = "230px"))
       )
     )
   )
@@ -388,7 +388,7 @@ shinyApp(ui, server)</code></pre>
 
 <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin:1.6rem 0 0.4rem;"><span style="font-size:15px;font-weight:500;color:#1a1a18;">Consumer Choice <span style="color:#888780;font-weight:400;">Intermediate Micro</span></span><a href="/econlab/intermediate-micro/choice.html" target="_blank" rel="noopener" style="font-size:12px;color:#185FA5;text-decoration:none;white-space:nowrap;">Full notes &#8599;</a></div>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 420
+#| viewerHeight: 360
 
 library(shiny)
 
@@ -413,7 +413,7 @@ ui &lt;- fluidPage(
     ),
     mainPanel(
       width = 8,
-      plotOutput("choice_plot", height = "520px")
+      plotOutput("choice_plot", height = "300px")
     )
   )
 )
