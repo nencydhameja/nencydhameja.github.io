@@ -232,7 +232,7 @@ author_profile: true
   <a href="/econlab/" style="color:#185FA5;text-decoration:none;">Econ&nbsp;Lab</a>.
 </p>
 
-<div class="demo-grid">
+<!-- <div class="demo-grid">
 <a class="demo-card demo-launch-card" href="/econlab/stats-course/simulations.html" target="_blank" rel="noopener">
   <div class="demo-card-header">
     <span class="demo-title">Central Limit Theorem <span class="talk-abbr">Statistics</span></span>
@@ -245,6 +245,6 @@ author_profile: true
     <span class="demo-title">Consumer Choice <span class="talk-abbr">Intermediate Micro</span></span>
     <span class="demo-open">Launch &#8599;</span>
   </div>
-  <div class="demo-launch"><span class="demo-spin">Open interactive simulation</span><small>runs in your browser</small></div>
+  <div class="demo-launch"><span class="demo-spin">Open interactive simulation</span><small>runs in your browser</small></div> -->
 </a>
 </div>
