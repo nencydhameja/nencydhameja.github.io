@@ -203,11 +203,6 @@ author_profile: true
   /* CHANGED: demos now open the standalone sim in a new tab (iframe-embedded shinylive is unreliable on GitHub Pages) */
   .demo-launch-card { display: block; text-decoration: none; }
   .demo-launch-card .demo-launch { min-height: 128px; }
-  .sim-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; align-items:start; }
-  .sim-grid > div { min-width:0; overflow:hidden; }
-  .sim-clip { overflow:hidden; height:250px; border:0.5px solid #d3d1c7; }
-  .sim-scale { width:156%; transform:scale(0.64); transform-origin:top left; }
-  @media (max-width:820px){ .sim-grid{ grid-template-columns:1fr; } }
 </style>
 
 <div class="page-heading">Courses Taught</div>
@@ -243,12 +238,8 @@ author_profile: true
   <a href="/econlab/" style="color:#185FA5;text-decoration:none;">Econ&nbsp;Lab</a>.
 </p>
 
-<div class="sim-grid">
-<div>
-</div>
-<div>
 <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin:1.3rem 0 0.4rem;"><span style="font-size:15px;font-weight:500;color:#1a1a18;">Central Limit Theorem <span style="color:#888780;font-weight:400;">Statistics</span></span><a href="/econlab/stats-course/simulations.html" target="_blank" rel="noopener" style="font-size:12px;color:#185FA5;text-decoration:none;white-space:nowrap;">Full notes &#8599;</a></div>
-<div class="sim-clip"><div class="sim-scale"><pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 360
 
 library(shiny)
@@ -388,11 +379,11 @@ server &lt;- function(input, output, session) {
   })
 }
 
-shinyApp(ui, server)</code></pre></div></div>
+shinyApp(ui, server)</code></pre>
 
 
 <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin:1.6rem 0 0.4rem;"><span style="font-size:15px;font-weight:500;color:#1a1a18;">Consumer Choice <span style="color:#888780;font-weight:400;">Intermediate Micro</span></span><a href="/econlab/intermediate-micro/choice.html" target="_blank" rel="noopener" style="font-size:12px;color:#185FA5;text-decoration:none;white-space:nowrap;">Full notes &#8599;</a></div>
-<div class="sim-clip"><div class="sim-scale"><pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 360
 
 library(shiny)
@@ -503,6 +494,5 @@ server &lt;- function(input, output, session) {
   })
 }
 
-shinyApp(ui, server)</code></pre></div></div>
-</div>
-</div>
+shinyApp(ui, server)</code></pre>
+
