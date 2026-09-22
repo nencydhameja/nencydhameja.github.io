@@ -238,8 +238,9 @@ author_profile: true
   <a href="/econlab/" style="color:#185FA5;text-decoration:none;">Econ&nbsp;Lab</a>.
 </p>
 
+<h3 style="font-size:15px;font-weight:500;margin:1.3rem 0 0.4rem;">Central Limit Theorem <span style="color:#888780;font-weight:400;">Statistics</span></h3>
 <pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 600
+#| viewerHeight: 420
 
 library(shiny)
 
@@ -379,3 +380,118 @@ server &lt;- function(input, output, session) {
 }
 
 shinyApp(ui, server)</code></pre>
+
+<h3 style="font-size:15px;font-weight:500;margin:1.6rem 0 0.4rem;">Consumer Choice <span style="color:#888780;font-weight:400;">Intermediate Micro</span></h3>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 420
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  titlePanel("Cobb-Douglas Consumer"),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 4,
+      sliderInput("a", "Cobb-Douglas exponent a:",
+                  min = 0.5, max = 4, value = 1, step = 0.25),
+      sliderInput("b", "Cobb-Douglas exponent b:",
+                  min = 0.5, max = 4, value = 1, step = 0.25),
+      sliderInput("m",  "Income (m):",            min =  20, max = 200, value = 100, step = 10),
+      sliderInput("p1", "Price of good 1 (p₁):",  min =   1, max =  20, value =   5, step = 1),
+      sliderInput("p2", "Price of good 2 (p₂):",  min =   1, max =  20, value =   5, step = 1),
+      hr(),
+      checkboxInput("show_other_ics",
+                    "Show a ladder of indifference curves",
+                    value = TRUE),
+      htmlOutput("readout")
+    ),
+    mainPanel(
+      width = 8,
+      plotOutput("choice_plot", height = "520px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  bundle &lt;- reactive({
+    a &lt;- input$a; b &lt;- input$b
+    m &lt;- input$m; p1 &lt;- input$p1; p2 &lt;- input$p2
+    x1 &lt;- a * m / ((a + b) * p1)
+    x2 &lt;- b * m / ((a + b) * p2)
+    u_opt &lt;- x1^a * x2^b
+    list(a = a, b = b, m = m, p1 = p1, p2 = p2,
+         x1 = x1, x2 = x2, u_opt = u_opt)
+  })
+
+  output$choice_plot &lt;- renderPlot({
+    s &lt;- bundle()
+    x1_int &lt;- s$m / s$p1
+    x2_int &lt;- s$m / s$p2
+
+    xmax &lt;- max(40, x1_int) * 1.05
+    ymax &lt;- max(40, x2_int) * 1.05
+
+    par(mar = c(4.2, 4.5, 1, 1))
+    plot(NA, xlim = c(0, xmax), ylim = c(0, ymax),
+         xlab = expression(x[1]), ylab = expression(x[2]), main = "")
+
+    # Indifference curves: x_1^a x_2^b = U =&gt; x_2 = (U / x_1^a)^(1/b)
+    ic_x &lt;- seq(0.1, xmax * 1.5, length.out = 600)
+    ic_y_opt &lt;- (s$u_opt / ic_x^s$a)^(1 / s$b)
+
+    if (isTRUE(input$show_other_ics)) {
+      for (frac in c(0.5, 0.75, 1.25)) {
+        u &lt;- s$u_opt * frac
+        y &lt;- (u / ic_x^s$a)^(1 / s$b)
+        lines(ic_x, y, col = adjustcolor("#7f8c8d", 0.5), lwd = 1.2, lty = 3)
+      }
+    }
+
+    lines(ic_x, ic_y_opt, col = "#27ae60", lwd = 2.4)
+
+    polygon(c(0, x1_int, 0), c(0, 0, x2_int),
+            col = adjustcolor("#3498db", 0.12), border = NA)
+    segments(0, x2_int, x1_int, 0, col = "#185FA5", lwd = 3)
+
+    points(s$x1, s$x2, pch = 19, col = "#c0392b", cex = 1.8)
+    text(s$x1, s$x2, sprintf("  (%.1f, %.1f)", s$x1, s$x2),
+         pos = 4, col = "#c0392b", cex = 1.0)
+
+    legend("topright",
+           legend = c("Budget line", "Indifference curve through optimum",
+                      if (isTRUE(input$show_other_ics)) "Other indifference curves" else NULL,
+                      "Optimal bundle (x₁*, x₂*)"),
+           col    = c("#185FA5", "#27ae60",
+                      if (isTRUE(input$show_other_ics)) "#7f8c8d" else NULL,
+                      "#c0392b"),
+           lwd    = c(3, 2.4, if (isTRUE(input$show_other_ics)) 1.2 else NULL, NA),
+           lty    = c(1, 1, if (isTRUE(input$show_other_ics)) 3 else NULL, NA),
+           pch    = c(NA, NA, if (isTRUE(input$show_other_ics)) NA else NULL, 19),
+           bty = "n", cex = 0.9)
+  })
+
+  output$readout &lt;- renderUI({
+    s &lt;- bundle()
+    share1 &lt;- s$a / (s$a + s$b)
+    share2 &lt;- s$b / (s$a + s$b)
+    HTML(sprintf(paste(
+      "&lt;div style='margin-top:10px;font-size:13px;line-height:1.7;'&gt;",
+      "&lt;b&gt;Ordinary demand:&lt;/b&gt; x₁* = %.2f, x₂* = %.2f&lt;br&gt;",
+      "&lt;b&gt;Spending on good 1:&lt;/b&gt; p₁·x₁* = %.1f (%.0f%% of income)&lt;br&gt;",
+      "&lt;b&gt;Spending on good 2:&lt;/b&gt; p₂·x₂* = %.1f (%.0f%% of income)&lt;br&gt;",
+      "&lt;b&gt;MRS at optimum:&lt;/b&gt; %.2f &amp;nbsp; &lt;b&gt;p₁/p₂:&lt;/b&gt; %.2f&lt;br&gt;",
+      "&lt;b&gt;Utility achieved:&lt;/b&gt; %.2f",
+      "&lt;/div&gt;"
+    ),
+    s$x1, s$x2,
+    s$p1 * s$x1, 100 * share1,
+    s$p2 * s$x2, 100 * share2,
+    (s$a / s$b) * (s$x2 / s$x1),
+    s$p1 / s$p2, s$u_opt))
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+
