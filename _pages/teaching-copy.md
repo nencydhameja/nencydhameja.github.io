@@ -119,8 +119,9 @@ author_profile: true
   .sim-cell { min-width: 0; }
   .sim-cell iframe,
   .sim-cell .shinylive-wrapper { max-width: 100%; }
-  /* shrink the INSIDE of the widget (sliders, plots, text), not just the box */
-  .sim-cell iframe { zoom: 0.6; }
+  /* keep the app HORIZONTAL (render wide internally) then scale it down to fit the narrow cell */
+  .sim-clip { overflow: hidden; height: 205px; }
+  .sim-clip iframe { width: 820px !important; height: 460px !important; transform: scale(0.44); transform-origin: top left; border: 0; }
   .sim-head {
     display: flex;
     align-items: baseline;
@@ -267,7 +268,7 @@ author_profile: true
 
 <div class="sim-cell">
 <div class="sim-head"><span style="font-size:15px;font-weight:500;color:#1a1a18;">Central Limit Theorem <span style="color:#888780;font-weight:400;">Statistics</span></span><a href="/econlab/stats-course/simulations.html" target="_blank" rel="noopener" style="font-size:12px;color:#185FA5;text-decoration:none;white-space:nowrap;">Full notes &#8599;</a></div>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+<div class="sim-clip"><pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 460
 
 library(shiny)
@@ -407,12 +408,12 @@ server &lt;- function(input, output, session) {
   })
 }
 
-shinyApp(ui, server)</code></pre>
+shinyApp(ui, server)</code></pre></div>
 </div>
 
 <div class="sim-cell">
 <div class="sim-head"><span style="font-size:15px;font-weight:500;color:#1a1a18;">Consumer Choice <span style="color:#888780;font-weight:400;">Intermediate Micro</span></span><a href="/econlab/intermediate-micro/choice.html" target="_blank" rel="noopener" style="font-size:12px;color:#185FA5;text-decoration:none;white-space:nowrap;">Full notes &#8599;</a></div>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+<div class="sim-clip"><pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 460
 
 library(shiny)
@@ -523,14 +524,14 @@ server &lt;- function(input, output, session) {
   })
 }
 
-shinyApp(ui, server)</code></pre>
+shinyApp(ui, server)</code></pre></div>
 </div>
 
 
 
 <div class="sim-cell">
 <div class="sim-head"><span style="font-size:15px;font-weight:500;color:#1a1a18;">Regression Discontinuity <span style="color:#888780;font-weight:400;">Causal Inference</span></span><a href="/econlab/causal-inference/rdd.html" target="_blank" rel="noopener" style="font-size:12px;color:#185FA5;text-decoration:none;white-space:nowrap;">Full notes &#8599;</a></div>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+<div class="sim-clip"><pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 460
 
 library(shiny)
@@ -713,12 +714,12 @@ server &lt;- function(input, output, session) {
   })
 }
 
-shinyApp(ui, server)</code></pre>
+shinyApp(ui, server)</code></pre></div>
 </div>
 
 <div class="sim-cell">
 <div class="sim-head"><span style="font-size:15px;font-weight:500;color:#1a1a18;">Monocentric City <span style="color:#888780;font-weight:400;">Urban Economics</span></span><a href="/econlab/urban-econ/monocentric-city.html" target="_blank" rel="noopener" style="font-size:12px;color:#185FA5;text-decoration:none;white-space:nowrap;">Full notes &#8599;</a></div>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+<div class="sim-clip"><pre class="shinylive-r" data-engine="r"><code>#| standalone: true
 #| viewerHeight: 460
 
 library(shiny)
@@ -881,7 +882,7 @@ server &lt;- function(input, output, session) {
   })
 }
 
-shinyApp(ui, server)</code></pre>
+shinyApp(ui, server)</code></pre></div>
 </div>
 
 </div>
