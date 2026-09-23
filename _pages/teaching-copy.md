@@ -119,6 +119,8 @@ author_profile: true
   .sim-cell { min-width: 0; }
   .sim-cell iframe,
   .sim-cell .shinylive-wrapper { max-width: 100%; }
+  /* shrink the INSIDE of the widget (sliders, plots, text), not just the box */
+  .sim-cell iframe { zoom: 0.8; }
   .sim-head {
     display: flex;
     align-items: baseline;
