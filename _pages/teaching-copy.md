@@ -116,12 +116,11 @@ author_profile: true
     align-items: start;
     margin: 1.3rem 0 1.1rem;
   }
-  .sim-cell { min-width: 0; }
-  .sim-cell iframe,
-  .sim-cell .shinylive-wrapper { max-width: 100%; }
-  /* keep the app HORIZONTAL (render wide internally) then scale it down to fit the narrow cell */
-  .sim-clip { overflow: hidden; height: 205px; }
-  .sim-clip iframe { width: 820px !important; height: 460px !important; transform: scale(0.44); transform-origin: top left; border: 0; }
+  .sim-cell { min-width: 0; overflow: hidden; }
+  /* render the app WIDE on the CONTAINER (so sliders + plots sit side by side, plots on the right),
+     then zoom the whole thing down to fit the cell (zoom shrinks the box too, no whitespace) */
+  .sim-clip { width: 900px; zoom: 0.44; }
+  .sim-clip iframe { width: 100% !important; height: 470px !important; max-width: none !important; border: 0; }
   .sim-head {
     display: flex;
     align-items: baseline;
