@@ -260,7 +260,7 @@ author_profile: true
 <p class="page-intro">
   I build browser-based teaching simulations that let students experiment with the models directly.
   Explore them in my
-  <a href="/econlab/" style="color:#185FA5;text-decoration:none;">Econ&nbsp;Lab</a>.
+  <a href="/econlab/" style="color:#185FA5;text-decoration:none;">EconLab</a>.
 </p>
 
 <div class="sim-row" markdown="0">
