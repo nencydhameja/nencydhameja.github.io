@@ -258,8 +258,8 @@ author_profile: true
 
 <div class="page-heading">Teaching Tools &amp; Simulations</div>
 <p class="page-intro">
-  I build browser-based teaching simulations that run entirely in the browser (no installs), so
-  students can experiment with the models directly. Explore them in my
+  I build browser-based teaching simulations that let students experiment with the models directly.
+  Explore them in my
   <a href="/econlab/" style="color:#185FA5;text-decoration:none;">Econ&nbsp;Lab</a>.
 </p>
 
