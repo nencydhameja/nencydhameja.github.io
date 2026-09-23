@@ -120,7 +120,7 @@ author_profile: true
   .sim-cell iframe,
   .sim-cell .shinylive-wrapper { max-width: 100%; }
   /* shrink the INSIDE of the widget (sliders, plots, text), not just the box */
-  .sim-cell iframe { zoom: 0.8; }
+  .sim-cell iframe { zoom: 0.6; }
   .sim-head {
     display: flex;
     align-items: baseline;
@@ -520,6 +520,364 @@ server &lt;- function(input, output, session) {
     s$p2 * s$x2, 100 * share2,
     (s$a / s$b) * (s$x2 / s$x1),
     s$p1 / s$p2, s$u_opt))
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</div>
+
+
+
+<div class="sim-cell">
+<div class="sim-head"><span style="font-size:15px;font-weight:500;color:#1a1a18;">Regression Discontinuity <span style="color:#888780;font-weight:400;">Causal Inference</span></span><a href="/econlab/causal-inference/rdd.html" target="_blank" rel="noopener" style="font-size:12px;color:#185FA5;text-decoration:none;white-space:nowrap;">Full notes &#8599;</a></div>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 460
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("n", "Sample size:",
+                  min = 200, max = 2000, value = 500, step = 100),
+
+      sliderInput("tau", "True treatment effect:",
+                  min = 0, max = 5, value = 2, step = 0.25),
+
+      sliderInput("sigma", "Noise (SD):",
+                  min = 0.5, max = 4, value = 1.5, step = 0.25),
+
+      sliderInput("bw", "Bandwidth around cutoff:",
+                  min = 0.05, max = 0.5, value = 0.2, step = 0.05),
+
+      selectInput("curve", "True relationship:",
+                  choices = c("Linear" = "linear",
+                              "Quadratic" = "quad",
+                              "Flat" = "flat")),
+
+      actionButton("go", "New draw", class = "btn-primary", width = "100%"),
+
+      uiOutput("results")
+    ),
+
+    mainPanel(
+      width = 9,
+      plotOutput("rdd_plot", height = "480px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  dat &lt;- reactive({
+    input$go
+    n     &lt;- input$n
+    tau   &lt;- input$tau
+    sigma &lt;- input$sigma
+    bw    &lt;- input$bw
+    curve &lt;- input$curve
+
+    # Running variable: uniform on [0, 1], cutoff at 0.5
+    x &lt;- runif(n)
+    cutoff &lt;- 0.5
+    treat &lt;- as.numeric(x &gt;= cutoff)
+
+    # Potential outcome (smooth function of x)
+    if (curve == "linear") {
+      mu &lt;- 2 + 1.5 * x
+    } else if (curve == "quad") {
+      mu &lt;- 2 + 3 * (x - 0.5)^2
+    } else {
+      mu &lt;- rep(3, n)
+    }
+
+    y &lt;- mu + tau * treat + rnorm(n, sd = sigma)
+
+    # Local linear regression within bandwidth
+    in_bw &lt;- abs(x - cutoff) &lt;= bw
+    x_bw &lt;- x[in_bw]
+    y_bw &lt;- y[in_bw]
+    t_bw &lt;- treat[in_bw]
+
+    # Separate regressions left and right
+    left  &lt;- x_bw &lt; cutoff
+    right &lt;- x_bw &gt;= cutoff
+
+    if (sum(left) &gt; 2 &amp;&amp; sum(right) &gt; 2) {
+      fit_l &lt;- lm(y_bw[left] ~ x_bw[left])
+      fit_r &lt;- lm(y_bw[right] ~ x_bw[right])
+
+      # Predicted values at cutoff
+      pred_l &lt;- coef(fit_l)[1] + coef(fit_l)[2] * cutoff
+      pred_r &lt;- coef(fit_r)[1] + coef(fit_r)[2] * cutoff
+
+      rdd_est &lt;- pred_r - pred_l
+
+      # Fitted lines for plotting
+      xseq_l &lt;- seq(cutoff - bw, cutoff, length.out = 100)
+      xseq_r &lt;- seq(cutoff, cutoff + bw, length.out = 100)
+      yhat_l &lt;- coef(fit_l)[1] + coef(fit_l)[2] * xseq_l
+      yhat_r &lt;- coef(fit_r)[1] + coef(fit_r)[2] * xseq_r
+    } else {
+      rdd_est &lt;- NA
+      xseq_l &lt;- xseq_r &lt;- yhat_l &lt;- yhat_r &lt;- NULL
+      pred_l &lt;- pred_r &lt;- NA
+    }
+
+    list(x = x, y = y, treat = treat, cutoff = cutoff,
+         bw = bw, in_bw = in_bw, rdd_est = rdd_est,
+         tau = tau, sigma = sigma,
+         xseq_l = xseq_l, xseq_r = xseq_r,
+         yhat_l = yhat_l, yhat_r = yhat_r,
+         pred_l = pred_l, pred_r = pred_r)
+  })
+
+  output$rdd_plot &lt;- renderPlot({
+    d &lt;- dat()
+    par(mar = c(4.5, 4.5, 3, 1))
+
+    # Color by treatment
+    cols &lt;- ifelse(d$treat == 1, adjustcolor("#3498db", 0.25),
+                   adjustcolor("#e74c3c", 0.25))
+
+    # Dim points outside bandwidth
+    cols[!d$in_bw] &lt;- adjustcolor("gray70", 0.15)
+
+    plot(d$x, d$y, pch = 16, cex = 0.5, col = cols,
+         xlab = "Running variable (X)", ylab = "Outcome (Y)",
+         main = "Regression Discontinuity Design")
+
+    # Cutoff line
+    abline(v = d$cutoff, lty = 2, col = "gray40", lwd = 1.5)
+
+    # Bandwidth shading
+    rect(d$cutoff - d$bw, par("usr")[3],
+         d$cutoff + d$bw, par("usr")[4],
+         col = adjustcolor("#f39c12", 0.08), border = NA)
+
+    # Local linear fits
+    if (!is.null(d$xseq_l)) {
+      lines(d$xseq_l, d$yhat_l, col = "#e74c3c", lwd = 3)
+      lines(d$xseq_r, d$yhat_r, col = "#3498db", lwd = 3)
+
+      # Jump arrow
+      arrows(d$cutoff + 0.01, d$pred_l, d$cutoff + 0.01, d$pred_r,
+             code = 3, lwd = 2.5, col = "#27ae60", length = 0.1)
+
+      text(d$cutoff + 0.03,
+           (d$pred_l + d$pred_r) / 2,
+           paste0("Jump = ", round(d$rdd_est, 2)),
+           col = "#27ae60", cex = 0.95, adj = 0, font = 2)
+    }
+
+    text(d$cutoff, par("usr")[4] * 0.98, "Cutoff",
+         col = "gray40", cex = 0.8, pos = 4)
+
+    legend("topleft", bty = "n", cex = 0.85,
+           legend = c("Control (below cutoff)", "Treated (above cutoff)",
+                      "Estimation window"),
+           pch = c(16, 16, 15),
+           col = c("#e74c3c", "#3498db", adjustcolor("#f39c12", 0.3)))
+  })
+
+  output$results &lt;- renderUI({
+    d &lt;- dat()
+    if (is.na(d$rdd_est)) {
+      return(tags$div(class = "stats-box",
+        HTML("&lt;b&gt;Not enough observations in bandwidth.&lt;/b&gt; Widen it.")))
+    }
+
+    bias &lt;- d$rdd_est - d$tau
+    tags$div(class = "stats-box",
+      HTML(paste0(
+        "&lt;b&gt;True effect:&lt;/b&gt; ", d$tau, "&lt;br&gt;",
+        "&lt;b&gt;RDD estimate:&lt;/b&gt; ", round(d$rdd_est, 3), "&lt;br&gt;",
+        "&lt;b&gt;Bias:&lt;/b&gt; &lt;span class='", ifelse(abs(bias) &lt; 0.3, "good", "bad"), "'&gt;",
+        round(bias, 3), "&lt;/span&gt;&lt;br&gt;",
+        "&lt;hr style='margin:6px 0'&gt;",
+        "&lt;small&gt;Bandwidth: &amp;plusmn;", d$bw, " around cutoff&lt;/small&gt;"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</div>
+
+<div class="sim-cell">
+<div class="sim-head"><span style="font-size:15px;font-weight:500;color:#1a1a18;">Monocentric City <span style="color:#888780;font-weight:400;">Urban Economics</span></span><a href="/econlab/urban-econ/monocentric-city.html" target="_blank" rel="noopener" style="font-size:12px;color:#185FA5;text-decoration:none;white-space:nowrap;">Full notes &#8599;</a></div>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 460
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .stats-box {
+      background: #f0f4f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 14px; line-height: 1.9;
+    }
+    .stats-box b { color: #2c3e50; }
+    .good { color: #27ae60; font-weight: bold; }
+    .bad  { color: #e74c3c; font-weight: bold; }
+    .info-box {
+      background: #eaf2f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 13px; line-height: 1.8;
+    }
+    .info-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+
+      sliderInput("transport", "Transport cost ($/mile):",
+                  min = 50, max = 500, value = 200, step = 25),
+
+      sliderInput("income", "Wage/income ($1000s):",
+                  min = 20, max = 120, value = 60, step = 5),
+
+      sliderInput("ag_rent", "Agricultural rent ($/acre):",
+                  min = 50, max = 500, value = 100, step = 25),
+
+      sliderInput("pop", "Population (thousands):",
+                  min = 50, max = 1000, value = 300, step = 25),
+
+      actionButton("go", "Update city", class = "btn-primary", width = "100%"),
+
+      uiOutput("info")
+    ),
+
+    mainPanel(
+      width = 9,
+      fluidRow(
+        column(4, plotOutput("rent_plot", height = "400px")),
+        column(4, plotOutput("density_plot", height = "400px")),
+        column(4, plotOutput("city_plot", height = "400px"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  city &lt;- reactive({
+    input$go
+    t_cost  &lt;- input$transport
+    income  &lt;- input$income * 1000
+    r_ag    &lt;- input$ag_rent
+    pop     &lt;- input$pop * 1000
+
+    # CBD rent determined by population pressure and income
+    # Higher pop and income push CBD rent up
+    r_cbd &lt;- r_ag + sqrt(pop * income * t_cost) * 0.01
+
+    # City radius: where rent = agricultural rent
+    d_star &lt;- (r_cbd - r_ag) / t_cost
+
+    # Ensure reasonable bounds
+    d_star &lt;- max(d_star, 0.1)
+
+    # Distance vector
+    d &lt;- seq(0, d_star * 1.3, length.out = 200)
+
+    # Rent gradient
+    rent &lt;- pmax(r_cbd - t_cost * d, r_ag)
+
+    # Population density declines with distance (proportional to rent)
+    density_cbd &lt;- pop / (pi * d_star^2) * 2
+    density &lt;- density_cbd * pmax(1 - d / d_star, 0)
+
+    # Total area
+    area &lt;- pi * d_star^2
+
+    # Average rent (within city)
+    avg_rent &lt;- (r_cbd + r_ag) / 2
+
+    list(d = d, rent = rent, density = density,
+         d_star = d_star, r_cbd = r_cbd, r_ag = r_ag,
+         area = area, avg_rent = avg_rent, t_cost = t_cost,
+         density_cbd = density_cbd)
+  })
+
+  output$rent_plot &lt;- renderPlot({
+    c &lt;- city()
+    par(mar = c(4.5, 4.5, 3, 1))
+    plot(c$d, c$rent, type = "l", lwd = 3, col = "#2c3e50",
+         xlab = "Distance from CBD (miles)",
+         ylab = "Rent ($/acre)",
+         main = "Rent Gradient")
+    abline(h = c$r_ag, lty = 2, col = "#e74c3c", lwd = 2)
+    abline(v = c$d_star, lty = 3, col = "#7f8c8d", lwd = 1.5)
+    text(c$d_star, c$r_cbd * 0.9,
+         paste0("City edge\nd* = ", round(c$d_star, 1), " mi"),
+         pos = 4, cex = 0.8, col = "#7f8c8d")
+    legend("topright", bty = "n", cex = 0.85,
+           legend = c("Rent gradient", "Agricultural rent"),
+           col = c("#2c3e50", "#e74c3c"), lwd = c(3, 2), lty = c(1, 2))
+  })
+
+  output$density_plot &lt;- renderPlot({
+    c &lt;- city()
+    par(mar = c(4.5, 4.5, 3, 1))
+    d_city &lt;- c$d[c$d &lt;= c$d_star]
+    dens_city &lt;- c$density[seq_along(d_city)]
+    plot(d_city, dens_city, type = "l", lwd = 3, col = "#3498db",
+         xlab = "Distance from CBD (miles)",
+         ylab = "Population density (per sq mi)",
+         main = "Population Density")
+    polygon(c(d_city, rev(d_city)),
+            c(dens_city, rep(0, length(d_city))),
+            col = adjustcolor("#3498db", 0.2), border = NA)
+    abline(v = c$d_star, lty = 3, col = "#7f8c8d", lwd = 1.5)
+  })
+
+  output$city_plot &lt;- renderPlot({
+    c &lt;- city()
+    par(mar = c(1, 1, 3, 1))
+    theta &lt;- seq(0, 2 * pi, length.out = 100)
+    r_max &lt;- c$d_star * 1.3
+
+    plot(NULL, xlim = c(-r_max, r_max), ylim = c(-r_max, r_max),
+         xlab = "", ylab = "", main = "City Footprint",
+         asp = 1, axes = FALSE)
+
+    # Fill city area
+    polygon(c$d_star * cos(theta), c$d_star * sin(theta),
+            col = adjustcolor("#e74c3c", 0.15), border = "#e74c3c", lwd = 2)
+
+    # CBD point
+    points(0, 0, pch = 19, cex = 2, col = "#2c3e50")
+    text(0, 0, "CBD", pos = 3, cex = 0.9, col = "#2c3e50", font = 2)
+
+    # Radius line
+    segments(0, 0, c$d_star, 0, lwd = 2, col = "#e74c3c", lty = 2)
+    text(c$d_star / 2, -c$d_star * 0.12,
+         paste0(round(c$d_star, 1), " mi"), cex = 0.85, col = "#e74c3c")
+  })
+
+  output$info &lt;- renderUI({
+    c &lt;- city()
+    tags$div(class = "info-box",
+      HTML(paste0(
+        "&lt;b&gt;City radius:&lt;/b&gt; ", round(c$d_star, 1), " miles&lt;br&gt;",
+        "&lt;b&gt;CBD rent:&lt;/b&gt; $", format(round(c$r_cbd), big.mark = ","), "/acre&lt;br&gt;",
+        "&lt;b&gt;Avg rent:&lt;/b&gt; $", format(round(c$avg_rent), big.mark = ","), "/acre&lt;br&gt;",
+        "&lt;b&gt;City area:&lt;/b&gt; ", format(round(c$area, 1), big.mark = ","), " sq mi"
+      ))
+    )
   })
 }
 
