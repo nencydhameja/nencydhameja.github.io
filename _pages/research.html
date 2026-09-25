@@ -232,14 +232,13 @@ author_profile: true
       .jmp-card { padding: 1rem; }
       .paper-card { padding: 1rem; }
     }
-  </style>
+    .status-heading { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #672414; font-family: 'Lora', Georgia, serif; margin: 2.3rem 0 1rem; padding-bottom: 0.35rem; border-bottom: 1px solid #d3d1c7; }
+  .status-heading:first-of-type { margin-top: 0.3rem; }
+</style>
 </head>
 <body>
 <div class="research-content">
 
-  <!-- Flat, tagged list (no section headings). JMP pinned; status shown by pill. -->
-
-  <!-- ═══ Job Market Paper ═══ -->
   <div class="jmp-card">
     <span class="jmp-pill">Job Market Paper</span>
     <h4 class="paper-title">Which Crimes Are Priced in Housing Markets? Evidence from Chicago</h4>
@@ -263,7 +262,8 @@ author_profile: true
     </div>
   </div>
 
-  <!-- ═══ Published ═══ -->
+  <div class="status-heading">Publications</div>
+
   <div class="paper-card">
     <div class="paper-top">
       <h4 class="paper-title paper-title--sm">Causal Forests versus Penalized Splines for Heterogeneous Treatment Effects</h4>
@@ -312,7 +312,52 @@ author_profile: true
     </div>
   </div>
 
-  <!-- ═══ Revise & Resubmit ═══ -->
+  <div class="status-heading">Work in Progress</div>
+
+  <div class="paper-card">
+    <div class="paper-top">
+      <h4 class="paper-title paper-title--sm">Social Context Matters: How Large Language Model Agents Reproduce Real-World Segregation Patterns in the Schelling Model</h4>
+      <span class="status-pill pill-wip">Work in Progress</span>
+    </div>
+    <p class="coauthors">with Srikanth Iyer, Christopher Zosh, Yixin Ren, Mohammed Mahinur Alam, Carl Lipo, and Andreas Pape</p>
+    <button class="abstract-toggle" onclick="toggle(this)">About</button>
+    <div class="abstract-text">We extend the Schelling segregation model by replacing traditional, rule-based agents with Large Language Model (LLM) agents that make residential decisions using natural language reasoning grounded in social context. To our knowledge, this is the first application that substitutes the mechanical agents of the Schelling model with LLM-driven agents. We compare LLM agent behavior across four social and two other contexts: Income (High vs. Low), Ethnic (Asian vs. Hispanic), Racial (White vs. Black), Political (Liberal vs. Conservative), two pairs of colors to serve as control groups, and a mechanical baseline (the standard Schelling model). We measure the resulting segregation via a Dissimilarity Index, which measures how dissimilar neighborhoods are in an overall geographical area. We find LLM agents partially reproduce empirical segregation patterns collected at the census block level and measured across counties.</div>
+    <div class="tag-row" style="margin-top: 10px;">
+      <span class="tag-label">Fields</span>
+      <span class="tag">Computational Social Science</span>
+      <span class="tag">Urban Economics</span>
+      <span class="tag">Artificial Intelligence</span>
+    </div>
+    <div class="tag-row" style="margin-bottom: 0;">
+      <span class="tag-label">Methods</span>
+      <span class="tag tag--method">Agent-Based Models</span>
+      <span class="tag tag--method">Large Language Model Agents</span>
+      <span class="tag tag--method">Schelling Segregation Model</span>
+    </div>
+  </div>
+
+  <div class="paper-card">
+    <div class="paper-top">
+      <h4 class="paper-title paper-title--sm">Food Swamps, Obesity, and Metabolic Risks</h4>
+      <span class="status-pill pill-wip">Work in Progress</span>
+    </div>
+    <p class="research-q">Do dollar-store rollouts affect metabolic health outcomes?</p>
+    <button class="abstract-toggle" onclick="toggle(this)">About</button>
+    <div class="abstract-text">This project examines how the expansion of dollar stores and low-nutrition retail environments contribute to obesity and metabolic health risks. Using store rollouts and quasi-experimental variation in food environments, I study how changes in access to calorie-dense, nutrient-poor options affect chronic disease outcomes.</div>
+    <div class="tag-row" style="margin-top: 10px;">
+      <span class="tag-label">Fields</span>
+      <span class="tag">Health Economics</span>
+      <span class="tag">Urban Economics</span>
+      <span class="tag">Public Economics</span>
+    </div>
+    <div class="tag-row" style="margin-bottom: 0;">
+      <span class="tag-label">Methods</span>
+      <span class="tag tag--method">Event Studies / DiD</span>
+    </div>
+  </div>
+
+  <div class="status-heading">Working Papers</div>
+
   <div class="paper-card">
     <div class="paper-top">
       <h4 class="paper-title paper-title--sm">Monte Carlo Diagnostics for Agent-Based Models</h4>
@@ -338,7 +383,6 @@ author_profile: true
     </div>
   </div>
 
-  <!-- ═══ Working Papers ═══ -->
   <div class="paper-card">
     <div class="paper-top">
       <h4 class="paper-title paper-title--sm">The Effects of Diversity Statements in Faculty Hiring</h4>
@@ -381,49 +425,6 @@ author_profile: true
       <span class="tag tag--method">Physical-Envelope Test (Fang&ndash;Gong)</span>
       <span class="tag tag--method">Bank-Exposure Design</span>
       <span class="tag tag--method">Event Study</span>
-    </div>
-  </div>
-
-  <!-- ═══ Work in Progress ═══ -->
-  <div class="paper-card">
-    <div class="paper-top">
-      <h4 class="paper-title paper-title--sm">Social Context Matters: How Large Language Model Agents Reproduce Real-World Segregation Patterns in the Schelling Model</h4>
-      <span class="status-pill pill-wip">Work in Progress</span>
-    </div>
-    <p class="coauthors">with Srikanth Iyer, Christopher Zosh, Yixin Ren, Mohammed Mahinur Alam, Carl Lipo, and Andreas Pape</p>
-    <button class="abstract-toggle" onclick="toggle(this)">About</button>
-    <div class="abstract-text">We extend the Schelling segregation model by replacing traditional, rule-based agents with Large Language Model (LLM) agents that make residential decisions using natural language reasoning grounded in social context. To our knowledge, this is the first application that substitutes the mechanical agents of the Schelling model with LLM-driven agents. We compare LLM agent behavior across four social and two other contexts: Income (High vs. Low), Ethnic (Asian vs. Hispanic), Racial (White vs. Black), Political (Liberal vs. Conservative), two pairs of colors to serve as control groups, and a mechanical baseline (the standard Schelling model). We measure the resulting segregation via a Dissimilarity Index, which measures how dissimilar neighborhoods are in an overall geographical area. We find LLM agents partially reproduce empirical segregation patterns collected at the census block level and measured across counties.</div>
-    <div class="tag-row" style="margin-top: 10px;">
-      <span class="tag-label">Fields</span>
-      <span class="tag">Computational Social Science</span>
-      <span class="tag">Urban Economics</span>
-      <span class="tag">Artificial Intelligence</span>
-    </div>
-    <div class="tag-row" style="margin-bottom: 0;">
-      <span class="tag-label">Methods</span>
-      <span class="tag tag--method">Agent-Based Models</span>
-      <span class="tag tag--method">Large Language Model Agents</span>
-      <span class="tag tag--method">Schelling Segregation Model</span>
-    </div>
-  </div>
-
-  <div class="paper-card">
-    <div class="paper-top">
-      <h4 class="paper-title paper-title--sm">Food Swamps, Obesity, and Metabolic Risks</h4>
-      <span class="status-pill pill-wip">Work in Progress</span>
-    </div>
-    <p class="research-q">Do dollar-store rollouts affect metabolic health outcomes?</p>
-    <button class="abstract-toggle" onclick="toggle(this)">About</button>
-    <div class="abstract-text">This project examines how the expansion of dollar stores and low-nutrition retail environments contribute to obesity and metabolic health risks. Using store rollouts and quasi-experimental variation in food environments, I study how changes in access to calorie-dense, nutrient-poor options affect chronic disease outcomes.</div>
-    <div class="tag-row" style="margin-top: 10px;">
-      <span class="tag-label">Fields</span>
-      <span class="tag">Health Economics</span>
-      <span class="tag">Urban Economics</span>
-      <span class="tag">Public Economics</span>
-    </div>
-    <div class="tag-row" style="margin-bottom: 0;">
-      <span class="tag-label">Methods</span>
-      <span class="tag tag--method">Event Studies / DiD</span>
     </div>
   </div>
 
