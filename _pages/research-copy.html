@@ -1,0 +1,441 @@
+---
+layout: archive
+title: ""
+permalink: /research-copy/
+author_profile: true
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research — Nency Dhameja</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+  body, .page, #main { background: #f7f6f3 !important; }  /* CHANGED: warm page bg so white panels pop (homepage stays white) */
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    .research-content {
+      width: 100%;
+      font-family: 'Inter', system-ui, sans-serif;
+      color: #1a1a18;
+      line-height: 1.6;
+    }
+
+    .page-bio {
+      font-size: 14px;
+      color: #1a1a18;
+      line-height: 1.7;
+      max-width: 680px;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 500;
+      margin: 0;
+      color: #672414;
+      font-family: 'Lora', Georgia, serif;
+    }
+
+    .section-block { margin-bottom: 2.5rem; }
+
+    .jmp-card {
+      background: #fff;
+      border-left: 3px solid #8B2F1A;
+      border-top: 0.5px solid #d3d1c7;
+      border-right: 0.5px solid #d3d1c7;
+      border-bottom: 0.5px solid #d3d1c7;
+      border-radius: 0 12px 12px 0;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .jmp-pill {
+      display: inline-block;
+      background: #f5ede9;
+      color: #672414;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+      letter-spacing: 0.03em;
+    }
+
+    .paper-card {
+      background: #fff;
+      border: 0.5px solid #d3d1c7;
+      border-radius: 12px;
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 0.75rem;
+      transition: border-color 0.15s;
+    }
+
+    .paper-card:hover { border-color: #b4b2a9; }
+
+    .paper-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .paper-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #1a1a18;
+      line-height: 1.4;
+      font-family: 'Lora', Georgia, serif;
+      margin: 0 0 6px;
+    }
+
+    .paper-title--sm { font-size: 15px; }
+
+    .research-q {
+      font-size: 13px;
+      color: #5f5e5a;
+      margin: 0 0 12px;
+      font-style: italic;
+      font-family: 'Lora', Georgia, serif;
+    }
+
+    .coauthors {
+      font-size: 12px;
+      color: #888780;
+      margin: 0 0 8px;
+    }
+
+    .journal {
+      font-size: 13px;
+      color: #5f5e5a;
+      font-style: italic;
+      font-family: 'Lora', Georgia, serif;
+      margin: 0 0 8px;
+    }
+
+    .abstract-visible {
+      font-size: 14px;
+      color: #4a4a46;
+      line-height: 1.65;
+      margin: 0 0 14px;
+      border-left: 2px solid #d3d1c7;
+      padding-left: 1rem;
+      text-align: justify;
+    }
+
+    .abstract-text {
+      font-size: 13.5px;
+      color: #5f5e5a;
+      line-height: 1.75;
+      margin-top: 0.75rem;
+      border-left: 2px solid #d3d1c7;
+      padding-left: 1rem;
+      display: none;
+      text-align: justify;
+      -webkit-hyphens: auto;
+      hyphens: auto;
+    }
+
+    .abstract-text.open { display: block; }
+
+    .tag-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #b4b2a9;
+      margin-right: 2px;
+      white-space: nowrap;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: #f1efe8;
+      color: #5f5e5a;
+    }
+
+    .tag--method {
+      background: transparent;
+      border: 0.5px solid #d3d1c7;
+    }
+
+    .status-pill {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .pill-rr  { background: #EAF3DE; color: #3B6D11; }
+    .pill-wp  { background: #F3DFAE; color: #7A4A0A; }  /* deeper amber = more complete draft */
+    .pill-wip { background: #FCF4E6; color: #9C7434; }  /* pale amber = earlier stage */
+    .pill-pub { background: #3B6D11; color: #F7F6F3; }  /* CHANGED: solid green (published), was pale #D4EDDA/#155724 */
+    .pill-consortium { background: #ECE9E2; color: #5f5e5a; }
+    .pill-stack { display: flex; flex-direction: column; gap: 5px; align-items: flex-end; }
+
+    .abstract-toggle {
+      font-size: 12.5px;
+      color: #888780;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 3px;
+    }
+
+    .abstract-toggle:hover { color: #5f5e5a; }
+
+    .paper-footer {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 0.75rem;
+    }
+
+    .pdf-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: #672414;
+      text-decoration: none;
+    }
+
+    .pdf-link:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .jmp-card { padding: 1rem; }
+      .paper-card { padding: 1rem; }
+    }
+    .field-heading { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #672414; font-family: 'Lora', Georgia, serif; margin: 2.3rem 0 1rem; padding-bottom: 0.35rem; border-bottom: 1px solid #d3d1c7; }
+  .field-heading:first-of-type { margin-top: 0.3rem; }
+</style>
+</head>
+<body>
+<div class="research-content">
+
+  <div class="field-heading">Applied Microeconomics</div>
+
+  <div class="jmp-card">
+    <span class="jmp-pill">Job Market Paper</span>
+    <h4 class="paper-title">Which Crimes Are Priced in Housing Markets? Evidence from Chicago</h4>
+    <!-- JMP abstract hidden for now — uncomment this block to show it publicly
+    <button class="abstract-toggle" onclick="toggle(this)">Show abstract</button>
+    <div class="abstract-text">
+      I estimate the effects of crime on housing markets in Chicago by linking 5.5 million geocoded incidents across 22 offense categories to more than half a million residential property sales and rental listings, identifying effects from changes in nearby crime within repeat sales of the same property. Most offenses have near-zero effects on sale prices, while a small set generates persistent discounts. A nearby homicide lowers sale prices by about 3 percent per incident (roughly $8,500 at the sample median sale price), while theft, motor-vehicle theft, assault, and robbery are precise nulls. Housing markets capitalize crime selectively: effects depend on observability (whether an incident reaches market participants) and transaction relevance (whether the threat it conveys matters for what is being transacted), rather than simply on harm or expected recurrence. Effects disappear beyond roughly a block, and sale and rental markets price different offenses, consistent with purchases incorporating future resale exposure in addition to occupancy. Asking prices respond little; adjustment instead appears in closing prices and transaction frictions, with homicide increasing time on market by roughly 4&ndash;7 days relative to a 35-day median and raising the probability of withdrawal.
+    </div>
+    -->
+    <p class="research-q">Why do some localized crime shocks affect housing prices while others do not?</p>
+    <div class="tag-row" style="margin-top: 10px;">
+      <span class="tag-label">Fields</span>
+      <span class="tag">Urban Economics</span>
+      <span class="tag">Housing Markets</span>
+      <span class="tag">Public Economics</span>
+    </div>
+    <div class="tag-row" style="margin-bottom: 0;">
+      <span class="tag-label">Methods</span>
+      <span class="tag tag--method">Repeat-Sales Design</span>
+      <span class="tag tag--method">Spatiotemporal Estimation</span>
+    </div>
+  </div>
+
+  <div class="paper-card">
+    <div class="paper-top">
+      <h4 class="paper-title paper-title--sm">Cashing the Credit: Anomalous Billing and Firm Dynamics in Italy&rsquo;s Superbonus 110%</h4>
+      <span class="status-pill pill-wp">Working Paper</span>
+    </div>
+    <p class="coauthors">with Maurizio Fiaschetti, Marcello Graziano, and Cristina Connolly</p>
+    <button class="abstract-toggle" onclick="toggle(this)">Show abstract</button>
+    <div class="abstract-text">We study whether Italy&rsquo;s Superbonus 110% created incentives for anomalous billing by construction firms. The program subsidized home renovation through transferable tax credits, separating payment from verification of the underlying work. Using panel data on 66,920 Italian construction firms from 2015&ndash;2024 and the February 2023 closure of credit transfers to new projects, we find that firms with unusually high revenue per employee and elevated profit margins became substantially more common during the program, with the increase concentrated among firms that retained access to credit transfers. Predetermined bank-branch density also strongly predicts credit-driven firm formation, linking the response to local capacity to intermediate the credits. Because accounting data cannot distinguish inflated billing from legitimate price increases under subsidized demand, we interpret the evidence as anomalous rather than fraudulent billing.</div>
+    <div class="tag-row" style="margin-top: 10px;">
+      <span class="tag-label">Fields</span>
+      <span class="tag">Public Economics</span>
+      <span class="tag">Industrial Organization</span>
+      <span class="tag">Law and Economics</span>
+    </div>
+    <div class="tag-row" style="margin-bottom: 0;">
+      <span class="tag-label">Methods</span>
+      <span class="tag tag--method">Distributional Analysis</span>
+      <span class="tag tag--method">Physical-Envelope Test (Fang&ndash;Gong)</span>
+      <span class="tag tag--method">Bank-Exposure Design</span>
+      <span class="tag tag--method">Event Study</span>
+    </div>
+  </div>
+
+  <div class="paper-card">
+    <div class="paper-top">
+      <h4 class="paper-title paper-title--sm">The Effects of Diversity Statements in Faculty Hiring</h4>
+      <span class="status-pill pill-wp">Working Paper</span>
+    </div>
+    <p class="coauthors">with David Slichter</p>
+    <button class="abstract-toggle" onclick="toggle(this)">Show abstract</button>
+    <div class="abstract-text">This project examines how mandatory diversity statements in faculty job applications influence hiring and student outcomes. Using comprehensive text from JOE and APSA postings linked to institution&ndash;year&ndash;discipline hiring records, we classify DEI-related requirements and estimate their effects using staggered-adoption DiD estimators with entropy-balancing weights.</div>
+    <div class="tag-row" style="margin-top: 10px;">
+      <span class="tag-label">Fields</span>
+      <span class="tag">Labor Economics</span>
+      <span class="tag">Higher Education</span>
+      <span class="tag">Personnel Economics</span>
+    </div>
+    <div class="tag-row" style="margin-bottom: 0;">
+      <span class="tag-label">Methods</span>
+      <span class="tag tag--method">Callaway and Sant'Anna</span>
+      <span class="tag tag--method">Difference-in-Differences</span>
+      <span class="tag tag--method">Entropy Balancing</span>
+      <span class="tag tag--method">Text Classification</span>
+    </div>
+  </div>
+
+  <div class="paper-card">
+    <div class="paper-top">
+      <h4 class="paper-title paper-title--sm">Food Swamps, Obesity, and Metabolic Risks</h4>
+      <span class="status-pill pill-wip">Work in Progress</span>
+    </div>
+    <p class="research-q">Do dollar-store rollouts affect metabolic health outcomes?</p>
+    <button class="abstract-toggle" onclick="toggle(this)">About</button>
+    <div class="abstract-text">This project examines how the expansion of dollar stores and low-nutrition retail environments contribute to obesity and metabolic health risks. Using store rollouts and quasi-experimental variation in food environments, I study how changes in access to calorie-dense, nutrient-poor options affect chronic disease outcomes.</div>
+    <div class="tag-row" style="margin-top: 10px;">
+      <span class="tag-label">Fields</span>
+      <span class="tag">Health Economics</span>
+      <span class="tag">Urban Economics</span>
+      <span class="tag">Public Economics</span>
+    </div>
+    <div class="tag-row" style="margin-bottom: 0;">
+      <span class="tag-label">Methods</span>
+      <span class="tag tag--method">Event Studies / DiD</span>
+    </div>
+  </div>
+
+  <div class="field-heading">Econometrics &amp; Computational Methods</div>
+
+  <div class="paper-card">
+    <div class="paper-top">
+      <h4 class="paper-title paper-title--sm">Causal Forests versus Penalized Splines for Heterogeneous Treatment Effects</h4>
+      <span class="status-pill pill-pub">Published</span>
+    </div>
+    <p class="coauthors">with Ivan Korolev and Abiodun Musbaudeen</p>
+    <p class="journal"><a href="https://www.sciencedirect.com/science/article/pii/S0165176526004015" target="_blank" style="color:#672414;font-weight:500;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;">Economics Letters 268 (2026) 113205</a></p>
+    <button class="abstract-toggle" onclick="toggle(this)">Show abstract</button>
+    <div class="abstract-text">This paper compares causal forests with varying-coefficient penalized spline estimators for heterogeneous treatment effects. We conduct simulations with randomized treatment assignment that vary heterogeneity, predictor dimension, and discrete nuisance structure. Performance is measured by out-of-sample mean squared error. Forests perform best in Wager&ndash;Athey designs with sharp treatment-effect transitions. Penalized splines dominate when heterogeneity is smooth, when the baseline mean and treatment effect differ in structure, and in mixed designs with continuous, binary, and group-level covariates. As group cardinality rises, forest performance deteriorates, while mgcv random-effect smooths handle group structure effectively and remain easy to implement.</div>
+    <div class="tag-row" style="margin-top: 10px;">
+      <span class="tag-label">Fields</span>
+      <span class="tag">Econometrics</span>
+      <span class="tag">Causal Inference</span>
+    </div>
+    <div class="tag-row" style="margin-bottom: 0;">
+      <span class="tag-label">Methods</span>
+      <span class="tag tag--method">Causal Forests</span>
+      <span class="tag tag--method">Penalized Splines</span>
+      <span class="tag tag--method">Monte Carlo Simulation</span>
+      <span class="tag tag--method">Heterogeneous Treatment Effects</span>
+    </div>
+  </div>
+
+  <div class="paper-card">
+    <div class="paper-top">
+      <h4 class="paper-title paper-title--sm">Comparing Human-Only, AI-Assisted, and AI-Led Teams on Assessing Research Reproducibility</h4>
+      <div class="pill-stack">
+        <span class="status-pill pill-pub">Published</span>
+        <span class="status-pill pill-consortium">Consortium-authored</span>
+      </div>
+    </div>
+    <p class="coauthors">Brodeur et al.</p>
+    <p class="journal"><a href="https://doi.org/10.1073/pnas.2524747123" target="_blank" style="color:#672414;font-weight:500;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;">Proceedings of the National Academy of Sciences 123 (22) e2524747123</a></p>
+    <button class="abstract-toggle" onclick="toggle(this)">Show abstract</button>
+    <div class="abstract-text">Large Language Models (LLMs) such as ChatGPT are transforming how scientists conduct and validate research, offering promise as tools to improve scientific reproducibility. However, computational reproducibility and error detection remain expensive and labor-intensive. We experimentally test how collaboration between researchers and LLM assistants influences the reproduction of quantitative social science findings across different levels of AI autonomy. We randomly assigned 288 researchers to 103 teams working under three conditions: human-only, AI-assisted (using ChatGPT as a collaborative tool), or AI-led (ChatGPT operating with minimal human oversight). Teams reproduced published results from leading social science journals, detected coding errors, and proposed robustness checks. Human-only and AI-assisted teams achieved comparable reproduction rates (94% vs. 91%) and performed similarly on most outcomes, except human-only teams identified significantly more major coding errors. Both substantially outperformed AI-led teams, which achieved only a 37% reproduction rate, detected fewer errors across all categories, proposed weaker robustness checks, and required more time. This autonomous approach, however, likely represents only a lower bound of AI capabilities. Despite rapid model advances, expert human judgment currently remains indispensable for reliable empirical verification. While AI assistance did not degrade most outcomes, it provided no measurable advantages and was associated with reduced detection of major errors. However, the 37% autonomous reproduction rate indicates that AI could provide value in settings where scale or cost constraints preclude human review of papers, even though general-purpose LLMs offer no immediate advantages for human-supervised verification.</div>
+    <div class="tag-row" style="margin-top: 10px;">
+      <span class="tag-label">Fields</span>
+      <span class="tag">Computational Social Science</span>
+      <span class="tag">Research Methodology</span>
+      <span class="tag">AI</span>
+    </div>
+    <div class="tag-row" style="margin-bottom: 0;">
+      <span class="tag-label">Methods</span>
+      <span class="tag tag--method">Human-AI Collaboration</span>
+      <span class="tag tag--method">Reproducibility Assessment</span>
+    </div>
+  </div>
+
+  <div class="paper-card">
+    <div class="paper-top">
+      <h4 class="paper-title paper-title--sm">Monte Carlo Diagnostics for Agent-Based Models</h4>
+      <span class="status-pill pill-rr">Revise &amp; Resubmit</span>
+    </div>
+    <p class="coauthors">with Christopher Zosh, Yixin Ren, Andreas Pape</p>
+    <p class="journal">Journal of Artificial Societies and Social Simulation</p>
+    <button class="abstract-toggle" onclick="toggle(this)">Show abstract</button>
+    <div class="abstract-text">We develop a statistical framework for diagnosing parameter identifiability and uncertainty in stochastic agent-based models (ABMs). The approach combines Monte Carlo experiments with simulation-based confidence intervals, providing generalizable tools for calibration, validation, and sensitivity analysis in complex ABMs.</div>
+    <div class="tag-row" style="margin-top: 10px;">
+      <span class="tag-label">Fields</span>
+      <span class="tag">Computational Economics</span>
+      <span class="tag">Econometrics</span>
+    </div>
+    <div class="tag-row" style="margin-bottom: 0;">
+      <span class="tag-label">Methods</span>
+      <span class="tag tag--method">Agent-Based Models</span>
+      <span class="tag tag--method">Monte Carlo Simulation</span>
+      <span class="tag tag--method">Simulation-Based Inference</span>
+    </div>
+    <div class="paper-footer">
+      <a class="pdf-link" href="https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf" target="_blank">PDF &rarr;</a>
+    </div>
+  </div>
+
+  <div class="paper-card">
+    <div class="paper-top">
+      <h4 class="paper-title paper-title--sm">Social Context Matters: How Large Language Model Agents Reproduce Real-World Segregation Patterns in the Schelling Model</h4>
+      <span class="status-pill pill-wip">Work in Progress</span>
+    </div>
+    <p class="coauthors">with Srikanth Iyer, Christopher Zosh, Yixin Ren, Mohammed Mahinur Alam, Carl Lipo, and Andreas Pape</p>
+    <button class="abstract-toggle" onclick="toggle(this)">About</button>
+    <div class="abstract-text">We extend the Schelling segregation model by replacing traditional, rule-based agents with Large Language Model (LLM) agents that make residential decisions using natural language reasoning grounded in social context. To our knowledge, this is the first application that substitutes the mechanical agents of the Schelling model with LLM-driven agents. We compare LLM agent behavior across four social and two other contexts: Income (High vs. Low), Ethnic (Asian vs. Hispanic), Racial (White vs. Black), Political (Liberal vs. Conservative), two pairs of colors to serve as control groups, and a mechanical baseline (the standard Schelling model). We measure the resulting segregation via a Dissimilarity Index, which measures how dissimilar neighborhoods are in an overall geographical area. We find LLM agents partially reproduce empirical segregation patterns collected at the census block level and measured across counties.</div>
+    <div class="tag-row" style="margin-top: 10px;">
+      <span class="tag-label">Fields</span>
+      <span class="tag">Computational Social Science</span>
+      <span class="tag">Urban Economics</span>
+      <span class="tag">Artificial Intelligence</span>
+    </div>
+    <div class="tag-row" style="margin-bottom: 0;">
+      <span class="tag-label">Methods</span>
+      <span class="tag tag--method">Agent-Based Models</span>
+      <span class="tag tag--method">Large Language Model Agents</span>
+      <span class="tag tag--method">Schelling Segregation Model</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function toggle(btn) {
+    if (!btn.dataset.show) { btn.dataset.show = btn.textContent; }
+    const el = btn.nextElementSibling;
+    const open = el.classList.toggle('open');
+    btn.textContent = open ? 'Hide' : btn.dataset.show;
+  }
+</script>
+</body>
+</html>
