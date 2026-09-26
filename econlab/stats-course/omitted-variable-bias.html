@@ -497,6 +497,7 @@ window.Quarto = {
   <ul>
   <li><a href="#the-formula" id="toc-the-formula" class="nav-link active" data-scroll-target="#the-formula">The formula</a></li>
   <li><a href="#sign-of-bias-table" id="toc-sign-of-bias-table" class="nav-link" data-scroll-target="#sign-of-bias-table">Sign-of-bias table</a></li>
+  <li><a href="#attenuation-vs.-inflation" id="toc-attenuation-vs.-inflation" class="nav-link" data-scroll-target="#attenuation-vs.-inflation">Attenuation vs.&nbsp;inflation</a></li>
   <li><a href="#simulation" id="toc-simulation" class="nav-link" data-scroll-target="#simulation">Simulation</a>
   <ul class="collapse">
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
@@ -570,6 +571,61 @@ window.Quarto = {
 </table>
 <p><strong>Example 1 — Returns to education, omitting ability.</strong> Ability likely has a positive effect on wages (<span class="math inline">\(\beta_2 &gt; 0\)</span>) and is positively correlated with education (<span class="math inline">\(\delta &gt; 0\)</span>). Omitting ability biases the return to education <strong>upward</strong>.</p>
 <p><strong>Example 2 — Class size and test scores, omitting SES.</strong> Higher SES likely raises scores (<span class="math inline">\(\beta_2 &gt; 0\)</span>) and wealthier districts may have smaller classes (<span class="math inline">\(\delta &lt; 0\)</span>). Omitting SES biases the class-size effect <strong>downward</strong> (makes class size look more harmful than it is).</p>
+</section>
+<section id="attenuation-vs.-inflation" class="level2">
+<h2 class="anchored" data-anchor-id="attenuation-vs.-inflation">Attenuation vs.&nbsp;inflation</h2>
+<p>“Positive” or “negative” bias tells you which way <span class="math inline">\(\tilde{\beta}_1\)</span> moves, but not whether the estimate is <em>exaggerated</em> or <em>shrunk</em> — that also depends on the sign of the true effect. Let <span class="math inline">\(Z\)</span> be the omitted confounder (<span class="math inline">\(X_2\)</span> above), <span class="math inline">\(Z \to X\)</span> its effect on the included regressor, and <span class="math inline">\(Z \to Y\)</span> its effect on the outcome. The direction of the bias follows a single rule:</p>
+<p><span class="math display">\[\text{Sign of bias} \;=\; \operatorname{sign}(Z \to X) \times \operatorname{sign}(Z \to Y).\]</span></p>
+<p>A bias with the <strong>same</strong> sign as <span class="math inline">\(\beta_1\)</span> pushes the estimate <strong>away from zero</strong> (<em>inflation</em>); a bias with the <strong>opposite</strong> sign pulls it <strong>toward zero</strong> (<em>attenuation</em>).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(Z \to X\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(Z \to Y\)</span></th>
+<th style="text-align: center;">Sign of bias</th>
+<th style="text-align: left;">If <span class="math inline">\(\beta_1 &lt; 0\)</span></th>
+<th style="text-align: left;">If <span class="math inline">\(\beta_1 &gt; 0\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(+\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(+\)</span></td>
+<td style="text-align: center;">positive</td>
+<td style="text-align: left;">toward zero — attenuation</td>
+<td style="text-align: left;">away from zero — inflation</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(+\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(-\)</span></td>
+<td style="text-align: center;">negative</td>
+<td style="text-align: left;">away from zero — inflation</td>
+<td style="text-align: left;">toward zero — attenuation</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(-\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(-\)</span></td>
+<td style="text-align: center;">positive</td>
+<td style="text-align: left;">toward zero — attenuation</td>
+<td style="text-align: left;">away from zero — inflation</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(-\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(+\)</span></td>
+<td style="text-align: center;">negative</td>
+<td style="text-align: left;">away from zero — inflation</td>
+<td style="text-align: left;">toward zero — attenuation</td>
+</tr>
+</tbody>
+</table>
+<p>The labels describe <strong>magnitude relative to zero</strong>, not sign: the same positive bias <em>attenuates</em> a negative effect but <em>inflates</em> a positive one.</p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
