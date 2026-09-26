@@ -564,22 +564,19 @@ window.Quarto = {
 </style>
 <section id="setting-up-the-problem" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up-the-problem">Setting up the problem</h2>
-<p>You have <span class="math inline">\(n\)</span> pairs <span class="math inline">\((x_i, y_i)\)</span> and want to fit a line. A line is two numbers: an intercept <span class="math inline">\(b_0\)</span> and a slope <span class="math inline">\(b_1\)</span>. At observation <span class="math inline">\(i\)</span> the line predicts <span class="math inline">\(\hat{y}_i = b_0 + b_1 x_i\)</span>, the actual value is <span class="math inline">\(y_i\)</span>, and the gap between them is</p>
-<p><span class="math display">\[e_i = y_i - b_0 - b_1 x_i.\]</span></p>
-<p>Change <span class="math inline">\(b_0\)</span> or <span class="math inline">\(b_1\)</span> and every gap moves. That is what you are choosing over.</p>
-<p><strong>Residuals are not errors.</strong> Once we plug in the fitted values <span class="math inline">\(\hat{\beta}_0, \hat{\beta}_1\)</span>, these gaps are called <strong>residuals</strong>. They are not the same as the <strong>errors</strong> <span class="math inline">\(u_i = y_i - \beta_0 - \beta_1 x_i\)</span>, which are measured from the true, unknown <span class="math inline">\(\beta_0, \beta_1\)</span> and can never be observed. Residuals you can compute; errors you cannot. Keep the two apart: the distinction becomes essential the moment you get to unbiasedness and to <a href="sampling-distribution-ols.html">estimating the error variance</a>.</p>
-<div class="roadmap">
-<div class="rm-title">
-<p>The derivation in five moves</p>
-</div>
-<ol type="1">
-<li><strong>Collapse the misfit</strong> into one number, <span class="math inline">\(S(b_0, b_1) = \sum_i e_i^2\)</span>.</li>
-<li><strong>Differentiate</strong> in <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> and set both to zero.</li>
-<li>Read off the <strong>normal equations</strong>: <span class="math inline">\(\sum_i e_i = 0\)</span> and <span class="math inline">\(\sum_i x_i e_i = 0\)</span>.</li>
-<li><strong>Solve</strong> them: <span class="math inline">\(\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}\)</span>, then <span class="math inline">\(\hat{\beta}_1 = S_{xy}/S_{xx}\)</span>.</li>
-<li><strong>Confirm it’s a minimum</strong> — the score is a bowl that opens upward.</li>
-</ol>
-</div>
+<p>You have <span class="math inline">\(n\)</span> pairs <span class="math inline">\((x_i, y_i)\)</span> and want to fit a line.</p>
+<ul>
+<li>A line is just two numbers: an <strong>intercept</strong> <span class="math inline">\(b_0\)</span> and a <strong>slope</strong> <span class="math inline">\(b_1\)</span>.</li>
+<li>At point <span class="math inline">\(i\)</span> the line predicts <span class="math inline">\(\hat{y}_i = b_0 + b_1 x_i\)</span>, while the real value is <span class="math inline">\(y_i\)</span>.</li>
+<li>The gap between them is <span class="math inline">\(e_i = y_i - b_0 - b_1 x_i\)</span>.</li>
+<li>Change <span class="math inline">\(b_0\)</span> or <span class="math inline">\(b_1\)</span> and every gap moves. Those two numbers are all you get to choose.</li>
+</ul>
+<p><strong>Residuals are not errors</strong> — keep them apart:</p>
+<ul>
+<li>A <strong>residual</strong> <span class="math inline">\(e_i = y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i\)</span> is measured from the <em>fitted</em> line, so you can compute it.</li>
+<li>An <strong>error</strong> <span class="math inline">\(u_i = y_i - \beta_0 - \beta_1 x_i\)</span> is measured from the <em>true, unknown</em> <span class="math inline">\(\beta_0, \beta_1\)</span>, so you can never observe it.</li>
+<li>The difference becomes essential the moment you reach unbiasedness and <a href="sampling-distribution-ols.html">estimating the error variance</a>.</li>
+</ul>
 </section>
 <section id="what-we-minimize" class="level2">
 <h2 class="anchored" data-anchor-id="what-we-minimize">What we minimize</h2>
