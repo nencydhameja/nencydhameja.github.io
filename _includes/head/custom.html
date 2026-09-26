@@ -32,33 +32,34 @@
 <!-- Support for MatJax -->
 <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<!-- Geo-blocking -->
-<!-- <script>
-  fetch("https://ipapi.co/json/")
-    .then(function(res) { return res.json(); })
-    .then(function(data) {
-      if (data.city && data.city.toLowerCase() === "johnson city") {
-        document.documentElement.style.visibility = "hidden";
-        document.body.innerHTML = `
-          <div style="
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            font-family: sans-serif;
-            text-align: center;
-            background: #fff;
-          ">
-            <div>
-              <h1 style="font-size: 2rem;">Access Restricted</h1>
-              <p style="color: #666;">This website is not available in your region.</p>
-            </div>
-          </div>
-        `;
-        document.documentElement.style.visibility = "visible";
-      }
-    })
-    .catch(function() {});
-</script> -->
+<!-- Geo-blocking: hide the site from specific cities (client-side, best-effort).
+     CHANGED: was commented-out ipapi.co / "johnson city" only. Now active,
+     uses ipwho.is (ipapi.co free tier was rate-limited), blocks a city list,
+     and includes a personal bypass so the owner is never locked out. -->
+<script>
+  (function () {
+    var BLOCKED_CITIES = ["johnson city", "binghamton", "endicott", "vestal"];   // lowercase; owner is in Vestal -> relies on the bypass below to get in
+    var BYPASS_CODE    = "letmein";   // owner: visit  nencydhameja.com/?access=letmein  once per browser
+
+    try {
+      var p = new URLSearchParams(location.search);
+      if (p.get("access") === BYPASS_CODE) localStorage.setItem("geoBypass", "1");
+      if (localStorage.getItem("geoBypass") === "1") return;   // whitelisted browser -> never blocked
+    } catch (e) {}
+
+    fetch("https://ipwho.is/")
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var city = (d && d.city ? d.city : "").toLowerCase();
+        if (BLOCKED_CITIES.indexOf(city) !== -1) {
+          document.body.innerHTML =
+            '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;text-align:center;background:#fff;">'
+          + '<div><h1 style="font-size:2rem;">Access Restricted</h1>'
+          + '<p style="color:#666;">This website is not available in your region.</p></div></div>';
+        }
+      })
+      .catch(function () {});
+  })();
+</script>
 <!-- end custom head snippets -->
 <!-- end custom head snippets -->
