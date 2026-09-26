@@ -499,6 +499,7 @@ window.Quarto = {
   <li><a href="#where-the-proofs-weights-come-from" id="toc-where-the-proofs-weights-come-from" class="nav-link" data-scroll-target="#where-the-proofs-weights-come-from">Where the proof’s weights come from</a></li>
   <li><a href="#build-it-yourself" id="toc-build-it-yourself" class="nav-link" data-scroll-target="#build-it-yourself">Build it yourself</a></li>
   <li><a href="#three-levers-on-the-variance" id="toc-three-levers-on-the-variance" class="nav-link" data-scroll-target="#three-levers-on-the-variance">Three levers on the variance</a></li>
+  <li><a href="#estimating-sigma2-where-n-2-comes-from" id="toc-estimating-sigma2-where-n-2-comes-from" class="nav-link" data-scroll-target="#estimating-sigma2-where-n-2-comes-from">Estimating <span class="math inline">\(\sigma^2\)</span>: where <span class="math inline">\(n-2\)</span> comes from</a></li>
   <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
   <li><a href="#from-here" id="toc-from-here" class="nav-link" data-scroll-target="#from-here">From here</a></li>
   </ul>
@@ -734,6 +735,20 @@ shinyApp(ui, server)</code></pre>
 </tbody>
 </table>
 <p>The last one is the least obvious and the most useful: <strong>you learn a slope best when your <span class="math inline">\(X\)</span>’s are far apart.</strong> Two points at the ends of the range pin a line down better than a hundred bunched in the middle.</p>
+</section>
+<section id="estimating-sigma2-where-n-2-comes-from" class="level2">
+<h2 class="anchored" data-anchor-id="estimating-sigma2-where-n-2-comes-from">Estimating <span class="math inline">\(\sigma^2\)</span>: where <span class="math inline">\(n-2\)</span> comes from</h2>
+<p>The variance formula <span class="math inline">\(\mathrm{Var}(\hat{\beta}_1) = \sigma^2 / SST_x\)</span> contains one piece you never observe: the error variance <span class="math inline">\(\sigma^2\)</span>. To report a standard error you estimate it from the residuals <span class="math inline">\(\hat{u}_i = y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i\)</span>, using</p>
+<p><span class="math display">\[s^2 = \frac{SSE}{n-2}, \qquad SSE = \sum_{i=1}^{n} \hat{u}_i^{\,2}.\]</span></p>
+<p>Here <span class="math inline">\(SSE\)</span> is the <strong>sum of squared residuals</strong> (also called the sum of squared errors): the total leftover misfit after the line has done its best. Its square root <span class="math inline">\(s\)</span> is the <strong>residual standard error</strong>, roughly the typical vertical distance from a point to the fitted line, in the units of <span class="math inline">\(y\)</span>. And <span class="math inline">\(s^2\)</span> is the estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
+<p>The one thing that needs explaining is the <span class="math inline">\(n-2\)</span>. It is the <strong>degrees of freedom</strong>, and it counts how many residuals are actually free to vary.</p>
+<p>Compare the ordinary sample variance, which divides by <span class="math inline">\(n-1\)</span>. There you estimate one quantity first, the mean, and the deviations are forced to satisfy one constraint, <span class="math inline">\(\sum_i (y_i - \bar{y}) = 0\)</span>, leaving <span class="math inline">\(n-1\)</span> free. In regression you estimate two quantities, <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>, so the residuals satisfy two constraints, which come straight from the least-squares first-order conditions:</p>
+<p><span class="math display">\[\sum_{i} \hat{u}_i = 0, \qquad \sum_{i} x_i \hat{u}_i = 0.\]</span></p>
+<p>Once any <span class="math inline">\(n-2\)</span> residuals are known, these two equations pin down the remaining two. Only <span class="math inline">\(n-2\)</span> are free, so dividing <span class="math inline">\(SSE\)</span> by <span class="math inline">\(n-2\)</span> (rather than <span class="math inline">\(n\)</span>) is what makes <span class="math inline">\(s^2\)</span> an <strong>unbiased</strong> estimator of <span class="math inline">\(\sigma^2\)</span>. Dividing by <span class="math inline">\(n\)</span> would understate it, because the fitted line is chosen to hug the data, so the residuals come out systematically a little smaller than the true errors <span class="math inline">\(u_i\)</span>.</p>
+<p>A quick sanity check: with <span class="math inline">\(n=2\)</span> the line passes through both points exactly, <span class="math inline">\(SSE = 0\)</span>, and <span class="math inline">\(s^2 = 0/0\)</span> is undefined. Two points carry no information about the noise; you need at least three before you can estimate <span class="math inline">\(\sigma^2\)</span> at all.</p>
+<p>Putting the pieces together, the number printed next to the slope in any regression output is</p>
+<p><span class="math display">\[\widehat{\mathrm{SE}}(\hat{\beta}_1) = \sqrt{\frac{s^2}{SST_x}} = \sqrt{\frac{SSE/(n-2)}{\sum_i (x_i - \bar{x})^2}},\]</span></p>
+<p>the estimated counterpart of the theoretical width <span class="math inline">\(\sigma / \sqrt{SST_x}\)</span> from the simulation above. This is the standard error you use for a <span class="math inline">\(t\)</span>-test or a confidence interval on <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
 </section>
 <section id="things-to-try" class="level2">
 <h2 class="anchored" data-anchor-id="things-to-try">Things to try</h2>
