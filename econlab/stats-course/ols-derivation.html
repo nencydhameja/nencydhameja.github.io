@@ -713,7 +713,14 @@ shinyApp(ui, server)</code></pre>
 <li><strong>The regression-output kind (Root MSE).</strong> Take the residuals you just minimized, square them, and average with the right degrees of freedom: <span class="math inline">\(\text{MSE} = SSR/(n-2) = s^2\)</span>, your estimate of the error variance <span class="math inline">\(\sigma^2\)</span>. Its square root, <strong>Root MSE <span class="math inline">\(= s\)</span></strong>, is the number Stata prints top-right of <code>regress</code> — the typical size of a residual, in the units of <span class="math inline">\(y\)</span>. (Where the <span class="math inline">\(n-2\)</span> comes from is on the <a href="sampling-distribution-ols.html">sampling distribution page</a>.)</li>
 <li><strong>The estimator kind.</strong> For any estimate <span class="math inline">\(\hat{\theta}\)</span> of a target <span class="math inline">\(\theta\)</span>, <span class="math inline">\(\text{MSE}(\hat{\theta}) = E[(\hat{\theta} - \theta)^2] = \mathrm{Var}(\hat{\theta}) + \text{Bias}(\hat{\theta})^2\)</span>. It measures how far the <em>estimate</em> lands from the <em>truth</em>, on average. If the estimator is unbiased, MSE is just its variance.</li>
 </ul>
-<p>They measure different things: one is how far the <strong>data</strong> sit from the line (noise), the other how far an <strong>estimator</strong> sits from the truth (accuracy). But they connect. The first one, <span class="math inline">\(s^2 = \hat{\sigma}^2\)</span>, is exactly what you plug into <span class="math inline">\(\mathrm{Var}(\hat{\beta}_1) = \sigma^2/SST_x\)</span> to pin down the second one for the slope.</p>
+<p>They measure different things: one is how far the <strong>data</strong> sit from the line (noise), the other how far an <strong>estimator</strong> sits from the truth (accuracy). But they connect, and the slope is where you see it:</p>
+<ul>
+<li>Start with the estimator MSE of the slope: <span class="math inline">\(\text{MSE}(\hat{\beta}_1) = \mathrm{Var}(\hat{\beta}_1) + \text{Bias}(\hat{\beta}_1)^2\)</span>.</li>
+<li>Under the OLS assumptions <span class="math inline">\(\hat{\beta}_1\)</span> is unbiased, so its bias is zero and its MSE is <em>just its variance</em>, <span class="math inline">\(\mathrm{Var}(\hat{\beta}_1) = \sigma^2 / SST_x\)</span>.</li>
+<li>That formula needs <span class="math inline">\(\sigma^2\)</span>, the error variance you can’t observe. So you plug in your estimate of it — the regression MSE, <span class="math inline">\(s^2 = \hat{\sigma}^2 = SSR/(n-2)\)</span>.</li>
+<li>The result is the estimated variance <span class="math inline">\(s^2 / SST_x\)</span>, and its square root <span class="math inline">\(s / \sqrt{SST_x}\)</span> is the slope’s standard error.</li>
+</ul>
+<p>So the “how noisy is the data” MSE is exactly the ingredient that sets the “how uncertain is my slope” MSE: the scatter of the points around the line feeds straight through into the uncertainty of <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
 </section>
 <section id="why-the-matrix-version" class="level2">
 <h2 class="anchored" data-anchor-id="why-the-matrix-version">Why the matrix version</h2>
