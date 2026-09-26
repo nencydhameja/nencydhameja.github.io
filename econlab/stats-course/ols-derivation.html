@@ -508,6 +508,7 @@ window.Quarto = {
   <li><a href="#a-word-on-mse" id="toc-a-word-on-mse" class="nav-link" data-scroll-target="#a-word-on-mse">A word on “MSE”</a></li>
   <li><a href="#why-the-matrix-version" id="toc-why-the-matrix-version" class="nav-link" data-scroll-target="#why-the-matrix-version">Why the matrix version</a>
   <ul class="collapse">
+  <li><a href="#what-makes-a-standard-error-big-or-small" id="toc-what-makes-a-standard-error-big-or-small" class="nav-link" data-scroll-target="#what-makes-a-standard-error-big-or-small">What makes a standard error big or small</a></li>
   <li><a href="#connections" id="toc-connections" class="nav-link" data-scroll-target="#connections">Connections</a></li>
   </ul></li>
   </ul>
@@ -725,7 +726,106 @@ shinyApp(ui, server)</code></pre>
 <li><strong>It is what the software actually runs.</strong> When you type <code>regress</code> in Stata or <code>lm</code> in R, it is not grinding through by-hand algebra — it is solving these normal equations in matrix form, <span class="math inline">\(\hat{\beta} = (X'X)^{-1}X'y\)</span>. So the matrix version is not optional theory; it is what happens under the hood every time you fit a regression.</li>
 </ul>
 <p>So: the scalar derivation is where you <em>understand</em> least squares; the matrix form is the engine you <em>use</em> once there is more than one <span class="math inline">\(x\)</span>. The full matrix treatment is on <strong><a href="regression-algebra.html">The Algebra Behind OLS</a></strong>.</p>
+<section id="what-makes-a-standard-error-big-or-small" class="level3">
+<h3 class="anchored" data-anchor-id="what-makes-a-standard-error-big-or-small">What makes a standard error big or small</h3>
+<p>Once there is more than one regressor, the standard error of coefficient <span class="math inline">\(j\)</span> is</p>
+<p><span class="math display">\[\mathrm{SE}(\hat{\beta}_j) = \frac{\sigma}{\sqrt{SST_j \, (1 - R_j^2)}},\]</span></p>
+<p>with three moving parts:</p>
+<ul>
+<li><span class="math inline">\(\sigma\)</span> — the noise around the line (the error SD).</li>
+<li><span class="math inline">\(SST_j = \sum_i (x_{ji} - \bar{x}_j)^2\)</span> — how much regressor <span class="math inline">\(j\)</span> varies.</li>
+<li><span class="math inline">\(R_j^2\)</span> — the <span class="math inline">\(R^2\)</span> from regressing <span class="math inline">\(x_j\)</span> on <strong>all the other regressors</strong>: how much of <span class="math inline">\(x_j\)</span> the others already explain.</li>
+</ul>
+<p>Reading off the levers:</p>
+<ul>
+<li><strong>The SE goes up</strong> when the noise <span class="math inline">\(\sigma\)</span> is larger, when <span class="math inline">\(x_j\)</span> barely varies (small <span class="math inline">\(SST_j\)</span> — too few points or too narrow a range of <span class="math inline">\(x_j\)</span>), or when <span class="math inline">\(x_j\)</span> is nearly explained by the other regressors (<span class="math inline">\(R_j^2 \to 1\)</span>). That last case is <strong>multicollinearity</strong>: the factor <span class="math inline">\(1/(1 - R_j^2)\)</span> is the <em>variance inflation factor</em>, and it runs off to infinity as <span class="math inline">\(R_j^2 \to 1\)</span> — the same thing as <span class="math inline">\(X'X\)</span> becoming impossible to invert.</li>
+<li><strong>The SE goes down</strong> with less noise, more spread in <span class="math inline">\(x_j\)</span> (or simply more data, which grows <span class="math inline">\(SST_j\)</span>), and regressors that are uncorrelated with each other (<span class="math inline">\(R_j^2 \to 0\)</span>).</li>
+</ul>
+<p>With exactly two regressors, <span class="math inline">\(R_j^2\)</span> is just <span class="math inline">\(\rho^2\)</span>, the square of their correlation, so the inflation factor is <span class="math inline">\(1/(1-\rho^2)\)</span> — the multiplier you can watch in the demo below.</p>
+<p><strong>See it happen.</strong> Drag the correlation between the two regressors toward 1. The left panel shows the coefficient estimates across many repeated samples: as the X’s line up, the cloud stretches into a diagonal — the data can pin down the two effects’ <em>combination</em> but not each one on its own — and both standard errors blow up. The right panel is the SE multiplier <span class="math inline">\(1/\sqrt{1-\rho^2}\)</span>, which runs off to infinity as <span class="math inline">\(\rho \to 1\)</span> (that is <span class="math inline">\(X'X\)</span> becoming impossible to invert).</p>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 520
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .eq-box { background:#f0f4f8; border-radius:6px; padding:14px;
+              margin-top:14px; font-size:14px; line-height:1.8; }
+    .eq-box b { color:#2c3e50; }
+    .hot { color:#e74c3c; font-weight:bold; }
+  "))),
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+      sliderInput("rho", "Correlation between X1 and X2:",
+                  min = 0, max = 0.99, value = 0.5, step = 0.03),
+      helpText("Push it toward 1 and the two regressors become nearly the same variable."),
+      uiOutput("box")
+    ),
+    mainPanel(
+      width = 9,
+      fluidRow(
+        column(6, plotOutput("cloud",   height = "380px")),
+        column(6, plotOutput("securve", height = "380px"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  sims &lt;- reactive({
+    rho &lt;- input$rho; n &lt;- 100; ns &lt;- 400
+    b1 &lt;- numeric(ns); b2 &lt;- numeric(ns)
+    for (i in seq_len(ns)) {
+      z1 &lt;- rnorm(n); z2 &lt;- rnorm(n)
+      x1 &lt;- z1
+      x2 &lt;- rho * z1 + sqrt(1 - rho^2) * z2
+      y  &lt;- 1 + 2 * x1 + 1 * x2 + rnorm(n, sd = 1)
+      cf &lt;- coef(lm(y ~ x1 + x2))
+      b1[i] &lt;- cf["x1"]; b2[i] &lt;- cf["x2"]
+    }
+    list(b1 = b1, b2 = b2)
+  })
+
+  output$cloud &lt;- renderPlot({
+    s &lt;- sims(); par(mar = c(4.5, 4.5, 3, 1))
+    plot(s$b1, s$b2, pch = 19, col = adjustcolor("#2980b9", 0.30),
+         xlim = c(-3, 7), ylim = c(-4, 6),
+         main = "Estimates across repeated samples",
+         xlab = "b1-hat", ylab = "b2-hat")
+    points(2, 1, pch = 4, col = "#e74c3c", cex = 2.2, lwd = 3)
+    legend("topright", bty = "n", legend = "truth (2, 1)",
+           pch = 4, col = "#e74c3c", pt.cex = 1.6, pt.lwd = 2)
+  })
+
+  output$securve &lt;- renderPlot({
+    par(mar = c(4.5, 4.5, 3, 1))
+    rseq &lt;- seq(0, 0.99, length.out = 120)
+    plot(rseq, 1 / sqrt(1 - rseq^2), type = "l", lwd = 2, col = "#8e44ad",
+         main = "How much the standard error inflates",
+         xlab = "correlation between X1 and X2", ylab = "SE multiplier")
+    abline(v = input$rho, col = "#e74c3c", lwd = 2, lty = 2)
+    points(input$rho, 1 / sqrt(1 - input$rho^2), pch = 19, col = "#e74c3c", cex = 1.4)
+  })
+
+  output$box &lt;- renderUI({
+    s &lt;- sims()
+    se1 &lt;- sd(s$b1); se2 &lt;- sd(s$b2)
+    vif &lt;- 1 / (1 - input$rho^2)
+    cls &lt;- if (input$rho &gt; 0.9) "hot" else ""
+    tags$div(class = "eq-box",
+      HTML(sprintf(
+        "&lt;b&gt;Spread of b1-hat:&lt;/b&gt; &lt;span class='%s'&gt;%.2f&lt;/span&gt;&lt;br&gt;&lt;b&gt;Spread of b2-hat:&lt;/b&gt; &lt;span class='%s'&gt;%.2f&lt;/span&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;SE inflation&lt;/b&gt;&lt;br&gt;1/(1-&amp;rho;&lt;sup&gt;2&lt;/sup&gt;) = %.1f&amp;times;",
+        cls, se1, cls, se2, vif)))
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+<p><strong>What would ideal data look like?</strong> Read it straight off the formula <span class="math inline">\(\mathrm{SE}(\hat{\beta}_j) = \sigma / \sqrt{SST_j(1 - R_j^2)}\)</span>: you want a <strong>large sample</strong>, each <span class="math inline">\(X\)</span> <strong>spread out</strong> (large <span class="math inline">\(SST_j\)</span>), the regressors <strong>uncorrelated with one another</strong> (every <span class="math inline">\(R_j^2 \approx 0\)</span>, so no inflation), and <strong>low noise</strong> <span class="math inline">\(\sigma\)</span>. That is essentially a well-designed experiment — plenty of independent variation in each <span class="math inline">\(X\)</span> and no redundancy between them. Then every variance inflation factor equals 1, and each coefficient is pinned down as tightly as the data allow.</p>
 <hr>
+</section>
 <section id="connections" class="level3">
 <h3 class="anchored" data-anchor-id="connections">Connections</h3>
 <ul>
