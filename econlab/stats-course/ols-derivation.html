@@ -508,6 +508,7 @@ window.Quarto = {
   <li><a href="#a-word-on-mse" id="toc-a-word-on-mse" class="nav-link" data-scroll-target="#a-word-on-mse">A word on “MSE”</a></li>
   <li><a href="#why-the-matrix-version" id="toc-why-the-matrix-version" class="nav-link" data-scroll-target="#why-the-matrix-version">Why the matrix version</a>
   <ul class="collapse">
+  <li><a href="#where-the-standard-errors-come-from-matrix-form" id="toc-where-the-standard-errors-come-from-matrix-form" class="nav-link" data-scroll-target="#where-the-standard-errors-come-from-matrix-form">Where the standard errors come from (matrix form)</a></li>
   <li><a href="#what-makes-a-standard-error-big-or-small" id="toc-what-makes-a-standard-error-big-or-small" class="nav-link" data-scroll-target="#what-makes-a-standard-error-big-or-small">What makes a standard error big or small</a></li>
   <li><a href="#connections" id="toc-connections" class="nav-link" data-scroll-target="#connections">Connections</a></li>
   </ul></li>
@@ -726,6 +727,14 @@ shinyApp(ui, server)</code></pre>
 <li><strong>It is what the software actually runs.</strong> When you type <code>regress</code> in Stata or <code>lm</code> in R, it is not grinding through by-hand algebra — it is solving these normal equations in matrix form, <span class="math inline">\(\hat{\beta} = (X'X)^{-1}X'y\)</span>. So the matrix version is not optional theory; it is what happens under the hood every time you fit a regression.</li>
 </ul>
 <p>So: the scalar derivation is where you <em>understand</em> least squares; the matrix form is the engine you <em>use</em> once there is more than one <span class="math inline">\(x\)</span>. The full matrix treatment is on <strong><a href="regression-algebra.html">The Algebra Behind OLS</a></strong>.</p>
+<section id="where-the-standard-errors-come-from-matrix-form" class="level3">
+<h3 class="anchored" data-anchor-id="where-the-standard-errors-come-from-matrix-form">Where the standard errors come from (matrix form)</h3>
+<p>In matrix form, all the variances and covariances of the estimates live in one object, the <strong>variance–covariance matrix</strong>:</p>
+<p><span class="math display">\[\widehat{\mathrm{Var}}(\hat{\beta}) = \hat{\sigma}^2 (X'X)^{-1}.\]</span></p>
+<p>The standard error of coefficient <span class="math inline">\(j\)</span> is <span class="math inline">\(\hat{\sigma}\)</span> times the square root of the <span class="math inline">\(j\)</span>-th <strong>diagonal</strong> entry of <span class="math inline">\((X'X)^{-1}\)</span>:</p>
+<p><span class="math display">\[\mathrm{SE}(\hat{\beta}_j) = \hat{\sigma}\,\sqrt{\big[(X'X)^{-1}\big]_{jj}}.\]</span></p>
+<p>This is where “blow up” becomes concrete. Inverting a matrix divides by its <strong>determinant</strong>, and when two regressors are nearly collinear the columns of <span class="math inline">\(X\)</span> almost line up, so <span class="math inline">\(\det(X'X)\)</span> sits close to zero. Dividing by a near-zero number makes the entries of <span class="math inline">\((X'X)^{-1}\)</span> huge — the diagonal ones included — so the variances, and with them the standard errors, explode. “<span class="math inline">\(X'X\)</span> is impossible to invert” and “the standard errors blow up” are the same sentence.</p>
+</section>
 <section id="what-makes-a-standard-error-big-or-small" class="level3">
 <h3 class="anchored" data-anchor-id="what-makes-a-standard-error-big-or-small">What makes a standard error big or small</h3>
 <p>Once there is more than one regressor, the standard error of coefficient <span class="math inline">\(j\)</span> is</p>
