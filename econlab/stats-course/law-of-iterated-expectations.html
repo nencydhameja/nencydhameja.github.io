@@ -532,6 +532,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#what-it-says" id="toc-what-it-says" class="nav-link active" data-scroll-target="#what-it-says">What it says</a></li>
+  <li><a href="#a-numerical-example-three-states" id="toc-a-numerical-example-three-states" class="nav-link" data-scroll-target="#a-numerical-example-three-states">A numerical example: three states</a></li>
   <li><a href="#why-it-is-true-discrete-case" id="toc-why-it-is-true-discrete-case" class="nav-link" data-scroll-target="#why-it-is-true-discrete-case">Why it is true (discrete case)</a></li>
   <li><a href="#why-you-care-in-econometrics" id="toc-why-you-care-in-econometrics" class="nav-link" data-scroll-target="#why-you-care-in-econometrics">Why you care in econometrics</a></li>
   <li><a href="#see-it" id="toc-see-it" class="nav-link" data-scroll-target="#see-it">See it</a>
@@ -571,6 +572,52 @@ window.Quarto = {
 <li>Plain version: to get the average height in a country, take the average height in each region, then average those regional averages, weighting each region by its population. You land on the same number as averaging every person directly.</li>
 <li>The inner <span class="math inline">\(E(Y \mid X)\)</span> is a <em>number that depends on <span class="math inline">\(X\)</span></em> (a different average in each group). The outer <span class="math inline">\(E[\cdot]\)</span> averages those numbers over the distribution of <span class="math inline">\(X\)</span>.</li>
 </ul>
+</section>
+<section id="a-numerical-example-three-states" class="level2">
+<h2 class="anchored" data-anchor-id="a-numerical-example-three-states">A numerical example: three states</h2>
+<p>Let <span class="math inline">\(Y\)</span> be income (in thousands of dollars) and <span class="math inline">\(X\)</span> be the state a person lives in. Three states:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">State <span class="math inline">\(x\)</span></th>
+<th style="text-align: center;">Avg income <span class="math inline">\(E(Y \mid X = x)\)</span></th>
+<th style="text-align: center;">People</th>
+<th style="text-align: center;">Share <span class="math inline">\(P(X = x)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">50</td>
+<td style="text-align: center;">500</td>
+<td style="text-align: center;">0.50</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">300</td>
+<td style="text-align: center;">0.30</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">200</td>
+<td style="text-align: center;">0.20</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Total</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>1000</strong></td>
+<td style="text-align: center;"><strong>1.00</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>The iterated way</strong> — average the state means, weighting each by its share of the population:</p>
+<p><span class="math display">\[E\big[E(Y \mid X)\big] = 50(0.50) + 60(0.30) + 80(0.20) = 25 + 18 + 16 = 59.\]</span></p>
+<p><strong>The direct way</strong> — pool everyone and divide total income by total people:</p>
+<p><span class="math display">\[E(Y) = \frac{500(50) + 300(60) + 200(80)}{1000} = \frac{25{,}000 + 18{,}000 + 16{,}000}{1000} = \frac{59{,}000}{1000} = 59.\]</span></p>
+<p>Both give <strong>59</strong>. They must: averaging the within-state averages (weighted by size) and averaging every person directly are two ways of computing the same total-income-over-total-people.</p>
+<p>One thing worth noticing: the national average of 59 sits closer to State A’s 50 than to C’s 80 — because A holds half the people. The weighting by <span class="math inline">\(P(X = x)\)</span> is doing real work; drop it and you’d wrongly get the plain average of 50, 60, 80, which is <span class="math inline">\(63.3\)</span>.</p>
 </section>
 <section id="why-it-is-true-discrete-case" class="level2">
 <h2 class="anchored" data-anchor-id="why-it-is-true-discrete-case">Why it is true (discrete case)</h2>
