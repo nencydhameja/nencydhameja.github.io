@@ -148,6 +148,12 @@ author_profile: true
     font-weight: 400;
     line-height: 1.5;
   }
+  /* collapsible field sections */
+  .pp-section-header { cursor: pointer; }
+  .pp-toggle { display:inline-block; width:0.9em; font-size:0.8em; color:#9a988f; margin-right:0.45rem; transition: transform 0.15s ease; }
+  .pp-collapsed .pp-toggle { transform: rotate(-90deg); }
+  .pp-count { font-size:11.5px; color:#a7a59c; font-weight:400; margin-left:0.55rem; letter-spacing:0.02em; }
+  .pp-collapsed .pp-field-card { display:none; }
 </style>
 
 <div class="pp-wrap">
@@ -229,7 +235,7 @@ author_profile: true
   <!-- Urban Economics -->
   <div class="pp-section-block">
     <div class="pp-section-header">
-      <span class="pp-section-label">Urban Economics</span>
+      <span class="pp-toggle">&#9662;</span><span class="pp-section-label">Urban Economics</span><span class="pp-count">10 papers</span>
       <div class="pp-section-line"></div>
     </div>
     <div class="pp-field-card">
@@ -290,13 +296,37 @@ author_profile: true
         </div>
         <div class="pp-paper-year">2019<div class="pp-paper-citations" id="cite-10-1093-qje-qjz004"></div></div>
       </div>
+      <div class="pp-paper-row" data-doi="10.1257/aer.20200407">
+        <div class="pp-paper-left">
+          <a class="pp-paper-title" href="https://www.aeaweb.org/articles?id=10.1257/aer.20200407" target="_blank">Creating Moves to Opportunity: Experimental Evidence on Barriers to Neighborhood Choice</a>
+          <div class="pp-paper-authors">Bergman, Chetty, DeLuca, Hendren, Katz &amp; Palmer</div>
+          <div class="pp-paper-note">Uses a randomized housing-voucher experiment to examine how search assistance and information barriers shape low-income families' neighborhood choices.</div>
+        </div>
+        <div class="pp-paper-year">2024<div class="pp-paper-citations" id="cite-10-1257-aer-20200407"></div></div>
+      </div>
+      <div class="pp-paper-row" data-doi="10.1257/aeri.20200792">
+        <div class="pp-paper-left">
+          <a class="pp-paper-title" href="https://www.aeaweb.org/articles?id=10.1257/aeri.20200792" target="_blank">Police Force Size and Civilian Race</a>
+          <div class="pp-paper-authors">Chalfin, Hansen, Weisburst &amp; Williams</div>
+          <div class="pp-paper-note">Studies how changes in police force size relate to homicides and arrests across places, with estimated effects that differ by civilian race.</div>
+        </div>
+        <div class="pp-paper-year">2022<div class="pp-paper-citations" id="cite-10-1257-aeri-20200792"></div></div>
+      </div>
+      <div class="pp-paper-row" data-doi="10.1086/728110">
+        <div class="pp-paper-left">
+          <a class="pp-paper-title" href="https://www.journals.uchicago.edu/doi/10.1086/728110" target="_blank">The Microgeography of Housing Supply</a>
+          <div class="pp-paper-authors">Baum-Snow &amp; Han</div>
+          <div class="pp-paper-note">Develops a neighborhood-level framework to examine how housing-supply elasticities vary within and across metropolitan areas.</div>
+        </div>
+        <div class="pp-paper-year">2024<div class="pp-paper-citations" id="cite-10-1086-728110"></div></div>
+      </div>
     </div>
   </div>
 
   <!-- Causal Inference -->
   <div class="pp-section-block">
     <div class="pp-section-header">
-      <span class="pp-section-label">Causal Inference &amp; Methods</span>
+      <span class="pp-toggle">&#9662;</span><span class="pp-section-label">Causal Inference &amp; Methods</span><span class="pp-count">12 papers</span>
       <div class="pp-section-line"></div>
     </div>
     <div class="pp-field-card">
@@ -357,13 +387,53 @@ author_profile: true
         </div>
         <div class="pp-paper-year">2021<div class="pp-paper-citations" id="cite-10-1080-01621459-2021-1928512"></div></div>
       </div>
+      <div class="pp-paper-row" data-doi="10.1257/aer.20181169">
+        <div class="pp-paper-left">
+          <a class="pp-paper-title" href="https://www.aeaweb.org/articles?id=10.1257/aer.20181169" target="_blank">Two-Way Fixed Effects Estimators with Heterogeneous Treatment Effects</a>
+          <div class="pp-paper-authors">de Chaisemartin &amp; D'Haultfœuille</div>
+          <div class="pp-paper-note">Studies how two-way fixed-effects regressions weight group-period treatment effects and proposes an alternative estimator under heterogeneity.</div>
+        </div>
+        <div class="pp-paper-year">2020<div class="pp-paper-citations" id="cite-10-1257-aer-20181169"></div></div>
+      </div>
+      <div class="pp-paper-row" data-doi="10.1016/j.jeconom.2021.03.014">
+        <div class="pp-paper-left">
+          <a class="pp-paper-title" href="https://www.sciencedirect.com/science/article/abs/pii/S0304407621001445" target="_blank">Difference-in-Differences with Variation in Treatment Timing</a>
+          <div class="pp-paper-authors">Goodman-Bacon</div>
+          <div class="pp-paper-note">Decomposes the two-way fixed-effects estimator into a weighted average of all two-group/two-period comparisons to examine timing-driven bias.</div>
+        </div>
+        <div class="pp-paper-year">2021<div class="pp-paper-citations" id="cite-10-1016-j-jeconom-2021-03-014"></div></div>
+      </div>
+      <div class="pp-paper-row" data-doi="10.1016/j.jeconom.2020.09.006">
+        <div class="pp-paper-left">
+          <a class="pp-paper-title" href="https://www.sciencedirect.com/science/article/abs/pii/S030440762030378X" target="_blank">Estimating Dynamic Treatment Effects in Event Studies with Heterogeneous Treatment Effects</a>
+          <div class="pp-paper-authors">Sun &amp; Abraham</div>
+          <div class="pp-paper-note">Studies how event-study lead and lag coefficients can be contaminated under heterogeneous timing and proposes an interaction-weighted estimator.</div>
+        </div>
+        <div class="pp-paper-year">2021<div class="pp-paper-citations" id="cite-10-1016-j-jeconom-2020-09-006"></div></div>
+      </div>
+      <div class="pp-paper-row" data-doi="10.1093/restud/rdad018">
+        <div class="pp-paper-left">
+          <a class="pp-paper-title" href="https://academic.oup.com/restud/article/90/5/2555/7039335" target="_blank">A More Credible Approach to Parallel Trends</a>
+          <div class="pp-paper-authors">Rambachan &amp; Roth</div>
+          <div class="pp-paper-note">Develops sensitivity-analysis tools for difference-in-differences and event studies that relax exact parallel trends by bounding post-treatment violations.</div>
+        </div>
+        <div class="pp-paper-year">2023<div class="pp-paper-citations" id="cite-10-1093-restud-rdad018"></div></div>
+      </div>
+      <div class="pp-paper-row" data-doi="10.1093/restud/rdae007">
+        <div class="pp-paper-left">
+          <a class="pp-paper-title" href="https://academic.oup.com/restud/article/91/6/3253/7601390" target="_blank">Revisiting Event-Study Designs: Robust and Efficient Estimation</a>
+          <div class="pp-paper-authors">Borusyak, Jaravel &amp; Spiess</div>
+          <div class="pp-paper-note">Develops an imputation-based estimator for staggered event-study designs and examines its efficiency and robustness under treatment-effect heterogeneity.</div>
+        </div>
+        <div class="pp-paper-year">2024<div class="pp-paper-citations" id="cite-10-1093-restud-rdae007"></div></div>
+      </div>
     </div>
   </div>
 
     <!-- Labor Economics -->
-  <div class="pp-section-block">
+  <div class="pp-section-block pp-collapsed">
     <div class="pp-section-header">
-      <span class="pp-section-label">Labor Economics</span>
+      <span class="pp-toggle">&#9662;</span><span class="pp-section-label">Labor Economics</span><span class="pp-count">10 papers</span>
       <div class="pp-section-line"></div>
     </div>
     <div class="pp-field-card">
@@ -432,13 +502,29 @@ author_profile: true
         </div>
         <div class="pp-paper-year">2019<div class="pp-paper-citations" id="cite-10-1093-qje-qjy006"></div></div>
       </div>
+      <div class="pp-paper-row" data-doi="10.1257/jep.37.4.23">
+        <div class="pp-paper-left">
+          <a class="pp-paper-title" href="https://www.aeaweb.org/articles?id=10.1257/jep.37.4.23" target="_blank">The Evolution of Work from Home</a>
+          <div class="pp-paper-authors">Barrero, Bloom &amp; Davis</div>
+          <div class="pp-paper-note">Uses survey data to examine why remote work persisted after the pandemic and how it varies across worker and job characteristics.</div>
+        </div>
+        <div class="pp-paper-year">2023<div class="pp-paper-citations" id="cite-10-1257-jep-37-4-23"></div></div>
+      </div>
+      <div class="pp-paper-row" data-doi="10.1093/qje/qjad048">
+        <div class="pp-paper-left">
+          <a class="pp-paper-title" href="https://academic.oup.com/qje/article/139/2/829/7289247" target="_blank">The Economic Impacts of COVID-19: Evidence from a New Public Database Built Using Private Sector Data</a>
+          <div class="pp-paper-authors">Chetty, Friedman, Stepner &amp; the Opportunity Insights Team</div>
+          <div class="pp-paper-note">Uses real-time private-sector data to examine how spending, business revenue, and low-wage employment responded to the COVID-19 shock across places.</div>
+        </div>
+        <div class="pp-paper-year">2024<div class="pp-paper-citations" id="cite-10-1093-qje-qjad048"></div></div>
+      </div>
     </div>
   </div>
 
   <!-- Behavioral & Computational -->
-  <div class="pp-section-block">
+  <div class="pp-section-block pp-collapsed">
     <div class="pp-section-header">
-      <span class="pp-section-label">Behavioral, Computational &amp; Research Replicability</span>
+      <span class="pp-toggle">&#9662;</span><span class="pp-section-label">Behavioral, Computational &amp; Research Replicability</span><span class="pp-count">7 papers</span>
       <div class="pp-section-line"></div>
     </div>
     <div class="pp-field-card">
@@ -483,13 +569,29 @@ author_profile: true
         </div>
         <div class="pp-paper-year">2016<div class="pp-paper-citations" id="cite-10-1257-aer-20161038"></div></div>
       </div>
+      <div class="pp-paper-row" data-doi="10.1126/science.adh2586">
+        <div class="pp-paper-left">
+          <a class="pp-paper-title" href="https://www.science.org/doi/10.1126/science.adh2586" target="_blank">Experimental Evidence on the Productivity Effects of Generative Artificial Intelligence</a>
+          <div class="pp-paper-authors">Noy &amp; Zhang</div>
+          <div class="pp-paper-note">Uses a randomized experiment to examine how access to a generative-AI writing tool affects task time, output quality, and within-worker inequality.</div>
+        </div>
+        <div class="pp-paper-year">2023<div class="pp-paper-citations" id="cite-10-1126-science-adh2586"></div></div>
+      </div>
+      <div class="pp-paper-row" data-doi="10.1146/annurev-economics-120925-105620">
+        <div class="pp-paper-left">
+          <a class="pp-paper-title" href="https://www.nber.org/papers/w33344" target="_blank">Large Language Models: An Applied Econometric Framework</a>
+          <div class="pp-paper-authors">Ludwig, Mullainathan &amp; Rambachan</div>
+          <div class="pp-paper-note">Develops an econometric framework for using large language models in prediction and measurement tasks, examining issues such as training leakage and validation.</div>
+        </div>
+        <div class="pp-paper-year">2026<div class="pp-paper-citations" id="cite-10-1146-annurev-economics-120925-105620"></div></div>
+      </div>
     </div>
   </div>
 
   <!-- Research Replicability -->
-  <div class="pp-section-block">
+  <div class="pp-section-block pp-collapsed">
     <div class="pp-section-header">
-      <span class="pp-section-label">Research Replicability &amp; Transparency</span>
+      <span class="pp-toggle">&#9662;</span><span class="pp-section-label">Research Replicability &amp; Transparency</span><span class="pp-count">6 papers</span>
       <div class="pp-section-line"></div>
     </div>
     <div class="pp-field-card">
@@ -546,9 +648,9 @@ author_profile: true
   </div>
 
   <!-- Health Economics -->
-  <div class="pp-section-block">
+  <div class="pp-section-block pp-collapsed">
     <div class="pp-section-header">
-      <span class="pp-section-label">Health Economics</span>
+      <span class="pp-toggle">&#9662;</span><span class="pp-section-label">Health Economics</span><span class="pp-count">7 papers</span>
       <div class="pp-section-line"></div>
     </div>
     <div class="pp-field-card">
@@ -593,6 +695,22 @@ author_profile: true
         </div>
         <div class="pp-paper-year">2015<div class="pp-paper-citations" id="cite-10-1257-aer-104-2-562-health"></div></div>
       </div>
+      <div class="pp-paper-row" data-doi="10.1257/aer.20190825">
+        <div class="pp-paper-left">
+          <a class="pp-paper-title" href="https://www.aeaweb.org/articles?id=10.1257/aer.20190825" target="_blank">Place-Based Drivers of Mortality: Evidence from Migration</a>
+          <div class="pp-paper-authors">Finkelstein, Gentzkow &amp; Williams</div>
+          <div class="pp-paper-note">Uses Medicare movers to examine how much geographic variation in elderly mortality reflects current place versus person-specific health.</div>
+        </div>
+        <div class="pp-paper-year">2021<div class="pp-paper-citations" id="cite-10-1257-aer-20190825"></div></div>
+      </div>
+      <div class="pp-paper-row" data-doi="10.1038/s41586-022-04996-4">
+        <div class="pp-paper-left">
+          <a class="pp-paper-title" href="https://www.nature.com/articles/s41586-022-04996-4" target="_blank">Social Capital I: Measurement and Associations with Economic Mobility</a>
+          <div class="pp-paper-authors">Chetty et al.</div>
+          <div class="pp-paper-note">Uses large-scale social-network data to construct measures of social capital and examine their association with upward economic mobility across areas.</div>
+        </div>
+        <div class="pp-paper-year">2022<div class="pp-paper-citations" id="cite-10-1038-s41586-022-04996-4"></div></div>
+      </div>
     </div>
   </div>
 
@@ -635,4 +753,9 @@ async function fetchCitations() {
   }
 }
 document.addEventListener('DOMContentLoaded', fetchCitations);
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.pp-section-header').forEach(function (h) {
+    h.addEventListener('click', function () { h.parentElement.classList.toggle('pp-collapsed'); });
+  });
+});
 </script>
