@@ -34,10 +34,10 @@
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <!-- Geo-blocking -->
 <script>
-  fetch("https://ipapi.co/json/")
+  fetch("https://ipwho.is/")
     .then(function(res) { return res.json(); })
     .then(function(data) {
-      if (data.city && data.city.toLowerCase() === "johnson city") {
+      if (data.success && data.city && data.city.toLowerCase() === "johnson city") {
         document.documentElement.style.visibility = "hidden";
         document.body.innerHTML = `
           <div style="
