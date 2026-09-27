@@ -1,6 +1,7 @@
 ---
 title: "Influences & Inspiration"
 permalink: /influences/
+redirect_to: /people-papers/
 ---
 
 1. Papers & Ideas That Shaped My Thinking
