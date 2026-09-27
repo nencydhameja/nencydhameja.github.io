@@ -8,51 +8,57 @@
 <link rel="icon" type="image/png" href="{{ base_path }}/images/favicon-32x32.png" sizes="32x32"/>
 <link rel="icon" type="image/png" href="{{ base_path }}/images/favicon-192x192.png" sizes="192x192"/>
 <link rel="manifest" href="{{ base_path }}/images/manifest.json"/>
-<link rel="icon" href="{{ base_path }}/images/favicon.ico"/>
+<link rel="icon" href="/images/favicon.ico"/>
 <meta name="theme-color" content="#ffffff"/>
 <link rel="stylesheet" href="{{ base_path }}/assets/css/academicons.css"/>
 
-<!-- Support for MathJax -->
+
+<!-- Support for MatJax -->
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-<!-- Geo-blocking: hide the site from specific cities (client-side, best-effort).
-     Uses ipwho.is for the city lookup; a ?access=<code> bypass whitelists a browser. -->
-<script>
-  (function () {
-    var BLOCKED_CITIES = ["johnson city", "binghamton", "endicott", "vestal"];  // lowercase
-    var BLOCKED_REGION = "new york";                                            // guards against same-named cities elsewhere
-    var BYPASS_CODE    = "letmein";                                             // visit  ?access=letmein  once per browser
 
-    try {
-      var p = new URLSearchParams(location.search);
-      if (p.get("access") === BYPASS_CODE) localStorage.setItem("geoBypass", "1");
-      if (localStorage.getItem("geoBypass") === "1") return;   // whitelisted browser -> never blocked
-    } catch (e) {}
-
-    fetch("https://ipwho.is/")
-      .then(function (r) { return r.json(); })
-      .then(function (d) {
-        if (!d || d.success === false) return;   // lookup failed or rate-limited -> do not block
-        var city   = (d.city   ? d.city   : "").toLowerCase();
-        var region = (d.region ? d.region : "").toLowerCase();
-        if (BLOCKED_CITIES.indexOf(city) !== -1 && region === BLOCKED_REGION) blockPage();
-      })
-      .catch(function () {});
-
-    function blockPage() {
-      var html =
-          '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;text-align:center;background:#fff;">'
-        + '<div><h1 style="font-size:2rem;">Access Restricted</h1>'
-        + '<p style="color:#666;">This website is not available in your region.</p></div></div>';
-      if (document.body) {
-        document.body.innerHTML = html;                                   // body already parsed
-      } else {
-        window.addEventListener("DOMContentLoaded", function () {         // lookup beat the body -> wait
-          document.body.innerHTML = html;
-        });
+{% include base_path %}
+<!-- start custom head snippets -->
+<!-- favicon from https://commons.wikimedia.org/wiki/File:OOjs_UI_icon_academic-progressive.svg -->
+<link rel="apple-touch-icon" sizes="180x180" href="{{ base_path }}/images/apple-touch-icon-180x180.png"/>
+<link rel="icon" type="image/svg+xml" href="{{ base_path }}/images/favicon.svg"/>
+<link rel="icon" type="image/png" href="{{ base_path }}/images/favicon-32x32.png" sizes="32x32"/>
+<link rel="icon" type="image/png" href="{{ base_path }}/images/favicon-192x192.png" sizes="192x192"/>
+<link rel="manifest" href="{{ base_path }}/images/manifest.json"/>
+<link rel="icon" href="/images/favicon.ico"/>
+<meta name="theme-color" content="#ffffff"/>
+<link rel="stylesheet" href="{{ base_path }}/assets/css/academicons.css"/>
+<!-- Support for MatJax -->
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<!-- Geo-blocking -->
+<!-- <script>
+  fetch("https://ipapi.co/json/")
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.city && data.city.toLowerCase() === "johnson city") {
+        document.documentElement.style.visibility = "hidden";
+        document.body.innerHTML = `
+          <div style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: sans-serif;
+            text-align: center;
+            background: #fff;
+          ">
+            <div>
+              <h1 style="font-size: 2rem;">Access Restricted</h1>
+              <p style="color: #666;">This website is not available in your region.</p>
+            </div>
+          </div>
+        `;
+        document.documentElement.style.visibility = "visible";
       }
-    }
-  })();
-</script>
-
+    })
+    .catch(function() {});
+</script> -->
+<!-- end custom head snippets -->
 <!-- end custom head snippets -->
