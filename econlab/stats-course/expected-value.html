@@ -531,7 +531,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-ex-means" id="toc-what-ex-means" class="nav-link active" data-scroll-target="#what-ex-means">What E(X) means</a></li>
+  <li><a href="#first-x-is-a-random-variable" id="toc-first-x-is-a-random-variable" class="nav-link active" data-scroll-target="#first-x-is-a-random-variable">First, X is a random variable</a></li>
+  <li><a href="#what-ex-means" id="toc-what-ex-means" class="nav-link" data-scroll-target="#what-ex-means">What E(X) means</a></li>
   <li><a href="#how-to-compute-it" id="toc-how-to-compute-it" class="nav-link" data-scroll-target="#how-to-compute-it">How to compute it</a></li>
   <li><a href="#the-one-rule-you-will-reuse-everywhere-linearity" id="toc-the-one-rule-you-will-reuse-everywhere-linearity" class="nav-link" data-scroll-target="#the-one-rule-you-will-reuse-everywhere-linearity">The one rule you will reuse everywhere: linearity</a></li>
   <li><a href="#expectation-vs-the-sample-mean-what-we-know-and-what-we-dont" id="toc-expectation-vs-the-sample-mean-what-we-know-and-what-we-dont" class="nav-link" data-scroll-target="#expectation-vs-the-sample-mean-what-we-know-and-what-we-dont">Expectation vs the sample mean: what we know and what we don’t</a></li>
@@ -566,6 +567,15 @@ window.Quarto = {
 
 
 <p>Before conditional expectations and regression, you need the plain one. This page is about the symbol <span class="math inline">\(E(X)\)</span> — what it means, how it is computed, and how it differs from the average of your data.</p>
+<section id="first-x-is-a-random-variable" class="level2">
+<h2 class="anchored" data-anchor-id="first-x-is-a-random-variable">First, X is a random variable</h2>
+<p><span class="math inline">\(X\)</span> is a <strong>random variable</strong>: a quantity whose value is settled by a random draw. Before you observe it you don’t know which value you will get — only the values it <em>can</em> take and how likely each one is. That list of possible values together with their probabilities is its <strong>distribution</strong>.</p>
+<ul>
+<li>Roll a die: <span class="math inline">\(X\)</span> is the face that lands up, one of <span class="math inline">\(1, \dots, 6\)</span>, each with probability <span class="math inline">\(1/6\)</span>.</li>
+<li>Pick a person at random: <span class="math inline">\(X\)</span> could be their height, their income, or their years of schooling.</li>
+</ul>
+<p>One notation habit worth keeping from the start: <strong>capital <span class="math inline">\(X\)</span></strong> is the random variable (the draw itself), while a <strong>lowercase <span class="math inline">\(x\)</span></strong> is one particular value it came out to be. The expected value <span class="math inline">\(E(X)\)</span> is a single number that summarizes the whole distribution of <span class="math inline">\(X\)</span> — its center of gravity.</p>
+</section>
 <section id="what-ex-means" class="level2">
 <h2 class="anchored" data-anchor-id="what-ex-means">What E(X) means</h2>
 <p>Read <span class="math inline">\(E(X)\)</span> as <strong>“the expected value of X”</strong> — also called the <strong>mean of X</strong> or the <strong>population mean</strong>. Two ways to picture it, both correct:</p>
