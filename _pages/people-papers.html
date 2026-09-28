@@ -235,7 +235,7 @@ author_profile: true
 </div>
 
   <!-- Urban Economics -->
-  <div class="pp-section-block">
+  <div class="pp-section-block pp-collapsed">
     <div class="pp-section-header">
       <span class="pp-toggle">&#9662;</span><span class="pp-section-label">Urban Economics</span><span class="pp-count">10 papers</span>
       <div class="pp-section-line"></div>
@@ -336,7 +336,7 @@ author_profile: true
   </div>
 
   <!-- Causal Inference -->
-  <div class="pp-section-block">
+  <div class="pp-section-block pp-collapsed">
     <div class="pp-section-header">
       <span class="pp-toggle">&#9662;</span><span class="pp-section-label">Causal Inference &amp; Methods</span><span class="pp-count">12 papers</span>
       <div class="pp-section-line"></div>
@@ -807,9 +807,8 @@ async function fetchCitations() {
   }
 }
 document.addEventListener('DOMContentLoaded', fetchCitations);
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.pp-section-header').forEach(function (h) {
-    h.addEventListener('click', function () { h.parentElement.classList.toggle('pp-collapsed'); });
-  });
+document.addEventListener('click', function (e) {
+  var h = e.target.closest('.pp-section-header');
+  if (h && h.parentElement) h.parentElement.classList.toggle('pp-collapsed');
 });
 </script>
