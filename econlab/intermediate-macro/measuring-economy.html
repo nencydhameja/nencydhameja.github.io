@@ -345,11 +345,9 @@ ui &lt;- fluidPage(
     tabPanel("GDP &amp; the deflator",
       sidebarLayout(
         sidebarPanel(width=4,
-          helpText("Base-year prices fixed: good A = $2, good B = $4."),
-          sliderInput("qA","Quantity of A:",min=0,max=20,value=12,step=1),
-          sliderInput("pA","Current price of A:",min=1,max=10,value=3,step=1),
-          sliderInput("qB","Quantity of B:",min=0,max=20,value=4,step=1),
-          sliderInput("pB","Current price of B:",min=1,max=10,value=5,step=1),
+          helpText("One good. Base-year price fixed at $4."),
+          sliderInput("q","Quantity produced:",min=0,max=20,value=12,step=1),
+          sliderInput("p","Current price:",min=1,max=10,value=5,step=1),
           uiOutput("gdp")),
         mainPanel(width=8, plotOutput("bar",height="420px")))),
     tabPanel("Labor market",
@@ -362,9 +360,9 @@ ui &lt;- fluidPage(
         mainPanel(width=8, plotOutput("pie",height="420px"))))
   ))
 server &lt;- function(input,output,session){
-  nom &lt;- reactive(input$qA*input$pA + input$qB*input$pB)
-  rea &lt;- reactive(input$qA*2 + input$qB*4)
-  output$gdp &lt;- renderUI(HTML(sprintf("&lt;div class='sb'&gt;Nominal GDP = &lt;b&gt;%.0f&lt;/b&gt;&lt;br&gt;Real GDP (base) = &lt;b&gt;%.0f&lt;/b&gt;&lt;br&gt;GDP deflator = &lt;b&gt;%.1f&lt;/b&gt;&lt;/div&gt;",
+  nom &lt;- reactive(input$q*input$p)
+  rea &lt;- reactive(input$q*4)
+  output$gdp &lt;- renderUI(HTML(sprintf("&lt;div class='sb'&gt;Nominal GDP = q&amp;times;p = &lt;b&gt;%.0f&lt;/b&gt;&lt;br&gt;Real GDP (base) = q&amp;times;$4 = &lt;b&gt;%.0f&lt;/b&gt;&lt;br&gt;GDP deflator = &lt;b&gt;%.1f&lt;/b&gt;&lt;/div&gt;",
     nom(),rea(),nom()/rea()*100)))
   output$bar &lt;- renderPlot({ par(mar=c(3,4.4,1,1))
     barplot(c(Nominal=nom(),Real=rea()),col=c("#b5462a","#1f3b73"),ylab="GDP",las=1,ylim=c(0,max(nom(),rea())*1.2))
