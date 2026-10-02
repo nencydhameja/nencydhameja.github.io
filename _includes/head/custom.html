@@ -1,4 +1,70 @@
 {% include base_path %}
+<!-- start custom head snippets -->
+<!-- favicon from https://commons.wikimedia.org/wiki/File:OOjs_UI_icon_academic-progressive.svg -->
+<link rel="apple-touch-icon" sizes="180x180" href="{{ base_path }}/images/apple-touch-icon-180x180.png"/>
+<link rel="icon" type="image/svg+xml" href="{{ base_path }}/images/favicon.svg"/>
+<link rel="icon" type="image/png" href="{{ base_path }}/images/favicon-32x32.png" sizes="32x32"/>
+<link rel="icon" type="image/png" href="{{ base_path }}/images/favicon-192x192.png" sizes="192x192"/>
+<link rel="manifest" href="{{ base_path }}/images/manifest.json"/>
+<link rel="icon" href="/images/favicon.ico"/>
+<meta name="theme-color" content="#ffffff"/>
+<link rel="stylesheet" href="{{ base_path }}/assets/css/academicons.css"/>
+
+<!-- Support for MathJax -->
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<!-- Geo-blocking -->
+<style id="geo-hide">html { visibility: hidden; }</style>
+<script>
+(function () {
+  // Add more entries if the console shows other city names for that area
+  var BLOCKED = [
+    { city: "johnson city", region: "new york" }
+  ];
+
+  function reveal() {
+    var s = document.getElementById("geo-hide");
+    if (s) s.remove();
+  }
+
+  function block() {
+    function render() {
+      document.body.innerHTML =
+        '<div style="display:flex;align-items:center;justify-content:center;height:100vh;' +
+        'font-family:sans-serif;text-align:center;background:#fff;">' +
+        '<div><h1 style="font-size:2rem;">Access Restricted</h1>' +
+        '<p style="color:#666;">This website is not available in your region.</p></div></div>';
+      reveal();
+    }
+    if (document.body) render();
+    else document.addEventListener("DOMContentLoaded", render);
+  }
+
+  // If the lookup hangs, show the page anyway after 3s
+  var timer = setTimeout(reveal, 3000);
+
+  fetch("https://ipwho.is/")
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      clearTimeout(timer);
+      console.log("geo:", d.success, d.city, d.region);
+      var city = (d.city || "").toLowerCase();
+      var region = (d.region || "").toLowerCase();
+      var hit = d.success && BLOCKED.some(function (b) {
+        return city === b.city && region === b.region;
+      });
+      if (hit) block(); else reveal();
+    })
+    .catch(function (e) {
+      clearTimeout(timer);
+      console.warn("geo lookup failed:", e);
+      reveal();
+    });
+})();
+</script>
+<!-- end custom head snippets -->
+<!-- {% include base_path %}
 
 <!-- start custom head snippets -->
 
@@ -61,4 +127,4 @@
     .catch(function() {});
 </script>
 <!-- end custom head snippets -->
-<!-- end custom head snippets -->
+<!-- end custom head snippets --> -->
