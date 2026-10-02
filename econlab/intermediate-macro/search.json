@@ -300,5 +300,19 @@
       "Money",
       "What Is Money?"
     ]
+  },
+  {
+    "objectID": "loanable-funds-fast.html",
+    "href": "loanable-funds-fast.html",
+    "title": "Loanable Funds & Crowding Out (fast / JS version)",
+    "section": "",
+    "text": "Think of all saving and borrowing in the economy as one market for a single good — loanable funds — whose “price” is the real interest rate \\(r\\).\n\nDemand = investment \\(I(r)\\). Firms borrow to build capital; they borrow less when \\(r\\) is high, so demand slopes down.\nSupply = national saving \\(S\\) = private \\((Y-T-C)\\) + public \\((T-G)\\) = \\(Y - C - G\\).\nEquilibrium: \\(r\\) adjusts until saving equals investment, \\(S = I(r)\\).\nCrowding out: a bigger deficit (raise \\(G\\), or cut \\(T\\)) lowers national saving → \\(r\\) rises → investment is squeezed.\n\n\n\n\n\n\n\nThis version uses plain JavaScript — no R download, so it loads instantly. Same model, same sliders as the webR version.\n\n\n\n\n\n\n  \n    Government purchases G: 1500\n    \n    Taxes T: 1500\n    \n    Investment-demand shift: 0\n    \n     Saving slopes up (consumption responds to r) — uncheck for vertical saving\n    \n  \n  \n    \n  \n\n\n\n\n\n\n\nRun a deficit — raise \\(G\\) above \\(T\\). The saving line slides left, \\(r\\) climbs, and investment falls: crowding out, live.\nShift investment demand (baseline, saving slopes up): \\(r\\) rises and investment rises.\nUncheck the box for vertical saving and shift demand again: \\(r\\) rises but \\(I^*\\) stays put. This is the difference between the two exam cases."
+  },
+  {
+    "objectID": "loanable-funds-fast.html#the-market-for-loanable-funds",
+    "href": "loanable-funds-fast.html#the-market-for-loanable-funds",
+    "title": "Loanable Funds & Crowding Out (fast / JS version)",
+    "section": "",
+    "text": "Think of all saving and borrowing in the economy as one market for a single good — loanable funds — whose “price” is the real interest rate \\(r\\).\n\nDemand = investment \\(I(r)\\). Firms borrow to build capital; they borrow less when \\(r\\) is high, so demand slopes down.\nSupply = national saving \\(S\\) = private \\((Y-T-C)\\) + public \\((T-G)\\) = \\(Y - C - G\\).\nEquilibrium: \\(r\\) adjusts until saving equals investment, \\(S = I(r)\\).\nCrowding out: a bigger deficit (raise \\(G\\), or cut \\(T\\)) lowers national saving → \\(r\\) rises → investment is squeezed.\n\n\n\n\n\n\n\nThis version uses plain JavaScript — no R download, so it loads instantly. Same model, same sliders as the webR version.\n\n\n\n\n\n\n  \n    Government purchases G: 1500\n    \n    Taxes T: 1500\n    \n    Investment-demand shift: 0\n    \n     Saving slopes up (consumption responds to r) — uncheck for vertical saving\n    \n  \n  \n    \n  \n\n\n\n\n\n\n\nRun a deficit — raise \\(G\\) above \\(T\\). The saving line slides left, \\(r\\) climbs, and investment falls: crowding out, live.\nShift investment demand (baseline, saving slopes up): \\(r\\) rises and investment rises.\nUncheck the box for vertical saving and shift demand again: \\(r\\) rises but \\(I^*\\) stays put. This is the difference between the two exam cases."
   }
 ]
