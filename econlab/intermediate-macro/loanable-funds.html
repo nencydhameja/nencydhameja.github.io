@@ -353,7 +353,7 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Try it below.</strong> Push the government into deficit and watch <span class="math inline">\(r\)</span> climb and investment fall. Then flip on “consumption responds to <span class="math inline">\(r\)</span>” and shift investment demand — see why investment moves only when saving slopes up.</p>
+<p><strong>Try it below.</strong> In the baseline, saving <strong>slopes up</strong> with <span class="math inline">\(r\)</span> (consumption responds to the interest rate). Push the government into deficit and watch <span class="math inline">\(r\)</span> climb and investment fall. Uncheck the box to see the vertical-saving case, where an investment-demand shift raises <span class="math inline">\(r\)</span> but leaves investment unchanged.</p>
 </div>
 </div>
 </div>
@@ -377,7 +377,7 @@ ui &lt;- fluidPage(
       sliderInput("G",  "Government purchases  G:", min = 800, max = 2500, value = 1500, step = 50),
       sliderInput("T",  "Taxes  T:",                min = 800, max = 2500, value = 1500, step = 50),
       sliderInput("dI0","Investment-demand shift:", min = -400, max = 400, value = 0, step = 50),
-      checkboxInput("rsens", "Consumption responds to r (saving slopes up)", value = FALSE),
+      checkboxInput("rsens", "Saving slopes up (consumption responds to r) — uncheck for vertical saving", value = TRUE),
       uiOutput("stats")
     ),
     mainPanel(
@@ -458,8 +458,8 @@ shinyApp(ui, server)</code></pre>
 <h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
 <ul>
 <li><strong>Run a deficit</strong> — raise <span class="math inline">\(G\)</span> above <span class="math inline">\(T\)</span>. The saving line slides left, <span class="math inline">\(r\)</span> climbs, and the equilibrium dot moves up the investment curve: <strong>less investment</strong>. That’s crowding out, live.</li>
-<li><strong>Shift investment demand</strong> with saving <strong>vertical</strong> (box unchecked): <span class="math inline">\(r\)</span> rises but <span class="math inline">\(I^*\)</span> stays put — the extra demand is exactly offset by the higher rate.</li>
-<li>Now <strong>check “consumption responds to <span class="math inline">\(r\)</span>”</strong> and shift investment demand again: the saving line tilts, so higher <span class="math inline">\(r\)</span> coaxes out more saving and <strong>investment actually rises</strong>. This is the difference between the two exam cases.</li>
+<li><strong>Shift investment demand</strong> (baseline, saving slopes up): <span class="math inline">\(r\)</span> rises <em>and</em> investment rises — the higher rate coaxes out more saving to fund it.</li>
+<li><strong>Uncheck the box</strong> for vertical saving and shift demand again: now <span class="math inline">\(r\)</span> rises but <span class="math inline">\(I^*\)</span> stays put — the extra demand is exactly offset by the higher rate. This is the difference between the two exam cases.</li>
 </ul>
 </section>
 </div>
