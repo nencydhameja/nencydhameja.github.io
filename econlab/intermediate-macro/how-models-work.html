@@ -41,11 +41,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -338,41 +333,59 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Try it.</strong> Raising income shifts demand right (P and Q both rise). Raising the input price shifts supply left (P rises, Q falls). The dashed point is the baseline for comparison.</p>
+<p><strong>Try it.</strong> Raising income shifts demand right (P and Q both rise). Raising the input price shifts supply left (P rises, Q falls). The grey dot is the baseline.</p>
 </div>
 </div>
 </div>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 520
-
-library(shiny)
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("body{font-family:'Inter',system-ui,sans-serif;}
-    .sb{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:10px;font-size:14px;line-height:1.8;} .sb b{color:#1f3b73;}"))),
-  sidebarLayout(
-    sidebarPanel(width=4,
-      sliderInput("inc","Buyers' income:",min=0,max=30,value=10,step=1),
-      sliderInput("pin","Input price:",min=0,max=20,value=5,step=1),
-      uiOutput("sb")),
-    mainPanel(width=8, plotOutput("plot",height="440px"))))
-server &lt;- function(input,output,session){
-  solve &lt;- function(inc,pin){ P &lt;- (60+2*inc+2*pin)/18; Q &lt;- 8*P-2*pin; list(P=P,Q=Q) }
-  output$plot &lt;- renderPlot({
-    e &lt;- solve(input$inc,input$pin); b &lt;- solve(10,5)
-    Pg &lt;- seq(0,10,length.out=200); Qd &lt;- 60-10*Pg+2*input$inc; Qs &lt;- 8*Pg-2*input$pin
-    par(mar=c(4.2,4.4,1,1))
-    plot(NA,xlim=c(0,90),ylim=c(0,10),xlab="Quantity  Q",ylab="Price  P",las=1,bty="l",cex.lab=1.15)
-    points(b$Q,b$P,pch=1,col="#9aa4b2",cex=1.4,lwd=2)
-    lines(Qd,Pg,col="#1f3b73",lwd=3); lines(Qs,Pg,col="#b5462a",lwd=3)
-    points(e$Q,e$P,pch=19,col="#1c6b4a",cex=1.7)
-    segments(0,e$P,e$Q,e$P,lty=3,col="#5a6472"); segments(e$Q,0,e$Q,e$P,lty=3,col="#5a6472")
-    legend("topright",c("Demand","Supply","Equilibrium","Baseline"),col=c("#1f3b73","#b5462a","#1c6b4a","#9aa4b2"),
-           lwd=c(3,3,NA,NA),pch=c(NA,NA,19,1),bty="n")
-  })
-  output$sb &lt;- renderUI({ e &lt;- solve(input$inc,input$pin)
-    HTML(sprintf("&lt;div class='sb'&gt;Equilibrium price &lt;b&gt;P* = %.2f&lt;/b&gt;&lt;br&gt;Equilibrium quantity &lt;b&gt;Q* = %.1f&lt;/b&gt;&lt;/div&gt;",e$P,e$Q)) })
-}
-shinyApp(ui,server)</code></pre>
+<style>
+ .sim{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .sim .ctrl{flex:0 0 280px;} .sim label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .sim input[type=range]{width:100%;} .sim .v{color:#1f3b73;font-weight:700;}
+ .sim .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.85;} .sim .box b{color:#1f3b73;}
+ .sim canvas{width:100%;height:auto;max-width:600px;} .sim .plot{flex:1 1 420px;min-width:320px;}
+</style>
+<div class="sim">
+ <div class="ctrl">
+  <label>Buyers' income: <span class="v" id="hm-iv">10</span></label>
+  <input type="range" id="hm-i" min="0" max="30" value="10" step="1">
+  <label>Input price: <span class="v" id="hm-pv">5</span></label>
+  <input type="range" id="hm-p" min="0" max="20" value="5" step="1">
+  <div class="box" id="hm-box"></div>
+ </div>
+ <div class="plot"><canvas id="hmC" width="600" height="440"></canvas></div>
+</div>
+<script>
+(function(){
+ var I=document.getElementById('hm-i'),P=document.getElementById('hm-p'),
+  cv=document.getElementById('hmC'),x=cv.getContext('2d'),box=document.getElementById('hm-box'),
+  iv=document.getElementById('hm-iv'),pv=document.getElementById('hm-pv');
+ var W=cv.width,H=cv.height,ML=56,MR=20,MT=16,MB=42,xmax=90,ymax=10;
+ function X(q){return ML+q/xmax*(W-ML-MR);} function Y(p){return H-MB-p/ymax*(H-MT-MB);}
+ function solve(inc,pin){var p=(60+2*inc+2*pin)/18;return {P:p,Q:8*p-2*pin};}
+ function draw(){
+  var inc=+I.value,pin=+P.value,e=solve(inc,pin),b=solve(10,5);
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='right';
+  for(var p=0;p<=10;p+=2){x.beginPath();x.moveTo(ML,Y(p));x.lineTo(W-MR,Y(p));x.stroke();x.fillText(p,ML-6,Y(p)+4);}
+  x.textAlign='center';for(var q=0;q<=90;q+=15){x.fillText(q,X(q),H-MB+16);}
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.fillText('Quantity  Q',(ML+W-MR)/2,H-7);
+  x.save();x.translate(15,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('Price  P',0,0);x.restore();
+  // demand & supply (param in P 0..10)
+  x.lineWidth=3;x.strokeStyle='#1f3b73';x.beginPath();x.moveTo(X(60-10*0+2*inc),Y(0));x.lineTo(X(60-10*10+2*inc),Y(10));x.stroke();
+  x.strokeStyle='#b5462a';x.beginPath();x.moveTo(X(8*0-2*pin),Y(0));x.lineTo(X(8*10-2*pin),Y(10));x.stroke();
+  x.strokeStyle='#9aa4b2';x.lineWidth=2;x.beginPath();x.arc(X(b.Q),Y(b.P),5,0,7);x.stroke();
+  x.setLineDash([3,3]);x.strokeStyle='#5a6472';x.lineWidth=1;x.beginPath();x.moveTo(ML,Y(e.P));x.lineTo(X(e.Q),Y(e.P));x.moveTo(X(e.Q),H-MB);x.lineTo(X(e.Q),Y(e.P));x.stroke();x.setLineDash([]);
+  x.fillStyle='#1c6b4a';x.beginPath();x.arc(X(e.Q),Y(e.P),6,0,7);x.fill();
+  x.textAlign='left';var lx=W-MR-150,ly=MT+6;
+  x.strokeStyle='#1f3b73';x.lineWidth=3;x.beginPath();x.moveTo(lx,ly);x.lineTo(lx+20,ly);x.stroke();x.fillStyle='#333';x.fillText('Demand',lx+26,ly+3);
+  x.strokeStyle='#b5462a';x.beginPath();x.moveTo(lx,ly+17);x.lineTo(lx+20,ly+17);x.stroke();x.fillText('Supply',lx+26,ly+20);
+  iv.textContent=inc;pv.textContent=pin;
+  box.innerHTML='Equilibrium price <b>P* = '+e.P.toFixed(2)+'</b><br>Equilibrium quantity <b>Q* = '+e.Q.toFixed(1)+'</b>';
+ }
+ [I,P].forEach(function(e){e.addEventListener('input',draw);});draw();
+})();
+</script>
 </section>
 <div id="did-you-know">
 <section id="what-to-notice" class="level3">
@@ -380,7 +393,7 @@ shinyApp(ui,server)</code></pre>
 <ul>
 <li><strong>Income up</strong> → demand shifts right → <strong>both</strong> P and Q rise.</li>
 <li><strong>Input price up</strong> → supply shifts left → P rises, Q falls.</li>
-<li>The model can tell you how a shock moves P and Q — but not <em>why</em> income itself changed. That needs a bigger model.</li>
+<li>The model shows how a shock moves P and Q — not <em>why</em> income itself changed. That needs a bigger model.</li>
 </ul>
 </section>
 </div>

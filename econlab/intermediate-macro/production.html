@@ -41,11 +41,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -322,8 +317,8 @@ window.Quarto = {
 <ul>
 <li><span class="math inline">\(A\)</span> = total factor productivity, <span class="math inline">\(K\)</span> = capital, <span class="math inline">\(L\)</span> = labor, <span class="math inline">\(\alpha\)</span> = capital’s share.</li>
 <li><strong>Marginal products:</strong> <span class="math inline">\(MPL = (1-\alpha)\dfrac{Y}{L}\)</span>, &nbsp; <span class="math inline">\(MPK = \alpha\dfrac{Y}{K}\)</span>.</li>
-<li><strong>Factor prices</strong> (competitive firms): real wage <span class="math inline">\(W/P = MPL\)</span>; real rental <span class="math inline">\(R/P = MPK\)</span>.</li>
-<li><strong>Income shares are constant:</strong> labor gets <span class="math inline">\((1-\alpha)Y\)</span>, capital gets <span class="math inline">\(\alpha Y\)</span> — and they <strong>add up to Y</strong> (Euler’s theorem).</li>
+<li><strong>Factor prices:</strong> real wage <span class="math inline">\(W/P = MPL\)</span>; real rental <span class="math inline">\(R/P = MPK\)</span>.</li>
+<li><strong>Income shares are constant:</strong> labor gets <span class="math inline">\((1-\alpha)Y\)</span>, capital gets <span class="math inline">\(\alpha Y\)</span> — they add up to <span class="math inline">\(Y\)</span> (Euler).</li>
 </ul>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
@@ -331,52 +326,67 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Try it.</strong> Add capital and watch the wage rise but the rental rate fall (each machine earns less). Change <span class="math inline">\(\alpha\)</span> to re-slice the pie between labor and capital.</p>
+<p><strong>Try it.</strong> Add capital and watch the wage rise but the rental rate fall. Change <span class="math inline">\(\alpha\)</span> to re-slice the pie between labor and capital.</p>
 </div>
 </div>
 </div>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 540
-
-library(shiny)
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("body{font-family:'Inter',system-ui,sans-serif;}
-    .sb{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:10px;font-size:14px;line-height:1.85;} .sb b{color:#1f3b73;}"))),
-  sidebarLayout(
-    sidebarPanel(width=4,
-      sliderInput("A","Productivity  A:",min=0.5,max=3,value=1,step=0.1),
-      sliderInput("alpha","Capital share  α:",min=0.1,max=0.9,value=0.3,step=0.05),
-      sliderInput("K","Capital  K:",min=10,max=500,value=125,step=5),
-      sliderInput("L","Labor  L:",min=10,max=500,value=100,step=5),
-      uiOutput("sb")),
-    mainPanel(width=8, plotOutput("plot",height="460px"))))
-server &lt;- function(input,output,session){
-  Yf &lt;- function(K,L,A,a) A*K^a*L^(1-a)
-  output$plot &lt;- renderPlot({
-    a&lt;-input$alpha; A&lt;-input$A; K&lt;-input$K
-    Lg &lt;- seq(10,500,length.out=200); Yg &lt;- Yf(K,Lg,A,a)
-    Ystar &lt;- Yf(K,input$L,A,a); mpl &lt;- (1-a)*Ystar/input$L
-    par(mar=c(4.2,4.6,1,1))
-    plot(Lg,Yg,type="l",col="#1f3b73",lwd=3,xlab="Labor  L",ylab="Output  Y",las=1,bty="l",cex.lab=1.15)
-    points(input$L,Ystar,pch=19,col="#1c6b4a",cex=1.7)
-    # tangent (slope = MPL)
-    abline(a=Ystar-mpl*input$L,b=mpl,col="#b5462a",lwd=1.5,lty=2)
-    legend("topleft",c("Production function Y(L)","Current point","Slope = MPL (real wage)"),
-           col=c("#1f3b73","#1c6b4a","#b5462a"),lwd=c(3,NA,1.5),pch=c(NA,19,NA),lty=c(1,NA,2),bty="n")
-  })
-  output$sb &lt;- renderUI({ a&lt;-input$alpha; Y&lt;-input$A*input$K^a*input$L^(1-a)
-    mpl&lt;-(1-a)*Y/input$L; mpk&lt;-a*Y/input$K
-    HTML(sprintf("&lt;div class='sb'&gt;Output &lt;b&gt;Y = %.0f&lt;/b&gt;&lt;br&gt;Real wage W/P = MPL = &lt;b&gt;%.2f&lt;/b&gt;&lt;br&gt;Real rental R/P = MPK = &lt;b&gt;%.2f&lt;/b&gt;&lt;br&gt;Labor income = &lt;b&gt;%.0f&lt;/b&gt; (%.0f%%)&lt;br&gt;Capital income = &lt;b&gt;%.0f&lt;/b&gt; (%.0f%%)&lt;/div&gt;",
-      Y,mpl,mpk,(1-a)*Y,100*(1-a),a*Y,100*a)) })
-}
-shinyApp(ui,server)</code></pre>
+<style>
+ .sim2{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .sim2 .ctrl{flex:0 0 280px;} .sim2 label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .sim2 input[type=range]{width:100%;} .sim2 .v{color:#1f3b73;font-weight:700;}
+ .sim2 .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.85;} .sim2 .box b{color:#1f3b73;}
+ .sim2 canvas{width:100%;height:auto;max-width:600px;} .sim2 .plot{flex:1 1 420px;min-width:320px;}
+</style>
+<div class="sim2">
+ <div class="ctrl">
+  <label>Productivity A: <span class="v" id="pr-Av">1.0</span></label><input type="range" id="pr-A" min="0.5" max="3" value="1" step="0.1">
+  <label>Capital share α: <span class="v" id="pr-av">0.30</span></label><input type="range" id="pr-al" min="0.1" max="0.9" value="0.3" step="0.05">
+  <label>Capital K: <span class="v" id="pr-Kv">125</span></label><input type="range" id="pr-K" min="10" max="500" value="125" step="5">
+  <label>Labor L: <span class="v" id="pr-Lv">100</span></label><input type="range" id="pr-L" min="10" max="500" value="100" step="5">
+  <div class="box" id="pr-box"></div>
+ </div>
+ <div class="plot"><canvas id="prC" width="600" height="440"></canvas></div>
+</div>
+<script>
+(function(){
+ var A=document.getElementById('pr-A'),al=document.getElementById('pr-al'),K=document.getElementById('pr-K'),L=document.getElementById('pr-L'),
+  cv=document.getElementById('prC'),x=cv.getContext('2d'),box=document.getElementById('pr-box');
+ var W=cv.width,H=cv.height,ML=60,MR=20,MT=16,MB=42,xmax=500;
+ function draw(){
+  var a=+A.value,alpha=+al.value,k=+K.value,l=+L.value;
+  var Ystar=a*Math.pow(k,alpha)*Math.pow(l,1-alpha);
+  var ymax=a*Math.pow(k,alpha)*Math.pow(500,1-alpha)*1.05;
+  var mpl=(1-alpha)*Ystar/l,mpk=alpha*Ystar/k;
+  function X(q){return ML+q/xmax*(W-ML-MR);} function Yc(v){return H-MB-v/ymax*(H-MT-MB);}
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='center';
+  for(var q=0;q<=500;q+=100){x.beginPath();x.moveTo(X(q),MT);x.lineTo(X(q),H-MB);x.stroke();x.fillText(q,X(q),H-MB+16);}
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.fillText('Labor  L',(ML+W-MR)/2,H-7);
+  x.save();x.translate(16,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('Output  Y',0,0);x.restore();
+  // production curve
+  x.strokeStyle='#1f3b73';x.lineWidth=3;x.beginPath();
+  for(var li=10;li<=500;li+=4){var yy=a*Math.pow(k,alpha)*Math.pow(li,1-alpha);var px=X(li),py=Yc(yy);if(li===10)x.moveTo(px,py);else x.lineTo(px,py);}x.stroke();
+  // tangent slope=MPL
+  x.strokeStyle='#b5462a';x.lineWidth=1.5;x.setLineDash([5,4]);
+  var y0=Ystar-mpl*l;x.beginPath();x.moveTo(X(0),Yc(y0));x.lineTo(X(500),Yc(y0+mpl*500));x.stroke();x.setLineDash([]);
+  x.fillStyle='#1c6b4a';x.beginPath();x.arc(X(l),Yc(Ystar),6,0,7);x.fill();
+  x.textAlign='left';x.fillStyle='#333';
+  x.fillText('Production Y(L)',ML+10,MT+14);x.fillStyle='#b5462a';x.fillText('slope = MPL (real wage)',ML+10,MT+30);
+  document.getElementById('pr-Av').textContent=a.toFixed(1);document.getElementById('pr-av').textContent=alpha.toFixed(2);
+  document.getElementById('pr-Kv').textContent=k;document.getElementById('pr-Lv').textContent=l;
+  box.innerHTML='Output <b>Y = '+Math.round(Ystar)+'</b><br>Real wage W/P = MPL = <b>'+mpl.toFixed(2)+'</b><br>Real rental R/P = MPK = <b>'+mpk.toFixed(2)+'</b><br>Labor income = <b>'+Math.round((1-alpha)*Ystar)+'</b> ('+Math.round(100*(1-alpha))+'%)<br>Capital income = <b>'+Math.round(alpha*Ystar)+'</b> ('+Math.round(100*alpha)+'%)';
+ }
+ [A,al,K,L].forEach(function(e){e.addEventListener('input',draw);});draw();
+})();
+</script>
 <div id="did-you-know">
 <section id="what-to-notice" class="level3">
 <h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
 <ul>
 <li>More <strong>capital</strong> → wage up, rental down (diminishing returns to capital).</li>
 <li>More <strong>labor</strong> → wage down, rental up.</li>
-<li>The <strong>shares</strong> (labor <span class="math inline">\(1-\alpha\)</span>, capital <span class="math inline">\(\alpha\)</span>) never change with K or L — only moving <span class="math inline">\(\alpha\)</span> re-slices the pie.</li>
+<li>The <strong>shares</strong> (<span class="math inline">\(1-\alpha\)</span> labor, <span class="math inline">\(\alpha\)</span> capital) never change with K or L — only moving <span class="math inline">\(\alpha\)</span> re-slices the pie.</li>
 </ul>
 </section>
 </div>

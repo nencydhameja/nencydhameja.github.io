@@ -41,11 +41,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -320,7 +315,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="money-prices-and-inflation">Money, prices, and inflation</h2>
 <p>The <strong>quantity equation</strong> is an identity: <span class="math inline">\(M \cdot V = P \cdot Y\)</span>.</p>
 <ul>
-<li><span class="math inline">\(M\)</span> = money supply, <span class="math inline">\(V\)</span> = <strong>velocity</strong> (times the average dollar is spent), <span class="math inline">\(P\)</span> = price level, <span class="math inline">\(Y\)</span> = real output.</li>
+<li><span class="math inline">\(M\)</span> = money supply, <span class="math inline">\(V\)</span> = <strong>velocity</strong>, <span class="math inline">\(P\)</span> = price level, <span class="math inline">\(Y\)</span> = real output.</li>
 <li>In <strong>growth rates</strong> (writing <span class="math inline">\(\Delta\log X\)</span> for the growth rate of <span class="math inline">\(X\)</span>): <span class="math inline">\(\Delta\log M + \Delta\log V = \Delta\log P + \Delta\log Y\)</span>. With inflation <span class="math inline">\(\pi = \Delta\log P\)</span>,</li>
 </ul>
 <p><span class="math display">\[\pi = \Delta\log M + \Delta\log V - \Delta\log Y\]</span></p>
@@ -338,40 +333,57 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 520
-
-library(shiny)
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("body{font-family:'Inter',system-ui,sans-serif;}
-    .sb{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:10px;font-size:15px;line-height:1.85;} .sb b{color:#1f3b73;}"))),
-  sidebarLayout(
-    sidebarPanel(width=4,
-      sliderInput("gM","Money growth  g_M (%):",min=0,max=20,value=5,step=1),
-      sliderInput("gY","Output growth  g_Y (%):",min=0,max=6,value=2,step=1),
-      sliderInput("gV","Velocity growth  g_V (%):",min=-3,max=3,value=0,step=1),
-      uiOutput("sb")),
-    mainPanel(width=8, plotOutput("plot",height="440px"))))
-server &lt;- function(input,output,session){
-  pit &lt;- reactive(input$gM + input$gV - input$gY)
-  output$plot &lt;- renderPlot({
-    yrs &lt;- 0:10; P &lt;- (1+pit()/100)^yrs
-    par(mar=c(4.2,4.6,1.6,1))
-    plot(yrs,P,type="o",col="#b5462a",lwd=3,pch=19,xlab="Years",ylab="Price level (start = 1)",
-         las=1,bty="l",cex.lab=1.1,main=sprintf("Inflation pi = %d + %d - %d = %d%% per year",input$gM,input$gV,input$gY,pit()))
-    abline(h=1,col="#9aa4b2",lty=3)
-  })
-  output$sb &lt;- renderUI(HTML(sprintf("&lt;div class='sb'&gt;Inflation&lt;br&gt;&lt;b&gt;pi = g_M + g_V - g_Y = %d%%&lt;/b&gt;&lt;br&gt;%s&lt;/div&gt;",
-    pit(), if(pit()&gt;0) "Prices rising." else if(pit()&lt;0) "Deflation." else "Stable prices.")))
-}
-shinyApp(ui,server)</code></pre>
+<style>
+ .sim5{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .sim5 .ctrl{flex:0 0 300px;} .sim5 label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .sim5 input[type=range]{width:100%;} .sim5 .v{color:#1f3b73;font-weight:700;}
+ .sim5 .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:15px;line-height:1.85;} .sim5 .box b{color:#1f3b73;}
+ .sim5 canvas{width:100%;height:auto;max-width:600px;} .sim5 .plot{flex:1 1 420px;min-width:320px;}
+</style>
+<div class="sim5">
+ <div class="ctrl">
+  <label>Money growth g_M (%): <span class="v" id="qt-Mv">5</span></label><input type="range" id="qt-M" min="0" max="20" value="5" step="1">
+  <label>Output growth g_Y (%): <span class="v" id="qt-Yv">2</span></label><input type="range" id="qt-Y" min="0" max="6" value="2" step="1">
+  <label>Velocity growth g_V (%): <span class="v" id="qt-Vv">0</span></label><input type="range" id="qt-V" min="-3" max="3" value="0" step="1">
+  <div class="box" id="qt-box"></div>
+ </div>
+ <div class="plot"><canvas id="qtC" width="600" height="440"></canvas></div>
+</div>
+<script>
+(function(){
+ var M=document.getElementById('qt-M'),Y=document.getElementById('qt-Y'),V=document.getElementById('qt-V'),
+  cv=document.getElementById('qtC'),x=cv.getContext('2d'),box=document.getElementById('qt-box');
+ var W=cv.width,H=cv.height,ML=56,MR=20,MT=28,MB=42;
+ function draw(){
+  var gM=+M.value,gY=+Y.value,gV=+V.value,pit=gM+gV-gY;
+  var vals=[];for(var t=0;t<=10;t++)vals.push(Math.pow(1+pit/100,t));
+  var ymax=Math.max(1.05,vals[10]*1.05),ymin=Math.min(1,vals[10]*0.95);
+  function X(t){return ML+t/10*(W-ML-MR);} function Yc(v){return H-MB-(v-ymin)/(ymax-ymin)*(H-MT-MB);}
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='center';
+  for(var t=0;t<=10;t+=2){x.beginPath();x.moveTo(X(t),MT);x.lineTo(X(t),H-MB);x.stroke();x.fillText(t,X(t),H-MB+16);}
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.fillText('Years',(ML+W-MR)/2,H-7);
+  x.save();x.translate(14,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('Price level (start = 1)',0,0);x.restore();
+  x.setLineDash([4,4]);x.strokeStyle='#9aa4b2';x.beginPath();x.moveTo(ML,Yc(1));x.lineTo(W-MR,Yc(1));x.stroke();x.setLineDash([]);
+  x.strokeStyle='#b5462a';x.lineWidth=3;x.beginPath();
+  for(var t=0;t<=10;t++){var px=X(t),py=Yc(vals[t]);if(t===0)x.moveTo(px,py);else x.lineTo(px,py);}x.stroke();
+  x.fillStyle='#b5462a';for(var t=0;t<=10;t++){x.beginPath();x.arc(X(t),Yc(vals[t]),3.5,0,7);x.fill();}
+  x.fillStyle='#1f3b73';x.textAlign='center';x.font='13px Inter,sans-serif';
+  x.fillText('Inflation  pi = '+gM+' + '+gV+' - '+gY+' = '+pit+'% per year',(ML+W-MR)/2,MT-10);
+  document.getElementById('qt-Mv').textContent=gM;document.getElementById('qt-Yv').textContent=gY;document.getElementById('qt-Vv').textContent=gV;
+  box.innerHTML='Inflation<br><b>pi = g_M + g_V - g_Y = '+pit+'%</b><br>'+(pit>0?'Prices rising.':pit<0?'Deflation.':'Stable prices.');
+ }
+ [M,Y,V].forEach(function(e){e.addEventListener('input',draw);});draw();
+})();
+</script>
 <div id="did-you-know">
 <section id="what-to-notice" class="level3">
 <h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
 <ul>
 <li>Set <span class="math inline">\(g_V = 0\)</span>: inflation is exactly <span class="math inline">\(g_M - g_Y\)</span> — the pure quantity theory.</li>
 <li>Faster <strong>output growth</strong> lowers inflation (more goods absorb the money).</li>
-<li>A <strong>negative</strong> velocity growth (people hold money longer) pulls inflation down even if money grows.</li>
+<li><strong>Negative</strong> velocity growth pulls inflation down even if money grows.</li>
 </ul>
 </section>
 </div>

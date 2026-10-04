@@ -41,11 +41,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -319,80 +314,101 @@ window.Quarto = {
 
 <section id="when-a-country-moves-the-world-rate" class="level2">
 <h2 class="anchored" data-anchor-id="when-a-country-moves-the-world-rate">When a country moves the world rate</h2>
-<p>A <strong>large</strong> economy’s saving and investment are big enough to change the <strong>world interest rate</strong>. Two regions clear together: <span class="math inline">\(CA_H + CA_{ROW} = 0\)</span>, where each current account <span class="math inline">\(CA = S - I\)</span> depends on <span class="math inline">\(r\)</span>.</p>
+<p>A <strong>large</strong> economy’s saving and investment change the <strong>world interest rate</strong>. Two regions clear together: <span class="math inline">\(CA_H + CA_{ROW} = 0\)</span>, with each <span class="math inline">\(CA = S - I\)</span> depending on <span class="math inline">\(r\)</span>.</p>
 <ul>
-<li>A <strong>home fiscal expansion</strong> lowers home saving → pushes the <strong>world rate up</strong> → home investment falls (crowding out) and the current account deteriorates.</li>
+<li>A <strong>home fiscal expansion</strong> lowers home saving → pushes the <strong>world rate up</strong> → home investment falls (crowding out).</li>
 <li>The adjustment is <strong>smaller</strong> than in a small economy, because the higher <span class="math inline">\(r\)</span> pulls saving up and investment down everywhere.</li>
 </ul>
 <section id="purchasing-power-parity-ppp" class="level3">
 <h3 class="anchored" data-anchor-id="purchasing-power-parity-ppp">Purchasing-power parity (PPP)</h3>
-<p>The same good should cost the same everywhere once converted: the nominal exchange rate equals the price ratio, <span class="math display">\[e = \frac{P_{\text{foreign}}}{P_{\text{home}}}.\]</span> Higher home inflation → the home currency <strong>depreciates</strong> one-for-one.</p>
+<p>The same good costs the same once converted: <span class="math inline">\(e = \dfrac{P_{\text{foreign}}}{P_{\text{home}}}\)</span>. Higher home inflation → the home currency <strong>depreciates</strong> one-for-one.</p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Try it.</strong> Tab 1: a home fiscal expansion raises the world rate and crowds out investment. Tab 2: a PPP calculator — change prices to get the exchange rate.</p>
+<p><strong>Try it.</strong> Left: a home fiscal expansion raises the world rate and crowds out investment. Right: a PPP calculator — change prices to get the exchange rate.</p>
 </div>
 </div>
 </div>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 540
-
-library(shiny)
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("body{font-family:'Inter',system-ui,sans-serif;}
-    .sb{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:10px;font-size:14px;line-height:1.85;} .sb b{color:#1f3b73;}"))),
-  tabsetPanel(
-    tabPanel("Large open economy",
-      sidebarLayout(
-        sidebarPanel(width=4,
-          sliderInput("fisc","Home fiscal expansion (cuts saving):",min=0,max=400,value=0,step=20),
-          uiOutput("sb1")),
-        mainPanel(width=8, plotOutput("plot",height="440px")))),
-    tabPanel("PPP calculator",
-      sidebarLayout(
-        sidebarPanel(width=4,
-          sliderInput("ph","Home price of the good:",min=1,max=20,value=3,step=1),
-          sliderInput("pf","Foreign price of the good:",min=1,max=40,value=6,step=1),
-          uiOutput("sb2")),
-        mainPanel(width=8, plotOutput("ppp",height="440px"))))
-  ))
-server &lt;- function(input,output,session){
-  # Home CA = S_H - I_H = -400 + 60r ; ROW CA = -50 + 30r ; fiscal shift d lowers S_H by d
-  rstar &lt;- reactive((450+input$fisc)/90)
-  output$plot &lt;- renderPlot({
-    r&lt;-rstar(); rg&lt;-seq(0,10,length.out=150)
-    CAh &lt;- (-400-input$fisc)+60*rg; CAr &lt;- -(-50+30*rg)  # ROW read toward left (negated)
-    par(mar=c(4.2,4.6,2,1))
-    plot(NA,xlim=c(-400,400),ylim=c(0,10),xlab="Current account  (home right, ROW left)",ylab="World rate  r (%)",
-         las=1,bty="l",main=sprintf("World rate clears at r = %.2f%%",r))
-    lines((-400-input$fisc)+60*rg,rg,col="#1f3b73",lwd=3)   # home CA upward
-    lines(-(-50+30*rg),rg,col="#b5462a",lwd=3)              # ROW CA (negated)
-    abline(h=r,lty=3,col="#5a6472"); abline(v=0,col="#9aa4b2",lty=3)
-    legend("topleft",c("Home CA","ROW CA (mirrored)"),col=c("#1f3b73","#b5462a"),lwd=3,bty="n")
-  })
-  output$sb1 &lt;- renderUI({ r&lt;-rstar(); Ih&lt;-1400-40*r; Sh&lt;-(1000-input$fisc)+20*r; nx&lt;-Sh-Ih
-    HTML(sprintf("&lt;div class='sb'&gt;World rate &lt;b&gt;r = %.2f%%&lt;/b&gt;&lt;br&gt;Home saving S = &lt;b&gt;%.0f&lt;/b&gt;&lt;br&gt;Home investment I = &lt;b&gt;%.0f&lt;/b&gt;&lt;br&gt;Home NX = S-I = &lt;b&gt;%.0f&lt;/b&gt;&lt;/div&gt;",r,Sh,Ih,nx)) })
-  output$ppp &lt;- renderPlot({
-    e &lt;- input$pf/input$ph
-    par(mar=c(2,2,3,2))
-    plot.new(); title(main=sprintf("e = P_foreign / P_home = %d / %d = %.2f",input$pf,input$ph,e))
-    text(0.5,0.6,sprintf("%.2f foreign currency\nper 1 home unit",e),cex=1.8,col="#1f3b73")
-    text(0.5,0.25,"Higher home inflation lowers e (home currency depreciates).",cex=1.0,col="#5a6472")
-  })
-  output$sb2 &lt;- renderUI({ e&lt;-input$pf/input$ph
-    HTML(sprintf("&lt;div class='sb'&gt;PPP exchange rate&lt;br&gt;&lt;b&gt;e = %.2f&lt;/b&gt; foreign per home unit&lt;/div&gt;",e)) })
-}
-shinyApp(ui,server)</code></pre>
+<style>
+ .sim9{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .sim9 .ctrl{flex:0 0 300px;} .sim9 label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .sim9 input[type=range]{width:100%;} .sim9 .v{color:#1f3b73;font-weight:700;}
+ .sim9 .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.85;} .sim9 .box b{color:#1f3b73;}
+ .sim9 canvas{width:100%;height:auto;max-width:600px;} .sim9 .plot{flex:1 1 420px;min-width:320px;}
+ .sim9 .tabs{margin-bottom:6px;} .sim9 .tabs button{font-family:inherit;font-size:13px;border:1px solid #d5dde8;background:#fff;color:#2c3e50;padding:6px 14px;border-radius:6px 6px 0 0;cursor:pointer;}
+ .sim9 .tabs button.on{background:#1f3b73;color:#fff;border-color:#1f3b73;}
+</style>
+<div class="sim9" id="loe">
+ <div style="flex:1 1 100%;" class="tabs">
+  <button id="loe-t1" class="on">Large open economy</button>
+  <button id="loe-t2">PPP calculator</button>
+ </div>
+ <div class="ctrl">
+  <div id="loe-c1">
+   <label>Home fiscal expansion (cuts saving): <span class="v" id="loe-fv">0</span></label><input type="range" id="loe-f" min="0" max="400" value="0" step="20">
+  </div>
+  <div id="loe-c2" style="display:none;">
+   <label>Home price of the good: <span class="v" id="loe-hv">3</span></label><input type="range" id="loe-h" min="1" max="20" value="3" step="1">
+   <label>Foreign price of the good: <span class="v" id="loe-pv">6</span></label><input type="range" id="loe-p" min="1" max="40" value="6" step="1">
+  </div>
+  <div class="box" id="loe-box"></div>
+ </div>
+ <div class="plot"><canvas id="loeC" width="600" height="440"></canvas></div>
+</div>
+<script>
+(function(){
+ var F=document.getElementById('loe-f'),Hp=document.getElementById('loe-h'),Fp=document.getElementById('loe-p'),
+  cv=document.getElementById('loeC'),x=cv.getContext('2d'),box=document.getElementById('loe-box'),
+  t1=document.getElementById('loe-t1'),t2=document.getElementById('loe-t2'),c1=document.getElementById('loe-c1'),c2=document.getElementById('loe-c2');
+ var W=cv.width,H=cv.height,tab=1;
+ function drawLOE(){
+  var f=+F.value,r=(450+f)/90;
+  var ML=56,MR=20,MT=28,MB=42,xmin=-400,xmax=400,ymax=10;
+  function X(v){return ML+(v-xmin)/(xmax-xmin)*(W-ML-MR);} function Yc(rr){return H-MB-rr/ymax*(H-MT-MB);}
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='right';
+  for(var rr=0;rr<=10;rr+=2){x.beginPath();x.moveTo(ML,Yc(rr));x.lineTo(W-MR,Yc(rr));x.stroke();x.fillText(rr,ML-6,Yc(rr)+4);}
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.textAlign='center';x.fillText('Current account  (home right, ROW left)',(ML+W-MR)/2,H-7);
+  x.save();x.translate(14,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('World rate  r (%)',0,0);x.restore();
+  x.setLineDash([2,3]);x.strokeStyle='#9aa4b2';x.beginPath();x.moveTo(X(0),MT);x.lineTo(X(0),H-MB);x.stroke();x.setLineDash([]);
+  // home CA upward: CA = (-400 - f) + 60 r
+  x.strokeStyle='#1f3b73';x.lineWidth=3;x.beginPath();x.moveTo(X((-400-f)+60*0),Yc(0));x.lineTo(X((-400-f)+60*10),Yc(10));x.stroke();
+  // ROW CA mirrored: -(-50 + 30 r)
+  x.strokeStyle='#b5462a';x.beginPath();x.moveTo(X(-(-50+30*0)),Yc(0));x.lineTo(X(-(-50+30*10)),Yc(10));x.stroke();
+  x.setLineDash([3,3]);x.strokeStyle='#5a6472';x.lineWidth=1;x.beginPath();x.moveTo(ML,Yc(r));x.lineTo(W-MR,Yc(r));x.stroke();x.setLineDash([]);
+  x.fillStyle='#1f3b73';x.textAlign='center';x.font='13px Inter,sans-serif';x.fillText('World rate clears at r = '+r.toFixed(2)+'%',(ML+W-MR)/2,MT-12);
+  x.textAlign='left';x.font='12px Inter,sans-serif';x.fillStyle='#1f3b73';x.fillText('Home CA',ML+10,MT+14);x.fillStyle='#b5462a';x.fillText('ROW CA (mirrored)',ML+10,MT+30);
+  var Ih=1400-40*r,Sh=(1000-f)+20*r,nx=Sh-Ih;
+  document.getElementById('loe-fv').textContent=f;
+  box.innerHTML='World rate <b>r = '+r.toFixed(2)+'%</b><br>Home saving S = <b>'+Math.round(Sh)+'</b><br>Home investment I = <b>'+Math.round(Ih)+'</b><br>Home NX = S−I = <b>'+Math.round(nx)+'</b>';
+ }
+ function drawPPP(){
+  var ph=+Hp.value,pf=+Fp.value,e=pf/ph;
+  x.clearRect(0,0,W,H);x.textAlign='center';
+  x.fillStyle='#1f3b73';x.font='15px Inter,sans-serif';x.fillText('e = P_foreign / P_home = '+pf+' / '+ph+' = '+e.toFixed(2),W/2,70);
+  x.font='bold 30px Inter,sans-serif';x.fillText(e.toFixed(2),W/2,H/2);
+  x.fillStyle='#5a6472';x.font='14px Inter,sans-serif';x.fillText('foreign currency per 1 home unit',W/2,H/2+34);
+  x.fillText('Higher home inflation lowers e (home currency depreciates).',W/2,H-40);
+  document.getElementById('loe-hv').textContent=ph;document.getElementById('loe-pv').textContent=pf;
+  box.innerHTML='PPP exchange rate<br><b>e = '+e.toFixed(2)+'</b> foreign per home unit';
+ }
+ function draw(){ if(tab===1) drawLOE(); else drawPPP(); }
+ t1.addEventListener('click',function(){tab=1;t1.className='on';t2.className='';c1.style.display='';c2.style.display='none';draw();});
+ t2.addEventListener('click',function(){tab=2;t2.className='on';t1.className='';c2.style.display='';c1.style.display='none';draw();});
+ [F,Hp,Fp].forEach(function(e){e.addEventListener('input',draw);});draw();
+})();
+</script>
 </section>
 <div id="did-you-know">
 <section id="what-to-notice" class="level3">
 <h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
 <ul>
 <li><strong>Home fiscal expansion</strong> raises the world rate — unlike a small economy, where <span class="math inline">\(r^*\)</span> is fixed.</li>
-<li>Because <span class="math inline">\(r\)</span> rises, home <strong>investment falls</strong> (crowding out) and the current account worsens by less than in the small-economy case.</li>
+<li>Because <span class="math inline">\(r\)</span> rises, home <strong>investment falls</strong> (crowding out).</li>
 <li>In the PPP tab, raising the <strong>home</strong> price lowers <span class="math inline">\(e\)</span> — the home currency buys less foreign currency.</li>
 </ul>
 </section>

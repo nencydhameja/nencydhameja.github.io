@@ -41,11 +41,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -330,57 +325,84 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Try it.</strong> Change quantities and current prices to see nominal, real, and the deflator split apart. Then switch to the labor-market tab.</p>
+<p><strong>Try it.</strong> Change the quantity and current price to see nominal, real, and the deflator split apart. Then switch to the labor-market tab.</p>
 </div>
 </div>
 </div>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 520
-
-library(shiny)
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("body{font-family:'Inter',system-ui,sans-serif;}
-    .sb{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:8px;font-size:14px;line-height:1.9;} .sb b{color:#1f3b73;}"))),
-  tabsetPanel(
-    tabPanel("GDP &amp; the deflator",
-      sidebarLayout(
-        sidebarPanel(width=4,
-          helpText("One good. Base-year price fixed at $4."),
-          sliderInput("q","Quantity produced:",min=0,max=20,value=12,step=1),
-          sliderInput("p","Current price:",min=1,max=10,value=5,step=1),
-          uiOutput("gdp")),
-        mainPanel(width=8, plotOutput("bar",height="420px")))),
-    tabPanel("Labor market",
-      sidebarLayout(
-        sidebarPanel(width=4,
-          sliderInput("E","Employed:",min=0,max=300,value=180,step=5),
-          sliderInput("U","Unemployed:",min=0,max=100,value=20,step=5),
-          sliderInput("N","Not in labor force:",min=0,max=200,value=50,step=5),
-          uiOutput("lab")),
-        mainPanel(width=8, plotOutput("pie",height="420px"))))
-  ))
-server &lt;- function(input,output,session){
-  nom &lt;- reactive(input$q*input$p)
-  rea &lt;- reactive(input$q*4)
-  output$gdp &lt;- renderUI(HTML(sprintf("&lt;div class='sb'&gt;Nominal GDP = q&amp;times;p = &lt;b&gt;%.0f&lt;/b&gt;&lt;br&gt;Real GDP (base) = q&amp;times;$4 = &lt;b&gt;%.0f&lt;/b&gt;&lt;br&gt;GDP deflator = &lt;b&gt;%.1f&lt;/b&gt;&lt;/div&gt;",
-    nom(),rea(),nom()/rea()*100)))
-  output$bar &lt;- renderPlot({ par(mar=c(3,4.4,1,1))
-    barplot(c(Nominal=nom(),Real=rea()),col=c("#b5462a","#1f3b73"),ylab="GDP",las=1,ylim=c(0,max(nom(),rea())*1.2))
-  })
-  LF &lt;- reactive(input$E+input$U); pop &lt;- reactive(input$E+input$U+input$N)
-  output$lab &lt;- renderUI(HTML(sprintf("&lt;div class='sb'&gt;Labor force = &lt;b&gt;%.0f&lt;/b&gt;&lt;br&gt;Adult pop = &lt;b&gt;%.0f&lt;/b&gt;&lt;br&gt;Unemployment u = &lt;b&gt;%.1f%%&lt;/b&gt;&lt;br&gt;LFPR = &lt;b&gt;%.1f%%&lt;/b&gt;&lt;/div&gt;",
-    LF(),pop(),100*input$U/LF(),100*LF()/pop())))
-  output$pie &lt;- renderPlot({ par(mar=c(1,1,1,1))
-    pie(c(Employed=input$E,Unemployed=input$U,`Not in LF`=input$N),col=c("#1c6b4a","#b5462a","#9aa4b2"))
-  })
-}
-shinyApp(ui,server)</code></pre>
+<style>
+ .me{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .me .ctrl{flex:0 0 300px;} .me label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .me input[type=range]{width:100%;} .me .v{color:#1f3b73;font-weight:700;}
+ .me .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.9;} .me .box b{color:#1f3b73;}
+ .me canvas{width:100%;height:auto;max-width:600px;} .me .plot{flex:1 1 420px;min-width:320px;}
+ .me .tabs{margin-bottom:6px;} .me .tabs button{font-family:inherit;font-size:13px;border:1px solid #d5dde8;background:#fff;color:#2c3e50;padding:6px 14px;border-radius:6px 6px 0 0;cursor:pointer;}
+ .me .tabs button.on{background:#1f3b73;color:#fff;border-color:#1f3b73;}
+</style>
+<div class="me">
+ <div style="flex:1 1 100%;" class="tabs">
+  <button id="me-t1" class="on">GDP &amp; the deflator</button>
+  <button id="me-t2">Labor market</button>
+ </div>
+ <div class="ctrl">
+  <div id="me-c1">
+   <label style="font-weight:500;color:#5a6472;">One good. Base-year price fixed at $4.</label>
+   <label>Quantity produced: <span class="v" id="me-qv">12</span></label><input type="range" id="me-q" min="0" max="20" value="12" step="1">
+   <label>Current price: <span class="v" id="me-pv">5</span></label><input type="range" id="me-p" min="1" max="10" value="5" step="1">
+  </div>
+  <div id="me-c2" style="display:none;">
+   <label>Employed: <span class="v" id="me-Ev">180</span></label><input type="range" id="me-E" min="0" max="300" value="180" step="5">
+   <label>Unemployed: <span class="v" id="me-Uv">20</span></label><input type="range" id="me-U" min="0" max="100" value="20" step="5">
+   <label>Not in labor force: <span class="v" id="me-Nv">50</span></label><input type="range" id="me-N" min="0" max="200" value="50" step="5">
+  </div>
+  <div class="box" id="me-box"></div>
+ </div>
+ <div class="plot"><canvas id="meC" width="600" height="420"></canvas></div>
+</div>
+<script>
+(function(){
+ var q=document.getElementById('me-q'),p=document.getElementById('me-p'),
+  E=document.getElementById('me-E'),U=document.getElementById('me-U'),N=document.getElementById('me-N'),
+  cv=document.getElementById('meC'),x=cv.getContext('2d'),box=document.getElementById('me-box'),
+  t1=document.getElementById('me-t1'),t2=document.getElementById('me-t2'),c1=document.getElementById('me-c1'),c2=document.getElementById('me-c2');
+ var W=cv.width,H=cv.height,tab=1;
+ function drawGDP(){
+  var qq=+q.value,pp=+p.value,nom=qq*pp,rea=qq*4,defl=rea>0?nom/rea*100:0;
+  var ML=60,MR=20,MT=20,MB=44,ymax=Math.max(nom,rea,1)*1.2;
+  function Yc(v){return H-MB-v/ymax*(H-MT-MB);}
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='right';
+  for(var k=0;k<=4;k++){var gv=ymax*k/4;x.beginPath();x.moveTo(ML,Yc(gv));x.lineTo(W-MR,Yc(gv));x.stroke();x.fillText(Math.round(gv),ML-6,Yc(gv)+4);}
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.save();x.translate(14,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.textAlign='center';x.fillText('GDP',0,0);x.restore();
+  var bw=120,gap=((W-ML-MR)-2*bw)/3;
+  function bar(k,val,col,lab){var bx=ML+gap+k*(bw+gap);x.fillStyle=col;x.fillRect(bx,Yc(val),bw,Yc(0)-Yc(val));x.fillStyle='#333';x.textAlign='center';x.fillText(lab,bx+bw/2,H-MB+18);x.fillText(Math.round(val),bx+bw/2,Yc(val)-6);}
+  bar(0,nom,'#b5462a','Nominal');bar(1,rea,'#1f3b73','Real (base)');
+  document.getElementById('me-qv').textContent=qq;document.getElementById('me-pv').textContent=pp;
+  box.innerHTML='Nominal GDP = q&times;p = <b>'+nom+'</b><br>Real GDP = q&times;$4 = <b>'+rea+'</b><br>GDP deflator = <b>'+defl.toFixed(1)+'</b>';
+ }
+ function drawLabor(){
+  var e=+E.value,u=+U.value,n=+N.value,LF=e+u,pop=e+u+n;
+  x.clearRect(0,0,W,H);
+  var cx=W*0.42,cy=H/2,R=Math.min(W*0.32,H*0.38),tot=pop||1,start=-Math.PI/2;
+  var segs=[['Employed',e,'#1c6b4a'],['Unemployed',u,'#b5462a'],['Not in LF',n,'#9aa4b2']];
+  segs.forEach(function(s){var ang=s[1]/tot*2*Math.PI;x.beginPath();x.moveTo(cx,cy);x.arc(cx,cy,R,start,start+ang);x.closePath();x.fillStyle=s[2];x.fill();start+=ang;});
+  x.font='13px Inter,sans-serif';x.textAlign='left';var ly=cy-30;
+  segs.forEach(function(s,i){x.fillStyle=s[2];x.fillRect(cx+R+24,ly+i*22-10,13,13);x.fillStyle='#333';x.fillText(s[0]+' ('+s[1]+')',cx+R+42,ly+i*22);});
+  document.getElementById('me-Ev').textContent=e;document.getElementById('me-Uv').textContent=u;document.getElementById('me-Nv').textContent=n;
+  box.innerHTML='Labor force = <b>'+LF+'</b><br>Adult pop = <b>'+pop+'</b><br>Unemployment u = <b>'+(LF?100*u/LF:0).toFixed(1)+'%</b><br>LFPR = <b>'+(pop?100*LF/pop:0).toFixed(1)+'%</b>';
+ }
+ function draw(){ if(tab===1) drawGDP(); else drawLabor(); }
+ t1.addEventListener('click',function(){tab=1;t1.className='on';t2.className='';c1.style.display='';c2.style.display='none';draw();});
+ t2.addEventListener('click',function(){tab=2;t2.className='on';t1.className='';c2.style.display='';c1.style.display='none';draw();});
+ [q,p,E,U,N].forEach(function(el){el.addEventListener('input',draw);});draw();
+})();
+</script>
 <div id="did-you-know">
 <section id="what-to-notice" class="level3">
 <h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
 <ul>
-<li>Raise only <strong>current prices</strong> → nominal GDP rises, real GDP doesn’t → the <strong>deflator</strong> rises. That’s inflation.</li>
-<li>Raise only <strong>quantities</strong> → real GDP rises too.</li>
+<li>Raise only the <strong>current price</strong> → nominal GDP rises, real GDP doesn’t → the <strong>deflator</strong> rises. That’s inflation.</li>
+<li>Raise only the <strong>quantity</strong> → real GDP rises too.</li>
 <li>In the labor tab, moving people to “not in labor force” lowers the <strong>LFPR</strong> but can <em>lower</em> measured unemployment — the denominators differ.</li>
 </ul>
 </section>

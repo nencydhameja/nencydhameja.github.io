@@ -41,11 +41,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -318,7 +313,7 @@ window.Quarto = {
 
 <section id="the-skill-premium" class="level2">
 <h2 class="anchored" data-anchor-id="the-skill-premium">The skill premium</h2>
-<p>The <strong>skill premium</strong> is the wage ratio of skilled to unskilled workers, <span class="math inline">\(\omega = w_s/w_u\)</span>. It is set by relative supply and relative demand:</p>
+<p>The <strong>skill premium</strong> is the wage ratio of skilled to unskilled workers, <span class="math inline">\(\omega = w_s/w_u\)</span>:</p>
 <p><span class="math display">\[\omega = D \cdot \left(\frac{L_u}{L_s}\right)^{1/\sigma}\]</span></p>
 <ul>
 <li><span class="math inline">\(L_s/L_u\)</span> = relative <strong>supply</strong> of skilled workers. More skilled workers (education) → <span class="math inline">\(\omega\)</span> <strong>falls</strong>.</li>
@@ -331,45 +326,59 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Try it.</strong> Educate more workers (raise the skilled share) and the premium falls. Turn up SBTC and it rises — the race between education and technology.</p>
+<p><strong>Try it.</strong> Educate more workers and the premium falls. Turn up SBTC and it rises — the race between education and technology.</p>
 </div>
 </div>
 </div>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 520
-
-library(shiny)
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("body{font-family:'Inter',system-ui,sans-serif;}
-    .sb{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:10px;font-size:14px;line-height:1.85;} .sb b{color:#1f3b73;}"))),
-  sidebarLayout(
-    sidebarPanel(width=4,
-      sliderInput("s","Skilled share of workers:",min=0.1,max=0.9,value=0.4,step=0.05),
-      sliderInput("D","Relative demand for skill  D (SBTC):",min=0.5,max=3,value=1.5,step=0.1),
-      sliderInput("sig","Substitutability  σ:",min=1,max=5,value=2,step=0.5),
-      uiOutput("sb")),
-    mainPanel(width=8, plotOutput("plot",height="440px"))))
-server &lt;- function(input,output,session){
-  prem &lt;- function(s,D,sig) D*((1-s)/s)^(1/sig)
-  output$plot &lt;- renderPlot({
-    sg &lt;- seq(0.1,0.9,length.out=200); wg &lt;- prem(sg,input$D,input$sig)
-    par(mar=c(4.2,4.6,1,1))
-    plot(sg,wg,type="l",col="#1f3b73",lwd=3,xlab="Skilled share of workers",ylab="Skill premium  w_s / w_u",
-         las=1,bty="l",cex.lab=1.1,ylim=c(0.5,max(wg)*1.05))
-    abline(h=1,col="#9aa4b2",lty=3)
-    points(input$s,prem(input$s,input$D,input$sig),pch=19,col="#1c6b4a",cex=1.7)
-  })
-  output$sb &lt;- renderUI({ w&lt;-prem(input$s,input$D,input$sig)
-    HTML(sprintf("&lt;div class='sb'&gt;Skill premium &lt;b&gt;w_s/w_u = %.2f&lt;/b&gt;&lt;br&gt;%s&lt;/div&gt;",
-      w, if(w&gt;1) sprintf("Skilled workers earn &lt;b&gt;%.0f%% more&lt;/b&gt;.",100*(w-1)) else "Premium below 1 (skilled no longer scarce).")) })
-}
-shinyApp(ui,server)</code></pre>
+<style>
+ .sim3{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .sim3 .ctrl{flex:0 0 300px;} .sim3 label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .sim3 input[type=range]{width:100%;} .sim3 .v{color:#1f3b73;font-weight:700;}
+ .sim3 .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.85;} .sim3 .box b{color:#1f3b73;}
+ .sim3 canvas{width:100%;height:auto;max-width:600px;} .sim3 .plot{flex:1 1 420px;min-width:320px;}
+</style>
+<div class="sim3">
+ <div class="ctrl">
+  <label>Skilled share of workers: <span class="v" id="iq-sv">0.40</span></label><input type="range" id="iq-s" min="0.1" max="0.9" value="0.4" step="0.05">
+  <label>Relative demand for skill D (SBTC): <span class="v" id="iq-Dv">1.5</span></label><input type="range" id="iq-D" min="0.5" max="3" value="1.5" step="0.1">
+  <label>Substitutability σ: <span class="v" id="iq-gv">2.0</span></label><input type="range" id="iq-g" min="1" max="5" value="2" step="0.5">
+  <div class="box" id="iq-box"></div>
+ </div>
+ <div class="plot"><canvas id="iqC" width="600" height="440"></canvas></div>
+</div>
+<script>
+(function(){
+ var S=document.getElementById('iq-s'),D=document.getElementById('iq-D'),G=document.getElementById('iq-g'),
+  cv=document.getElementById('iqC'),x=cv.getContext('2d'),box=document.getElementById('iq-box');
+ var W=cv.width,H=cv.height,ML=56,MR=20,MT=16,MB=42;
+ function prem(s,d,sig){return d*Math.pow((1-s)/s,1/sig);}
+ function draw(){
+  var s=+S.value,d=+D.value,sig=+G.value;
+  var ymax=1;for(var ss=0.1;ss<=0.9;ss+=0.02){ymax=Math.max(ymax,prem(ss,d,sig));}ymax*=1.05;
+  function X(v){return ML+(v-0.1)/0.8*(W-ML-MR);} function Y(v){return H-MB-v/ymax*(H-MT-MB);}
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='center';
+  for(var q=0.1;q<=0.9001;q+=0.2){x.beginPath();x.moveTo(X(q),MT);x.lineTo(X(q),H-MB);x.stroke();x.fillText(q.toFixed(1),X(q),H-MB+16);}
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.fillText('Skilled share of workers',(ML+W-MR)/2,H-7);
+  x.save();x.translate(15,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('Skill premium  w_s / w_u',0,0);x.restore();
+  x.setLineDash([4,4]);x.strokeStyle='#9aa4b2';x.beginPath();x.moveTo(ML,Y(1));x.lineTo(W-MR,Y(1));x.stroke();x.setLineDash([]);
+  x.strokeStyle='#1f3b73';x.lineWidth=3;x.beginPath();
+  for(var ss=0.1;ss<=0.9;ss+=0.01){var px=X(ss),py=Y(prem(ss,d,sig));if(ss<=0.1001)x.moveTo(px,py);else x.lineTo(px,py);}x.stroke();
+  x.fillStyle='#1c6b4a';x.beginPath();x.arc(X(s),Y(prem(s,d,sig)),6,0,7);x.fill();
+  var w=prem(s,d,sig);
+  document.getElementById('iq-sv').textContent=s.toFixed(2);document.getElementById('iq-Dv').textContent=d.toFixed(1);document.getElementById('iq-gv').textContent=sig.toFixed(1);
+  box.innerHTML='Skill premium <b>w_s/w_u = '+w.toFixed(2)+'</b><br>'+(w>1?('Skilled workers earn <b>'+Math.round(100*(w-1))+'% more</b>.'):'Premium below 1 (skilled no longer scarce).');
+ }
+ [S,D,G].forEach(function(e){e.addEventListener('input',draw);});draw();
+})();
+</script>
 <div id="did-you-know">
 <section id="what-to-notice" class="level3">
 <h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
 <ul>
-<li>Slide the <strong>skilled share</strong> up → the premium falls: expanding education compresses inequality (Goldin &amp; Katz’s “race”).</li>
-<li>Turn up <strong>SBTC (D)</strong> → the whole curve shifts up: technology that favors skill widens inequality.</li>
+<li>Slide the <strong>skilled share</strong> up → the premium falls: expanding education compresses inequality.</li>
+<li>Turn up <strong>SBTC (D)</strong> → the whole curve shifts up: technology favoring skill widens inequality.</li>
 </ul>
 </section>
 </div>

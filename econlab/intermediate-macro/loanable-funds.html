@@ -41,11 +41,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -289,8 +284,6 @@ window.Quarto = {
   <ul>
   <li><a href="#the-market-for-loanable-funds" id="toc-the-market-for-loanable-funds" class="nav-link active" data-scroll-target="#the-market-for-loanable-funds">The market for loanable funds</a>
   <ul class="collapse">
-  <li><a href="#the-three-savings" id="toc-the-three-savings" class="nav-link" data-scroll-target="#the-three-savings">The three “savings”</a></li>
-  <li><a href="#comparative-statics" id="toc-comparative-statics" class="nav-link" data-scroll-target="#comparative-statics">Comparative statics</a></li>
   <li><a href="#what-to-notice" id="toc-what-to-notice" class="nav-link" data-scroll-target="#what-to-notice">What to notice</a></li>
   </ul></li>
   </ul>
@@ -323,29 +316,9 @@ window.Quarto = {
 <p>Think of all saving and borrowing in the economy as one market for a single good — <strong>loanable funds</strong> — whose “price” is the <strong>real interest rate</strong> <span class="math inline">\(r\)</span>.</p>
 <ul>
 <li><strong>Demand</strong> = <strong>investment</strong> <span class="math inline">\(I(r)\)</span>. Firms borrow to build capital; they borrow <em>less</em> when <span class="math inline">\(r\)</span> is high, so demand slopes <strong>down</strong>.</li>
-<li><strong>Supply</strong> = <strong>national saving</strong> <span class="math inline">\(S\)</span>. It splits into <strong>private</strong> saving (households) and <strong>public</strong> saving (the government):</li>
-</ul>
-<p><span class="math display">\[S = \underbrace{(Y - T - C)}_{\text{private}} + \underbrace{(T - G)}_{\text{public}} = Y - C - G\]</span></p>
-<ul>
+<li><strong>Supply</strong> = <strong>national saving</strong> <span class="math inline">\(S\)</span> = private <span class="math inline">\((Y-T-C)\)</span> + public <span class="math inline">\((T-G)\)</span> = <span class="math inline">\(Y - C - G\)</span>.</li>
 <li><strong>Equilibrium:</strong> <span class="math inline">\(r\)</span> adjusts until <strong>saving equals investment</strong>, <span class="math inline">\(S = I(r)\)</span>.</li>
-</ul>
-<section id="the-three-savings" class="level3">
-<h3 class="anchored" data-anchor-id="the-three-savings">The three “savings”</h3>
-<ul>
-<li><strong>Private saving</strong> <span class="math inline">\(= Y - T - C\)</span> — what households keep after taxes and consumption.</li>
-<li><strong>Public saving</strong> <span class="math inline">\(= T - G\)</span> — the government’s balance (a <strong>deficit</strong> when <span class="math inline">\(G &gt; T\)</span>).</li>
-<li><strong>National saving</strong> <span class="math inline">\(= Y - C - G\)</span> — the total pool that funds investment.</li>
-</ul>
-</section>
-<section id="comparative-statics" class="level3">
-<h3 class="anchored" data-anchor-id="comparative-statics">Comparative statics</h3>
-<ul>
-<li><strong>Deficit up (raise <span class="math inline">\(G\)</span>, or cut <span class="math inline">\(T\)</span>):</strong> national saving falls → the saving line shifts <strong>left</strong> → <span class="math inline">\(r\)</span> <strong>rises</strong> and investment is squeezed. This is <strong>crowding out</strong>.</li>
-<li><strong>Investment demand up:</strong> the <span class="math inline">\(I(r)\)</span> line shifts <strong>right</strong> → <span class="math inline">\(r\)</span> <strong>rises</strong>. Whether investment actually rises depends on saving:
-<ul>
-<li>if saving is <strong>vertical</strong> (consumption doesn’t depend on <span class="math inline">\(r\)</span>), total investment is <strong>unchanged</strong> — the higher <span class="math inline">\(r\)</span> chokes off exactly the extra demand;</li>
-<li>if saving <strong>slopes up</strong> (consumption responds to <span class="math inline">\(r\)</span>), higher <span class="math inline">\(r\)</span> pulls in more saving, so investment <strong>rises</strong>.</li>
-</ul></li>
+<li><strong>Crowding out:</strong> a bigger deficit (raise <span class="math inline">\(G\)</span>, or cut <span class="math inline">\(T\)</span>) lowers national saving → <span class="math inline">\(r\)</span> rises → investment is squeezed.</li>
 </ul>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
@@ -353,113 +326,109 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Try it below.</strong> In the baseline, saving <strong>slopes up</strong> with <span class="math inline">\(r\)</span> (consumption responds to the interest rate). Push the government into deficit and watch <span class="math inline">\(r\)</span> climb and investment fall. Uncheck the box to see the vertical-saving case, where an investment-demand shift raises <span class="math inline">\(r\)</span> but leaves investment unchanged.</p>
+<p><strong>Try it below.</strong> Push the government into deficit and watch <span class="math inline">\(r\)</span> climb and investment fall. In the baseline, saving slopes up with <span class="math inline">\(r\)</span>; uncheck the box for the vertical-saving case.</p>
 </div>
 </div>
 </div>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 560
+<style>
+  .lf-wrap{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,-apple-system,sans-serif;}
+  .lf-ctrl{flex:0 0 300px;max-width:320px;}
+  .lf-ctrl label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+  .lf-ctrl input[type=range]{width:100%;}
+  .lf-ctrl .val{color:#1f3b73;font-weight:700;}
+  .lf-chk{margin-top:12px;font-size:13.5px;color:#2c3e50;}
+  .lf-stats{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.85;}
+  .lf-stats b{color:#1f3b73;}
+  .lf-plot{flex:1 1 420px;min-width:320px;}
+  .lf-plot canvas{width:100%;height:auto;max-width:600px;}
+</style>
 
-library(shiny)
+<div class="lf-wrap">
+  <div class="lf-ctrl">
+    <label>Government purchases G: <span class="val" id="lf-Gv">1500</span></label>
+    <input type="range" id="lf-G" min="800" max="2500" value="1500" step="50">
+    <label>Taxes T: <span class="val" id="lf-Tv">1500</span></label>
+    <input type="range" id="lf-T" min="800" max="2500" value="1500" step="50">
+    <label>Investment-demand shift: <span class="val" id="lf-dIv">0</span></label>
+    <input type="range" id="lf-dI0" min="-400" max="400" value="0" step="50">
+    <div class="lf-chk"><label style="font-weight:500;display:inline;"><input type="checkbox" id="lf-rs" checked=""> Saving slopes up (consumption responds to r) — uncheck for vertical saving</label></div>
+    <div class="lf-stats" id="lf-stats"></div>
+  </div>
+  <div class="lf-plot">
+    <canvas id="lfCanvas" width="600" height="470"></canvas>
+  </div>
+</div>
 
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("
-    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
-    .stats-box { background:#f0f4f8; border-radius:6px; padding:12px 14px; margin-top:10px;
-                 font-size:14px; line-height:1.85; }
-    .stats-box b { color:#1f3b73; }
-    .up { color:#b5462a; font-weight:bold; }
-    .dn { color:#1c6b4a; font-weight:bold; }
-  "))),
-  sidebarLayout(
-    sidebarPanel(
-      width = 4,
-      sliderInput("G",  "Government purchases  G:", min = 800, max = 2500, value = 1500, step = 50),
-      sliderInput("T",  "Taxes  T:",                min = 800, max = 2500, value = 1500, step = 50),
-      sliderInput("dI0","Investment-demand shift:", min = -400, max = 400, value = 0, step = 50),
-      checkboxInput("rsens", "Saving slopes up (consumption responds to r) — uncheck for vertical saving", value = TRUE),
-      uiOutput("stats")
-    ),
-    mainPanel(
-      width = 8,
-      plotOutput("plot", height = "460px")
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-
-  # fixed structural parameters
-  Y &lt;- 6000; C0 &lt;- 600; mpc &lt;- 0.6; b &lt;- 100; I0 &lt;- 1600
-
-  eq &lt;- function(G, T, dI0, cr) {
-    rstar &lt;- (I0 + dI0 - (Y - C0 - mpc*(Y - T) - G)) / (cr + b)
-    Cstar &lt;- C0 + mpc*(Y - T) - cr*rstar
-    list(r = rstar,
-         I = I0 + dI0 - b*rstar,
-         Spriv = Y - T - Cstar,
-         Spub  = T - G,
-         Snat  = (Y - T - Cstar) + (T - G))
+<script>
+(function(){
+  var Y=6000,C0=600,mpc=0.6,b=100,I0=1600;
+  var G=document.getElementById('lf-G'),T=document.getElementById('lf-T'),
+      dI0=document.getElementById('lf-dI0'),rs=document.getElementById('lf-rs'),
+      cv=document.getElementById('lfCanvas'),ctx=cv.getContext('2d'),
+      stats=document.getElementById('lf-stats'),
+      gv=document.getElementById('lf-Gv'),tv=document.getElementById('lf-Tv'),dv=document.getElementById('lf-dIv');
+  function eq(g,t,di,cr){
+    var r=(I0+di-(Y-C0-mpc*(Y-t)-g))/(cr+b);
+    var C=C0+mpc*(Y-t)-cr*r;
+    return {r:r,I:I0+di-b*r,Spriv:Y-t-C,Spub:t-g,Snat:(Y-t-C)+(t-g)};
   }
-
-  vals &lt;- reactive({
-    cr &lt;- if (isTRUE(input$rsens)) 50 else 0
-    cur  &lt;- eq(input$G, input$T, input$dI0, cr)
-    base &lt;- eq(1500, 1500, 0, cr)     # reference: balanced budget, no shift
-    Sr &lt;- function(r) Y - (C0 + mpc*(Y - input$T) - cr*r) - input$G
-    Ir &lt;- function(r) I0 + input$dI0 - b*r
-    list(cur = cur, base = base, Sr = Sr, Ir = Ir, cr = cr)
-  })
-
-  output$plot &lt;- renderPlot({
-    v &lt;- vals(); rg &lt;- seq(0, 16, length.out = 200)
-    par(mar = c(4.2, 4.4, 1.2, 1))
-    plot(NA, xlim = c(0, 2500), ylim = c(0, 16),
-         xlab = "Loanable funds  (S, I)", ylab = "Real interest rate  r  (%)",
-         las = 1, bty = "l", cex.lab = 1.15)
-    points(v$base$I, v$base$r, pch = 1, col = "#9aa4b2", cex = 1.4, lwd = 2)
-    lines(v$Sr(rg), rg, col = "#1f3b73", lwd = 3)
-    lines(v$Ir(rg), rg, col = "#b5462a", lwd = 3)
-    points(v$cur$I, v$cur$r, pch = 19, col = "#1c6b4a", cex = 1.7)
-    segments(0, v$cur$r, v$cur$I, v$cur$r, lty = 3, col = "#5a6472")
-    segments(v$cur$I, 0, v$cur$I, v$cur$r, lty = 3, col = "#5a6472")
-    legend("topright",
-           c("Saving  S(r)", "Investment  I(r)", "Equilibrium", "Baseline (G=T, no shift)"),
-           col = c("#1f3b73", "#b5462a", "#1c6b4a", "#9aa4b2"),
-           lwd = c(3, 3, NA, NA), pch = c(NA, NA, 19, 1), bty = "n", cex = 1.0)
-  })
-
-  output$stats &lt;- renderUI({
-    v &lt;- vals(); c &lt;- v$cur
-    deficit &lt;- input$G - input$T
-    dI &lt;- c$I - v$base$I
-    budget &lt;- if (deficit &gt; 0) sprintf("deficit of %.0f", deficit)
-              else if (deficit &lt; 0) sprintf("surplus of %.0f", -deficit)
-              else "balanced budget"
-    crowd &lt;- if (abs(dI) &lt; 1) "investment is unchanged vs. baseline"
-             else if (dI &lt; 0) sprintf("investment is &lt;span class='up'&gt;crowded out by %.0f&lt;/span&gt; vs. baseline", -dI)
-             else sprintf("investment is &lt;span class='dn'&gt;higher by %.0f&lt;/span&gt; vs. baseline", dI)
-    HTML(sprintf(
-      "&lt;div class='stats-box'&gt;
-         Budget: &lt;b&gt;%s&lt;/b&gt;&lt;br&gt;
-         Private saving = &lt;b&gt;%.0f&lt;/b&gt; &amp;nbsp; Public saving = &lt;b&gt;%.0f&lt;/b&gt;&lt;br&gt;
-         National saving = &lt;b&gt;%.0f&lt;/b&gt;&lt;br&gt;
-         Equilibrium: &lt;b&gt;r* = %.2f%%&lt;/b&gt;, &amp;nbsp; &lt;b&gt;I* = %.0f&lt;/b&gt;&lt;br&gt;
-         %s
-       &lt;/div&gt;",
-      budget, c$Spriv, c$Spub, c$Snat, c$r, c$I, crowd))
-  })
-}
-
-shinyApp(ui, server)</code></pre>
-</section>
+  var W=cv.width,H=cv.height,ML=60,MR=22,MT=18,MB=44,xmax=2500,ymax=16;
+  function X(q){return ML+q/xmax*(W-ML-MR);}
+  function Yc(r){return H-MB-r/ymax*(H-MT-MB);}
+  function draw(){
+    var g=+G.value,t=+T.value,di=+dI0.value,cr=rs.checked?50:0;
+    var cur=eq(g,t,di,cr),base=eq(1500,1500,0,cr);
+    function Sr(r){return Y-(C0+mpc*(Y-t)-cr*r)-g;}
+    function Ir(r){return I0+di-b*r;}
+    ctx.clearRect(0,0,W,H);
+    ctx.font='12px Inter,sans-serif';
+    // grid + ticks
+    ctx.strokeStyle='#eef1f5';ctx.lineWidth=1;ctx.fillStyle='#5a6472';ctx.textAlign='right';
+    for(var r=0;r<=16;r+=4){ctx.beginPath();ctx.moveTo(ML,Yc(r));ctx.lineTo(W-MR,Yc(r));ctx.stroke();ctx.fillText(r,ML-7,Yc(r)+4);}
+    ctx.textAlign='center';
+    for(var q=0;q<=2500;q+=500){ctx.fillText(q,X(q),H-MB+17);}
+    // axes
+    ctx.strokeStyle='#9aa4b2';ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(ML,MT);ctx.lineTo(ML,H-MB);ctx.lineTo(W-MR,H-MB);ctx.stroke();
+    ctx.fillText('Loanable funds  (S, I)',(ML+W-MR)/2,H-8);
+    ctx.save();ctx.translate(16,(MT+H-MB)/2);ctx.rotate(-Math.PI/2);ctx.fillText('Real interest rate  r (%)',0,0);ctx.restore();
+    // S and I lines (linear in r)
+    ctx.lineWidth=3;
+    ctx.strokeStyle='#1f3b73';ctx.beginPath();ctx.moveTo(X(Sr(0)),Yc(0));ctx.lineTo(X(Sr(16)),Yc(16));ctx.stroke();
+    ctx.strokeStyle='#b5462a';ctx.beginPath();ctx.moveTo(X(Ir(0)),Yc(0));ctx.lineTo(X(Ir(16)),Yc(16));ctx.stroke();
+    // baseline marker
+    ctx.strokeStyle='#9aa4b2';ctx.lineWidth=2;ctx.beginPath();ctx.arc(X(base.I),Yc(base.r),5,0,7);ctx.stroke();
+    // equilibrium guides + dot
+    ctx.setLineDash([3,3]);ctx.strokeStyle='#5a6472';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(ML,Yc(cur.r));ctx.lineTo(X(cur.I),Yc(cur.r));ctx.moveTo(X(cur.I),H-MB);ctx.lineTo(X(cur.I),Yc(cur.r));ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='#1c6b4a';ctx.beginPath();ctx.arc(X(cur.I),Yc(cur.r),6,0,7);ctx.fill();
+    // legend
+    ctx.textAlign='left';var lx=W-MR-168,ly=MT+8;
+    function leg(i,c){ctx.strokeStyle=c;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(lx,ly+i*17);ctx.lineTo(lx+20,ly+i*17);ctx.stroke();}
+    leg(0,'#1f3b73');ctx.fillStyle='#333';ctx.fillText('Saving  S(r)',lx+26,ly+3);
+    leg(1,'#b5462a');ctx.fillText('Investment  I(r)',lx+26,ly+17+3);
+    ctx.fillStyle='#1c6b4a';ctx.beginPath();ctx.arc(lx+10,ly+34,4,0,7);ctx.fill();ctx.fillStyle='#333';ctx.fillText('Equilibrium',lx+26,ly+34+3);
+    ctx.strokeStyle='#9aa4b2';ctx.lineWidth=2;ctx.beginPath();ctx.arc(lx+10,ly+51,4,0,7);ctx.stroke();ctx.fillStyle='#333';ctx.fillText('Baseline',lx+26,ly+51+3);
+    // labels + stats
+    gv.textContent=g;tv.textContent=t;dv.textContent=(di>0?'+':'')+di;
+    var deficit=g-t,dI=cur.I-base.I;
+    var budget=deficit>0?('deficit of '+deficit):deficit<0?('surplus of '+(-deficit)):'balanced budget';
+    var crowd=Math.abs(dI)<1?'investment unchanged vs. baseline'
+      :dI<0?'<span style="color:#b5462a;font-weight:600">investment crowded out by '+Math.round(-dI)+'</span> vs. baseline'
+      :'<span style="color:#1c6b4a;font-weight:600">investment higher by '+Math.round(dI)+'</span> vs. baseline';
+    stats.innerHTML='Budget: <b>'+budget+'</b><br>Private saving = <b>'+Math.round(cur.Spriv)+'</b> &nbsp; Public saving = <b>'+Math.round(cur.Spub)+'</b><br>National saving = <b>'+Math.round(cur.Snat)+'</b><br>Equilibrium: <b>r* = '+cur.r.toFixed(2)+'%</b>, &nbsp; <b>I* = '+Math.round(cur.I)+'</b><br>'+crowd;
+  }
+  [G,T,dI0].forEach(function(e){e.addEventListener('input',draw);});
+  rs.addEventListener('change',draw);
+  draw();
+})();
+</script>
 <div id="did-you-know">
 <section id="what-to-notice" class="level3">
 <h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
 <ul>
-<li><strong>Run a deficit</strong> — raise <span class="math inline">\(G\)</span> above <span class="math inline">\(T\)</span>. The saving line slides left, <span class="math inline">\(r\)</span> climbs, and the equilibrium dot moves up the investment curve: <strong>less investment</strong>. That’s crowding out, live.</li>
-<li><strong>Shift investment demand</strong> (baseline, saving slopes up): <span class="math inline">\(r\)</span> rises <em>and</em> investment rises — the higher rate coaxes out more saving to fund it.</li>
-<li><strong>Uncheck the box</strong> for vertical saving and shift demand again: now <span class="math inline">\(r\)</span> rises but <span class="math inline">\(I^*\)</span> stays put — the extra demand is exactly offset by the higher rate. This is the difference between the two exam cases.</li>
+<li><strong>Run a deficit</strong> — raise <span class="math inline">\(G\)</span> above <span class="math inline">\(T\)</span>. The saving line slides left, <span class="math inline">\(r\)</span> climbs, and investment falls: crowding out, live.</li>
+<li><strong>Shift investment demand</strong> (baseline, saving slopes up): <span class="math inline">\(r\)</span> rises <em>and</em> investment rises.</li>
+<li><strong>Uncheck the box</strong> for vertical saving and shift demand again: <span class="math inline">\(r\)</span> rises but <span class="math inline">\(I^*\)</span> stays put. This is the difference between the two exam cases.</li>
 </ul>
 </section>
 </div>

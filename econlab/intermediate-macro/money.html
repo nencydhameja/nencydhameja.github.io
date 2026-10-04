@@ -41,11 +41,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -321,11 +316,11 @@ window.Quarto = {
 <p><strong>Money</strong> = the stock of assets you own and can spend now. It does three jobs: <strong>medium of exchange</strong>, <strong>store of value</strong>, <strong>unit of account</strong>.</p>
 <ul>
 <li><strong>Fiat</strong> money (dollars) has no intrinsic value; <strong>commodity</strong> money (gold) does.</li>
-<li><strong>Aggregates by liquidity:</strong> <strong>M0</strong> (currency + reserves, the monetary base) ⊂ <strong>M1</strong> (+ checking) ⊂ <strong>M2</strong> (+ savings).</li>
-<li>Banks lend out deposits, so the base multiplies into a larger money supply:</li>
+<li><strong>Aggregates by liquidity:</strong> <strong>M0</strong> (currency + reserves) ⊂ <strong>M1</strong> (+ checking) ⊂ <strong>M2</strong> (+ savings).</li>
+<li>Banks lend out deposits, so the base multiplies:</li>
 </ul>
 <p><span class="math display">\[M = B \cdot \frac{1+c}{rr+c}\]</span></p>
-<p>where <span class="math inline">\(B\)</span> = monetary base, <span class="math inline">\(rr\)</span> = reserve ratio, <span class="math inline">\(c\)</span> = currency-to-deposit ratio. The fraction is the <strong>money multiplier</strong>.</p>
+<p><span class="math inline">\(B\)</span> = monetary base, <span class="math inline">\(rr\)</span> = reserve ratio, <span class="math inline">\(c\)</span> = currency-to-deposit ratio. The fraction is the <strong>money multiplier</strong>.</p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -336,34 +331,48 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 520
-
-library(shiny)
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("body{font-family:'Inter',system-ui,sans-serif;}
-    .sb{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:10px;font-size:14px;line-height:1.85;} .sb b{color:#1f3b73;}"))),
-  sidebarLayout(
-    sidebarPanel(width=4,
-      sliderInput("B","Monetary base  B (open-market ops):",min=100,max=2000,value=500,step=50),
-      sliderInput("rr","Reserve ratio  rr:",min=0.05,max=1,value=0.1,step=0.05),
-      sliderInput("c","Currency/deposit ratio  c:",min=0,max=0.5,value=0.2,step=0.05),
-      uiOutput("sb")),
-    mainPanel(width=8, plotOutput("plot",height="440px"))))
-server &lt;- function(input,output,session){
-  mult &lt;- function(rr,c) (1+c)/(rr+c)
-  output$plot &lt;- renderPlot({
-    rg &lt;- seq(0.05,1,length.out=200); Mg &lt;- input$B*mult(rg,input$c)
-    par(mar=c(4.2,4.8,1,1))
-    plot(rg,Mg,type="l",col="#1f3b73",lwd=3,xlab="Reserve ratio  rr",ylab="Money supply  M",
-         las=1,bty="l",cex.lab=1.1)
-    points(input$rr,input$B*mult(input$rr,input$c),pch=19,col="#1c6b4a",cex=1.7)
-  })
-  output$sb &lt;- renderUI({ m&lt;-mult(input$rr,input$c)
-    HTML(sprintf("&lt;div class='sb'&gt;Money multiplier = &lt;b&gt;%.2f&lt;/b&gt;&lt;br&gt;Money supply &lt;b&gt;M = %.0f&lt;/b&gt;&lt;br&gt;(base %.0f &amp;times; %.2f)&lt;/div&gt;",
-      m,input$B*m,input$B,m)) })
-}
-shinyApp(ui,server)</code></pre>
+<style>
+ .sim4{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .sim4 .ctrl{flex:0 0 300px;} .sim4 label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .sim4 input[type=range]{width:100%;} .sim4 .v{color:#1f3b73;font-weight:700;}
+ .sim4 .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.85;} .sim4 .box b{color:#1f3b73;}
+ .sim4 canvas{width:100%;height:auto;max-width:600px;} .sim4 .plot{flex:1 1 420px;min-width:320px;}
+</style>
+<div class="sim4">
+ <div class="ctrl">
+  <label>Monetary base B (open-market ops): <span class="v" id="mo-Bv">500</span></label><input type="range" id="mo-B" min="100" max="2000" value="500" step="50">
+  <label>Reserve ratio rr: <span class="v" id="mo-rv">0.10</span></label><input type="range" id="mo-r" min="0.05" max="1" value="0.1" step="0.05">
+  <label>Currency/deposit ratio c: <span class="v" id="mo-cv">0.20</span></label><input type="range" id="mo-c" min="0" max="0.5" value="0.2" step="0.05">
+  <div class="box" id="mo-box"></div>
+ </div>
+ <div class="plot"><canvas id="moC" width="600" height="440"></canvas></div>
+</div>
+<script>
+(function(){
+ var B=document.getElementById('mo-B'),R=document.getElementById('mo-r'),C=document.getElementById('mo-c'),
+  cv=document.getElementById('moC'),x=cv.getContext('2d'),box=document.getElementById('mo-box');
+ var W=cv.width,H=cv.height,ML=66,MR=20,MT=16,MB=42;
+ function mult(rr,c){return (1+c)/(rr+c);}
+ function draw(){
+  var b=+B.value,rr=+R.value,c=+C.value;
+  var ymax=b*mult(0.05,c)*1.05;
+  function X(v){return ML+(v-0.05)/0.95*(W-ML-MR);} function Y(v){return H-MB-v/ymax*(H-MT-MB);}
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='center';
+  for(var q=0.2;q<=1.0001;q+=0.2){x.beginPath();x.moveTo(X(q),MT);x.lineTo(X(q),H-MB);x.stroke();x.fillText(q.toFixed(1),X(q),H-MB+16);}
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.fillText('Reserve ratio  rr',(ML+W-MR)/2,H-7);
+  x.save();x.translate(16,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('Money supply  M',0,0);x.restore();
+  x.strokeStyle='#1f3b73';x.lineWidth=3;x.beginPath();
+  for(var rg=0.05;rg<=1;rg+=0.01){var px=X(rg),py=Y(b*mult(rg,c));if(rg<=0.0501)x.moveTo(px,py);else x.lineTo(px,py);}x.stroke();
+  x.fillStyle='#1c6b4a';x.beginPath();x.arc(X(rr),Y(b*mult(rr,c)),6,0,7);x.fill();
+  document.getElementById('mo-Bv').textContent=b;document.getElementById('mo-rv').textContent=rr.toFixed(2);document.getElementById('mo-cv').textContent=c.toFixed(2);
+  var m=mult(rr,c);
+  box.innerHTML='Money multiplier = <b>'+m.toFixed(2)+'</b><br>Money supply <b>M = '+Math.round(b*m)+'</b><br>(base '+b+' &times; '+m.toFixed(2)+')';
+ }
+ [B,R,C].forEach(function(e){e.addEventListener('input',draw);});draw();
+})();
+</script>
 <div id="did-you-know">
 <section id="what-to-notice" class="level3">
 <h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>

@@ -41,11 +41,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -289,7 +284,6 @@ window.Quarto = {
   <ul>
   <li><a href="#the-small-open-economy" id="toc-the-small-open-economy" class="nav-link active" data-scroll-target="#the-small-open-economy">The small open economy</a>
   <ul class="collapse">
-  <li><a href="#shocks" id="toc-shocks" class="nav-link" data-scroll-target="#shocks">Shocks</a></li>
   <li><a href="#what-to-notice" id="toc-what-to-notice" class="nav-link" data-scroll-target="#what-to-notice">What to notice</a></li>
   </ul></li>
   </ul>
@@ -321,16 +315,9 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="the-small-open-economy">The small open economy</h2>
 <p>With perfect capital mobility, a small country takes the <strong>world interest rate</strong> as given: <span class="math inline">\(r = r^*\)</span>.</p>
 <ul>
-<li><strong>Net exports = net capital outflow:</strong> <span class="math inline">\(NX = S - I = NFI\)</span>. Saving not invested at home flows abroad.</li>
-<li><span class="math inline">\(r^*\)</span> fixes investment <span class="math inline">\(I(r^*)\)</span>, so it fixes <span class="math inline">\(S - I\)</span> — and therefore the <strong>trade balance</strong>.</li>
-<li>The <strong>real exchange rate</strong> <span class="math inline">\(\varepsilon\)</span> then adjusts so net exports hit that number: <span class="math inline">\(NX(\varepsilon) = S - I\)</span>.</li>
-<li><strong>FX view:</strong> supply of domestic currency <span class="math inline">\(= S-I\)</span> (vertical); demand <span class="math inline">\(= NX(\varepsilon)\)</span> (downward).</li>
-</ul>
-<section id="shocks" class="level3">
-<h3 class="anchored" data-anchor-id="shocks">Shocks</h3>
-<ul>
-<li><strong>Deficit (G↑ / T↓):</strong> saving falls → <span class="math inline">\(S-I\)</span> falls → <span class="math inline">\(\varepsilon\)</span> <strong>appreciates</strong>, NX toward deficit.</li>
-<li><strong>Investment demand↑ or <span class="math inline">\(r^*\)</span>↓:</strong> <span class="math inline">\(I\)</span> rises → <span class="math inline">\(S-I\)</span> falls → <span class="math inline">\(\varepsilon\)</span> appreciates.</li>
+<li><strong>Net exports = net capital outflow:</strong> <span class="math inline">\(NX = S - I = NFI\)</span>.</li>
+<li><span class="math inline">\(r^*\)</span> fixes investment <span class="math inline">\(I(r^*)\)</span>, so it fixes <span class="math inline">\(S - I\)</span> — hence the <strong>trade balance</strong>.</li>
+<li>The <strong>real exchange rate</strong> <span class="math inline">\(\varepsilon\)</span> adjusts so <span class="math inline">\(NX(\varepsilon) = S - I\)</span>.</li>
 <li><strong>Tariff:</strong> doesn’t touch <span class="math inline">\(S\)</span> or <span class="math inline">\(I\)</span> → <span class="math inline">\(S-I\)</span> fixed → shifts <span class="math inline">\(NX(\varepsilon)\)</span>, so <span class="math inline">\(\varepsilon\)</span> <strong>appreciates but NX is unchanged.</strong></li>
 </ul>
 <div class="callout callout-style-simple callout-note no-icon">
@@ -339,65 +326,74 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Try it.</strong> Left panel: <span class="math inline">\(r^*\)</span> fixes investment, the gap to saving is net capital outflow. Right panel: the exchange rate slides so net exports equal that gap. A tariff moves <span class="math inline">\(\varepsilon\)</span> but not NX.</p>
+<p><strong>Try it.</strong> Left panel: <span class="math inline">\(r^*\)</span> fixes investment; the gap to saving is net capital outflow. Right panel: the exchange rate slides so net exports equal that gap. A tariff moves <span class="math inline">\(\varepsilon\)</span> but not NX.</p>
 </div>
 </div>
 </div>
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
-#| viewerHeight: 560
-
-library(shiny)
-ui &lt;- fluidPage(
-  tags$head(tags$style(HTML("body{font-family:'Inter',system-ui,sans-serif;}
-    .sb{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:10px;font-size:14px;line-height:1.8;} .sb b{color:#1f3b73;}"))),
-  sidebarLayout(
-    sidebarPanel(width=4,
-      sliderInput("G","Government purchases  G:",min=800,max=2500,value=1500,step=50),
-      sliderInput("T","Taxes  T:",min=800,max=2500,value=1500,step=50),
-      sliderInput("dI0","Investment-demand shift:",min=-400,max=400,value=0,step=50),
-      sliderInput("rstar","World rate  r* (%):",min=1,max=10,value=5,step=1),
-      sliderInput("tar","Import tariff (shifts NX):",min=0,max=600,value=0,step=50),
-      uiOutput("sb")),
-    mainPanel(width=8, plotOutput("plot",height="470px"))))
-server &lt;- function(input,output,session){
-  Y&lt;-6000; C0&lt;-600; mpc&lt;-0.6; b&lt;-100; I0&lt;-1600; A&lt;-1500; m&lt;-250
-  calc &lt;- reactive({
-    S &lt;- Y - (C0+mpc*(Y-input$T)) - input$G
-    I &lt;- I0 + input$dI0 - b*input$rstar
-    NFI &lt;- S - I
-    eps &lt;- (A + input$tar - NFI)/m
-    list(S=S,I=I,NFI=NFI,eps=eps)
-  })
-  output$plot &lt;- renderPlot({
-    v&lt;-calc(); par(mfrow=c(1,2),mar=c(4.2,4.3,2.2,1))
-    # panel 1: loanable funds
-    rg&lt;-seq(0,12,length.out=150); Ir&lt;-I0+input$dI0-b*rg
-    plot(NA,xlim=c(0,2500),ylim=c(0,12),xlab="S, I",ylab="r (%)",las=1,bty="l",main="Loanable funds")
-    abline(v=v$S,col="#1f3b73",lwd=3)                 # vertical saving
-    lines(Ir,rg,col="#b5462a",lwd=3)                  # investment
-    abline(h=input$rstar,col="#1c6b4a",lwd=2,lty=2)   # world rate
-    points(v$I,input$rstar,pch=19,col="#1c6b4a",cex=1.6)
-    text(2300,input$rstar+0.6,"r*",col="#1c6b4a")
-    # panel 2: exchange rate
-    eg&lt;-seq(0,12,length.out=150); NXe&lt;-A+input$tar-m*eg
-    plot(NA,xlim=c(-600,2000),ylim=c(0,12),xlab="Net exports  NX",ylab=expression(epsilon),las=1,bty="l",main="Real exchange rate")
-    abline(v=v$NFI,col="#1f3b73",lwd=3)               # S - I (vertical)
-    lines(NXe,eg,col="#b5462a",lwd=3)                 # NX(eps)
-    points(v$NFI,v$eps,pch=19,col="#1c6b4a",cex=1.6)
-    segments(-600,v$eps,v$NFI,v$eps,lty=3,col="#5a6472")
-    abline(v=0,col="#9aa4b2",lty=3)
-  })
-  output$sb &lt;- renderUI({ v&lt;-calc()
-    HTML(sprintf("&lt;div class='sb'&gt;National saving S = &lt;b&gt;%.0f&lt;/b&gt;&lt;br&gt;Investment I = &lt;b&gt;%.0f&lt;/b&gt;&lt;br&gt;Net capital outflow S-I = NX = &lt;b&gt;%.0f&lt;/b&gt;&lt;br&gt;Real exchange rate &lt;b&gt;eps = %.2f&lt;/b&gt;&lt;/div&gt;",
-      v$S,v$I,v$NFI,v$eps)) })
-}
-shinyApp(ui,server)</code></pre>
-</section>
+<style>
+ .sim8{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .sim8 .ctrl{flex:0 0 300px;} .sim8 label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:10px 0 2px;}
+ .sim8 input[type=range]{width:100%;} .sim8 .v{color:#1f3b73;font-weight:700;}
+ .sim8 .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:12px;font-size:14px;line-height:1.8;} .sim8 .box b{color:#1f3b73;}
+ .sim8 canvas{width:100%;height:auto;max-width:640px;} .sim8 .plot{flex:1 1 440px;min-width:340px;}
+</style>
+<div class="sim8">
+ <div class="ctrl">
+  <label>Government purchases G: <span class="v" id="so-Gv">1500</span></label><input type="range" id="so-G" min="800" max="2500" value="1500" step="50">
+  <label>Taxes T: <span class="v" id="so-Tv">1500</span></label><input type="range" id="so-T" min="800" max="2500" value="1500" step="50">
+  <label>Investment-demand shift: <span class="v" id="so-dv">0</span></label><input type="range" id="so-dI" min="-400" max="400" value="0" step="50">
+  <label>World rate r* (%): <span class="v" id="so-rv">5</span></label><input type="range" id="so-r" min="1" max="10" value="5" step="1">
+  <label>Import tariff (shifts NX): <span class="v" id="so-tv">0</span></label><input type="range" id="so-t" min="0" max="600" value="0" step="50">
+  <div class="box" id="so-box"></div>
+ </div>
+ <div class="plot"><canvas id="soC" width="640" height="340"></canvas></div>
+</div>
+<script>
+(function(){
+ var Y=6000,C0=600,mpc=0.6,b=100,I0=1600,A=1500,m=250;
+ var G=document.getElementById('so-G'),T=document.getElementById('so-T'),dI=document.getElementById('so-dI'),
+  Rr=document.getElementById('so-r'),Tar=document.getElementById('so-t'),
+  cv=document.getElementById('soC'),x=cv.getContext('2d'),box=document.getElementById('so-box');
+ var W=cv.width,H=cv.height,PW=(W-30)/2;
+ function draw(){
+  var g=+G.value,t=+T.value,di=+dI.value,rs=+Rr.value,tar=+Tar.value;
+  var S=Y-(C0+mpc*(Y-t))-g,I=I0+di-b*rs,NFI=S-I,eps=(A+tar-NFI)/m;
+  x.clearRect(0,0,W,H);x.font='11px Inter,sans-serif';
+  // PANEL 1: loanable funds (left)
+  (function(){var ox=0,ML=48,MR=12,MT=24,MB=36,xmax=2500,ymax=12;
+   function X(q){return ox+ML+q/xmax*(PW-ML-MR);} function Yc(r){return H-MB-r/ymax*(H-MT-MB);}
+   x.fillStyle='#1f3b73';x.textAlign='center';x.font='12px Inter,sans-serif';x.fillText('Loanable funds',ox+PW/2,14);x.font='11px Inter,sans-serif';
+   x.strokeStyle='#9aa4b2';x.lineWidth=1.2;x.beginPath();x.moveTo(ox+ML,MT);x.lineTo(ox+ML,H-MB);x.lineTo(ox+ML+(PW-ML-MR),H-MB);x.stroke();
+   x.fillStyle='#5a6472';x.fillText('S, I',ox+PW-20,H-MB+16);x.save();x.translate(ox+12,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('r (%)',0,0);x.restore();
+   x.strokeStyle='#1f3b73';x.lineWidth=3;x.beginPath();x.moveTo(X(S),Yc(0));x.lineTo(X(S),Yc(12));x.stroke(); // vertical saving
+   x.strokeStyle='#b5462a';x.beginPath();x.moveTo(X(I0+di-b*0),Yc(0));x.lineTo(X(I0+di-b*12),Yc(12));x.stroke(); // I(r)
+   x.strokeStyle='#1c6b4a';x.lineWidth=2;x.setLineDash([5,3]);x.beginPath();x.moveTo(ox+ML,Yc(rs));x.lineTo(ox+ML+(PW-ML-MR),Yc(rs));x.stroke();x.setLineDash([]);
+   x.fillStyle='#1c6b4a';x.beginPath();x.arc(X(I),Yc(rs),5,0,7);x.fill();
+   x.fillStyle='#1c6b4a';x.textAlign='left';x.fillText('r*',ox+ML+6,Yc(rs)-4);
+  })();
+  // PANEL 2: exchange rate (right)
+  (function(){var ox=PW+30,ML=48,MR=12,MT=24,MB=36,xmin=-600,xmax=2000,ymax=12;
+   function X(v){return ox+ML+(v-xmin)/(xmax-xmin)*(PW-ML-MR);} function Yc(e){return H-MB-e/ymax*(H-MT-MB);}
+   x.fillStyle='#1f3b73';x.textAlign='center';x.font='12px Inter,sans-serif';x.fillText('Real exchange rate',ox+PW/2,14);x.font='11px Inter,sans-serif';
+   x.strokeStyle='#9aa4b2';x.lineWidth=1.2;x.beginPath();x.moveTo(ox+ML,MT);x.lineTo(ox+ML,H-MB);x.lineTo(ox+ML+(PW-ML-MR),H-MB);x.stroke();
+   x.fillStyle='#5a6472';x.fillText('NX',ox+PW-18,H-MB+16);x.save();x.translate(ox+12,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('eps',0,0);x.restore();
+   x.setLineDash([2,3]);x.strokeStyle='#9aa4b2';x.beginPath();x.moveTo(X(0),MT);x.lineTo(X(0),H-MB);x.stroke();x.setLineDash([]);
+   x.strokeStyle='#1f3b73';x.lineWidth=3;x.beginPath();x.moveTo(X(NFI),Yc(0));x.lineTo(X(NFI),Yc(12));x.stroke(); // S-I vertical
+   x.strokeStyle='#b5462a';x.beginPath();x.moveTo(X(A+tar-m*0),Yc(0));x.lineTo(X(A+tar-m*12),Yc(12));x.stroke(); // NX(eps)
+   x.setLineDash([3,3]);x.strokeStyle='#5a6472';x.lineWidth=1;x.beginPath();x.moveTo(ox+ML,Yc(eps));x.lineTo(X(NFI),Yc(eps));x.stroke();x.setLineDash([]);
+   x.fillStyle='#1c6b4a';x.beginPath();x.arc(X(NFI),Yc(eps),5,0,7);x.fill();
+  })();
+  document.getElementById('so-Gv').textContent=g;document.getElementById('so-Tv').textContent=t;document.getElementById('so-dv').textContent=(di>0?'+':'')+di;document.getElementById('so-rv').textContent=rs;document.getElementById('so-tv').textContent=tar;
+  box.innerHTML='National saving S = <b>'+Math.round(S)+'</b><br>Investment I = <b>'+Math.round(I)+'</b><br>Net capital outflow S−I = NX = <b>'+Math.round(NFI)+'</b><br>Real exchange rate <b>eps = '+eps.toFixed(2)+'</b>';
+ }
+ [G,T,dI,Rr,Tar].forEach(function(e){e.addEventListener('input',draw);});draw();
+})();
+</script>
 <div id="did-you-know">
 <section id="what-to-notice" class="level3">
 <h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
 <ul>
-<li><strong>Deficit</strong> (G above T): saving line slides left, NFI falls, <span class="math inline">\(\varepsilon\)</span> rises (appreciates).</li>
+<li><strong>Deficit</strong> (G above T): saving slides left, NFI falls, <span class="math inline">\(\varepsilon\)</span> appreciates.</li>
 <li><strong>Lower <span class="math inline">\(r^*\)</span></strong>: investment rises, NFI falls, currency appreciates, NX falls.</li>
 <li><strong>Tariff</strong>: only the right panel’s NX curve shifts — <span class="math inline">\(\varepsilon\)</span> rises but the trade balance (NFI) is unchanged. Protectionism can’t fix a trade deficit.</li>
 </ul>
