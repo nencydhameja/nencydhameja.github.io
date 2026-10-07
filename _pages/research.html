@@ -236,6 +236,10 @@ author_profile: true
     }
     .status-heading { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #672414; font-family: 'Lora', Georgia, serif; margin: 2.3rem 0 1rem; padding-bottom: 0.35rem; border-bottom: 1px solid #d3d1c7; }
   .status-heading:first-of-type { margin-top: 0.3rem; }
+    /* paper numbering [1] [2] ... continuous down the page (auto via CSS counters) */
+    .research-content { counter-reset: papernum; }
+    .jmp-card, .paper-card { counter-increment: papernum; }
+    .paper-title::before { content: "[" counter(papernum) "]\00a0\00a0"; color: #b4b2a9; font-weight: 500; }
 </style>
 </head>
 <body>
