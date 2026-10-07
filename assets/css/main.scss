@@ -185,7 +185,7 @@ body, .page, #main {
 
 /* CHANGED: added maroon rule under the author name (sits on the light #eef8fc bg, so maroon shows) */
 .author__name {
-  border-bottom: 2px solid #672414;
-  padding-bottom: 0.45rem;
-  margin-bottom: 0.55rem;
+  border-bottom: 1px solid rgba(103, 36, 20, 0.35);  /* CHANGED: faint maroon rule (was 2px solid #672414) */
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
 }
