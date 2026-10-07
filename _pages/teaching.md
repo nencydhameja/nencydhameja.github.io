@@ -6,7 +6,7 @@ author_profile: true
 ---
 
 <style>
-  body, .page, #main { background: #f7f6f3 !important; }  /* CHANGED: warm page bg so white panels pop (homepage stays white) */
+  body, .page, #main { background: #ffffff !important; }  /* CHANGED: was #f7f6f3 (warm cream) -> #ffffff (white), to match the clean look */
 
   .talk-section { margin-bottom: 0.35rem; }
 
