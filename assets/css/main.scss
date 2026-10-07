@@ -151,7 +151,7 @@ h2 {
 /* Highlight the active navigation tab */
 .greedy-nav a {
       /* your link color */
-  color:var(--global-link-color)!important;
+  color:#ffffff!important;  /* CHANGED: was var(--global-link-color) (#f5f0dc cream) -> #ffffff, white top-nav links */
    padding:0px!important;
    margin-left:40px!important;
 }
@@ -180,5 +180,12 @@ h2 {
    
 }
 body, .page, #main {
-  background-color: #f7f6f3 !important;
+  background-color: #eef8fc !important;  /* CHANGED: was #f7f6f3 (warm cream) -> #eef8fc (soft pale blue), site-wide background */
+}
+
+/* CHANGED: added maroon rule under the author name (sits on the light #eef8fc bg, so maroon shows) */
+.author__name {
+  border-bottom: 2px solid #672414;
+  padding-bottom: 0.45rem;
+  margin-bottom: 0.55rem;
 }

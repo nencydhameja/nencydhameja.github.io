@@ -36,7 +36,7 @@ Prior to my Ph.D., I pursued an Executive MBA in Singapore and earned a Bachelor
 <!--<p><strong>Fields</strong>: Applied Microeconomics - Urban Economics, Economics of Education, Behavioral Economics, Health Economics </p>-->
 
 <p><strong>Primary fields</strong>: Applied Microeconomics; Urban and Regional Economics <br>
-<strong>Secondary fields</strong>: Applied Econometrics; Labor Economics </p>
+<strong>Secondary fields</strong>: Applied Econometrics; Labor Economics; Computational Economics </p>
 
   <!-- <div style="width:260px; flex-shrink:0; margin-top:4rem;">
     <div style="background:linear-gradient(135deg,#fff 0%,#f5ede9 100%);border:0.5px solid #d3c4be;border-top:3px solid #672414;border-radius:12px;padding:1.25rem 1.5rem;">
