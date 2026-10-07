@@ -26,7 +26,9 @@ Prior to my Ph.D., I pursued an Executive MBA in Singapore and earned a Bachelor
 </p> -->
 <!-- <p>I study how neighborhood conditions and institutional policies affect housing markets, health, and labor outcomes using quasi-experimental methods and large-scale administrative data.</p> -->
 <p>My research focuses on urban and regional economics, public policy, and labor economics. I also work on applied econometrics and AI-based economic modeling.</p>
-<p>In my job market paper, I study how crime disrupts housing markets — which crimes price, how the discount travels from listing to closing, and who bears the cost. Related work examines retail food environments and health outcomes, and how diversity statement requirements affect faculty hiring.</p>
+<p>In my job market paper, When Does Crime Enter House Prices? Evidence from Chicago, I study which crimes are priced into housing values, why most are not, and how the discount emerges between listing and closing.</p>
+<!-- <p>In my job market paper, I study how crime disrupts housing markets — which crimes price, how the discount travels from listing to closing, and who bears the cost.</p>  -->
+Related work examines retail food environments and health outcomes, and how diversity statement requirements affect faculty hiring.
 <p>Prior to my Ph.D., I completed an Executive MBA in Singapore and a Bachelor of Technology in India.</p>
 <!-- Fields: Applied Microeconomics — Urban Economics, Behavioral Economics, Labor Economics -->
 <!--<p><strong>Fields</strong>: Applied Microeconomics - Urban Economics, Economics of Education, Behavioral Economics, Health Economics </p>-->
