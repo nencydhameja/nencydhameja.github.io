@@ -838,7 +838,7 @@ async function fetchCitations() {
 
   const dois = [...new Set(Object.keys(doiMap))];
 
-  // Fetch in chunks of 10 to avoid URL length limits
+  /* Fetch in chunks of 10 to avoid URL length limits */
   const chunkSize = 10;
   for (let i = 0; i < dois.length; i += chunkSize) {
     const chunk = dois.slice(i, i + chunkSize);
