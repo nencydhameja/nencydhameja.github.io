@@ -154,6 +154,8 @@ author_profile: true
   .pp-collapsed .pp-toggle { transform: rotate(-90deg); }
   .pp-count { font-size:11.5px; color:#a7a59c; font-weight:400; margin-left:0.55rem; letter-spacing:0.02em; }
   .pp-collapsed .pp-field-card { display:none; }
+  .pp-paper-venue { font-size:0.82em; color:#6b6a65; margin-top:0.2rem; }
+  .pp-paper-venue a { color:#672414; text-decoration:none; border-bottom:1px dotted #b9896f; }
   .pp-paper-tags { margin-top:0.5rem; display:flex; flex-wrap:wrap; gap:0.35rem; }
   .pp-tag { font-size:10px; padding:2px 8px; border-radius:999px; background:transparent; border:0.5px solid #d3d1c7; color:#7a7870; letter-spacing:0.01em; }
   .pp-paper-usp { margin-top:0.4rem; font-size:12px; color:#5f5e5a; line-height:1.6; }
@@ -825,42 +827,55 @@ author_profile: true
   </div>
 
 <script>
-async function fetchCitations() {
+async function fetchMeta() {
   const rows = document.querySelectorAll('[data-doi]');
   if (!rows.length) return;
-
   const doiMap = {};
+  const rowMap = {};
   rows.forEach(row => {
     const doi = row.dataset.doi;
-    const id = 'cite-' + doi.replace(/\//g, '-').replace(/\./g, '-');
-    doiMap[doi] = id;
+    if (!doi) return;
+    doiMap[doi] = 'cite-' + doi.replace(/\//g, '-').replace(/\./g, '-');
+    rowMap[doi.toLowerCase()] = row;
   });
-
   const dois = [...new Set(Object.keys(doiMap))];
-
-  /* Fetch in chunks of 10 to avoid URL length limits */
   const chunkSize = 10;
   for (let i = 0; i < dois.length; i += chunkSize) {
     const chunk = dois.slice(i, i + chunkSize);
     const filter = chunk.map(d => `doi:https://doi.org/${d}`).join('|');
-    const url = `https://api.openalex.org/works?filter=${encodeURIComponent(filter)}&select=doi,cited_by_count&per_page=25&mailto=nencydhameja@gmail.com`;
+    const url = `https://api.openalex.org/works?filter=${encodeURIComponent(filter)}&select=doi,cited_by_count,publication_year,primary_location&per_page=25&mailto=nencydhameja@gmail.com`;
     try {
       const res = await fetch(url);
       const data = await res.json();
       (data.results || []).forEach(work => {
-        if (!work.doi || work.cited_by_count == null) return;
+        if (!work.doi) return;
         const doi = work.doi.replace('https://doi.org/', '');
-        let id = doiMap[doi] || doiMap[doi.toLowerCase()];
-        if (!id) id = 'cite-' + doi.replace(/\//g, '-').replace(/\./g, '-');
-        const el = document.getElementById(id);
-        if (el) el.textContent = work.cited_by_count.toLocaleString() + ' citations';
+        const key = doi.toLowerCase();
+        if (work.cited_by_count != null) {
+          let id = doiMap[doi] || doiMap[key];
+          if (!id) id = 'cite-' + doi.replace(/\//g, '-').replace(/\./g, '-');
+          const el = document.getElementById(id);
+          if (el) el.textContent = work.cited_by_count.toLocaleString() + ' citations';
+        }
+        const row = rowMap[key];
+        if (row && !row.querySelector('.pp-paper-venue')) {
+          const src = work.primary_location && work.primary_location.source;
+          const venue = src && src.display_name;
+          if (venue) {
+            const left = row.querySelector('.pp-paper-left') || row;
+            const d = document.createElement('div');
+            d.className = 'pp-paper-venue';
+            d.innerHTML = 'Published in <a href="https://doi.org/' + doi + '" target="_blank"><em>' + venue + '</em></a>' + (work.publication_year ? ', ' + work.publication_year : '');
+            const authors = left.querySelector('.pp-paper-authors');
+            if (authors) authors.insertAdjacentElement('afterend', d);
+            else left.appendChild(d);
+          }
+        }
       });
-    } catch(e) {
-      console.log('Citation fetch error:', e);
-    }
+    } catch(e) { console.log('Meta fetch error:', e); }
   }
 }
-document.addEventListener('DOMContentLoaded', fetchCitations);
+document.addEventListener('DOMContentLoaded', fetchMeta);
 document.addEventListener('click', function (e) {
   var h = e.target.closest('.pp-section-header');
   if (h && h.parentElement) h.parentElement.classList.toggle('pp-collapsed');
