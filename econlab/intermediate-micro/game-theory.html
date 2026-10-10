@@ -315,14 +315,21 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#finding-a-nash-equilibrium-in-a-22-game" id="toc-finding-a-nash-equilibrium-in-a-22-game" class="nav-link active" data-scroll-target="#finding-a-nash-equilibrium-in-a-22-game">Finding a Nash equilibrium in a 2×2 game</a>
+  <ul class="collapse">
+  <li><a href="#what-to-notice" id="toc-what-to-notice" class="nav-link" data-scroll-target="#what-to-notice">What to notice</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
-<div style="background:#fff8e7; border-left:4px solid #d4a017; padding:12px 18px; margin:0 0 22px 0; font-size:0.9em; color:#2c3e50; border-radius:0 6px 6px 0; line-height:1.55;">
-  <strong>About this page.</strong> Simulation-based companion notes for <strong>ECON 360 — Intermediate Microeconomics</strong> at Binghamton University. Topic order follows <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Professor David Slichter</a>'s ECON 360 syllabus.
-</div>
+
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./monopoly.html">Imperfect Competition &amp; Beyond</a></li><li class="breadcrumb-item"><a href="./game-theory.html">Game Theory</a></li></ol></nav>
 <div class="quarto-title">
@@ -343,18 +350,124 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </header>
 
 
+<section id="finding-a-nash-equilibrium-in-a-22-game" class="level2">
+<h2 class="anchored" data-anchor-id="finding-a-nash-equilibrium-in-a-22-game">Finding a Nash equilibrium in a 2×2 game</h2>
+<p>Two players choose <strong>simultaneously</strong>. Each has two strategies — here <strong>Cooperate (C)</strong> or <strong>Defect (D)</strong>. A cell shows the payoffs <strong>(Row, Column)</strong>.</p>
+<ul>
+<li>A player’s <strong>best response</strong> = the strategy giving the higher payoff, <em>given what the other player does</em>.</li>
+<li>A <strong>Nash equilibrium</strong> = a cell where <strong>both</strong> players are best-responding — nobody wants to switch unilaterally.</li>
+</ul>
+<p>The classic <strong>Prisoner’s Dilemma</strong> has payoffs ranked <strong>T &gt; R &gt; P &gt; S</strong> (Temptation &gt; Reward &gt; Punishment &gt; Sucker). Then “Defect” is a <em>dominant</em> strategy for both, so the unique Nash is <strong>(D, D)</strong> — even though <strong>(C, C)</strong> would make both better off. That tension is the whole point.</p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Coming soon.</strong> This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as <a href="budget.html">Budget Constraints</a>, <a href="choice.html">The Consumer’s Choice Problem</a>, and <a href="monopoly.html">Monopoly</a>: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.</p>
+<p><strong>Try it.</strong> Adjust the four payoffs. Best responses get <strong>underlined</strong>; a cell turns <strong>green</strong> when it’s a Nash equilibrium. Break the T &gt; R &gt; P &gt; S ranking and watch the equilibrium move (or multiply).</p>
 </div>
 </div>
+</div>
+<style>
+ .gt{font-family:'Inter',system-ui,sans-serif;margin:14px 0;}
+ .gt .ctrl{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:16px;}
+ .gt .ctrl > div{flex:0 0 180px;}
+ .gt label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin-bottom:2px;}
+ .gt input[type=range]{width:100%;} .gt .v{color:#1f3b73;font-weight:700;}
+ .gt table{border-collapse:collapse;margin:6px 0;}
+ .gt td,.gt th{border:1px solid #d5dde8;padding:16px 22px;text-align:center;font-size:18px;min-width:120px;}
+ .gt th{background:#1f3b73;color:#fff;font-size:14px;}
+ .gt .rowhdr{background:#eef3fb;color:#1f3b73;font-weight:700;font-size:14px;}
+ .gt .rp{color:#1f3b73;} .gt .cp{color:#b5462a;}
+ .gt .br{text-decoration:underline;font-weight:800;}
+ .gt .nash{background:#eef7f1;}
+ .gt .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.7;max-width:560px;} .gt .box b{color:#1f3b73;}
+</style>
+<div class="gt">
+ <div class="ctrl">
+  <div><label>Temptation T: <span class="v" id="gt-Tv">5</span></label><input type="range" id="gt-T" min="0" max="6" value="5" step="1"></div>
+  <div><label>Reward R: <span class="v" id="gt-Rv">3</span></label><input type="range" id="gt-R" min="0" max="6" value="3" step="1"></div>
+  <div><label>Punishment P: <span class="v" id="gt-Pv">1</span></label><input type="range" id="gt-P" min="0" max="6" value="1" step="1"></div>
+  <div><label>Sucker S: <span class="v" id="gt-Sv">0</span></label><input type="range" id="gt-S" min="0" max="6" value="0" step="1"></div>
+ </div>
+ 
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Column: C</th>
+<th data-quarto-table-cell-role="th">Column: D</th>
+</tr>
+<tr class="even">
+<td class="rowhdr">Row: C</td>
+<td id="cCC"></td>
+<td id="cCD"></td>
+</tr>
+<tr class="odd">
+<td class="rowhdr">Row: D</td>
+<td id="cDC"></td>
+<td id="cDD"></td>
+</tr>
+</tbody>
+</table>
+
+ <div style="font-size:13px;color:#5a6472;"><span style="color:#1f3b73;font-weight:700;">blue</span> = Row payoff · <span style="color:#b5462a;font-weight:700;">red</span> = Column payoff · <u>underline</u> = best response · green cell = Nash</div>
+ <div class="box" id="gt-box"></div>
+</div>
+<script>
+(function(){
+ var T=document.getElementById('gt-T'),R=document.getElementById('gt-R'),P=document.getElementById('gt-P'),S=document.getElementById('gt-S'),box=document.getElementById('gt-box');
+ // payoff(row strat, col strat) -> [rowPayoff, colPayoff]
+ function pay(t,r,p,s){
+   return {CC:[r,r], CD:[s,t], DC:[t,s], DD:[p,p]};
+ }
+ function cell(id,rp,cp,rbr,cbr,nash){
+   var el=document.getElementById(id);
+   el.className = nash ? 'nash' : '';
+   el.innerHTML='<span class="rp'+(rbr?' br':'')+'">'+rp+'</span><span style="color:#999;"> , </span><span class="cp'+(cbr?' br':'')+'">'+cp+'</span>';
+ }
+ function draw(){
+  var t=+T.value,r=+R.value,p=+P.value,s=+S.value, G=pay(t,r,p,s);
+  document.getElementById('gt-Tv').textContent=t;document.getElementById('gt-Rv').textContent=r;
+  document.getElementById('gt-Pv').textContent=p;document.getElementById('gt-Sv').textContent=s;
+  // Row best response given Column's strategy (compare row payoffs down a column)
+  // Col = C: Row C->G.CC[0]=r vs Row D->G.DC[0]=t
+  var rowBR_C_C = r>=t, rowBR_D_C = t>=r;          // ties: both marked
+  // Col = D: Row C->G.CD[0]=s vs Row D->G.DD[0]=p
+  var rowBR_C_D = s>=p, rowBR_D_D = p>=s;
+  // Column best response given Row's strategy (compare col payoffs across a row)
+  // Row = C: Col C->G.CC[1]=r vs Col D->G.CD[1]=t
+  var colBR_C_C = r>=t, colBR_C_D = t>=r;
+  // Row = D: Col C->G.DC[1]=s vs Col D->G.DD[1]=p
+  var colBR_D_C = s>=p, colBR_D_D = p>=s;
+  // cell (rowStrat, colStrat): rowBR if row's strat is BR to that col; colBR if col's strat is BR to that row
+  var nCC=rowBR_C_C&&colBR_C_C, nCD=rowBR_C_D&&colBR_C_D, nDC=rowBR_D_C&&colBR_D_C, nDD=rowBR_D_D&&colBR_D_D;
+  cell('cCC',G.CC[0],G.CC[1],rowBR_C_C,colBR_C_C,nCC);
+  cell('cCD',G.CD[0],G.CD[1],rowBR_C_D,colBR_C_D,nCD);
+  cell('cDC',G.DC[0],G.DC[1],rowBR_D_C,colBR_D_C,nDC);
+  cell('cDD',G.DD[0],G.DD[1],rowBR_D_D,colBR_D_D,nDD);
+  var nash=[]; if(nCC)nash.push('(C,C)'); if(nCD)nash.push('(C,D)'); if(nDC)nash.push('(D,C)'); if(nDD)nash.push('(D,D)');
+  var isPD = (t>r)&&(r>p)&&(p>s);
+  box.innerHTML='Nash equilibrium: <b>'+(nash.length?nash.join(', '):'none in pure strategies')+'</b><br>'+
+    (isPD ? 'This is a <b>Prisoner’s Dilemma</b> (T&gt;R&gt;P&gt;S): Defect dominates, so (D,D) is the unique Nash — yet (C,C) pays both more. The dilemma.' :
+            'Ranking isn’t T&gt;R&gt;P&gt;S, so it’s no longer a classic Prisoner’s Dilemma — the equilibrium can shift or multiply.');
+ }
+ [T,R,P,S].forEach(function(e){e.addEventListener('input',draw);});draw();
+})();
+</script>
+<div id="did-you-know">
+<section id="what-to-notice" class="level3">
+<h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
+<ul>
+<li><strong>Default (PD):</strong> both best-respond with <strong>Defect</strong>, so <strong>(D, D)</strong> is the only green cell — even though <strong>(C, C)</strong> gives both a higher payoff. Individually rational, collectively bad.</li>
+<li>Make <strong>R &gt; T</strong> (cooperating beats tempting) → cooperation becomes a best response and <strong>(C, C)</strong> can turn green. It’s no longer a dilemma.</li>
+<li>Some payoff settings give <strong>two</strong> Nash equilibria (a coordination game) — watch two cells go green at once.</li>
+</ul>
+</section>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -764,7 +877,7 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><span style="white-space:nowrap">Topic order follows <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Prof.&nbsp;David Slichter</a>’s ECON 360 syllabus | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span><br><span style="font-size:0.82em;color:#777;">Markdown content rendered to HTML by Quarto; interactive R simulations run in-browser via WebAssembly.</span></p>
+<p><span style="white-space:nowrap">Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span><br><span style="font-size:0.82em;color:#777;">Markdown content rendered to HTML by Quarto; interactive R simulations run in-browser via WebAssembly.</span></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

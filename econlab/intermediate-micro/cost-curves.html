@@ -78,6 +78,35 @@ gtag('js', new Date());
 gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -315,14 +344,21 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-family-of-cost-curves" id="toc-the-family-of-cost-curves" class="nav-link active" data-scroll-target="#the-family-of-cost-curves">The family of cost curves</a>
+  <ul class="collapse">
+  <li><a href="#what-to-notice" id="toc-what-to-notice" class="nav-link" data-scroll-target="#what-to-notice">What to notice</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
-<div style="background:#fff8e7; border-left:4px solid #d4a017; padding:12px 18px; margin:0 0 22px 0; font-size:0.9em; color:#2c3e50; border-radius:0 6px 6px 0; line-height:1.55;">
-  <strong>About this page.</strong> Simulation-based companion notes for <strong>ECON 360 — Intermediate Microeconomics</strong> at Binghamton University. Topic order follows <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Professor David Slichter</a>'s ECON 360 syllabus.
-</div>
+
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./technology.html">Production &amp; Costs</a></li><li class="breadcrumb-item"><a href="./cost-curves.html">Cost Curves</a></li></ol></nav>
 <div class="quarto-title">
@@ -343,18 +379,97 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </header>
 
 
+<section id="the-family-of-cost-curves" class="level2">
+<h2 class="anchored" data-anchor-id="the-family-of-cost-curves">The family of cost curves</h2>
+<p>From a firm’s total cost <span class="math inline">\(C(q) = F + VC(q)\)</span> we build four per-unit curves:</p>
+<ul>
+<li><strong>AFC</strong> = <span class="math inline">\(F/q\)</span> — average fixed cost, always <strong>falling</strong> (fixed cost spread over more units).</li>
+<li><strong>AVC</strong> = <span class="math inline">\(VC(q)/q\)</span> — average variable cost, <strong>U-shaped</strong>.</li>
+<li><strong>ATC</strong> = <span class="math inline">\(C(q)/q\)</span> = AVC + AFC — <strong>U-shaped</strong>, lies above AVC, gap = AFC.</li>
+<li><strong>MC</strong> = <span class="math inline">\(\dfrac{dC}{dq}\)</span> — marginal cost.</li>
+</ul>
+<p><strong>The key geometry:</strong> MC cuts <strong>AVC</strong> and <strong>ATC</strong> at their <strong>minimum points</strong> — because an average falls while the marginal is below it and rises once the marginal is above it.</p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Coming soon.</strong> This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as <a href="budget.html">Budget Constraints</a>, <a href="choice.html">The Consumer’s Choice Problem</a>, and <a href="monopoly.html">Monopoly</a>: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.</p>
+<p><strong>Try it.</strong> Raise <strong>fixed cost F</strong> — AFC and ATC shift up (MC and AVC don’t move), and the ATC minimum slides right. Watch MC slice through both U’s at their lowest points.</p>
 </div>
 </div>
+</div>
+<style>
+ .cc{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .cc .ctrl{flex:0 0 300px;} .cc label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .cc input[type=range]{width:100%;} .cc .v{color:#1f3b73;font-weight:700;}
+ .cc .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.8;} .cc .box b{color:#1f3b73;}
+ .cc canvas{width:100%;height:auto;max-width:600px;} .cc .plot{flex:1 1 420px;min-width:320px;}
+ .cc .lg{font-size:13px;margin-top:8px;} .cc .lg span{display:inline-block;margin-right:14px;}
+</style>
+<div class="cc">
+ <div class="ctrl">
+  <label>Fixed cost F: <span class="v" id="cc-Fv">20</span></label><input type="range" id="cc-F" min="8" max="45" value="20" step="1">
+  <div class="box" id="cc-box"></div>
+  <div class="lg">
+   <span style="color:#b5462a;">▬ MC</span>
+   <span style="color:#1c6b4a;">▬ AVC</span>
+   <span style="color:#1f3b73;">▬ ATC</span>
+   <span style="color:#9aa4b2;">▬ AFC</span>
+  </div>
+ </div>
+ <div class="plot"><canvas id="ccC" width="600" height="460"></canvas></div>
+</div>
+<script>
+(function(){
+ // cubic VC = a q - b q^2 + c q^3  -> U-shaped MC & AVC
+ var a=4,b=0.6,c=0.04;
+ var F=document.getElementById('cc-F'),cv=document.getElementById('ccC'),x=cv.getContext('2d'),box=document.getElementById('cc-box');
+ var W=cv.width,H=cv.height,ML=48,MR=20,MT=16,MB=42,qmax=15,ymax=12;
+ function MC(q){return a-2*b*q+3*c*q*q;}
+ function AVC(q){return a-b*q+c*q*q;}
+ function ATC(q,f){return f/q+AVC(q);}
+ function AFC(q,f){return f/q;}
+ function X(q){return ML+q/qmax*(W-ML-MR);} function Yc(v){return H-MB-v/ymax*(H-MT-MB);}
+ function curve(fn,col,lw){x.strokeStyle=col;x.lineWidth=lw;x.beginPath();var st=false;
+   for(var q=0.4;q<=qmax;q+=0.1){var v=fn(q);if(v<0||v>ymax){st=false;continue;}var px=X(q),py=Yc(v);if(!st){x.moveTo(px,py);st=true;}else x.lineTo(px,py);}x.stroke();}
+ function minOf(fn,f){var best=1e9,bq=0;for(var q=0.5;q<=qmax;q+=0.01){var v=f?fn(q,f):fn(q);if(v<best){best=v;bq=q;}}return{q:bq,v:best};}
+ function draw(){
+  var f=+F.value;
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='right';
+  for(var v=0;v<=ymax;v+=2){x.beginPath();x.moveTo(ML,Yc(v));x.lineTo(W-MR,Yc(v));x.stroke();x.fillText(v,ML-6,Yc(v)+4);}
+  x.textAlign='center';for(var q=0;q<=qmax;q+=3){x.fillText(q,X(q),H-MB+16);}
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.fillText('Quantity  q',(ML+W-MR)/2,H-7);
+  x.save();x.translate(14,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('$ per unit',0,0);x.restore();
+  curve(function(q){return AFC(q,f);},'#9aa4b2',1.6);
+  curve(AVC,'#1c6b4a',2.4);
+  curve(function(q){return ATC(q,f);},'#1f3b73',2.8);
+  curve(MC,'#b5462a',2.8);
+  // mark min AVC and min ATC
+  var mavc=minOf(AVC), matc=minOf(ATC,f);
+  x.fillStyle='#1c6b4a';x.beginPath();x.arc(X(mavc.q),Yc(mavc.v),4,0,7);x.fill();
+  x.fillStyle='#1f3b73';x.beginPath();x.arc(X(matc.q),Yc(matc.v),4,0,7);x.fill();
+  document.getElementById('cc-Fv').textContent=f;
+  box.innerHTML='Min AVC = <b>'+mavc.v.toFixed(2)+'</b> at q = '+mavc.q.toFixed(1)+' (shutdown price)<br>Min ATC = <b>'+matc.v.toFixed(2)+'</b> at q = '+matc.q.toFixed(1)+' (break-even price)<br><span style="color:#5a6472;font-size:13px;">MC passes through both minima.</span>';
+ }
+ F.addEventListener('input',draw);draw();
+})();
+</script>
+<div id="did-you-know">
+<section id="what-to-notice" class="level3">
+<h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
+<ul>
+<li><strong>MC cuts AVC and ATC at their minimums</strong> — the dots. Left of a minimum, MC is below the average (pulling it down); right of it, MC is above (pulling it up).</li>
+<li><strong>Raise F:</strong> AFC and ATC shift <strong>up</strong>, the ATC minimum moves <strong>right</strong>, but <strong>MC and AVC don’t move</strong> (fixed cost isn’t marginal or variable).</li>
+<li>The vertical gap between <strong>ATC and AVC is AFC</strong> — and it shrinks as q grows.</li>
+</ul>
+</section>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -764,7 +879,7 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><span style="white-space:nowrap">Topic order follows <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Prof.&nbsp;David Slichter</a>’s ECON 360 syllabus | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span><br><span style="font-size:0.82em;color:#777;">Markdown content rendered to HTML by Quarto; interactive R simulations run in-browser via WebAssembly.</span></p>
+<p><span style="white-space:nowrap">Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span><br><span style="font-size:0.82em;color:#777;">Markdown content rendered to HTML by Quarto; interactive R simulations run in-browser via WebAssembly.</span></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

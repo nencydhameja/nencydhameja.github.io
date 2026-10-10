@@ -78,6 +78,35 @@ gtag('js', new Date());
 gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -315,14 +344,21 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#where-a-demand-curve-comes-from" id="toc-where-a-demand-curve-comes-from" class="nav-link active" data-scroll-target="#where-a-demand-curve-comes-from">Where a demand curve comes from</a>
+  <ul class="collapse">
+  <li><a href="#what-to-notice" id="toc-what-to-notice" class="nav-link" data-scroll-target="#what-to-notice">What to notice</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
-<div style="background:#fff8e7; border-left:4px solid #d4a017; padding:12px 18px; margin:0 0 22px 0; font-size:0.9em; color:#2c3e50; border-radius:0 6px 6px 0; line-height:1.55;">
-  <strong>About this page.</strong> Simulation-based companion notes for <strong>ECON 360 — Intermediate Microeconomics</strong> at Binghamton University. Topic order follows <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Professor David Slichter</a>'s ECON 360 syllabus.
-</div>
+
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./budget.html">Consumer Theory</a></li><li class="breadcrumb-item"><a href="./demand.html">Demand</a></li></ol></nav>
 <div class="quarto-title">
@@ -343,18 +379,89 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </header>
 
 
+<section id="where-a-demand-curve-comes-from" class="level2">
+<h2 class="anchored" data-anchor-id="where-a-demand-curve-comes-from">Where a demand curve comes from</h2>
+<p>A <strong>demand curve</strong> shows how the quantity a consumer buys depends on price. It falls out of utility maximization. For a <strong>Cobb–Douglas</strong> consumer (utility <span class="math inline">\(u = x_1^{a}x_2^{1-a}\)</span>) with income <span class="math inline">\(m\)</span> and prices <span class="math inline">\(p_1, p_2\)</span>, the demand for good 1 is:</p>
+<p><span class="math display">\[x_1 = a\,\frac{m}{p_1}\]</span></p>
+<ul>
+<li><strong>Downward-sloping:</strong> higher <span class="math inline">\(p_1\)</span> → less <span class="math inline">\(x_1\)</span> (that’s the demand curve).</li>
+<li><strong>Income shifts it:</strong> higher <span class="math inline">\(m\)</span> → the whole curve shifts <strong>out</strong> (<span class="math inline">\(x_1\)</span> rises at every price) — good 1 is a <strong>normal</strong> good.</li>
+<li><strong>Nice Cobb–Douglas fact:</strong> spending on good 1 is <span class="math inline">\(p_1 x_1 = a\,m\)</span> — a <strong>constant share</strong> <span class="math inline">\(a\)</span> of income, no matter the price.</li>
+<li><span class="math inline">\(p_2\)</span> doesn’t appear — Cobb–Douglas demand for good 1 is independent of the other price.</li>
+</ul>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Coming soon.</strong> This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as <a href="budget.html">Budget Constraints</a>, <a href="choice.html">The Consumer’s Choice Problem</a>, and <a href="monopoly.html">Monopoly</a>: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.</p>
+<p><strong>Try it.</strong> Raise the <strong>price</strong> to slide up the demand curve; raise <strong>income</strong> to shift it out. Watch spending stay a constant share of income.</p>
 </div>
 </div>
+</div>
+<style>
+ .dm{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .dm .ctrl{flex:0 0 300px;} .dm label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .dm input[type=range]{width:100%;} .dm .v{color:#1f3b73;font-weight:700;}
+ .dm .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.85;} .dm .box b{color:#1f3b73;}
+ .dm canvas{width:100%;height:auto;max-width:600px;} .dm .plot{flex:1 1 420px;min-width:320px;}
+</style>
+<div class="dm">
+ <div class="ctrl">
+  <label>Income m: <span class="v" id="dm-mv">100</span></label><input type="range" id="dm-m" min="50" max="200" value="100" step="10">
+  <label>Taste for good 1, a (share): <span class="v" id="dm-av">0.50</span></label><input type="range" id="dm-a" min="0.2" max="0.8" value="0.5" step="0.05">
+  <label>Price of good 1, p₁: <span class="v" id="dm-pv">5</span></label><input type="range" id="dm-p" min="1" max="20" value="5" step="1">
+  <div class="box" id="dm-box"></div>
+ </div>
+ <div class="plot"><canvas id="dmC" width="600" height="440"></canvas></div>
+</div>
+<script>
+(function(){
+ var M=document.getElementById('dm-m'),A=document.getElementById('dm-a'),P=document.getElementById('dm-p'),
+  cv=document.getElementById('dmC'),x=cv.getContext('2d'),box=document.getElementById('dm-box');
+ var W=cv.width,H=cv.height,ML=52,MR=20,MT=16,MB=44,xmax=60,pmax=20;
+ function X(q){return ML+q/xmax*(W-ML-MR);} function Yp(p){return H-MB-p/pmax*(H-MT-MB);}
+ function draw(){
+  var m=+M.value,a=+A.value,p1=+P.value;
+  function xd(p){return a*m/p;}            // demand: x1 = a m / p
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='right';
+  for(var p=0;p<=pmax;p+=4){x.beginPath();x.moveTo(ML,Yp(p));x.lineTo(W-MR,Yp(p));x.stroke();x.fillText(p,ML-6,Yp(p)+4);}
+  x.textAlign='center';for(var q=0;q<=xmax;q+=10){x.fillText(q,X(q),H-MB+16);}
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.fillText('Quantity  x₁',(ML+W-MR)/2,H-7);
+  x.save();x.translate(14,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('Price  p₁',0,0);x.restore();
+  // baseline demand (m=100,a=0.5) faint
+  x.strokeStyle='#1f3b73';x.lineWidth=1.4;x.setLineDash([4,3]);x.globalAlpha=0.4;x.beginPath();
+  for(var p=1;p<=pmax;p+=0.5){var q=0.5*100/p;if(q>xmax)continue;var px=X(q),py=Yp(p);if(p<=1.01)x.moveTo(px,py);else x.lineTo(px,py);}x.stroke();
+  x.globalAlpha=1;x.setLineDash([]);
+  // current demand curve
+  x.strokeStyle='#1f3b73';x.lineWidth=3;x.beginPath();var started=false;
+  for(var p=1;p<=pmax;p+=0.25){var q=xd(p);if(q>xmax){continue;}var px=X(q),py=Yp(p);if(!started){x.moveTo(px,py);started=true;}else x.lineTo(px,py);}x.stroke();
+  // current point
+  var q1=xd(p1);
+  x.setLineDash([3,3]);x.strokeStyle='#5a6472';x.lineWidth=1;x.beginPath();x.moveTo(ML,Yp(p1));x.lineTo(X(Math.min(q1,xmax)),Yp(p1));x.moveTo(X(Math.min(q1,xmax)),H-MB);x.lineTo(X(Math.min(q1,xmax)),Yp(p1));x.stroke();x.setLineDash([]);
+  if(q1<=xmax){x.fillStyle='#1c6b4a';x.beginPath();x.arc(X(q1),Yp(p1),6,0,7);x.fill();}
+  x.fillStyle='#1f3b73';x.textAlign='left';x.fillText('demand  x₁ = a·m/p₁',ML+10,MT+14);
+  document.getElementById('dm-mv').textContent=m;document.getElementById('dm-av').textContent=a.toFixed(2);document.getElementById('dm-pv').textContent=p1;
+  box.innerHTML='Quantity demanded <b>x₁ = '+q1.toFixed(1)+'</b><br>Spending p₁·x₁ = <b>'+(p1*q1).toFixed(0)+'</b> = a·m ('+Math.round(a*100)+'% of income)<br><span style="color:#5a6472;font-size:13px;">Spending stays a constant share of m as p₁ changes.</span>';
+ }
+ [M,A,P].forEach(function(e){e.addEventListener('input',draw);});draw();
+})();
+</script>
+<div id="did-you-know">
+<section id="what-to-notice" class="level3">
+<h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
+<ul>
+<li>Slide <strong>price</strong> up → you move <strong>along</strong> the demand curve (quantity falls).</li>
+<li>Slide <strong>income</strong> up → the whole curve shifts <strong>out</strong> (normal good).</li>
+<li>Spending p₁·x₁ always equals <strong>a·m</strong> — the Cobb–Douglas constant-share result — even as price changes.</li>
+</ul>
+</section>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -764,7 +871,7 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><span style="white-space:nowrap">Topic order follows <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Prof.&nbsp;David Slichter</a>’s ECON 360 syllabus | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span><br><span style="font-size:0.82em;color:#777;">Markdown content rendered to HTML by Quarto; interactive R simulations run in-browser via WebAssembly.</span></p>
+<p><span style="white-space:nowrap">Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span><br><span style="font-size:0.82em;color:#777;">Markdown content rendered to HTML by Quarto; interactive R simulations run in-browser via WebAssembly.</span></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

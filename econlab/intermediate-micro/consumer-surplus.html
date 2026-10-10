@@ -78,6 +78,35 @@ gtag('js', new Date());
 gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -315,14 +344,21 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#measuring-the-gain-from-buying" id="toc-measuring-the-gain-from-buying" class="nav-link active" data-scroll-target="#measuring-the-gain-from-buying">Measuring the gain from buying</a>
+  <ul class="collapse">
+  <li><a href="#what-to-notice" id="toc-what-to-notice" class="nav-link" data-scroll-target="#what-to-notice">What to notice</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
-<div style="background:#fff8e7; border-left:4px solid #d4a017; padding:12px 18px; margin:0 0 22px 0; font-size:0.9em; color:#2c3e50; border-radius:0 6px 6px 0; line-height:1.55;">
-  <strong>About this page.</strong> Simulation-based companion notes for <strong>ECON 360 — Intermediate Microeconomics</strong> at Binghamton University. Topic order follows <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Professor David Slichter</a>'s ECON 360 syllabus.
-</div>
+
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./consumer-surplus.html">Markets &amp; Welfare</a></li><li class="breadcrumb-item"><a href="./consumer-surplus.html">Consumer Surplus</a></li></ol></nav>
 <div class="quarto-title">
@@ -343,18 +379,90 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </header>
 
 
+<section id="measuring-the-gain-from-buying" class="level2">
+<h2 class="anchored" data-anchor-id="measuring-the-gain-from-buying">Measuring the gain from buying</h2>
+<p><strong>Consumer surplus (CS)</strong> is what buyers gain from a market: the gap between what they’d have been <em>willing</em> to pay (the height of the demand curve) and what they <em>actually</em> pay (the price), summed over all units bought.</p>
+<p>With a linear demand curve <span class="math inline">\(P = A - Q\)</span> and a market price <span class="math inline">\(P_0\)</span>:</p>
+<ul>
+<li><p>Quantity bought: <span class="math inline">\(Q_d = A - P_0\)</span>.</p></li>
+<li><p><strong>CS = the triangle</strong> under the demand curve and above the price: <span class="math display">\[CS = \tfrac{1}{2}(A - P_0)\,Q_d = \tfrac{1}{2}(A - P_0)^2\]</span></p></li>
+<li><p><strong>Lower price → more CS</strong> (two ways: existing buyers pay less, <em>and</em> new buyers enter).</p></li>
+<li><p>The triangle’s top corner is the “choke price” <span class="math inline">\(A\)</span> — above it, nobody buys.</p></li>
+</ul>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Coming soon.</strong> This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as <a href="budget.html">Budget Constraints</a>, <a href="choice.html">The Consumer’s Choice Problem</a>, and <a href="monopoly.html">Monopoly</a>: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.</p>
+<p><strong>Try it.</strong> Drop the <strong>price</strong> and watch the consumer-surplus triangle grow. Shift demand (A) to see willingness-to-pay change.</p>
 </div>
 </div>
+</div>
+<style>
+ .cs{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .cs .ctrl{flex:0 0 300px;} .cs label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .cs input[type=range]{width:100%;} .cs .v{color:#1f3b73;font-weight:700;}
+ .cs .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.85;} .cs .box b{color:#1f3b73;}
+ .cs canvas{width:100%;height:auto;max-width:600px;} .cs .plot{flex:1 1 420px;min-width:320px;}
+</style>
+<div class="cs">
+ <div class="ctrl">
+  <label>Demand intercept A (choke price): <span class="v" id="cs-Av">30</span></label><input type="range" id="cs-A" min="16" max="40" value="30" step="1">
+  <label>Market price P₀: <span class="v" id="cs-Pv">10</span></label><input type="range" id="cs-P" min="0" max="40" value="10" step="1">
+  <div class="box" id="cs-box"></div>
+ </div>
+ <div class="plot"><canvas id="csC" width="600" height="440"></canvas></div>
+</div>
+<script>
+(function(){
+ var A=document.getElementById('cs-A'),P=document.getElementById('cs-P'),
+  cv=document.getElementById('csC'),x=cv.getContext('2d'),box=document.getElementById('cs-box');
+ var W=cv.width,H=cv.height,ML=48,MR=20,MT=16,MB=42,Qmax=40,Pmax=44;
+ function X(q){return ML+q/Qmax*(W-ML-MR);} function Yp(p){return H-MB-p/Pmax*(H-MT-MB);}
+ function draw(){
+  var a=+A.value,p0=+P.value;
+  var Qd=Math.max(0,a-p0);
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='right';
+  for(var p=0;p<=Pmax;p+=8){x.beginPath();x.moveTo(ML,Yp(p));x.lineTo(W-MR,Yp(p));x.stroke();x.fillText(p,ML-6,Yp(p)+4);}
+  x.textAlign='center';for(var q=0;q<=Qmax;q+=8){x.fillText(q,X(q),H-MB+16);}
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.fillText('Quantity  Q',(ML+W-MR)/2,H-7);
+  x.save();x.translate(14,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('Price  P',0,0);x.restore();
+  // CS triangle shade: from (0,p0)-(0,a)-(Qd,p0)
+  if(Qd>0){x.fillStyle='rgba(31,59,115,0.18)';x.beginPath();x.moveTo(X(0),Yp(p0));x.lineTo(X(0),Yp(a));x.lineTo(X(Qd),Yp(p0));x.closePath();x.fill();}
+  // expenditure rectangle (lighter)
+  if(Qd>0){x.fillStyle='rgba(90,100,114,0.10)';x.fillRect(X(0),Yp(p0),X(Qd)-X(0),Yp(0)-Yp(p0));}
+  // demand line
+  x.strokeStyle='#1f3b73';x.lineWidth=3;x.beginPath();x.moveTo(X(0),Yp(a));x.lineTo(X(a),Yp(0));x.stroke();
+  x.fillStyle='#1f3b73';x.textAlign='left';x.fillText('Demand',X(a*0.68),Yp(a*0.32)-4);
+  // price line
+  x.strokeStyle='#b5462a';x.lineWidth=2;x.setLineDash([5,3]);x.beginPath();x.moveTo(ML,Yp(p0));x.lineTo(W-MR,Yp(p0));x.stroke();x.setLineDash([]);
+  x.fillStyle='#b5462a';x.fillText('P₀',W-MR-24,Yp(p0)-5);
+  if(Qd>0){x.fillStyle='#111';x.beginPath();x.arc(X(Qd),Yp(p0),5,0,7);x.fill();}
+  // CS label inside triangle
+  if(Qd>6){x.fillStyle='#1f3b73';x.font='bold 13px Inter,sans-serif';x.fillText('CS',X(Qd*0.22),Yp((p0+a)/2));x.font='12px Inter,sans-serif';}
+  document.getElementById('cs-Av').textContent=a;document.getElementById('cs-Pv').textContent=p0;
+  var CS=0.5*Qd*Qd, exp=p0*Qd;
+  box.innerHTML='Quantity bought <b>Q_d = '+Qd.toFixed(0)+'</b><br>Consumer surplus <b>CS = ½(A−P₀)² = '+CS.toFixed(0)+'</b><br>Spending P₀·Q = <b>'+exp.toFixed(0)+'</b><br><span style="color:#5a6472;font-size:13px;">Lower P₀ → bigger CS triangle.</span>';
+ }
+ [A,P].forEach(function(e){e.addEventListener('input',draw);});draw();
+})();
+</script>
+<div id="did-you-know">
+<section id="what-to-notice" class="level3">
+<h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
+<ul>
+<li><strong>Drop the price</strong> → the blue CS triangle grows: existing buyers pay less <em>and</em> new buyers come in.</li>
+<li>At <strong>P₀ = A</strong> (the choke price) CS = 0 — nobody buys. At <strong>P₀ = 0</strong>, CS is the whole area under demand.</li>
+<li>The grey rectangle is <strong>spending</strong> (P₀·Q); the blue triangle above it is the <strong>surplus</strong> buyers keep.</li>
+</ul>
+</section>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -764,7 +872,7 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><span style="white-space:nowrap">Topic order follows <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Prof.&nbsp;David Slichter</a>’s ECON 360 syllabus | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span><br><span style="font-size:0.82em;color:#777;">Markdown content rendered to HTML by Quarto; interactive R simulations run in-browser via WebAssembly.</span></p>
+<p><span style="white-space:nowrap">Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span><br><span style="font-size:0.82em;color:#777;">Markdown content rendered to HTML by Quarto; interactive R simulations run in-browser via WebAssembly.</span></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

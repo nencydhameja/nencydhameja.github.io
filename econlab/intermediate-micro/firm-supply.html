@@ -78,6 +78,35 @@ gtag('js', new Date());
 gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -315,14 +344,21 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#how-a-competitive-firm-chooses-output" id="toc-how-a-competitive-firm-chooses-output" class="nav-link active" data-scroll-target="#how-a-competitive-firm-chooses-output">How a competitive firm chooses output</a>
+  <ul class="collapse">
+  <li><a href="#what-to-notice" id="toc-what-to-notice" class="nav-link" data-scroll-target="#what-to-notice">What to notice</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
-<div style="background:#fff8e7; border-left:4px solid #d4a017; padding:12px 18px; margin:0 0 22px 0; font-size:0.9em; color:#2c3e50; border-radius:0 6px 6px 0; line-height:1.55;">
-  <strong>About this page.</strong> Simulation-based companion notes for <strong>ECON 360 — Intermediate Microeconomics</strong> at Binghamton University. Topic order follows <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Professor David Slichter</a>'s ECON 360 syllabus.
-</div>
+
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./technology.html">Production &amp; Costs</a></li><li class="breadcrumb-item"><a href="./firm-supply.html">Firm Supply</a></li></ol></nav>
 <div class="quarto-title">
@@ -343,18 +379,102 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </header>
 
 
+<section id="how-a-competitive-firm-chooses-output" class="level2">
+<h2 class="anchored" data-anchor-id="how-a-competitive-firm-chooses-output">How a competitive firm chooses output</h2>
+<p>A price-taking firm takes the market price <span class="math inline">\(P\)</span> as given and picks <span class="math inline">\(q\)</span> to maximize profit. The rules:</p>
+<ul>
+<li><strong>Produce where <span class="math inline">\(P = MC\)</span></strong> — on the <em>upward</em> part of marginal cost.</li>
+<li><strong>Shut down if <span class="math inline">\(P &lt;\)</span> min AVC</strong> — if price can’t even cover average variable cost, produce <strong>0</strong> (you lose less by stopping).</li>
+<li>So the firm’s <strong>supply curve = the MC curve above minimum AVC</strong>.</li>
+<li><strong>Profit = <span class="math inline">\((P - ATC)\times q\)</span></strong>: positive if <span class="math inline">\(P &gt;\)</span> ATC, a loss if min AVC <span class="math inline">\(&lt; P &lt;\)</span> ATC (still operate — you cover some fixed cost), zero at <span class="math inline">\(P =\)</span> min ATC (break-even).</li>
+</ul>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Coming soon.</strong> This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as <a href="budget.html">Budget Constraints</a>, <a href="choice.html">The Consumer’s Choice Problem</a>, and <a href="monopoly.html">Monopoly</a>: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.</p>
+<p><strong>Try it.</strong> Slide the <strong>price</strong>. Watch the firm ride up its MC curve, the profit/loss rectangle flip color, and production drop to zero once price falls below the shutdown line.</p>
 </div>
 </div>
+</div>
+<style>
+ .fs{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .fs .ctrl{flex:0 0 300px;} .fs label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .fs input[type=range]{width:100%;} .fs .v{color:#1f3b73;font-weight:700;}
+ .fs .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.85;} .fs .box b{color:#1f3b73;}
+ .fs canvas{width:100%;height:auto;max-width:600px;} .fs .plot{flex:1 1 420px;min-width:320px;}
+ .fs .lg{font-size:13px;margin-top:8px;} .fs .lg span{display:inline-block;margin-right:14px;}
+</style>
+<div class="fs">
+ <div class="ctrl">
+  <label>Market price P: <span class="v" id="fs-Pv">6</span></label><input type="range" id="fs-P" min="0" max="12" value="6" step="0.5">
+  <div class="box" id="fs-box"></div>
+  <div class="lg"><span style="color:#b5462a;">▬ MC</span> <span style="color:#1c6b4a;">▬ AVC</span> <span style="color:#1f3b73;">▬ ATC</span></div>
+ </div>
+ <div class="plot"><canvas id="fsC" width="600" height="460"></canvas></div>
+</div>
+<script>
+(function(){
+ var a=4,b=0.6,c=0.04,F=20;        // same cost as the Cost Curves module
+ var P=document.getElementById('fs-P'),cv=document.getElementById('fsC'),x=cv.getContext('2d'),box=document.getElementById('fs-box');
+ var W=cv.width,H=cv.height,ML=48,MR=20,MT=16,MB=42,qmax=15,ymax=12;
+ function MC(q){return a-2*b*q+3*c*q*q;}
+ function AVC(q){return a-b*q+c*q*q;}
+ function ATC(q){return F/q+AVC(q);}
+ function X(q){return ML+q/qmax*(W-ML-MR);} function Yc(v){return H-MB-v/ymax*(H-MT-MB);}
+ function minAVC(){var best=1e9,bq=0;for(var q=0.5;q<=qmax;q+=0.01){var v=AVC(q);if(v<best){best=v;bq=q;}}return{q:bq,v:best};}
+ // supply: upward branch of MC where MC=P, q = [2b + sqrt(4b^2 - 12c(a-P))]/(6c)
+ function qSupply(p){var disc=4*b*b-12*c*(a-p);if(disc<0)return null;var q=(2*b+Math.sqrt(disc))/(6*c);return q;}
+ function curve(fn,col,lw){x.strokeStyle=col;x.lineWidth=lw;x.beginPath();var st=false;
+   for(var q=0.4;q<=qmax;q+=0.1){var v=fn(q);if(v<0||v>ymax){st=false;continue;}var px=X(q),py=Yc(v);if(!st){x.moveTo(px,py);st=true;}else x.lineTo(px,py);}x.stroke();}
+ function draw(){
+  var p=+P.value, shut=minAVC();
+  var produce = p>=shut.v;
+  var q = produce ? qSupply(p) : 0;
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='right';
+  for(var v=0;v<=ymax;v+=2){x.beginPath();x.moveTo(ML,Yc(v));x.lineTo(W-MR,Yc(v));x.stroke();x.fillText(v,ML-6,Yc(v)+4);}
+  x.textAlign='center';for(var qq=0;qq<=qmax;qq+=3){x.fillText(qq,X(qq),H-MB+16);}
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.fillText('Quantity  q',(ML+W-MR)/2,H-7);
+  x.save();x.translate(14,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('$ per unit',0,0);x.restore();
+  // profit/loss rectangle (P - ATC) x q
+  if(produce && q){var atc=ATC(q);x.fillStyle=(p>=atc)?'rgba(28,107,74,0.18)':'rgba(181,70,42,0.18)';
+    x.fillRect(X(0),Yc(Math.max(p,atc)),X(q)-X(0),Math.abs(Yc(p)-Yc(atc)));}
+  curve(AVC,'#1c6b4a',2.2);curve(ATC,'#1f3b73',2.4);curve(MC,'#b5462a',3);
+  // shutdown line (min AVC)
+  x.strokeStyle='#1c6b4a';x.lineWidth=1;x.setLineDash([4,3]);x.beginPath();x.moveTo(ML,Yc(shut.v));x.lineTo(W-MR,Yc(shut.v));x.stroke();x.setLineDash([]);
+  x.fillStyle='#1c6b4a';x.textAlign='left';x.fillText('shutdown (min AVC)',ML+6,Yc(shut.v)-4);
+  // price line
+  x.strokeStyle='#5a6472';x.lineWidth=1.6;x.setLineDash([6,3]);x.beginPath();x.moveTo(ML,Yc(p));x.lineTo(W-MR,Yc(p));x.stroke();x.setLineDash([]);
+  x.fillStyle='#5a6472';x.fillText('P',W-MR-16,Yc(p)-5);
+  // chosen q dot
+  if(produce && q){x.fillStyle='#111';x.beginPath();x.arc(X(q),Yc(p),6,0,7);x.fill();}
+  document.getElementById('fs-Pv').textContent=p.toFixed(1);
+  if(!produce){
+    box.innerHTML='Price <b>'+p.toFixed(1)+'</b> &lt; min AVC ('+shut.v.toFixed(2)+') &rarr; <b style="color:#b5462a;">SHUT DOWN</b>, q = 0.<br><span style="color:#5a6472;font-size:13px;">Price can’t cover variable cost.</span>';
+  }else{
+    var atc=ATC(q),profit=(p-atc)*q;
+    box.innerHTML='Produce where P = MC: <b>q = '+q.toFixed(1)+'</b><br>ATC at that q = <b>'+atc.toFixed(2)+'</b><br>Profit = (P−ATC)·q = <b style="color:'+(profit>=0?'#1c6b4a':'#b5462a')+';">'+profit.toFixed(1)+'</b> '+(profit>=0?'(profit)':'(loss, but still operate)')+'';
+  }
+ }
+ P.addEventListener('input',draw);draw();
+})();
+</script>
+<div id="did-you-know">
+<section id="what-to-notice" class="level3">
+<h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
+<ul>
+<li>The firm’s output <strong>rides up the MC curve</strong> as price rises — that’s why <strong>supply = MC</strong> (above shutdown).</li>
+<li>Between <strong>min AVC and min ATC</strong>, the firm makes a <strong>loss but still produces</strong> — it covers variable cost plus part of fixed cost. The rectangle is red but output is positive.</li>
+<li>Drop price <strong>below the shutdown line</strong> → output jumps to <strong>0</strong>. That’s the lower end of the supply curve.</li>
+</ul>
+</section>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -764,7 +884,7 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><span style="white-space:nowrap">Topic order follows <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Prof.&nbsp;David Slichter</a>’s ECON 360 syllabus | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span><br><span style="font-size:0.82em;color:#777;">Markdown content rendered to HTML by Quarto; interactive R simulations run in-browser via WebAssembly.</span></p>
+<p><span style="white-space:nowrap">Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span><br><span style="font-size:0.82em;color:#777;">Markdown content rendered to HTML by Quarto; interactive R simulations run in-browser via WebAssembly.</span></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

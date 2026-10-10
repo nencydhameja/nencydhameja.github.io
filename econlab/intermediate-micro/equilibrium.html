@@ -78,6 +78,35 @@ gtag('js', new Date());
 gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -315,14 +344,21 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#market-equilibrium-and-what-a-tax-does" id="toc-market-equilibrium-and-what-a-tax-does" class="nav-link active" data-scroll-target="#market-equilibrium-and-what-a-tax-does">Market equilibrium (and what a tax does)</a>
+  <ul class="collapse">
+  <li><a href="#what-to-notice" id="toc-what-to-notice" class="nav-link" data-scroll-target="#what-to-notice">What to notice</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
-<div style="background:#fff8e7; border-left:4px solid #d4a017; padding:12px 18px; margin:0 0 22px 0; font-size:0.9em; color:#2c3e50; border-radius:0 6px 6px 0; line-height:1.55;">
-  <strong>About this page.</strong> Simulation-based companion notes for <strong>ECON 360 — Intermediate Microeconomics</strong> at Binghamton University. Topic order follows <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Professor David Slichter</a>'s ECON 360 syllabus.
-</div>
+
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./consumer-surplus.html">Markets &amp; Welfare</a></li><li class="breadcrumb-item"><a href="./equilibrium.html">Equilibrium</a></li></ol></nav>
 <div class="quarto-title">
@@ -343,18 +379,101 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </header>
 
 
+<section id="market-equilibrium-and-what-a-tax-does" class="level2">
+<h2 class="anchored" data-anchor-id="market-equilibrium-and-what-a-tax-does">Market equilibrium (and what a tax does)</h2>
+<p>The market clears where <strong>demand = supply</strong>. With linear curves:</p>
+<p><span class="math display">\[\text{Demand: } P = A - Q \qquad \text{Supply: } P = C + Q\]</span></p>
+<ul>
+<li><strong>Equilibrium:</strong> set them equal → <span class="math inline">\(Q^* = \dfrac{A-C}{2}\)</span>, and <span class="math inline">\(P^*\)</span> from either curve.</li>
+<li><strong>A per-unit tax <span class="math inline">\(t\)</span></strong> (collected from sellers) drives a <strong>wedge</strong>: buyers pay <span class="math inline">\(P_b\)</span>, sellers keep <span class="math inline">\(P_s = P_b - t\)</span>. Quantity falls.</li>
+<li><strong>Incidence:</strong> the side that is <em>less</em> price-sensitive (steeper curve) bears more of the tax. With equally-sloped curves here, buyers and sellers split it evenly.</li>
+<li><strong>Deadweight loss (DWL):</strong> the tax kills mutually beneficial trades — the little triangle between the curves over the lost quantity.</li>
+</ul>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Coming soon.</strong> This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as <a href="budget.html">Budget Constraints</a>, <a href="choice.html">The Consumer’s Choice Problem</a>, and <a href="monopoly.html">Monopoly</a>: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.</p>
+<p><strong>Try it.</strong> Shift demand (A) or supply (C) and watch P*, Q* move. Add a <strong>tax</strong> to open the wedge and see the deadweight-loss triangle appear.</p>
 </div>
 </div>
+</div>
+<style>
+ .eq{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .eq .ctrl{flex:0 0 300px;} .eq label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .eq input[type=range]{width:100%;} .eq .v{color:#1f3b73;font-weight:700;}
+ .eq .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.8;} .eq .box b{color:#1f3b73;}
+ .eq canvas{width:100%;height:auto;max-width:600px;} .eq .plot{flex:1 1 420px;min-width:320px;}
+</style>
+<div class="eq">
+ <div class="ctrl">
+  <label>Demand intercept A: <span class="v" id="eq-Av">30</span></label><input type="range" id="eq-A" min="16" max="40" value="30" step="1">
+  <label>Supply intercept C: <span class="v" id="eq-Cv">6</span></label><input type="range" id="eq-C" min="0" max="16" value="6" step="1">
+  <label>Per-unit tax t: <span class="v" id="eq-tv">0</span></label><input type="range" id="eq-t" min="0" max="16" value="0" step="1">
+  <div class="box" id="eq-box"></div>
+ </div>
+ <div class="plot"><canvas id="eqC" width="600" height="460"></canvas></div>
+</div>
+<script>
+(function(){
+ var A=document.getElementById('eq-A'),C=document.getElementById('eq-C'),T=document.getElementById('eq-t'),
+  cv=document.getElementById('eqC'),x=cv.getContext('2d'),box=document.getElementById('eq-box');
+ var W=cv.width,H=cv.height,ML=48,MR=20,MT=16,MB=42,Qmax=40,Pmax=44;
+ function X(q){return ML+q/Qmax*(W-ML-MR);} function Yp(p){return H-MB-p/Pmax*(H-MT-MB);}
+ function draw(){
+  var a=+A.value,c=+C.value,t=+T.value;
+  var Q0=(a-c)/2, P0=a-Q0;                       // no-tax equilibrium
+  var Qt=Math.max(0,(a-c-t)/2);                   // with tax
+  var Pb=a-Qt, Ps=Pb-t;                           // buyer price, seller price
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='right';
+  for(var p=0;p<=Pmax;p+=8){x.beginPath();x.moveTo(ML,Yp(p));x.lineTo(W-MR,Yp(p));x.stroke();x.fillText(p,ML-6,Yp(p)+4);}
+  x.textAlign='center';for(var q=0;q<=Qmax;q+=8){x.fillText(q,X(q),H-MB+16);}
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.fillText('Quantity  Q',(ML+W-MR)/2,H-7);
+  x.save();x.translate(14,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('Price  P',0,0);x.restore();
+  // DWL triangle (between demand and supply, from Qt to Q0)
+  if(t>0){x.fillStyle='rgba(181,70,42,0.18)';x.beginPath();
+    x.moveTo(X(Qt),Yp(Pb));x.lineTo(X(Q0),Yp(P0));x.lineTo(X(Qt),Yp(Ps));x.closePath();x.fill();}
+  // demand: P = a - Q
+  x.strokeStyle='#1f3b73';x.lineWidth=3;x.beginPath();x.moveTo(X(0),Yp(a));x.lineTo(X(a),Yp(0));x.stroke();
+  x.fillStyle='#1f3b73';x.textAlign='left';x.fillText('Demand',X(a*0.7),Yp(a*0.3)-4);
+  // supply: P = c + Q
+  x.strokeStyle='#1c6b4a';x.beginPath();x.moveTo(X(0),Yp(c));x.lineTo(X(Qmax),Yp(c+Qmax));x.stroke();
+  x.fillText('Supply',X(Qmax*0.62),Yp(c+Qmax*0.62)+12);
+  // taxed supply (dashed, +t)
+  if(t>0){x.strokeStyle='#b5462a';x.setLineDash([5,3]);x.beginPath();x.moveTo(X(0),Yp(c+t));x.lineTo(X(Qmax),Yp(c+t+Qmax));x.stroke();x.setLineDash([]);
+    x.fillStyle='#b5462a';x.fillText('Supply + t',X(Qmax*0.5),Yp(c+t+Qmax*0.5)-5);}
+  // equilibrium points
+  function dot(q,p,col){x.fillStyle=col;x.beginPath();x.arc(X(q),Yp(p),5,0,7);x.fill();}
+  if(t===0){dot(Q0,P0,'#111');}
+  else{dot(Qt,Pb,'#b5462a');dot(Qt,Ps,'#1c6b4a');
+    x.setLineDash([2,2]);x.strokeStyle='#5a6472';x.beginPath();x.moveTo(X(Qt),Yp(Ps));x.lineTo(X(Qt),Yp(Pb));x.stroke();x.setLineDash([]);}
+  document.getElementById('eq-Av').textContent=a;document.getElementById('eq-Cv').textContent=c;document.getElementById('eq-tv').textContent=t;
+  if(t===0){
+    box.innerHTML='Equilibrium: <b>Q* = '+Q0.toFixed(1)+'</b>, <b>P* = '+P0.toFixed(1)+'</b><br><span style="color:#5a6472;font-size:13px;">Add a tax to see the wedge.</span>';
+  }else{
+    var rev=t*Qt, dwl=0.5*t*(Q0-Qt);
+    box.innerHTML='Buyers pay <b>P_b = '+Pb.toFixed(1)+'</b>, sellers keep <b>P_s = '+Ps.toFixed(1)+'</b><br>Quantity <b>Q = '+Qt.toFixed(1)+'</b> (was '+Q0.toFixed(1)+')<br>Tax revenue = <b>'+rev.toFixed(1)+'</b> &nbsp; <span style="color:#b5462a;">DWL = '+dwl.toFixed(1)+'</span><br><span style="color:#5a6472;font-size:13px;">Buyer burden '+(Pb-P0).toFixed(1)+', seller burden '+(P0-Ps).toFixed(1)+' (split evenly here).</span>';
+  }
+ }
+ [A,C,T].forEach(function(e){e.addEventListener('input',draw);});draw();
+})();
+</script>
+<div id="did-you-know">
+<section id="what-to-notice" class="level3">
+<h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
+<ul>
+<li>Shift <strong>demand out</strong> (↑A) → both P* and Q* rise. Shift <strong>supply out</strong> (↓C) → P* falls, Q* rises.</li>
+<li>Add a <strong>tax</strong> → quantity falls, a price wedge opens (buyers pay more, sellers get less), and the shaded <strong>deadweight-loss</strong> triangle grows with the tax.</li>
+<li>With equally-sloped curves, buyers and sellers bear the tax <strong>equally</strong> — incidence doesn’t depend on who writes the check.</li>
+</ul>
+</section>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -764,7 +883,7 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><span style="white-space:nowrap">Topic order follows <a href="https://sites.google.com/site/slichterdavid/home" style="color:#185FA5;text-decoration:none;">Prof.&nbsp;David Slichter</a>’s ECON 360 syllabus | Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span><br><span style="font-size:0.82em;color:#777;">Markdown content rendered to HTML by Quarto; interactive R simulations run in-browser via WebAssembly.</span></p>
+<p><span style="white-space:nowrap">Built with AI assistance</span><br><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span><br><span style="font-size:0.82em;color:#777;">Markdown content rendered to HTML by Quarto; interactive R simulations run in-browser via WebAssembly.</span></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;
