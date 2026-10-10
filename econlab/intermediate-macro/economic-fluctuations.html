@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Intermediate Macroeconomics</title>
+<title>Economic Fluctuations: AD / AS Shocks – Intermediate Macroeconomics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -78,6 +78,35 @@ gtag('js', new Date());
 gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -91,7 +120,7 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Home</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./economic-fluctuations.html">Short-Run Fluctuations</a></li><li class="breadcrumb-item"><a href="./economic-fluctuations.html">AD / AS Shocks</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -118,7 +147,7 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
@@ -231,7 +260,7 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./economic-fluctuations.html" class="sidebar-item-text sidebar-link">
+  <a href="./economic-fluctuations.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">AD / AS Shocks</span></a>
   </div>
 </li>
@@ -270,22 +299,20 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#foundations" id="toc-foundations" class="nav-link active" data-scroll-target="#foundations">Foundations</a></li>
-  <li><a href="#the-real-economy" id="toc-the-real-economy" class="nav-link" data-scroll-target="#the-real-economy">The Real Economy</a></li>
-  <li><a href="#money" id="toc-money" class="nav-link" data-scroll-target="#money">Money</a></li>
-  <li><a href="#inflation" id="toc-inflation" class="nav-link" data-scroll-target="#inflation">Inflation</a></li>
-  <li><a href="#the-open-economy" id="toc-the-open-economy" class="nav-link" data-scroll-target="#the-open-economy">The Open Economy</a></li>
-  <li><a href="#short-run-fluctuations" id="toc-short-run-fluctuations" class="nav-link" data-scroll-target="#short-run-fluctuations">Short-Run Fluctuations</a></li>
+  <li><a href="#the-aggregate-demandsupply-model" id="toc-the-aggregate-demandsupply-model" class="nav-link active" data-scroll-target="#the-aggregate-demandsupply-model">The aggregate demand–supply model</a>
+  <ul class="collapse">
+  <li><a href="#how-shocks-play-out" id="toc-how-shocks-play-out" class="nav-link" data-scroll-target="#how-shocks-play-out">How shocks play out</a></li>
+  <li><a href="#what-to-notice" id="toc-what-to-notice" class="nav-link" data-scroll-target="#what-to-notice">What to notice</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./economic-fluctuations.html">Short-Run Fluctuations</a></li><li class="breadcrumb-item"><a href="./economic-fluctuations.html">AD / AS Shocks</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Intermediate Macroeconomics</h1>
-<p class="subtitle lead">Notes &amp; simulations</p>
+<h1 class="title">Economic Fluctuations: AD / AS Shocks</h1>
 </div>
 
 
@@ -302,48 +329,142 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </header>
 
 
-<p>The course follows the classical, long-run (flexible-price) model: how output and incomes are determined, how saving funds investment, what money and inflation are, and how it all works in an economy open to trade and capital flows.</p>
-<section id="foundations" class="level2">
-<h2 class="anchored" data-anchor-id="foundations">Foundations</h2>
+<section id="the-aggregate-demandsupply-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-aggregate-demandsupply-model">The aggregate demand–supply model</h2>
+<p>In the short run prices are <strong>sticky</strong>, so shocks move <strong>real output</strong>. In the long run prices adjust and output returns to its <strong>natural level</strong>. Three curves:</p>
 <ul>
-<li><a href="how-models-work.html">How a Macro Model Works</a> — exogenous vs endogenous variables; supply, demand, and equilibrium</li>
-<li><a href="measuring-economy.html">Measuring the Economy</a> — GDP, real vs nominal, the GDP deflator, CPI, and unemployment</li>
+<li><strong>AD</strong> (aggregate demand): from <span class="math inline">\(M\cdot V = P\cdot Y\)</span>, so <span class="math inline">\(Y = \dfrac{M V}{P}\)</span> — slopes <strong>down</strong>. Shifts right/left when <strong>M or V</strong> changes (a <em>demand shock</em>).</li>
+<li><strong>LRAS</strong> (long-run supply): <strong>vertical</strong> at natural output <span class="math inline">\(Y^*\)</span> — output is pinned by K, L, technology, independent of prices.</li>
+<li><strong>SRAS</strong> (short-run supply): <strong>horizontal</strong> at the current (sticky) price level. A <em>supply shock</em> (oil, a bumper crop) shifts it <strong>up/down</strong>.</li>
+</ul>
+<section id="how-shocks-play-out" class="level3">
+<h3 class="anchored" data-anchor-id="how-shocks-play-out">How shocks play out</h3>
+<ul>
+<li><strong>Demand shock</strong> (move AD): short run → output moves <em>along</em> the flat SRAS (price sticks); long run → SRAS adjusts, output returns to <span class="math inline">\(Y^*\)</span>, only the <strong>price level</strong> changes. The Fed can fully offset it.</li>
+<li><strong>Supply shock</strong> (shift SRAS): short run → output <em>and</em> prices move in <strong>opposite</strong> directions (adverse = stagflation); long run → the economy self-corrects back to <span class="math inline">\(Y^*\)</span>.</li>
+</ul>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Try it.</strong> Move <strong>aggregate demand</strong> or hit a <strong>supply shock</strong>, then toggle <strong>Short run ↔︎ Long run</strong> to watch the economy adjust back to natural output. Loads instantly — plain JavaScript, no downloads.</p>
+</div>
+</div>
+</div>
+<style>
+ .adas{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,-apple-system,sans-serif;}
+ .adas .ctrl{flex:0 0 320px;max-width:340px;}
+ .adas label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .adas input[type=range]{width:100%;}
+ .adas .v{color:#1f3b73;font-weight:700;}
+ .adas .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.85;}
+ .adas .box b{color:#1f3b73;}
+ .adas .up{color:#b5462a;font-weight:bold;} .adas .dn{color:#1c6b4a;font-weight:bold;}
+ .adas .plot{flex:1 1 440px;min-width:340px;}
+ .adas canvas{width:100%;height:auto;max-width:640px;}
+ .adas .tabs{margin:10px 0 2px;}
+ .adas .tabs button{font-family:inherit;font-size:13px;border:1px solid #d5dde8;background:#fff;color:#2c3e50;padding:6px 14px;border-radius:6px;cursor:pointer;margin-right:6px;}
+ .adas .tabs button.on{background:#1f3b73;color:#fff;border-color:#1f3b73;}
+ .adas .reset{font-family:inherit;font-size:12px;border:1px solid #d5dde8;background:#fff;color:#5a6472;padding:5px 12px;border-radius:6px;cursor:pointer;margin-top:12px;}
+</style>
+<div class="adas">
+ <div class="ctrl">
+  <label>Aggregate demand  M·V  (demand shock): <span class="v" id="ad-Dv">10000</span></label>
+  <input type="range" id="ad-D" min="7000" max="13000" value="10000" step="250">
+  <label>Supply shock  (cost level): <span class="v" id="ad-Sv">0</span></label>
+  <input type="range" id="ad-S" min="-40" max="40" value="0" step="5">
+  <div class="tabs">
+    <button id="ad-sr" class="on">Short run</button>
+    <button id="ad-lr">Long run</button>
+  </div>
+  <button class="reset" id="ad-reset">Reset to long-run equilibrium</button>
+  <div class="box" id="ad-box"></div>
+ </div>
+ <div class="plot"><canvas id="adC" width="640" height="470"></canvas></div>
+</div>
+<script>
+(function(){
+ var Ystar=100;                 // natural output
+ var D=document.getElementById('ad-D'),S=document.getElementById('ad-S'),
+   srBtn=document.getElementById('ad-sr'),lrBtn=document.getElementById('ad-lr'),
+   reset=document.getElementById('ad-reset'),
+   cv=document.getElementById('adC'),x=cv.getContext('2d'),box=document.getElementById('ad-box'),
+   dv=document.getElementById('ad-Dv'),sv=document.getElementById('ad-Sv');
+ var mode='sr';
+ var W=cv.width,H=cv.height,ML=58,MR=22,MT=20,MB=46,Ymax=200,Pmin=40,Pmax=180;
+ function X(y){return ML+y/Ymax*(W-ML-MR);}
+ function Yc(p){return H-MB-(p-Pmin)/(Pmax-Pmin)*(H-MT-MB);}
+ function draw(){
+  var d=+D.value, shock=+S.value;
+  var Pe=100+shock;                       // SRAS height in short run (base 100, shifted by supply shock)
+  var Plr=d/Ystar;                         // long-run price where AD meets LRAS
+  var Psras = (mode==='sr') ? Pe : Plr;    // in LR the supply shock self-corrects; SRAS slides to Plr
+  var Yeq = (mode==='sr') ? d/Psras : Ystar;
+  var Peq = Psras;
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  // grid + ticks
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='right';
+  for(var p=Pmin;p<=Pmax;p+=20){x.beginPath();x.moveTo(ML,Yc(p));x.lineTo(W-MR,Yc(p));x.stroke();x.fillText(p,ML-7,Yc(p)+4);}
+  x.textAlign='center';for(var y=0;y<=Ymax;y+=40){x.fillText(y,X(y),H-MB+17);}
+  // axes
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.fillText('Output  Y',(ML+W-MR)/2,H-9);
+  x.save();x.translate(16,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('Price level  P',0,0);x.restore();
+  // LRAS vertical at Ystar
+  x.strokeStyle='#1c6b4a';x.lineWidth=2.6;x.beginPath();x.moveTo(X(Ystar),MT);x.lineTo(X(Ystar),H-MB);x.stroke();
+  x.fillStyle='#1c6b4a';x.textAlign='left';x.fillText('LRAS',X(Ystar)+4,MT+12);
+  // baseline AD (faint) at D=10000
+  x.strokeStyle='#1f3b73';x.lineWidth=1.4;x.setLineDash([4,3]);x.globalAlpha=0.45;x.beginPath();
+  for(var p=Pmin;p<=Pmax;p+=1){var yy=10000/p;var px=X(yy),py=Yc(p);if(p===Pmin)x.moveTo(px,py);else x.lineTo(px,py);}x.stroke();
+  x.globalAlpha=1;x.setLineDash([]);
+  // current AD: Y = d/P
+  x.strokeStyle='#1f3b73';x.lineWidth=3;x.beginPath();
+  for(var p=Pmin;p<=Pmax;p+=1){var yy=d/p;var px=X(yy),py=Yc(p);if(p===Pmin)x.moveTo(px,py);else x.lineTo(px,py);}x.stroke();
+  x.fillStyle='#1f3b73';x.fillText('AD',X(d/Pmax)-26,Yc(Pmax)+4);
+  // SRAS horizontal at Psras
+  x.strokeStyle='#b5462a';x.lineWidth=2.6;x.beginPath();x.moveTo(ML,Yc(Psras));x.lineTo(W-MR,Yc(Psras));x.stroke();
+  x.fillStyle='#b5462a';x.fillText('SRAS',W-MR-40,Yc(Psras)-5);
+  // equilibrium
+  x.setLineDash([3,3]);x.strokeStyle='#5a6472';x.lineWidth=1;x.beginPath();
+  x.moveTo(ML,Yc(Peq));x.lineTo(X(Yeq),Yc(Peq));x.moveTo(X(Yeq),H-MB);x.lineTo(X(Yeq),Yc(Peq));x.stroke();x.setLineDash([]);
+  x.fillStyle=(mode==='sr')?'#b5462a':'#1c6b4a';x.beginPath();x.arc(X(Yeq),Yc(Peq),6,0,7);x.fill();
+  // labels + stats
+  dv.textContent=d;sv.textContent=(shock>0?'+':'')+shock;
+  var gap=Yeq-Ystar;
+  var state = Math.abs(gap)<0.5 ? "at natural output" :
+    gap>0 ? "<span class='up'>boom</span> (output above natural)" :
+            "<span class='dn'>recession</span> (output below natural)";
+  var shockword = shock>0 ? "adverse (SRAS up)" : shock<0 ? "favorable (SRAS down)" : "none";
+  var lead = (mode==='sr')
+    ? "SHORT RUN: prices sticky — the economy sits where AD meets the flat SRAS."
+    : "LONG RUN: SRAS has adjusted; output is back at natural, the shock shows up in the price level.";
+  box.innerHTML = "<b>"+lead+"</b><br>"+
+    "Output  <b>Y = "+Yeq.toFixed(1)+"</b>  (natural = "+Ystar+")<br>"+
+    "Price level  <b>P = "+Peq.toFixed(1)+"</b><br>"+
+    "Supply shock: <b>"+shockword+"</b><br>"+
+    "State: "+state;
+ }
+ function setMode(m){mode=m;srBtn.className=(m==='sr')?'on':'';lrBtn.className=(m==='lr')?'on':'';draw();}
+ D.addEventListener('input',draw);S.addEventListener('input',draw);
+ srBtn.addEventListener('click',function(){setMode('sr');});
+ lrBtn.addEventListener('click',function(){setMode('lr');});
+ reset.addEventListener('click',function(){D.value=10000;S.value=0;setMode('sr');});
+ draw();
+})();
+</script>
+</section>
+<div id="did-you-know">
+<section id="what-to-notice" class="level3">
+<h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
+<ul>
+<li><strong>Demand shock:</strong> move <strong>M·V</strong> only (leave supply at 0). In the <strong>short run</strong> output swings (boom/recession) while the price sticks. Flip to <strong>Long run</strong> — output snaps back to natural and <em>only the price level</em> has moved. That’s money neutrality, delayed.</li>
+<li><strong>Supply shock:</strong> slide <strong>Supply shock</strong> to adverse (+). In the <strong>short run</strong> output falls <em>and</em> prices rise together — <strong>stagflation</strong>. Flip to <strong>Long run</strong> — the economy self-corrects back to natural output and the shock unwinds.</li>
+<li><strong>The asymmetry:</strong> a demand shock can be fully offset by moving M·V back; a supply shock forces a choice between output and prices. Toggling short/long run shows <em>why</em> the two shocks feel so different.</li>
 </ul>
 </section>
-<section id="the-real-economy" class="level2">
-<h2 class="anchored" data-anchor-id="the-real-economy">The Real Economy</h2>
-<ul>
-<li><a href="production.html">Production &amp; Factor Prices</a> — Cobb–Douglas, marginal products, and how income splits between labor and capital</li>
-<li><a href="inequality.html">Income Distribution &amp; Inequality</a> — human capital, the skill premium, and the labor share</li>
-<li><a href="loanable-funds.html">Loanable Funds &amp; Crowding Out</a> — saving, investment, the real interest rate, and government deficits</li>
-</ul>
-</section>
-<section id="money" class="level2">
-<h2 class="anchored" data-anchor-id="money">Money</h2>
-<ul>
-<li><a href="money.html">What Is Money?</a> — functions and types of money, monetary aggregates, and the central bank</li>
-</ul>
-</section>
-<section id="inflation" class="level2">
-<h2 class="anchored" data-anchor-id="inflation">Inflation</h2>
-<ul>
-<li><a href="quantity-theory.html">Quantity Theory &amp; Inflation</a> — MV = PY, velocity, and money growth as the source of inflation</li>
-<li><a href="fisher-money-market.html">The Fisher Effect &amp; the Money Market</a> — nominal vs real interest rates and money-market equilibrium</li>
-<li><a href="costs-of-inflation.html">The Costs of Inflation</a> — shoeleather, menu costs, redistribution, and hyperinflation</li>
-</ul>
-</section>
-<section id="the-open-economy" class="level2">
-<h2 class="anchored" data-anchor-id="the-open-economy">The Open Economy</h2>
-<ul>
-<li><a href="small-open-economy.html">Small Open Economy &amp; the Exchange Rate</a> — net exports, net capital outflow, and the real exchange rate</li>
-<li><a href="large-open-economy.html">Large Open Economy &amp; PPP</a> — the world interest rate and purchasing-power parity</li>
-</ul>
-</section>
-<section id="short-run-fluctuations" class="level2">
-<h2 class="anchored" data-anchor-id="short-run-fluctuations">Short-Run Fluctuations</h2>
-<ul>
-<li><a href="economic-fluctuations.html">Economic Fluctuations: AD / AS Shocks</a> — sticky prices, demand vs supply shocks, and the short-run to long-run adjustment</li>
-</ul>
+</div>
 
 
 </section>
