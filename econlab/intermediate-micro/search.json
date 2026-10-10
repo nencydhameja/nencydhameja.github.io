@@ -4,7 +4,7 @@
     "href": "cost-min.html",
     "title": "Cost Minimization",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Coming soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
     "crumbs": [
       "Production & Costs",
       "Cost Minimization"
@@ -15,7 +15,7 @@
     "href": "technology.html",
     "title": "Technology",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Coming soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
     "crumbs": [
       "Production & Costs",
       "Technology"
@@ -26,7 +26,7 @@
     "href": "buying-selling.html",
     "title": "Buying & Selling",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Coming soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
     "crumbs": [
       "Consumer Theory",
       "Buying & Selling"
@@ -37,7 +37,7 @@
     "href": "budget.html",
     "title": "Budget Constraints",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.",
+    "text": "Before we can talk about what a consumer wants to do, we have to talk about what they can do. This lecture is about the second question. The thing that stops you from buying a private jet isn’t lack of desire — it’s the budget. So we want a clean way of writing down “the set of affordable bundles.” Once that’s in hand, every later result in consumer theory will follow the same pattern: combine what’s feasible (budget set) with what’s desired (preferences) and pick the best feasible option.\nThat pattern — agents have goals, they choose actions to pursue those goals, they face constraints that make the goals hard to reach — is the backbone of every model in the course. Today we set up the constraint side.",
     "crumbs": [
       "Consumer Theory",
       "Budget Constraints"
@@ -47,8 +47,8 @@
     "objectID": "budget.html#why-this-matters",
     "href": "budget.html#why-this-matters",
     "title": "Budget Constraints",
-    "section": "Why this matters",
-    "text": "Why this matters\nBefore we can talk about what a consumer wants to do, we have to talk about what they can do. This lecture is about the second question. The thing that stops you from buying a private jet isn’t lack of desire — it’s the budget. So we want a clean way of writing down “the set of affordable bundles.” Once that’s in hand, every later result in consumer theory will follow the same pattern: combine what’s feasible (budget set) with what’s desired (preferences) and pick the best feasible option.\nThat pattern — agents have goals, they choose actions to pursue those goals, they face constraints that make the goals hard to reach — is the backbone of every model in the course. Today we set up the constraint side.",
+    "section": "",
+    "text": "Before we can talk about what a consumer wants to do, we have to talk about what they can do. This lecture is about the second question. The thing that stops you from buying a private jet isn’t lack of desire — it’s the budget. So we want a clean way of writing down “the set of affordable bundles.” Once that’s in hand, every later result in consumer theory will follow the same pattern: combine what’s feasible (budget set) with what’s desired (preferences) and pick the best feasible option.\nThat pattern — agents have goals, they choose actions to pursue those goals, they face constraints that make the goals hard to reach — is the backbone of every model in the course. Today we set up the constraint side.",
     "crumbs": [
       "Consumer Theory",
       "Budget Constraints"
@@ -136,7 +136,18 @@
     "href": "game-theory.html",
     "title": "Game Theory",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Two players choose simultaneously. Each has two strategies — here Cooperate (C) or Defect (D). A cell shows the payoffs (Row, Column).\n\nA player’s best response = the strategy giving the higher payoff, given what the other player does.\nA Nash equilibrium = a cell where both players are best-responding — nobody wants to switch unilaterally.\n\nThe classic Prisoner’s Dilemma has payoffs ranked T &gt; R &gt; P &gt; S (Temptation &gt; Reward &gt; Punishment &gt; Sucker). Then “Defect” is a dominant strategy for both, so the unique Nash is (D, D) — even though (C, C) would make both better off. That tension is the whole point.\n\n\n\n\n\n\nTry it. Adjust the four payoffs. Best responses get underlined; a cell turns green when it’s a Nash equilibrium. Break the T &gt; R &gt; P &gt; S ranking and watch the equilibrium move (or multiply).\n\n\n\n\n\n \n  Temptation T: 5\n  Reward R: 3\n  Punishment P: 1\n  Sucker S: 0\n \n \n\n\n\n\nColumn: C\nColumn: D\n\n\nRow: C\n\n\n\n\nRow: D\n\n\n\n\n\n\n blue = Row payoff · red = Column payoff · underline = best response · green cell = Nash\n \n\n\n\n\n\n\nDefault (PD): both best-respond with Defect, so (D, D) is the only green cell — even though (C, C) gives both a higher payoff. Individually rational, collectively bad.\nMake R &gt; T (cooperating beats tempting) → cooperation becomes a best response and (C, C) can turn green. It’s no longer a dilemma.\nSome payoff settings give two Nash equilibria (a coordination game) — watch two cells go green at once.",
+    "crumbs": [
+      "Imperfect Competition & Beyond",
+      "Game Theory"
+    ]
+  },
+  {
+    "objectID": "game-theory.html#finding-a-nash-equilibrium-in-a-22-game",
+    "href": "game-theory.html#finding-a-nash-equilibrium-in-a-22-game",
+    "title": "Game Theory",
+    "section": "",
+    "text": "Two players choose simultaneously. Each has two strategies — here Cooperate (C) or Defect (D). A cell shows the payoffs (Row, Column).\n\nA player’s best response = the strategy giving the higher payoff, given what the other player does.\nA Nash equilibrium = a cell where both players are best-responding — nobody wants to switch unilaterally.\n\nThe classic Prisoner’s Dilemma has payoffs ranked T &gt; R &gt; P &gt; S (Temptation &gt; Reward &gt; Punishment &gt; Sucker). Then “Defect” is a dominant strategy for both, so the unique Nash is (D, D) — even though (C, C) would make both better off. That tension is the whole point.\n\n\n\n\n\n\nTry it. Adjust the four payoffs. Best responses get underlined; a cell turns green when it’s a Nash equilibrium. Break the T &gt; R &gt; P &gt; S ranking and watch the equilibrium move (or multiply).\n\n\n\n\n\n \n  Temptation T: 5\n  Reward R: 3\n  Punishment P: 1\n  Sucker S: 0\n \n \n\n\n\n\nColumn: C\nColumn: D\n\n\nRow: C\n\n\n\n\nRow: D\n\n\n\n\n\n\n blue = Row payoff · red = Column payoff · underline = best response · green cell = Nash\n \n\n\n\n\n\n\nDefault (PD): both best-respond with Defect, so (D, D) is the only green cell — even though (C, C) gives both a higher payoff. Individually rational, collectively bad.\nMake R &gt; T (cooperating beats tempting) → cooperation becomes a best response and (C, C) can turn green. It’s no longer a dilemma.\nSome payoff settings give two Nash equilibria (a coordination game) — watch two cells go green at once.",
     "crumbs": [
       "Imperfect Competition & Beyond",
       "Game Theory"
@@ -147,7 +158,7 @@
     "href": "profit-max.html",
     "title": "Profit Maximization",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Coming soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
     "crumbs": [
       "Production & Costs",
       "Profit Maximization"
@@ -158,7 +169,18 @@
     "href": "equilibrium.html",
     "title": "Equilibrium",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "The market clears where demand = supply. With linear curves:\n\\[\\text{Demand: } P = A - Q \\qquad \\text{Supply: } P = C + Q\\]\n\nEquilibrium: set them equal → \\(Q^* = \\dfrac{A-C}{2}\\), and \\(P^*\\) from either curve.\nA per-unit tax \\(t\\) (collected from sellers) drives a wedge: buyers pay \\(P_b\\), sellers keep \\(P_s = P_b - t\\). Quantity falls.\nIncidence: the side that is less price-sensitive (steeper curve) bears more of the tax. With equally-sloped curves here, buyers and sellers split it evenly.\nDeadweight loss (DWL): the tax kills mutually beneficial trades — the little triangle between the curves over the lost quantity.\n\n\n\n\n\n\n\nTry it. Shift demand (A) or supply (C) and watch P*, Q* move. Add a tax to open the wedge and see the deadweight-loss triangle appear.\n\n\n\n\n\n \n  Demand intercept A: 30\n  Supply intercept C: 6\n  Per-unit tax t: 0\n  \n \n \n\n\n\n\n\n\nShift demand out (↑A) → both P* and Q* rise. Shift supply out (↓C) → P* falls, Q* rises.\nAdd a tax → quantity falls, a price wedge opens (buyers pay more, sellers get less), and the shaded deadweight-loss triangle grows with the tax.\nWith equally-sloped curves, buyers and sellers bear the tax equally — incidence doesn’t depend on who writes the check.",
+    "crumbs": [
+      "Markets & Welfare",
+      "Equilibrium"
+    ]
+  },
+  {
+    "objectID": "equilibrium.html#market-equilibrium-and-what-a-tax-does",
+    "href": "equilibrium.html#market-equilibrium-and-what-a-tax-does",
+    "title": "Equilibrium",
+    "section": "",
+    "text": "The market clears where demand = supply. With linear curves:\n\\[\\text{Demand: } P = A - Q \\qquad \\text{Supply: } P = C + Q\\]\n\nEquilibrium: set them equal → \\(Q^* = \\dfrac{A-C}{2}\\), and \\(P^*\\) from either curve.\nA per-unit tax \\(t\\) (collected from sellers) drives a wedge: buyers pay \\(P_b\\), sellers keep \\(P_s = P_b - t\\). Quantity falls.\nIncidence: the side that is less price-sensitive (steeper curve) bears more of the tax. With equally-sloped curves here, buyers and sellers split it evenly.\nDeadweight loss (DWL): the tax kills mutually beneficial trades — the little triangle between the curves over the lost quantity.\n\n\n\n\n\n\n\nTry it. Shift demand (A) or supply (C) and watch P*, Q* move. Add a tax to open the wedge and see the deadweight-loss triangle appear.\n\n\n\n\n\n \n  Demand intercept A: 30\n  Supply intercept C: 6\n  Per-unit tax t: 0\n  \n \n \n\n\n\n\n\n\nShift demand out (↑A) → both P* and Q* rise. Shift supply out (↓C) → P* falls, Q* rises.\nAdd a tax → quantity falls, a price wedge opens (buyers pay more, sellers get less), and the shaded deadweight-loss triangle grows with the tax.\nWith equally-sloped curves, buyers and sellers bear the tax equally — incidence doesn’t depend on who writes the check.",
     "crumbs": [
       "Markets & Welfare",
       "Equilibrium"
@@ -169,7 +191,7 @@
     "href": "utility.html",
     "title": "Utility",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Coming soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
     "crumbs": [
       "Consumer Theory",
       "Utility"
@@ -180,7 +202,7 @@
     "href": "exchange.html",
     "title": "Exchange",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Coming soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
     "crumbs": [
       "Markets & Welfare",
       "Exchange"
@@ -191,7 +213,7 @@
     "href": "asymmetric-info.html",
     "title": "Asymmetric Information",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Coming soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
     "crumbs": [
       "Imperfect Competition & Beyond",
       "Asymmetric Information"
@@ -202,7 +224,7 @@
     "href": "uncertainty.html",
     "title": "Uncertainty",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Coming soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
     "crumbs": [
       "Imperfect Competition & Beyond",
       "Uncertainty"
@@ -213,7 +235,7 @@
     "href": "slutsky.html",
     "title": "Slutsky Decomposition",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Coming soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
     "crumbs": [
       "Consumer Theory",
       "Slutsky Decomposition"
@@ -224,7 +246,7 @@
     "href": "monopoly.html",
     "title": "Monopoly",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.",
+    "text": "In a competitive market, firms are “not special” — they’re price takers, they earn zero economic profits in the long run, and nobody enjoys any market power. This lecture is about what happens when a firm is special: the only seller in its market, with no immediate threat of entry. The firm benefits from this position. Consumers, as we’ll see, pay for it. The interesting question is whether the firm’s gain outweighs the consumers’ loss. (Short answer: no, it doesn’t — that’s the welfare story.)",
     "crumbs": [
       "Imperfect Competition & Beyond",
       "Monopoly"
@@ -234,8 +256,8 @@
     "objectID": "monopoly.html#the-setup",
     "href": "monopoly.html#the-setup",
     "title": "Monopoly",
-    "section": "The setup",
-    "text": "The setup\nIn a competitive market, firms are “not special” — they’re price takers, they earn zero economic profits in the long run, and nobody enjoys any market power. This lecture is about what happens when a firm is special: the only seller in its market, with no immediate threat of entry. The firm benefits from this position. Consumers, as we’ll see, pay for it. The interesting question is whether the firm’s gain outweighs the consumers’ loss. (Short answer: no, it doesn’t — that’s the welfare story.)",
+    "section": "",
+    "text": "In a competitive market, firms are “not special” — they’re price takers, they earn zero economic profits in the long run, and nobody enjoys any market power. This lecture is about what happens when a firm is special: the only seller in its market, with no immediate threat of entry. The firm benefits from this position. Consumers, as we’ll see, pay for it. The interesting question is whether the firm’s gain outweighs the consumers’ loss. (Short answer: no, it doesn’t — that’s the welfare story.)",
     "crumbs": [
       "Imperfect Competition & Beyond",
       "Monopoly"
@@ -323,7 +345,7 @@
     "href": "revealed-preference.html",
     "title": "Revealed Preference",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Coming soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
     "crumbs": [
       "Consumer Theory",
       "Revealed Preference"
@@ -334,7 +356,7 @@
     "href": "market-demand.html",
     "title": "Market Demand",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Coming soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
     "crumbs": [
       "Markets & Welfare",
       "Market Demand"
@@ -345,7 +367,7 @@
     "href": "industry-supply.html",
     "title": "Industry Supply",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Coming soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
     "crumbs": [
       "Production & Costs",
       "Industry Supply"
@@ -356,7 +378,7 @@
     "href": "externalities.html",
     "title": "Externalities",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Coming soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
     "crumbs": [
       "Imperfect Competition & Beyond",
       "Externalities"
@@ -367,7 +389,7 @@
     "href": "intertemporal.html",
     "title": "Intertemporal Choice",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Coming soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
     "crumbs": [
       "Consumer Theory",
       "Intertemporal Choice"
@@ -378,7 +400,18 @@
     "href": "firm-supply.html",
     "title": "Firm Supply",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "A price-taking firm takes the market price \\(P\\) as given and picks \\(q\\) to maximize profit. The rules:\n\nProduce where \\(P = MC\\) — on the upward part of marginal cost.\nShut down if \\(P &lt;\\) min AVC — if price can’t even cover average variable cost, produce 0 (you lose less by stopping).\nSo the firm’s supply curve = the MC curve above minimum AVC.\nProfit = \\((P - ATC)\\times q\\): positive if \\(P &gt;\\) ATC, a loss if min AVC \\(&lt; P &lt;\\) ATC (still operate — you cover some fixed cost), zero at \\(P =\\) min ATC (break-even).\n\n\n\n\n\n\n\nTry it. Slide the price. Watch the firm ride up its MC curve, the profit/loss rectangle flip color, and production drop to zero once price falls below the shutdown line.\n\n\n\n\n\n \n  Market price P: 6\n  \n  ▬ MC ▬ AVC ▬ ATC\n \n \n\n\n\n\n\n\nThe firm’s output rides up the MC curve as price rises — that’s why supply = MC (above shutdown).\nBetween min AVC and min ATC, the firm makes a loss but still produces — it covers variable cost plus part of fixed cost. The rectangle is red but output is positive.\nDrop price below the shutdown line → output jumps to 0. That’s the lower end of the supply curve.",
+    "crumbs": [
+      "Production & Costs",
+      "Firm Supply"
+    ]
+  },
+  {
+    "objectID": "firm-supply.html#how-a-competitive-firm-chooses-output",
+    "href": "firm-supply.html#how-a-competitive-firm-chooses-output",
+    "title": "Firm Supply",
+    "section": "",
+    "text": "A price-taking firm takes the market price \\(P\\) as given and picks \\(q\\) to maximize profit. The rules:\n\nProduce where \\(P = MC\\) — on the upward part of marginal cost.\nShut down if \\(P &lt;\\) min AVC — if price can’t even cover average variable cost, produce 0 (you lose less by stopping).\nSo the firm’s supply curve = the MC curve above minimum AVC.\nProfit = \\((P - ATC)\\times q\\): positive if \\(P &gt;\\) ATC, a loss if min AVC \\(&lt; P &lt;\\) ATC (still operate — you cover some fixed cost), zero at \\(P =\\) min ATC (break-even).\n\n\n\n\n\n\n\nTry it. Slide the price. Watch the firm ride up its MC curve, the profit/loss rectangle flip color, and production drop to zero once price falls below the shutdown line.\n\n\n\n\n\n \n  Market price P: 6\n  \n  ▬ MC ▬ AVC ▬ ATC\n \n \n\n\n\n\n\n\nThe firm’s output rides up the MC curve as price rises — that’s why supply = MC (above shutdown).\nBetween min AVC and min ATC, the firm makes a loss but still produces — it covers variable cost plus part of fixed cost. The rectangle is red but output is positive.\nDrop price below the shutdown line → output jumps to 0. That’s the lower end of the supply curve.",
     "crumbs": [
       "Production & Costs",
       "Firm Supply"
@@ -389,7 +422,7 @@
     "href": "index.html",
     "title": "Intermediate Microeconomics — ECON 360",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\nWelcome to the simulation-based companion notes for ECON 360: Intermediate Microeconomics at Binghamton University.\nEvery chapter pairs short conceptual notes with an interactive demo that runs entirely in your browser — drag a slider, see the budget line pivot, watch the indifference curve move, find the monopoly profit maximum, build your own payoff matrix. There is nothing to install.",
+    "text": "Welcome to the simulation-based companion notes for ECON 360: Intermediate Microeconomics at Binghamton University.\nEvery chapter pairs short conceptual notes with an interactive demo that runs entirely in your browser — drag a slider, see the budget line pivot, watch the indifference curve move, find the monopoly profit maximum, build your own payoff matrix. There is nothing to install.",
     "crumbs": [
       "Home"
     ]
@@ -419,7 +452,18 @@
     "href": "demand.html",
     "title": "Demand",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "A demand curve shows how the quantity a consumer buys depends on price. It falls out of utility maximization. For a Cobb–Douglas consumer (utility \\(u = x_1^{a}x_2^{1-a}\\)) with income \\(m\\) and prices \\(p_1, p_2\\), the demand for good 1 is:\n\\[x_1 = a\\,\\frac{m}{p_1}\\]\n\nDownward-sloping: higher \\(p_1\\) → less \\(x_1\\) (that’s the demand curve).\nIncome shifts it: higher \\(m\\) → the whole curve shifts out (\\(x_1\\) rises at every price) — good 1 is a normal good.\nNice Cobb–Douglas fact: spending on good 1 is \\(p_1 x_1 = a\\,m\\) — a constant share \\(a\\) of income, no matter the price.\n\\(p_2\\) doesn’t appear — Cobb–Douglas demand for good 1 is independent of the other price.\n\n\n\n\n\n\n\nTry it. Raise the price to slide up the demand curve; raise income to shift it out. Watch spending stay a constant share of income.\n\n\n\n\n\n \n  Income m: 100\n  Taste for good 1, a (share): 0.50\n  Price of good 1, p₁: 5\n  \n \n \n\n\n\n\n\n\nSlide price up → you move along the demand curve (quantity falls).\nSlide income up → the whole curve shifts out (normal good).\nSpending p₁·x₁ always equals a·m — the Cobb–Douglas constant-share result — even as price changes.",
+    "crumbs": [
+      "Consumer Theory",
+      "Demand"
+    ]
+  },
+  {
+    "objectID": "demand.html#where-a-demand-curve-comes-from",
+    "href": "demand.html#where-a-demand-curve-comes-from",
+    "title": "Demand",
+    "section": "",
+    "text": "A demand curve shows how the quantity a consumer buys depends on price. It falls out of utility maximization. For a Cobb–Douglas consumer (utility \\(u = x_1^{a}x_2^{1-a}\\)) with income \\(m\\) and prices \\(p_1, p_2\\), the demand for good 1 is:\n\\[x_1 = a\\,\\frac{m}{p_1}\\]\n\nDownward-sloping: higher \\(p_1\\) → less \\(x_1\\) (that’s the demand curve).\nIncome shifts it: higher \\(m\\) → the whole curve shifts out (\\(x_1\\) rises at every price) — good 1 is a normal good.\nNice Cobb–Douglas fact: spending on good 1 is \\(p_1 x_1 = a\\,m\\) — a constant share \\(a\\) of income, no matter the price.\n\\(p_2\\) doesn’t appear — Cobb–Douglas demand for good 1 is independent of the other price.\n\n\n\n\n\n\n\nTry it. Raise the price to slide up the demand curve; raise income to shift it out. Watch spending stay a constant share of income.\n\n\n\n\n\n \n  Income m: 100\n  Taste for good 1, a (share): 0.50\n  Price of good 1, p₁: 5\n  \n \n \n\n\n\n\n\n\nSlide price up → you move along the demand curve (quantity falls).\nSlide income up → the whole curve shifts out (normal good).\nSpending p₁·x₁ always equals a·m — the Cobb–Douglas constant-share result — even as price changes.",
     "crumbs": [
       "Consumer Theory",
       "Demand"
@@ -430,7 +474,7 @@
     "href": "preferences.html",
     "title": "Preferences",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Coming soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
     "crumbs": [
       "Consumer Theory",
       "Preferences"
@@ -441,7 +485,18 @@
     "href": "consumer-surplus.html",
     "title": "Consumer Surplus",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "Consumer surplus (CS) is what buyers gain from a market: the gap between what they’d have been willing to pay (the height of the demand curve) and what they actually pay (the price), summed over all units bought.\nWith a linear demand curve \\(P = A - Q\\) and a market price \\(P_0\\):\n\nQuantity bought: \\(Q_d = A - P_0\\).\nCS = the triangle under the demand curve and above the price: \\[CS = \\tfrac{1}{2}(A - P_0)\\,Q_d = \\tfrac{1}{2}(A - P_0)^2\\]\nLower price → more CS (two ways: existing buyers pay less, and new buyers enter).\nThe triangle’s top corner is the “choke price” \\(A\\) — above it, nobody buys.\n\n\n\n\n\n\n\nTry it. Drop the price and watch the consumer-surplus triangle grow. Shift demand (A) to see willingness-to-pay change.\n\n\n\n\n\n \n  Demand intercept A (choke price): 30\n  Market price P₀: 10\n  \n \n \n\n\n\n\n\n\nDrop the price → the blue CS triangle grows: existing buyers pay less and new buyers come in.\nAt P₀ = A (the choke price) CS = 0 — nobody buys. At P₀ = 0, CS is the whole area under demand.\nThe grey rectangle is spending (P₀·Q); the blue triangle above it is the surplus buyers keep.",
+    "crumbs": [
+      "Markets & Welfare",
+      "Consumer Surplus"
+    ]
+  },
+  {
+    "objectID": "consumer-surplus.html#measuring-the-gain-from-buying",
+    "href": "consumer-surplus.html#measuring-the-gain-from-buying",
+    "title": "Consumer Surplus",
+    "section": "",
+    "text": "Consumer surplus (CS) is what buyers gain from a market: the gap between what they’d have been willing to pay (the height of the demand curve) and what they actually pay (the price), summed over all units bought.\nWith a linear demand curve \\(P = A - Q\\) and a market price \\(P_0\\):\n\nQuantity bought: \\(Q_d = A - P_0\\).\nCS = the triangle under the demand curve and above the price: \\[CS = \\tfrac{1}{2}(A - P_0)\\,Q_d = \\tfrac{1}{2}(A - P_0)^2\\]\nLower price → more CS (two ways: existing buyers pay less, and new buyers enter).\nThe triangle’s top corner is the “choke price” \\(A\\) — above it, nobody buys.\n\n\n\n\n\n\n\nTry it. Drop the price and watch the consumer-surplus triangle grow. Shift demand (A) to see willingness-to-pay change.\n\n\n\n\n\n \n  Demand intercept A (choke price): 30\n  Market price P₀: 10\n  \n \n \n\n\n\n\n\n\nDrop the price → the blue CS triangle grows: existing buyers pay less and new buyers come in.\nAt P₀ = A (the choke price) CS = 0 — nobody buys. At P₀ = 0, CS is the whole area under demand.\nThe grey rectangle is spending (P₀·Q); the blue triangle above it is the surplus buyers keep.",
     "crumbs": [
       "Markets & Welfare",
       "Consumer Surplus"
@@ -452,7 +507,7 @@
     "href": "choice.html",
     "title": "The Consumer’s Choice Problem",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.",
+    "text": "We’ve built two ingredients separately. From the Budget lecture we have the affordable set — every bundle the consumer can pay for. From the preferences/utility lectures we have what they want — a ranking over bundles, with higher indifference curves preferred to lower ones. Now we combine them.\nThe basic idea isn’t subtle. Agents have goals (their preferences) and face constraints (their budget). They pick whichever bundle is most preferred among the bundles that are feasible. This lecture is about turning that sentence into a picture and into algebra.",
     "crumbs": [
       "Consumer Theory",
       "Choice"
@@ -462,8 +517,8 @@
     "objectID": "choice.html#where-we-are",
     "href": "choice.html#where-we-are",
     "title": "The Consumer’s Choice Problem",
-    "section": "Where we are",
-    "text": "Where we are\nWe’ve built two ingredients separately. From the Budget lecture we have the affordable set — every bundle the consumer can pay for. From the preferences/utility lectures we have what they want — a ranking over bundles, with higher indifference curves preferred to lower ones. Now we combine them.\nThe basic idea isn’t subtle. Agents have goals (their preferences) and face constraints (their budget). They pick whichever bundle is most preferred among the bundles that are feasible. This lecture is about turning that sentence into a picture and into algebra.",
+    "section": "",
+    "text": "We’ve built two ingredients separately. From the Budget lecture we have the affordable set — every bundle the consumer can pay for. From the preferences/utility lectures we have what they want — a ranking over bundles, with higher indifference curves preferred to lower ones. Now we combine them.\nThe basic idea isn’t subtle. Agents have goals (their preferences) and face constraints (their budget). They pick whichever bundle is most preferred among the bundles that are feasible. This lecture is about turning that sentence into a picture and into algebra.",
     "crumbs": [
       "Consumer Theory",
       "Choice"
@@ -507,7 +562,7 @@
     "href": "choice.html#cobb-douglas-the-worked-example",
     "title": "The Consumer’s Choice Problem",
     "section": "Cobb-Douglas: the worked example",
-    "text": "Cobb-Douglas: the worked example\nA consumer with Cobb-Douglas preferences has utility \\[\nU(x_1, x_2) \\;=\\; x_1^{\\,a}\\, x_2^{\\,b},\n\\] where \\(a, b &gt; 0\\). Marginal utilities are \\[\nMU_1 = a\\, x_1^{a-1} x_2^{b}, \\qquad MU_2 = b\\, x_1^{a} x_2^{b-1}.\n\\] The marginal rate of substitution (MRS, the slope of the indifference curve) is \\[\n\\text{MRS} = -\\frac{MU_1}{MU_2} = -\\frac{a\\, x_2}{b\\, x_1}.\n\\] At the optimum, MRS equals the price slope: \\[\n-\\,\\frac{a\\, x_2^*}{b\\, x_1^*} = -\\,\\frac{p_1}{p_2} \\quad\\Longrightarrow\\quad x_2^* = \\frac{b\\, p_1}{a\\, p_2}\\, x_1^*.\n\\quad(\\star)\n\\] And the budget is exhausted: \\(p_1 x_1^* + p_2 x_2^* = m\\). Substitute \\((\\star)\\) into the budget equation: \\[\np_1 x_1^* + p_2 \\cdot \\frac{b\\, p_1}{a\\, p_2}\\, x_1^* = m\n\\;\\;\\Longrightarrow\\;\\;\np_1 x_1^* \\left(1 + \\frac{b}{a}\\right) = m\n\\;\\;\\Longrightarrow\\;\\;\n\\boxed{\\; x_1^* \\;=\\; \\frac{a\\, m}{(a+b)\\, p_1}, \\qquad x_2^* \\;=\\; \\frac{b\\, m}{(a+b)\\, p_2}. \\;}\n\\]\nTwo clean observations:\n\nThe consumer spends a fixed fraction of income on each good. Total spending on good 1 is \\(p_1 x_1^* = \\frac{a}{a+b} m\\). So a Cobb-Douglas consumer with exponents \\(a\\) and \\(b\\) devotes the share \\(a/(a+b)\\) of income to good 1 and \\(b/(a+b)\\) to good 2 — regardless of prices. Price changes shift the quantity bought, but not the share of the budget spent.\nCross-price effects are zero. Demand for good 1 doesn’t depend on \\(p_2\\). That’s not a feature of the world; it’s a feature of Cobb-Douglas. More flexible utility functions (CES, quasilinear, additively separable) generate non-zero cross-price effects.\n\n#| standalone: true\n#| viewerHeight: 660\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  titlePanel(\"Solve Choice by Picture: Cobb-Douglas Consumer\"),\n\n  sidebarLayout(\n    sidebarPanel(\n      width = 4,\n      sliderInput(\"a\", \"Cobb-Douglas exponent a:\",\n                  min = 0.5, max = 4, value = 1, step = 0.25),\n      sliderInput(\"b\", \"Cobb-Douglas exponent b:\",\n                  min = 0.5, max = 4, value = 1, step = 0.25),\n      sliderInput(\"m\",  \"Income (m):\",            min =  20, max = 200, value = 100, step = 10),\n      sliderInput(\"p1\", \"Price of good 1 (p₁):\",  min =   1, max =  20, value =   5, step = 1),\n      sliderInput(\"p2\", \"Price of good 2 (p₂):\",  min =   1, max =  20, value =   5, step = 1),\n      hr(),\n      checkboxInput(\"show_other_ics\",\n                    \"Show a ladder of indifference curves\",\n                    value = TRUE),\n      htmlOutput(\"readout\")\n    ),\n    mainPanel(\n      width = 8,\n      plotOutput(\"choice_plot\", height = \"520px\")\n    )\n  )\n)\n\nserver &lt;- function(input, output, session) {\n\n  bundle &lt;- reactive({\n    a &lt;- input$a; b &lt;- input$b\n    m &lt;- input$m; p1 &lt;- input$p1; p2 &lt;- input$p2\n    x1 &lt;- a * m / ((a + b) * p1)\n    x2 &lt;- b * m / ((a + b) * p2)\n    u_opt &lt;- x1^a * x2^b\n    list(a = a, b = b, m = m, p1 = p1, p2 = p2,\n         x1 = x1, x2 = x2, u_opt = u_opt)\n  })\n\n  output$choice_plot &lt;- renderPlot({\n    s &lt;- bundle()\n    x1_int &lt;- s$m / s$p1\n    x2_int &lt;- s$m / s$p2\n\n    xmax &lt;- max(40, x1_int) * 1.05\n    ymax &lt;- max(40, x2_int) * 1.05\n\n    par(mar = c(4.2, 4.5, 1, 1))\n    plot(NA, xlim = c(0, xmax), ylim = c(0, ymax),\n         xlab = expression(x[1]), ylab = expression(x[2]), main = \"\")\n\n    # Indifference curves: x_1^a x_2^b = U =&gt; x_2 = (U / x_1^a)^(1/b)\n    ic_x &lt;- seq(0.1, xmax * 1.5, length.out = 600)\n    ic_y_opt &lt;- (s$u_opt / ic_x^s$a)^(1 / s$b)\n\n    if (isTRUE(input$show_other_ics)) {\n      for (frac in c(0.5, 0.75, 1.25)) {\n        u &lt;- s$u_opt * frac\n        y &lt;- (u / ic_x^s$a)^(1 / s$b)\n        lines(ic_x, y, col = adjustcolor(\"#7f8c8d\", 0.5), lwd = 1.2, lty = 3)\n      }\n    }\n\n    lines(ic_x, ic_y_opt, col = \"#27ae60\", lwd = 2.4)\n\n    polygon(c(0, x1_int, 0), c(0, 0, x2_int),\n            col = adjustcolor(\"#3498db\", 0.12), border = NA)\n    segments(0, x2_int, x1_int, 0, col = \"#185FA5\", lwd = 3)\n\n    points(s$x1, s$x2, pch = 19, col = \"#c0392b\", cex = 1.8)\n    text(s$x1, s$x2, sprintf(\"  (%.1f, %.1f)\", s$x1, s$x2),\n         pos = 4, col = \"#c0392b\", cex = 1.0)\n\n    legend(\"topright\",\n           legend = c(\"Budget line\", \"Indifference curve through optimum\",\n                      if (isTRUE(input$show_other_ics)) \"Other indifference curves\" else NULL,\n                      \"Optimal bundle (x₁*, x₂*)\"),\n           col    = c(\"#185FA5\", \"#27ae60\",\n                      if (isTRUE(input$show_other_ics)) \"#7f8c8d\" else NULL,\n                      \"#c0392b\"),\n           lwd    = c(3, 2.4, if (isTRUE(input$show_other_ics)) 1.2 else NULL, NA),\n           lty    = c(1, 1, if (isTRUE(input$show_other_ics)) 3 else NULL, NA),\n           pch    = c(NA, NA, if (isTRUE(input$show_other_ics)) NA else NULL, 19),\n           bty = \"n\", cex = 0.9)\n  })\n\n  output$readout &lt;- renderUI({\n    s &lt;- bundle()\n    share1 &lt;- s$a / (s$a + s$b)\n    share2 &lt;- s$b / (s$a + s$b)\n    HTML(sprintf(paste(\n      \"&lt;div style='margin-top:10px;font-size:13px;line-height:1.7;'&gt;\",\n      \"&lt;b&gt;Ordinary demand:&lt;/b&gt; x₁* = %.2f, x₂* = %.2f&lt;br&gt;\",\n      \"&lt;b&gt;Spending on good 1:&lt;/b&gt; p₁·x₁* = %.1f (%.0f%% of income)&lt;br&gt;\",\n      \"&lt;b&gt;Spending on good 2:&lt;/b&gt; p₂·x₂* = %.1f (%.0f%% of income)&lt;br&gt;\",\n      \"&lt;b&gt;MRS at optimum:&lt;/b&gt; %.2f &nbsp; &lt;b&gt;p₁/p₂:&lt;/b&gt; %.2f&lt;br&gt;\",\n      \"&lt;b&gt;Utility achieved:&lt;/b&gt; %.2f\",\n      \"&lt;/div&gt;\"\n    ),\n    s$x1, s$x2,\n    s$p1 * s$x1, 100 * share1,\n    s$p2 * s$x2, 100 * share2,\n    (s$a / s$b) * (s$x2 / s$x1),\n    s$p1 / s$p2, s$u_opt))\n  })\n}\n\nshinyApp(ui, server)\n\n\n\n\n\n\nThings to try.\n\nSet \\(a = b\\) and vary prices. The consumer splits income 50/50, period. Watch the quantities shift while the spending shares don’t budge.\nSet \\(a = 3, b = 1\\). The consumer commits 75% of income to good 1, 25% to good 2 — for any prices. That’s Cobb-Douglas in a nutshell.\nDouble \\(p_1\\) with \\(a = b = 1\\). Spending on good 1 stays $50 (out of $100 income), so \\(x_1^*\\) halves. Good 2 spending and quantity don’t change.\nCheck MRS = \\(p_1/p_2\\). They should match at every interior optimum. If you ever see them disagree, you’re at a corner (next section).",
+    "text": "Cobb-Douglas: the worked example\nA consumer with Cobb-Douglas preferences has utility \\[\nU(x_1, x_2) \\;=\\; x_1^{\\,a}\\, x_2^{\\,b},\n\\] where \\(a, b &gt; 0\\). Marginal utilities are \\[\nMU_1 = a\\, x_1^{a-1} x_2^{b}, \\qquad MU_2 = b\\, x_1^{a} x_2^{b-1}.\n\\] The marginal rate of substitution (MRS, the slope of the indifference curve) is \\[\n\\text{MRS} = -\\frac{MU_1}{MU_2} = -\\frac{a\\, x_2}{b\\, x_1}.\n\\] At the optimum, MRS equals the price slope: \\[\n-\\,\\frac{a\\, x_2^*}{b\\, x_1^*} = -\\,\\frac{p_1}{p_2} \\quad\\Longrightarrow\\quad x_2^* = \\frac{b\\, p_1}{a\\, p_2}\\, x_1^*.\n\\quad(\\star)\n\\] And the budget is exhausted: \\(p_1 x_1^* + p_2 x_2^* = m\\). Substitute \\((\\star)\\) into the budget equation: \\[\np_1 x_1^* + p_2 \\cdot \\frac{b\\, p_1}{a\\, p_2}\\, x_1^* = m\n\\;\\;\\Longrightarrow\\;\\;\np_1 x_1^* \\left(1 + \\frac{b}{a}\\right) = m\n\\;\\;\\Longrightarrow\\;\\;\n\\boxed{\\; x_1^* \\;=\\; \\frac{a\\, m}{(a+b)\\, p_1}, \\qquad x_2^* \\;=\\; \\frac{b\\, m}{(a+b)\\, p_2}. \\;}\n\\]\nTwo clean observations:\n\nThe consumer spends a fixed fraction of income on each good. Total spending on good 1 is \\(p_1 x_1^* = \\frac{a}{a+b} m\\). So a Cobb-Douglas consumer with exponents \\(a\\) and \\(b\\) devotes the share \\(a/(a+b)\\) of income to good 1 and \\(b/(a+b)\\) to good 2 — regardless of prices. Price changes shift the quantity bought, but not the share of the budget spent.\nCross-price effects are zero. Demand for good 1 doesn’t depend on \\(p_2\\). That’s not a feature of the world; it’s a feature of Cobb-Douglas. More flexible utility functions (CES, quasilinear, additively separable) generate non-zero cross-price effects.\n\n#| standalone: true\n#| viewerHeight: 660\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  titlePanel(\"Cobb-Douglas Consumer\"),\n\n  sidebarLayout(\n    sidebarPanel(\n      width = 4,\n      sliderInput(\"a\", \"Cobb-Douglas exponent a:\",\n                  min = 0.5, max = 4, value = 1, step = 0.25),\n      sliderInput(\"b\", \"Cobb-Douglas exponent b:\",\n                  min = 0.5, max = 4, value = 1, step = 0.25),\n      sliderInput(\"m\",  \"Income (m):\",            min =  20, max = 200, value = 100, step = 10),\n      sliderInput(\"p1\", \"Price of good 1 (p₁):\",  min =   1, max =  20, value =   5, step = 1),\n      sliderInput(\"p2\", \"Price of good 2 (p₂):\",  min =   1, max =  20, value =   5, step = 1),\n      hr(),\n      checkboxInput(\"show_other_ics\",\n                    \"Show a ladder of indifference curves\",\n                    value = TRUE),\n      htmlOutput(\"readout\")\n    ),\n    mainPanel(\n      width = 8,\n      plotOutput(\"choice_plot\", height = \"520px\")\n    )\n  )\n)\n\nserver &lt;- function(input, output, session) {\n\n  bundle &lt;- reactive({\n    a &lt;- input$a; b &lt;- input$b\n    m &lt;- input$m; p1 &lt;- input$p1; p2 &lt;- input$p2\n    x1 &lt;- a * m / ((a + b) * p1)\n    x2 &lt;- b * m / ((a + b) * p2)\n    u_opt &lt;- x1^a * x2^b\n    list(a = a, b = b, m = m, p1 = p1, p2 = p2,\n         x1 = x1, x2 = x2, u_opt = u_opt)\n  })\n\n  output$choice_plot &lt;- renderPlot({\n    s &lt;- bundle()\n    x1_int &lt;- s$m / s$p1\n    x2_int &lt;- s$m / s$p2\n\n    xmax &lt;- max(40, x1_int) * 1.05\n    ymax &lt;- max(40, x2_int) * 1.05\n\n    par(mar = c(4.2, 4.5, 1, 1))\n    plot(NA, xlim = c(0, xmax), ylim = c(0, ymax),\n         xlab = expression(x[1]), ylab = expression(x[2]), main = \"\")\n\n    # Indifference curves: x_1^a x_2^b = U =&gt; x_2 = (U / x_1^a)^(1/b)\n    ic_x &lt;- seq(0.1, xmax * 1.5, length.out = 600)\n    ic_y_opt &lt;- (s$u_opt / ic_x^s$a)^(1 / s$b)\n\n    if (isTRUE(input$show_other_ics)) {\n      for (frac in c(0.5, 0.75, 1.25)) {\n        u &lt;- s$u_opt * frac\n        y &lt;- (u / ic_x^s$a)^(1 / s$b)\n        lines(ic_x, y, col = adjustcolor(\"#7f8c8d\", 0.5), lwd = 1.2, lty = 3)\n      }\n    }\n\n    lines(ic_x, ic_y_opt, col = \"#27ae60\", lwd = 2.4)\n\n    polygon(c(0, x1_int, 0), c(0, 0, x2_int),\n            col = adjustcolor(\"#3498db\", 0.12), border = NA)\n    segments(0, x2_int, x1_int, 0, col = \"#185FA5\", lwd = 3)\n\n    points(s$x1, s$x2, pch = 19, col = \"#c0392b\", cex = 1.8)\n    text(s$x1, s$x2, sprintf(\"  (%.1f, %.1f)\", s$x1, s$x2),\n         pos = 4, col = \"#c0392b\", cex = 1.0)\n\n    legend(\"topright\",\n           legend = c(\"Budget line\", \"Indifference curve through optimum\",\n                      if (isTRUE(input$show_other_ics)) \"Other indifference curves\" else NULL,\n                      \"Optimal bundle (x₁*, x₂*)\"),\n           col    = c(\"#185FA5\", \"#27ae60\",\n                      if (isTRUE(input$show_other_ics)) \"#7f8c8d\" else NULL,\n                      \"#c0392b\"),\n           lwd    = c(3, 2.4, if (isTRUE(input$show_other_ics)) 1.2 else NULL, NA),\n           lty    = c(1, 1, if (isTRUE(input$show_other_ics)) 3 else NULL, NA),\n           pch    = c(NA, NA, if (isTRUE(input$show_other_ics)) NA else NULL, 19),\n           bty = \"n\", cex = 0.9)\n  })\n\n  output$readout &lt;- renderUI({\n    s &lt;- bundle()\n    share1 &lt;- s$a / (s$a + s$b)\n    share2 &lt;- s$b / (s$a + s$b)\n    HTML(sprintf(paste(\n      \"&lt;div style='margin-top:10px;font-size:13px;line-height:1.7;'&gt;\",\n      \"&lt;b&gt;Ordinary demand:&lt;/b&gt; x₁* = %.2f, x₂* = %.2f&lt;br&gt;\",\n      \"&lt;b&gt;Spending on good 1:&lt;/b&gt; p₁·x₁* = %.1f (%.0f%% of income)&lt;br&gt;\",\n      \"&lt;b&gt;Spending on good 2:&lt;/b&gt; p₂·x₂* = %.1f (%.0f%% of income)&lt;br&gt;\",\n      \"&lt;b&gt;MRS at optimum:&lt;/b&gt; %.2f &nbsp; &lt;b&gt;p₁/p₂:&lt;/b&gt; %.2f&lt;br&gt;\",\n      \"&lt;b&gt;Utility achieved:&lt;/b&gt; %.2f\",\n      \"&lt;/div&gt;\"\n    ),\n    s$x1, s$x2,\n    s$p1 * s$x1, 100 * share1,\n    s$p2 * s$x2, 100 * share2,\n    (s$a / s$b) * (s$x2 / s$x1),\n    s$p1 / s$p2, s$u_opt))\n  })\n}\n\nshinyApp(ui, server)\n\n\n\n\n\n\nThings to try.\n\nSet \\(a = b\\) and vary prices. The consumer splits income 50/50, period. Watch the quantities shift while the spending shares don’t budge.\nSet \\(a = 3, b = 1\\). The consumer commits 75% of income to good 1, 25% to good 2 — for any prices. That’s Cobb-Douglas in a nutshell.\nDouble \\(p_1\\) with \\(a = b = 1\\). Spending on good 1 stays $50 (out of $100 income), so \\(x_1^*\\) halves. Good 2 spending and quantity don’t change.\nCheck MRS = \\(p_1/p_2\\). They should match at every interior optimum. If you ever see them disagree, you’re at a corner (next section).",
     "crumbs": [
       "Consumer Theory",
       "Choice"
@@ -551,7 +606,18 @@
     "href": "cost-curves.html",
     "title": "Cost Curves",
     "section": "",
-    "text": "About this page. Simulation-based companion notes for ECON 360 — Intermediate Microeconomics at Binghamton University. Topic order follows Professor David Slichter's ECON 360 syllabus.\n\n\n\n\n\n\n\n\n\n\n\nComing soon. This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as Budget Constraints, The Consumer’s Choice Problem, and Monopoly: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.",
+    "text": "From a firm’s total cost \\(C(q) = F + VC(q)\\) we build four per-unit curves:\n\nAFC = \\(F/q\\) — average fixed cost, always falling (fixed cost spread over more units).\nAVC = \\(VC(q)/q\\) — average variable cost, U-shaped.\nATC = \\(C(q)/q\\) = AVC + AFC — U-shaped, lies above AVC, gap = AFC.\nMC = \\(\\dfrac{dC}{dq}\\) — marginal cost.\n\nThe key geometry: MC cuts AVC and ATC at their minimum points — because an average falls while the marginal is below it and rises once the marginal is above it.\n\n\n\n\n\n\nTry it. Raise fixed cost F — AFC and ATC shift up (MC and AVC don’t move), and the ATC minimum slides right. Watch MC slice through both U’s at their lowest points.\n\n\n\n\n\n \n  Fixed cost F: 20\n  \n  \n   ▬ MC\n   ▬ AVC\n   ▬ ATC\n   ▬ AFC\n  \n \n \n\n\n\n\n\n\nMC cuts AVC and ATC at their minimums — the dots. Left of a minimum, MC is below the average (pulling it down); right of it, MC is above (pulling it up).\nRaise F: AFC and ATC shift up, the ATC minimum moves right, but MC and AVC don’t move (fixed cost isn’t marginal or variable).\nThe vertical gap between ATC and AVC is AFC — and it shrinks as q grows.",
+    "crumbs": [
+      "Production & Costs",
+      "Cost Curves"
+    ]
+  },
+  {
+    "objectID": "cost-curves.html#the-family-of-cost-curves",
+    "href": "cost-curves.html#the-family-of-cost-curves",
+    "title": "Cost Curves",
+    "section": "",
+    "text": "From a firm’s total cost \\(C(q) = F + VC(q)\\) we build four per-unit curves:\n\nAFC = \\(F/q\\) — average fixed cost, always falling (fixed cost spread over more units).\nAVC = \\(VC(q)/q\\) — average variable cost, U-shaped.\nATC = \\(C(q)/q\\) = AVC + AFC — U-shaped, lies above AVC, gap = AFC.\nMC = \\(\\dfrac{dC}{dq}\\) — marginal cost.\n\nThe key geometry: MC cuts AVC and ATC at their minimum points — because an average falls while the marginal is below it and rises once the marginal is above it.\n\n\n\n\n\n\nTry it. Raise fixed cost F — AFC and ATC shift up (MC and AVC don’t move), and the ATC minimum slides right. Watch MC slice through both U’s at their lowest points.\n\n\n\n\n\n \n  Fixed cost F: 20\n  \n  \n   ▬ MC\n   ▬ AVC\n   ▬ ATC\n   ▬ AFC\n  \n \n \n\n\n\n\n\n\nMC cuts AVC and ATC at their minimums — the dots. Left of a minimum, MC is below the average (pulling it down); right of it, MC is above (pulling it up).\nRaise F: AFC and ATC shift up, the ATC minimum moves right, but MC and AVC don’t move (fixed cost isn’t marginal or variable).\nThe vertical gap between ATC and AVC is AFC — and it shrinks as q grows.",
     "crumbs": [
       "Production & Costs",
       "Cost Curves"
