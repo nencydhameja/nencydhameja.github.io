@@ -78,6 +78,35 @@ gtag('js', new Date());
 gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -315,8 +344,17 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#splitting-a-price-change-in-two" id="toc-splitting-a-price-change-in-two" class="nav-link active" data-scroll-target="#splitting-a-price-change-in-two">Splitting a price change in two</a>
+  <ul class="collapse">
+  <li><a href="#what-to-notice" id="toc-what-to-notice" class="nav-link" data-scroll-target="#what-to-notice">What to notice</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -341,18 +379,114 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </header>
 
 
+<section id="splitting-a-price-change-in-two" class="level2">
+<h2 class="anchored" data-anchor-id="splitting-a-price-change-in-two">Splitting a price change in two</h2>
+<p>When the price of good 1 falls, the consumer buys more of it — but for <strong>two different reasons</strong>, and Slutsky’s trick is to separate them:</p>
+<ul>
+<li><strong>Substitution effect</strong> — good 1 is now cheaper <em>relative</em> to good 2, so even holding real purchasing power fixed, the consumer tilts toward good 1. This effect always moves <strong>opposite</strong> to the price change.</li>
+<li><strong>Income effect</strong> — the price cut also makes the consumer <em>richer in real terms</em> (the old bundle now costs less), and they spend part of that windfall. The direction depends on whether the good is normal or inferior.</li>
+</ul>
+<p>Slutsky’s way of “holding purchasing power fixed” is concrete: after the price change, give the consumer exactly the income that lets them <strong>just afford their original bundle</strong>. Call it <span class="math inline">\(m'\)</span>. With original bundle <span class="math inline">\((x_1^0,x_2^0)\)</span> and new prices, <span class="math display">\[
+m' = p_1'\,x_1^0 + p_2\,x_2^0.
+\]</span> Then:</p>
+<ul>
+<li><strong>Substitution effect</strong> <span class="math inline">\(= x_1(p_1',m') - x_1(p_1,m)\)</span> — move along to the new price ratio, pivoting around the old bundle.</li>
+<li><strong>Income effect</strong> <span class="math inline">\(= x_1(p_1',m) - x_1(p_1',m')\)</span> — take the compensation back away, shifting to the true new budget.</li>
+<li>The two add up to the <strong>total effect</strong>.</li>
+</ul>
+<p>The sim uses Cobb–Douglas demand, <span class="math inline">\(x_1 = a\,m/p_1\)</span>.</p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Coming soon.</strong> This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as <a href="budget.html">Budget Constraints</a>, <a href="choice.html">The Consumer’s Choice Problem</a>, and <a href="monopoly.html">Monopoly</a>: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.</p>
+<p><strong>Try it.</strong> Lower <strong>p₁′</strong>. Three budget lines appear: the original (blue), the Slutsky-compensated pivot (dashed grey, through the old bundle), and the final budget (orange). The bundles on them split the move into substitution + income.</p>
 </div>
 </div>
+</div>
+<style>
+ .sl{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .sl .ctrl{flex:0 0 310px;} .sl label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .sl input[type=range]{width:100%;} .sl .v{color:#1f3b73;font-weight:700;}
+ .sl .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.75;} .sl .box b{color:#1f3b73;}
+ .sl canvas{width:100%;height:auto;max-width:600px;} .sl .plot{flex:1 1 420px;min-width:320px;}
+ .sl .sub{color:#b5462a;font-weight:700;} .sl .inc{color:#1c6b4a;font-weight:700;}
+</style>
+<div class="sl">
+ <div class="ctrl">
+  <label>Taste for good 1 (a): <span class="v" id="sl-av">0.50</span></label>
+  <input type="range" id="sl-a" min="0.3" max="0.7" value="0.5" step="0.05">
+  <label>New price of good 1 (p₁′): <span class="v" id="sl-pv">1.00</span></label>
+  <input type="range" id="sl-p" min="0.4" max="2" value="1" step="0.05">
+  <div class="box" id="sl-box"></div>
+ </div>
+ <div class="plot"><canvas id="slC" width="600" height="470"></canvas></div>
+</div>
+<script>
+(function(){
+ var A=document.getElementById('sl-a'),P=document.getElementById('sl-p'),
+   box=document.getElementById('sl-box'),cv=document.getElementById('slC'),x=cv.getContext('2d');
+ var W=cv.width,H=cv.height,ML=48,MR=18,MT=18,MB=42,mx=44,my=44;
+ var p1=1, p2=1, m=20;                       // original prices & income
+ function X(v){return ML+v/mx*(W-ML-MR);} function Y(v){return H-MB-v/my*(H-MT-MB);}
+ function line(x1int,x2int,col,lw,dash){x.strokeStyle=col;x.lineWidth=lw;if(dash)x.setLineDash(dash);else x.setLineDash([]);
+   x.beginPath();x.moveTo(X(0),Y(x2int));x.lineTo(X(x1int),Y(0));x.stroke();x.setLineDash([]);}
+ function dot(px,py,col,lab){x.fillStyle=col;x.beginPath();x.arc(X(px),Y(py),5.5,0,7);x.fill();
+   if(lab){x.fillStyle=col;x.font='bold 13px Inter,sans-serif';x.fillText(lab,X(px)+8,Y(py)-6);x.font='12px Inter,sans-serif';}}
+ function draw(){
+  var a=+A.value, p1n=+P.value;
+  // original bundle
+  var x10=a*m/p1, x20=(1-a)*m/p2;
+  // final bundle (new price, same income)
+  var x1f=a*m/p1n, x2f=(1-a)*m/p2;
+  // Slutsky-compensated income: afford old bundle at new prices
+  var mc=p1n*x10 + p2*x20;
+  var x1s=a*mc/p1n, x2s=(1-a)*mc/p2;
+  var subEff=x1s-x10, incEff=x1f-x1s, tot=x1f-x10;
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='right';
+  for(var v=0;v<=my;v+=10){x.beginPath();x.moveTo(ML,Y(v));x.lineTo(W-MR,Y(v));x.stroke();x.fillText(v,ML-6,Y(v)+4);}
+  x.textAlign='center';for(var q=0;q<=mx;q+=10){x.fillText(q,X(q),H-MB+16);}
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.fillText('Good 1  (x₁)',(ML+W-MR)/2,H-7);
+  x.save();x.translate(14,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('Good 2  (x₂)',0,0);x.restore();
+  // original budget: intercepts (m/p1, m/p2)
+  line(m/p1, m/p2, '#1f3b73', 2.6);
+  // compensated budget: intercepts (mc/p1n, mc/p2), passes through old bundle
+  line(mc/p1n, mc/p2, '#9aa4b2', 1.8, [5,4]);
+  // final budget: intercepts (m/p1n, m/p2)
+  line(m/p1n, m/p2, '#b5462a', 2.6);
+  dot(x10,x20,'#1f3b73','old');
+  dot(x1s,x2s,'#5a6472','Slutsky');
+  dot(x1f,x2f,'#b5462a','new');
+  // substitution / income brackets on the x-axis
+  x.textAlign='left';
+  document.getElementById('sl-av').textContent=a.toFixed(2);
+  document.getElementById('sl-pv').textContent=p1n.toFixed(2);
+  box.innerHTML =
+    'Original x₁ = <b>'+x10.toFixed(1)+'</b> &nbsp;→&nbsp; new x₁ = <b>'+x1f.toFixed(1)+'</b><br>'+
+    'Compensated income m′ = <b>'+mc.toFixed(1)+'</b> (afford old bundle at new prices)<br>'+
+    '<span class="sub">Substitution effect = '+(subEff>=0?'+':'')+subEff.toFixed(2)+'</span> (always opposes the price move)<br>'+
+    '<span class="inc">Income effect = '+(incEff>=0?'+':'')+incEff.toFixed(2)+'</span><br>'+
+    'Total effect = <b>'+(tot>=0?'+':'')+tot.toFixed(2)+'</b>';
+ }
+ [A,P].forEach(function(e){e.addEventListener('input',draw);});draw();
+})();
+</script>
+<div id="did-you-know">
+<section id="what-to-notice" class="level3">
+<h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
+<ul>
+<li>Drop <strong>p₁′</strong> below 1 and the <strong>substitution effect is positive</strong> (more good 1) — it <em>always</em> opposes the price change, no exceptions.</li>
+<li>For Cobb–Douglas both goods are <strong>normal</strong>, so the income effect pushes the <em>same</em> direction as substitution. Total demand for good 1 rises as its price falls — a downward-sloping demand curve.</li>
+<li>The <strong>grey dashed</strong> line is the heart of the method: same slope as the new budget (new price ratio) but shifted to just pass through the <strong>old bundle</strong>. That pivot is the pure substitution effect.</li>
+</ul>
+</section>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -78,6 +78,35 @@ gtag('js', new Date());
 gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -315,8 +344,17 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#two-people-two-goods-gains-from-trade" id="toc-two-people-two-goods-gains-from-trade" class="nav-link active" data-scroll-target="#two-people-two-goods-gains-from-trade">Two people, two goods, gains from trade</a>
+  <ul class="collapse">
+  <li><a href="#what-to-notice" id="toc-what-to-notice" class="nav-link" data-scroll-target="#what-to-notice">What to notice</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -341,18 +379,114 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </header>
 
 
+<section id="two-people-two-goods-gains-from-trade" class="level2">
+<h2 class="anchored" data-anchor-id="two-people-two-goods-gains-from-trade">Two people, two goods, gains from trade</h2>
+<p>Market analysis so far took prices as given. <strong>General equilibrium</strong> asks where prices come from. The simplest laboratory is a pure <strong>exchange economy</strong>: two consumers (A and B), two goods, fixed total supplies, no production. Everything they consume, they already own between them — the question is how they’ll <strong>trade</strong>.</p>
+<p>The <strong>Edgeworth box</strong> draws it all at once. Its width is the total of good 1, its height the total of good 2. Measure A’s bundle from the bottom-left corner and B’s bundle from the top-right. Every point in the box is a complete <strong>allocation</strong> — what each person ends up with.</p>
+<ul>
+<li>The <strong>endowment</strong> ■ is where they start.</li>
+<li>At a price ratio <span class="math inline">\(p = p_1/p_2\)</span>, each consumer trades to their favorite affordable bundle. A <strong>competitive equilibrium</strong> is a price at which the two plans are <strong>compatible</strong> — markets clear, so the chosen point is a single dot ● in the box.</li>
+<li>At equilibrium both indifference curves are <strong>tangent</strong> to the budget line (and to each other). Points where they’re tangent trace the <strong>contract curve</strong> — the efficient allocations.</li>
+</ul>
+<p>With Cobb–Douglas tastes (<span class="math inline">\(U_A=x^{a}y^{1-a}\)</span>, <span class="math inline">\(U_B=x^{b}y^{1-b}\)</span>) the market-clearing price has a closed form: <span class="math display">\[
+p=\frac{a\,\omega^A_2+b\,\omega^B_2}{(1-a)\,\omega^A_1+(1-b)\,\omega^B_1}.
+\]</span></p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Coming soon.</strong> This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as <a href="budget.html">Budget Constraints</a>, <a href="choice.html">The Consumer’s Choice Problem</a>, and <a href="monopoly.html">Monopoly</a>: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.</p>
+<p><strong>Try it.</strong> Move the <strong>endowment</strong> and A’s <strong>taste</strong>. The equilibrium price adjusts so markets clear; the dot ● is the equilibrium allocation, with both indifference curves tangent to the budget line through ■. The grey curve is the contract curve.</p>
 </div>
 </div>
+</div>
+<style>
+ .ex{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .ex .ctrl{flex:0 0 310px;} .ex label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .ex input[type=range]{width:100%;} .ex .v{color:#1f3b73;font-weight:700;}
+ .ex .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.75;} .ex .box b{color:#1f3b73;}
+ .ex canvas{width:100%;height:auto;max-width:560px;} .ex .plot{flex:1 1 420px;min-width:320px;}
+ .ex .lg span{display:inline-block;margin-right:12px;font-size:12px;}
+</style>
+<div class="ex">
+ <div class="ctrl">
+  <label>A's endowment of good 1 (ω₁ᴬ): <span class="v" id="ex-w1v">3</span></label>
+  <input type="range" id="ex-w1" min="1" max="9" value="3" step="1">
+  <label>A's endowment of good 2 (ω₂ᴬ): <span class="v" id="ex-w2v">7</span></label>
+  <input type="range" id="ex-w2" min="1" max="9" value="7" step="1">
+  <label>A's taste for good 1 (a): <span class="v" id="ex-av">0.60</span></label>
+  <input type="range" id="ex-a" min="0.25" max="0.75" value="0.6" step="0.05">
+  <div class="box" id="ex-box"></div>
+  <div class="lg"><span style="color:#1f3b73;">▬ A indiff.</span><span style="color:#b5462a;">▬ B indiff.</span><span style="color:#5a6472;">▬ budget</span></div>
+ </div>
+ <div class="plot"><canvas id="exC" width="560" height="470"></canvas></div>
+</div>
+<script>
+(function(){
+ var Wg1=10, Wg2=10, b=0.5;                  // totals, B's taste fixed
+ var W1=document.getElementById('ex-w1'),W2=document.getElementById('ex-w2'),A=document.getElementById('ex-a'),
+   box=document.getElementById('ex-box'),cv=document.getElementById('exC'),x=cv.getContext('2d');
+ var W=cv.width,H=cv.height,ML=42,MR=18,MT=16,MB=40;
+ function X(v){return ML+v/Wg1*(W-ML-MR);} function Y(v){return H-MB-v/Wg2*(H-MT-MB);}
+ function icA(UA,a){x.beginPath();var st=false; // A frame: y=(UA/x^a)^(1/(1-a))
+   for(var q=0.05;q<=Wg1;q+=0.04){var y=Math.pow(UA/Math.pow(q,a),1/(1-a));if(y<0||y>Wg2){st=false;continue;}
+     if(!st){x.moveTo(X(q),Y(y));st=true;}else x.lineTo(X(q),Y(y));}x.stroke();}
+ function icB(UB){x.beginPath();var st=false; // B frame bundle (Wg1-x, Wg2-y); UB=xB^b yB^(1-b)
+   for(var q=0.05;q<=Wg1;q+=0.04){var xB=Wg1-q;if(xB<=0.02){st=false;continue;}
+     var yB=Math.pow(UB/Math.pow(xB,b),1/(1-b));var y=Wg2-yB;if(y<0||y>Wg2){st=false;continue;}
+     if(!st){x.moveTo(X(q),Y(y));st=true;}else x.lineTo(X(q),Y(y));}x.stroke();}
+ function draw(){
+  var wA1=+W1.value, wA2=+W2.value, a=+A.value;
+  var wB1=Wg1-wA1, wB2=Wg2-wA2;
+  var p=(a*wA2+b*wB2)/((1-a)*wA1+(1-b)*wB1);   // equilibrium price p1/p2
+  var mA=p*wA1+wA2, xA=a*mA/p, yA=(1-a)*mA;
+  var xB=Wg1-xA, yB=Wg2-yA;
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  // box border
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.4;x.strokeRect(X(0),Y(Wg2),X(Wg1)-X(0),Y(0)-Y(Wg2));
+  x.fillStyle='#5a6472';x.textAlign='left';x.fillText('Aₒ',X(0)+3,Y(0)-4);x.textAlign='right';x.fillText('Bₒ',X(Wg1)-3,Y(Wg2)+12);
+  x.textAlign='center';x.fillText('Good 1  (A →)',(X(0)+X(Wg1))/2,H-7);
+  x.save();x.translate(13,(Y(0)+Y(Wg2))/2);x.rotate(-Math.PI/2);x.fillText('Good 2  (A ↑)',0,0);x.restore();
+  // contract curve: yA = B*Wg2*xA /(AA*Wg1 + (B-AA)*xA), AA=a/(1-a), B=b/(1-b)
+  var AA=a/(1-a), BB=b/(1-b);
+  x.strokeStyle='#cbd5e1';x.lineWidth=2;x.setLineDash([4,3]);x.beginPath();var st=false;
+  for(var q=0.05;q<=Wg1;q+=0.05){var y=BB*Wg2*q/(AA*Wg1+(BB-AA)*q);if(y<0||y>Wg2){st=false;continue;}
+    if(!st){x.moveTo(X(q),Y(y));st=true;}else x.lineTo(X(q),Y(y));}x.stroke();x.setLineDash([]);
+  // budget line through endowment, slope -p: p*x + y = p*wA1+wA2
+  var C=p*wA1+wA2;
+  x.strokeStyle='#5a6472';x.lineWidth=1.8;x.beginPath();x.moveTo(X(0),Y(C));x.lineTo(X(C/p),Y(0));x.stroke();
+  // indifference curves through equilibrium
+  x.strokeStyle='#1f3b73';x.lineWidth=2;icA(Math.pow(xA,a)*Math.pow(yA,1-a),a);
+  x.strokeStyle='#b5462a';x.lineWidth=2;icB(Math.pow(xB,b)*Math.pow(yB,1-b));
+  // endowment (square) + equilibrium (dot)
+  x.fillStyle='#1c6b4a';x.fillRect(X(wA1)-5,Y(wA2)-5,10,10);
+  x.fillStyle='#111';x.beginPath();x.arc(X(xA),Y(yA),6,0,7);x.fill();
+  document.getElementById('ex-w1v').textContent=wA1;
+  document.getElementById('ex-w2v').textContent=wA2;
+  document.getElementById('ex-av').textContent=a.toFixed(2);
+  box.innerHTML =
+    'Equilibrium price p₁/p₂ = <b>'+p.toFixed(2)+'</b><br>'+
+    'A trades to ('+xA.toFixed(1)+', '+yA.toFixed(1)+'), B gets ('+xB.toFixed(1)+', '+yB.toFixed(1)+')<br>'+
+    'A '+(xA>wA1?'buys':'sells')+' good 1 ('+Math.abs(xA-wA1).toFixed(1)+'), '+(yA>wA2?'buys':'sells')+' good 2.<br>'+
+    '<span style="color:#5a6472;font-size:13px;">Both curves are tangent to the budget line at ● — on the contract curve, efficient.</span>';
+ }
+ [W1,W2,A].forEach(function(e){e.addEventListener('input',draw);});draw();
+})();
+</script>
+<div id="did-you-know">
+<section id="what-to-notice" class="level3">
+<h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
+<ul>
+<li>Put the endowment ■ <strong>off</strong> the contract curve and the equilibrium ● sits elsewhere — the two trade their way to an efficient point where neither can do better without hurting the other.</li>
+<li>The equilibrium <strong>price line</strong> always passes through the endowment: trade is a movement <em>along</em> it, swapping one good for the other at the market rate.</li>
+<li>When A’s taste <strong>a</strong> equals B’s (both 0.5) and the endowment is already efficient, the price makes the chosen point coincide with the endowment — <strong>no trade</strong>, because there were no gains to exploit.</li>
+</ul>
+</section>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

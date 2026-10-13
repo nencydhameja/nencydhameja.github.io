@@ -78,6 +78,35 @@ gtag('js', new Date());
 gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -315,8 +344,17 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#when-you-own-your-goods" id="toc-when-you-own-your-goods" class="nav-link active" data-scroll-target="#when-you-own-your-goods">When you own your goods</a>
+  <ul class="collapse">
+  <li><a href="#what-to-notice" id="toc-what-to-notice" class="nav-link" data-scroll-target="#what-to-notice">What to notice</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -341,18 +379,99 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </header>
 
 
+<section id="when-you-own-your-goods" class="level2">
+<h2 class="anchored" data-anchor-id="when-you-own-your-goods">When you own your goods</h2>
+<p>So far income <span class="math inline">\(m\)</span> just dropped from the sky. More realistically, a consumer starts with an <strong>endowment</strong> — a bundle <span class="math inline">\((\omega_1,\omega_2)\)</span> they already own (hours of time, a crop, savings) — and trades at market prices. Their “income” is whatever that endowment is <strong>worth</strong>: <span class="math display">\[
+m = p_1\omega_1 + p_2\omega_2.
+\]</span> So the budget constraint is <span class="math display">\[
+p_1 x_1 + p_2 x_2 = p_1\omega_1 + p_2\omega_2,
+\]</span> and it always <strong>passes through the endowment point</strong> — because consuming exactly what you own is always affordable. A price change <em>rotates</em> the budget line around <span class="math inline">\((\omega_1,\omega_2)\)</span>.</p>
+<p>The consumer is a <strong>net buyer</strong> of good 1 if <span class="math inline">\(x_1 &gt; \omega_1\)</span> and a <strong>net seller</strong> if <span class="math inline">\(x_1 &lt; \omega_1\)</span>. The powerful twist: when a price rises, an endowment-holder isn’t simply worse off. A seller of that good gets <em>richer</em>; a buyer gets poorer. That’s why the response to price changes here differs from the fixed-income case.</p>
+<p>The sim uses Cobb–Douglas demand with endowment income: <span class="math inline">\(x_1 = a\,(p_1\omega_1 + p_2\omega_2)/p_1\)</span>.</p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Coming soon.</strong> This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as <a href="budget.html">Budget Constraints</a>, <a href="choice.html">The Consumer’s Choice Problem</a>, and <a href="monopoly.html">Monopoly</a>: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.</p>
+<p><strong>Try it.</strong> Slide the <strong>price of good 1</strong>. The budget line pivots around the endowment ■. Watch the optimal bundle ● move — and watch the consumer flip between <strong>net buyer</strong> and <strong>net seller</strong> of good 1.</p>
 </div>
 </div>
+</div>
+<style>
+ .bs{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .bs .ctrl{flex:0 0 310px;} .bs label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .bs input[type=range]{width:100%;} .bs .v{color:#1f3b73;font-weight:700;}
+ .bs .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.75;} .bs .box b{color:#1f3b73;}
+ .bs canvas{width:100%;height:auto;max-width:600px;} .bs .plot{flex:1 1 420px;min-width:320px;}
+ .bs .buy{color:#b5462a;font-weight:700;} .bs .sell{color:#1c6b4a;font-weight:700;}
+</style>
+<div class="bs">
+ <div class="ctrl">
+  <label>Taste for good 1 (a): <span class="v" id="bs-av">0.50</span></label>
+  <input type="range" id="bs-a" min="0.25" max="0.75" value="0.5" step="0.05">
+  <label>Price of good 1 (p₁): <span class="v" id="bs-pv">1.00</span></label>
+  <input type="range" id="bs-p" min="0.4" max="3" value="1" step="0.05">
+  <div class="box" id="bs-box"></div>
+ </div>
+ <div class="plot"><canvas id="bsC" width="600" height="470"></canvas></div>
+</div>
+<script>
+(function(){
+ var A=document.getElementById('bs-a'),P=document.getElementById('bs-p'),
+   box=document.getElementById('bs-box'),cv=document.getElementById('bsC'),x=cv.getContext('2d');
+ var W=cv.width,H=cv.height,ML=48,MR=18,MT=18,MB=42,mx=30,my=30;
+ var w1=8, w2=12, p2=1;                      // endowment & price of good 2
+ function X(v){return ML+v/mx*(W-ML-MR);} function Y(v){return H-MB-v/my*(H-MT-MB);}
+ function draw(){
+  var a=+A.value, p1=+P.value;
+  var m=p1*w1+p2*w2;
+  var x1=a*m/p1, x2=(1-a)*m/p2;
+  var net=x1-w1;
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='right';
+  for(var v=0;v<=my;v+=5){x.beginPath();x.moveTo(ML,Y(v));x.lineTo(W-MR,Y(v));x.stroke();x.fillText(v,ML-6,Y(v)+4);}
+  x.textAlign='center';for(var q=0;q<=mx;q+=5){x.fillText(q,X(q),H-MB+16);}
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.fillText('Good 1  (x₁)',(ML+W-MR)/2,H-7);
+  x.save();x.translate(14,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('Good 2  (x₂)',0,0);x.restore();
+  // budget: intercepts (m/p1, m/p2)
+  x.strokeStyle='#1f3b73';x.lineWidth=2.6;x.beginPath();x.moveTo(X(0),Y(m/p2));x.lineTo(X(m/p1),Y(0));x.stroke();
+  // endowment (square)
+  x.fillStyle='#1c6b4a';x.fillRect(X(w1)-5,Y(w2)-5,10,10);
+  x.fillStyle='#1c6b4a';x.textAlign='left';x.fillText('endowment ω',X(w1)+9,Y(w2)-7);
+  // optimal bundle
+  x.fillStyle='#b5462a';x.beginPath();x.arc(X(x1),Y(x2),6,0,7);x.fill();
+  x.fillStyle='#b5462a';x.fillText('choice',X(x1)+9,Y(x2)+16);
+  // vertical guide at endowment good-1 level
+  x.strokeStyle='#cbd5e1';x.lineWidth=1;x.setLineDash([3,3]);x.beginPath();x.moveTo(X(w1),MT);x.lineTo(X(w1),H-MB);x.stroke();x.setLineDash([]);
+  document.getElementById('bs-av').textContent=a.toFixed(2);
+  document.getElementById('bs-pv').textContent=p1.toFixed(2);
+  var role = net>0.05 ? '<span class="buy">NET BUYER</span> of good 1 (buys '+net.toFixed(1)+')'
+           : net<-0.05 ? '<span class="sell">NET SELLER</span> of good 1 (sells '+(-net).toFixed(1)+')'
+           : 'at the endowment — neither buying nor selling good 1';
+  box.innerHTML =
+    'Endowment value (income) m = p₁ω₁ + p₂ω₂ = <b>'+m.toFixed(1)+'</b><br>'+
+    'Chosen x₁ = <b>'+x1.toFixed(1)+'</b> vs owned ω₁ = '+w1+'<br>'+
+    'The consumer is '+role+'.<br>'+
+    '<span style="color:#5a6472;font-size:13px;">The budget line always pivots through ω as p₁ changes.</span>';
+ }
+ [A,P].forEach(function(e){e.addEventListener('input',draw);});draw();
+})();
+</script>
+<div id="did-you-know">
+<section id="what-to-notice" class="level3">
+<h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
+<ul>
+<li>Every budget line passes through the <strong>endowment ■</strong> — consuming what you already own is always feasible, so a price change can only <em>rotate</em> the line, never shift it off that point.</li>
+<li>Raise <strong>p₁</strong> enough and a buyer of good 1 becomes a <strong>seller</strong>: good 1 is now so valuable it’s worth selling some of your stock rather than buying more.</li>
+<li>A higher <strong>p₁</strong> makes a seller of good 1 <em>richer</em> (endowment worth more) — the endowment income effect that’s absent from the fixed-income story.</li>
+</ul>
+</section>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

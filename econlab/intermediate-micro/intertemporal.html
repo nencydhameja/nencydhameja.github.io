@@ -78,6 +78,35 @@ gtag('js', new Date());
 gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -315,8 +344,17 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#consuming-across-time" id="toc-consuming-across-time" class="nav-link active" data-scroll-target="#consuming-across-time">Consuming across time</a>
+  <ul class="collapse">
+  <li><a href="#what-to-notice" id="toc-what-to-notice" class="nav-link" data-scroll-target="#what-to-notice">What to notice</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -341,18 +379,102 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </header>
 
 
+<section id="consuming-across-time" class="level2">
+<h2 class="anchored" data-anchor-id="consuming-across-time">Consuming across time</h2>
+<p>Now the “two goods” are <strong>consumption today</strong> (<span class="math inline">\(c_1\)</span>) and <strong>consumption tomorrow</strong> (<span class="math inline">\(c_2\)</span>). The consumer has income <span class="math inline">\(m_1\)</span> today and <span class="math inline">\(m_2\)</span> tomorrow, and can borrow or save at interest rate <span class="math inline">\(r\)</span>.</p>
+<p>Saving a dollar today returns <span class="math inline">\(1+r\)</span> dollars tomorrow; borrowing a dollar today costs <span class="math inline">\(1+r\)</span> tomorrow. So the relative price of consuming today in terms of tomorrow is <span class="math inline">\((1+r)\)</span>. The budget constraint, in <strong>present-value</strong> form: <span class="math display">\[
+c_1 + \frac{c_2}{1+r} \;=\; m_1 + \frac{m_2}{1+r}.
+\]</span> Like the endowment model, this line always passes through the income point <span class="math inline">\((m_1,m_2)\)</span>, and raising <span class="math inline">\(r\)</span> <strong>pivots</strong> it around that point (steeper — today’s consumption becomes dearer).</p>
+<p>The consumer is a <strong>saver</strong> (lender) if <span class="math inline">\(c_1 &lt; m_1\)</span> and a <strong>borrower</strong> if <span class="math inline">\(c_1 &gt; m_1\)</span>. With Cobb–Douglas preferences <span class="math inline">\(U=c_1^{a}c_2^{1-a}\)</span> and wealth <span class="math inline">\(W = m_1 + m_2/(1+r)\)</span>: <span class="math display">\[
+c_1 = a\,W, \qquad c_2 = (1-a)\,W\,(1+r).
+\]</span> Here <span class="math inline">\(a\)</span> is effectively <strong>patience</strong> turned around — a <em>low</em> <span class="math inline">\(a\)</span> means the consumer weights tomorrow heavily and tends to save.</p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Coming soon.</strong> This module is part of ECON 360 but the simulation hasn’t been built yet. It will follow the same pattern as <a href="budget.html">Budget Constraints</a>, <a href="choice.html">The Consumer’s Choice Problem</a>, and <a href="monopoly.html">Monopoly</a>: a short conceptual setup, then an interactive Shinylive demo you can play with in your browser.</p>
+<p><strong>Try it.</strong> Raise the <strong>interest rate</strong> — the budget line pivots steeper around the income point ■, and saving becomes more attractive. Slide <strong>a</strong> (weight on today) to turn a saver into a borrower.</p>
 </div>
 </div>
+</div>
+<style>
+ .it{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,sans-serif;}
+ .it .ctrl{flex:0 0 310px;} .it label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:12px 0 2px;}
+ .it input[type=range]{width:100%;} .it .v{color:#1f3b73;font-weight:700;}
+ .it .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.75;} .it .box b{color:#1f3b73;}
+ .it canvas{width:100%;height:auto;max-width:600px;} .it .plot{flex:1 1 420px;min-width:320px;}
+ .it .save{color:#1c6b4a;font-weight:700;} .it .borrow{color:#b5462a;font-weight:700;}
+</style>
+<div class="it">
+ <div class="ctrl">
+  <label>Weight on today (a): <span class="v" id="it-av">0.50</span></label>
+  <input type="range" id="it-a" min="0.25" max="0.75" value="0.5" step="0.05">
+  <label>Interest rate r: <span class="v" id="it-rv">0.10</span></label>
+  <input type="range" id="it-r" min="0" max="1" value="0.1" step="0.05">
+  <div class="box" id="it-box"></div>
+ </div>
+ <div class="plot"><canvas id="itC" width="600" height="470"></canvas></div>
+</div>
+<script>
+(function(){
+ var A=document.getElementById('it-a'),R=document.getElementById('it-r'),
+   box=document.getElementById('it-box'),cv=document.getElementById('itC'),x=cv.getContext('2d');
+ var W=cv.width,H=cv.height,ML=48,MR=18,MT=18,MB=42,mx=30,my=30;
+ var m1=12, m2=12;                           // income today & tomorrow
+ function X(v){return ML+v/mx*(W-ML-MR);} function Y(v){return H-MB-v/my*(H-MT-MB);}
+ function draw(){
+  var a=+A.value, r=+R.value;
+  var Wlth=m1+m2/(1+r);                       // present value of wealth
+  var c1=a*Wlth, c2=(1-a)*Wlth*(1+r);
+  // budget intercepts: future endpoint (c1=0): c2 = (1+r)*Wlth ; today endpoint (c2=0): c1 = Wlth
+  var futureMax=(1+r)*Wlth, todayMax=Wlth;
+  var saving=m1-c1;
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='right';
+  for(var v=0;v<=my;v+=5){x.beginPath();x.moveTo(ML,Y(v));x.lineTo(W-MR,Y(v));x.stroke();x.fillText(v,ML-6,Y(v)+4);}
+  x.textAlign='center';for(var q=0;q<=mx;q+=5){x.fillText(q,X(q),H-MB+16);}
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.fillText('Consumption today  c₁',(ML+W-MR)/2,H-7);
+  x.save();x.translate(14,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('Consumption tomorrow  c₂',0,0);x.restore();
+  // budget line (clip to box)
+  x.strokeStyle='#1f3b73';x.lineWidth=2.6;x.beginPath();
+  x.moveTo(X(0),Y(futureMax));x.lineTo(X(todayMax),Y(0));x.stroke();
+  // income endowment (square)
+  x.fillStyle='#1c6b4a';x.fillRect(X(m1)-5,Y(m2)-5,10,10);
+  x.fillStyle='#1c6b4a';x.textAlign='left';x.fillText('income (m₁,m₂)',X(m1)+9,Y(m2)-7);
+  // 45-degree-ish guide: vertical at m1
+  x.strokeStyle='#cbd5e1';x.lineWidth=1;x.setLineDash([3,3]);x.beginPath();x.moveTo(X(m1),MT);x.lineTo(X(m1),H-MB);x.stroke();x.setLineDash([]);
+  // choice
+  x.fillStyle='#b5462a';x.beginPath();x.arc(X(c1),Y(c2),6,0,7);x.fill();
+  x.fillStyle='#b5462a';x.fillText('choice',X(c1)+9,Y(c2)+16);
+  document.getElementById('it-av').textContent=a.toFixed(2);
+  document.getElementById('it-rv').textContent=r.toFixed(2);
+  var role = saving>0.05 ? '<span class="save">SAVER</span> — lends '+saving.toFixed(1)+' today'
+           : saving<-0.05 ? '<span class="borrow">BORROWER</span> — borrows '+(-saving).toFixed(1)+' today'
+           : 'consumes exactly their income each period';
+  box.innerHTML =
+    'Present value of wealth W = m₁ + m₂/(1+r) = <b>'+Wlth.toFixed(1)+'</b><br>'+
+    'c₁ = <b>'+c1.toFixed(1)+'</b> (income today = '+m1+') , c₂ = <b>'+c2.toFixed(1)+'</b><br>'+
+    'The consumer is a '+role+'.<br>'+
+    '<span style="color:#5a6472;font-size:13px;">Higher r steepens the line (today costs more future consumption) and rewards saving.</span>';
+ }
+ [A,R].forEach(function(e){e.addEventListener('input',draw);});draw();
+})();
+</script>
+<div id="did-you-know">
+<section id="what-to-notice" class="level3">
+<h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
+<ul>
+<li>The budget line pivots around the <strong>income point ■</strong> as <span class="math inline">\(r\)</span> changes — borrowing and lending are always done <em>relative to</em> what you earn each period.</li>
+<li><strong>Higher r</strong> steepens the line: a dollar saved today buys more future consumption, so savers gain. A pure saver is made better off by a rate hike; a borrower worse off.</li>
+<li>Raising <strong>a</strong> (caring more about today) pushes the choice right, past the income line — the consumer becomes a <strong>borrower</strong>, pulling future income forward.</li>
+</ul>
+</section>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
