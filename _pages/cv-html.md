@@ -6,15 +6,8 @@ author_profile: true
 ---
 
 <style>
-  .archive {
-    width: 80%;
-    margin: 0 auto;
-    float: none;
-    padding-right: 0;
-  }
-  @media (min-width: 80em) {
-    .archive { width: 70%; }
-  }
+  /* gap between sidebar and CV panel on wide screens (theme handles the layout) */
+  @media (min-width: 57.8125em) { .cv-page-wrap { margin-left: 1rem; } }
 
   .cv-wrap {
     font-family: 'EB Garamond', Georgia, serif;
@@ -109,6 +102,7 @@ author_profile: true
 </style>
 
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<div class="cv-page-wrap">
 <div class="cv-download" style="margin-bottom: 0.75rem; text-align: right;">
   <a href="/files/Nency_Dhameja_CV.pdf" class="btn btn--primary" target="_blank">Download CV as PDF</a>
 </div>
@@ -153,7 +147,7 @@ author_profile: true
   <h2>Research</h2>
   <div class="cv-sub">Job Market Paper</div>
   <div class="cv-paper">
-    <a href="/files/Dhameja_Crime_House_Prices.pdf" target="_blank"><strong>When Does Crime Enter House Prices? Evidence from Chicago</strong></a>
+    <strong>When Does Crime Enter House Prices? Evidence from Chicago</strong>
     <div class="cv-abstract">I estimate how crime affects housing prices in Chicago. Although homebuyers presumably care about crime, most offenses have a near-zero effect on sale prices and asking rents. I argue that this is consistent with limited information: crime only changes buyers&rsquo; valuations if they learn of an incident and revise their expectations about future exposure. First, price effects are hyperlocal even though the predictive value of crimes is not. Second, price effects strengthen with agents&rsquo; local experience. Third, even within an offense, the effect depends on where at the property the incident occurred. These patterns are consistent with buyers responding to incidents they learn about rather than to the future crime those incidents predict.</div>
   </div>
 
@@ -324,4 +318,5 @@ author_profile: true
 </div>
 <div class="cv-download" style="margin-top: 0.75rem; text-align: right;">
   <a href="/files/Nency_Dhameja_CV.pdf" class="btn btn--primary" target="_blank">Download CV as PDF</a>
+</div>
 </div>
