@@ -38,6 +38,8 @@ Prior to my Ph.D., I pursued an Executive MBA in Singapore and earned a Bachelor
 <p><strong>Primary fields</strong>: Applied Microeconomics; Urban and Regional Economics <br>
 <strong>Secondary fields</strong>: Applied Econometrics; Labor Economics; Computational Economics </p>
 
+<p><strong>CV</strong>: <a href="/files/Nency_Dhameja_CV_2026.pdf" target="_blank" rel="noopener">Download (PDF)</a></p>
+
   <!-- <div style="width:260px; flex-shrink:0; margin-top:4rem;">
     <div style="background:linear-gradient(135deg,#fff 0%,#f5ede9 100%);border:0.5px solid #d3c4be;border-top:3px solid #672414;border-radius:12px;padding:1.25rem 1.5rem;">
       <div style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#888780;margin-bottom:0.6rem;">Job Market Paper</div>
