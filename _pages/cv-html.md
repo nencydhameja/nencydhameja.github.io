@@ -230,7 +230,7 @@ author_profile: true
   <div class="cv-years">
     <span class="cv-yr">2026</span><span>Macroeconomic Theory (ECON 362, Fall, current)<br>Introduction to Econometrics (ECON 466, Fall, current)<br>Economics of Education (ECON 448, Spring)</span>
     <span class="cv-yr">2025</span><span>Behavioral Economics (ECON 483C, Fall)<br>Agent-Based Modeling with Python (ECON 570/670, Spring)</span>
-    <span class="cv-yr">2024</span><span>Forecasting (ECON 476, Fall)<br>Introduction to Econometrics (ECON 466, Fall)<br>Econometrics (ECON 616, Spring)</span>
+    <span class="cv-yr">2024</span><span>Forecasting (ECON 467, Fall)<br>Introduction to Econometrics (ECON 466, Fall)<br>Econometrics (ECON 616, Spring)</span>
     <span class="cv-yr">2023</span><span>Economic Development of Latin America (ECON 483, Fall)<br>U.S. Financial Systems: Markets and Institutions (ECON 350, Spring)</span>
     <span class="cv-yr">2022</span><span>Economics of Corporations (ECON 454, Fall)</span>
   </div>
