@@ -95,6 +95,12 @@ author_profile: true
   color: #111;
   margin-bottom: 0.5rem;
 }
+  .cv-years { display: grid; grid-template-columns: 3.2em 1fr; gap: 0.1rem 0.6rem; }
+  .cv-years .cv-yr { font-weight: 600; }
+  .cv-paper .cv-venue { display: block; }
+  .cv-abstract { margin-top: 0.2rem; text-align: justify; }
+  .cv-list { margin: 0.1rem 0 0.3rem 0; padding-left: 1.2em; }
+  .cv-list li { margin-bottom: 0.15rem; }
   @media (max-width: 600px) {
     .cv-header-info { flex-direction: column; }
     .cv-address-right { text-align: left; }
@@ -104,24 +110,25 @@ author_profile: true
 
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <div class="cv-download" style="margin-bottom: 0.75rem; text-align: right;">
-  <a href="/files/Nency_Dhameja_CV_2026.pdf" class="btn btn--primary" target="_blank">Download CV as PDF</a>
+  <a href="/files/Nency_Dhameja_CV.pdf" class="btn btn--primary" target="_blank">Download CV as PDF</a>
 </div>
 <div class="cv-wrap">
 <div class="cv-name">Nency Dhameja</div>
 
-<div class="cv-updated">Last Updated: <script>document.write(new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}))</script></div>
+<div class="cv-updated">Last Updated: October 2026</div>
 
 <div class="cv-header-info">
-  <div>4400 Vestal Pkwy E,<br>Binghamton, NY 13902</div>
+  <div>Department of Economics<br>Binghamton University<br>4400 Vestal Parkway East<br>Binghamton, NY 13902</div>
   <div class="cv-address-right">
-    <span class="cv-email">ndhamej1@binghamton.edu</span><br>
+    <span class="cv-email"><a href="mailto:ndhamej1@binghamton.edu">ndhamej1@binghamton.edu</a></span><br>
     <a href="https://nencydhameja.com">https://nencydhameja.com/</a>
   </div>
 </div>
 
 <section class="cv-section">
-  <h2>Fields of Interest</h2>
-  <p>Applied Microeconomics (Urban, Labor, Health, Behavioral), Computational Methods</p>
+  <h2>Fields</h2>
+  <div><strong>Primary:</strong> Urban and Regional Economics; Applied Microeconomics</div>
+  <div><strong>Secondary:</strong> Applied Econometrics; Labor Economics; Computational Economics</div>
 </section>
 
 <section class="cv-section">
@@ -129,14 +136,15 @@ author_profile: true
   <div class="cv-entry">
     <div class="cv-row"><span class="cv-left"><strong>Binghamton University, USA</strong></span><span class="cv-right">Aug 2021 – present</span></div>
     <div>Ph.D. in Economics (Expected May 2027)</div>
+    <div>Committee: David Slichter (chair), Andreas Pape, Solomon W. Polachek, and Ivan Korolev</div>
   </div>
   <div class="cv-entry">
     <div class="cv-row"><span class="cv-left"><strong>SP Jain School of Management, Singapore</strong></span><span class="cv-right">Sep 2018 – Jul 2020</span></div>
-    <div>Master of Business Administration in Finance</div>
-    <div>Dean's List</div>
+    <div>Executive Master of Business Administration (EMBA) in Finance</div>
+    <div>Thesis: Behavioral factors in stock markets</div>
   </div>
   <div class="cv-entry">
-    <div class="cv-row"><span class="cv-left"><strong>Mahatma Gandhi Mission's CoET, India</strong></span><span class="cv-right">Sep 2001 – May 2005</span></div>
+    <div class="cv-row"><span class="cv-left"><strong>Mahatma Gandhi Mission&rsquo;s College of Engineering &amp; Technology, India</strong></span><span class="cv-right">Oct 2001 – Jun 2005</span></div>
     <div>Bachelor of Technology in Electronics &amp; Telecommunications</div>
   </div>
 </section>
@@ -144,86 +152,138 @@ author_profile: true
 <section class="cv-section">
   <h2>Research</h2>
   <div class="cv-sub">Job Market Paper</div>
-  <div class="cv-entry">
-    <strong>Salience, Attention, and Memory: Crime Capitalization in Housing Prices</strong><br>
-    Uses repeat-sales panel data and spatial-temporal kernel estimation to identify the causal impact of localized crime shocks via a near-far difference-in-differences design with property fixed effects.
+  <div class="cv-paper">
+    <a href="/files/Dhameja_Crime_House_Prices.pdf" target="_blank"><strong>When Does Crime Enter House Prices? Evidence from Chicago</strong></a>
+    <div class="cv-abstract">I estimate how crime affects housing prices in Chicago. Although homebuyers presumably care about crime, most offenses have a near-zero effect on sale prices and asking rents. I argue that this is consistent with limited information: crime only changes buyers&rsquo; valuations if they learn of an incident and revise their expectations about future exposure. First, price effects are hyperlocal even though the predictive value of crimes is not. Second, price effects strengthen with agents&rsquo; local experience. Third, even within an offense, the effect depends on where at the property the incident occurred. These patterns are consistent with buyers responding to incidents they learn about rather than to the future crime those incidents predict.</div>
+  </div>
+
+  <div class="cv-sub">Publications</div>
+  <div class="cv-paper">
+    <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6752734"><strong>Causal Forests versus Penalized Splines for Heterogeneous Treatment Effects</strong></a> <em>(with Ivan Korolev and Abiodun Musbaudeen)</em>
+    <span class="cv-venue"><em>Economics Letters</em>, 268 (2026), 113205.</span>
+  </div>
+
+  <div class="cv-sub">Consortium-Authored Publications</div>
+  <div class="cv-paper">
+    <a href="https://www.pnas.org/doi/10.1073/pnas.2524747123"><strong>AI-assisted teams outperform AI-led teams but not human-only teams in assessing research reproducibility in quantitative social science</strong></a> <em>(Brodeur et al.)</em>
+    <span class="cv-venue"><em>Proceedings of the National Academy of Sciences</em>, 123(22) (2026), e2524747123.</span>
   </div>
 
   <div class="cv-sub">Working Papers</div>
   <div class="cv-paper">
-    <strong>The Effect of Diversity Statements in Faculty Hiring</strong> <em>(with David Slichter)</em><br>
-    Uses nationwide faculty job posting data and staggered difference-in-differences to estimate the causal impact of diversity statement requirements on faculty hiring composition and representation outcomes.
+    <strong>The Effects of Diversity Statements in Faculty Hiring</strong> <em>(with David Slichter)</em>
   </div>
   <div class="cv-paper">
-    <a href="https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf"><strong>Monte Carlo Diagnostics for Agent-Based Models</strong></a> <em>(with Christopher Zosh, Yixin Ren, Andreas Pape)</em><br>
-    Develops simulation-based inference methods for estimating parameters and uncertainty in stochastic agent-based economic models.
+    <strong>Cashing the Credit: Anomalous Billing and Firm Dynamics in Italy&rsquo;s Superbonus 110%</strong> <em>(with Marcello Graziano, Maurizio Fiaschetti, and Cristina Connolly)</em>
   </div>
   <div class="cv-paper">
-    <a href="https://chriszosh1.github.io/files/Social_Context_and_LLM_Segregation.pdf"><strong>Social Context in the Schelling Model using LLMs</strong></a> <em>(with Andreas Pape, Srikanth Iyer, Carl Lipo, Yixin Ren, Christopher Zosh)</em><br>
-    Embeds large language models as decision-making agents in a Schelling segregation framework to study how social context shapes residential sorting.
+    <a href="https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf"><strong>Monte-Carlo Tests for Identification and Validation of Stochastic Agent-Based Models</strong></a> <em>(with Christopher Zosh, Yixin Ren, Andreas Pape)</em>
+    <span class="cv-venue">Revise &amp; Resubmit, <em>Journal of Artificial Societies and Social Simulation</em> (JASSS)</span>
   </div>
 
   <div class="cv-sub">Work in Progress</div>
   <div class="cv-paper">
-    <strong>Food Swamps, Obesity, and Metabolic Risks</strong><br>
-    Exploits within-tract variation in dollar store entry using continuous-treatment difference-in-differences and entropy balancing to estimate causal effects on obesity.
+    <strong>Social Context in the Schelling Model using LLMs</strong> <em>(with Andreas Pape, Srikanth Iyer, Yixin Ren, Christopher Zosh, Mohammed Mahinur Alam, Carl Lipo)</em>
+  </div>
+  <div class="cv-paper">
+    <strong>Food Swamps, Obesity, and Metabolic Risks</strong>
   </div>
 </section>
 
 <section class="cv-section">
-  <h2>Employment</h2>
-  <div class="cv-entry"><strong>Binghamton University</strong></div>
-  <div class="cv-entry">
-    <div class="cv-row"><span class="cv-left"><em>Instructor</em> &mdash; Economic Poverty &amp; Discrimination</span><span class="cv-right">Winter 2026</span></div>
-  </div>
-  <div class="cv-entry">
-    <div class="cv-row"><span class="cv-left"><em>Teaching Assistant</em></span><span class="cv-right">Aug 2022 – present</span></div>
-    <div>Courses: Econometrics (undergraduate and graduate), Behavioral Economics, Economics of Education, Agent-Based Modeling (Python), Forecasting, Economic Development of Latin America, U.S. Financial Markets &amp; Institutions, Economics of Corporations.</div>
-  </div>
-  <div class="cv-entry">
-    <div class="cv-row"><span class="cv-left"><em>Data Analyst</em>, Graduate Admissions Office</span><span class="cv-right">Aug 2021 – Aug 2022</span></div>
-    <div>Created and maintained daily, weekly, and monthly reports for the Graduate Admissions Office.</div>
-  </div>
-  <div class="cv-entry">
-    <em>Prior industry experience:</em> Software engineering and management roles at Grab, Accenture, Jones Lang LaSalle, and Agilent Technologies (2005–2021).
-  </div>
+  <h2>Grants and Awards</h2>
+  <div>Graduate Student Research Fund, Binghamton University (2026), for MLS transaction data</div>
+  <div>Dean&rsquo;s List (Term II, III), SP Jain School of Management, 2019–2020</div>
+</section>
+
+<section class="cv-section">
+  <h2>Research Affiliations</h2>
+  <div><a href="https://www.i4replication.org/about">Fellow, Institute for Replication</a>, since 2026</div>
 </section>
 
 <section class="cv-section">
   <h2>Conference Presentations</h2>
-  <div class="cv-entry"><strong>2026</strong><br>
-  ASSA Annual Meeting, Jan 2026; Northeast Regional Conference on Complex Systems (NERCCS), Online, Mar 2026; Midwest Economics Association (MEA), Mar 2026; 
-    <!-- American Society of Health Economists (ASHEcon), Jun 2026; Society for the Advancement of Behavioral Economics (SABE), Jun 2026; Western Economic Association International (WEAI), Jun 2026.-->
+  <div class="cv-years">
+    <span class="cv-yr">2027</span><span>American Economic Association (AEA), Jan (Scheduled)</span>
+    <span class="cv-yr">2026</span><span>Southern Economic Association (SEA), Nov (Scheduled)<br>Western Economic Association International (WEAI), Jul<br>Society for the Advancement of Behavioral Economics (SABE), Jun<br>American Society of Health Economists (ASHEcon), Jun<br>Midwest Economics Association (MEA), Mar<br>American Economic Association (AEA), Jan</span>
+    <span class="cv-yr">2025</span><span>Southern Economic Association (SEA), Nov<br>Western Economic Association International (WEAI), Jun<br>Finger Lakes (FLX) Economics of Education Conference, Jun<br>Eastern Economic Association (EEA), Feb</span>
+    <span class="cv-yr">2024</span><span>Eastern Economic Association (EEA), Feb</span>
   </div>
-  <div class="cv-entry"><strong>2025</strong><br>
-  Eastern Economic Association (EEA), Feb 2025; American Political Science Association (APSA), Online, Feb 2025; FLX Economics of Education Conference, Jun 2025; Western Economic Association International (WEAI), Jun 2025; Southern Economic Association (SEA), Nov 2025.</div>
-  <div class="cv-entry"><strong>2024</strong><br>
-  Eastern Economic Association (EEA), Feb 2024.</div>
+</section>
+
+<section class="cv-section">
+  <h2>Online Presentations</h2>
+  <div class="cv-years">
+    <span class="cv-yr">2026</span><span>Canadian Economics Association (CEA), May</span>
+    <span class="cv-yr">2025</span><span>American Political Science Association (APSA), Feb</span>
+  </div>
 </section>
 
 <section class="cv-section">
   <h2>Poster Presentations</h2>
-  <p>Association for Public Policy Analysis &amp; Management (APPAM), Seattle, Nov 2025.</p>
+  <div class="cv-years">
+    <span class="cv-yr">2026</span><span>Society for Causal Inference (SCI), May</span>
+    <span class="cv-yr">2025</span><span>Association for Public Policy Analysis &amp; Management (APPAM), Nov</span>
+  </div>
 </section>
 
 <section class="cv-section">
-  <h2>Professional Service</h2>
-  <div>Session Discussant, Midwest Economics Association Annual Meeting (2026)</div>
+  <h2>Teaching</h2>
+  <div class="cv-row"><span class="cv-left"><strong>Binghamton University, NY</strong></span><span class="cv-right">2022 – present</span></div>
+  <div class="cv-sub">Instructor</div>
+  <div>Economics of Poverty and Discrimination (ECON 144), Winter 2026. Sole instructor</div>
+  <div class="cv-sub">Teaching Assistant</div>
+  <div class="cv-years">
+    <span class="cv-yr">2026</span><span>Macroeconomic Theory (ECON 362, Fall, current)<br>Introduction to Econometrics (ECON 466, Fall, current)<br>Economics of Education (ECON 448, Spring)</span>
+    <span class="cv-yr">2025</span><span>Behavioral Economics (ECON 483C, Fall)<br>Agent-Based Modeling with Python (ECON 570/670, Spring)</span>
+    <span class="cv-yr">2024</span><span>Forecasting (ECON 476, Fall)<br>Introduction to Econometrics (ECON 466, Fall)<br>Econometrics (ECON 616, Spring)</span>
+    <span class="cv-yr">2023</span><span>Economic Development of Latin America (ECON 483, Fall)<br>U.S. Financial Systems: Markets and Institutions (ECON 350, Spring)</span>
+    <span class="cv-yr">2022</span><span>Economics of Corporations (ECON 454, Fall)</span>
+  </div>
+  <div class="cv-sub">Teaching Simulations</div>
+  <div><a href="/econlab/">Open-access interactive simulations for economics and statistics</a></div>
+</section>
+
+<section class="cv-section">
+  <h2>Service</h2>
+  <div>Session Discussant, Western Economic Association International (2026)</div>
   <div>Conference Volunteer, Society for Causal Inference Annual Conference (2026)</div>
+  <div>Session Discussant, Midwest Economics Association Annual Meeting (2026)</div>
   <div>Session Chair and Discussant, American Political Science Association (2025)</div>
   <div>Session Discussant, Eastern Economic Association Annual Conference (2024)</div>
 </section>
 
-<!--<section class="cv-section">
-  <h2>Professional Development</h2>
-  <div>Northwestern University, Causal Inference Workshop (Main &amp; Advanced), 2025</div>
-  <div>Harvard University, CausalLab Workshop, Scheduled, Summer 2026</div>
-</section>-->
+<section class="cv-section">
+  <h2>Additional Training &amp; Workshops</h2>
+  <div class="cv-sub">Supplementary Methods Training</div>
+  <ul class="cv-list">
+    <li>Advanced Confounding Adjustment, Harvard T.H. Chan School of Public Health, 2026</li>
+    <li>Causal Inference Workshop (Advanced), Northwestern University, 2025</li>
+    <li>Causal Inference Workshop (Main), Northwestern University, 2025</li>
+  </ul>
+  <div class="cv-sub">Pedagogical Workshops/Conferences</div>
+  <ul class="cv-list">
+    <li>Conference on Teaching and Research in Economic Education (CTREE), AEA, 2026</li>
+    <li>TeachECONference (CTaLE), 2026</li>
+  </ul>
+</section>
 
 <section class="cv-section">
-  <h2>Research Methods and Technical Skills</h2>
-  <p>Causal inference (difference-in-differences, event studies, IV, entropy balancing, continuous treatments); spatial methods (kernel estimation, exposure measures); simulation and agent-based modeling (including LLM agent simulations); machine learning (LASSO, Random Forest, XGBoost).</p>
-  <p style="margin-top:0.4rem;"><strong>Programming:</strong> Python, Stata, R, SQL.</p>
+  <h2>Professional Experience</h2>
+  <div class="cv-entry">
+    <div class="cv-row"><span class="cv-left"><strong>Data Analyst</strong>, Graduate Admissions Office, Binghamton University</span><span class="cv-right">Aug 2021 – Aug 2022</span></div>
+  </div>
+  <div class="cv-entry">
+    <div class="cv-row"><span class="cv-left"><strong>Industry</strong>, India &amp; Singapore</span><span class="cv-right">Jun 2005 – Aug 2021</span></div>
+    <div>Sixteen years in software engineering, business analysis, and project management at Accenture, Grab, Jones Lang LaSalle, Agilent Technologies, and CSC (now DXC Technology). JLL Pinnacle Award, 2017; Agilent Technologies Appreciation Award for Innovation, 2008, and Outstanding Individual and Team Performance Awards, 2009–2011.</div>
+  </div>
+</section>
+
+<section class="cv-section">
+  <h2>Computational Skills</h2>
+  <div><strong>Methods:</strong> panel methods; causal inference; spatial data construction; agent-based modeling (including LLM agents); machine learning (causal forests, gradient boosting)</div>
+  <div><strong>Spatial data analysis:</strong> large-scale geocoding and spatial matching; spatial econometrics</div>
+  <div><strong>Software:</strong> Stata, R, Python, SQL, Git, QGIS</div>
 </section>
 
 <section class="cv-section">
@@ -241,13 +301,13 @@ author_profile: true
       <span class="cv-ref-email"><a href="mailto:slichter@binghamton.edu">slichter@binghamton.edu</a></span>
     </div>
     <div class="cv-ref">
-      <a href="https://andreasduuspape.com/">Dr. Andreas Pape</a><br>
+      <a href="https://www.binghamton.edu/apps/directory/person/profile/apape">Dr. Andreas Pape</a><br>
       Associate Professor of Economics<br>
       Binghamton University<br>
       <span class="cv-ref-email"><a href="mailto:apape@binghamton.edu">apape@binghamton.edu</a></span>
     </div>
     <div class="cv-ref">
-      <a href="https://www.binghamton.edu/economics/people/polachek-solomon.html">Dr. Solomon W. Polachek</a><br>
+      <a href="https://bingweb.binghamton.edu/~polachek/">Dr. Solomon W. Polachek</a><br>
       Distinguished Professor of Economics<br>
       Binghamton University<br>
       <span class="cv-ref-email"><a href="mailto:polachek@binghamton.edu">polachek@binghamton.edu</a></span>
@@ -261,11 +321,7 @@ author_profile: true
   </div>
 </section>
 
-<!-- <div class="cv-download">
- <a href="/files/Nency_Dhameja_CV_2026.pdf" class="btn btn--primary" target="_blank">Download CV as PDF</a>
-</div> -->
-
 </div>
 <div class="cv-download" style="margin-top: 0.75rem; text-align: right;">
-  <a href="/files/Nency_Dhameja_CV_2026.pdf" class="btn btn--primary" target="_blank">Download CV as PDF</a>
+  <a href="/files/Nency_Dhameja_CV.pdf" class="btn btn--primary" target="_blank">Download CV as PDF</a>
 </div>
