@@ -189,3 +189,12 @@ body, .page, #main {
   padding-bottom: 0.4rem;
   margin-bottom: 0.5rem;
 }
+
+/* Link style: maroon, no underline; underline on hover only. The theme's .page__content a and
+   .archive a rules underline permanently with higher specificity, so they are overridden explicitly. */
+a, a:visited { color: #800000; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.page__content a, .page__content a:visited,
+.archive a, .archive a:visited,
+.archive__item-title { color: #800000; text-decoration: none; }
+.page__content a:hover, .archive a:hover { text-decoration: underline; }
