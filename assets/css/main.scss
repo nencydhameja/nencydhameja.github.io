@@ -190,11 +190,12 @@ body, .page, #main {
   margin-bottom: 0.5rem;
 }
 
-/* Link style: maroon, no underline; underline on hover only. The theme's .page__content a and
-   .archive a rules underline permanently with higher specificity, so they are overridden explicitly. */
-a, a:visited { color: #800000; text-decoration: none; }
-a:hover { text-decoration: underline; }
-.page__content a, .page__content a:visited,
-.archive a, .archive a:visited,
-.archive__item-title { color: #800000; text-decoration: none; }
-.page__content a:hover, .archive a:hover { text-decoration: underline; }
+/* Links to files in /files/ (paper PDFs etc.): maroon, no underline; underline on hover only.
+   Scoped by href so every other link keeps the theme style. Selectors are qualified with the theme's
+   .page__content / .archive containers so they beat the theme's permanent-underline rules. */
+a[href^="/files/"], a[href*="nencydhameja.com/files/"], a[href^="/files/"]:visited,  a[href*="nencydhameja.com/files/"]:visited,
+.page__content a[href^="/files/"], .page__content a[href*="nencydhameja.com/files/"], .page__content a[href^="/files/"]:visited,  .page__content a[href*="nencydhameja.com/files/"]:visited,
+.archive a[href^="/files/"], .archive a[href*="nencydhameja.com/files/"], .archive a[href^="/files/"]:visited ,  .archive a[href*="nencydhameja.com/files/"]:visited { color: #800000; text-decoration: none; }
+a[href^="/files/"]:hover, a[href*="nencydhameja.com/files/"]:hover,
+.page__content a[href^="/files/"]:hover, .page__content a[href*="nencydhameja.com/files/"]:hover,
+.archive a[href^="/files/"]:hover , .archive a[href*="nencydhameja.com/files/"]:hover { text-decoration: underline; }
