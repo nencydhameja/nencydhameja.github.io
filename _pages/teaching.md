@@ -216,7 +216,7 @@ author_profile: true
     <div class="talk-row"><span class="talk-year">Spring 2026</span><span class="talk-name">Economics of Education</span><span class="talk-num">ECON 448</span></div>
     <div class="talk-row"><span class="talk-year">Fall 2025</span><span class="talk-name">Behavioral Economics</span><span class="talk-num">ECON 483C</span></div>
     <div class="talk-row"><span class="talk-year">Spring 2025</span><span class="talk-name">Agent-Based Modeling (Python)</span><span class="talk-num">ECON 570/670</span></div>
-    <div class="talk-row"><span class="talk-year">Fall 2024</span><span class="talk-name">Forecasting</span><span class="talk-num">ECON 476</span></div>
+    <div class="talk-row"><span class="talk-year">Fall 2024</span><span class="talk-name">Forecasting</span><span class="talk-num">ECON 467</span></div>
     <div class="talk-row"><span class="talk-year"></span><span class="talk-name">Introduction to Econometrics</span><span class="talk-num">ECON 466</span></div>
     <div class="talk-row"><span class="talk-year">Spring 2024</span><span class="talk-name">Econometrics</span><span class="talk-num">ECON 616</span></div>
     <div class="talk-row"><span class="talk-year">Fall 2023</span><span class="talk-name">Economic Development of Latin America</span><span class="talk-num">ECON 483</span></div>
