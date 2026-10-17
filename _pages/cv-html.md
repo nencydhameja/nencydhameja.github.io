@@ -269,7 +269,7 @@ author_profile: true
   </div>
   <div class="cv-entry">
     <div class="cv-row"><span class="cv-left"><strong>Industry</strong>, India &amp; Singapore</span><span class="cv-right">Jun 2005 – Aug 2021</span></div>
-    <div>Sixteen years in software engineering, business analysis, and project management at Accenture, Grab, Jones Lang LaSalle, Agilent Technologies, and CSC (now DXC Technology). JLL Pinnacle Award, 2017; Agilent Technologies Appreciation Award for Innovation, 2008, and Outstanding Individual and Team Performance Awards, 2009–2011.</div>
+    <div>Fifteen years in software engineering, business analysis, and project management at Accenture, Grab, Jones Lang LaSalle, Agilent Technologies, and CSC (now DXC Technology). JLL Pinnacle Award, 2017; Agilent Technologies Appreciation Award for Innovation, 2008, and Outstanding Individual and Team Performance Awards, 2009–2011.</div>
   </div>
 </section>
 
