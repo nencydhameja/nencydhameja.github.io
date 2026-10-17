@@ -44,6 +44,7 @@ author_profile: true
   .cv-section { margin-bottom: 1.1rem; }
 
   .cv-section h2 {
+    font-family: 'EB Garamond', Georgia, serif;
     font-size: 13pt;
     font-weight: 600;
     font-variant: small-caps;
