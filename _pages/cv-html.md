@@ -86,7 +86,7 @@ author_profile: true
   font-weight: 600;
   font-variant: small-caps;
   letter-spacing: 0.08em;
-  color: #111;
+  color: #672414;
   margin-bottom: 0.5rem;
 }
   .cv-years { display: grid; grid-template-columns: 3.2em 1fr; gap: 0.1rem 0.6rem; }
