@@ -199,26 +199,26 @@ author_profile: true
 <section class="cv-section">
   <h2>Conference Presentations</h2>
   <div class="cv-years">
-    <span class="cv-yr">2027</span><span>American Economic Association (AEA), Jan (Scheduled)</span>
-    <span class="cv-yr">2026</span><span>Southern Economic Association (SEA), Nov (Scheduled)<br>Western Economic Association International (WEAI), Jul<br>Society for the Advancement of Behavioral Economics (SABE), Jun<br>American Society of Health Economists (ASHEcon), Jun<br>Midwest Economics Association (MEA), Mar<br>American Economic Association (AEA), Jan</span>
-    <span class="cv-yr">2025</span><span>Southern Economic Association (SEA), Nov<br>Western Economic Association International (WEAI), Jun<br>Finger Lakes (FLX) Economics of Education Conference, Jun<br>Eastern Economic Association (EEA), Feb</span>
-    <span class="cv-yr">2024</span><span>Eastern Economic Association (EEA), Feb</span>
+    <span class="cv-yr">2027</span><span>American Economic Association (AEA) (scheduled)</span>
+    <span class="cv-yr">2026</span><span>Southern Economic Association (SEA) (scheduled)<br>Western Economic Association International (WEAI)<br>Society for the Advancement of Behavioral Economics (SABE)<br>American Society of Health Economists (ASHEcon)<br>Midwest Economics Association (MEA)<br>American Economic Association (AEA)</span>
+    <span class="cv-yr">2025</span><span>Southern Economic Association (SEA)<br>Western Economic Association International (WEAI)<br>Finger Lakes (FLX) Economics of Education Conference<br>Eastern Economic Association (EEA)</span>
+    <span class="cv-yr">2024</span><span>Eastern Economic Association (EEA)</span>
   </div>
 </section>
 
 <section class="cv-section">
   <h2>Online Presentations</h2>
   <div class="cv-years">
-    <span class="cv-yr">2026</span><span>Canadian Economics Association (CEA), May</span>
-    <span class="cv-yr">2025</span><span>American Political Science Association (APSA), Feb</span>
+    <span class="cv-yr">2026</span><span>Canadian Economics Association (CEA)</span>
+    <span class="cv-yr">2025</span><span>American Political Science Association (APSA)</span>
   </div>
 </section>
 
 <section class="cv-section">
   <h2>Poster Presentations</h2>
   <div class="cv-years">
-    <span class="cv-yr">2026</span><span>Society for Causal Inference (SCI), May</span>
-    <span class="cv-yr">2025</span><span>Association for Public Policy Analysis &amp; Management (APPAM), Nov</span>
+    <span class="cv-yr">2026</span><span>Society for Causal Inference (SCI)</span>
+    <span class="cv-yr">2025</span><span>Association for Public Policy Analysis &amp; Management (APPAM)</span>
   </div>
 </section>
 
