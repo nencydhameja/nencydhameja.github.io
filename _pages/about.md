@@ -35,7 +35,7 @@ Prior to my Ph.D., I pursued an Executive MBA in Singapore and earned a Bachelor
 <!-- Fields: Applied Microeconomics — Urban Economics, Behavioral Economics, Labor Economics -->
 <!--<p><strong>Fields</strong>: Applied Microeconomics - Urban Economics, Economics of Education, Behavioral Economics, Health Economics </p>-->
 
-<p><strong>Primary fields</strong>: Applied Microeconomics; Urban and Regional Economics <br>
+<p><strong>Primary fields</strong>: Urban and Regional Economics; Applied Microeconomics <br>
 <strong>Secondary fields</strong>: Applied Econometrics; Labor Economics; Computational Economics </p>
 
 <!-- CV link hidden until advisor review:
