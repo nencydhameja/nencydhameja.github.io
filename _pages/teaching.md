@@ -42,7 +42,7 @@ author_profile: true
     border-bottom: 0.5px solid #f1efe8;
   }
   .talk-year { font-size: 12px; font-weight: 400; color: #8a8880; }  /* CHANGED: term+year, no longer bold (was font-weight 600) */
-  .talk-num { font-size: 10px; color: #a7a59c; letter-spacing: 0.02em; text-align: right; white-space: nowrap; }  /* CHANGED: small course number in right column (where the term column used to be) */
+  .talk-num { font-size: 11px; color: #8a8880; letter-spacing: 0.02em; text-align: right; white-space: nowrap; }  /* CHANGED: small course number in right column (where the term column used to be) */
 
   .talk-row:last-child { border-bottom: none; }
 
@@ -80,7 +80,7 @@ author_profile: true
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #888780;
+    color: #672414;
     margin: 1rem 0 0.3rem;
   }
 
@@ -97,7 +97,7 @@ author_profile: true
 
   .page-intro {
     font-size: 14.5px;
-    color: #5f5e5a;
+    color: #1a1a18;
     line-height: 1.55;
     margin: -0.3rem 0 1.1rem;
   }
@@ -229,7 +229,7 @@ author_profile: true
 <p class="page-intro">
   I build browser-based teaching simulations that run entirely in the browser (no installs), so
   students can experiment with the models directly. Explore them in my
-  <a href="/econlab/" style="color:#185FA5;text-decoration:none;">Econ&nbsp;Lab</a>.
+  <a href="/econlab/" target="_blank" rel="noopener" style="color:#672414;text-decoration:none;">Econ&nbsp;Lab</a>.
 </p>
 
 <!-- Simulation cards hidden for now (they live in Econ Lab); uncomment to show them here
