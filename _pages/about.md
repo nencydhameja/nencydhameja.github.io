@@ -15,7 +15,38 @@ redirect_from:
 </style>
 
 <!-- <h3>Hi, I’m Nency Dhameja.</h3> -->
-<div style="text-align: justify;max-width: 680px;">
+<style>
+.home-wrap{display:flex;align-items:flex-start;width:100%}
+.home-bio{order:1;flex:1 1 auto;min-width:0;max-width:680px;text-align:justify;padding-right:28px}
+.jm-col{order:2;flex:0 0 210px;border-left:1px solid #672414;padding-left:22px;margin-top:4px}
+.jm-col h4{font-size:0.72em;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#672414;margin:0 0 0.7em}
+.jm-label{font-size:0.7em;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#672414;margin:0 0 0.4em}
+.jm-title{font-style:italic;font-size:0.92em;line-height:1.35;color:#1a1a18;margin:0 0 0.8em}
+.jm-title a{color:#672414;font-weight:400;text-decoration:none}
+.jm-title a:hover{text-decoration:underline}
+.jm-col ul{list-style:none;margin:0;padding:0}
+.jm-col li.jm-cv{margin-top:1.4em}
+.jm-col li{margin:0 0 0.6em;font-size:0.88em;line-height:1.35}
+.jm-col a{color:#672414;text-decoration:none;font-weight:400}
+.jm-col a:hover{text-decoration:underline}
+@media (max-width: 768px){
+  .home-wrap{flex-direction:column}
+  .jm-col{order:0;flex:none;width:100%;border-left:none;padding-left:0;margin:0 0 1em;padding-bottom:0.8em;border-bottom:1px solid #672414}
+  .home-bio{padding-right:0;max-width:100%;width:100%}
+}
+</style>
+<div class="home-wrap">
+<aside class="jm-col">
+<div class="jm-label">Job Market Paper</div>
+<div class="jm-title"><a href="/files/Dhameja_Crime_House_Prices.pdf" target="_blank" rel="noopener">When Does Crime Enter House Prices? Evidence from Chicago</a></div>
+<ul>
+<!-- Explore the Results hidden until the results page is rebuilt from the current paper:
+<li><a href="/assets/projects/crime-salience/paper.html" target="_blank" rel="noopener">Explore the Results</a></li>
+-->
+<li class="jm-cv"><a href="/files/Nency_Dhameja_CV.pdf" target="_blank" rel="noopener">Curriculum Vitae (PDF)</a></li>
+</ul></aside>
+<div class="home-bio">
+
 <!-- <div style="border: 0.5px solid #d3d1c7; border-radius: 12px; padding: 1.5rem 2rem;"> -->
 
 <p>Hi, I’m Nency Dhameja <em>(pronounced “Nancy”)</em>, a 6th-year Ph.D. candidate in Economics at Binghamton University, State University of New York (SUNY).</p>
@@ -37,6 +68,7 @@ Prior to my Ph.D., I pursued an Executive MBA in Singapore and earned a Bachelor
 
 <p><strong>Primary fields</strong>: Urban and Regional Economics; Applied Microeconomics <br>
 <strong>Secondary fields</strong>: Applied Econometrics; Labor Economics; Computational Economics </p>
+</div></div>
 
 <!-- CV link hidden until advisor review:
 <p><strong>CV</strong>: <a href="/files/Nency_Dhameja_CV.pdf" target="_blank" rel="noopener">Download (PDF)</a></p>

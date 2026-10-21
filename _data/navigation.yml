@@ -17,6 +17,7 @@ main:
     url: /teaching/ 
   - title: "Econ Lab"
     url: /econlab/
+    new_window: true
   - title: "CV"
     url: /cv-html/
   # - title: "Talks"
