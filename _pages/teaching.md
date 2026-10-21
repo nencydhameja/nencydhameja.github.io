@@ -30,7 +30,7 @@ author_profile: true
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: #888780;
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .talk-row {
@@ -42,22 +42,22 @@ author_profile: true
     border-bottom: 0.5px solid #f1efe8;
   }
   .talk-year { font-size: 12px; font-weight: 400; color: #8a8880; }  /* CHANGED: term+year, no longer bold (was font-weight 600) */
-  .talk-num { font-size: 8.5px; color: #a7a59c; letter-spacing: 0.02em; text-align: right; white-space: nowrap; }  /* CHANGED: small course number in right column (where the term column used to be) */
+  .talk-num { font-size: 10px; color: #a7a59c; letter-spacing: 0.02em; text-align: right; white-space: nowrap; }  /* CHANGED: small course number in right column (where the term column used to be) */
 
   .talk-row:last-child { border-bottom: none; }
 
   .talk-name {
-    font-size: 11px;          /* CHANGED: was 12.5px -> 11px, smaller course text */
+    font-size: 13px;          /* CHANGED 2026-10-21: 11px -> 13px, readable course text */
     font-weight: 500;
     color: #1a1a18;
   }
 
   .talk-abbr {
-    font-size: 11px;          /* CHANGED: was 12.5px -> 11px */
+    font-size: 13px;          /* CHANGED 2026-10-21: 11px -> 13px */
     font-weight: 400;
     color: #888780;
   }
-  .talk-name .talk-abbr { font-size: 8.5px; color: #a7a59c; letter-spacing: 0.02em; }  /* CHANGED: was 10px -> 8.5px, smaller inline course number */
+  .talk-name .talk-abbr { font-size: 10px; color: #a7a59c; letter-spacing: 0.02em; }  /* CHANGED: was 10px -> 8.5px, smaller inline course number */
 
   .talk-meta {
     display: flex;
