@@ -156,29 +156,36 @@ author_profile: true
   <h2>Other Research</h2>
   <div class="cv-sub">Methods and Research Practice</div>
   <div class="cv-paper">
-    <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6752734"><strong>Causal Forests versus Penalized Splines for Heterogeneous Treatment Effects</strong></a> <em>(with Ivan Korolev and Abiodun Musbaudeen)</em> [<em>Economics Letters</em>, 268 (2026), 113205]
+    <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6752734"><strong>Causal Forests versus Penalized Splines for Heterogeneous Treatment Effects</strong></a> <em>(with Ivan Korolev and Abiodun Musbaudeen)</em>
+    <span class="cv-venue">[<em>Economics Letters</em>, 268 (2026), 113205]</span>
   </div>
   <div class="cv-paper">
-    <a href="https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf"><strong>Monte-Carlo Tests for Identification and Validation of Stochastic Agent-Based Models</strong></a> <em>(with Christopher Zosh, Yixin Ren, and Andreas Pape)</em> [<em>Revise &amp; Resubmit</em>, <em>JASSS</em>]
+    <a href="https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf"><strong>Monte-Carlo Tests for Identification and Validation of Stochastic Agent-Based Models</strong></a> <em>(with Christopher Zosh, Yixin Ren, and Andreas Pape)</em>
+    <span class="cv-venue">[<em>Revise &amp; Resubmit</em>, <em>JASSS</em>]</span>
   </div>
   <div class="cv-paper">
-    <a href="https://www.pnas.org/doi/10.1073/pnas.2524747123"><strong>AI-assisted teams outperform AI-led teams but not human-only teams in assessing research reproducibility in quantitative social science</strong></a> <em>(Brodeur et al.)</em> [<em>PNAS</em>, 123(22) (2026), e2524747123; consortium-authored]
+    <a href="https://www.pnas.org/doi/10.1073/pnas.2524747123"><strong>AI-assisted teams outperform AI-led teams but not human-only teams in assessing research reproducibility in quantitative social science</strong></a> <em>(Brodeur et al.)</em>
+    <span class="cv-venue">[<em>PNAS</em>, 123(22) (2026), e2524747123; consortium-authored]</span>
   </div>
 
   <div class="cv-sub">Public Policy and Institutions</div>
   <div class="cv-paper">
-    <strong>The Effects of Diversity Statements in Faculty Hiring</strong> <em>(with David Slichter)</em> [<em>Working paper</em>]
+    <strong>The Effects of Diversity Statements in Faculty Hiring</strong> <em>(with David Slichter)</em>
+    <span class="cv-venue">[<em>Working paper</em>]</span>
   </div>
   <div class="cv-paper">
-    <strong>Cashing the Credit: Anomalous Billing and Firm Dynamics in Italy&rsquo;s Superbonus 110%</strong> <em>(with Marcello Graziano, Maurizio Fiaschetti, and Cristina Connolly)</em> [<em>Working paper</em>]
+    <strong>Cashing the Credit: Anomalous Billing and Firm Dynamics in Italy&rsquo;s Superbonus 110%</strong> <em>(with Marcello Graziano, Maurizio Fiaschetti, and Cristina Connolly)</em>
+    <span class="cv-venue">[<em>Working paper</em>]</span>
   </div>
 
   <div class="cv-sub">Neighborhoods and Spatial Inequality</div>
   <div class="cv-paper">
-    <strong>Social Context in the Schelling Model using LLMs</strong> <em>(with Andreas Pape, Srikanth Iyer, Yixin Ren, Christopher Zosh, Mohammed Mahinur Alam, and Carl Lipo)</em> [<em>Work in progress</em>]
+    <strong>Social Context in the Schelling Model using LLMs</strong> <em>(with Andreas Pape, Srikanth Iyer, Yixin Ren, Christopher Zosh, Mohammed Mahinur Alam, and Carl Lipo)</em>
+    <span class="cv-venue">[<em>Work in progress</em>]</span>
   </div>
   <div class="cv-paper">
-    <strong>Food Swamps, Obesity, and Metabolic Risks</strong> [<em>Work in progress</em>]
+    <strong>Food Swamps, Obesity, and Metabolic Risks</strong>
+    <span class="cv-venue">[<em>Work in progress</em>]</span>
   </div>
 </section>
 
