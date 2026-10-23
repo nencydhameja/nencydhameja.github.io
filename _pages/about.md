@@ -79,7 +79,7 @@ Prior to my Ph.D., I pursued an Executive MBA in Singapore and earned a Bachelor
       <div style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#888780;margin-bottom:0.6rem;">Job Market Paper</div>
       <div style="font-size:15px;font-weight:500;color:#1a1a18;font-family:Georgia,serif;line-height:1.4;margin-bottom:0.75rem;">Salience, Attention, and Memory: Crime Capitalization in Housing Prices</div>
       <div style="font-size:13px;color:#5f5e5a;font-style:italic;margin-bottom:0.9rem;">How do behavioral frictions shape the way crime shocks get capitalized into housing prices?</div>
-      <a href="/files/Nency_Dhameja_CV_2026.pdf" style="font-size:12px;font-weight:500;color:#672414;text-decoration:none;">↓ PDF</a>
+      <a href="/files/Nency_Dhameja_CV.pdf" style="font-size:12px;font-weight:500;color:#672414;text-decoration:none;">↓ PDF</a>
     </div>
   </div> -->
 
