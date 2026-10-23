@@ -145,43 +145,40 @@ author_profile: true
 </section>
 
 <section class="cv-section">
-  <h2>Research</h2>
-  <div class="cv-sub">Job Market Paper</div>
+  <h2>Job Market Paper</h2>
   <div class="cv-paper">
-    <strong>When Does Crime Enter House Prices? Evidence from Chicago</strong>
+    <a href="/files/Dhameja_Crime_House_Prices.pdf"><strong>When Does Crime Enter House Prices? Evidence from Chicago</strong></a>
     <div class="cv-abstract">I estimate how crime affects housing prices in Chicago. Although homebuyers presumably care about crime, most offenses have a near-zero effect on sale prices and asking rents. I argue that this is consistent with limited information: crime only changes buyers&rsquo; valuations if they learn of an incident and revise their expectations about future exposure. First, price effects are hyperlocal even though the predictive value of crimes is not. Second, price effects strengthen with agents&rsquo; local experience. Third, even within an offense, the effect depends on where at the property the incident occurred. These patterns are consistent with buyers responding to incidents they learn about rather than to the future crime those incidents predict.</div>
   </div>
+</section>
 
-  <div class="cv-sub">Publications</div>
+<section class="cv-section">
+  <h2>Other Research</h2>
+  <div class="cv-sub">Methods and Research Practice</div>
   <div class="cv-paper">
-    <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6752734"><strong>Causal Forests versus Penalized Splines for Heterogeneous Treatment Effects</strong></a> <em>(with Ivan Korolev and Abiodun Musbaudeen)</em>
-    <span class="cv-venue"><em>Economics Letters</em>, 268 (2026), 113205.</span>
-  </div>
-
-  <div class="cv-sub">Consortium-Authored Publications</div>
-  <div class="cv-paper">
-    <a href="https://www.pnas.org/doi/10.1073/pnas.2524747123"><strong>AI-assisted teams outperform AI-led teams but not human-only teams in assessing research reproducibility in quantitative social science</strong></a> <em>(Brodeur et al.)</em>
-    <span class="cv-venue"><em>Proceedings of the National Academy of Sciences</em>, 123(22) (2026), e2524747123.</span>
-  </div>
-
-  <div class="cv-sub">Working Papers</div>
-  <div class="cv-paper">
-    <strong>The Effects of Diversity Statements in Faculty Hiring</strong> <em>(with David Slichter)</em>
+    <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6752734"><strong>Causal Forests versus Penalized Splines for Heterogeneous Treatment Effects</strong></a> <em>(with Ivan Korolev and Abiodun Musbaudeen)</em> [<em>Economics Letters</em>, 268 (2026), 113205]
   </div>
   <div class="cv-paper">
-    <strong>Cashing the Credit: Anomalous Billing and Firm Dynamics in Italy&rsquo;s Superbonus 110%</strong> <em>(with Marcello Graziano, Maurizio Fiaschetti, and Cristina Connolly)</em>
+    <a href="https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf"><strong>Monte-Carlo Tests for Identification and Validation of Stochastic Agent-Based Models</strong></a> <em>(with Christopher Zosh, Yixin Ren, and Andreas Pape)</em> [<em>Revise &amp; Resubmit</em>, <em>JASSS</em>]
   </div>
   <div class="cv-paper">
-    <a href="https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf"><strong>Monte-Carlo Tests for Identification and Validation of Stochastic Agent-Based Models</strong></a> <em>(with Christopher Zosh, Yixin Ren, Andreas Pape)</em>
-    <span class="cv-venue">Revise &amp; Resubmit, <em>Journal of Artificial Societies and Social Simulation</em> (JASSS)</span>
+    <a href="https://www.pnas.org/doi/10.1073/pnas.2524747123"><strong>AI-assisted teams outperform AI-led teams but not human-only teams in assessing research reproducibility in quantitative social science</strong></a> <em>(Brodeur et al.)</em> [<em>PNAS</em>, 123(22) (2026), e2524747123; consortium-authored]
   </div>
 
-  <div class="cv-sub">Work in Progress</div>
+  <div class="cv-sub">Public Policy and Institutions</div>
   <div class="cv-paper">
-    <strong>Social Context in the Schelling Model using LLMs</strong> <em>(with Andreas Pape, Srikanth Iyer, Yixin Ren, Christopher Zosh, Mohammed Mahinur Alam, Carl Lipo)</em>
+    <strong>The Effects of Diversity Statements in Faculty Hiring</strong> <em>(with David Slichter)</em> [<em>Working paper</em>]
   </div>
   <div class="cv-paper">
-    <strong>Food Swamps, Obesity, and Metabolic Risks</strong>
+    <strong>Cashing the Credit: Anomalous Billing and Firm Dynamics in Italy&rsquo;s Superbonus 110%</strong> <em>(with Marcello Graziano, Maurizio Fiaschetti, and Cristina Connolly)</em> [<em>Working paper</em>]
+  </div>
+
+  <div class="cv-sub">Neighborhoods and Spatial Inequality</div>
+  <div class="cv-paper">
+    <strong>Social Context in the Schelling Model using LLMs</strong> <em>(with Andreas Pape, Srikanth Iyer, Yixin Ren, Christopher Zosh, Mohammed Mahinur Alam, and Carl Lipo)</em> [<em>Work in progress</em>]
+  </div>
+  <div class="cv-paper">
+    <strong>Food Swamps, Obesity, and Metabolic Risks</strong> [<em>Work in progress</em>]
   </div>
 </section>
 
@@ -276,8 +273,8 @@ author_profile: true
 
 <section class="cv-section">
   <h2>Computational Skills</h2>
-  <div><strong>Methods:</strong> panel methods; causal inference; spatial data construction; agent-based modeling (including LLM agents); machine learning (causal forests, gradient boosting)</div>
-  <div><strong>Spatial data analysis:</strong> large-scale geocoding and spatial matching; spatial econometrics</div>
+  <div><strong>Methods:</strong> panel methods; causal inference; spatial data construction; web scraping; agent-based modeling (including LLM agents); machine learning (causal forests, gradient boosting)</div>
+  <div><strong>Spatial data analysis:</strong> large-scale geocoding, spatial matching, and spatial inference.</div>
   <div><strong>Software:</strong> Stata, R, Python, SQL, Git, QGIS</div>
 </section>
 
