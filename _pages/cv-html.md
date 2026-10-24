@@ -7,7 +7,7 @@ author_profile: true
 
 <style>
   /* gap between sidebar and CV panel on wide screens (theme handles the layout) */
-  @media (min-width: 57.8125em) { .cv-page-wrap { margin-left: 1rem; } }
+  @media (min-width: 57.8125em) { .cv-page-wrap { margin-left: 0.5rem; } .cv-page-wrap .cv-wrap { padding: 1.5rem 1.1rem; } }
 
   .cv-wrap {
     font-family: 'EB Garamond', Georgia, serif;
