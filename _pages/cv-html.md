@@ -276,7 +276,7 @@ author_profile: true
 
 <section class="cv-section">
   <h2>Computational Skills</h2>
-  <div><strong>Methods:</strong> panel methods; causal inference; spatial data construction; agent-based modeling (including LLM agents); machine learning (causal forests, gradient boosting)</div>
+  <div><strong>Methods:</strong> panel methods; causal inference; spatial data construction; agent-based modeling (including LLM agents); machine learning (causal forests, gradient boosting, LASSO, random forests)</div>
   <div><strong>Spatial data analysis:</strong> large-scale geocoding, spatial matching, and spatial inference.</div>
   <div><strong>Software:</strong> Stata, R, Python, SQL, Git, QGIS</div>
 </section>
