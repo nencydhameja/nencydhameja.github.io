@@ -153,8 +153,7 @@ author_profile: true
 </section>
 
 <section class="cv-section">
-  <h2>Other Research</h2>
-  <div class="cv-sub">Publications</div>
+  <h2>Publications</h2>
   <div class="cv-paper">
     <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6752734"><strong>Causal Forests versus Penalized Splines for Heterogeneous Treatment Effects</strong></a> <em>(with Ivan Korolev and Abiodun Musbaudeen)</em>
     <span class="cv-venue">[<em>Economics Letters</em>, 268 (2026), 113205]</span>
@@ -164,7 +163,10 @@ author_profile: true
     <span class="cv-venue">[<em>PNAS</em>, 123(22) (2026), e2524747123; consortium-authored]</span>
   </div>
 
-  <div class="cv-sub">Working Papers</div>
+</section>
+
+<section class="cv-section">
+  <h2>Working Papers</h2>
   <div class="cv-paper">
     <a href="https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf"><strong>Monte-Carlo Tests for Identification and Validation of Stochastic Agent-Based Models</strong></a> <em>(with Christopher Zosh, Yixin Ren, and Andreas Pape)</em>
     <span class="cv-venue">[<strong>Revise &amp; Resubmit</strong>, <em>Journal of Artificial Societies and Social Simulation</em>]</span>
@@ -176,7 +178,10 @@ author_profile: true
     <strong>Cashing the Credit: Anomalous Billing and Firm Dynamics in Italy&rsquo;s Superbonus 110%</strong> <em>(with Marcello Graziano, Maurizio Fiaschetti, and Cristina Connolly)</em>
   </div>
 
-  <div class="cv-sub">Work in Progress</div>
+</section>
+
+<section class="cv-section">
+  <h2>Work in Progress</h2>
   <div class="cv-paper">
     <strong>Social Context in the Schelling Model using LLMs</strong> <em>(with Andreas Pape, Srikanth Iyer, Yixin Ren, Christopher Zosh, Mohammed Mahinur Alam, and Carl Lipo)</em>
   </div>
