@@ -154,6 +154,16 @@ author_profile: true
 
 <section class="cv-section">
   <h2>Other Research</h2>
+  <div class="cv-sub">Public Policy and Institutions</div>
+  <div class="cv-paper">
+    <strong>The Effects of Diversity Statements in Faculty Hiring</strong> <em>(with David Slichter)</em>
+    <span class="cv-venue">[<em>Working paper</em>]</span>
+  </div>
+  <div class="cv-paper">
+    <strong>Cashing the Credit: Anomalous Billing and Firm Dynamics in Italy&rsquo;s Superbonus 110%</strong> <em>(with Marcello Graziano, Maurizio Fiaschetti, and Cristina Connolly)</em>
+    <span class="cv-venue">[<em>Working paper</em>]</span>
+  </div>
+
   <div class="cv-sub">Methods and Research Practice</div>
   <div class="cv-paper">
     <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6752734"><strong>Causal Forests versus Penalized Splines for Heterogeneous Treatment Effects</strong></a> <em>(with Ivan Korolev and Abiodun Musbaudeen)</em>
@@ -166,16 +176,6 @@ author_profile: true
   <div class="cv-paper">
     <a href="https://www.pnas.org/doi/10.1073/pnas.2524747123"><strong>AI-assisted teams outperform AI-led teams but not human-only teams in assessing research reproducibility in quantitative social science</strong></a> <em>(Brodeur et al.)</em>
     <span class="cv-venue">[<em>PNAS</em>, 123(22) (2026), e2524747123; consortium-authored]</span>
-  </div>
-
-  <div class="cv-sub">Public Policy and Institutions</div>
-  <div class="cv-paper">
-    <strong>The Effects of Diversity Statements in Faculty Hiring</strong> <em>(with David Slichter)</em>
-    <span class="cv-venue">[<em>Working paper</em>]</span>
-  </div>
-  <div class="cv-paper">
-    <strong>Cashing the Credit: Anomalous Billing and Firm Dynamics in Italy&rsquo;s Superbonus 110%</strong> <em>(with Marcello Graziano, Maurizio Fiaschetti, and Cristina Connolly)</em>
-    <span class="cv-venue">[<em>Working paper</em>]</span>
   </div>
 
   <div class="cv-sub">Neighborhoods and Spatial Inequality</div>
