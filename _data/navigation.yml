@@ -15,9 +15,9 @@ main:
     url: /research/   
   - title: "Teaching"
     url: /teaching/ 
-  - title: "Econ Lab"
-    url: /econlab/
-    new_window: true
+  # - title: "Econ Lab"   # hidden 2026-10-24
+  #   url: /econlab/
+  #   new_window: true
   - title: "CV"
     url: /cv-html/
   # - title: "Talks"
