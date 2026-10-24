@@ -129,7 +129,7 @@ author_profile: true
 <section class="cv-section">
   <h2>Education</h2>
   <div class="cv-entry">
-    <div class="cv-row"><span class="cv-left"><strong>Binghamton University, USA</strong></span><span class="cv-right">Aug 2021 – present</span></div>
+    <div class="cv-row"><span class="cv-left"><strong>Binghamton University, NY, USA</strong></span><span class="cv-right">Aug 2021 – present</span></div>
     <div>Ph.D. in Economics (Expected May 2027)</div>
     <div>Committee: David Slichter (chair), Andreas Pape, Solomon W. Polachek, and Ivan Korolev</div>
   </div>
@@ -224,7 +224,7 @@ author_profile: true
 
 <section class="cv-section">
   <h2>Teaching</h2>
-  <div class="cv-row"><span class="cv-left"><strong>Binghamton University, USA</strong></span><span class="cv-right">2022 – present</span></div>
+  <div class="cv-row"><span class="cv-left"><strong>Binghamton University, NY, USA</strong></span><span class="cv-right">2022 – present</span></div>
   <div class="cv-sub">Instructor</div>
   <div>Economics of Poverty and Discrimination (ECON 144), Winter 2026. Sole instructor</div>
   <div class="cv-sub">Teaching Assistant</div>
