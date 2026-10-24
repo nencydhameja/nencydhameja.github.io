@@ -266,7 +266,7 @@ author_profile: true
 <section class="cv-section">
   <h2>Professional Experience</h2>
   <div class="cv-entry">
-    <div class="cv-row"><span class="cv-left"><strong>Data Analyst</strong>, Graduate Admissions Office, Binghamton University</span><span class="cv-right">Aug 2021 – Aug 2022</span></div>
+    <div class="cv-row"><span class="cv-left"><strong>Data Analyst</strong>, Graduate Admissions Office, Binghamton University</span><span class="cv-right">Aug 2021 – Jul 2022</span></div>
   </div>
   <div class="cv-entry">
     <div class="cv-row"><span class="cv-left"><strong>Industry</strong>, India &amp; Singapore</span><span class="cv-right">Jun 2005 – Aug 2021</span></div>
