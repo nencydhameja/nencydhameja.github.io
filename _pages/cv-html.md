@@ -113,7 +113,7 @@ author_profile: true
 <div class="cv-updated">Last Updated: October 2026</div>
 
 <div class="cv-header-info">
-  <div>Department of Economics<br>Binghamton University<br>4400 Vestal Parkway East<br>Binghamton, NY 13902</div>
+  <div>Department of Economics<br>Binghamton University<br>4400 Vestal Parkway East<br>Binghamton, NY 13902, USA</div>
   <div class="cv-address-right">
     <span class="cv-email"><a href="mailto:ndhamej1@binghamton.edu">ndhamej1@binghamton.edu</a></span><br>
     <a href="https://nencydhameja.com">https://nencydhameja.com/</a>
@@ -224,7 +224,7 @@ author_profile: true
 
 <section class="cv-section">
   <h2>Teaching</h2>
-  <div class="cv-row"><span class="cv-left"><strong>Binghamton University, NY</strong></span><span class="cv-right">2022 – present</span></div>
+  <div class="cv-row"><span class="cv-left"><strong>Binghamton University, USA</strong></span><span class="cv-right">2022 – present</span></div>
   <div class="cv-sub">Instructor</div>
   <div>Economics of Poverty and Discrimination (ECON 144), Winter 2026. Sole instructor</div>
   <div class="cv-sub">Teaching Assistant</div>
