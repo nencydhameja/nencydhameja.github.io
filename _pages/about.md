@@ -25,7 +25,10 @@ redirect_from:
 .jm-title a{color:#672414;font-weight:400;text-decoration:none}
 .jm-title a:hover{text-decoration:underline}
 .jm-col ul{list-style:none;margin:0;padding:0}
-.jm-col li.jm-cv{margin-top:1.4em}
+.home-bio a.jmp-link{color:#672414;text-decoration:none;border-bottom:none}
+.jm-box{background:#f7efec;border-radius:6px;padding:10px 12px;margin:0 0 0.9em}
+.jm-box .jm-title{margin:0}
+.jm-col li.jm-cv{margin-top:0}
 .jm-col li{margin:0 0 0.6em;font-size:0.88em;line-height:1.35}
 .jm-col a{color:#672414;text-decoration:none;font-weight:400}
 .jm-col a:hover{text-decoration:underline}
@@ -37,8 +40,10 @@ redirect_from:
 </style>
 <div class="home-wrap">
 <aside class="jm-col">
+<div class="jm-box">
 <div class="jm-label">Job Market Paper</div>
 <div class="jm-title"><a href="/files/Dhameja_Crime_House_Prices.pdf" target="_blank" rel="noopener">When Does Crime Enter House Prices? Evidence from Chicago</a></div>
+</div>
 <ul>
 <!-- Explore the Results hidden until the results page is rebuilt from the current paper:
 <li><a href="/assets/projects/crime-salience/paper.html" target="_blank" rel="noopener">Explore the Results</a></li>
@@ -57,7 +62,7 @@ Prior to my Ph.D., I pursued an Executive MBA in Singapore and earned a Bachelor
 </p> -->
 <!-- <p>I study how neighborhood conditions and institutional policies affect housing markets, health, and labor outcomes using quasi-experimental methods and large-scale administrative data.</p> -->
 <p>My research focuses on urban and regional economics, public policy, and labor economics. I also work on applied econometrics and AI-based economic modeling.</p>
-<p>In my job market paper, <em> When Does Crime Enter House Prices? Evidence from Chicago</em>, I study which crimes are priced into housing values, why most are not, and how the discount emerges between listing and closing.</p>
+<p>In my job market paper, <a class="jmp-link" href="/files/Dhameja_Crime_House_Prices.pdf" target="_blank" rel="noopener"><em>When Does Crime Enter House Prices? Evidence from Chicago</em></a>, I study which crimes are priced into housing values, why most are not, and how the discount emerges between listing and closing.</p>
 <!-- <p>In my job market paper, I study how crime disrupts housing markets — which crimes price, how the discount travels from listing to closing, and who bears the cost.</p>  -->
 <!-- Related work examines retail food environments and health outcomes, and how diversity statement requirements affect faculty hiring. -->
 <p>In my other work, I study whether diversity statement requirements changed faculty hiring, whether Italy's energy-efficiency renovation subsidy led construction firms to overbill, and how retail food environments affect health.</p>
