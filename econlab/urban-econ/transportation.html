@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Transportation and Congestion – Urban Economics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4ZRP97CMZ9"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./monocentric-city.html">Land and Location</a></li><li class="breadcrumb-item"><a href="./transportation.html">Transportation and Congestion</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Urban Economics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Why Cities Exist</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./why-cities-exist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Why Cities Exist</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./agglomeration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Agglomeration Economies</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Land and Location</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./monocentric-city.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Monocentric City</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transportation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Transportation and Congestion</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./spatial-equilibrium.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Spatial Equilibrium</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Housing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./zoning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zoning &amp; Housing Supply</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rent-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rent Control and Housing Policy</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Neighborhoods and Amenities</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hedonic-pricing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hedonic Pricing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./crime-neighborhoods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Crime and Neighborhoods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tiebout.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tiebout Sorting</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./education.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Education and Schools</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./segregation-schelling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Segregation and the Schelling Model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gentrification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gentrification &amp; Displacement</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Urban Policy</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./place-based-policy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Place-Based Policy</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#why-traffic-is-an-economic-problem" id="toc-why-traffic-is-an-economic-problem" class="nav-link active" data-scroll-target="#why-traffic-is-an-economic-problem">Why traffic is an economic problem</a>
+  <ul class="collapse">
+  <li><a href="#travel-time-rises-with-traffic" id="toc-travel-time-rises-with-traffic" class="nav-link" data-scroll-target="#travel-time-rises-with-traffic">Travel time rises with traffic</a></li>
+  <li><a href="#private-cost-vs-social-cost" id="toc-private-cost-vs-social-cost" class="nav-link" data-scroll-target="#private-cost-vs-social-cost">Private cost vs social cost</a></li>
+  <li><a href="#the-fix-a-congestion-toll" id="toc-the-fix-a-congestion-toll" class="nav-link" data-scroll-target="#the-fix-a-congestion-toll">The fix: a congestion toll</a></li>
+  <li><a href="#why-new-lanes-do-not-fix-traffic" id="toc-why-new-lanes-do-not-fix-traffic" class="nav-link" data-scroll-target="#why-new-lanes-do-not-fix-traffic">Why new lanes do not fix traffic</a></li>
+  <li><a href="#things-to-try" id="toc-things-to-try" class="nav-link" data-scroll-target="#things-to-try">Things to try</a></li>
+  </ul></li>
+  <li><a href="#congestion-pricing-in-practice" id="toc-congestion-pricing-in-practice" class="nav-link" data-scroll-target="#congestion-pricing-in-practice">Congestion pricing in practice</a></li>
+  <li><a href="#mass-transit" id="toc-mass-transit" class="nav-link" data-scroll-target="#mass-transit">Mass transit</a></li>
+  <li><a href="#connections" id="toc-connections" class="nav-link" data-scroll-target="#connections">Connections</a></li>
+  <li><a href="#did-you-know" id="toc-did-you-know" class="nav-link" data-scroll-target="#did-you-know">Did you know?</a></li>
+  <li><a href="#key-papers" id="toc-key-papers" class="nav-link" data-scroll-target="#key-papers">Key papers</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./monocentric-city.html">Land and Location</a></li><li class="breadcrumb-item"><a href="./transportation.html">Transportation and Congestion</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Transportation and Congestion</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="why-traffic-is-an-economic-problem" class="level2">
+<h2 class="anchored" data-anchor-id="why-traffic-is-an-economic-problem">Why traffic is an economic problem</h2>
+<p>When you drive onto a busy road, you slow down everyone else a little. You pay for your own time, but not for theirs. Since no one pays the full cost of their trip, people drive too much. The result is congestion. It is a classic <strong>externality</strong>.</p>
+<section id="travel-time-rises-with-traffic" class="level3">
+<h3 class="anchored" data-anchor-id="travel-time-rises-with-traffic">Travel time rises with traffic</h3>
+<p>On an empty road, travel time is short. As traffic gets close to the road’s capacity, travel time climbs fast. The last few cars add much more delay than the first few.</p>
+</section>
+<section id="private-cost-vs-social-cost" class="level3">
+<h3 class="anchored" data-anchor-id="private-cost-vs-social-cost">Private cost vs social cost</h3>
+<p>Each driver pays the <strong>private cost</strong>: the value of their own time on the road. But one more car also adds a small delay to every other driver. The <strong>social cost</strong> of a trip is the private cost plus that delay to everyone else.</p>
+<p>Drivers keep entering until the value of a trip equals the private cost. The efficient number of trips is lower, where the value of a trip equals the social cost.</p>
+</section>
+<section id="the-fix-a-congestion-toll" class="level3">
+<h3 class="anchored" data-anchor-id="the-fix-a-congestion-toll">The fix: a congestion toll</h3>
+<p>A toll equal to the gap between social and private cost, at the efficient level of traffic, makes each driver pay for the delay they cause. This idea comes from <strong>William Vickrey</strong> in the 1950s and 1960s. Some drivers switch times, routes, or modes. The ones who stay get a faster trip.</p>
+</section>
+<section id="why-new-lanes-do-not-fix-traffic" class="level3">
+<h3 class="anchored" data-anchor-id="why-new-lanes-do-not-fix-traffic">Why new lanes do not fix traffic</h3>
+<p>Duranton and Turner (2011) found that vehicle miles in US cities rise about one for one with new highway lanes. They call this the <strong>fundamental law of road congestion</strong>. New capacity lowers travel time for a while, but new trips fill the road again.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>The Model View.</strong> The plot shows demand for trips, the private cost, and the social cost. Traffic settles where demand meets private cost. The efficient level is where demand meets social cost. Try the toll and the capacity sliders to see each policy.</p>
+</div>
+</div>
+</div>
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| viewerHeight: 640
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  tags$head(tags$style(HTML("
+    .info-box {
+      background: #eaf2f8; border-radius: 6px; padding: 14px;
+      margin-top: 12px; font-size: 13px; line-height: 1.8;
+    }
+    .info-box b { color: #2c3e50; }
+  "))),
+
+  sidebarLayout(
+    sidebarPanel(
+      width = 3,
+      sliderInput("demand", "Demand for trips (value of first trip, $):",
+                  min = 20, max = 60, value = 40, step = 1),
+      sliderInput("cap", "Road capacity (cars per hour):",
+                  min = 1000, max = 4000, value = 2000, step = 250),
+      sliderInput("vot", "Value of time ($ per hour):",
+                  min = 10, max = 50, value = 25, step = 5),
+      sliderInput("toll", "Toll ($ per trip):",
+                  min = 0, max = 20, value = 0, step = 0.5),
+      uiOutput("info")
+    ),
+    mainPanel(
+      width = 9,
+      plotOutput("cost_plot", height = "500px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+
+  t0 &lt;- 0.5          # free-flow trip time, hours
+  slope &lt;- 0.008     # demand falls $0.008 per extra car per hour
+
+  model &lt;- reactive({
+    a &lt;- input$demand; K &lt;- input$cap; v &lt;- input$vot; tau &lt;- input$toll
+    tt  &lt;- function(V) t0 * (1 + 0.15 * (V / K)^4)
+    dtt &lt;- function(V) t0 * 0.6 * V^3 / K^4
+    pc  &lt;- function(V) v * tt(V)
+    msc &lt;- function(V) pc(V) + V * v * dtt(V)
+    dem &lt;- function(V) a - slope * V
+    vmax &lt;- a / slope
+    solve_at &lt;- function(f) {
+      g &lt;- function(V) dem(V) - f(V)
+      if (g(0) &lt;= 0) return(0)
+      uniroot(g, c(0, vmax))$root
+    }
+    v_eq  &lt;- solve_at(function(V) pc(V) + tau)
+    v_opt &lt;- solve_at(msc)
+    toll_opt &lt;- msc(v_opt) - pc(v_opt)
+    # deadweight loss of the untolled equilibrium
+    v_free &lt;- solve_at(pc)
+    dwl &lt;- if (v_free &gt; v_opt) integrate(function(V) msc(V) - dem(V), v_opt, v_free)$value else 0
+    list(tt = tt, pc = pc, msc = msc, dem = dem, vmax = vmax,
+         v_eq = v_eq, v_opt = v_opt, toll_opt = toll_opt, dwl = dwl, tau = tau)
+  })
+
+  output$cost_plot &lt;- renderPlot({
+    m &lt;- model()
+    V &lt;- seq(0, m$vmax, length.out = 400)
+    par(mar = c(4.5, 4.5, 3, 1))
+    ymax &lt;- max(m$dem(0), 1.3 * m$msc(max(m$v_eq, m$v_opt)))
+    plot(V, m$dem(V), type = "l", lwd = 3, col = "#2c3e50",
+         ylim = c(0, ymax), xlab = "Cars per hour",
+         ylab = "Dollars per trip", main = "Demand, private cost, and social cost")
+    lines(V, m$pc(V), lwd = 3, col = "#3498db")
+    lines(V, m$msc(V), lwd = 3, col = "#e74c3c")
+    if (m$tau &gt; 0) lines(V, m$pc(V) + m$tau, lwd = 2, lty = 2, col = "#3498db")
+    abline(v = m$v_eq, lty = 3, col = "#3498db", lwd = 2)
+    abline(v = m$v_opt, lty = 3, col = "#27ae60", lwd = 2)
+    legend("topright", bty = "n", cex = 0.9,
+           legend = c("Demand (value of a trip)", "Private cost",
+                      "Social cost", "Private cost + toll",
+                      "Traffic with current toll", "Efficient traffic"),
+           col = c("#2c3e50", "#3498db", "#e74c3c", "#3498db", "#3498db", "#27ae60"),
+           lwd = c(3, 3, 3, 2, 2, 2), lty = c(1, 1, 1, 2, 3, 3))
+  })
+
+  output$info &lt;- renderUI({
+    m &lt;- model()
+    tags$div(class = "info-box",
+      HTML(paste0(
+        "&lt;b&gt;Traffic now:&lt;/b&gt; ", format(round(m$v_eq), big.mark = ","), " cars/hour&lt;br&gt;",
+        "&lt;b&gt;Trip time now:&lt;/b&gt; ", round(60 * m$tt(m$v_eq)), " minutes&lt;br&gt;",
+        "&lt;b&gt;Efficient traffic:&lt;/b&gt; ", format(round(m$v_opt), big.mark = ","), " cars/hour&lt;br&gt;",
+        "&lt;b&gt;Efficient toll:&lt;/b&gt; $", sprintf("%.2f", m$toll_opt), "&lt;br&gt;",
+        "&lt;b&gt;Loss with no toll:&lt;/b&gt; $", format(round(m$dwl), big.mark = ","), " per hour"
+      ))
+    )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</section>
+<section id="things-to-try" class="level3">
+<h3 class="anchored" data-anchor-id="things-to-try">Things to try</h3>
+<ul>
+<li><strong>Set the toll equal to the efficient toll:</strong> the blue dotted line moves onto the green one. Traffic falls to the efficient level.</li>
+<li><strong>Double the capacity with no toll:</strong> trip time falls, but traffic rises. Then raise demand a little, as a growing city would. Trip time creeps back up. This is the fundamental law in action.</li>
+<li><strong>Raise the value of time:</strong> the gap between private and social cost grows. Congestion is more costly in rich, busy cities.</li>
+<li><strong>Lower demand:</strong> at low traffic, the efficient toll is close to zero. Tolls matter only on crowded roads.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="congestion-pricing-in-practice" class="level2">
+<h2 class="anchored" data-anchor-id="congestion-pricing-in-practice">Congestion pricing in practice</h2>
+<p>Singapore started charging drivers to enter its center in 1975. London followed in 2003 and Stockholm in 2006. New York started its congestion charge for lower Manhattan in January 2025. In each case, traffic in the charged zone fell.</p>
+<p>Tolls are unpopular before they start and more popular after. People see faster trips and better bus service. The fairness question matters too. Low-income drivers pay a larger share of their income, but many low-income workers ride transit, and toll revenue can fund it.</p>
+<p>Akbar, Couture, Duranton and Storeygard (2023) add a twist. In Indian cities, most of the gap in travel speed between cities comes from slow roads even when traffic is light, not from congestion. Better roads and street design can matter more than tolls.</p>
+</section>
+<section id="mass-transit" class="level2">
+<h2 class="anchored" data-anchor-id="mass-transit">Mass transit</h2>
+<p>Buses and trains are the other answer to congestion. Each rider on a full train takes a car off the road.</p>
+<p>Transit has a special cost structure. Building a rail line is very expensive, but carrying one more rider costs almost nothing. So transit works best where many people travel the same way: dense cities with a busy downtown.</p>
+<p>Transit also gets better as more people use it. More riders justify more frequent service, which means shorter waits for everyone. Economists call this the <strong>Mohring effect</strong>. It is one reason most cities price transit below cost.</p>
+<p>The catch is that most US metro areas are spread out, with jobs in many places. That makes it hard for transit to win riders from cars. A congestion toll helps transit too, since it makes driving downtown cost more.</p>
+</section>
+<section id="connections" class="level2">
+<h2 class="anchored" data-anchor-id="connections">Connections</h2>
+<ul>
+<li><a href="monocentric-city.html">The Monocentric City</a>: lower commuting costs flatten the rent gradient and spread the city out.</li>
+<li><a href="why-cities-exist.html">Why Cities Exist</a>: congestion is one of the costs that limits city size.</li>
+<li><a href="place-based-policy.html">Place-Based Policy</a>: new roads and transit lines are investments in particular places.</li>
+</ul>
+</section>
+<section id="did-you-know" class="level2">
+<h2 class="anchored" data-anchor-id="did-you-know">Did you know?</h2>
+<ul>
+<li><strong>William Vickrey</strong> won the Nobel Prize in Economics in 1996. He died three days after it was announced.</li>
+<li>The travel-time curve in the simulation comes from the <strong>US Bureau of Public Roads</strong> in 1964. Planners still call it the <strong>BPR function</strong>.</li>
+<li>Traffic jams can form with no accident at all. When roads are close to capacity, one driver braking hard can send a wave of stopped cars backward for miles.</li>
+</ul>
+</section>
+<section id="key-papers" class="level2">
+<h2 class="anchored" data-anchor-id="key-papers">Key papers</h2>
+<ul>
+<li><strong>Vickrey, W. S. (1963).</strong> <a href="https://scholar.google.com/scholar?q=%22Pricing+in+Urban+and+Suburban+Transport%22">Pricing in Urban and Suburban Transport</a>. <em>American Economic Review</em> 53(2). The case for congestion pricing.</li>
+<li><strong>Duranton, G. and Turner, M. A. (2011).</strong> <a href="https://scholar.google.com/scholar?q=%22The+Fundamental+Law+of+Road+Congestion%22">The Fundamental Law of Road Congestion: Evidence from US Cities</a>. <em>American Economic Review</em> 101(6). New lanes bring new traffic.</li>
+<li><strong>Akbar, P., Couture, V., Duranton, G. and Storeygard, A. (2023).</strong> <a href="https://scholar.google.com/scholar?q=%22Mobility+and+Congestion+in+Urban+India%22">Mobility and Congestion in Urban India</a>. <em>American Economic Review</em> 113(4). Slow roads matter more than traffic.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | Built with AI assistance | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span><br><span style="font-size:0.82em;color:#777;">Markdown content rendered to HTML by Quarto; interactive R simulations run in-browser via WebAssembly.</span></p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
