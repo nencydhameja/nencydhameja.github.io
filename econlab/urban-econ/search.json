@@ -44,6 +44,17 @@
     ]
   },
   {
+    "objectID": "monocentric-city.html#key-papers",
+    "href": "monocentric-city.html#key-papers",
+    "title": "The Monocentric City",
+    "section": "Key papers",
+    "text": "Key papers\n\nAlonso, W. (1964). Location and Land Use. Harvard University Press. The model.\nMills, E. S. (1967). An Aggregative Model of Resource Allocation in a Metropolitan Area. American Economic Review 57(2). The model.\nMuth, R. F. (1969). Cities and Housing. University of Chicago Press. The model.\nBaum-Snow, N. (2007). Did Highways Cause Suburbanization?. Quarterly Journal of Economics 122(2). Highways and suburbs.",
+    "crumbs": [
+      "Land & Location",
+      "The Monocentric City"
+    ]
+  },
+  {
     "objectID": "hedonic-pricing.html",
     "href": "hedonic-pricing.html",
     "title": "Hedonic Pricing",
@@ -82,6 +93,17 @@
     "title": "Hedonic Pricing",
     "section": "Did you know?",
     "text": "Did you know?\n\nSherwin Rosen’s 1974 paper “Hedonic Prices and Implicit Markets” is one of the most cited papers in economics. It showed that prices in differentiated-product markets (houses, cars, jobs) implicitly reveal the value of each characteristic.\nSandra Black (1999) cleverly addressed the OVB problem in hedonic pricing by comparing houses on opposite sides of school attendance boundaries — same neighborhood, different schools. She found that a 5% increase in test scores raises house prices by about 2.5%. This boundary discontinuity design is essentially a regression discontinuity applied to hedonic pricing.\nZillow’s Zestimate is, at its core, a massive hedonic model — predicting house prices from hundreds of attributes using machine learning. The difference from Rosen’s original framework is scale and flexibility: Zillow uses nonlinear models on millions of observations, but the fundamental idea (price = f(attributes)) is the same.",
+    "crumbs": [
+      "Housing",
+      "Hedonic Pricing"
+    ]
+  },
+  {
+    "objectID": "hedonic-pricing.html#key-papers",
+    "href": "hedonic-pricing.html#key-papers",
+    "title": "Hedonic Pricing",
+    "section": "Key papers",
+    "text": "Key papers\n\nRosen, S. (1974). Hedonic Prices and Implicit Markets: Product Differentiation in Pure Competition. Journal of Political Economy 82(1). The hedonic model.\nBlack, S. E. (1999). Do Better Schools Matter? Parental Valuation of Elementary Education. Quarterly Journal of Economics 114(2). School quality at attendance-zone boundaries.\nChay, K. Y. and Greenstone, M. (2005). Does Air Quality Matter? Evidence from the Housing Market. Journal of Political Economy 113(2). Clean air and house prices.",
     "crumbs": [
       "Housing",
       "Hedonic Pricing"
@@ -182,6 +204,17 @@
     ]
   },
   {
+    "objectID": "spatial-equilibrium.html#key-papers",
+    "href": "spatial-equilibrium.html#key-papers",
+    "title": "Spatial Equilibrium",
+    "section": "Key papers",
+    "text": "Key papers\n\nRosen, S. (1979). Wage-Based Indexes of Urban Quality of Life. In Current Issues in Urban Economics, Johns Hopkins University Press. Wages and amenities.\nRoback, J. (1982). Wages, Rents, and the Quality of Life. Journal of Political Economy 90(6). Wages and rents together.\nAlbouy, D. (2012). Are Big Cities Bad Places to Live? Estimating Quality of Life across Metropolitan Areas. NBER Working Paper 14472. Quality-of-life rankings.",
+    "crumbs": [
+      "Land & Location",
+      "Spatial Equilibrium"
+    ]
+  },
+  {
     "objectID": "agglomeration.html",
     "href": "agglomeration.html",
     "title": "Agglomeration Economies",
@@ -220,6 +253,17 @@
     "title": "Agglomeration Economies",
     "section": "Did you know?",
     "text": "Did you know?\n\nAlfred Marshall identified the three agglomeration channels in his 1890 Principles of Economics, making it one of the oldest ideas in urban economics that is still central today. He wrote that in industrial districts, “the mysteries of the trade become no mysteries; but are as it were in the air.”\nSilicon Valley is the canonical agglomeration story. The cluster started with Stanford University and a few electronics firms in the 1950s. Knowledge spillovers and labor market pooling created a self-reinforcing cycle: more firms attracted more talent, which attracted more firms. Today, Santa Clara County has more patent activity per capita than anywhere else in the world.\nDuranton and Puga (2001) introduced the “nursery cities” concept: young firms experiment in large, diverse cities (where they can try different production processes) and then relocate to smaller, specialized cities once they’ve found their niche. This explains why startups cluster in New York and San Francisco but mature manufacturing plants locate in smaller metros.",
+    "crumbs": [
+      "Agglomeration & Sorting",
+      "Agglomeration Economies"
+    ]
+  },
+  {
+    "objectID": "agglomeration.html#key-papers",
+    "href": "agglomeration.html#key-papers",
+    "title": "Agglomeration Economies",
+    "section": "Key papers",
+    "text": "Key papers\n\nGreenstone, M., Hornbeck, R. and Moretti, E. (2010). Identifying Agglomeration Spillovers: Evidence from Winners and Losers of Large Plant Openings. Journal of Political Economy 118(3). Million-dollar plants.\nDuranton, G. and Puga, D. (2001). Nursery Cities: Urban Diversity, Process Innovation, and the Life Cycle of Products. American Economic Review 91(5). Diverse cities as nurseries for new firms.\nCombes, P.-P., Duranton, G. and Gobillon, L. (2008). Spatial Wage Disparities: Sorting Matters!. Journal of Urban Economics 63(2). Separating sorting from agglomeration.",
     "crumbs": [
       "Agglomeration & Sorting",
       "Agglomeration Economies"
@@ -281,6 +325,17 @@
     ]
   },
   {
+    "objectID": "gentrification.html#key-papers",
+    "href": "gentrification.html#key-papers",
+    "title": "Gentrification & Displacement",
+    "section": "Key papers",
+    "text": "Key papers\n\nVigdor, J. L. (2002). Does Gentrification Harm the Poor?. Brookings-Wharton Papers on Urban Affairs 2002. Who is displaced.\nMcKinnish, T., Walsh, R. and White, T. K. (2010). Who Gentrifies Low-Income Neighborhoods?. Journal of Urban Economics 67(2). Who moves in.\nBrummet, Q. and Reed, D. (2019). The Effects of Gentrification on the Well-Being and Opportunity of Original Resident Adults and Children. Federal Reserve Bank of Philadelphia Working Paper 19-30. Effects on original residents.",
+    "crumbs": [
+      "Neighborhoods",
+      "Gentrification & Displacement"
+    ]
+  },
+  {
     "objectID": "tiebout.html",
     "href": "tiebout.html",
     "title": "Tiebout Sorting",
@@ -325,6 +380,17 @@
     ]
   },
   {
+    "objectID": "tiebout.html#key-papers",
+    "href": "tiebout.html#key-papers",
+    "title": "Tiebout Sorting",
+    "section": "Key papers",
+    "text": "Key papers\n\nTiebout, C. M. (1956). A Pure Theory of Local Expenditures. Journal of Political Economy 64(5). Voting with your feet.\nOates, W. E. (1969). The Effects of Property Taxes and Local Public Spending on Property Values: An Empirical Study of Tax Capitalization and the Tiebout Hypothesis. Journal of Political Economy 77(6). Capitalization.\nBayer, P., Ferreira, F. and McMillan, R. (2007). A Unified Framework for Measuring Preferences for Schools and Neighborhoods. Journal of Political Economy 115(4). Preferences for schools and neighborhoods.",
+    "crumbs": [
+      "Agglomeration & Sorting",
+      "Tiebout Sorting"
+    ]
+  },
+  {
     "objectID": "zoning.html",
     "href": "zoning.html",
     "title": "Zoning & Housing Supply",
@@ -363,6 +429,17 @@
     "title": "Zoning & Housing Supply",
     "section": "Did you know?",
     "text": "Did you know?\n\nHouston is the largest US city with no formal zoning ordinance. Instead, it uses deed restrictions and minimum lot-size requirements. The result: Houston has some of the most affordable housing among large US metros, with median home prices roughly one-third those of San Francisco.\nJapan takes a radically different approach: zoning is set nationally, not locally. The national government defines 12 zone types, and local municipalities cannot restrict land use beyond these categories. This means NIMBYs can’t block new housing at the neighborhood level. Tokyo, a metro of 37 million people, has housing costs roughly comparable to Houston.\nHsieh and Moretti’s (2019) estimate of 36% lost GDP growth is one of the most cited numbers in recent urban economics. The mechanism is simple: productive cities can’t grow because they can’t build housing, so workers are stuck in less productive locations. The aggregate output loss is the difference between actual GDP and what GDP would have been with mobile workers and elastic housing supply.",
+    "crumbs": [
+      "Housing",
+      "Zoning & Housing Supply"
+    ]
+  },
+  {
+    "objectID": "zoning.html#key-papers",
+    "href": "zoning.html#key-papers",
+    "title": "Zoning & Housing Supply",
+    "section": "Key papers",
+    "text": "Key papers\n\nGlaeser, E. L., Gyourko, J. and Saks, R. (2005). Why Is Manhattan So Expensive? Regulation and the Rise in Housing Prices. Journal of Law and Economics 48(2). The regulatory tax.\nSaiz, A. (2010). The Geographic Determinants of Housing Supply. Quarterly Journal of Economics 125(3). Land, geography, and supply elasticities.\nHsieh, C.-T. and Moretti, E. (2019). Housing Constraints and Spatial Misallocation. American Economic Journal: Macroeconomics 11(2). The cost of housing limits to national output.",
     "crumbs": [
       "Housing",
       "Zoning & Housing Supply"
