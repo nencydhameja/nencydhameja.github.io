@@ -371,7 +371,7 @@ ui &lt;- fluidPage(
       width = 4,
 
       sliderInput("init_rent", "Initial rent ($/month):",
-                  min = 500, max = 2000, value = 1000, step = 50),
+                  min = 500, max = 2000, value = 1000, step = 50, ticks = FALSE),
 
       sliderInput("migration_rate", "Incoming high-income migration (per year):",
                   min = 0, max = 15, value = 5, step = 1),
@@ -466,15 +466,12 @@ server &lt;- function(input, output, session) {
 
     plot(s$years, s$rent, type = "b", lwd = 3, pch = 19, col = "#e74c3c",
          xlab = "Year", ylab = "Monthly rent ($)",
-         main = "Rent Trajectory",
+         main = paste0("Rent over 10 years: ", sprintf("%+.0f", s$rent_change_pct), "%"),
          ylim = c(min(s$rent) * 0.9, max(s$rent) * 1.1))
 
     abline(h = s$rent[1], lty = 2, col = "gray60", lwd = 1.5)
     text(5, s$rent[1], "Initial rent", pos = 3, cex = 0.8, col = "gray50")
 
-    # Annotate final rent change
-    text(10, s$rent[11], paste0("+", round(s$rent_change_pct), "%"),
-         pos = 3, col = "#e74c3c", font = 2, cex = 0.9)
   })
 
   output$comp_plot &lt;- renderPlot({
@@ -506,8 +503,8 @@ server &lt;- function(input, output, session) {
 
     plot(s$years, s$original_remaining, type = "b", lwd = 3, pch = 19,
          col = "#27ae60",
-         xlab = "Year", ylab = "Original residents remaining (%)",
-         main = "Displacement",
+         xlab = "Year", ylab = "Original residents left (%)",
+         main = paste0("Displaced after 10 years: ", round(s$displaced_cum[11]), "%"),
          ylim = c(0, 105))
 
     polygon(c(s$years, rev(s$years)),
@@ -518,10 +515,6 @@ server &lt;- function(input, output, session) {
     polygon(c(s$years, rev(s$years)),
             c(rep(100, length(s$years)), rev(s$original_remaining)),
             col = adjustcolor("#e74c3c", 0.15), border = NA)
-
-    text(8, (100 + s$original_remaining[9]) / 2,
-         paste0(round(s$displaced_cum[11]), "% displaced"),
-         col = "#e74c3c", font = 2, cex = 0.9)
 
     abline(h = 50, lty = 3, col = "gray70")
   })
