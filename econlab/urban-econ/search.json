@@ -323,7 +323,7 @@
     "href": "index.html",
     "title": "Urban Economics",
     "section": "",
-    "text": "Interactive simulations for urban economics. Each topic pairs explanation with a simulation you can run in the browser — see how land markets, housing prices, agglomeration, sorting, and neighborhood change actually work, not just read about them.\nThe course covers the core models that economists use to understand cities: why they exist, how they’re shaped, who lives where, and what happens when policy intervenes. Topics range from the classic monocentric city model to modern debates about zoning, gentrification, and spatial misallocation.\nBuilds on: Statistical Inference | Causal Inference",
+    "text": "Interactive simulations for urban economics. Each topic pairs explanation with a simulation you can run in the browser — see how land markets, housing prices, agglomeration, sorting, and neighborhood change actually work, not just read about them.\nThe course covers the core models that economists use to understand cities: why they exist, how they’re shaped, who lives where, and what happens when policy intervenes. Topics range from the classic monocentric city model to modern debates about zoning, gentrification, and spatial misallocation.",
     "crumbs": [
       "Home"
     ]
@@ -493,7 +493,7 @@
     "href": "spatial-equilibrium.html#key-papers",
     "title": "Spatial Equilibrium",
     "section": "Key papers",
-    "text": "Key papers\n\nRosen, S. (1979). Wage-Based Indexes of Urban Quality of Life. In Current Issues in Urban Economics, Johns Hopkins University Press. Wages and amenities.\nRoback, J. (1982). Wages, Rents, and the Quality of Life. Journal of Political Economy 90(6). Wages and rents together.\nAlbouy, D. (2012). Are Big Cities Bad Places to Live? Estimating Quality of Life across Metropolitan Areas. NBER Working Paper 14472. Quality-of-life rankings.\nHornbeck, R. and Moretti, E. (2024). Estimating Who Benefits from Productivity Growth: Local and Distant Effects of City Productivity Growth on Wages, Rents, and Inequality. Review of Economics and Statistics 106(3). Who gains when a city gets more productive, after rents rise.",
+    "text": "Key papers\n\nRosen, S. (1979). Wage-Based Indexes of Urban Quality of Life. In Current Issues in Urban Economics, Johns Hopkins University Press. Wages and amenities.\nRoback, J. (1982). Wages, Rents, and the Quality of Life. Journal of Political Economy 90(6). Wages and rents together.\nAlbouy, D. (2012). Are Big Cities Bad Places to Live? Estimating Quality of Life across Metropolitan Areas. NBER Working Paper 14472. Quality-of-life rankings.\nDiamond, R. (2016). The Determinants and Welfare Implications of US Workers’ Diverging Location Choices by Skill: 1980-2000. American Economic Review 106(3). College graduates moved to high-wage, high-rent, high-amenity cities, widening real inequality.\nHornbeck, R. and Moretti, E. (2024). Estimating Who Benefits from Productivity Growth: Local and Distant Effects of City Productivity Growth on Wages, Rents, and Inequality. Review of Economics and Statistics 106(3). Who gains when a city gets more productive, after rents rise.",
     "crumbs": [
       "Land and Location",
       "Spatial Equilibrium"
