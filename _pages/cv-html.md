@@ -172,6 +172,9 @@ author_profile: true
     <strong>Cashing the Credit: Anomalous Billing and Firm Dynamics in Italy&rsquo;s Superbonus 110%</strong> <em>(with Marcello Graziano, Maurizio Fiaschetti, and Cristina Connolly)</em>
   </div>
   <div class="cv-paper">
+    <strong>Social Context in the Schelling Model using LLMs</strong> <em>(with Andreas Pape, Srikanth Iyer, Yixin Ren, Christopher Zosh, Mohammed Mahinur Alam, Carl Lipo)</em>
+  </div>
+  <div class="cv-paper">
     <a href="https://chriszosh1.github.io/files/Agent-BasedEconometrics_MC_Zosh_et_al.pdf"><strong>Monte-Carlo Tests for Identification and Validation of Stochastic Agent-Based Models</strong></a> <em>(with Christopher Zosh, Yixin Ren, Andreas Pape)</em>
     <span class="cv-venue">Revise &amp; Resubmit, <em>Journal of Artificial Societies and Social Simulation</em> (JASSS)</span>
   </div>
@@ -179,9 +182,6 @@ author_profile: true
   <div class="cv-sub">Work in Progress</div>
   <div class="cv-paper">
     <strong>Do Online Crime Maps Change How Crime Is Priced? Evidence from Platform Launch and Removal</strong>
-  </div>
-  <div class="cv-paper">
-    <strong>Social Context in the Schelling Model using LLMs</strong> <em>(with Andreas Pape, Srikanth Iyer, Yixin Ren, Christopher Zosh, Mohammed Mahinur Alam, Carl Lipo)</em>
   </div>
   <div class="cv-paper">
     <strong>Food Swamps, Obesity, and Metabolic Risks</strong>
