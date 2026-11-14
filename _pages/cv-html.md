@@ -178,7 +178,7 @@ author_profile: true
 
   <div class="cv-sub">Work in Progress</div>
   <div class="cv-paper">
-    <strong>Do Crime Maps Change House Prices? Evidence from Real Estate Platforms</strong>
+    <strong>Do Online Crime Maps Change How Crime Is Priced? Evidence from Platform Launch and Removal</strong>
   </div>
   <div class="cv-paper">
     <strong>Social Context in the Schelling Model using LLMs</strong> <em>(with Andreas Pape, Srikanth Iyer, Yixin Ren, Christopher Zosh, Mohammed Mahinur Alam, Carl Lipo)</em>
