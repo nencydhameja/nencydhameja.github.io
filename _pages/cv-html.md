@@ -169,7 +169,7 @@ author_profile: true
     <strong>The Effects of Diversity Statements in Faculty Hiring</strong> <em>(with David Slichter)</em>
   </div>
   <div class="cv-paper">
-    <strong>Cashing the Credit: Anomalous Billing and Firm Dynamics in Italy&rsquo;s Superbonus 110%</strong> <em>(with Marcello Graziano, Maurizio Fiaschetti, and Cristina Connolly)</em>
+    <strong>Cashing the Credit: Anomalous Billing and Firm Dynamics in Italy&rsquo;s Superbonus 110%</strong> <em>(with Marcello Graziano, Maurizio Fiaschetti, and Davide Calandra)</em>
   </div>
   <div class="cv-paper">
     <strong>Social Context in the Schelling Model using LLMs</strong> <em>(with Andreas Pape, Srikanth Iyer, Yixin Ren, Christopher Zosh, Mohammed Mahinur Alam, Carl Lipo)</em>
