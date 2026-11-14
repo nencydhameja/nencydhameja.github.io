@@ -134,7 +134,7 @@ author_profile: true
     <div>Committee: David Slichter (chair), Andreas Pape, Solomon W. Polachek, and Ivan Korolev</div>
   </div>
   <div class="cv-entry">
-    <div class="cv-row"><span class="cv-left"><strong>SP Jain School of Management, Singapore</strong></span><span class="cv-right">Sep 2018 – Jul 2020</span></div>
+    <div class="cv-row"><span class="cv-left"><strong>S P Jain School of Global Management, Singapore</strong></span><span class="cv-right">Sep 2018 – Jul 2020</span></div>
     <div>Executive Master of Business Administration (EMBA) in Finance</div>
     <div>Thesis: Behavioral factors in stock markets</div>
   </div>
@@ -178,6 +178,9 @@ author_profile: true
 
   <div class="cv-sub">Work in Progress</div>
   <div class="cv-paper">
+    <strong>Do Crime Maps Change House Prices? Evidence from Real Estate Platforms</strong>
+  </div>
+  <div class="cv-paper">
     <strong>Social Context in the Schelling Model using LLMs</strong> <em>(with Andreas Pape, Srikanth Iyer, Yixin Ren, Christopher Zosh, Mohammed Mahinur Alam, Carl Lipo)</em>
   </div>
   <div class="cv-paper">
@@ -188,7 +191,7 @@ author_profile: true
 <section class="cv-section">
   <h2>Grants and Awards</h2>
   <div>Graduate Student Research Fund, Binghamton University (2026), for MLS transaction data</div>
-  <div>Dean&rsquo;s List (Term II, III), SP Jain School of Management, 2019–2020</div>
+  <div>Dean&rsquo;s List (Term II, III), S P Jain School of Global Management, 2019–2020</div>
 </section>
 
 <section class="cv-section">
@@ -200,7 +203,7 @@ author_profile: true
   <h2>Conference Presentations</h2>
   <div class="cv-years">
     <span class="cv-yr">2027</span><span>American Economic Association (AEA) (scheduled)</span>
-    <span class="cv-yr">2026</span><span>Southern Economic Association (SEA) (scheduled)<br>Western Economic Association International (WEAI)<br>Society for the Advancement of Behavioral Economics (SABE)<br>American Society of Health Economists (ASHEcon)<br>Midwest Economics Association (MEA)<br>American Economic Association (AEA)</span>
+    <span class="cv-yr">2026</span><span>Western Economic Association International (WEAI)<br>Society for the Advancement of Behavioral Economics (SABE)<br>American Society of Health Economists (ASHEcon)<br>Midwest Economics Association (MEA)<br>American Economic Association (AEA)</span>
     <span class="cv-yr">2025</span><span>Southern Economic Association (SEA)<br>Western Economic Association International (WEAI)<br>Finger Lakes (FLX) Economics of Education Conference<br>Eastern Economic Association (EEA)</span>
     <span class="cv-yr">2024</span><span>Eastern Economic Association (EEA)</span>
   </div>
