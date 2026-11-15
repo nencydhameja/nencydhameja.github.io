@@ -181,7 +181,7 @@ author_profile: true
 
   <div class="cv-sub">Work in Progress</div>
   <div class="cv-paper">
-    <strong>Do Online Crime Maps Change How Crime Is Priced? Evidence from Platform Launch and Removal</strong>
+    <strong>Do Crime Maps Change How House Prices Respond to Crime?</strong>
   </div>
   <div class="cv-paper">
     <strong>Food Swamps, Obesity, and Metabolic Risks</strong>
