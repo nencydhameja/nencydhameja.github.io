@@ -5,5 +5,6 @@ sitemap: false
 User-agent: *
 Disallow: /files/Dhameja_Crime_House_Prices.pdf
 Disallow: /files/Dhameja_Crime_House_Prices_Online_Appendix.pdf
+Disallow: /files/REE/
 
 Sitemap: https://nencydhameja.com/sitemap.xml
