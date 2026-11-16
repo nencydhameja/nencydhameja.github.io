@@ -236,6 +236,11 @@ collections:
 
 # These settings control how pages and collections are included in the site
 defaults:
+  # REE submission PDFs: keep out of sitemap.xml (also Disallow in robots.txt)  /* CHANGED: added 2026-11-16 */
+  - scope:
+      path: "files/REE"
+    values:
+      sitemap: false
   # _posts
   - scope:
       path: ""
