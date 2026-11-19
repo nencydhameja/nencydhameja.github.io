@@ -467,6 +467,7 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
   var f=function(k){return Math.pow(k,a);};
   var ks=Math.pow(s/bk,1/(1-a)), ys=f(ks), cs=(1-s)*ys, mpk=a*Math.pow(ks,a-1);
   var kgr=Math.pow(a/bk,1/(1-a)), ygr=f(kgr), cgr=ygr-bk*kgr;
+  var eff=(n>0||g>0), tl=eff?'\u0303':'';  // per effective worker when n or g > 0 -> tilde labels
   var kmax=Math.max(10,1.35*ks,(showGR?1.35*kgr:0));
   var ymax=Math.max(f(kmax),bk*kmax*0.75)*1.08;
   var X=function(k){return ML+k/kmax*(W-ML-MR);}, Y=function(v){return H-MB-v/ymax*(H-MT-MB);};
@@ -495,9 +496,9 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
   x.moveTo(X(ks),H-MB);x.lineTo(X(ks),Y(ys));x.moveTo(ML,Y(ys));x.lineTo(X(ks),Y(ys));x.stroke();x.setLineDash([]);
   // consumption bracket
   x.strokeStyle='#c9a227';x.lineWidth=4;x.beginPath();x.moveTo(X(ks)+4,Y(ys));x.lineTo(X(ks)+4,Y(s*ys));x.stroke();
-  x.fillStyle='#a07e10';x.textAlign='left';x.fillText('c*',X(ks)+9,Y((ys+s*ys)/2)+4);
+  x.fillStyle='#a07e10';x.textAlign='left';x.fillText('c'+tl+'*',X(ks)+9,Y((ys+s*ys)/2)+4);
   x.fillStyle='#1f3b73';x.beginPath();x.arc(X(ks),Y(s*ys),6,0,7);x.fill();
-  x.textAlign='center';x.fillText('k*',X(ks),H-MB+32);
+  x.textAlign='center';x.fillText('k'+tl+'*',X(ks),H-MB+32);
   // labels
   x.textAlign='left';
   x.fillStyle='#7f8c8d';x.fillText('f(k)',X(kmax*0.9),Y(f(kmax*0.9))-8);
@@ -508,9 +509,9 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
   if(Math.abs(s-a)<0.005) where="<span class='good'>at the Golden Rule</span> (s = α)";
   else if(s<a) where="<span class='bad'>below the Golden Rule</span>: MPK &gt; δ+n+g, so saving more would raise long-run consumption";
   else where="<span class='bad'>above the Golden Rule</span>: MPK &lt; δ+n+g, so saving less would raise consumption at every date";
-  box.innerHTML="<b>Steady state</b><br>k* = <b>"+ks.toFixed(2)+"</b> &nbsp; y* = <b>"+ys.toFixed(2)+"</b> &nbsp; c* = <b>"+cs.toFixed(2)+"</b><br>"+
-   "Break-even rate δ+n+g = <b>"+bk.toFixed(3)+"</b><br>MPK at k* = <b>"+mpk.toFixed(3)+"</b><br>"+
-   "Golden Rule: k*GR = <b>"+kgr.toFixed(2)+"</b>, c*GR = <b>"+cgr.toFixed(2)+"</b><br>This economy is "+where+".<br>"+
+  box.innerHTML="<b>Steady state"+(eff?" (per effective worker)":"")+"</b><br>k"+tl+"* = <b>"+ks.toFixed(2)+"</b> &nbsp; y"+tl+"* = <b>"+ys.toFixed(2)+"</b> &nbsp; c"+tl+"* = <b>"+cs.toFixed(2)+"</b><br>"+
+   "Break-even rate δ+n+g = <b>"+bk.toFixed(3)+"</b><br>MPK at k"+tl+"* = <b>"+mpk.toFixed(3)+"</b><br>"+
+   "Golden Rule: k"+tl+"*GR = <b>"+kgr.toFixed(2)+"</b>, c"+tl+"*GR = <b>"+cgr.toFixed(2)+"</b><br>This economy is "+where+".<br>"+
    "<span style='color:#5a6472'>Long-run growth of Y/L = g = <b>"+(100*g).toFixed(1)+"%</b>; of total Y = n+g = <b>"+(100*(n+g)).toFixed(1)+"%</b>.</span>";
  }
  [S,D,N,G,A].forEach(function(el){el.addEventListener('input',draw);});
@@ -546,7 +547,7 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 <li><strong>MPK = δ</strong> in the basic model.</li>
 <li><strong>MPK = δ + n + g</strong> once you add population growth and technology growth.</li>
 </ul>
-<p>On the diagram, that is the point where the slope of f(k) equals the slope of the break-even line. <strong>Shortcut:</strong> with Cobb–Douglas output y = k^α, the Golden Rule saving rate is just <strong>s = α</strong>.</p>
+<p>On the diagram, that is the point where the slope of f(k) equals the slope of the break-even line. <strong>Shortcut:</strong> with Cobb–Douglas output y = k<sup>α</sup>, the Golden Rule saving rate is just <strong>s = α</strong>.</p>
 <p><strong>Why it matters for policy.</strong> Comparing MPK with δ + n + g tells a country which way to move. Below the Golden Rule (MPK &gt; δ + n + g) it should save more, which costs consumption today but raises it later. Above the Golden Rule (MPK &lt; δ + n + g) it should save less, which raises consumption at every date. A high saving rate on its own does not tell you which case a country is in. Section 5 runs this check for the U.S.</p>
 </section>
 <section id="the-transition-what-happens-after-a-policy-change" class="level2">
@@ -639,7 +640,7 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </section>
 <section id="the-lectures-numerical-example-period-by-period" class="level2">
 <h2 class="anchored" data-anchor-id="the-lectures-numerical-example-period-by-period">3. The lecture’s numerical example, period by period</h2>
-<p>With y = √k, s = 0.30, δ = 0.10, n = g = 0 and k₁ = 4. Change the inputs and the table updates. The last row is the steady state.</p>
+<p>The defaults are the lecture’s example: y = √k, s = 0.30, δ = 0.10, n = g = 0 and k₁ = 4, which gives k* = 9. Change the inputs and the table updates. The last row is the steady state for whatever inputs you enter.</p>
 <div class="sw" id="nt" style="display:block;">
  <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:end;">
   <div><label>Starting k₁</label><input type="number" id="nt-k" value="4" min="0.1" step="0.5"></div>
@@ -666,7 +667,7 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
  run();
 })();
 </script>
-<p>Start k₁ above 9 (say 16) and Δk is negative: the economy shrinks back toward the same k* = 9.</p>
+<p>At the defaults, start k₁ above 9 (say 16) and Δk is negative: the economy shrinks back toward the same k* = 9. In general, any k₁ above k* shrinks toward it and any k₁ below grows toward it.</p>
 <section id="what-if-nobody-saves-s-0" class="level3">
 <h3 class="anchored" data-anchor-id="what-if-nobody-saves-s-0">What if nobody saves? (s = 0)</h3>
 <p>Set <strong>s = 0</strong> and <strong>k₁ = 9</strong> in the table above. The law of motion becomes Δk = 0 · f(k) − δk = −δk: no new investment, and 10% of capital wears out every year.</p>
@@ -728,7 +729,7 @@ gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
 </section>
 <section id="growth-accounting-the-solow-residual" class="level2">
 <h2 class="anchored" data-anchor-id="growth-accounting-the-solow-residual">4. Growth accounting: the Solow residual</h2>
-<p>For Y = A·K<sup>α·L</sup>(1−α), output growth splits into capital, labor, and total factor productivity (TFP):</p>
+<p>For Y = A·K<sup>α</sup>·L<sup>1−α</sup>, output growth splits into capital, labor, and total factor productivity (TFP):</p>
 <p><strong>ΔY/Y ≈ α·ΔK/K + (1 − α)·ΔL/L + ΔA/A</strong></p>
 <p>TFP growth ΔA/A is what is left over: the <strong>Solow residual</strong>.</p>
 <div class="sw" id="ga" style="display:block;">
