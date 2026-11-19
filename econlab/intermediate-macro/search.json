@@ -44,135 +44,47 @@
     ]
   },
   {
-    "objectID": "loanable-funds.html",
-    "href": "loanable-funds.html",
-    "title": "Loanable Funds & Crowding Out",
+    "objectID": "economic-fluctuations.html",
+    "href": "economic-fluctuations.html",
+    "title": "Economic Fluctuations: AD / AS Shocks",
     "section": "",
-    "text": "Think of all saving and borrowing in the economy as one market for a single good — loanable funds — whose “price” is the real interest rate \\(r\\).\n\nDemand = investment \\(I(r)\\). Firms borrow to build capital; they borrow less when \\(r\\) is high, so demand slopes down.\nSupply = national saving \\(S\\) = private \\((Y-T-C)\\) + public \\((T-G)\\) = \\(Y - C - G\\).\nEquilibrium: \\(r\\) adjusts until saving equals investment, \\(S = I(r)\\).\nCrowding out: a bigger deficit (raise \\(G\\), or cut \\(T\\)) lowers national saving → \\(r\\) rises → investment is squeezed.\n\n\n\n\n\n\n\nTry it below. Push the government into deficit and watch \\(r\\) climb and investment fall. In the baseline, saving slopes up with \\(r\\); uncheck the box for the vertical-saving case.\n\n\n\n\n\n\n  \n    Government purchases G: 1500\n    \n    Taxes T: 1500\n    \n    Investment-demand shift: 0\n    \n     Saving slopes up (consumption responds to r) — uncheck for vertical saving\n    \n  \n  \n    \n  \n\n\n\n\n\n\n\nRun a deficit — raise \\(G\\) above \\(T\\). The saving line slides left, \\(r\\) climbs, and investment falls: crowding out, live.\nShift investment demand (baseline, saving slopes up): \\(r\\) rises and investment rises.\nUncheck the box for vertical saving and shift demand again: \\(r\\) rises but \\(I^*\\) stays put. This is the difference between the two exam cases.",
+    "text": "In the short run prices are sticky, so shocks move real output. In the long run prices adjust and output returns to its natural level. Three curves:\n\nAD (aggregate demand): from \\(M\\cdot V = P\\cdot Y\\), so \\(Y = \\dfrac{M V}{P}\\) — slopes down. Shifts right/left when M or V changes (a demand shock).\nLRAS (long-run supply): vertical at natural output \\(Y^*\\) — output is pinned by K, L, technology, independent of prices.\nSRAS (short-run supply): horizontal at the current (sticky) price level. A supply shock (oil, a bumper crop) shifts it up/down.\n\n\n\n\nDemand shock (move AD): short run → output moves along the flat SRAS (price sticks); long run → SRAS adjusts, output returns to \\(Y^*\\), only the price level changes. The Fed can fully offset it.\nSupply shock (shift SRAS): short run → output and prices move in opposite directions (adverse = stagflation); long run → the economy self-corrects back to \\(Y^*\\).\n\n\n\n\n\n\n\nTry it. Move aggregate demand or hit a supply shock, then toggle Short run ↔︎ Long run to watch the economy adjust back to natural output. Loads instantly — plain JavaScript, no downloads.\n\n\n\n\n\n \n  Aggregate demand  M·V  (demand shock): 10000\n  \n  Supply shock  (cost level): 0\n  \n  \n    Short run\n    Long run\n  \n  Reset to long-run equilibrium\n  \n \n \n\n\n\n\n\n\n\nDemand shock: move M·V only (leave supply at 0). In the short run output swings (boom/recession) while the price sticks. Flip to Long run — output snaps back to natural and only the price level has moved. That’s money neutrality, delayed.\nSupply shock: slide Supply shock to adverse (+). In the short run output falls and prices rise together — stagflation. Flip to Long run — the economy self-corrects back to natural output and the shock unwinds.\nThe asymmetry: a demand shock can be fully offset by moving M·V back; a supply shock forces a choice between output and prices. Toggling short/long run shows why the two shocks feel so different.",
     "crumbs": [
-      "The Real Economy",
-      "Loanable Funds & Crowding Out"
+      "Short-Run Fluctuations",
+      "AD / AS Shocks"
     ]
   },
   {
-    "objectID": "loanable-funds.html#the-market-for-loanable-funds",
-    "href": "loanable-funds.html#the-market-for-loanable-funds",
-    "title": "Loanable Funds & Crowding Out",
+    "objectID": "economic-fluctuations.html#the-aggregate-demandsupply-model",
+    "href": "economic-fluctuations.html#the-aggregate-demandsupply-model",
+    "title": "Economic Fluctuations: AD / AS Shocks",
     "section": "",
-    "text": "Think of all saving and borrowing in the economy as one market for a single good — loanable funds — whose “price” is the real interest rate \\(r\\).\n\nDemand = investment \\(I(r)\\). Firms borrow to build capital; they borrow less when \\(r\\) is high, so demand slopes down.\nSupply = national saving \\(S\\) = private \\((Y-T-C)\\) + public \\((T-G)\\) = \\(Y - C - G\\).\nEquilibrium: \\(r\\) adjusts until saving equals investment, \\(S = I(r)\\).\nCrowding out: a bigger deficit (raise \\(G\\), or cut \\(T\\)) lowers national saving → \\(r\\) rises → investment is squeezed.\n\n\n\n\n\n\n\nTry it below. Push the government into deficit and watch \\(r\\) climb and investment fall. In the baseline, saving slopes up with \\(r\\); uncheck the box for the vertical-saving case.\n\n\n\n\n\n\n  \n    Government purchases G: 1500\n    \n    Taxes T: 1500\n    \n    Investment-demand shift: 0\n    \n     Saving slopes up (consumption responds to r) — uncheck for vertical saving\n    \n  \n  \n    \n  \n\n\n\n\n\n\n\nRun a deficit — raise \\(G\\) above \\(T\\). The saving line slides left, \\(r\\) climbs, and investment falls: crowding out, live.\nShift investment demand (baseline, saving slopes up): \\(r\\) rises and investment rises.\nUncheck the box for vertical saving and shift demand again: \\(r\\) rises but \\(I^*\\) stays put. This is the difference between the two exam cases.",
+    "text": "In the short run prices are sticky, so shocks move real output. In the long run prices adjust and output returns to its natural level. Three curves:\n\nAD (aggregate demand): from \\(M\\cdot V = P\\cdot Y\\), so \\(Y = \\dfrac{M V}{P}\\) — slopes down. Shifts right/left when M or V changes (a demand shock).\nLRAS (long-run supply): vertical at natural output \\(Y^*\\) — output is pinned by K, L, technology, independent of prices.\nSRAS (short-run supply): horizontal at the current (sticky) price level. A supply shock (oil, a bumper crop) shifts it up/down.\n\n\n\n\nDemand shock (move AD): short run → output moves along the flat SRAS (price sticks); long run → SRAS adjusts, output returns to \\(Y^*\\), only the price level changes. The Fed can fully offset it.\nSupply shock (shift SRAS): short run → output and prices move in opposite directions (adverse = stagflation); long run → the economy self-corrects back to \\(Y^*\\).\n\n\n\n\n\n\n\nTry it. Move aggregate demand or hit a supply shock, then toggle Short run ↔︎ Long run to watch the economy adjust back to natural output. Loads instantly — plain JavaScript, no downloads.\n\n\n\n\n\n \n  Aggregate demand  M·V  (demand shock): 10000\n  \n  Supply shock  (cost level): 0\n  \n  \n    Short run\n    Long run\n  \n  Reset to long-run equilibrium\n  \n \n \n\n\n\n\n\n\n\nDemand shock: move M·V only (leave supply at 0). In the short run output swings (boom/recession) while the price sticks. Flip to Long run — output snaps back to natural and only the price level has moved. That’s money neutrality, delayed.\nSupply shock: slide Supply shock to adverse (+). In the short run output falls and prices rise together — stagflation. Flip to Long run — the economy self-corrects back to natural output and the shock unwinds.\nThe asymmetry: a demand shock can be fully offset by moving M·V back; a supply shock forces a choice between output and prices. Toggling short/long run shows why the two shocks feel so different.",
     "crumbs": [
-      "The Real Economy",
-      "Loanable Funds & Crowding Out"
+      "Short-Run Fluctuations",
+      "AD / AS Shocks"
     ]
   },
   {
-    "objectID": "measuring-economy.html",
-    "href": "measuring-economy.html",
-    "title": "Measuring the Economy",
+    "objectID": "costs-of-inflation.html",
+    "href": "costs-of-inflation.html",
+    "title": "The Costs of Inflation",
     "section": "",
-    "text": "GDP = market value of final goods produced: \\(Y = C + I + G + NX\\).\nNominal vs real: nominal GDP uses current prices; real GDP uses base-year prices (so it moves only when quantities move).\nGDP deflator \\(= \\dfrac{\\text{Nominal GDP}}{\\text{Real GDP}}\\times 100\\) — a price index for everything the country produces.\nUnemployment rate \\(u = \\dfrac{\\text{Unemployed}}{\\text{Labor force}}\\);   LFPR \\(= \\dfrac{\\text{Labor force}}{\\text{Adult population}}\\).\n\n\n\n\n\n\n\nTry it. Change the quantity and current price to see nominal, real, and the deflator split apart. Then switch to the labor-market tab.\n\n\n\n\n\n \n  GDP & the deflator\n  Labor market\n \n \n  \n   One good. Base-year price fixed at $4.\n   Quantity produced: 12\n   Current price: 5\n  \n  \n   Employed: 180\n   Unemployed: 20\n   Not in labor force: 50\n  \n  \n \n \n\n\n\n\n\n\nRaise only the current price → nominal GDP rises, real GDP doesn’t → the deflator rises. That’s inflation.\nRaise only the quantity → real GDP rises too.\nIn the labor tab, moving people to “not in labor force” lowers the LFPR but can lower measured unemployment — the denominators differ.",
-    "crumbs": [
-      "Foundations",
-      "Measuring the Economy"
-    ]
-  },
-  {
-    "objectID": "measuring-economy.html#three-headline-numbers",
-    "href": "measuring-economy.html#three-headline-numbers",
-    "title": "Measuring the Economy",
-    "section": "",
-    "text": "GDP = market value of final goods produced: \\(Y = C + I + G + NX\\).\nNominal vs real: nominal GDP uses current prices; real GDP uses base-year prices (so it moves only when quantities move).\nGDP deflator \\(= \\dfrac{\\text{Nominal GDP}}{\\text{Real GDP}}\\times 100\\) — a price index for everything the country produces.\nUnemployment rate \\(u = \\dfrac{\\text{Unemployed}}{\\text{Labor force}}\\);   LFPR \\(= \\dfrac{\\text{Labor force}}{\\text{Adult population}}\\).\n\n\n\n\n\n\n\nTry it. Change the quantity and current price to see nominal, real, and the deflator split apart. Then switch to the labor-market tab.\n\n\n\n\n\n \n  GDP & the deflator\n  Labor market\n \n \n  \n   One good. Base-year price fixed at $4.\n   Quantity produced: 12\n   Current price: 5\n  \n  \n   Employed: 180\n   Unemployed: 20\n   Not in labor force: 50\n  \n  \n \n \n\n\n\n\n\n\nRaise only the current price → nominal GDP rises, real GDP doesn’t → the deflator rises. That’s inflation.\nRaise only the quantity → real GDP rises too.\nIn the labor tab, moving people to “not in labor force” lowers the LFPR but can lower measured unemployment — the denominators differ.",
-    "crumbs": [
-      "Foundations",
-      "Measuring the Economy"
-    ]
-  },
-  {
-    "objectID": "inequality.html",
-    "href": "inequality.html",
-    "title": "Income Distribution & Inequality",
-    "section": "",
-    "text": "The skill premium is the wage ratio of skilled to unskilled workers, \\(\\omega = w_s/w_u\\):\n\\[\\omega = D \\cdot \\left(\\frac{L_u}{L_s}\\right)^{1/\\sigma}\\]\n\n\\(L_s/L_u\\) = relative supply of skilled workers. More skilled workers (education) → \\(\\omega\\) falls.\n\\(D\\) = relative demand for skill. Skill-biased technical change (SBTC) raises \\(D\\) → \\(\\omega\\) rises.\n\\(\\sigma\\) = how easily firms substitute the two types.\n\n\n\n\n\n\n\nTry it. Educate more workers and the premium falls. Turn up SBTC and it rises — the race between education and technology.\n\n\n\n\n\n \n  Skilled share of workers: 0.40\n  Relative demand for skill D (SBTC): 1.5\n  Substitutability σ: 2.0\n  \n \n \n\n\n\n\n\n\nSlide the skilled share up → the premium falls: expanding education compresses inequality.\nTurn up SBTC (D) → the whole curve shifts up: technology favoring skill widens inequality.",
-    "crumbs": [
-      "The Real Economy",
-      "Income Distribution & Inequality"
-    ]
-  },
-  {
-    "objectID": "inequality.html#the-skill-premium",
-    "href": "inequality.html#the-skill-premium",
-    "title": "Income Distribution & Inequality",
-    "section": "",
-    "text": "The skill premium is the wage ratio of skilled to unskilled workers, \\(\\omega = w_s/w_u\\):\n\\[\\omega = D \\cdot \\left(\\frac{L_u}{L_s}\\right)^{1/\\sigma}\\]\n\n\\(L_s/L_u\\) = relative supply of skilled workers. More skilled workers (education) → \\(\\omega\\) falls.\n\\(D\\) = relative demand for skill. Skill-biased technical change (SBTC) raises \\(D\\) → \\(\\omega\\) rises.\n\\(\\sigma\\) = how easily firms substitute the two types.\n\n\n\n\n\n\n\nTry it. Educate more workers and the premium falls. Turn up SBTC and it rises — the race between education and technology.\n\n\n\n\n\n \n  Skilled share of workers: 0.40\n  Relative demand for skill D (SBTC): 1.5\n  Substitutability σ: 2.0\n  \n \n \n\n\n\n\n\n\nSlide the skilled share up → the premium falls: expanding education compresses inequality.\nTurn up SBTC (D) → the whole curve shifts up: technology favoring skill widens inequality.",
-    "crumbs": [
-      "The Real Economy",
-      "Income Distribution & Inequality"
-    ]
-  },
-  {
-    "objectID": "large-open-economy.html",
-    "href": "large-open-economy.html",
-    "title": "Large Open Economy & PPP",
-    "section": "",
-    "text": "A large economy’s saving and investment change the world interest rate. Two regions clear together: \\(CA_H + CA_{ROW} = 0\\), with each \\(CA = S - I\\) depending on \\(r\\).\n\nA home fiscal expansion lowers home saving → pushes the world rate up → home investment falls (crowding out).\nThe adjustment is smaller than in a small economy, because the higher \\(r\\) pulls saving up and investment down everywhere.\n\n\n\nThe same good costs the same once converted: \\(e = \\dfrac{P_{\\text{foreign}}}{P_{\\text{home}}}\\). Higher home inflation → the home currency depreciates one-for-one.\n\n\n\n\n\n\nTry it. Left: a home fiscal expansion raises the world rate and crowds out investment. Right: a PPP calculator — change prices to get the exchange rate.\n\n\n\n\n\n \n  Large open economy\n  PPP calculator\n \n \n  \n   Home fiscal expansion (cuts saving): 0\n  \n  \n   Home price of the good: 3\n   Foreign price of the good: 6\n  \n  \n \n \n\n\n\n\n\n\n\nHome fiscal expansion raises the world rate — unlike a small economy, where \\(r^*\\) is fixed.\nBecause \\(r\\) rises, home investment falls (crowding out).\nIn the PPP tab, raising the home price lowers \\(e\\) — the home currency buys less foreign currency.",
-    "crumbs": [
-      "The Open Economy",
-      "Large Open Economy & PPP"
-    ]
-  },
-  {
-    "objectID": "large-open-economy.html#when-a-country-moves-the-world-rate",
-    "href": "large-open-economy.html#when-a-country-moves-the-world-rate",
-    "title": "Large Open Economy & PPP",
-    "section": "",
-    "text": "A large economy’s saving and investment change the world interest rate. Two regions clear together: \\(CA_H + CA_{ROW} = 0\\), with each \\(CA = S - I\\) depending on \\(r\\).\n\nA home fiscal expansion lowers home saving → pushes the world rate up → home investment falls (crowding out).\nThe adjustment is smaller than in a small economy, because the higher \\(r\\) pulls saving up and investment down everywhere.\n\n\n\nThe same good costs the same once converted: \\(e = \\dfrac{P_{\\text{foreign}}}{P_{\\text{home}}}\\). Higher home inflation → the home currency depreciates one-for-one.\n\n\n\n\n\n\nTry it. Left: a home fiscal expansion raises the world rate and crowds out investment. Right: a PPP calculator — change prices to get the exchange rate.\n\n\n\n\n\n \n  Large open economy\n  PPP calculator\n \n \n  \n   Home fiscal expansion (cuts saving): 0\n  \n  \n   Home price of the good: 3\n   Foreign price of the good: 6\n  \n  \n \n \n\n\n\n\n\n\n\nHome fiscal expansion raises the world rate — unlike a small economy, where \\(r^*\\) is fixed.\nBecause \\(r\\) rises, home investment falls (crowding out).\nIn the PPP tab, raising the home price lowers \\(e\\) — the home currency buys less foreign currency.",
-    "crumbs": [
-      "The Open Economy",
-      "Large Open Economy & PPP"
-    ]
-  },
-  {
-    "objectID": "fisher-money-market.html",
-    "href": "fisher-money-market.html",
-    "title": "The Fisher Effect & the Money Market",
-    "section": "",
-    "text": "Fisher equation: \\(i = r + \\pi^e\\) — nominal rate = real rate + expected inflation.\nReal money demand falls with \\(i\\). Here \\((M/P)^d = \\dfrac{Y}{2i}\\).\nEquilibrium: \\(P\\) adjusts so \\(M/P = \\dfrac{Y}{2i}\\).\nVelocity: \\(V = \\dfrac{PY}{M} = 2i\\).\nEx ante real rate \\(= i - \\pi^e\\); ex post \\(= i - \\pi\\).\n\n\n\n\n\n\n\nTry it. Raise expected inflation: \\(i\\) rises, people hold less real money, so \\(P\\) jumps more than the money stock. Watch velocity rise too.\n\n\n\n\n\n \n  Money supply M: 1000\n  Real rate r (%): 2\n  Expected inflation pi_e (%): 3\n  Real output Y: 1000\n  \n \n \n\n\n\n\n\n\nDefaults (M=1000, r=2, \\(\\pi^e\\)=3, Y=1000) give i=5, P=10, V=10 — the exam short-answer baseline.\nRaise \\(\\pi^e\\): i and V rise, desired real balances fall, and P rises more than M.\nThe real rate r is set by the real economy; inflation just adds on top (Fisher).",
+    "text": "Shoeleather costs — effort to hold less cash when inflation is high.\nMenu costs — the cost of changing posted prices.\nRelative-price distortions — staggered price changes misallocate resources.\nRedistribution (unexpected inflation) — fixed nominal contracts transfer wealth between borrowers and lenders.\nHyperinflation — all costs balloon; money stops working as a store of value.\n\n\n\nA loan sets its nominal rate on expected inflation: \\(i = r + \\pi^e\\). The lender’s realized real return is \\(i - \\pi\\).\n\nIf actual \\(\\pi &gt;\\) expected → the borrower gains (repays in cheaper dollars).\nIf actual \\(\\pi &lt;\\) expected → the lender gains.\n\n\n\n\n\n\n\nTry it. Fix the expected inflation the loan was priced on, then move actual inflation and watch who gains.\n\n\n\n\n\n \n  Real rate the loan targets r (%): 2\n  Expected inflation when signed pi_e (%): 3\n  ACTUAL inflation pi (%): 3\n  \n \n \n\n\n\n\n\n\n\nSet actual = expected → ex post equals ex ante → no redistribution.\nPush actual above expected → the lender’s realized return falls → borrower wins.\nMenu, shoeleather, and relative-price costs happen even when inflation is fully expected; redistribution is the extra cost of the surprise.",
     "crumbs": [
       "Inflation",
-      "The Fisher Effect & the Money Market"
+      "The Costs of Inflation"
     ]
   },
   {
-    "objectID": "fisher-money-market.html#two-interest-rates-and-money-market-equilibrium",
-    "href": "fisher-money-market.html#two-interest-rates-and-money-market-equilibrium",
-    "title": "The Fisher Effect & the Money Market",
+    "objectID": "costs-of-inflation.html#why-inflation-is-costly",
+    "href": "costs-of-inflation.html#why-inflation-is-costly",
+    "title": "The Costs of Inflation",
     "section": "",
-    "text": "Fisher equation: \\(i = r + \\pi^e\\) — nominal rate = real rate + expected inflation.\nReal money demand falls with \\(i\\). Here \\((M/P)^d = \\dfrac{Y}{2i}\\).\nEquilibrium: \\(P\\) adjusts so \\(M/P = \\dfrac{Y}{2i}\\).\nVelocity: \\(V = \\dfrac{PY}{M} = 2i\\).\nEx ante real rate \\(= i - \\pi^e\\); ex post \\(= i - \\pi\\).\n\n\n\n\n\n\n\nTry it. Raise expected inflation: \\(i\\) rises, people hold less real money, so \\(P\\) jumps more than the money stock. Watch velocity rise too.\n\n\n\n\n\n \n  Money supply M: 1000\n  Real rate r (%): 2\n  Expected inflation pi_e (%): 3\n  Real output Y: 1000\n  \n \n \n\n\n\n\n\n\nDefaults (M=1000, r=2, \\(\\pi^e\\)=3, Y=1000) give i=5, P=10, V=10 — the exam short-answer baseline.\nRaise \\(\\pi^e\\): i and V rise, desired real balances fall, and P rises more than M.\nThe real rate r is set by the real economy; inflation just adds on top (Fisher).",
+    "text": "Shoeleather costs — effort to hold less cash when inflation is high.\nMenu costs — the cost of changing posted prices.\nRelative-price distortions — staggered price changes misallocate resources.\nRedistribution (unexpected inflation) — fixed nominal contracts transfer wealth between borrowers and lenders.\nHyperinflation — all costs balloon; money stops working as a store of value.\n\n\n\nA loan sets its nominal rate on expected inflation: \\(i = r + \\pi^e\\). The lender’s realized real return is \\(i - \\pi\\).\n\nIf actual \\(\\pi &gt;\\) expected → the borrower gains (repays in cheaper dollars).\nIf actual \\(\\pi &lt;\\) expected → the lender gains.\n\n\n\n\n\n\n\nTry it. Fix the expected inflation the loan was priced on, then move actual inflation and watch who gains.\n\n\n\n\n\n \n  Real rate the loan targets r (%): 2\n  Expected inflation when signed pi_e (%): 3\n  ACTUAL inflation pi (%): 3\n  \n \n \n\n\n\n\n\n\n\nSet actual = expected → ex post equals ex ante → no redistribution.\nPush actual above expected → the lender’s realized return falls → borrower wins.\nMenu, shoeleather, and relative-price costs happen even when inflation is fully expected; redistribution is the extra cost of the surprise.",
     "crumbs": [
       "Inflation",
-      "The Fisher Effect & the Money Market"
-    ]
-  },
-  {
-    "objectID": "quantity-theory.html",
-    "href": "quantity-theory.html",
-    "title": "Quantity Theory & Inflation",
-    "section": "",
-    "text": "The quantity equation is an identity: \\(M \\cdot V = P \\cdot Y\\).\n\n\\(M\\) = money supply, \\(V\\) = velocity, \\(P\\) = price level, \\(Y\\) = real output.\nIn growth rates (writing \\(\\Delta\\log X\\) for the growth rate of \\(X\\)): \\(\\Delta\\log M + \\Delta\\log V = \\Delta\\log P + \\Delta\\log Y\\). With inflation \\(\\pi = \\Delta\\log P\\),\n\n\\[\\pi = \\Delta\\log M + \\Delta\\log V - \\Delta\\log Y\\]\n\nQuantity theory: if \\(V\\) is roughly constant (\\(\\Delta\\log V \\approx 0\\)), then \\(\\pi = \\Delta\\log M - \\Delta\\log Y\\) — sustained inflation comes from money growth outrunning real growth.\nClassical dichotomy: in the long run money moves only nominal things (P), not real output.\n\n\n\n\n\n\n\nTry it. Money growth above real growth → inflation. Faster output growth absorbs money and lowers inflation. Rising velocity adds to inflation.\n\n\n\n\n\n \n  Money growth g_M (%): 5\n  Output growth g_Y (%): 2\n  Velocity growth g_V (%): 0\n  \n \n \n\n\n\n\n\n\nSet \\(g_V = 0\\): inflation is exactly \\(g_M - g_Y\\) — the pure quantity theory.\nFaster output growth lowers inflation (more goods absorb the money).\nNegative velocity growth pulls inflation down even if money grows.",
-    "crumbs": [
-      "Inflation",
-      "Quantity Theory & Inflation"
-    ]
-  },
-  {
-    "objectID": "quantity-theory.html#money-prices-and-inflation",
-    "href": "quantity-theory.html#money-prices-and-inflation",
-    "title": "Quantity Theory & Inflation",
-    "section": "",
-    "text": "The quantity equation is an identity: \\(M \\cdot V = P \\cdot Y\\).\n\n\\(M\\) = money supply, \\(V\\) = velocity, \\(P\\) = price level, \\(Y\\) = real output.\nIn growth rates (writing \\(\\Delta\\log X\\) for the growth rate of \\(X\\)): \\(\\Delta\\log M + \\Delta\\log V = \\Delta\\log P + \\Delta\\log Y\\). With inflation \\(\\pi = \\Delta\\log P\\),\n\n\\[\\pi = \\Delta\\log M + \\Delta\\log V - \\Delta\\log Y\\]\n\nQuantity theory: if \\(V\\) is roughly constant (\\(\\Delta\\log V \\approx 0\\)), then \\(\\pi = \\Delta\\log M - \\Delta\\log Y\\) — sustained inflation comes from money growth outrunning real growth.\nClassical dichotomy: in the long run money moves only nominal things (P), not real output.\n\n\n\n\n\n\n\nTry it. Money growth above real growth → inflation. Faster output growth absorbs money and lowers inflation. Rising velocity adds to inflation.\n\n\n\n\n\n \n  Money growth g_M (%): 5\n  Output growth g_Y (%): 2\n  Velocity growth g_V (%): 0\n  \n \n \n\n\n\n\n\n\nSet \\(g_V = 0\\): inflation is exactly \\(g_M - g_Y\\) — the pure quantity theory.\nFaster output growth lowers inflation (more goods absorb the money).\nNegative velocity growth pulls inflation down even if money grows.",
-    "crumbs": [
-      "Inflation",
-      "Quantity Theory & Inflation"
+      "The Costs of Inflation"
     ]
   },
   {
@@ -201,6 +113,16 @@
     "title": "Intermediate Macroeconomics",
     "section": "The Real Economy",
     "text": "The Real Economy\n\nProduction & Factor Prices — Cobb–Douglas, marginal products, and how income splits between labor and capital\nIncome Distribution & Inequality — human capital, the skill premium, and the labor share\nLoanable Funds & Crowding Out — saving, investment, the real interest rate, and government deficits",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#long-run-growth",
+    "href": "index.html#long-run-growth",
+    "title": "Intermediate Macroeconomics",
+    "section": "Long-Run Growth",
+    "text": "Long-Run Growth\n\nThe Solow Growth Model — capital accumulation, the steady state, the Golden Rule, population and technology growth, and convergence",
     "crumbs": [
       "Home"
     ]
@@ -236,25 +158,277 @@
     ]
   },
   {
-    "objectID": "costs-of-inflation.html",
-    "href": "costs-of-inflation.html",
-    "title": "The Costs of Inflation",
-    "section": "",
-    "text": "Shoeleather costs — effort to hold less cash when inflation is high.\nMenu costs — the cost of changing posted prices.\nRelative-price distortions — staggered price changes misallocate resources.\nRedistribution (unexpected inflation) — fixed nominal contracts transfer wealth between borrowers and lenders.\nHyperinflation — all costs balloon; money stops working as a store of value.\n\n\n\nA loan sets its nominal rate on expected inflation: \\(i = r + \\pi^e\\). The lender’s realized real return is \\(i - \\pi\\).\n\nIf actual \\(\\pi &gt;\\) expected → the borrower gains (repays in cheaper dollars).\nIf actual \\(\\pi &lt;\\) expected → the lender gains.\n\n\n\n\n\n\n\nTry it. Fix the expected inflation the loan was priced on, then move actual inflation and watch who gains.\n\n\n\n\n\n \n  Real rate the loan targets r (%): 2\n  Expected inflation when signed pi_e (%): 3\n  ACTUAL inflation pi (%): 3\n  \n \n \n\n\n\n\n\n\n\nSet actual = expected → ex post equals ex ante → no redistribution.\nPush actual above expected → the lender’s realized return falls → borrower wins.\nMenu, shoeleather, and relative-price costs happen even when inflation is fully expected; redistribution is the extra cost of the surprise.",
+    "objectID": "index.html#short-run-fluctuations",
+    "href": "index.html#short-run-fluctuations",
+    "title": "Intermediate Macroeconomics",
+    "section": "Short-Run Fluctuations",
+    "text": "Short-Run Fluctuations\n\nEconomic Fluctuations: AD / AS Shocks — sticky prices, demand vs supply shocks, and the short-run to long-run adjustment",
     "crumbs": [
-      "Inflation",
-      "The Costs of Inflation"
+      "Home"
     ]
   },
   {
-    "objectID": "costs-of-inflation.html#why-inflation-is-costly",
-    "href": "costs-of-inflation.html#why-inflation-is-costly",
-    "title": "The Costs of Inflation",
+    "objectID": "quantity-theory.html",
+    "href": "quantity-theory.html",
+    "title": "Quantity Theory & Inflation",
     "section": "",
-    "text": "Shoeleather costs — effort to hold less cash when inflation is high.\nMenu costs — the cost of changing posted prices.\nRelative-price distortions — staggered price changes misallocate resources.\nRedistribution (unexpected inflation) — fixed nominal contracts transfer wealth between borrowers and lenders.\nHyperinflation — all costs balloon; money stops working as a store of value.\n\n\n\nA loan sets its nominal rate on expected inflation: \\(i = r + \\pi^e\\). The lender’s realized real return is \\(i - \\pi\\).\n\nIf actual \\(\\pi &gt;\\) expected → the borrower gains (repays in cheaper dollars).\nIf actual \\(\\pi &lt;\\) expected → the lender gains.\n\n\n\n\n\n\n\nTry it. Fix the expected inflation the loan was priced on, then move actual inflation and watch who gains.\n\n\n\n\n\n \n  Real rate the loan targets r (%): 2\n  Expected inflation when signed pi_e (%): 3\n  ACTUAL inflation pi (%): 3\n  \n \n \n\n\n\n\n\n\n\nSet actual = expected → ex post equals ex ante → no redistribution.\nPush actual above expected → the lender’s realized return falls → borrower wins.\nMenu, shoeleather, and relative-price costs happen even when inflation is fully expected; redistribution is the extra cost of the surprise.",
+    "text": "The quantity equation is an identity: \\(M \\cdot V = P \\cdot Y\\).\n\n\\(M\\) = money supply, \\(V\\) = velocity, \\(P\\) = price level, \\(Y\\) = real output.\nIn growth rates (writing \\(\\Delta\\log X\\) for the growth rate of \\(X\\)): \\(\\Delta\\log M + \\Delta\\log V = \\Delta\\log P + \\Delta\\log Y\\). With inflation \\(\\pi = \\Delta\\log P\\),\n\n\\[\\pi = \\Delta\\log M + \\Delta\\log V - \\Delta\\log Y\\]\n\nQuantity theory: if \\(V\\) is roughly constant (\\(\\Delta\\log V \\approx 0\\)), then \\(\\pi = \\Delta\\log M - \\Delta\\log Y\\) — sustained inflation comes from money growth outrunning real growth.\nClassical dichotomy: in the long run money moves only nominal things (P), not real output.\n\n\n\n\n\n\n\nTry it. Money growth above real growth → inflation. Faster output growth absorbs money and lowers inflation. Rising velocity adds to inflation.\n\n\n\n\n\n \n  Money growth g_M (%): 5\n  Output growth g_Y (%): 2\n  Velocity growth g_V (%): 0\n  \n \n \n\n\n\n\n\n\nSet \\(g_V = 0\\): inflation is exactly \\(g_M - g_Y\\) — the pure quantity theory.\nFaster output growth lowers inflation (more goods absorb the money).\nNegative velocity growth pulls inflation down even if money grows.",
     "crumbs": [
       "Inflation",
-      "The Costs of Inflation"
+      "Quantity Theory & Inflation"
+    ]
+  },
+  {
+    "objectID": "quantity-theory.html#money-prices-and-inflation",
+    "href": "quantity-theory.html#money-prices-and-inflation",
+    "title": "Quantity Theory & Inflation",
+    "section": "",
+    "text": "The quantity equation is an identity: \\(M \\cdot V = P \\cdot Y\\).\n\n\\(M\\) = money supply, \\(V\\) = velocity, \\(P\\) = price level, \\(Y\\) = real output.\nIn growth rates (writing \\(\\Delta\\log X\\) for the growth rate of \\(X\\)): \\(\\Delta\\log M + \\Delta\\log V = \\Delta\\log P + \\Delta\\log Y\\). With inflation \\(\\pi = \\Delta\\log P\\),\n\n\\[\\pi = \\Delta\\log M + \\Delta\\log V - \\Delta\\log Y\\]\n\nQuantity theory: if \\(V\\) is roughly constant (\\(\\Delta\\log V \\approx 0\\)), then \\(\\pi = \\Delta\\log M - \\Delta\\log Y\\) — sustained inflation comes from money growth outrunning real growth.\nClassical dichotomy: in the long run money moves only nominal things (P), not real output.\n\n\n\n\n\n\n\nTry it. Money growth above real growth → inflation. Faster output growth absorbs money and lowers inflation. Rising velocity adds to inflation.\n\n\n\n\n\n \n  Money growth g_M (%): 5\n  Output growth g_Y (%): 2\n  Velocity growth g_V (%): 0\n  \n \n \n\n\n\n\n\n\nSet \\(g_V = 0\\): inflation is exactly \\(g_M - g_Y\\) — the pure quantity theory.\nFaster output growth lowers inflation (more goods absorb the money).\nNegative velocity growth pulls inflation down even if money grows.",
+    "crumbs": [
+      "Inflation",
+      "Quantity Theory & Inflation"
+    ]
+  },
+  {
+    "objectID": "fisher-money-market.html",
+    "href": "fisher-money-market.html",
+    "title": "The Fisher Effect & the Money Market",
+    "section": "",
+    "text": "Fisher equation: \\(i = r + \\pi^e\\) — nominal rate = real rate + expected inflation.\nReal money demand falls with \\(i\\). Here \\((M/P)^d = \\dfrac{Y}{2i}\\).\nEquilibrium: \\(P\\) adjusts so \\(M/P = \\dfrac{Y}{2i}\\).\nVelocity: \\(V = \\dfrac{PY}{M} = 2i\\).\nEx ante real rate \\(= i - \\pi^e\\); ex post \\(= i - \\pi\\).\n\n\n\n\n\n\n\nTry it. Raise expected inflation: \\(i\\) rises, people hold less real money, so \\(P\\) jumps more than the money stock. Watch velocity rise too.\n\n\n\n\n\n \n  Money supply M: 1000\n  Real rate r (%): 2\n  Expected inflation pi_e (%): 3\n  Real output Y: 1000\n  \n \n \n\n\n\n\n\n\nDefaults (M=1000, r=2, \\(\\pi^e\\)=3, Y=1000) give i=5, P=10, V=10 — the exam short-answer baseline.\nRaise \\(\\pi^e\\): i and V rise, desired real balances fall, and P rises more than M.\nThe real rate r is set by the real economy; inflation just adds on top (Fisher).",
+    "crumbs": [
+      "Inflation",
+      "The Fisher Effect & the Money Market"
+    ]
+  },
+  {
+    "objectID": "fisher-money-market.html#two-interest-rates-and-money-market-equilibrium",
+    "href": "fisher-money-market.html#two-interest-rates-and-money-market-equilibrium",
+    "title": "The Fisher Effect & the Money Market",
+    "section": "",
+    "text": "Fisher equation: \\(i = r + \\pi^e\\) — nominal rate = real rate + expected inflation.\nReal money demand falls with \\(i\\). Here \\((M/P)^d = \\dfrac{Y}{2i}\\).\nEquilibrium: \\(P\\) adjusts so \\(M/P = \\dfrac{Y}{2i}\\).\nVelocity: \\(V = \\dfrac{PY}{M} = 2i\\).\nEx ante real rate \\(= i - \\pi^e\\); ex post \\(= i - \\pi\\).\n\n\n\n\n\n\n\nTry it. Raise expected inflation: \\(i\\) rises, people hold less real money, so \\(P\\) jumps more than the money stock. Watch velocity rise too.\n\n\n\n\n\n \n  Money supply M: 1000\n  Real rate r (%): 2\n  Expected inflation pi_e (%): 3\n  Real output Y: 1000\n  \n \n \n\n\n\n\n\n\nDefaults (M=1000, r=2, \\(\\pi^e\\)=3, Y=1000) give i=5, P=10, V=10 — the exam short-answer baseline.\nRaise \\(\\pi^e\\): i and V rise, desired real balances fall, and P rises more than M.\nThe real rate r is set by the real economy; inflation just adds on top (Fisher).",
+    "crumbs": [
+      "Inflation",
+      "The Fisher Effect & the Money Market"
+    ]
+  },
+  {
+    "objectID": "solow-growth.html",
+    "href": "solow-growth.html",
+    "title": "The Solow Growth Model",
+    "section": "",
+    "text": "The classical model treats capital K and labor L as given: Y = F(K, L). It does not track how today’s saving becomes tomorrow’s capital. The Solow model adds that missing piece, a law of motion for capital, and uses it to answer three questions:\n\nWhy do economies with little capital grow fast, and why does that growth slow down (postwar Japan)?\nDoes saving more make a country grow faster forever, or only richer?\nWhat is the only source of sustained growth in living standards?",
+    "crumbs": [
+      "Long-Run Growth",
+      "The Solow Growth Model"
+    ]
+  },
+  {
+    "objectID": "solow-growth.html#why-growth-needs-its-own-model",
+    "href": "solow-growth.html#why-growth-needs-its-own-model",
+    "title": "The Solow Growth Model",
+    "section": "",
+    "text": "The classical model treats capital K and labor L as given: Y = F(K, L). It does not track how today’s saving becomes tomorrow’s capital. The Solow model adds that missing piece, a law of motion for capital, and uses it to answer three questions:\n\nWhy do economies with little capital grow fast, and why does that growth slow down (postwar Japan)?\nDoes saving more make a country grow faster forever, or only richer?\nWhat is the only source of sustained growth in living standards?",
+    "crumbs": [
+      "Long-Run Growth",
+      "The Solow Growth Model"
+    ]
+  },
+  {
+    "objectID": "solow-growth.html#the-building-blocks",
+    "href": "solow-growth.html#the-building-blocks",
+    "title": "The Solow Growth Model",
+    "section": "The building blocks",
+    "text": "The building blocks\nEverything is measured per worker (lower-case letters), using constant returns to scale:\n\n\n\n\n\n\n\n\nPiece\nEquation\nMeaning\n\n\n\n\nProduction\ny = f(k)\nOutput per worker rises with capital per worker k = K/L, at a diminishing rate (MPK falls as k rises)\n\n\nSaving = investment\ni = s·y = s·f(k)\nA fixed share s of output is saved and invested; c = (1 − s)·y is consumed\n\n\nDepreciation\nδ·k\nCapital that wears out each period\n\n\nLaw of motion\nΔk = s·f(k) − δ·k\nCapital per worker grows when investment exceeds what is needed to replace worn-out capital\n\n\nSteady state\ns·f(k*) = δ·k*\nInvestment exactly covers break-even investment, so Δk = 0\n\n\n\nWith population growth n and labor-augmenting technology growth g, measure everything per effective worker (k̃ = K/(E·L)) and break-even investment becomes (δ + n + g)·k̃:\n\nδ·k̃ replaces worn-out capital,\nn·k̃ equips new workers,\ng·k̃ keeps up with rising labor efficiency E.\n\nThese are the small-rate approximations used in the lecture (exact in continuous time).",
+    "crumbs": [
+      "Long-Run Growth",
+      "The Solow Growth Model"
+    ]
+  },
+  {
+    "objectID": "solow-growth.html#the-solow-diagram",
+    "href": "solow-growth.html#the-solow-diagram",
+    "title": "The Solow Growth Model",
+    "section": "1. The Solow diagram",
+    "text": "1. The Solow diagram\n\n\n\n\n\n\nTry it. The defaults are the lecture’s numerical example: y = √k (α = 0.5), s = 0.30, δ = 0.10, n = g = 0, so k* = 9, y* = 3, c* = 2.1. Move one slider at a time and watch where the investment curve s·f(k) crosses the break-even line.\n\n\n\n\n\n\n \n  Saving rate s: \n  \n  Depreciation rate δ: \n  \n  Population growth n: \n  \n  Technology growth g: \n  \n  Capital share α in y = kα: \n  \n  \n   Show Golden Rule\n   Reset to lecture example\n  \n  \n   f(k): output\n   s·f(k): investment\n   (δ+n+g)·k: break-even investment\n  \n  \n \n \n\n\n\n\n\nWhat to notice\n\nSaving (s up): the blue curve shifts up and k* moves right. Output per worker y* is permanently higher. That is a level effect.\nDepreciation or population growth (δ or n up): the red line gets steeper and k* moves left. Faster population growth means lower output per worker, because each period’s investment is spread over more new workers (capital dilution).\nGolden Rule: turn it on. Steady-state consumption c* = f(k*) − (δ+n+g)k* is largest where the slope of f(k) equals the slope of the break-even line: MPK = δ + n + g. With Cobb–Douglas output this happens exactly when s = α. In the lecture example, k*GR = 25, y*GR = 5, c*GR = 2.5 (above c* = 2.1 at s = 0.30).\nGrowth rates: whatever you do to s or n, long-run growth of Y/L is g. Only technology moves the long-run growth rate.",
+    "crumbs": [
+      "Long-Run Growth",
+      "The Solow Growth Model"
+    ]
+  },
+  {
+    "objectID": "solow-growth.html#the-transition-what-happens-after-a-policy-change",
+    "href": "solow-growth.html#the-transition-what-happens-after-a-policy-change",
+    "title": "The Solow Growth Model",
+    "section": "2. The transition: what happens after a policy change",
+    "text": "2. The transition: what happens after a policy change\nThe diagram shows where the economy ends up. This simulation shows the path it takes. The economy starts in the steady state at the old saving rate; in period 10 the saving rate changes permanently.\n\n \n  Old saving rate: \n  \n  New saving rate (from period 10): \n  \n  Technology growth g: \n  \n  \n   Output per worker\n   Consumption per worker\n   Growth rate of Y/L\n  \n  Fixed: α = 0.5, δ = 0.10, n = 0. Uses the lecture's approximation k̃t+1 = k̃t + s·f(k̃t) − (δ+n+g)·k̃t. Grey dashed path = no policy change.\n  \n \n \n\n\n\n\n\nWhat to notice\n\nLevel effect, not growth effect. Raise s from 0.30 to 0.40 and look at Growth rate of Y/L: growth jumps above g, then falls back to g. The economy ends up permanently richer but does not grow permanently faster.\nBelow the Golden Rule (old s &lt; 0.50): switch to Consumption per worker. Consumption drops at period 10, then climbs above the old path. The current generation sacrifices for future ones.\nAbove the Golden Rule (try old s = 0.70, new s = 0.50): consumption jumps up immediately and stays above the old path at every date. Everyone gains.\nConvergence. Growth is fastest right after the change, when k̃ is furthest below its new steady state. This is the model’s reading of postwar Japan.",
+    "crumbs": [
+      "Long-Run Growth",
+      "The Solow Growth Model"
+    ]
+  },
+  {
+    "objectID": "solow-growth.html#the-lectures-numerical-example-period-by-period",
+    "href": "solow-growth.html#the-lectures-numerical-example-period-by-period",
+    "title": "The Solow Growth Model",
+    "section": "3. The lecture’s numerical example, period by period",
+    "text": "3. The lecture’s numerical example, period by period\nWith y = √k, s = 0.30, δ = 0.10, n = g = 0 and k₁ = 4. Change the inputs and the table updates. The last row is the steady state.\n\n \n  Starting k₁\n  Saving rate s\n  Depreciation δ\n  Years shown\n \n \n\n\nStart k₁ above 9 (say 16) and Δk is negative: the economy shrinks back toward the same k* = 9.",
+    "crumbs": [
+      "Long-Run Growth",
+      "The Solow Growth Model"
+    ]
+  },
+  {
+    "objectID": "solow-growth.html#growth-accounting-the-solow-residual",
+    "href": "solow-growth.html#growth-accounting-the-solow-residual",
+    "title": "The Solow Growth Model",
+    "section": "4. Growth accounting: the Solow residual",
+    "text": "4. Growth accounting: the Solow residual\nFor Y = A·Kα·L(1−α), output growth splits into capital, labor, and total factor productivity (TFP):\nΔY/Y ≈ α·ΔK/K + (1 − α)·ΔL/L + ΔA/A\nTFP growth ΔA/A is what is left over: the Solow residual.\n\n \n  Output growth ΔY/Y (%)\n  Capital growth ΔK/K (%)\n  Labor growth ΔL/L (%)\n  Capital share α\n \n \n\n\nThe residual picks up everything not measured in K and L: genuine innovation, but also changes in capacity utilization, organization, reallocation across sectors, and measurement error.",
+    "crumbs": [
+      "Long-Run Growth",
+      "The Solow Growth Model"
+    ]
+  },
+  {
+    "objectID": "solow-growth.html#is-the-u.s.-below-the-golden-rule",
+    "href": "solow-growth.html#is-the-u.s.-below-the-golden-rule",
+    "title": "The Solow Growth Model",
+    "section": "5. Is the U.S. below the Golden Rule?",
+    "text": "5. Is the U.S. below the Golden Rule?\nThe lecture’s stylized calculation uses three ratios to output. Compare MPK − δ with n + g: if MPK − δ is larger, the economy has too little capital (below the Golden Rule).\n\n \n  Capital stock K/Y\n  Depreciation δK/Y\n  Capital income MPK·K/Y\n  n + g",
+    "crumbs": [
+      "Long-Run Growth",
+      "The Solow Growth Model"
+    ]
+  },
+  {
+    "objectID": "solow-growth.html#balanced-growth-who-grows-at-what-rate",
+    "href": "solow-growth.html#balanced-growth-who-grows-at-what-rate",
+    "title": "The Solow Growth Model",
+    "section": "Balanced growth: who grows at what rate",
+    "text": "Balanced growth: who grows at what rate\n\n\n\nVariable\nSymbol\nSteady-state growth rate\n\n\n\n\nCapital per effective worker\nk̃ = K/(EL)\n0\n\n\nOutput per effective worker\nỹ = Y/(EL)\n0\n\n\nCapital per worker\nK/L\ng\n\n\nOutput per worker\nY/L\ng\n\n\nTotal capital\nK\nn + g\n\n\nTotal output\nY\nn + g",
+    "crumbs": [
+      "Long-Run Growth",
+      "The Solow Growth Model"
+    ]
+  },
+  {
+    "objectID": "solow-growth.html#convergence-conditional-not-unconditional",
+    "href": "solow-growth.html#convergence-conditional-not-unconditional",
+    "title": "The Solow Growth Model",
+    "section": "Convergence: conditional, not unconditional",
+    "text": "Convergence: conditional, not unconditional\n\nUnconditional convergence (all poor countries grow faster than rich ones) is not what Solow predicts, and the cross-country data do not show it.\nConditional convergence: a country grows faster the further it starts below its own steady state. Countries with different saving, population growth, or technology have different steady states.\nLow income alone does not imply fast growth. What matters is income relative to the country’s own long-run path.",
+    "crumbs": [
+      "Long-Run Growth",
+      "The Solow Growth Model"
+    ]
+  },
+  {
+    "objectID": "solow-growth.html#check-yourself",
+    "href": "solow-growth.html#check-yourself",
+    "title": "The Solow Growth Model",
+    "section": "Check yourself",
+    "text": "Check yourself\n\n\n1. The saving rate permanently doubles from 20% to 40%. Does output per worker grow faster forever?\n\nNo. Growth of Y/L rises during the transition to the new, higher k*, then returns to g. The permanent effect is on the level of output per worker, not its growth rate.\n\n\n\n2. Population growth n rises. What happens to k*, y*, and the growth rate of total output Y?\n\nThe break-even line (δ+n+g)k gets steeper, so k* and y* per worker fall (capital dilution). Total output Y grows faster in steady state, at n + g.\n\n\n\n3. y = √k, δ = 0.10, n = g = 0. Find the Golden Rule capital stock and saving rate.\n\nMPK = 0.5/√k = δ = 0.10, so √k = 5 and k*GR = 25. Then y = 5, break-even investment = 0.10 × 25 = 2.5, so s_GR = 2.5/5 = 0.5 (equal to α), and c*GR = 5 − 2.5 = 2.5.\n\n\n\n4. An economy is above the Golden Rule. Should it save more or less, and who gains?\n\nLess. Consumption jumps up immediately and stays higher along the whole transition, so every generation gains.\n\n\n\n5. Output grows 3%, capital 4%, labor 1%, α = 0.3. What is TFP growth?\n\n3 − 0.3(4) − 0.7(1) = 3 − 1.2 − 0.7 = 1.1%.\n\n\n\n6. Two countries both have income per worker of $5,000. One grows at 5% a year, the other at 0.5%. Does this contradict the Solow model?\n\nNo. Each converges to its own steady state. The fast grower is likely far below its own k* (high saving, good institutions, technology adoption); the slow grower may already be near a low k*.\n\n\n\n7. Which raises long-run living standards more: a permanent doubling of s, or a permanent 1-point rise in g?\n\nThe rise in g. Higher s gives a one-time level increase; higher g raises the growth rate of Y/L forever, so it eventually dominates any one-time level gain.",
+    "crumbs": [
+      "Long-Run Growth",
+      "The Solow Growth Model"
+    ]
+  },
+  {
+    "objectID": "solow-growth.html#what-the-solow-model-leaves-unexplained",
+    "href": "solow-growth.html#what-the-solow-model-leaves-unexplained",
+    "title": "The Solow Growth Model",
+    "section": "What the Solow model leaves unexplained",
+    "text": "What the Solow model leaves unexplained\nThe model takes s, n, and g as given. It does not explain where technological progress comes from, why saving rates differ across countries, or how human capital and institutions (compare North and South Korea) shape investment and innovation. It is also a real model: it says nothing about money, the price level, or inflation.",
+    "crumbs": [
+      "Long-Run Growth",
+      "The Solow Growth Model"
+    ]
+  },
+  {
+    "objectID": "large-open-economy.html",
+    "href": "large-open-economy.html",
+    "title": "Large Open Economy & PPP",
+    "section": "",
+    "text": "A large economy’s saving and investment change the world interest rate. Two regions clear together: \\(CA_H + CA_{ROW} = 0\\), with each \\(CA = S - I\\) depending on \\(r\\).\n\nA home fiscal expansion lowers home saving → pushes the world rate up → home investment falls (crowding out).\nThe adjustment is smaller than in a small economy, because the higher \\(r\\) pulls saving up and investment down everywhere.\n\n\n\nThe same good costs the same once converted: \\(e = \\dfrac{P_{\\text{foreign}}}{P_{\\text{home}}}\\). Higher home inflation → the home currency depreciates one-for-one.\n\n\n\n\n\n\nTry it. Left: a home fiscal expansion raises the world rate and crowds out investment. Right: a PPP calculator — change prices to get the exchange rate.\n\n\n\n\n\n \n  Large open economy\n  PPP calculator\n \n \n  \n   Home fiscal expansion (cuts saving): 0\n  \n  \n   Home price of the good: 3\n   Foreign price of the good: 6\n  \n  \n \n \n\n\n\n\n\n\n\nHome fiscal expansion raises the world rate — unlike a small economy, where \\(r^*\\) is fixed.\nBecause \\(r\\) rises, home investment falls (crowding out).\nIn the PPP tab, raising the home price lowers \\(e\\) — the home currency buys less foreign currency.",
+    "crumbs": [
+      "The Open Economy",
+      "Large Open Economy & PPP"
+    ]
+  },
+  {
+    "objectID": "large-open-economy.html#when-a-country-moves-the-world-rate",
+    "href": "large-open-economy.html#when-a-country-moves-the-world-rate",
+    "title": "Large Open Economy & PPP",
+    "section": "",
+    "text": "A large economy’s saving and investment change the world interest rate. Two regions clear together: \\(CA_H + CA_{ROW} = 0\\), with each \\(CA = S - I\\) depending on \\(r\\).\n\nA home fiscal expansion lowers home saving → pushes the world rate up → home investment falls (crowding out).\nThe adjustment is smaller than in a small economy, because the higher \\(r\\) pulls saving up and investment down everywhere.\n\n\n\nThe same good costs the same once converted: \\(e = \\dfrac{P_{\\text{foreign}}}{P_{\\text{home}}}\\). Higher home inflation → the home currency depreciates one-for-one.\n\n\n\n\n\n\nTry it. Left: a home fiscal expansion raises the world rate and crowds out investment. Right: a PPP calculator — change prices to get the exchange rate.\n\n\n\n\n\n \n  Large open economy\n  PPP calculator\n \n \n  \n   Home fiscal expansion (cuts saving): 0\n  \n  \n   Home price of the good: 3\n   Foreign price of the good: 6\n  \n  \n \n \n\n\n\n\n\n\n\nHome fiscal expansion raises the world rate — unlike a small economy, where \\(r^*\\) is fixed.\nBecause \\(r\\) rises, home investment falls (crowding out).\nIn the PPP tab, raising the home price lowers \\(e\\) — the home currency buys less foreign currency.",
+    "crumbs": [
+      "The Open Economy",
+      "Large Open Economy & PPP"
+    ]
+  },
+  {
+    "objectID": "inequality.html",
+    "href": "inequality.html",
+    "title": "Income Distribution & Inequality",
+    "section": "",
+    "text": "The skill premium is the wage ratio of skilled to unskilled workers, \\(\\omega = w_s/w_u\\):\n\\[\\omega = D \\cdot \\left(\\frac{L_u}{L_s}\\right)^{1/\\sigma}\\]\n\n\\(L_s/L_u\\) = relative supply of skilled workers. More skilled workers (education) → \\(\\omega\\) falls.\n\\(D\\) = relative demand for skill. Skill-biased technical change (SBTC) raises \\(D\\) → \\(\\omega\\) rises.\n\\(\\sigma\\) = how easily firms substitute the two types.\n\n\n\n\n\n\n\nTry it. Educate more workers and the premium falls. Turn up SBTC and it rises — the race between education and technology.\n\n\n\n\n\n \n  Skilled share of workers: 0.40\n  Relative demand for skill D (SBTC): 1.5\n  Substitutability σ: 2.0\n  \n \n \n\n\n\n\n\n\nSlide the skilled share up → the premium falls: expanding education compresses inequality.\nTurn up SBTC (D) → the whole curve shifts up: technology favoring skill widens inequality.",
+    "crumbs": [
+      "The Real Economy",
+      "Income Distribution & Inequality"
+    ]
+  },
+  {
+    "objectID": "inequality.html#the-skill-premium",
+    "href": "inequality.html#the-skill-premium",
+    "title": "Income Distribution & Inequality",
+    "section": "",
+    "text": "The skill premium is the wage ratio of skilled to unskilled workers, \\(\\omega = w_s/w_u\\):\n\\[\\omega = D \\cdot \\left(\\frac{L_u}{L_s}\\right)^{1/\\sigma}\\]\n\n\\(L_s/L_u\\) = relative supply of skilled workers. More skilled workers (education) → \\(\\omega\\) falls.\n\\(D\\) = relative demand for skill. Skill-biased technical change (SBTC) raises \\(D\\) → \\(\\omega\\) rises.\n\\(\\sigma\\) = how easily firms substitute the two types.\n\n\n\n\n\n\n\nTry it. Educate more workers and the premium falls. Turn up SBTC and it rises — the race between education and technology.\n\n\n\n\n\n \n  Skilled share of workers: 0.40\n  Relative demand for skill D (SBTC): 1.5\n  Substitutability σ: 2.0\n  \n \n \n\n\n\n\n\n\nSlide the skilled share up → the premium falls: expanding education compresses inequality.\nTurn up SBTC (D) → the whole curve shifts up: technology favoring skill widens inequality.",
+    "crumbs": [
+      "The Real Economy",
+      "Income Distribution & Inequality"
+    ]
+  },
+  {
+    "objectID": "measuring-economy.html",
+    "href": "measuring-economy.html",
+    "title": "Measuring the Economy",
+    "section": "",
+    "text": "GDP = market value of final goods produced: \\(Y = C + I + G + NX\\).\nNominal vs real: nominal GDP uses current prices; real GDP uses base-year prices (so it moves only when quantities move).\nGDP deflator \\(= \\dfrac{\\text{Nominal GDP}}{\\text{Real GDP}}\\times 100\\) — a price index for everything the country produces.\nUnemployment rate \\(u = \\dfrac{\\text{Unemployed}}{\\text{Labor force}}\\);   LFPR \\(= \\dfrac{\\text{Labor force}}{\\text{Adult population}}\\).\n\n\n\n\n\n\n\nTry it. Change the quantity and current price to see nominal, real, and the deflator split apart. Then switch to the labor-market tab.\n\n\n\n\n\n \n  GDP & the deflator\n  Labor market\n \n \n  \n   One good. Base-year price fixed at $4.\n   Quantity produced: 12\n   Current price: 5\n  \n  \n   Employed: 180\n   Unemployed: 20\n   Not in labor force: 50\n  \n  \n \n \n\n\n\n\n\n\nRaise only the current price → nominal GDP rises, real GDP doesn’t → the deflator rises. That’s inflation.\nRaise only the quantity → real GDP rises too.\nIn the labor tab, moving people to “not in labor force” lowers the LFPR but can lower measured unemployment — the denominators differ.",
+    "crumbs": [
+      "Foundations",
+      "Measuring the Economy"
+    ]
+  },
+  {
+    "objectID": "measuring-economy.html#three-headline-numbers",
+    "href": "measuring-economy.html#three-headline-numbers",
+    "title": "Measuring the Economy",
+    "section": "",
+    "text": "GDP = market value of final goods produced: \\(Y = C + I + G + NX\\).\nNominal vs real: nominal GDP uses current prices; real GDP uses base-year prices (so it moves only when quantities move).\nGDP deflator \\(= \\dfrac{\\text{Nominal GDP}}{\\text{Real GDP}}\\times 100\\) — a price index for everything the country produces.\nUnemployment rate \\(u = \\dfrac{\\text{Unemployed}}{\\text{Labor force}}\\);   LFPR \\(= \\dfrac{\\text{Labor force}}{\\text{Adult population}}\\).\n\n\n\n\n\n\n\nTry it. Change the quantity and current price to see nominal, real, and the deflator split apart. Then switch to the labor-market tab.\n\n\n\n\n\n \n  GDP & the deflator\n  Labor market\n \n \n  \n   One good. Base-year price fixed at $4.\n   Quantity produced: 12\n   Current price: 5\n  \n  \n   Employed: 180\n   Unemployed: 20\n   Not in labor force: 50\n  \n  \n \n \n\n\n\n\n\n\nRaise only the current price → nominal GDP rises, real GDP doesn’t → the deflator rises. That’s inflation.\nRaise only the quantity → real GDP rises too.\nIn the labor tab, moving people to “not in labor force” lowers the LFPR but can lower measured unemployment — the denominators differ.",
+    "crumbs": [
+      "Foundations",
+      "Measuring the Economy"
+    ]
+  },
+  {
+    "objectID": "loanable-funds.html",
+    "href": "loanable-funds.html",
+    "title": "Loanable Funds & Crowding Out",
+    "section": "",
+    "text": "Think of all saving and borrowing in the economy as one market for a single good — loanable funds — whose “price” is the real interest rate \\(r\\).\n\nDemand = investment \\(I(r)\\). Firms borrow to build capital; they borrow less when \\(r\\) is high, so demand slopes down.\nSupply = national saving \\(S\\) = private \\((Y-T-C)\\) + public \\((T-G)\\) = \\(Y - C - G\\).\nEquilibrium: \\(r\\) adjusts until saving equals investment, \\(S = I(r)\\).\nCrowding out: a bigger deficit (raise \\(G\\), or cut \\(T\\)) lowers national saving → \\(r\\) rises → investment is squeezed.\n\n\n\n\n\n\n\nTry it below. Push the government into deficit and watch \\(r\\) climb and investment fall. In the baseline, saving slopes up with \\(r\\); uncheck the box for the vertical-saving case.\n\n\n\n\n\n\n  \n    Government purchases G: 1500\n    \n    Taxes T: 1500\n    \n    Investment-demand shift: 0\n    \n     Saving slopes up (consumption responds to r) — uncheck for vertical saving\n    \n  \n  \n    \n  \n\n\n\n\n\n\n\nRun a deficit — raise \\(G\\) above \\(T\\). The saving line slides left, \\(r\\) climbs, and investment falls: crowding out, live.\nShift investment demand (baseline, saving slopes up): \\(r\\) rises and investment rises.\nUncheck the box for vertical saving and shift demand again: \\(r\\) rises but \\(I^*\\) stays put. This is the difference between the two exam cases.",
+    "crumbs": [
+      "The Real Economy",
+      "Loanable Funds & Crowding Out"
+    ]
+  },
+  {
+    "objectID": "loanable-funds.html#the-market-for-loanable-funds",
+    "href": "loanable-funds.html#the-market-for-loanable-funds",
+    "title": "Loanable Funds & Crowding Out",
+    "section": "",
+    "text": "Think of all saving and borrowing in the economy as one market for a single good — loanable funds — whose “price” is the real interest rate \\(r\\).\n\nDemand = investment \\(I(r)\\). Firms borrow to build capital; they borrow less when \\(r\\) is high, so demand slopes down.\nSupply = national saving \\(S\\) = private \\((Y-T-C)\\) + public \\((T-G)\\) = \\(Y - C - G\\).\nEquilibrium: \\(r\\) adjusts until saving equals investment, \\(S = I(r)\\).\nCrowding out: a bigger deficit (raise \\(G\\), or cut \\(T\\)) lowers national saving → \\(r\\) rises → investment is squeezed.\n\n\n\n\n\n\n\nTry it below. Push the government into deficit and watch \\(r\\) climb and investment fall. In the baseline, saving slopes up with \\(r\\); uncheck the box for the vertical-saving case.\n\n\n\n\n\n\n  \n    Government purchases G: 1500\n    \n    Taxes T: 1500\n    \n    Investment-demand shift: 0\n    \n     Saving slopes up (consumption responds to r) — uncheck for vertical saving\n    \n  \n  \n    \n  \n\n\n\n\n\n\n\nRun a deficit — raise \\(G\\) above \\(T\\). The saving line slides left, \\(r\\) climbs, and investment falls: crowding out, live.\nShift investment demand (baseline, saving slopes up): \\(r\\) rises and investment rises.\nUncheck the box for vertical saving and shift demand again: \\(r\\) rises but \\(I^*\\) stays put. This is the difference between the two exam cases.",
+    "crumbs": [
+      "The Real Economy",
+      "Loanable Funds & Crowding Out"
     ]
   },
   {
@@ -299,16 +473,6 @@
     "crumbs": [
       "Money",
       "What Is Money?"
-    ]
-  },
-  {
-    "objectID": "index.html#short-run-fluctuations",
-    "href": "index.html#short-run-fluctuations",
-    "title": "Intermediate Macroeconomics",
-    "section": "Short-Run Fluctuations",
-    "text": "Short-Run Fluctuations\n\nEconomic Fluctuations: AD / AS Shocks — sticky prices, demand vs supply shocks, and the short-run to long-run adjustment",
-    "crumbs": [
-      "Home"
     ]
   }
 ]

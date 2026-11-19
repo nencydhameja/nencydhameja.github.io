@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>The Solow Growth Model – Intermediate Macroeconomics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-d279e387f5997211c97d65d1670dc95e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4ZRP97CMZ9"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-4ZRP97CMZ9', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./solow-growth.html">Long-Run Growth</a></li><li class="breadcrumb-item"><a href="./solow-growth.html">The Solow Growth Model</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Intermediate Macroeconomics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./how-models-work.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">How a Macro Model Works</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./measuring-economy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Measuring the Economy</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Real Economy</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./production.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Production &amp; Factor Prices</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./inequality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Income Distribution &amp; Inequality</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./loanable-funds.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Loanable Funds &amp; Crowding Out</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Long-Run Growth</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./solow-growth.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">The Solow Growth Model</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Money</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./money.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">What Is Money?</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Inflation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quantity-theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quantity Theory &amp; Inflation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fisher-money-market.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Fisher Effect &amp; the Money Market</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./costs-of-inflation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Costs of Inflation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Short-Run Fluctuations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./economic-fluctuations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AD / AS Shocks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">The Open Economy</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./small-open-economy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Small Open Economy &amp; the Exchange Rate</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./large-open-economy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Large Open Economy &amp; PPP</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#why-growth-needs-its-own-model" id="toc-why-growth-needs-its-own-model" class="nav-link active" data-scroll-target="#why-growth-needs-its-own-model">Why growth needs its own model</a></li>
+  <li><a href="#the-building-blocks" id="toc-the-building-blocks" class="nav-link" data-scroll-target="#the-building-blocks">The building blocks</a></li>
+  <li><a href="#the-solow-diagram" id="toc-the-solow-diagram" class="nav-link" data-scroll-target="#the-solow-diagram">1. The Solow diagram</a>
+  <ul class="collapse">
+  <li><a href="#what-to-notice" id="toc-what-to-notice" class="nav-link" data-scroll-target="#what-to-notice">What to notice</a></li>
+  </ul></li>
+  <li><a href="#the-transition-what-happens-after-a-policy-change" id="toc-the-transition-what-happens-after-a-policy-change" class="nav-link" data-scroll-target="#the-transition-what-happens-after-a-policy-change">2. The transition: what happens after a policy change</a>
+  <ul class="collapse">
+  <li><a href="#what-to-notice-1" id="toc-what-to-notice-1" class="nav-link" data-scroll-target="#what-to-notice-1">What to notice</a></li>
+  </ul></li>
+  <li><a href="#the-lectures-numerical-example-period-by-period" id="toc-the-lectures-numerical-example-period-by-period" class="nav-link" data-scroll-target="#the-lectures-numerical-example-period-by-period">3. The lecture’s numerical example, period by period</a></li>
+  <li><a href="#growth-accounting-the-solow-residual" id="toc-growth-accounting-the-solow-residual" class="nav-link" data-scroll-target="#growth-accounting-the-solow-residual">4. Growth accounting: the Solow residual</a></li>
+  <li><a href="#is-the-u.s.-below-the-golden-rule" id="toc-is-the-u.s.-below-the-golden-rule" class="nav-link" data-scroll-target="#is-the-u.s.-below-the-golden-rule">5. Is the U.S. below the Golden Rule?</a></li>
+  <li><a href="#balanced-growth-who-grows-at-what-rate" id="toc-balanced-growth-who-grows-at-what-rate" class="nav-link" data-scroll-target="#balanced-growth-who-grows-at-what-rate">Balanced growth: who grows at what rate</a></li>
+  <li><a href="#convergence-conditional-not-unconditional" id="toc-convergence-conditional-not-unconditional" class="nav-link" data-scroll-target="#convergence-conditional-not-unconditional">Convergence: conditional, not unconditional</a></li>
+  <li><a href="#check-yourself" id="toc-check-yourself" class="nav-link" data-scroll-target="#check-yourself">Check yourself</a></li>
+  <li><a href="#what-the-solow-model-leaves-unexplained" id="toc-what-the-solow-model-leaves-unexplained" class="nav-link" data-scroll-target="#what-the-solow-model-leaves-unexplained">What the Solow model leaves unexplained</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./solow-growth.html">Long-Run Growth</a></li><li class="breadcrumb-item"><a href="./solow-growth.html">The Solow Growth Model</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">The Solow Growth Model</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="why-growth-needs-its-own-model" class="level2">
+<h2 class="anchored" data-anchor-id="why-growth-needs-its-own-model">Why growth needs its own model</h2>
+<p>The classical model treats capital K and labor L as given: Y = F(K, L). It does not track how today’s saving becomes tomorrow’s capital. The Solow model adds that missing piece, a <strong>law of motion for capital</strong>, and uses it to answer three questions:</p>
+<ul>
+<li>Why do economies with little capital grow fast, and why does that growth slow down (postwar Japan)?</li>
+<li>Does saving more make a country grow faster forever, or only richer?</li>
+<li>What is the only source of <em>sustained</em> growth in living standards?</li>
+</ul>
+</section>
+<section id="the-building-blocks" class="level2">
+<h2 class="anchored" data-anchor-id="the-building-blocks">The building blocks</h2>
+<p>Everything is measured <strong>per worker</strong> (lower-case letters), using constant returns to scale:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Piece</th>
+<th>Equation</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Production</td>
+<td>y = f(k)</td>
+<td>Output per worker rises with capital per worker k = K/L, at a diminishing rate (MPK falls as k rises)</td>
+</tr>
+<tr class="even">
+<td>Saving = investment</td>
+<td>i = s·y = s·f(k)</td>
+<td>A fixed share s of output is saved and invested; c = (1 − s)·y is consumed</td>
+</tr>
+<tr class="odd">
+<td>Depreciation</td>
+<td>δ·k</td>
+<td>Capital that wears out each period</td>
+</tr>
+<tr class="even">
+<td>Law of motion</td>
+<td>Δk = s·f(k) − δ·k</td>
+<td>Capital per worker grows when investment exceeds what is needed to replace worn-out capital</td>
+</tr>
+<tr class="odd">
+<td>Steady state</td>
+<td>s·f(k*) = δ·k*</td>
+<td>Investment exactly covers break-even investment, so Δk = 0</td>
+</tr>
+</tbody>
+</table>
+<p>With population growth n and labor-augmenting technology growth g, measure everything <strong>per effective worker</strong> (k̃ = K/(E·L)) and break-even investment becomes <strong>(δ + n + g)·k̃</strong>:</p>
+<ul>
+<li>δ·k̃ replaces worn-out capital,</li>
+<li>n·k̃ equips new workers,</li>
+<li>g·k̃ keeps up with rising labor efficiency E.</li>
+</ul>
+<p>These are the small-rate approximations used in the lecture (exact in continuous time).</p>
+</section>
+<section id="the-solow-diagram" class="level2">
+<h2 class="anchored" data-anchor-id="the-solow-diagram">1. The Solow diagram</h2>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Try it.</strong> The defaults are the lecture’s numerical example: y = √k (α = 0.5), s = 0.30, δ = 0.10, n = g = 0, so k* = 9, y* = 3, c* = 2.1. Move one slider at a time and watch where the investment curve s·f(k) crosses the break-even line.</p>
+</div>
+</div>
+</div>
+<style>
+ .sw{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;margin:14px 0;font-family:'Inter',system-ui,-apple-system,sans-serif;}
+ .sw .ctrl{flex:0 0 320px;max-width:340px;}
+ .sw label{display:block;font-size:14px;font-weight:600;color:#2c3e50;margin:10px 0 2px;}
+ .sw input[type=range]{width:100%;}
+ .sw input[type=number]{width:90px;font-family:inherit;font-size:14px;padding:3px 6px;border:1px solid #d5dde8;border-radius:5px;}
+ .sw .v{color:#1f3b73;font-weight:700;}
+ .sw .box{background:#f0f4f8;border-radius:6px;padding:12px 14px;margin-top:14px;font-size:14px;line-height:1.8;}
+ .sw .box b{color:#1f3b73;}
+ .sw .good{color:#1c6b4a;font-weight:700;} .sw .bad{color:#b5462a;font-weight:700;}
+ .sw .plot{flex:1 1 440px;min-width:300px;}
+ .sw canvas{width:100%;height:auto;max-width:660px;}
+ .sw button{font-family:inherit;font-size:13px;border:1px solid #d5dde8;background:#fff;color:#2c3e50;padding:6px 12px;border-radius:6px;cursor:pointer;margin:10px 6px 0 0;}
+ .sw button.on{background:#1f3b73;color:#fff;border-color:#1f3b73;}
+ .sw .key{font-size:13px;color:#5a6472;margin-top:6px;line-height:1.7;}
+ .sw .sw-sw{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:5px;}
+ .swt{border-collapse:collapse;font-family:'Inter',system-ui,sans-serif;font-size:14px;margin:10px 0;width:100%;max-width:720px;}
+ .swt th{background:#2c3e50;color:#fff;padding:6px 10px;text-align:right;}
+ .swt td{padding:5px 10px;border-bottom:1px solid #ecf0f1;text-align:right;}
+ .swt tr.ss td{font-weight:700;color:#1c6b4a;border-top:2px solid #1c6b4a;}
+</style>
+
+<div class="sw" id="sd">
+ <div class="ctrl">
+  <label>Saving rate s: <span class="v" id="sd-sv"></span></label>
+  <input type="range" id="sd-s" min="0.05" max="0.80" step="0.01" value="0.30">
+  <label>Depreciation rate δ: <span class="v" id="sd-dv"></span></label>
+  <input type="range" id="sd-d" min="0.02" max="0.20" step="0.01" value="0.10">
+  <label>Population growth n: <span class="v" id="sd-nv"></span></label>
+  <input type="range" id="sd-n" min="0" max="0.05" step="0.005" value="0">
+  <label>Technology growth g: <span class="v" id="sd-gv"></span></label>
+  <input type="range" id="sd-g" min="0" max="0.04" step="0.005" value="0">
+  <label>Capital share α in y = k<sup>α</sup>: <span class="v" id="sd-av"></span></label>
+  <input type="range" id="sd-a" min="0.20" max="0.60" step="0.05" value="0.50">
+  <div>
+   <button id="sd-gr">Show Golden Rule</button>
+   <button id="sd-reset">Reset to lecture example</button>
+  </div>
+  <div class="key">
+   <span class="sw-sw" style="background:#7f8c8d"></span>f(k): output<br>
+   <span class="sw-sw" style="background:#1f3b73"></span>s·f(k): investment<br>
+   <span class="sw-sw" style="background:#b5462a"></span>(δ+n+g)·k: break-even investment
+  </div>
+  <div class="box" id="sd-box"></div>
+ </div>
+ <div class="plot"><canvas id="sd-c" width="660" height="480"></canvas></div>
+</div>
+
+<script>
+(function(){
+ var $=function(id){return document.getElementById(id);};
+ var S=$('sd-s'),D=$('sd-d'),N=$('sd-n'),G=$('sd-g'),A=$('sd-a'),cv=$('sd-c'),x=cv.getContext('2d'),box=$('sd-box'),grBtn=$('sd-gr');
+ var showGR=false;
+ var W=cv.width,H=cv.height,ML=56,MR=24,MT=18,MB=46;
+ function draw(){
+  var s=+S.value,d=+D.value,n=+N.value,g=+G.value,a=+A.value,bk=d+n+g;
+  $('sd-sv').textContent=s.toFixed(2);$('sd-dv').textContent=d.toFixed(2);
+  $('sd-nv').textContent=n.toFixed(3);$('sd-gv').textContent=g.toFixed(3);$('sd-av').textContent=a.toFixed(2);
+  var f=function(k){return Math.pow(k,a);};
+  var ks=Math.pow(s/bk,1/(1-a)), ys=f(ks), cs=(1-s)*ys, mpk=a*Math.pow(ks,a-1);
+  var kgr=Math.pow(a/bk,1/(1-a)), ygr=f(kgr), cgr=ygr-bk*kgr;
+  var kmax=Math.max(10,1.35*ks,(showGR?1.35*kgr:0));
+  var ymax=Math.max(f(kmax),bk*kmax*0.75)*1.08;
+  var X=function(k){return ML+k/kmax*(W-ML-MR);}, Y=function(v){return H-MB-v/ymax*(H-MT-MB);};
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';x.lineWidth=1;
+  // grid
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';
+  var ystep=ymax>8?2:(ymax>4?1:0.5), kstep=kmax>60?20:(kmax>25?10:(kmax>12?4:2));
+  x.textAlign='right';for(var v=0;v<=ymax;v+=ystep){x.beginPath();x.moveTo(ML,Y(v));x.lineTo(W-MR,Y(v));x.stroke();x.fillText(v.toFixed(ystep<1?1:0),ML-7,Y(v)+4);}
+  x.textAlign='center';for(var k=0;k<=kmax;k+=kstep){x.fillText(k,X(k),H-MB+17);}
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.fillText(g>0||n>0?'Capital per effective worker  k̃':'Capital per worker  k',(ML+W-MR)/2,H-8);
+  x.save();x.translate(15,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText('Per-worker quantities',0,0);x.restore();
+  function curve(fn,col,w){x.strokeStyle=col;x.lineWidth=w;x.beginPath();for(var i=0;i<=300;i++){var kk=kmax*i/300,vv=fn(kk);if(vv>ymax*1.02){break;}var px=X(kk),py=Y(vv);if(i===0)x.moveTo(px,py);else x.lineTo(px,py);}x.stroke();}
+  curve(f,'#7f8c8d',2);
+  curve(function(k){return s*f(k);},'#1f3b73',2.8);
+  curve(function(k){return bk*k;},'#b5462a',2.6);
+  // golden rule
+  if(showGR){
+   curve(function(k){return a*f(k);},'#1c6b4a',1.6);
+   x.setLineDash([5,4]);x.strokeStyle='#1c6b4a';x.lineWidth=1.3;x.beginPath();x.moveTo(X(kgr),Y(ygr));x.lineTo(X(kgr),H-MB);x.stroke();x.setLineDash([]);
+   x.fillStyle='#1c6b4a';x.textAlign='center';x.fillText('k*GR',X(kgr),H-MB-6);
+   x.textAlign='left';x.fillText('s_GR·f(k), s_GR = α',X(kmax*0.35),Y(a*f(kmax*0.35))-10);
+  }
+  // steady state markers
+  x.setLineDash([3,3]);x.strokeStyle='#5a6472';x.lineWidth=1;x.beginPath();
+  x.moveTo(X(ks),H-MB);x.lineTo(X(ks),Y(ys));x.moveTo(ML,Y(ys));x.lineTo(X(ks),Y(ys));x.stroke();x.setLineDash([]);
+  // consumption bracket
+  x.strokeStyle='#c9a227';x.lineWidth=4;x.beginPath();x.moveTo(X(ks)+4,Y(ys));x.lineTo(X(ks)+4,Y(s*ys));x.stroke();
+  x.fillStyle='#a07e10';x.textAlign='left';x.fillText('c*',X(ks)+9,Y((ys+s*ys)/2)+4);
+  x.fillStyle='#1f3b73';x.beginPath();x.arc(X(ks),Y(s*ys),6,0,7);x.fill();
+  x.textAlign='center';x.fillText('k*',X(ks),H-MB+32);
+  // labels
+  x.textAlign='left';
+  x.fillStyle='#7f8c8d';x.fillText('f(k)',X(kmax*0.9),Y(f(kmax*0.9))-8);
+  x.fillStyle='#1f3b73';x.fillText('s·f(k)',X(kmax*0.9),Y(s*f(kmax*0.9))+16);
+  var kl=Math.min(kmax*0.92,ymax*0.92/bk);x.fillStyle='#b5462a';x.fillText('(δ+n+g)k',X(kl)-70,Y(bk*kl)-6);
+  // readout
+  var gap=mpk-bk, where;
+  if(Math.abs(s-a)<0.005) where="<span class='good'>at the Golden Rule</span> (s = α)";
+  else if(s<a) where="<span class='bad'>below the Golden Rule</span>: MPK &gt; δ+n+g, so saving more would raise long-run consumption";
+  else where="<span class='bad'>above the Golden Rule</span>: MPK &lt; δ+n+g, so saving less would raise consumption at every date";
+  box.innerHTML="<b>Steady state</b><br>k* = <b>"+ks.toFixed(2)+"</b> &nbsp; y* = <b>"+ys.toFixed(2)+"</b> &nbsp; c* = <b>"+cs.toFixed(2)+"</b><br>"+
+   "Break-even rate δ+n+g = <b>"+bk.toFixed(3)+"</b><br>MPK at k* = <b>"+mpk.toFixed(3)+"</b><br>"+
+   "Golden Rule: k*GR = <b>"+kgr.toFixed(2)+"</b>, c*GR = <b>"+cgr.toFixed(2)+"</b><br>This economy is "+where+".<br>"+
+   "<span style='color:#5a6472'>Long-run growth of Y/L = g = <b>"+(100*g).toFixed(1)+"%</b>; of total Y = n+g = <b>"+(100*(n+g)).toFixed(1)+"%</b>.</span>";
+ }
+ [S,D,N,G,A].forEach(function(el){el.addEventListener('input',draw);});
+ grBtn.addEventListener('click',function(){showGR=!showGR;grBtn.className=showGR?'on':'';grBtn.textContent=showGR?'Hide Golden Rule':'Show Golden Rule';draw();});
+ $('sd-reset').addEventListener('click',function(){S.value=0.30;D.value=0.10;N.value=0;G.value=0;A.value=0.50;draw();});
+ draw();
+})();
+</script>
+<div id="did-you-know">
+<section id="what-to-notice" class="level3">
+<h3 class="anchored" data-anchor-id="what-to-notice">What to notice</h3>
+<ul>
+<li><strong>Saving (s up):</strong> the blue curve shifts up and k* moves right. Output per worker y* is permanently higher. That is a <strong>level effect</strong>.</li>
+<li><strong>Depreciation or population growth (δ or n up):</strong> the red line gets steeper and k* moves left. Faster population growth means <strong>lower</strong> output per worker, because each period’s investment is spread over more new workers (capital dilution).</li>
+<li><strong>Golden Rule:</strong> turn it on. Steady-state consumption c* = f(k*) − (δ+n+g)k* is largest where the slope of f(k) equals the slope of the break-even line: <strong>MPK = δ + n + g</strong>. With Cobb–Douglas output this happens exactly when <strong>s = α</strong>. In the lecture example, k*GR = 25, y*GR = 5, c*GR = 2.5 (above c* = 2.1 at s = 0.30).</li>
+<li><strong>Growth rates:</strong> whatever you do to s or n, long-run growth of Y/L is <strong>g</strong>. Only technology moves the long-run growth rate.</li>
+</ul>
+</section>
+</div>
+</section>
+<section id="the-transition-what-happens-after-a-policy-change" class="level2">
+<h2 class="anchored" data-anchor-id="the-transition-what-happens-after-a-policy-change">2. The transition: what happens after a policy change</h2>
+<p>The diagram shows where the economy ends up. This simulation shows the <strong>path</strong> it takes. The economy starts in the steady state at the old saving rate; in period 10 the saving rate changes permanently.</p>
+<div class="sw" id="tp">
+ <div class="ctrl">
+  <label>Old saving rate: <span class="v" id="tp-s0v"></span></label>
+  <input type="range" id="tp-s0" min="0.05" max="0.80" step="0.01" value="0.30">
+  <label>New saving rate (from period 10): <span class="v" id="tp-s1v"></span></label>
+  <input type="range" id="tp-s1" min="0.05" max="0.80" step="0.01" value="0.40">
+  <label>Technology growth g: <span class="v" id="tp-gv"></span></label>
+  <input type="range" id="tp-g" min="0" max="0.04" step="0.005" value="0.02">
+  <div>
+   <button id="tp-y" class="on">Output per worker</button>
+   <button id="tp-c">Consumption per worker</button>
+   <button id="tp-gr">Growth rate of Y/L</button>
+  </div>
+  <div class="key">Fixed: α = 0.5, δ = 0.10, n = 0. Uses the lecture's approximation k̃<sub>t+1</sub> = k̃<sub>t</sub> + s·f(k̃<sub>t</sub>) − (δ+n+g)·k̃<sub>t</sub>. Grey dashed path = no policy change.</div>
+  <div class="box" id="tp-box"></div>
+ </div>
+ <div class="plot"><canvas id="tp-c-cv" width="660" height="440"></canvas></div>
+</div>
+
+<script>
+(function(){
+ var $=function(id){return document.getElementById(id);};
+ var S0=$('tp-s0'),S1=$('tp-s1'),G=$('tp-g'),cv=$('tp-c-cv'),x=cv.getContext('2d'),box=$('tp-box');
+ var view='y',T=80,TS=10,a=0.5,d=0.10,n=0;
+ var btn={y:$('tp-y'),c:$('tp-c'),gr:$('tp-gr')};
+ function sim(s0,s1,g){
+  var bk=d+n+g,k=Math.pow(s0/bk,1/(1-a)),out=[];
+  for(var t=0;t<=T;t++){
+   var s=t<TS?s0:s1,yt=Math.pow(k,a),E=Math.pow(1+g,t);
+   out.push({t:t,k:k,y:yt*E,c:(1-s)*yt*E});
+   k=k+s*yt-bk*k;
+  }
+  for(var i=0;i<out.length;i++){out[i].gr=i===0?null:100*(out[i].y/out[i-1].y-1);}
+  return out;
+ }
+ function draw(){
+  var s0=+S0.value,s1=+S1.value,g=+G.value;
+  $('tp-s0v').textContent=s0.toFixed(2);$('tp-s1v').textContent=s1.toFixed(2);$('tp-gv').textContent=g.toFixed(3);
+  var P=sim(s0,s1,g),B=sim(s0,s0,g);
+  var key=view==='gr'?'gr':view;
+  var vals=[];P.concat(B).forEach(function(o){if(o[key]!==null)vals.push(o[key]);});
+  var lo=Math.min.apply(null,vals),hi=Math.max.apply(null,vals);
+  if(view==='gr'){lo=Math.min(lo,0);hi=Math.max(hi,100*g+0.5);}else{lo=Math.min(lo*0.95,lo);}
+  var pad=(hi-lo)*0.08||0.5;lo-=pad;hi+=pad;
+  var W=cv.width,H=cv.height,ML=56,MR=20,MT=18,MB=44;
+  var X=function(t){return ML+t/T*(W-ML-MR);},Y=function(v){return H-MB-(v-lo)/(hi-lo)*(H-MT-MB);};
+  x.clearRect(0,0,W,H);x.font='12px Inter,sans-serif';
+  x.strokeStyle='#eef1f5';x.fillStyle='#5a6472';x.textAlign='right';
+  for(var j=0;j<=5;j++){var v=lo+(hi-lo)*j/5;x.beginPath();x.moveTo(ML,Y(v));x.lineTo(W-MR,Y(v));x.stroke();x.fillText(v.toFixed(2),ML-6,Y(v)+4);}
+  x.textAlign='center';for(var t=0;t<=T;t+=10)x.fillText(t,X(t),H-MB+17);
+  x.strokeStyle='#9aa4b2';x.lineWidth=1.3;x.beginPath();x.moveTo(ML,MT);x.lineTo(ML,H-MB);x.lineTo(W-MR,H-MB);x.stroke();
+  x.fillText('Period',(ML+W-MR)/2,H-8);
+  var lab={y:'Output per worker Y/L',c:'Consumption per worker C/L',gr:'Growth rate of Y/L (%)'}[view];
+  x.save();x.translate(14,(MT+H-MB)/2);x.rotate(-Math.PI/2);x.fillText(lab,0,0);x.restore();
+  x.setLineDash([4,4]);x.strokeStyle='#c9a227';x.lineWidth=1.2;x.beginPath();x.moveTo(X(TS),MT);x.lineTo(X(TS),H-MB);x.stroke();
+  x.fillStyle='#a07e10';x.textAlign='left';x.fillText('s changes',X(TS)+4,MT+12);
+  function line(arr,col,w,dash){x.setLineDash(dash||[]);x.strokeStyle=col;x.lineWidth=w;x.beginPath();var st=false;arr.forEach(function(o){if(o[key]===null)return;var px=X(o.t),py=Y(o[key]);if(!st){x.moveTo(px,py);st=true;}else x.lineTo(px,py);});x.stroke();x.setLineDash([]);}
+  line(B,'#9aa4b2',1.6,[6,4]);
+  line(P,view==='c'?'#a07e10':'#1f3b73',2.8);
+  // readout
+  var c9=P[TS-1].c,c10=P[TS].c,cT=P[T].c,cB=B[T].c,kgr=Math.pow(a/(d+n+g),1/(1-a)),k0=P[0].k;
+  var side=s0<a?'below':(s0>a?'above':'at');
+  box.innerHTML="Start: "+(side==='at'?'<b>at</b>':'<b>'+side+'</b>')+" the Golden Rule (s<sub>GR</sub> = α = 0.50).<br>"+
+   "Consumption per worker just before / right after the change: <b>"+c9.toFixed(3)+"</b> &rarr; <b>"+c10.toFixed(3)+"</b> "+(c10<c9-1e-9?"<span class='bad'>(falls)</span>":(c10>c9+1e-9?"<span class='good'>(jumps up)</span>":""))+"<br>"+
+   "Period "+T+": C/L = <b>"+cT.toFixed(3)+"</b> vs <b>"+cB.toFixed(3)+"</b> with no change ("+(cT>cB?"<span class='good'>higher</span>":"<span class='bad'>lower</span>")+")<br>"+
+   "Growth of Y/L: period 11 = <b>"+P[TS+1].gr.toFixed(2)+"%</b>, period "+T+" = <b>"+P[T].gr.toFixed(2)+"%</b> (long run = g = "+(100*g).toFixed(1)+"%)";
+ }
+ function setView(v){view=v;for(var b in btn)btn[b].className=(b===v)?'on':'';draw();}
+ btn.y.onclick=function(){setView('y');};btn.c.onclick=function(){setView('c');};btn.gr.onclick=function(){setView('gr');};
+ [S0,S1,G].forEach(function(el){el.addEventListener('input',draw);});
+ draw();
+})();
+</script>
+<div id="did-you-know">
+<section id="what-to-notice-1" class="level3">
+<h3 class="anchored" data-anchor-id="what-to-notice-1">What to notice</h3>
+<ul>
+<li><strong>Level effect, not growth effect.</strong> Raise s from 0.30 to 0.40 and look at <strong>Growth rate of Y/L</strong>: growth jumps above g, then falls back to g. The economy ends up permanently richer but does not grow permanently faster.</li>
+<li><strong>Below the Golden Rule</strong> (old s &lt; 0.50): switch to <strong>Consumption per worker</strong>. Consumption drops at period 10, then climbs above the old path. The current generation sacrifices for future ones.</li>
+<li><strong>Above the Golden Rule</strong> (try old s = 0.70, new s = 0.50): consumption jumps up immediately and stays above the old path at every date. Everyone gains.</li>
+<li><strong>Convergence.</strong> Growth is fastest right after the change, when k̃ is furthest below its new steady state. This is the model’s reading of postwar Japan.</li>
+</ul>
+</section>
+</div>
+</section>
+<section id="the-lectures-numerical-example-period-by-period" class="level2">
+<h2 class="anchored" data-anchor-id="the-lectures-numerical-example-period-by-period">3. The lecture’s numerical example, period by period</h2>
+<p>With y = √k, s = 0.30, δ = 0.10, n = g = 0 and k₁ = 4. Change the inputs and the table updates. The last row is the steady state.</p>
+<div class="sw" id="nt" style="display:block;">
+ <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:end;">
+  <div><label>Starting k₁</label><input type="number" id="nt-k" value="4" min="0.1" step="0.5"></div>
+  <div><label>Saving rate s</label><input type="number" id="nt-s" value="0.30" min="0.01" max="0.99" step="0.05"></div>
+  <div><label>Depreciation δ</label><input type="number" id="nt-d" value="0.10" min="0.01" max="0.5" step="0.01"></div>
+  <div><label>Years shown</label><input type="number" id="nt-n" value="8" min="3" max="40" step="1"></div>
+ </div>
+ <div id="nt-out"></div>
+</div>
+<script>
+(function(){
+ var $=function(id){return document.getElementById(id);};
+ function run(){
+  var k=+$('nt-k').value,s=+$('nt-s').value,d=+$('nt-d').value,N=Math.round(+$('nt-n').value);
+  if(!(k>0&&s>0&&s<1&&d>0&&N>0)){$('nt-out').innerHTML='<p>Enter positive values, with s between 0 and 1.</p>';return;}
+  var h='<table class="swt"><tr><th>Year</th><th>k</th><th>y = &radic;k</th><th>c = (1&minus;s)y</th><th>i = sy</th><th>&delta;k</th><th>&Delta;k = i &minus; &delta;k</th></tr>';
+  for(var t=1;t<=N;t++){var y=Math.sqrt(k),i=s*y,dk=d*k;h+='<tr><td>'+t+'</td><td>'+k.toFixed(3)+'</td><td>'+y.toFixed(3)+'</td><td>'+((1-s)*y).toFixed(3)+'</td><td>'+i.toFixed(3)+'</td><td>'+dk.toFixed(3)+'</td><td>'+(i-dk).toFixed(3)+'</td></tr>';k=k+i-dk;}
+  var ks=Math.pow(s/d,2),ys=Math.sqrt(ks);
+  h+='<tr class="ss"><td>k*</td><td>'+ks.toFixed(3)+'</td><td>'+ys.toFixed(3)+'</td><td>'+((1-s)*ys).toFixed(3)+'</td><td>'+(s*ys).toFixed(3)+'</td><td>'+(d*ks).toFixed(3)+'</td><td>0</td></tr></table>';
+  h+='<p style="font-size:14px;color:#5a6472;">Steady state from s&radic;k* = &delta;k*: &radic;k* = s/&delta;, so k* = (s/&delta;)&sup2;.</p>';
+  $('nt-out').innerHTML=h;
+ }
+ ['nt-k','nt-s','nt-d','nt-n'].forEach(function(id){$(id).addEventListener('input',run);});
+ run();
+})();
+</script>
+<p>Start k₁ above 9 (say 16) and Δk is negative: the economy shrinks back toward the same k* = 9.</p>
+</section>
+<section id="growth-accounting-the-solow-residual" class="level2">
+<h2 class="anchored" data-anchor-id="growth-accounting-the-solow-residual">4. Growth accounting: the Solow residual</h2>
+<p>For Y = A·K<sup>α·L</sup>(1−α), output growth splits into capital, labor, and total factor productivity (TFP):</p>
+<p><strong>ΔY/Y ≈ α·ΔK/K + (1 − α)·ΔL/L + ΔA/A</strong></p>
+<p>TFP growth ΔA/A is what is left over: the <strong>Solow residual</strong>.</p>
+<div class="sw" id="ga" style="display:block;">
+ <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:end;">
+  <div><label>Output growth ΔY/Y (%)</label><input type="number" id="ga-y" value="3" step="0.1"></div>
+  <div><label>Capital growth ΔK/K (%)</label><input type="number" id="ga-k" value="4" step="0.1"></div>
+  <div><label>Labor growth ΔL/L (%)</label><input type="number" id="ga-l" value="1" step="0.1"></div>
+  <div><label>Capital share α</label><input type="number" id="ga-a" value="0.3" step="0.05" min="0" max="1"></div>
+ </div>
+ <div class="box" id="ga-box" style="max-width:720px;"></div>
+</div>
+<script>
+(function(){
+ var $=function(id){return document.getElementById(id);};
+ function run(){
+  var y=+$('ga-y').value,k=+$('ga-k').value,l=+$('ga-l').value,a=+$('ga-a').value;
+  var ck=a*k,cl=(1-a)*l,tfp=y-ck-cl;
+  var sh=function(v){return y!==0?' ('+(100*v/y).toFixed(0)+'% of output growth)':'';};
+  $('ga-box').innerHTML='Capital contribution: &alpha;&middot;ΔK/K = '+a.toFixed(2)+' &times; '+k+' = <b>'+ck.toFixed(2)+' pp</b>'+sh(ck)+'<br>'+
+   'Labor contribution: (1&minus;&alpha;)&middot;ΔL/L = '+(1-a).toFixed(2)+' &times; '+l+' = <b>'+cl.toFixed(2)+' pp</b>'+sh(cl)+'<br>'+
+   'TFP growth (Solow residual): '+y+' &minus; '+ck.toFixed(2)+' &minus; '+cl.toFixed(2)+' = <b>'+tfp.toFixed(2)+'%</b>'+sh(tfp);
+ }
+ ['ga-y','ga-k','ga-l','ga-a'].forEach(function(id){$(id).addEventListener('input',run);});
+ run();
+})();
+</script>
+<p>The residual picks up everything not measured in K and L: genuine innovation, but also changes in capacity utilization, organization, reallocation across sectors, and measurement error.</p>
+</section>
+<section id="is-the-u.s.-below-the-golden-rule" class="level2">
+<h2 class="anchored" data-anchor-id="is-the-u.s.-below-the-golden-rule">5. Is the U.S. below the Golden Rule?</h2>
+<p>The lecture’s stylized calculation uses three ratios to output. Compare <strong>MPK − δ</strong> with <strong>n + g</strong>: if MPK − δ is larger, the economy has too little capital (below the Golden Rule).</p>
+<div class="sw" id="gr" style="display:block;">
+ <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:end;">
+  <div><label>Capital stock K/Y</label><input type="number" id="gr-k" value="2.5" step="0.1" min="0.1"></div>
+  <div><label>Depreciation δK/Y</label><input type="number" id="gr-d" value="0.1" step="0.01" min="0"></div>
+  <div><label>Capital income MPK·K/Y</label><input type="number" id="gr-m" value="0.3" step="0.01" min="0"></div>
+  <div><label>n + g</label><input type="number" id="gr-ng" value="0.03" step="0.005" min="0"></div>
+ </div>
+ <div class="box" id="gr-box" style="max-width:720px;"></div>
+</div>
+<script>
+(function(){
+ var $=function(id){return document.getElementById(id);};
+ function run(){
+  var k=+$('gr-k').value,dk=+$('gr-d').value,mk=+$('gr-m').value,ng=+$('gr-ng').value;
+  if(!(k>0)){$('gr-box').innerHTML='Enter a positive K/Y.';return;}
+  var d=dk/k,m=mk/k,gap=m-d;
+  var v=Math.abs(gap-ng)<1e-9?"<span class='good'>at the Golden Rule</span>":
+   (gap>ng?"<span class='bad'>below the Golden Rule</span>: more saving would raise long-run consumption, at the cost of lower consumption at first":
+           "<span class='bad'>above the Golden Rule</span>: less saving would raise consumption at every date");
+  $('gr-box').innerHTML='&delta; = '+dk+' / '+k+' = <b>'+d.toFixed(3)+'</b><br>MPK = '+mk+' / '+k+' = <b>'+m.toFixed(3)+'</b><br>'+
+   'MPK &minus; &delta; = <b>'+gap.toFixed(3)+'</b> vs n + g = <b>'+ng.toFixed(3)+'</b><br>This economy is '+v+'.';
+ }
+ ['gr-k','gr-d','gr-m','gr-ng'].forEach(function(id){$(id).addEventListener('input',run);});
+ run();
+})();
+</script>
+</section>
+<section id="balanced-growth-who-grows-at-what-rate" class="level2">
+<h2 class="anchored" data-anchor-id="balanced-growth-who-grows-at-what-rate">Balanced growth: who grows at what rate</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Symbol</th>
+<th>Steady-state growth rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Capital per effective worker</td>
+<td>k̃ = K/(EL)</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Output per effective worker</td>
+<td>ỹ = Y/(EL)</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Capital per worker</td>
+<td>K/L</td>
+<td>g</td>
+</tr>
+<tr class="even">
+<td>Output per worker</td>
+<td>Y/L</td>
+<td>g</td>
+</tr>
+<tr class="odd">
+<td>Total capital</td>
+<td>K</td>
+<td>n + g</td>
+</tr>
+<tr class="even">
+<td>Total output</td>
+<td>Y</td>
+<td>n + g</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="convergence-conditional-not-unconditional" class="level2">
+<h2 class="anchored" data-anchor-id="convergence-conditional-not-unconditional">Convergence: conditional, not unconditional</h2>
+<ul>
+<li><strong>Unconditional convergence</strong> (all poor countries grow faster than rich ones) is <strong>not</strong> what Solow predicts, and the cross-country data do not show it.</li>
+<li><strong>Conditional convergence</strong>: a country grows faster the further it starts below <strong>its own</strong> steady state. Countries with different saving, population growth, or technology have different steady states.</li>
+<li>Low income alone does not imply fast growth. What matters is income relative to the country’s own long-run path.</li>
+</ul>
+</section>
+<section id="check-yourself" class="level2">
+<h2 class="anchored" data-anchor-id="check-yourself">Check yourself</h2>
+<details>
+<summary>
+<b>1.</b> The saving rate permanently doubles from 20% to 40%. Does output per worker grow faster forever?
+</summary>
+No.&nbsp;Growth of Y/L rises during the transition to the new, higher k*, then returns to g. The permanent effect is on the <b>level</b> of output per worker, not its growth rate.
+</details>
+<details>
+<summary>
+<b>2.</b> Population growth n rises. What happens to k*, y*, and the growth rate of total output Y?
+</summary>
+The break-even line (δ+n+g)k gets steeper, so k* and y* per worker fall (capital dilution). Total output Y grows faster in steady state, at n + g.
+</details>
+<details>
+<summary>
+<b>3.</b> y = √k, δ = 0.10, n = g = 0. Find the Golden Rule capital stock and saving rate.
+</summary>
+MPK = 0.5/√k = δ = 0.10, so √k = 5 and k*GR = 25. Then y = 5, break-even investment = 0.10 × 25 = 2.5, so s_GR = 2.5/5 = 0.5 (equal to α), and c*GR = 5 − 2.5 = 2.5.
+</details>
+<details>
+<summary>
+<b>4.</b> An economy is above the Golden Rule. Should it save more or less, and who gains?
+</summary>
+Less. Consumption jumps up immediately and stays higher along the whole transition, so every generation gains.
+</details>
+<details>
+<summary>
+<b>5.</b> Output grows 3%, capital 4%, labor 1%, α = 0.3. What is TFP growth?
+</summary>
+3 − 0.3(4) − 0.7(1) = 3 − 1.2 − 0.7 = 1.1%.
+</details>
+<details>
+<summary>
+<b>6.</b> Two countries both have income per worker of $5,000. One grows at 5% a year, the other at 0.5%. Does this contradict the Solow model?
+</summary>
+No.&nbsp;Each converges to its own steady state. The fast grower is likely far below its own k* (high saving, good institutions, technology adoption); the slow grower may already be near a low k*.
+</details>
+<details>
+<summary>
+<b>7.</b> Which raises long-run living standards more: a permanent doubling of s, or a permanent 1-point rise in g?
+</summary>
+The rise in g. Higher s gives a one-time level increase; higher g raises the growth rate of Y/L forever, so it eventually dominates any one-time level gain.
+</details>
+</section>
+<section id="what-the-solow-model-leaves-unexplained" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-solow-model-leaves-unexplained">What the Solow model leaves unexplained</h2>
+<p>The model takes s, n, and g as given. It does not explain where technological progress comes from, why saving rates differ across countries, or how human capital and institutions (compare North and South Korea) shape investment and innovation. It is also a <strong>real</strong> model: it says nothing about money, the price level, or inflation.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p><span style="white-space:nowrap">© 2026 <a href="https://nencydhameja.com" style="color:#185FA5;text-decoration:none;">Nency Dhameja</a> | <a href="../index.html" style="color:#185FA5;text-decoration:none;">Econ Lab</a> | Built with AI assistance | <a href="mailto:nencydhameja@gmail.com" style="color:#185FA5;text-decoration:none;">Leave Feedback</a></span><br><span style="font-size:0.82em;color:#777;">Markdown content rendered to HTML by Quarto; interactive R simulations run in-browser via WebAssembly.</span></p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
