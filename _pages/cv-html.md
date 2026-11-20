@@ -149,7 +149,7 @@ author_profile: true
   <div class="cv-sub">Job Market Paper</div>
   <div class="cv-paper">
     <a href="/files/Dhameja_Crime_House_Prices.pdf"><strong>When Does Crime Enter House Prices? Evidence from Chicago</strong></a>
-    <div class="cv-abstract">I estimate how crime affects housing prices in Chicago. Although homebuyers presumably care about crime, most offenses have a near-zero effect on sale prices and asking rents. I argue that this is consistent with limited information: crime only changes buyers&rsquo; valuations if they learn of an incident and revise their expectations about future exposure. First, price effects are hyperlocal even though the predictive value of crimes is not. Second, price effects strengthen with agents&rsquo; local experience. Third, even within an offense, the effect depends on where at the property the incident occurred. These patterns are consistent with buyers responding to incidents they learn about rather than to the future crime those incidents predict.</div>
+    <div class="cv-abstract">I estimate how crime affects house prices in Chicago. Although homebuyers presumably care about crime, I find that only four of twenty-two offenses (homicide, burglary, narcotics, and vandalism) reduce home sale prices. I argue that limited information may help explain this pattern: crime affects prices only if buyers learn of an incident and update their beliefs about future crime. Three findings are consistent with this interpretation. First, price effects of crime are hyperlocal even though the predictability of crime is not. Second, these effects vary with incident visibility; for instance, burglary and narcotics discounts are concentrated among incidents at a home&rsquo;s frontage, not those inside the dwelling. Third, asking prices respond more to nearby crime when listing agents have more local experience. Crime also affects transactions beyond closing prices: some offenses lower asking prices or raise withdrawals without detectable closing-price discounts. House-price discounts alone may therefore understate homebuyers&rsquo; willingness to pay to avoid crime.</div>
   </div>
 
   <div class="cv-sub">Publications</div>
@@ -202,7 +202,7 @@ author_profile: true
 <section class="cv-section">
   <h2>Conference Presentations</h2>
   <div class="cv-years">
-    <span class="cv-yr">2027</span><span>American Economic Association (AEA) (scheduled)</span>
+    <span class="cv-yr">2027</span><span>AREUEA&ndash;ASSA PhD/Postdoc Poster Session (selected) (scheduled)<br>American Economic Association (AEA) (scheduled)</span><!-- CHANGED 2026-11-20: added AREUEA line -->
     <span class="cv-yr">2026</span><span>Western Economic Association International (WEAI)<br>Society for the Advancement of Behavioral Economics (SABE)<br>American Society of Health Economists (ASHEcon)<br>Midwest Economics Association (MEA)<br>American Economic Association (AEA)</span>
     <span class="cv-yr">2025</span><span>Southern Economic Association (SEA)<br>Western Economic Association International (WEAI)<br>Finger Lakes (FLX) Economics of Education Conference<br>Eastern Economic Association (EEA)</span>
     <span class="cv-yr">2024</span><span>Eastern Economic Association (EEA)</span>
