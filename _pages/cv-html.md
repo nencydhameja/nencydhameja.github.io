@@ -202,7 +202,7 @@ author_profile: true
 <section class="cv-section">
   <h2>Conference Presentations</h2>
   <div class="cv-years">
-    <span class="cv-yr">2027</span><span>AREUEA&ndash;ASSA PhD/Postdoc Poster Session (selected) (scheduled)<br>American Economic Association (AEA) (scheduled)</span><!-- CHANGED 2026-11-20: added AREUEA line -->
+    <span class="cv-yr">2027</span><span>AREUEA&ndash;ASSA PhD/Postdoc Poster Session (scheduled)<br>American Economic Association (AEA) (scheduled)</span><!-- CHANGED 2026-11-20: added AREUEA line -->
     <span class="cv-yr">2026</span><span>Western Economic Association International (WEAI)<br>Society for the Advancement of Behavioral Economics (SABE)<br>American Society of Health Economists (ASHEcon)<br>Midwest Economics Association (MEA)<br>American Economic Association (AEA)</span>
     <span class="cv-yr">2025</span><span>Southern Economic Association (SEA)<br>Western Economic Association International (WEAI)<br>Finger Lakes (FLX) Economics of Education Conference<br>Eastern Economic Association (EEA)</span>
     <span class="cv-yr">2024</span><span>Eastern Economic Association (EEA)</span>
