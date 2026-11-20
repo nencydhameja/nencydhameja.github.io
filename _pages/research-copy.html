@@ -242,15 +242,24 @@ author_profile: true
 <body>
 <div class="research-content">
 
-  <!-- ADDED 2026-11-20: research agenda intro (staging) -->
-  <p class="research-intro" style="font-family:'Lora', Georgia, serif;font-size:16.5px;font-weight:400;color:#3d3c38;line-height:1.7;margin:0 0 1.6rem;">My research studies housing, crime, and urban economics using spatial data. I ask how local conditions, such as crime, become reflected in house prices, and what this reveals about how buyers learn about neighborhoods.</p>
-
-
+  <!-- RESTRUCTURE 2026-11-20 (staging): research agenda block = intro + JMP + housing work in progress -->
+  <div class="status-heading">Housing and Crime</div>
   <div class="jmp-card">
+  <p class="research-intro" style="font-family:'Lora', Georgia, serif;font-size:16.5px;font-weight:400;color:#3d3c38;line-height:1.7;margin:0 0 1.2rem;">My research studies housing, crime, and urban economics using spatial data. I ask how local conditions, such as crime, become reflected in house prices, and what this reveals about how buyers learn about neighborhoods.</p>
     <span class="jmp-pill">Job Market Paper</span>
     <h4 class="paper-title">When Does Crime Enter House Prices? Evidence from Chicago</h4>
     <p class="research-q">Why do some localized crime shocks affect housing prices while others do not?</p>
     <div class="abstract-text open">I estimate how crime affects house prices in Chicago. Although homebuyers presumably care about crime, I find that only four of twenty-two offenses (homicide, burglary, narcotics, and vandalism) reduce home sale prices. I argue that limited information may help explain this pattern: crime affects prices only if buyers learn of an incident and update their beliefs about future exposure. Three findings are consistent with this interpretation. First, price effects of crime are hyperlocal even though the predictability of crime is not. Second, these effects vary with incident visibility; for instance, burglary and narcotics discounts are concentrated among incidents at a home&rsquo;s frontage, not those inside the dwelling. Third, prices respond more to nearby crime when real estate agents have more local experience. Crime also affects transactions beyond closing prices: some offenses lower asking prices or raise withdrawals without detectable closing-price discounts. House-price discounts alone may therefore understate homebuyers&rsquo; willingness to pay to avoid crime.</div><!-- ADDED 2026-11-20: JMP abstract from main.tex -->
+    <div style="border-top:0.5px solid #e4e2da;margin:1.2rem 0 0;"></div>
+  <div class="paper-card" style="background:none;border:0;box-shadow:none;padding:1.1rem 0 0;margin:0;">
+    <div class="paper-top">
+      <h4 class="paper-title paper-title--sm">Do Crime Maps Change How House Prices Respond to Crime?</h4>
+      <span class="status-pill pill-wip">Work in Progress</span>
+    </div>
+    <p class="research-q">Did adding and removing crime maps on listing platforms change how crime is reflected in house prices?</p>
+    <button class="abstract-toggle" onclick="toggle(this)">About</button>
+    <div class="abstract-text">Trulia launched crime maps for Chicago in 2011; Realtor.com removed its crime maps in late 2021 and Trulia in early 2022. Using Chicago home sales matched to geocoded crime incidents, this paper studies whether these changes in what buyers see altered how crime is reflected in house prices.</div>
+  </div>
   </div>
 
   <div class="status-heading">Publications</div>
@@ -335,21 +344,9 @@ author_profile: true
   </div>
   </div><!-- /paper-group -->
 
-
   <div class="status-heading">Work in Progress</div>
 
-  <!-- ADDED 2026-11-13: crime-maps paper (staged on research-copy for review) -->
   <div class="paper-group">
-  <div class="paper-card">
-    <div class="paper-top">
-      <h4 class="paper-title paper-title--sm">Do Crime Maps Change How House Prices Respond to Crime?</h4>
-      <span class="status-pill pill-wip">Work in Progress</span>
-    </div>
-    <p class="research-q">Did adding and removing crime maps on listing platforms change how crime is reflected in house prices?</p>
-    <button class="abstract-toggle" onclick="toggle(this)">About</button>
-    <div class="abstract-text">Trulia launched crime maps for Chicago in 2011; Realtor.com removed its crime maps in late 2021 and Trulia in early 2022. Using Chicago home sales matched to geocoded crime incidents, this paper studies whether these changes in what buyers see altered how crime is reflected in house prices.</div>
-  </div>
-
 
   <div class="paper-card">
     <div class="paper-top">
