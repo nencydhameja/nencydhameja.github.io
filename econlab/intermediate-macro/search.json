@@ -485,5 +485,16 @@
       "Money",
       "What Is Money?"
     ]
+  },
+  {
+    "objectID": "solow-growth.html#answering-the-three-questions",
+    "href": "solow-growth.html#answering-the-three-questions",
+    "title": "The Solow Growth Model",
+    "section": "Answering the three questions",
+    "text": "Answering the three questions\nWe opened with three questions. Here is what the Solow model says.\n1. Why do economies with little capital grow fast, and why does that growth slow down (postwar Japan)? When capital per worker is low, each new machine adds a lot of output (MPK is high), and investment s·f(k) is far above break-even investment (δ + n + g)·k. So Δk is large and the economy grows fast. As capital builds up, diminishing returns set in: each extra machine adds less output, the gap between the two curves closes, and growth slows toward its long-run rate. Japan in 1945 had lost much of its capital but kept its workers, institutions, and know-how, so it started far below its steady state. It grew quickly while rebuilding, and growth slowed as it approached that steady state.\n2. Does saving more make a country grow faster forever, or only richer? Only richer. A higher saving rate raises steady-state capital and output per worker, so living standards are permanently higher (a level effect). Growth is faster only during the transition to the new steady state. Once there, output per worker grows at g again, the same rate as before (section 2 shows this path). Whether saving more is a good idea depends on the Golden Rule: it raises long-run consumption only if the economy starts below it.\n3. What is the only source of sustained growth in living standards? Technological progress. In the steady state, capital and output per effective worker are constant, so output per worker Y/L grows at exactly g, the growth rate of labor efficiency. Saving and population growth change the level of Y/L, not its long-run growth rate. Only a higher g makes living standards keep rising faster over time.",
+    "crumbs": [
+      "Long-Run Growth",
+      "The Solow Growth Model"
+    ]
   }
 ]
