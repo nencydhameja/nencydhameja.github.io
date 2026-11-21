@@ -11,7 +11,7 @@ author_profile: true
 
   .cv-wrap {
     font-family: 'EB Garamond', Georgia, serif;
-    font-size: 10.5pt;
+    font-size: 12pt; /* CHANGED: was 10.5pt -> 12pt */
     line-height: 1.5;
     color: #111;
     /* border: 0.5px solid rgba(26, 13, 171, 0.25); */
@@ -31,12 +31,12 @@ author_profile: true
     margin-bottom: 1.2rem;
   }
   .cv-address-right { text-align: right; }
-  .cv-email { font-family: 'Courier New', monospace; font-size: 10pt; }
+  .cv-email { font-family: 'Courier New', monospace; font-size: 11.5pt; /* CHANGED: was 10pt -> 11.5pt */ }
 
   .cv-updated {
     text-align: right;
     font-style: italic;
-    font-size: 10pt;
+    font-size: 11.5pt; /* CHANGED: was 10pt -> 11.5pt */
     color: #444;
     margin-bottom: 0.5rem;
   }
@@ -45,7 +45,7 @@ author_profile: true
 
   .cv-section h2 {
     font-family: 'EB Garamond', Georgia, serif;
-    font-size: 13pt;
+    font-size: 14.5pt; /* CHANGED: was 13pt -> 14.5pt */
     font-weight: 600;
     font-variant: small-caps;
     letter-spacing: 0.05em;
@@ -74,15 +74,15 @@ author_profile: true
     grid-template-columns: 1fr 1fr;
     gap: 0.8rem 1rem;
   }
-  .cv-ref { font-size: 10.5pt; line-height: 1.6; }
+  .cv-ref { font-size: 12pt; /* CHANGED: was 10.5pt -> 12pt */ line-height: 1.6; }
   .cv-ref a { font-weight: 600; }
-  .cv-ref .cv-ref-email { font-family: 'Courier New', monospace; font-size: 9.5pt; }
+  .cv-ref .cv-ref-email { font-family: 'Courier New', monospace; font-size: 11pt; /* CHANGED: was 9.5pt -> 11pt */ }
   .cv-ref .cv-ref-email a { font-weight: normal; }
 
   .cv-download { margin-top: 1.5rem; }
   .cv-name {
   text-align: center;
-  font-size: 18pt;
+  font-size: 20pt; /* CHANGED: was 18pt -> 20pt */
   font-weight: 600;
   font-variant: small-caps;
   letter-spacing: 0.08em;
