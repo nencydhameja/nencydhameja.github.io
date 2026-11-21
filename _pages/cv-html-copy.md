@@ -185,7 +185,7 @@ author_profile: true
     <strong>Do Crime Maps Change How House Prices Respond to Crime?</strong>
   </div>
   <div class="cv-paper">
-    <strong>Food Swamps, Obesity, and Metabolic Risks</strong>
+    <strong>Food Swamps: Urban Retail and Health</strong>
   </div>
 </section>
 
