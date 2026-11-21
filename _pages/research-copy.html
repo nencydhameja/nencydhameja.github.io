@@ -288,8 +288,8 @@ author_profile: true
 
   <div class="status-heading">Publications</div>
 
-  <div class="paper-group">
-  <div class="paper-card">
+  <div class="paper-card"> <!-- CHANGED 2026-11-21: Publications in one panel (was separate cards) -->
+  <div class="paper-card" style="background:none;border:0;box-shadow:none;padding:0;margin:0;">
     <div class="paper-top">
       <h4 class="paper-title paper-title--sm">Causal Forests versus Penalized Splines for Heterogeneous Treatment Effects</h4>
       <span class="status-pill pill-pub">Published</span>
@@ -300,7 +300,8 @@ author_profile: true
     <div class="abstract-text">This paper compares causal forests with varying-coefficient penalized spline estimators for heterogeneous treatment effects. We conduct simulations with randomized treatment assignment that vary heterogeneity, predictor dimension, and discrete nuisance structure. Performance is measured by out-of-sample mean squared error. Forests perform best in Wager&ndash;Athey designs with sharp treatment-effect transitions. Penalized splines dominate when heterogeneity is smooth, when the baseline mean and treatment effect differ in structure, and in mixed designs with continuous, binary, and group-level covariates. As group cardinality rises, forest performance deteriorates, while mgcv random-effect smooths handle group structure effectively and remain easy to implement.</div>
   </div>
 
-  <div class="paper-card">
+    <div style="border-top:0.5px solid #e4e2da;margin:1.1rem 0 0;"></div>
+  <div class="paper-card" style="background:none;border:0;box-shadow:none;padding:1.1rem 0 0;margin:0;">
     <div class="paper-top">
       <h4 class="paper-title paper-title--sm">Comparing Human-Only, AI-Assisted, and AI-Led Teams on Assessing Research Reproducibility</h4>
       <div class="pill-stack">
@@ -313,7 +314,7 @@ author_profile: true
     <button class="abstract-toggle" onclick="toggle(this)">Abstract</button>
     <div class="abstract-text">Large Language Models (LLMs) such as ChatGPT are transforming how scientists conduct and validate research, offering promise as tools to improve scientific reproducibility. However, computational reproducibility and error detection remain expensive and labor-intensive. We experimentally test how collaboration between researchers and LLM assistants influences the reproduction of quantitative social science findings across different levels of AI autonomy. We randomly assigned 288 researchers to 103 teams working under three conditions: human-only, AI-assisted (using ChatGPT as a collaborative tool), or AI-led (ChatGPT operating with minimal human oversight). Teams reproduced published results from leading social science journals, detected coding errors, and proposed robustness checks. Human-only and AI-assisted teams achieved comparable reproduction rates (94% vs. 91%) and performed similarly on most outcomes, except human-only teams identified significantly more major coding errors. Both substantially outperformed AI-led teams, which achieved only a 37% reproduction rate, detected fewer errors across all categories, proposed weaker robustness checks, and required more time. This autonomous approach, however, likely represents only a lower bound of AI capabilities. Despite rapid model advances, expert human judgment currently remains indispensable for reliable empirical verification. While AI assistance did not degrade most outcomes, it provided no measurable advantages and was associated with reduced detection of major errors. However, the 37% autonomous reproduction rate indicates that AI could provide value in settings where scale or cost constraints preclude human review of papers, even though general-purpose LLMs offer no immediate advantages for human-supervised verification.</div>
   </div>
-  </div><!-- /paper-group -->
+  </div><!-- /publications panel -->
 
   <div class="status-heading">Working Papers</div>
 
