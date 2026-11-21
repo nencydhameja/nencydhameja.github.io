@@ -63,6 +63,8 @@ author_profile: true
 
     .jmp-card .abstract-text, .jmp-card .abstract-visible { border-left: 0; padding-left: 0; } /* ADDED 2026-11-21: was grey 2px inner line next to red bar */
 
+    .jmp-inner { border-left: 3px solid #8B2F1A; padding-left: 1rem; } /* ADDED 2026-11-21: red bar on JMP part only */
+    .jmp-inner .abstract-text, .jmp-inner .abstract-visible { border-left: 0; padding-left: 0; }
     .jmp-pill {
       display: inline-block;
       background: #f5ede9;
@@ -245,16 +247,17 @@ author_profile: true
 <div class="research-content">
 
   <!-- RESTRUCTURE 2026-11-20 (staging): research agenda block = intro + JMP + housing work in progress -->
-  <!-- REMOVED 2026-11-21: <div class="status-heading">Housing, Crime, and Urban Economics</div> -->
   <p class="research-intro" style="font-family:'Lora', Georgia, serif;font-size:16.5px;font-weight:400;color:#3d3c38;line-height:1.7;margin:0 0 1.2rem;">My research studies housing, crime, and urban economics using spatial data. I ask how local conditions, such as crime, become reflected in house prices, and what this reveals about how buyers learn about neighborhoods.</p> <!-- CHANGED 2026-11-21: intro moved above the JMP card -->
-  <div class="jmp-card">
+  <div class="status-heading">Housing, Crime, and Urban Economics</div> <!-- RESTORED 2026-11-21, now below intro; JMP + 3 WIP in one panel -->
+  <div class="paper-card"> <!-- CHANGED 2026-11-21: one panel for JMP + 3 WIP (was jmp-card + separate WIP panel) -->
+  <div class="jmp-inner">
     <span class="jmp-pill">Job Market Paper</span>
     <h4 class="paper-title">When Does Crime Enter House Prices? Evidence from Chicago</h4>
     <p class="research-q">Why do some localized crime shocks affect housing prices while others do not?</p>
     <div class="abstract-text open">I estimate how crime affects house prices in Chicago. Although homebuyers presumably care about crime, I find that only four of twenty-two offenses (homicide, burglary, narcotics, and vandalism) reduce home sale prices. I argue that limited information may help explain this pattern: crime affects prices only if buyers learn of an incident and update their beliefs about future exposure. Three findings are consistent with this interpretation. First, price effects of crime are hyperlocal even though the predictability of crime is not. Second, these effects vary with incident visibility; for instance, burglary and narcotics discounts are concentrated among incidents at a home&rsquo;s frontage, not those inside the dwelling. Third, prices respond more to nearby crime when real estate agents have more local experience. Crime also affects transactions beyond closing prices: some offenses lower asking prices or raise withdrawals without detectable closing-price discounts. House-price discounts alone may therefore understate homebuyers&rsquo; willingness to pay to avoid crime.</div><!-- ADDED 2026-11-20: JMP abstract from main.tex -->
-  </div><!-- /jmp-card: JMP only (CHANGED 2026-11-21: was also wrapping Crime Maps + Food Swamps) -->
-  <div class="paper-card"> <!-- CHANGED 2026-11-21: one panel for the three WIP projects (was 3 separate cards) -->
-  <div class="paper-card" style="background:none;border:0;box-shadow:none;padding:0;margin:0;">
+  </div><!-- /jmp-inner -->
+    <div style="border-top:0.5px solid #e4e2da;margin:1.1rem 0 0;"></div>
+  <div class="paper-card" style="background:none;border:0;box-shadow:none;padding:1.1rem 0 0;margin:0;">
     <div class="paper-top">
       <h4 class="paper-title paper-title--sm">Do Crime Maps Change How House Prices Respond to Crime?</h4>
       <span class="status-pill pill-wip">Work in Progress</span>
@@ -284,7 +287,7 @@ author_profile: true
     <button class="abstract-toggle" onclick="toggle(this)">About</button>
     <div class="abstract-text">Dollar stores have become a primary food source in many low-income and rural communities, raising the question of what their presence means for health. Using geocoded SNAP-authorized retailers since 2007, I find that places with more dollar stores have higher obesity rates, in both neighborhood estimates and metropolitan survey data. Dietary data suggest one possible mechanism: food bought at convenience-type stores contains more calories and sugar and less protein than grocery-store food, with larger gaps for low-income shoppers. These stores are a broader category than dollar stores, so this evidence does not establish what dollar-store shoppers eat. To investigate whether access affects health, I examine Oklahoma City&rsquo;s 2019 restrictions on new dollar stores, which were followed by grocery entry and convenience-store exit. I am also exploring access to health records that follow the same people over time, using measured body mass index to test whether changes in nearby food options affect their weight.</div> <!-- CHANGED 2026-11-21: short generic abstract -> full abstract from live research page -->
   </div>
-</div><!-- /wip panel -->
+</div><!-- /housing panel: JMP + WIP -->
 
   <div class="status-heading">Publications</div>
 
