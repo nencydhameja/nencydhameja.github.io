@@ -18,19 +18,20 @@ redirect_from:
 <style>
 .home-wrap{display:flex;align-items:flex-start;width:100%}
 .home-bio{order:1;flex:1 1 auto;min-width:0;max-width:680px;text-align:justify;padding-right:28px}
-.jm-col{order:2;flex:0 0 210px;border-left:1px solid #672414;padding-left:22px;margin-top:4px}
+.jm-col{order:2;flex:0 0 310px;border-left:1px solid #d3d1c7;padding-left:22px;margin-top:4px}
 .jm-col h4{font-size:0.72em;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#672414;margin:0 0 0.7em}
 .jm-label{font-size:0.7em;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#672414;margin:0 0 0.4em}
-.jm-title{font-style:italic;font-size:0.92em;line-height:1.35;color:#1a1a18;margin:0 0 0.8em}
+.jm-title{font-style:normal;font-size:0.92em;line-height:1.35;color:#1a1a18;margin:0 0 0.8em}
 .jm-title a{color:#672414;font-weight:400;text-decoration:none}
 .jm-title a:hover{text-decoration:underline}
 .jm-col ul{list-style:none;margin:0;padding:0}
 .home-bio a.jmp-link{color:#672414;text-decoration:none;border-bottom:none}
 .jm-box{background:#f7efec;border-radius:6px;padding:10px 12px;margin:0 0 0.9em}
 .jm-box .jm-title{margin:0}
+.jm-res{margin-top:0.6em;font-size:0.88em}.jm-res a{color:#672414;font-weight:400;text-decoration:none}.jm-res a:hover{text-decoration:underline}
 .jm-col li.jm-cv{margin-top:0}
-.jm-col li{margin:0 0 0.6em;font-size:0.88em;line-height:1.35}
-.jm-col a{color:#672414;text-decoration:none;font-weight:400}
+.jm-col li{padding:0 12px;margin:0 0 0.6em;font-size:0.88em;line-height:1.35}
+.jm-col a,.jm-col .jm-title a{color:#672414 !important;text-decoration:none;font-weight:400}
 .jm-col a:hover{text-decoration:underline}
 @media (max-width: 768px){
   .home-wrap{flex-direction:column}
@@ -42,12 +43,9 @@ redirect_from:
 <aside class="jm-col">
 <div class="jm-box">
 <div class="jm-label">Job Market Paper</div>
-<div class="jm-title"><a href="/files/Dhameja_Crime_House_Prices.pdf" target="_blank" rel="noopener">When Does Crime Enter House Prices? Evidence from Chicago</a></div>
+<div class="jm-title"><a href="/files/Dhameja_Crime_House_Prices.pdf" target="_blank" rel="noopener">When Does Crime Enter House Prices? Evidence from Chicago (PDF)</a></div><div class="jm-res"><a href="/assets/projects/jmp/" target="_blank" rel="noopener">Interactive Results</a></div>
 </div>
 <ul>
-<!-- Explore the Results hidden until the results page is rebuilt from the current paper:
-<li><a href="/assets/projects/crime-salience/paper.html" target="_blank" rel="noopener">Explore the Results</a></li>
--->
 <li class="jm-cv"><a href="/files/Nency_Dhameja_CV.pdf" target="_blank" rel="noopener">Curriculum Vitae (PDF)</a></li>
 </ul></aside>
 <div class="home-bio">
@@ -61,13 +59,13 @@ My research is centered on causal inference and policy evaluation in applied mic
 Prior to my Ph.D., I pursued an Executive MBA in Singapore and earned a Bachelor of Technology in India. This technical background informs my research through an emphasis on reproducible workflows, large-scale administrative data, and computational modeling, including LLM-based agent simulations, for studying economic behavior and policy interventions.
 </p> -->
 <!-- <p>I study how neighborhood conditions and institutional policies affect housing markets, health, and labor outcomes using quasi-experimental methods and large-scale administrative data.</p> -->
-<p>My research focuses on urban and regional economics, public policy, and labor economics. I also work on applied econometrics and AI-based economic modeling.</p>
-<p>In my job market paper, <a class="jmp-link" href="/files/Dhameja_Crime_House_Prices.pdf" target="_blank" rel="noopener"><em>When Does Crime Enter House Prices? Evidence from Chicago</em></a>, I study which crimes are priced into housing values, why most are not, and how the discount emerges between listing and closing.</p>
+<p>My research studies housing markets and neighborhoods, using spatial data: which local conditions enter house prices, and why. I work in urban and regional economics and public policy.</p>
+<p>In my job market paper, <a class="jmp-link" href="/files/Dhameja_Crime_House_Prices.pdf" target="_blank" rel="noopener"><em>When Does Crime Enter House Prices? Evidence from Chicago</em></a>, I study which crimes are priced into housing values, why most are not, and how the discount emerges between listing and closing. In ongoing work, I study whether adding and removing crime maps on home-listing websites changed how crime enters house prices, and how losing intercity rail service affects local housing markets.</p>
 <!-- <p>In my job market paper, I study how crime disrupts housing markets — which crimes price, how the discount travels from listing to closing, and who bears the cost.</p>  -->
 <!-- Related work examines retail food environments and health outcomes, and how diversity statement requirements affect faculty hiring. -->
 <p>In my other work, I study whether diversity statement requirements changed faculty hiring, whether Italy's energy-efficiency renovation subsidy led construction firms to overbill, and how retail food environments affect health.</p>
 
-<p>Prior to my Ph.D., I completed an Executive MBA in Singapore and a Bachelor of Technology in India.</p>
+<p>Prior to my Ph.D., I completed an Executive MBA (finance) in Singapore and a Bachelor of Technology in India.</p>
 <!-- Fields: Applied Microeconomics — Urban Economics, Behavioral Economics, Labor Economics -->
 <!--<p><strong>Fields</strong>: Applied Microeconomics - Urban Economics, Economics of Education, Behavioral Economics, Health Economics </p>-->
 
